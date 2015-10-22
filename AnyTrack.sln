@@ -11,8 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{7DA6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{633745E8-928B-4C8D-9F63-E020CAFEEBAC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyTrack", "AnyTrack.Shell\AnyTrack.csproj", "{2B4FCAAF-1AE0-42FA-A20A-86AC0D0130C1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyTrack.Backend", "Backend\AnyTrack.Backend\AnyTrack.Backend.csproj", "{8E06F61A-3FD1-419E-A45F-66BABB282D60}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyTrack.Backend.WebHost", "Backend\AnyTrack.Backend.WebHost\AnyTrack.Backend.WebHost.csproj", "{022C9F29-2FCD-4023-BB22-346F2D3845C5}"
@@ -23,8 +21,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acceptance", "Testing\Accep
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4CF7A751-618C-459D-9749-0489BFD45283}"
 	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyTrack", "AnyTrack\AnyTrack.csproj", "{2B4FCAAF-1AE0-42FA-A20A-86AC0D0130C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,12 +36,6 @@ Global
 		Scripted|Any CPU = Scripted|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2B4FCAAF-1AE0-42FA-A20A-86AC0D0130C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B4FCAAF-1AE0-42FA-A20A-86AC0D0130C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B4FCAAF-1AE0-42FA-A20A-86AC0D0130C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B4FCAAF-1AE0-42FA-A20A-86AC0D0130C1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2B4FCAAF-1AE0-42FA-A20A-86AC0D0130C1}.Scripted|Any CPU.ActiveCfg = Scripted|Any CPU
-		{2B4FCAAF-1AE0-42FA-A20A-86AC0D0130C1}.Scripted|Any CPU.Build.0 = Scripted|Any CPU
 		{8E06F61A-3FD1-419E-A45F-66BABB282D60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8E06F61A-3FD1-419E-A45F-66BABB282D60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E06F61A-3FD1-419E-A45F-66BABB282D60}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -65,6 +62,12 @@ Global
 		{64C40775-ED61-4C4D-AC07-E4ACF9526EE6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{64C40775-ED61-4C4D-AC07-E4ACF9526EE6}.Scripted|Any CPU.ActiveCfg = Scripted|Any CPU
 		{64C40775-ED61-4C4D-AC07-E4ACF9526EE6}.Scripted|Any CPU.Build.0 = Scripted|Any CPU
+		{2B4FCAAF-1AE0-42FA-A20A-86AC0D0130C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B4FCAAF-1AE0-42FA-A20A-86AC0D0130C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B4FCAAF-1AE0-42FA-A20A-86AC0D0130C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B4FCAAF-1AE0-42FA-A20A-86AC0D0130C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B4FCAAF-1AE0-42FA-A20A-86AC0D0130C1}.Scripted|Any CPU.ActiveCfg = Scripted|Any CPU
+		{2B4FCAAF-1AE0-42FA-A20A-86AC0D0130C1}.Scripted|Any CPU.Build.0 = Scripted|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

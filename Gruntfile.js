@@ -6,7 +6,6 @@ module.exports = function(grunt) {
                 src: ['AnyTrack.sln'],
                 options: {
                     projectConfiguration: 'Scripted',
-                    targets: ['Clean', 'Rebuild', 'Publish'],
                     version: 14.0,
                     maxCpuCount: 4,
                     buildParameters: {
