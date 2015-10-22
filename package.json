@@ -8,7 +8,7 @@
     "grunt": "^0.4.5",
     "grunt-iisexpress": "^0.4.0",
     "grunt-msbuild": "^0.3.4",
-    "grunt-nunit-runner": "^2.0.5",
+    "grunt-nunit-runner": "^2.0.5"
   },
   "engines": {
     "node": ">=0.8.0"
