@@ -90,15 +90,31 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Feature Files\Account Mangement\Account Registration.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Account Registration.feature</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpecFlowNUnitExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Feature Files\Account Mangement\Account Registration.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Account Registration.feature.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Feature Files\" />
+    <Folder Include="Feature Files\Burn Down Charts\" />
+    <Folder Include="Feature Files\Offline Mode\" />
+    <Folder Include="Feature Files\Planning Poker\" />
+    <Folder Include="Feature Files\Project Management\" />
+    <Folder Include="Feature Files\Sprint Management\" />
+    <Folder Include="Feature Files\Story Mangement\" />
+    <Folder Include="Feature Files\Task Management\" />
+    <Folder Include="Step Definitions\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
