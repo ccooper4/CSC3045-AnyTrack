@@ -26,8 +26,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4CF7A7
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scripts", "Scripts\Scripts.csproj", "{27C59743-EE99-4D1D-9EB7-F06279E1C589}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,16 +60,11 @@ Global
 		{E053C9E8-CC60-4693-A78E-77E70CDCBB6C}.Scripted|Any CPU.Build.0 = Scripted|Any CPU
 		{64C40775-ED61-4C4D-AC07-E4ACF9526EE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{64C40775-ED61-4C4D-AC07-E4ACF9526EE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64C40775-ED61-4C4D-AC07-E4ACF9526EE6}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{64C40775-ED61-4C4D-AC07-E4ACF9526EE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64C40775-ED61-4C4D-AC07-E4ACF9526EE6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{64C40775-ED61-4C4D-AC07-E4ACF9526EE6}.Scripted|Any CPU.ActiveCfg = Scripted|Any CPU
 		{64C40775-ED61-4C4D-AC07-E4ACF9526EE6}.Scripted|Any CPU.Build.0 = Scripted|Any CPU
-		{27C59743-EE99-4D1D-9EB7-F06279E1C589}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{27C59743-EE99-4D1D-9EB7-F06279E1C589}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{27C59743-EE99-4D1D-9EB7-F06279E1C589}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{27C59743-EE99-4D1D-9EB7-F06279E1C589}.Release|Any CPU.Build.0 = Release|Any CPU
-		{27C59743-EE99-4D1D-9EB7-F06279E1C589}.Scripted|Any CPU.ActiveCfg = Scripted|Any CPU
-		{27C59743-EE99-4D1D-9EB7-F06279E1C589}.Scripted|Any CPU.Build.0 = Scripted|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
