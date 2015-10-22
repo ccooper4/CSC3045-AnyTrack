@@ -37,8 +37,6 @@ module.exports = function(grunt) {
                 // The path to the NUnit bin folder. If not specified the bin 
                 // folder must be in the system path. 
                 path: 'packages/NUnit.Runners.2.6.4/tools',
-                // Integrate test output with TeamCity. 
-                teamcity: true,
                 // Project configuration (e.g.: Debug) to load. 
                 config: 'Scripted',
             }
