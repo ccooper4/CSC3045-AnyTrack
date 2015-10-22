@@ -92,10 +92,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\AnyTrackBackendDatabase.mdf" />
-    <Content Include="App_Data\AnyTrackBackendDatabase_log.ldf">
-      <DependentUpon>AnyTrackBackendDatabase.mdf</DependentUpon>
-    </Content>
     <Content Include="Unity.Wcf.README.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -114,12 +110,16 @@
     <Content Include="packages.config" />
     <Content Include="Configuration\Connection.config" />
     <Content Include="CodeAnalysisRules.ruleset" />
+    <None Include="Properties\PublishProfiles\Scripted.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

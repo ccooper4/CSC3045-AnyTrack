@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 
-namespace AnyTrack.Shell
+namespace AnyTrack.Client
 {
     /// <summary>
     /// Interaction logic for Shell.xaml

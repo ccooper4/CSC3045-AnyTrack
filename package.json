@@ -1,12 +1,14 @@
 {
   "name": "AnyTrack",
   "description": "CSC3045 - Any Track",
-  "repository": "git@vm-devscm.home.lan:JJGuesthouse",
+  "repository": "git@gitlab.eeecs.qub.ac.uk:CSC3045_Agile_Projects/cs2.git",
   "version": "1.0.0",
   "dependencies": {},
   "devDependencies": {
     "grunt": "^0.4.5",
-    "grunt-msbuild": "^0.3.4"
+    "grunt-iisexpress": "^0.4.0",
+    "grunt-msbuild": "^0.3.4",
+    "grunt-nunit-runner": "^2.0.5",
   },
   "engines": {
     "node": ">=0.8.0"

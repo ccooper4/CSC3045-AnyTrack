@@ -38,7 +38,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Scripted|AnyCPU'">
-    <OutputPath>bin\Scripted\</OutputPath>
+    <OutputPath>..\..\Build\Testing\Acceptance\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework">

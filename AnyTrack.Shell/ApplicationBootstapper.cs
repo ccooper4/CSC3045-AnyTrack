@@ -4,7 +4,7 @@ using System.Windows;
 using Prism.Mvvm;
 using Prism.Unity;
 
-namespace AnyTrack.Shell
+namespace AnyTrack.Client
 {
     /// <summary>
     /// Bootstraps the application using the Unity Container
