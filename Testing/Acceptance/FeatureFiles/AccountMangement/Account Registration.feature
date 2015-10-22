@@ -8,7 +8,7 @@ Scenario: Happy Path Registration
 
 	Given there is no account associated with the email address 'user@test.com' 
 	When I open the system 
-	And click 'Sign Up'
+	And I click 'Sign Up'
 	Then a 'Registration' screen is displayed
 	And the following fields are displayed: 
 		| Field            | Required |
@@ -34,9 +34,9 @@ Scenario: Happy Path Registration
 
 Scenario: User account has already been created for given email
 
-	Given an account associated with the email 'user@test.com' exists
+	Given an account associated with the email address 'user@test.com' exists
 	When I open the system
-	And click 'Sign Up'
+	And I click 'Sign Up'
 	Then a 'Registration' screen is displayed
 	And the following fields are displayed:
 		| Field            | Required |
@@ -62,8 +62,8 @@ Scenario: User tries to register an account with passwords that do not match
 
 	Given there is no account associated with the email address 'user@test.com'
 	When I open the system 
-	And click 'Sign Up’
-	Then a 'Registration screen' is displayed 
+	And I click 'Sign Up'
+	Then a 'Registration' screen is displayed 
 	And the following fields are displayed:
 		| Field            | Required |
 		| Email Address    | Yes      |
@@ -87,8 +87,8 @@ Scenario: User tries to register an account with passwords that do not match
 Scenario: User tries to register an invalid email address
 
 	When I open the system 
-	And click 'Sign Up'
-	Then a 'Registration screen' is displayed 
+	And I click 'Sign Up'
+	Then a 'Registration' screen is displayed 
 	And the following fields are displayed:
 		| Field            | Required |
 		| Email Address    | Yes      |
@@ -112,8 +112,8 @@ Scenario: User doesn't specify skill set at registration
 
 	Given there is no account associated with the email address 'user@test.com'
 	When I open the system 
-	And click 'Sign Up'
-	Then a 'Registration screen' is displayed 
+	And I click 'Sign Up'
+	Then a 'Registration' screen is displayed 
 	And the following fields are displayed:
 		| Field            | Required |
 		| Email Address    | Yes      |
@@ -123,15 +123,54 @@ Scenario: User doesn't specify skill set at registration
 		| Skill Set        | No       |
 
 	When I enter the following information:
-	| Field            | Value         |
-	| Email Address    | user@test.com |
-	| Full Name        | David Tester  |
-	| Password         | Password      |
-	| Confirm Password | Password      |
+		| Field            | Value         |
+		| Email Address    | user@test.com |
+		| Full Name        | David Tester  |
+		| Password         | Password      |
+		| Confirm Password | Password      |
 	And I click 'Register' 
 
 	Then a 'Registration - Success' screen is displayed
 	And an account associated with the email address 'user@test.com' exists
+
+
+	#As a registering user 
+	#I can select the scrum role(s) that I will potentially take (Product Owner, Scrum Master, Developer) 
+	#So that I will be able to carry out those roles in projects
+
+	Scenario: Assigning Roles at Registration Happy Path
+	Given there is no account associated with the email address 'po@test.com' 
+	When I open the system 
+	And I click 'Sign Up'
+	Then a 'Registration' screen is displayed 
+	And the following fields are displayed:
+		| Field            | Required |
+		| Email Address    | Yes      |
+		| Full Name        | Yes      |
+		| Password         | Yes      |
+		| Confirm Password | Yes      |
+		| Skill Set        | No       |
+		| Product Owner    | No       |
+		| Scrum Master     | No       |
+		| Developer        | No       |
+
+	When I enter the following information:
+		| Field            | Value                 |
+		| Email Address    | po@test.com           |
+		| Full Name        | David Tester          |
+		| Password         | Password              |
+		| Confirm Password | Password              |
+		| Skill Set        | C#, Scrum, Java, Html |
+		| Product Owner    | Yes                   |
+	And I click 'Register' 
+
+	Then a 'Registration - Success' screen is displayed
+	And an account associated with the email address 'po@test.com' exists 
+	And the 'po@test.com' account has the following preferred roles: 
+		| Roles         |
+		| Product Owner |
+
+
 
 
 	 

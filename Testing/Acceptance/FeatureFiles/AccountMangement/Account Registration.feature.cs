@@ -77,7 +77,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 10
  testRunner.When("I open the system", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 11
- testRunner.And("click \'Sign Up\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I click \'Sign Up\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 12
  testRunner.Then("a \'Registration\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -140,11 +140,11 @@ this.ScenarioSetup(scenarioInfo);
 #line 35
 this.ScenarioSetup(scenarioInfo);
 #line 37
- testRunner.Given("an account associated with the email \'user@test.com\' exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("an account associated with the email address \'user@test.com\' exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 38
  testRunner.When("I open the system", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 39
- testRunner.And("click \'Sign Up\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I click \'Sign Up\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 40
  testRunner.Then("a \'Registration\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -211,9 +211,9 @@ this.ScenarioSetup(scenarioInfo);
 #line 64
  testRunner.When("I open the system", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 65
- testRunner.And("click \'Sign Up’", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I click \'Sign Up\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 66
- testRunner.Then("a \'Registration screen\' is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("a \'Registration\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -276,9 +276,9 @@ this.ScenarioSetup(scenarioInfo);
 #line 89
  testRunner.When("I open the system", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 90
- testRunner.And("click \'Sign Up\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I click \'Sign Up\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 91
- testRunner.Then("a \'Registration screen\' is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("a \'Registration\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -343,9 +343,9 @@ this.ScenarioSetup(scenarioInfo);
 #line 114
  testRunner.When("I open the system", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 115
- testRunner.And("click \'Sign Up\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I click \'Sign Up\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 116
- testRunner.Then("a \'Registration screen\' is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("a \'Registration\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -391,6 +391,92 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.Then("a \'Registration - Success\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 134
  testRunner.And("an account associated with the email address \'user@test.com\' exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Assigning Roles at Registration Happy Path")]
+        public virtual void AssigningRolesAtRegistrationHappyPath()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Assigning Roles at Registration Happy Path", ((string[])(null)));
+#line 141
+ this.ScenarioSetup(scenarioInfo);
+#line 142
+ testRunner.Given("there is no account associated with the email address \'po@test.com\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 143
+ testRunner.When("I open the system", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 144
+ testRunner.And("I click \'Sign Up\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 145
+ testRunner.Then("a \'Registration\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Required"});
+            table11.AddRow(new string[] {
+                        "Email Address",
+                        "Yes"});
+            table11.AddRow(new string[] {
+                        "Full Name",
+                        "Yes"});
+            table11.AddRow(new string[] {
+                        "Password",
+                        "Yes"});
+            table11.AddRow(new string[] {
+                        "Confirm Password",
+                        "Yes"});
+            table11.AddRow(new string[] {
+                        "Skill Set",
+                        "No"});
+            table11.AddRow(new string[] {
+                        "Product Owner",
+                        "No"});
+            table11.AddRow(new string[] {
+                        "Scrum Master",
+                        "No"});
+            table11.AddRow(new string[] {
+                        "Developer",
+                        "No"});
+#line 146
+ testRunner.And("the following fields are displayed:", ((string)(null)), table11, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table12.AddRow(new string[] {
+                        "Email Address",
+                        "po@test.com"});
+            table12.AddRow(new string[] {
+                        "Full Name",
+                        "David Tester"});
+            table12.AddRow(new string[] {
+                        "Password",
+                        "Password"});
+            table12.AddRow(new string[] {
+                        "Confirm Password",
+                        "Password"});
+            table12.AddRow(new string[] {
+                        "Skill Set",
+                        "C#, Scrum, Java, Html"});
+            table12.AddRow(new string[] {
+                        "Product Owner",
+                        "Yes"});
+#line 157
+ testRunner.When("I enter the following information:", ((string)(null)), table12, "When ");
+#line 165
+ testRunner.And("I click \'Register\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 167
+ testRunner.Then("a \'Registration - Success\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 168
+ testRunner.And("an account associated with the email address \'po@test.com\' exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Roles"});
+            table13.AddRow(new string[] {
+                        "Product Owner"});
+#line 169
+ testRunner.And("the \'po@test.com\' account has the following preferred roles:", ((string)(null)), table13, "And ");
 #line hidden
             this.ScenarioCleanup();
         }
