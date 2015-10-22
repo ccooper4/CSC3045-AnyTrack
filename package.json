@@ -1,0 +1,14 @@
+{
+  "name": "AnyTrack",
+  "description": "CSC3045 - Any Track",
+  "repository": "git@vm-devscm.home.lan:JJGuesthouse",
+  "version": "1.0.0",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-msbuild": "^0.3.4"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  }
+}
