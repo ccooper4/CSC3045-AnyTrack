@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AnyTrack.Backend.Data.Model;
+using AnyTrack.Backend.Migrations;
 
 namespace AnyTrack.Backend.Data
 {
@@ -20,6 +21,7 @@ namespace AnyTrack.Backend.Data
         /// </summary>
         public EntityUnitOfWork() : base("AnyTrackBackend")
         {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<EntityUnitOfWork, Configuration>());
         }
 
         #endregion 
