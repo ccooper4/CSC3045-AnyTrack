@@ -32,8 +32,8 @@ namespace Acceptance.FeatureFiles.ProjectManagement
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Project Creation", "As a logged in user\r\n\r\nI can create a new project\r\n\r\nSo that I can be the Project" +
-                    " Manager", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Project Creation", "As a logged in user\r\nI can create a new project\r\nSo that I can be the Project Man" +
+                    "ager", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -70,19 +70,19 @@ namespace Acceptance.FeatureFiles.ProjectManagement
         public virtual void HappyPathProjectCreation()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Happy path project creation", ((string[])(null)));
-#line 8
+#line 6
 this.ScenarioSetup(scenarioInfo);
-#line 10
+#line 8
  testRunner.Given("an account associated with the email address \'user@test.com\' exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 11
+#line 9
  testRunner.And("I am logged in as \'user@test.com\' with the password \'Password\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 13
+#line 11
  testRunner.When("I click \'Projects\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 14
+#line 12
  testRunner.Then("a \'Projects\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 16
+#line 14
  testRunner.When("I click \'Create a project\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 17
+#line 15
  testRunner.Then("a \'New Project\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
@@ -95,7 +95,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Version Control"});
             table1.AddRow(new string[] {
                         "Started On"});
-#line 18
+#line 16
  testRunner.And("the following fields are displayed:", ((string)(null)), table1, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -113,11 +113,11 @@ this.ScenarioSetup(scenarioInfo);
             table2.AddRow(new string[] {
                         "Started On",
                         "<today>"});
-#line 25
+#line 23
  testRunner.When("I enter the following information:", ((string)(null)), table2, "When ");
-#line 31
+#line 29
  testRunner.And("I click \'Save\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 32
+#line 30
  testRunner.Then("a \'Projects\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -128,21 +128,21 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void ProjectCreatedThatAlreadyExists()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Project created that already exists", ((string[])(null)));
-#line 34
+#line 32
 this.ScenarioSetup(scenarioInfo);
-#line 36
+#line 34
  testRunner.Given("an account associated with the email address \'user@test.com\' exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 37
+#line 35
     testRunner.And("I am logged in as \'user@test.com\' with the password \'Password\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 38
+#line 36
  testRunner.And("I have created a project called \'SCRUM Management\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 40
+#line 38
  testRunner.When("I click \'Projects\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 41
+#line 39
  testRunner.Then("a \'Projects\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 43
+#line 41
   testRunner.When("I click \'Create a project\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 44
+#line 42
  testRunner.Then("a \'New Project\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
@@ -155,7 +155,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Version Control"});
             table3.AddRow(new string[] {
                         "Started On"});
-#line 46
+#line 44
  testRunner.And("the following fields are displayed:", ((string)(null)), table3, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
@@ -173,11 +173,11 @@ this.ScenarioSetup(scenarioInfo);
             table4.AddRow(new string[] {
                         "Started On",
                         "<today>"});
-#line 53
+#line 51
  testRunner.When("I enter the following information:", ((string)(null)), table4, "When ");
-#line 59
+#line 57
  testRunner.And("I click \'Save\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 60
+#line 58
  testRunner.Then("an error message \'A project with the name SCRUM Management already exists\' is dis" +
                     "played", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -189,19 +189,19 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void ProjectCreatedWithoutANamePresent()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Project created without a name present", ((string[])(null)));
-#line 62
+#line 60
 this.ScenarioSetup(scenarioInfo);
-#line 64
+#line 62
  testRunner.Given("an account associated with the email address \'user@test.com\' exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 65
+#line 63
  testRunner.And("I am logged in as \'user@test.com\' with the password \'Password\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 67
+#line 65
  testRunner.When("I click \'Projects\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 68
+#line 66
  testRunner.Then("a \'Projects\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 70
+#line 68
   testRunner.When("I click \'Create a project\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 71
+#line 69
  testRunner.Then("a \'New Project\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
@@ -214,7 +214,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Version Control"});
             table5.AddRow(new string[] {
                         "Started On"});
-#line 72
+#line 70
  testRunner.And("the following fields are displayed:", ((string)(null)), table5, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
@@ -229,11 +229,11 @@ this.ScenarioSetup(scenarioInfo);
             table6.AddRow(new string[] {
                         "Started On",
                         "<today>"});
-#line 79
+#line 77
  testRunner.When("I enter the following information:", ((string)(null)), table6, "When ");
-#line 84
+#line 82
  testRunner.And("I click \'Save\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 85
+#line 83
  testRunner.Then("an error message \'Project name must be specified\' is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -244,19 +244,19 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void ProjectCreatedWithoutADatePresent()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Project created without a date present", ((string[])(null)));
-#line 87
+#line 85
 this.ScenarioSetup(scenarioInfo);
-#line 89
+#line 87
  testRunner.Given("an account associated with the email address \'user@test.com\' exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 90
+#line 88
     testRunner.And("I am logged in as \'user@test.com\' with the password \'Password\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 92
+#line 90
  testRunner.When("I click \'Projects\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 93
+#line 91
  testRunner.Then("a \'Projects\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 95
+#line 93
     testRunner.When("I click \'Create a project\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 96
+#line 94
  testRunner.Then("a \'New Project\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
@@ -269,7 +269,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Version Control"});
             table7.AddRow(new string[] {
                         "Started On"});
-#line 97
+#line 95
  testRunner.And("the following fields are displayed:", ((string)(null)), table7, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
@@ -284,11 +284,11 @@ this.ScenarioSetup(scenarioInfo);
             table8.AddRow(new string[] {
                         "Version Control",
                         "http://www.eeecs.qub.ac.uk/svn/cs2/"});
-#line 104
+#line 102
  testRunner.When("I enter the following information:", ((string)(null)), table8, "When ");
-#line 109
+#line 107
  testRunner.And("I click \'Save\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 110
+#line 108
  testRunner.Then("an error message \'Start date for project must be specified\' is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

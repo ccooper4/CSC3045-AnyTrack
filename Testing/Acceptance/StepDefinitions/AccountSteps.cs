@@ -56,6 +56,7 @@ namespace Acceptance.StepDefinitions
         /// </summary>
         /// <param name="emailAddress">users email address</param>
         /// <param name="rolesTable">roles to be checked</param>
+        [Given(@"the '(.*)' account has the following preferred roles:")]
         [Then(@"the '(.*)' account has the following preferred roles:")]
         public void ThenTheAccountHasTheFollowingPreferredRoles(string emailAddress, Table rolesTable)
         {

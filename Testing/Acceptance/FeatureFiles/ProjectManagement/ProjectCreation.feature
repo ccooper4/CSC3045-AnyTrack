@@ -1,9 +1,7 @@
 ﻿Feature: Project Creation
-As a logged in user
-
-I can create a new project
-
-So that I can be the Project Manager
+	As a logged in user
+	I can create a new project
+	So that I can be the Project Manager
 
 Scenario: Happy path project creation
 

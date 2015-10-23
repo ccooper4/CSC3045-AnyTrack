@@ -25,7 +25,7 @@ namespace Acceptance.FeatureFiles.AccountMangement
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "Account Registration.feature"
+#line 1 "AccountRegistration.feature"
 #line hidden
         
         [NUnit.Framework.TestFixtureSetUpAttribute()]

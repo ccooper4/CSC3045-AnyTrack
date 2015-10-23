@@ -99,20 +99,25 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FeatureFiles\AccountMangement\Account Login.feature.cs">
+    <Compile Include="FeatureFiles\AccountMangement\AccountLogin.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Account Login.feature</DependentUpon>
+      <DependentUpon>AccountLogin.feature</DependentUpon>
     </Compile>
-    <Compile Include="FeatureFiles\AccountMangement\Account Registration.feature.cs">
+    <Compile Include="FeatureFiles\AccountMangement\AccountRegistration.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Account Registration.feature</DependentUpon>
+      <DependentUpon>AccountRegistration.feature</DependentUpon>
     </Compile>
     <Compile Include="FeatureFiles\ProjectManagement\ProjectCreation.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ProjectCreation.feature</DependentUpon>
+    </Compile>
+    <Compile Include="FeatureFiles\ProjectManagement\ProjectPoductOwnerAssignment.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjectPoductOwnerAssignment.feature</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpecFlowNUnitExtension.cs" />
@@ -122,17 +127,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="FeatureFiles\AccountMangement\Account Login.feature">
+    <None Include="FeatureFiles\AccountMangement\AccountLogin.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>Account Login.feature.cs</LastGenOutput>
+      <LastGenOutput>AccountLogin.cs</LastGenOutput>
     </None>
-    <None Include="FeatureFiles\AccountMangement\Account Registration.feature">
+    <None Include="FeatureFiles\AccountMangement\AccountRegistration.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>Account Registration.feature.cs</LastGenOutput>
+      <LastGenOutput>AccountRegistration.feature.cs</LastGenOutput>
     </None>
     <None Include="FeatureFiles\ProjectManagement\ProjectCreation.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ProjectCreation.feature.cs</LastGenOutput>
+    </None>
+    <None Include="FeatureFiles\ProjectManagement\ProjectPoductOwnerAssignment.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ProjectPoductOwnerAssignment.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

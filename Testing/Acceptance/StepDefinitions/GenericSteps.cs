@@ -54,6 +54,16 @@ namespace Acceptance.StepDefinitions
         }
 
         /// <summary>
+        /// Clicks a given option from the popup menu
+        /// </summary>
+        /// <param name="optionName">Name of option on popup menu</param>
+        [When(@"I click '(.*)' from the pop­up menu")]
+        public void WhenIClickFromThePopUpMenu(string optionName)
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        /// <summary>
         /// Enters the given information into the fields specified
         /// </summary>
         /// <param name="table">Table of data to be entered</param>
@@ -63,6 +73,26 @@ namespace Acceptance.StepDefinitions
             ScenarioContext.Current.Pending();
         }
 
+        /// <summary>
+        /// Enters the given text into the given search box element
+        /// </summary>
+        /// <param name="searchMessage">what to be searched for</param>
+        /// <param name="searchBoxName">search box to enter the search request into</param>
+        [When(@"I enter '(.*)' into the '(.*)' search box")]
+        public void WhenIEnterIntoTheSearchBox(string searchMessage, string searchBoxName)
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        /// <summary>
+        /// Add a user of given name from a search result
+        /// </summary>
+        /// <param name="name">users name from result</param>
+        [When(@"I add '(.*)' from the results")]
+        public void WhenIAddFromTheResults(string name)
+        {
+            ScenarioContext.Current.Pending();
+        }      
 
         #endregion When Steps
 
@@ -94,6 +124,36 @@ namespace Acceptance.StepDefinitions
         /// <param name="message"></param>
         [Then(@"an error message '(.*)' is displayed")]
         public void ThenAnErrorMessageIsDisplayed(string message)
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        /// <summary>
+        /// Checks a given message is displayed on the screen
+        /// </summary>
+        /// <param name="message"></param>
+        [Then(@"a '(.*)' message is displayed")]
+        public void ThenAMessageIsDisplayed(string message)
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+
+        /// <summary>
+        /// Checks that the given search results is displayed
+        /// </summary>
+        /// <param name="searchResult">Table of expected search results</param>
+        [Then(@"the following result is displayed:")]
+        public void ThenTheFollowingResultIsDisplayed(Table searchResult)
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        /// <summary>
+        /// Checks that no results are returned from last search
+        /// </summary>
+        [Then(@"no results are found")]
+        public void ThenNoResultsAreFound()
         {
             ScenarioContext.Current.Pending();
         }
