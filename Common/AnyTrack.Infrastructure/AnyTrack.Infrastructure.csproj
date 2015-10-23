@@ -55,6 +55,9 @@
     <Reference Include="Prism">
       <HintPath>..\..\packages\Prism.Core.6.0.1\lib\net45\Prism.dll</HintPath>
     </Reference>
+    <Reference Include="Prism.Unity.Wpf">
+      <HintPath>..\..\packages\Prism.Unity.6.0.1\lib\net45\Prism.Unity.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Prism.Wpf">
       <HintPath>..\..\packages\Prism.Wpf.6.0.1\lib\net45\Prism.Wpf.dll</HintPath>
     </Reference>
@@ -71,6 +74,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="CodeAnalysisRules.ruleset" />
     <None Include="packages.config" />
   </ItemGroup>
