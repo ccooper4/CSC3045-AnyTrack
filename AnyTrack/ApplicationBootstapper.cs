@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows;
+using AnyTrack.Accounting;
+using AnyTrack.Client.Views;
+using Microsoft.Practices.Unity;
+using Prism.Modularity;
 using Prism.Mvvm;
 using Prism.Unity;
 
@@ -39,6 +43,9 @@ namespace AnyTrack.Client
         protected override void ConfigureModuleCatalog()
         {
             base.ConfigureModuleCatalog();
+
+            var moduleCatalog = (ModuleCatalog)this.ModuleCatalog;
+            moduleCatalog.AddModule(typeof(AccountingModule));
         }
 
         /// <summary>

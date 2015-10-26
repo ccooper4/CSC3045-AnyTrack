@@ -20,5 +20,10 @@ namespace AnyTrack.Infrastructure
         /// The side region in the UI
         /// </summary>
         public const string SideRegion = "SideRegion";
+
+        /// <summary>
+        /// The main container of the App.
+        /// </summary>
+        public const string AppContainer = "AppContainer";
     }
 }

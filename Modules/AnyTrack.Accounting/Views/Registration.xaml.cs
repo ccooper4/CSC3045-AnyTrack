@@ -10,20 +10,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MahApps.Metro.Controls;
 
-namespace AnyTrack.Client
+namespace AnyTrack.Accounting.Views
 {
     /// <summary>
-    /// Interaction logic for Shell.xaml
+    /// Interaction logic for Registration.xaml
     /// </summary>
-    public partial class Shell : MetroWindow
+    public partial class Registration : UserControl
     {
         /// <summary>
-        /// Constructs the application's shell.
+        /// Creates a new instance of the registration view.
         /// </summary>
-        public Shell()
+        public Registration()
         {
             InitializeComponent();
         }
