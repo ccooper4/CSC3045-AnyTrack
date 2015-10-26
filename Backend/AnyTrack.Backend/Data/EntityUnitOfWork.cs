@@ -22,13 +22,30 @@ namespace AnyTrack.Backend.Data
         public EntityUnitOfWork() : base("AnyTrackBackend")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<EntityUnitOfWork, Configuration>());
+
+            UserEntitySet = base.Set<User>();
+            UserRepository = new EntityRepository<User>(UserEntitySet);
         }
 
-        #endregion 
+        #endregion
 
         #region Properties
 
+        /// <summary>
+        /// Gets the user repository controlled by this unit of work.
+        /// </summary>
+        public IRepository<User> UserRepository { get; private set; }
+
         #endregion
+
+        #region Fields
+
+        /// <summary>
+        /// Gets or sets the User's Entity Set, as provided by Entity Framework.
+        /// </summary>
+        private DbSet<User> UserEntitySet { get; set; }
+
+        #endregion 
 
         #region Methods
 
