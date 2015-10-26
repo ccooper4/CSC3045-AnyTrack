@@ -156,6 +156,12 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Modules\AnyTrack.Accounting\AnyTrack.Accounting.csproj">
+      <Project>{9f38c80a-2e8c-486f-8054-e235886e1a17}</Project>
+      <Name>AnyTrack.Accounting</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
