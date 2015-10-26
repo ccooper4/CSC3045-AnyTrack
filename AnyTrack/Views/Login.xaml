@@ -11,7 +11,7 @@
             <ColumnDefinition Width="87*"/>
         </Grid.ColumnDefinitions>
         <Label x:Name="EmailLabel" Content="Email Address&#xD;&#xA;" HorizontalAlignment="Left" Margin="40,35,0,0" VerticalAlignment="Top" Height="27" Width="84" Grid.ColumnSpan="2"/>
-        <Label x:Name="PasswordLabel" Content="Password&#xA;" HorizontalAlignment="Left" Margin="40,63,0,0" VerticalAlignment="Top" Height="27" Width="60" Grid.ColumnSpan="2"Grid.Column="0" />
+        <Label x:Name="PasswordLabel" Content="Password&#xA;" HorizontalAlignment="Left" Margin="40,63,0,0" VerticalAlignment="Top" Height="27" Width="60" Grid.ColumnSpan="2" Grid.Column="0" />
         <TextBox x:Name="EmailTextBox" HorizontalAlignment="Left" Height="23" Margin="85,35,0,0" TextWrapping="Wrap" Text="{}" VerticalAlignment="Top" Width="202" Grid.Column="1"/>
         <TextBox x:Name="PasswordTextBox" HorizontalAlignment="Left" Height="23" Margin="85,67,0,0" TextWrapping="Wrap" Text="{}" VerticalAlignment="Top" Width="202" Grid.Column="1"/>
         <Button x:Name="LoginButton" Content="Login" HorizontalAlignment="Left" Margin="134,123,0,0" VerticalAlignment="Top" Width="75" Height="20" Grid.Column="1"/>
