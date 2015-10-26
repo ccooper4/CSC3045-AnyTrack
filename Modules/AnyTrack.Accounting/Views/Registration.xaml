@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="AnyTrack.Accounting.Views.Registration"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AnyTrack.Accounting.Views"
+             xmlns:prism="http://www.codeplex.com/prism"
+             mc:Ignorable="d" 
+             d:DesignHeight="350" d:DesignWidth="600">
+
+    <Grid Background="LightGray">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.75*" />
+            <ColumnDefinition Width="5*" MaxWidth="600px"/>
+            <ColumnDefinition Width="1.75*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+
+        <GroupBox Grid.Column="1" Grid.Row="0" Header="Registration" HorizontalAlignment="Stretch" Margin="0, 30px, 0, 10px" >
+            <Grid Background="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+       
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Column="0" Grid.Row="0" Name="EmailLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Email Address*:</Label>
+                <TextBox Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Text="{Binding Email}" />
+
+                <Label Grid.Column="0" Grid.Row="1" Name="FirstLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >First Name*:</Label>
+                <TextBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Text="{Binding FirstName}" />
+
+                <Label Grid.Column="0" Grid.Row="2" Name="LastLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Last Name*:</Label>
+                <TextBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Text="{Binding LastName}" />
+
+                <Label Grid.Column="0" Grid.Row="3" Name="PasswordLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Password*:</Label>
+                <TextBox Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Text="{Binding Password}" />
+
+                <Label Grid.Column="0" Grid.Row="4" Name="ConfirmPasswordLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Confirm Password:</Label>
+                <TextBox Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" Text="{Binding ConfirmPassword}" />
+
+                <Label Grid.Column="0" Grid.Row="5" Name="SkillSetLabel" VerticalAlignment="Top" HorizontalAlignment="Right" Padding="10px" >Skill Set:</Label>
+                <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Row="5" Grid.Column="1">
+                    <DockPanel VerticalAlignment="Center">
+                        <Button Content="Add Skill" DockPanel.Dock="Right" Command="{Binding AddCategoryCommand}" Height="4"/>
+                        <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Text="{Binding SkillSet}"/>
+                    </DockPanel>
+
+                    <ListView ItemsSource="{Binding Skills}">
+                        <ListView.Resources>
+                            <Style TargetType="GridViewColumnHeader">
+                                <Setter Property="Visibility" Value="Hidden" />
+                            </Style>
+                        </ListView.Resources>
+                        <ListView.View >
+                            <GridView>
+                                <GridViewColumn Header="Skills" DisplayMemberBinding="{Binding Path=Name}" Width="Auto"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
+                
+            </Grid>
+        </GroupBox>
+        <WrapPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Margin="10px, 0, 0, 0">Cancel</Button>
+            <Button Margin="10px, 0, 0, 0" Command="{Binding RegisterUserCommand}" >Register</Button>
+        </WrapPanel>
+    </Grid>
+</UserControl>
