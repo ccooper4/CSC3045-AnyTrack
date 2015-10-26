@@ -16,5 +16,8 @@
         <TextBox x:Name="PasswordTextBox" HorizontalAlignment="Left" Height="23" Margin="85,67,0,0" TextWrapping="Wrap" Text="{}" VerticalAlignment="Top" Width="202" Grid.Column="1"/>
         <Button x:Name="LoginButton" Content="Login" HorizontalAlignment="Left" Margin="134,123,0,0" VerticalAlignment="Top" Width="75" Height="20" Grid.Column="1"/>
         <Label x:Name="ForgotPassLabel" Content="Forgot Password?&#xD;&#xA;" HorizontalAlignment="Left" Margin="184,93,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <Label x:Name="SignUpLabel" Content="Sign Up&#xD;&#xA;" HorizontalAlignment="Left" Margin="261,140,0,-13" VerticalAlignment="Top" Grid.Column="1"/>
+        <Label x:Name="OfflineLabel" Content="Offline Mode&#xD;&#xA;" HorizontalAlignment="Left" Margin="40,140,0,-13" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+
     </Grid>
 </Window>
