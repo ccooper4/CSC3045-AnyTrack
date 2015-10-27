@@ -30,7 +30,7 @@ namespace Unit.Modules.AnyTrack.Accounting.Views
         {
             regionManager = Substitute.For<IRegionManager>();
             gateway = Substitute.For<IAccountServiceGateway>();
-            loginViewModel = new LoginViewModel(regionManager);
+            loginViewModel = new LoginViewModel(regionManager, gateway);
         }
     }
 

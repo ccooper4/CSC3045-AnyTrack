@@ -25,6 +25,11 @@ namespace AnyTrack.Accounting.Views
         private readonly IRegionManager regionManager;
 
         /// <summary>
+        /// The account service gateway
+        /// </summary>
+        private readonly IAccountServiceGateway serviceGateway;
+
+        /// <summary>
         /// The specified email address.
         /// </summary>
         private string email;        
@@ -37,17 +42,24 @@ namespace AnyTrack.Accounting.Views
         #endregion
 
         /// <summary>
-        /// RegistrationViewModel constructor.
+        /// LoginViewModel constructor
         /// </summary>
         /// <param name="regionManager">The region manager.</param>
-        public LoginViewModel(IRegionManager regionManager)
+        /// <param name="gateway">The account service gateway.</param>
+        public LoginViewModel(IRegionManager regionManager, IAccountServiceGateway gateway)
         {
             if (regionManager == null)
             {
                 throw new ArgumentNullException("regionManager");
             }
+            
+            if (gateway == null)
+            {
+                throw new ArgumentNullException("gateway");
+            }
 
             this.regionManager = regionManager;
+            this.serviceGateway = gateway;
 
             LoginUserCommand = new DelegateCommand(this.LoginUser, this.CanLogin);
         }
