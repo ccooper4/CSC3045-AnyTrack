@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="600">
 
-    <Grid Background="LightGray" Margin="0,0,0,-58">
+    <Grid Background="LightGray" Margin="0,0,0,-135">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.75*" />
             <ColumnDefinition Width="5*" MaxWidth="600px"/>
@@ -57,9 +57,9 @@
                 <TextBox Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" Text="{Binding ConfirmPassword}" />
 
                 <Label Grid.Column="0" Grid.Row="5" Name="RolesLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Roles:</Label>
-                <CheckBox Content="Product Owner" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="{Binding ProductOwner}"/>
-                <CheckBox Content="Scrum Master" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="{Binding ScrumMaster}"/>
-                <CheckBox Content="Developer" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="{Binding Developer}"/>
+                <CheckBox Name="ProductOwnerCheckbox" Content="Product Owner" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10px" IsChecked="{Binding ProductOwner}"/>
+                <CheckBox Name="ScrumMasterCheckbox" Content="Scrum Master" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left"  VerticalAlignment="Center" Padding="10px" IsChecked="{Binding ScrumMaster}"/>
+                <CheckBox Name="DeveloperCheckbox" Content="Developer" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left"  VerticalAlignment="Center" Padding="10px" IsChecked="{Binding Developer}"/>
                 
                 <Label Grid.Column="0" Grid.Row="8" Name="SkillSetLabel" VerticalAlignment="Top" HorizontalAlignment="Right" Padding="10px" >Skill Set:</Label>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Row="9" Grid.Column="1">
