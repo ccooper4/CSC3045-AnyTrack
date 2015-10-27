@@ -62,6 +62,21 @@ namespace AnyTrack.Accounting.ServiceGateways
             client.CreateAccount(newUser);
         }
 
+        /// <summary>
+        /// Logins in a user with their provided details
+        /// </summary>
+        /// <param name="login">The login details.</param>
+        public void LoginAccount(UserCredential login)
+        {
+            var user = new UserCredential
+            {
+                EmailAddress = login.EmailAddress,
+                Password = login.Password
+            };
+
+            client.LogIn(user);
+        }
+
         #endregion 
     }
 }

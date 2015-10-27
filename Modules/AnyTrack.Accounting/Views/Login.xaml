@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AnyTrack.Accounting.Views"
              xmlns:prism="http://www.codeplex.com/prism"
+             prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="600">
 
@@ -19,7 +20,6 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
 
         <GroupBox Grid.Column="1" Grid.Row="0" Header="Login" HorizontalAlignment="Stretch" Margin="0, 30px, 0, 10px" >
             <Grid Background="White" Margin="0,0,0,-5">
@@ -38,10 +38,10 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Column="0" Grid.Row="0" Name="EmailLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Email Address:</Label>
-                <TextBox Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"/>
+                <TextBox Name="EmailTextbox" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Text="{Binding Email}"/>
 
                 <Label Grid.Column="0" Grid.Row="1" Name="PasswordLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Password:</Label>
-                <TextBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"/>
+                <TextBox Name="PasswordTextbox" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Text="{Binding Password}"/>
 
                 <Label Grid.Column="1" Grid.Row="3" Name="ForgotPasswordLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Forgot Password?</Label>
 
@@ -52,11 +52,11 @@
             </Grid>
         </GroupBox>
         <WrapPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" Width="97" Margin="10,0,0,0">
-            <Label x:Name="OfflineLabel" VerticalAlignment="Center" HorizontalAlignment="Left" Padding="10px" Content="Offline Mode" />
+            <Button x:Name="OfflineButton" VerticalAlignment="Center" HorizontalAlignment="Left" Padding="10px" Content="Offline Mode" BorderThickness="0" Background="LightGray" Command="{Binding OfflineModeCommand}" />
         </WrapPanel>
 
         <WrapPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Width="91" Grid.Row="1">
-            <Label x:Name="RegistrationLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" Content="Sign Up" Width="70" />
+            <Button x:Name="RegistrationButton" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" Content="Sign Up" Width="70" BorderThickness="0" Background="LightGray" Command="{Binding SignUpCommand}"/>
         </WrapPanel>
     </Grid>
 </UserControl>

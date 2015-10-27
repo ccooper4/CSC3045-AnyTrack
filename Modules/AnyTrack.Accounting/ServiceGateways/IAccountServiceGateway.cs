@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AnyTrack.Accounting.BackendAccountService;
 using AnyTrack.Accounting.ServiceGateways.Models;
 
 namespace AnyTrack.Accounting.ServiceGateways
@@ -17,5 +18,11 @@ namespace AnyTrack.Accounting.ServiceGateways
         /// </summary>
         /// <param name="registration">The registration details.</param>
         void RegisterAccount(NewUserRegistration registration);
+
+        /// <summary>
+        /// Logins in a user with their provided details
+        /// </summary>
+        /// <param name="login">The login details.</param>
+        void LoginAccount(UserCredential login);
     }
 }

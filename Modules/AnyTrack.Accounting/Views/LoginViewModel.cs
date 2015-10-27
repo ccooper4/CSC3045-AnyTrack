@@ -4,7 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AnyTrack.Accounting.BackendAccountService;
 using AnyTrack.Accounting.ServiceGateways;
+using AnyTrack.Infrastructure;
 using Microsoft.Practices.Unity;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -13,7 +15,7 @@ using Prism.Regions;
 namespace AnyTrack.Accounting.Views
 {
     /// <summary>
-    /// The view model for the registration page. 
+    /// The view model for the login page. 
     /// </summary>
     public class LoginViewModel : BindableBase
     {
@@ -62,8 +64,8 @@ namespace AnyTrack.Accounting.Views
             this.serviceGateway = gateway;
 
             LoginUserCommand = new DelegateCommand(this.LoginUser, this.CanLogin);
+            SignUpCommand = new DelegateCommand(this.SignUp, this.CanSignUp);
         }
-
         #region Properties
 
         /// <summary>
@@ -99,28 +101,57 @@ namespace AnyTrack.Accounting.Views
         }
             
         /// <summary>
-        /// Gets the command used to register a user. 
+        /// Gets the command used to login a user. 
         /// </summary>
         public DelegateCommand LoginUserCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command used to login a user. 
+        /// </summary>
+        public DelegateCommand SignUpCommand { get; private set; }
         #endregion
 
         #region Methods
 
         /// <summary>
-        /// Detects whether the registration can take place.
+        /// Detects whether the login can take place.
         /// </summary>
-        /// <returns>Proceed with registration or not.</returns>
+        /// <returns>Proceed with login or not.</returns>
         private bool CanLogin()
         {
             return true;
         }
 
         /// <summary>
-        /// Perform registration.
+        /// Detects whether the SignUp can take place.
+        /// </summary>
+        /// <returns>Proceed with SignUp or not.</returns>
+        private bool CanSignUp()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Perform login.
         /// </summary>
         private void LoginUser()
         {
+            var user = new UserCredential
+            {
+                EmailAddress = email,
+                Password = password
+            };
+
+            serviceGateway.LoginAccount(user);
             regionManager.RequestNavigate(Infrastructure.RegionNames.MainRegion, "Login");
+        }
+
+        /// <summary>
+        /// Navigate to SignUp
+        /// </summary>
+        private void SignUp()
+        {
+            regionManager.RequestNavigate(RegionNames.AppContainer, "Registration");
         }
 
         #endregion
