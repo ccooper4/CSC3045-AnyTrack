@@ -30,5 +30,20 @@ namespace AnyTrack.Backend.Service.Model
         /// Gets or sets the last name.
         /// </summary>
         public string LastName { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the product owner flag has been set.
+        /// </summary>
+        public bool ProductOwner { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the scrum master flag has been set.
+        /// </summary>
+        public bool ScrumMaster { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the developer flag has been set.
+        /// </summary>
+        public bool Developer { get; set; }
     }
 }

@@ -32,17 +32,17 @@ namespace AnyTrack.Backend.Data.Model
         public virtual string LastName { get; set; }
 
         /// <summary>
-        /// Gets or sets the Scrum Master Flag.
+        /// Gets or sets a value indicating whether the scrum mater flag has been set.
         /// </summary>
         public virtual bool ScrumMaster { get; set; }
 
         /// <summary>
-        /// Gets or sets the Product Owner Flag.
+        /// Gets or sets a value indicating whether the product owner flag has been set.
         /// </summary>
         public virtual bool ProductOwner { get; set; }
 
         /// <summary>
-        /// Gets or sets the Developer Flag.
+        /// Gets or sets a value indicating whether the developer flag has been set.
         /// </summary>
         public virtual bool Developer { get; set; }
     }
