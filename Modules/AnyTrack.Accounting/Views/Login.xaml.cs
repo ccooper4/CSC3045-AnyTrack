@@ -10,17 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AnyTrack.Client.Views
+namespace AnyTrack.Accounting.Views
 {
     /// <summary>
     /// Interaction logic for Login.xaml
     /// </summary>
-    public partial class Login : Window
+    public partial class Login : UserControl
     {
         /// <summary>
-        /// Creates a new instance of the Login view.
+        /// Creates a new instance of the login view.
         /// </summary>
         public Login()
         {
