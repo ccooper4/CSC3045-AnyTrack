@@ -184,10 +184,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Backend\AnyTrack.Backend\AnyTrack.Backend.csproj">
-      <Project>{8e06f61a-3fd1-419e-a45f-66babb282d60}</Project>
-      <Name>AnyTrack.Backend</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Common\AnyTrack.Infrastructure\AnyTrack.Infrastructure.csproj">
       <Project>{a5a20403-c6e3-4475-88aa-762bd691f812}</Project>
       <Name>AnyTrack.Infrastructure</Name>
@@ -197,7 +193,6 @@
       <Name>AnyTrack.Accounting</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets')" />
   <Import Project="..\packages\StyleCop.Error.MSBuild.1.0.0\build\StyleCop.Error.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.Error.MSBuild.1.0.0\build\StyleCop.Error.MSBuild.Targets')" />
