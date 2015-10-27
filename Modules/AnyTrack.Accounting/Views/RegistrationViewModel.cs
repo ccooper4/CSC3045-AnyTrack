@@ -68,14 +68,18 @@ namespace AnyTrack.Accounting.Views
         private bool developer;
 
         /// <summary>
+        /// The currently entered skill.
+        /// </summary>
+        private string currentSkill;
+
+        /// <summary>
         /// The specified user skills.
         /// </summary>
-        private ObservableCollection<UserSkills> skills;
+        private ObservableCollection<string> skills;
 
         #endregion
 
         #region Constructor 
-
         /// <summary>
         /// RegistrationViewModel constructor.
         /// </summary>
@@ -97,6 +101,7 @@ namespace AnyTrack.Accounting.Views
             this.serviceGateway = gateway;
 
             RegisterUserCommand = new DelegateCommand(this.RegisterUser, this.CanRegister);
+            AddSkillCommand = new DelegateCommand(this.AddSkill, this.CanAddSkill);
         }
 
         #endregion
@@ -239,9 +244,25 @@ namespace AnyTrack.Accounting.Views
         }
 
         /// <summary>
+        /// Gets or sets CurrentSkill property.
+        /// </summary>
+        public string CurrentSkill
+        {
+            get
+            {
+                return currentSkill;
+            }
+
+            set
+            {
+                SetProperty(ref currentSkill, value);
+            }
+        }
+
+        /// <summary>
         /// Gets the Skills property.
         /// </summary>
-        public ObservableCollection<UserSkills> Skills
+        public ObservableCollection<string> Skills
         {
             get
             {
@@ -253,6 +274,11 @@ namespace AnyTrack.Accounting.Views
         /// Gets the command used to register a user. 
         /// </summary>
         public DelegateCommand RegisterUserCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command used to register add a Skill.
+        /// </summary>
+        public DelegateCommand AddSkillCommand { get; private set; }
         #endregion
 
         #region Methods 
@@ -276,12 +302,33 @@ namespace AnyTrack.Accounting.Views
                 EmailAddress = email,
                 FirstName = firstName,
                 LastName = lastName,
-                Password = password
+                Password = password,
+                ProductOwner = productOwner,
+                ScrumMaster = scrumMaster,
+                Developer = developer
             };
 
             serviceGateway.RegisterAccount(newUser);
 
             regionManager.RequestNavigate(Infrastructure.RegionNames.AppContainer, "Login");
+        }
+
+        /// <summary>
+        /// Detects whether the entered skill can be added.
+        /// </summary>
+        /// <returns>Proceed with adding the skill or not.</returns>
+        private bool CanAddSkill()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Add a new skill.
+        /// </summary>
+        private void AddSkill()
+        {
+            Skills.Add(CurrentSkill);
+            CurrentSkill = string.Empty;
         }
 
         #endregion 

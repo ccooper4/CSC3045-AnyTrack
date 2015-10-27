@@ -30,5 +30,20 @@ namespace AnyTrack.Accounting.ServiceGateways.Models
         /// Gets or sets the last name.
         /// </summary>
         public string LastName { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether user want to be a Product Owner.
+        /// </summary>
+        public bool ProductOwner { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether user want to be a Scrum Master.
+        /// </summary>
+        public bool ScrumMaster { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether user want to be a Developer.
+        /// </summary>
+        public bool Developer { get; set; }
     }
 }

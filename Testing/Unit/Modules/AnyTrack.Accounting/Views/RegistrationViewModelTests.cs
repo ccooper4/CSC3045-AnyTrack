@@ -82,6 +82,9 @@ namespace Unit.Modules.AnyTrack.Accounting.Views.RegistrationViewModelTests
             registrationViewModel.Password = "Password";
             registrationViewModel.FirstName = "Test";
             registrationViewModel.LastName = "Test";
+            registrationViewModel.ProductOwner = false;
+            registrationViewModel.ScrumMaster = false;
+            registrationViewModel.Developer = false;
 
             registrationViewModel.Call("RegisterUser");
 
@@ -90,6 +93,9 @@ namespace Unit.Modules.AnyTrack.Accounting.Views.RegistrationViewModelTests
             registration.Password.Should().Be(registrationViewModel.Password);
             registration.LastName.Should().Be(registrationViewModel.LastName);
             registration.FirstName.Should().Be(registrationViewModel.FirstName);
+            registration.ProductOwner.Should().Be(registrationViewModel.ProductOwner);
+            registration.ScrumMaster.Should().Be(registrationViewModel.ScrumMaster);
+            registration.Developer.Should().Be(registrationViewModel.Developer);
             gateway.Received().RegisterAccount(registration);
 
             regionManager.Received().RequestNavigate(RegionNames.AppContainer, "Login");

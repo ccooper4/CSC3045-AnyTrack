@@ -58,7 +58,10 @@ namespace Unit.Modules.AnyTrack.Accounting.ServiceGateways.AccountServiceGateway
                 EmailAddress = "test@agile.local",
                 FirstName = "Test",
                 LastName = "Test",
-                Password = "Test"
+                Password = "Test",
+                ProductOwner = false,
+                ScrumMaster = false,
+                Developer = false
             };
 
             gateway.RegisterAccount(registration);
@@ -68,6 +71,9 @@ namespace Unit.Modules.AnyTrack.Accounting.ServiceGateways.AccountServiceGateway
             sentModel.FirstName.Should().Be("Test");
             sentModel.LastName.Should().Be("Test");
             sentModel.Password.Should().Be("Test");
+            sentModel.ProductOwner.Should().Be(registration.ProductOwner);
+            sentModel.ScrumMaster.Should().Be(registration.ScrumMaster);
+            sentModel.Developer.Should().Be(registration.Developer);
 
         }
 
