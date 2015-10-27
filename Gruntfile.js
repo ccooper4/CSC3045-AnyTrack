@@ -6,6 +6,7 @@ module.exports = function(grunt) {
                 src: ['AnyTrack.sln'],
                 options: {
                     projectConfiguration: 'Scripted',
+					targets: ['Clean', 'Rebuild'],
                     version: 14.0,
                     maxCpuCount: 4,
                     buildParameters: {
@@ -55,6 +56,10 @@ module.exports = function(grunt) {
             killIisExpress: {
             	cmd: "taskkill /im iisexpress.exe",
             	exitCodes: [0, 128]
+            },
+            nugetRestore: {
+            	cmd: ".nuget\\NuGet.exe restore AnyTrack.sln",
+            	exitCodes: [0]
             }
         }
     });
@@ -72,8 +77,9 @@ module.exports = function(grunt) {
     });
 
     //Friendly Task Names
-
-    grunt.registerTask('build', ['msbuild:dev']);
+	
+	grunt.registerTask('nuget-restore', ['exec:nugetRestore']);
+    grunt.registerTask('build', ['nuget-restore', 'msbuild:dev']);
     grunt.registerTask('start', ['stop', 'iisexpress:backend']);
     grunt.registerTask('unit-test', ['nunit:unit']);
     grunt.registerTask('acceptance-test', ['nunit:acceptance']);
