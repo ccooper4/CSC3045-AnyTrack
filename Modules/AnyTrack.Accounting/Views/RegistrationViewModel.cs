@@ -272,7 +272,10 @@ namespace AnyTrack.Accounting.Views
                 EmailAddress = email,
                 FirstName = firstName,
                 LastName = lastName,
-                Password = password
+                Password = password,
+                ProductOwner = productOwner,
+                ScrumMaster = scrumMaster,
+                Developer = developer
             };
 
             serviceGateway.RegisterAccount(newUser);

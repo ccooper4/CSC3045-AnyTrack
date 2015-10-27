@@ -54,6 +54,9 @@ namespace AnyTrack.Accounting.ServiceGateways
                 FirstName = registration.FirstName,
                 LastName = registration.LastName,
                 Password = registration.Password,
+                ProductOwner = registration.ProductOwner,
+                ScrumMaster = registration.ScrumMaster,
+                Developer = registration.Developer,
             };
 
             client.CreateAccount(newUser);
