@@ -10,7 +10,7 @@ Scenario: Select a task
 	When I click 'Projects'
 	Then the 'My Projects' screen is displayed
 	When I click on the project with name 'Scrum Management System'
-	Then the 'Scrum Management System - Product Backlog' is displayed
+	Then the 'Scrum Management System - Product Backlog' screen is displayed
 	When I click 'Start Planning Poker'
 	Then the 'Planning Poker - Lobby' screen is displayed
 	When I click 'Select Stories'
@@ -30,11 +30,11 @@ Scenario: Give an estimate
 	When I click 'Projects'
 	Then the 'My Projects' screen is displayed
 	When I click on the project with name 'Scrum Management System'
-	Then the 'Scrum Management System - Product Backlog' is displayed
+	Then the 'Scrum Management System - Product Backlog' screen is displayed
 	When I click 'Start Planning Poker'
 	Then the 'Scrum Management System' planning poker screen is displayed
 	When the 'Story1' story tab is selected
-	Then the 'Story1 - Account Registration' is displayed
+	Then the 'Story1 - Account Registration' screen is displayed
 	And the following fields are displayed:
 		| Field    | Options |
 		| Estimate | 0       |
@@ -65,7 +65,7 @@ Scenario: Give a final estimate
 	And I click 'Start Planning Poker'
 	Then the 'Scrum Management System' planning poker screen is displayed
 	When the 'Story1' story tab is selected
-	Then the 'Story1 - Account Registration' is displayed
+	Then the 'Story1 - Account Registration' screen is displayed
 	And the following fields are displayed:
         | Field       | Options |
 		| Final Value | 0       |

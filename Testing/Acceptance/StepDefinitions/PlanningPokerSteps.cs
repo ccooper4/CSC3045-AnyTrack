@@ -6,6 +6,9 @@ using TechTalk.SpecFlow;
 
 namespace Acceptance.StepDefinitions
 {
+    /// <summary>
+    /// This class contains steps specific to planning poker features
+    /// </summary>
     [Binding]
     public sealed class PlanningPokerSteps
     {

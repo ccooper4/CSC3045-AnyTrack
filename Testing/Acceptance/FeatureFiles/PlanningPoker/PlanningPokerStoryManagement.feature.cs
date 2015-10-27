@@ -86,7 +86,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 12
  testRunner.When("I click on the project with name \'Scrum Management System\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 13
- testRunner.Then("the \'Scrum Management System - Product Backlog\' is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the \'Scrum Management System - Product Backlog\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 14
  testRunner.When("I click \'Start Planning Poker\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 15
@@ -127,7 +127,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 32
  testRunner.When("I click on the project with name \'Scrum Management System\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 33
- testRunner.Then("the \'Scrum Management System - Product Backlog\' is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the \'Scrum Management System - Product Backlog\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 34
  testRunner.When("I click \'Start Planning Poker\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 35
@@ -135,7 +135,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 36
  testRunner.When("the \'Story1\' story tab is selected", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 37
- testRunner.Then("the \'Story1 - Account Registration\' is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the \'Story1 - Account Registration\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -213,7 +213,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 67
  testRunner.When("the \'Story1\' story tab is selected", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 68
- testRunner.Then("the \'Story1 - Account Registration\' is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the \'Story1 - Account Registration\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",

@@ -91,7 +91,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 14
  testRunner.When("I click on the project with name \'Scrum Management System\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 15
- testRunner.Then("the \'Scrum Management System - Product Backlog\' is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the \'Scrum Management System - Product Backlog\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 16
  testRunner.When("I click \'Start Planning Poker\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 17
@@ -132,7 +132,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 30
  testRunner.When("I click on the project with name \'Scrum Management System\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 31
- testRunner.Then("the \'Scrum Management System - Product Backlog\' is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the \'Scrum Management System - Product Backlog\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 32
  testRunner.When("I click \'Join Planning Poker\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 33

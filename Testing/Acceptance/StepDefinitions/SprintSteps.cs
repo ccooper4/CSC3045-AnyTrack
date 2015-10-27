@@ -6,6 +6,9 @@ using TechTalk.SpecFlow;
 
 namespace Acceptance.StepDefinitions
 {
+    /// <summary>
+    /// This class contains steps specific to sprint features
+    /// </summary>
     [Binding]
     public sealed class SprintSteps
     {
@@ -21,18 +24,7 @@ namespace Acceptance.StepDefinitions
             ScenarioContext.Current.Pending();
         }
 
-        /// <summary>
-        /// Manage the sprints of a given project
-        /// </summary>
-        /// <param name="sprintName">sprint name to be checked</param>
-        /// <param name="projectName">project name to be checked</param>
         #region When Steps
-        [When(@"I click '(.*)' from the pop­up menu of '(.*)' project")]
-        public void WhenIClickFromThePopUpMenuOfProject(string sprintName, string projectName)
-        {
-            ScenarioContext.Current.Pending();
-        }
-
         #endregion When Steps
 
         #region Then Steps

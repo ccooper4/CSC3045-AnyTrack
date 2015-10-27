@@ -75,6 +75,17 @@ namespace Acceptance.StepDefinitions
         }
 
         /// <summary>
+        /// Manage options of a given project
+        /// </summary>
+        /// <param name="optionName">option name to be checked</param>
+        /// <param name="projectName">project name to be checked</param>
+        [When(@"I click '(.*)' from the pop­up menu of '(.*)' project")]
+        public void WhenIClickFromThePopUpMenuOfProject(string optionName, string projectName)
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        /// <summary>
         /// Enters the given text into the given search box element
         /// </summary>
         /// <param name="searchMessage">what to be searched for</param>

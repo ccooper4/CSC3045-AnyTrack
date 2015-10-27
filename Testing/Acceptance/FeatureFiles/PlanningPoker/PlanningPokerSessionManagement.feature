@@ -12,7 +12,7 @@ Scenario: Start a Planning Poker session
 	When I click 'Projects'
 	Then the 'My Projects' screen is displayed
 	When I click on the project with name 'Scrum Management System'
-	Then the 'Scrum Management System - Product Backlog' is displayed
+	Then the 'Scrum Management System - Product Backlog' screen is displayed
 	When I click 'Start Planning Poker'
 	Then the 'Scrum Management System' planning poker screen is displayed
 
@@ -28,7 +28,7 @@ Scenario: Join a Planning Poker session
 	When I click 'Projects'
 	Then the 'My Projects' screen is displayed
 	When I click on the project with name 'Scrum Management System'
-	Then the 'Scrum Management System - Product Backlog' is displayed
+	Then the 'Scrum Management System - Product Backlog' screen is displayed
 	When I click 'Join Planning Poker'
 	Then the 'Scrum Management System' planning poker screen is displayed
 

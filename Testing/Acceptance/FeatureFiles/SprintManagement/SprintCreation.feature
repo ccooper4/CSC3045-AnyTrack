@@ -3,7 +3,7 @@
 	I can create a new sprint
 	So that development can begin
 
-	Scenario:
+	Scenario: Creating a sprint
 	Given I am logged in as 'user@test.com' with the password 'Password'
 	And 'user@test.com' is a 'Scrum Master' of the 'Scrum Management System' Project
 	When I click 'Projects'
