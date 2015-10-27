@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AnyTrack.Accounting.ServiceGateways;
+using AnyTrack.Accounting.ServiceGateways.Models;
 using Microsoft.Practices.Unity;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -23,6 +24,11 @@ namespace AnyTrack.Accounting.Views
         /// The region manager.
         /// </summary>
         private readonly IRegionManager regionManager;
+
+        /// <summary>
+        /// The account service gateway
+        /// </summary>
+        private readonly IAccountServiceGateway serviceGateway;
 
         /// <summary>
         /// The specified email address.
@@ -71,21 +77,32 @@ namespace AnyTrack.Accounting.Views
 
         #endregion
 
+        #region Constructor 
+
         /// <summary>
         /// RegistrationViewModel constructor.
         /// </summary>
         /// <param name="regionManager">The region manager.</param>
-        public RegistrationViewModel(IRegionManager regionManager)
+        /// <param name="gateway">The account service gateway.</param>
+        public RegistrationViewModel(IRegionManager regionManager, IAccountServiceGateway gateway)
         {
             if (regionManager == null)
             {
                 throw new ArgumentNullException("regionManager");
             }
 
+            if (gateway == null)
+            {
+                throw new ArgumentNullException("gateway");
+            }
+
             this.regionManager = regionManager;
+            this.serviceGateway = gateway;
 
             RegisterUserCommand = new DelegateCommand(this.RegisterUser, this.CanRegister);
         }
+
+        #endregion
 
         #region Properties
 
@@ -250,7 +267,17 @@ namespace AnyTrack.Accounting.Views
         /// </summary>
         private void RegisterUser()
         {
-            regionManager.RequestNavigate(Infrastructure.RegionNames.MainRegion, "Login");
+            var newUser = new NewUserRegistration
+            {
+                EmailAddress = email,
+                FirstName = firstName,
+                LastName = lastName,
+                Password = password
+            };
+
+            serviceGateway.RegisterAccount(newUser);
+
+            regionManager.RequestNavigate(Infrastructure.RegionNames.AppContainer, "Login");
         }
 
         #endregion 

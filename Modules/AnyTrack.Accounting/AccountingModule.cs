@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AnyTrack.Accounting.BackendAccountService;
+using AnyTrack.Accounting.ServiceGateways;
 using AnyTrack.Accounting.Views;
 using AnyTrack.Infrastructure;
 using Microsoft.Practices.Unity;
@@ -62,6 +64,13 @@ namespace AnyTrack.Accounting
         /// </summary>
         public void Initialize()
         {
+            // AnyTrack.Accountng.ServiceReferences.BackendAccountService 
+            container.RegisterType<IAccountService, AccountServiceClient>();
+
+            // AnyTrack.Accounting.ServiceGateways
+            container.RegisterType<IAccountServiceGateway, AccountServiceGateway>();
+
+            // AnyTrack.Accounting.Views
             container.RegisterType<object, Registration>("Login");
 
             regionManager.RequestNavigate(RegionNames.AppContainer, "Login");

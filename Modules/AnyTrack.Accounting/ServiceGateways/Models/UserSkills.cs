@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AnyTrack.Accounting.ServiceGateways
+namespace AnyTrack.Accounting.ServiceGateways.Models
 {
     /// <summary>
     /// Classs for recording skills of a user.
