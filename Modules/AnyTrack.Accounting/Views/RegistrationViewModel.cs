@@ -50,6 +50,21 @@ namespace AnyTrack.Accounting.Views
         private string confirmPassword;
 
         /// <summary>
+        /// The specified productOwner flag.
+        /// </summary>
+        private bool productOwner;
+
+        /// <summary>
+        /// The specified scrumMaster flag.
+        /// </summary>
+        private bool scrumMaster;
+
+        /// <summary>
+        /// The specified developer flag.
+        /// </summary>
+        private bool developer;
+
+        /// <summary>
         /// The specified user skills.
         /// </summary>
         private ObservableCollection<UserSkills> skills;
@@ -155,18 +170,61 @@ namespace AnyTrack.Accounting.Views
         }
 
         /// <summary>
-        /// Gets or sets the Skills property.
+        /// Gets or sets a value indicating whether Product Owner flag is set.
+        /// </summary>
+        public bool ProductOwner
+        {
+            get
+            {
+                return productOwner;
+            }
+
+            set
+            {
+                SetProperty(ref productOwner, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether Scrum Master flag is set.
+        /// </summary>
+        public bool ScrumMaster
+        {
+            get
+            {
+                return scrumMaster;
+            }
+
+            set
+            {
+                SetProperty(ref scrumMaster, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether Developer flag is set.
+        /// </summary>
+        public bool Developer
+        {
+            get
+            {
+                return developer;
+            }
+
+            set
+            {
+                SetProperty(ref developer, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets the Skills property.
         /// </summary>
         public ObservableCollection<UserSkills> Skills
         {
             get
             {
                 return skills;
-            }
-
-            set
-            {
-                SetProperty(ref skills, value);
             }
         } 
 

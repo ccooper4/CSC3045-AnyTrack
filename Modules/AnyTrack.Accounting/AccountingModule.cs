@@ -62,9 +62,9 @@ namespace AnyTrack.Accounting
         /// </summary>
         public void Initialize()
         {
-            container.RegisterType<object, Registration>("Registration");
+            container.RegisterType<object, Registration>("Login");
 
-            regionManager.RequestNavigate(RegionNames.AppContainer, "Registration");
+            regionManager.RequestNavigate(RegionNames.AppContainer, "Login");
         }
 
         #endregion 
