@@ -30,5 +30,20 @@ namespace AnyTrack.Backend.Service.Model
         /// Gets or sets the last name.
         /// </summary>
         public string LastName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ProductOwner.
+        /// </summary>
+        public bool ProductOwner { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ScrumMaster.
+        /// </summary>
+        public bool ScrumMaster { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Developer.
+        /// </summary>
+        public bool Developer { get; set; }
     }
 }

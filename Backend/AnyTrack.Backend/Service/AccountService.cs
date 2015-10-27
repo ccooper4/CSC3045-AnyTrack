@@ -73,7 +73,10 @@ namespace AnyTrack.Backend.Service
                 EmailAddress = user.EmailAddress,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Password = Crypto.HashPassword(user.Password)
+                Password = Crypto.HashPassword(user.Password),
+                ProductOwner = user.ProductOwner,
+                ScrumMaster = user.ScrumMaster,
+                Developer = user.Developer
             };
 
             unitOfWork.UserRepository.Insert(dataUser);
