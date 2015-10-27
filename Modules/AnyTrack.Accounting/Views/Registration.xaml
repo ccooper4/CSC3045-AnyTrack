@@ -82,7 +82,7 @@
             </Grid>
         </GroupBox>
         <WrapPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Margin="10px, 0, 0, 0">Cancel</Button>
+            <Button Margin="10px, 0, 0, 0" Command="{Binding CancelRegisterUserCommand}" >Cancel</Button>
             <Button Margin="10px, 0, 0, 0" Command="{Binding RegisterUserCommand}" >Register</Button>
         </WrapPanel>
     </Grid>

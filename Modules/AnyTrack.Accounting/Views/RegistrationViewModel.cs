@@ -102,6 +102,7 @@ namespace AnyTrack.Accounting.Views
 
             RegisterUserCommand = new DelegateCommand(this.RegisterUser, this.CanRegister);
             AddSkillCommand = new DelegateCommand(this.AddSkill, this.CanAddSkill);
+            CancelRegisterUserCommand = new DelegateCommand(this.CancelRegisterUser, this.CanCancel);
         }
 
         #endregion
@@ -276,6 +277,11 @@ namespace AnyTrack.Accounting.Views
         public DelegateCommand RegisterUserCommand { get; private set; }
 
         /// <summary>
+        /// Gets the command used to register a user. 
+        /// </summary>
+        public DelegateCommand CancelRegisterUserCommand { get; private set; }
+
+        /// <summary>
         /// Gets the command used to register add a Skill.
         /// </summary>
         public DelegateCommand AddSkillCommand { get; private set; }
@@ -288,6 +294,15 @@ namespace AnyTrack.Accounting.Views
         /// </summary>
         /// <returns>Proceed with registration or not.</returns>
         private bool CanRegister()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Detects whether the registration can cancel.
+        /// </summary>
+        /// <returns>Cancel registration or not.</returns>
+        private bool CanCancel()
         {
             return true;
         }
@@ -311,6 +326,14 @@ namespace AnyTrack.Accounting.Views
             serviceGateway.RegisterAccount(newUser);
 
             regionManager.RequestNavigate(Infrastructure.RegionNames.AppContainer, "Login");
+        }
+
+        /// <summary>
+        /// Cancel registration.
+        /// </summary>
+        private void CancelRegisterUser()
+        {
+            regionManager.RequestNavigate(RegionNames.AppContainer, "Login");
         }
 
         /// <summary>

@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AnyTrack.Accounting.BackendAccountService;
 using AnyTrack.Accounting.Views;
 using AnyTrack.Backend.Data;
 using AnyTrack.Infrastructure;
@@ -41,6 +42,20 @@ namespace Unit.Modules.AnyTrack.Accounting.Views
     public class LoginViewModelTests : Context
     {
         #region Constructor Tests
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TestNullConstructor()
+        {
+            loginViewModel = new LoginViewModel(null, gateway);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TestNullConstructorForGateway()
+        {
+            loginViewModel = new LoginViewModel(regionManager, null);
+        }
 
         #endregion
 
