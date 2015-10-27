@@ -19,6 +19,9 @@ namespace AnyTrack.Client.Views
     /// </summary>
     public partial class Login : Window
     {
+        /// <summary>
+        /// Creates a new instance of the Login view.
+        /// </summary>
         public Login()
         {
             InitializeComponent();
