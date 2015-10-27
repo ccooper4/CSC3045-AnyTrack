@@ -76,7 +76,7 @@ namespace AnyTrack.Accounting.Views
         /// <summary>
         /// The specified user skills.
         /// </summary>
-        private ObservableCollection<string> skills;
+        private ObservableCollection<string> skills = new ObservableCollection<string>();
 
         /// <summary>
         /// The secret questions to present to the user. 
