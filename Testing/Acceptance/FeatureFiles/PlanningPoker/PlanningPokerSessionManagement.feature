@@ -6,9 +6,7 @@
 Scenario: Start a Planning Poker session
 	Given an account associated with the email address 'user@test.com' exists
 	And I am logged in as 'user@test.com' with the password 'Password'
-	And the 'user@test.com' account has the following preferred roles: 
-		| Roles         |
-		| Product Owner |
+	And 'user@test.com' is a 'Scrum Master' of the 'Scrum Management System' Project
 	And the account 'user@test.com' has been assigned to 'Scrum Management System' project
 	And the 'Scrum Management System' project has a sprint 'Sprint1' which contains a story called 'Story1'
 	When I click 'Projects'
@@ -24,6 +22,8 @@ Scenario: Join a Planning Poker session
 	And the 'developer@test.com' account has the following preferred roles:
          | Roles     |
          | Developer |
+	And 'developer@test.com' is a 'Developer' of the 'Scrum Management System' Project
+	And I have created a project called 'Scrum Management System'
 	And the 'Scrum Management System' project has a sprint 'Sprint1' which contains a story called 'Story1'
 	When I click 'Projects'
 	Then the 'My Projects' screen is displayed

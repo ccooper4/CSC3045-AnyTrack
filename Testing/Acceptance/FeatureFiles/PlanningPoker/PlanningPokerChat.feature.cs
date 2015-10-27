@@ -73,7 +73,7 @@ namespace Acceptance.FeatureFiles.PlanningPoker
 #line 6
 this.ScenarioSetup(scenarioInfo);
 #line 7
- testRunner.Given("there is no account associated with the email address \'user@test.com\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I am logged in as \'user@test.com\' with the password \'Password\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "Roles"});
@@ -81,6 +81,44 @@ this.ScenarioSetup(scenarioInfo);
                         "Scrum Master"});
 #line 8
  testRunner.And("the \'user@test.com\' account has the following preferred roles:", ((string)(null)), table1, "And ");
+#line 11
+ testRunner.And("\'user@test.com\' is a \'Scrum Master\' of the \'Scrum Management System\' Project", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 12
+ testRunner.And("I have created a project called \'Scrum Management System\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 13
+ testRunner.When("I click \'Projects\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 14
+ testRunner.Then("the \'My Projects\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 15
+ testRunner.When("I click on the project with name \'Scrum Management System\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 16
+ testRunner.Then("the \'Scrum Management System - Product Backlog\' is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 17
+ testRunner.When("I click \'Start Planning Poker\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 18
+ testRunner.Then("the \'Scrum Management System\' planning poker screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 19
+ testRunner.When("I enter the following text to the send message field: \'Hello\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 20
+ testRunner.And("I click \'Send\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 21
+ testRunner.Then("the message \'Hello\' is displayed in \'Scrum Management System\' planning poker acti" +
+                    "ve session", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "StoryNumber",
+                        "StoryName",
+                        "Included"});
+            table2.AddRow(new string[] {
+                        "1",
+                        "Story1",
+                        "No"});
+#line 22
+ testRunner.And("the following story information is displayed:", ((string)(null)), table2, "And ");
+#line 25
+ testRunner.When("I check the checkbox for \'Story1\' to include it in the planning poker", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 26
+ testRunner.Then("the \'Planning Poker - Lobby\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

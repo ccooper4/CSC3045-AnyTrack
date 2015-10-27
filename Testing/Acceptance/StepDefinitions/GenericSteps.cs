@@ -47,6 +47,7 @@ namespace Acceptance.StepDefinitions
         /// Clicks the given element
         /// </summary>
         /// <param name="element">element to be clicked</param>
+        [Then(@"I click '(.*)'")]
         [When(@"I click '(.*)'")]
         public void WhenIClick(string element)
         {
@@ -102,6 +103,7 @@ namespace Acceptance.StepDefinitions
         /// Checks the given screen is displayed
         /// </summary>
         /// <param name="screenName">screen name to be checked</param>
+        [Then(@"the '(.*)' screen is displayed")]
         [Then(@"a '(.*)' screen is displayed")]
         public void ThenAScreenIsDisplayed(string screenName)
         {
@@ -158,17 +160,27 @@ namespace Acceptance.StepDefinitions
             ScenarioContext.Current.Pending();
         }
 
+        /// <summary>
+        /// Being unable to click an element due to permissions
+        /// </summary>
+        /// <param name="element">element to be clicked</param>
+        [Then(@"I cannot click '(.*)'")]
+        public void ThenICannotClick(string element)
+        {
+            ScenarioContext.Current.Pending();
+        }
+
 
         #endregion Then Steps
 
-        
 
 
-        
 
-        
 
-        
+
+
+
+
 
     }
 }

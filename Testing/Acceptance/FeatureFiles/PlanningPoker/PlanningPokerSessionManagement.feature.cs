@@ -76,30 +76,25 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.Given("an account associated with the email address \'user@test.com\' exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 8
  testRunner.And("I am logged in as \'user@test.com\' with the password \'Password\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Roles"});
-            table1.AddRow(new string[] {
-                        "Product Owner"});
 #line 9
- testRunner.And("the \'user@test.com\' account has the following preferred roles:", ((string)(null)), table1, "And ");
-#line 12
+ testRunner.And("\'user@test.com\' is a \'Scrum Master\' of the \'Scrum Management System\' Project", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 10
  testRunner.And("the account \'user@test.com\' has been assigned to \'Scrum Management System\' projec" +
                     "t", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 13
+#line 11
  testRunner.And("the \'Scrum Management System\' project has a sprint \'Sprint1\' which contains a sto" +
                     "ry called \'Story1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 14
+#line 12
  testRunner.When("I click \'Projects\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 15
+#line 13
  testRunner.Then("the \'My Projects\' screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 16
+#line 14
  testRunner.When("I click on the project with name \'Scrum Management System\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 17
+#line 15
  testRunner.Then("the \'Scrum Management System - Product Backlog\' is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 18
+#line 16
  testRunner.When("I click \'Start Planning Poker\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 19
+#line 17
  testRunner.Then("the \'Scrum Management System\' planning poker screen is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -110,19 +105,23 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void JoinAPlanningPokerSession()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Join a Planning Poker session", ((string[])(null)));
-#line 21
+#line 19
 this.ScenarioSetup(scenarioInfo);
-#line 22
+#line 20
  testRunner.Given("an account associated with the email address \'developer@test.com\' exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 23
+#line 21
  testRunner.And("I am logged in as \'developer@test.com\' with the password \'Password\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "Roles"});
-            table2.AddRow(new string[] {
+            table1.AddRow(new string[] {
                         "Developer"});
-#line 24
- testRunner.And("the \'developer@test.com\' account has the following preferred roles:", ((string)(null)), table2, "And ");
+#line 22
+ testRunner.And("the \'developer@test.com\' account has the following preferred roles:", ((string)(null)), table1, "And ");
+#line 25
+ testRunner.And("\'developer@test.com\' is a \'Developer\' of the \'Scrum Management System\' Project", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 26
+ testRunner.And("I have created a project called \'Scrum Management System\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 27
  testRunner.And("the \'Scrum Management System\' project has a sprint \'Sprint1\' which contains a sto" +
                     "ry called \'Story1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");

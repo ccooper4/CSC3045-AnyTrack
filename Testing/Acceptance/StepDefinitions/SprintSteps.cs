@@ -21,5 +21,31 @@ namespace Acceptance.StepDefinitions
             ScenarioContext.Current.Pending();
         }
 
+        /// <summary>
+        /// Manage the sprints of a given project
+        /// </summary>
+        /// <param name="sprintName">sprint name to be checked</param>
+        /// <param name="projectName">project name to be checked</param>
+        #region When Steps
+        [When(@"I click '(.*)' from the pop­up menu of '(.*)' project")]
+        public void WhenIClickFromThePopUpMenuOfProject(string sprintName, string projectName)
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        #endregion When Steps
+
+        #region Then Steps
+        /// <summary>
+        /// Adding a sprint to a project
+        /// </summary>
+        /// <param name="sprintName">the name of sprint to be created</param>
+        /// <param name="projectName">the project name to be checked</param>
+        [Then(@"the sprint '(.*)' has been created in the '(.*)' project")]
+        public void ThenTheSprintHasBeenCreatedInTheProject(string sprintName, string projectName)
+        {
+            ScenarioContext.Current.Pending();
+        }
+        #endregion Then Steps
     }
 }

@@ -53,16 +53,6 @@ namespace Acceptance.StepDefinitions
         {
             ScenarioContext.Current.Pending();
         }
-
-        /// <summary>
-        /// Navigation to the My Projects screen
-        /// </summary>
-        /// <param name="screen">the screen to navigate to</param>
-        [Then(@"the '(.*)' screen is displayed")]
-        public void ThenTheScreenIsDisplayed(string screen)
-        {
-            ScenarioContext.Current.Pending();
-        }
         #endregion Then Steps
     }
 }
