@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 using AnyTrack.Accounting.ServiceGateways;
 using AnyTrack.Accounting.ServiceGateways.Models;
-using Microsoft.Practices.Unity;
+using AnyTrack.Infrastructure;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -16,7 +13,7 @@ namespace AnyTrack.Accounting.Views
     /// <summary>
     /// The view model for the registration page. 
     /// </summary>
-    public class RegistrationViewModel : BindableBase
+    public class RegistrationViewModel : ValidatedBindableBase
     {
         #region Fields 
 
@@ -109,6 +106,8 @@ namespace AnyTrack.Accounting.Views
         /// <summary>
         /// Gets or sets Email property.
         /// </summary>
+        [Required]
+        [EmailAddress(ErrorMessage = "The email address is required")]
         public string Email
         {
             get
@@ -125,6 +124,7 @@ namespace AnyTrack.Accounting.Views
         /// <summary>
         /// Gets or sets First name property.
         /// </summary>
+        [Required]
         public string FirstName
         {
             get
@@ -141,6 +141,7 @@ namespace AnyTrack.Accounting.Views
         /// <summary>
         /// Gets or sets Last name property.
         /// </summary>
+        [Required]
         public string LastName
         {
             get
@@ -157,6 +158,7 @@ namespace AnyTrack.Accounting.Views
         /// <summary>
         /// Gets or sets Password property.
         /// </summary>
+        [Required]
         public string Password
         {
             get
@@ -173,6 +175,8 @@ namespace AnyTrack.Accounting.Views
         /// <summary>
         /// Gets or sets Confirm Password property.
         /// </summary>
+        [Required]
+        [Compare("Password")]
         public string ConfirmPassword
         {
             get

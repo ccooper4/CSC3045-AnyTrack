@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AnyTrack.Accounting.Views"
              xmlns:prism="http://www.codeplex.com/prism"
+             prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="600">
 
@@ -42,7 +43,7 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Column="0" Grid.Row="0" Name="EmailLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Email Address*:</Label>
-                <TextBox Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Text="{Binding Email}" />
+                <TextBox Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Text="{Binding Email}"  />
 
                 <Label Grid.Column="0" Grid.Row="1" Name="FirstLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >First Name*:</Label>
                 <TextBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Text="{Binding FirstName}" />
