@@ -64,19 +64,14 @@
                 <Label Grid.Column="0" Grid.Row="8" Name="SkillSetLabel" VerticalAlignment="Top" HorizontalAlignment="Right" Padding="10px" >Skill Set:</Label>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Row="9" Grid.Column="1">
                     <DockPanel VerticalAlignment="Center">
-                        <Button Content="Add Skill" DockPanel.Dock="Right" Command="{Binding AddCategoryCommand}" Height="4"/>
-                        <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Text="{Binding SkillSet}"/>
+                        <Button Content="Add Skill" DockPanel.Dock="Right" Command="{Binding AddSkillCommand}" Height="4"/>
+                        <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Text="{Binding CurrentSkill}"/>
                     </DockPanel>
 
                     <ListView ItemsSource="{Binding Skills}">
-                        <ListView.Resources>
-                            <Style TargetType="GridViewColumnHeader">
-                                <Setter Property="Visibility" Value="Hidden" />
-                            </Style>
-                        </ListView.Resources>
-                        <ListView.View >
-                            <GridView>
-                                <GridViewColumn Header="Skills" DisplayMemberBinding="{Binding Path=Name}" Width="Auto"/>
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Watch List" >
+                                <GridViewColumn Header="Skills" DisplayMemberBinding="{Binding Path=CurrentSkill}" Width="Auto"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
