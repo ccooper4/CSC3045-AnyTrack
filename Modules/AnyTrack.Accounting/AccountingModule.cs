@@ -74,7 +74,7 @@ namespace AnyTrack.Accounting
             container.RegisterType<object, Registration>("Registration");
             container.RegisterType<object, Login>("Login");
 
-            regionManager.RequestNavigate(RegionNames.AppContainer, "Login");
+            regionManager.RequestNavigate(RegionNames.AppContainer, "Registration");
         }
 
         #endregion 

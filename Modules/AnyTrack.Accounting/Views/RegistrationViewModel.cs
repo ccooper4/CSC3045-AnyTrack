@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using AnyTrack.Accounting.ServiceGateways;
@@ -77,6 +78,11 @@ namespace AnyTrack.Accounting.Views
         /// </summary>
         private ObservableCollection<string> skills;
 
+        /// <summary>
+        /// The secret questions to present to the user. 
+        /// </summary>
+        private ObservableCollection<AvailableSecretQuestion> secretQuestions;
+
         #endregion
 
         #region Constructor 
@@ -100,6 +106,7 @@ namespace AnyTrack.Accounting.Views
             this.regionManager = regionManager;
             this.serviceGateway = gateway;
 
+            // SecretQuestions = serviceGateway.SecretQuestions();
             RegisterUserCommand = new DelegateCommand(this.RegisterUser, this.CanRegister);
             AddSkillCommand = new DelegateCommand(this.AddSkill, this.CanAddSkill);
             CancelRegisterUserCommand = new DelegateCommand(this.CancelRegisterUser, this.CanCancel);
@@ -269,7 +276,12 @@ namespace AnyTrack.Accounting.Views
             {
                 return skills;
             }
-        } 
+        }
+
+        /// <summary>
+        /// Gets the SecretQuestions property.
+        /// </summary>
+        public List<AvailableSecretQuestion> SecretQuestions { get; private set; }
 
         /// <summary>
         /// Gets the command used to register a user. 

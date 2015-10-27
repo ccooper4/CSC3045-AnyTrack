@@ -77,6 +77,15 @@ namespace AnyTrack.Accounting.ServiceGateways
             client.LogIn(user);
         }
 
+        /// <summary>
+        /// Returns the supported list of secret questions.
+        /// </summary>
+        /// <returns> the supported list of secret questions. </returns>
+        public List<AvailableSecretQuestion> SecretQuestions()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion 
     }
 }

@@ -24,5 +24,11 @@ namespace AnyTrack.Accounting.ServiceGateways
         /// </summary>
         /// <param name="login">The login details.</param>
         void LoginAccount(UserCredential login);
+
+        /// <summary>
+        /// Returns the supported list of secret questions.
+        /// </summary>
+        /// <returns>the supported list of secret questions.</returns>
+        List<AvailableSecretQuestion> SecretQuestions();
     }
 }

@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="600">
 
-    <Grid Background="LightGray" Margin="0,0,0,-135">
+    <Grid Background="LightGray" Margin="0,0,0,-210">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.75*" />
             <ColumnDefinition Width="5*" MaxWidth="600px"/>
@@ -31,6 +31,9 @@
                 </Grid.ColumnDefinitions>
        
                 <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
@@ -63,13 +66,13 @@
                 <CheckBox Name="DeveloperCheckbox" Content="Developer" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left"  VerticalAlignment="Center" Padding="10px" IsChecked="{Binding Developer}"/>
                 
                 <Label Grid.Column="0" Grid.Row="8" Name="SkillSetLabel" VerticalAlignment="Top" HorizontalAlignment="Right" Padding="10px" >Skill Set:</Label>
-                <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Row="9" Grid.Column="1">
+                <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Row="8" Grid.Column="1">
                     <DockPanel VerticalAlignment="Center">
                         <Button Content="Add Skill" DockPanel.Dock="Right" Command="{Binding AddSkillCommand}" Height="4"/>
                         <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Text="{Binding CurrentSkill}"/>
                     </DockPanel>
 
-                    <ListView ItemsSource="{Binding Skills}">
+                    <ListView ItemsSource="{Binding Skills}" Padding="0,0,0,10px">
                         <ListView.View>
                             <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Watch List" >
                                 <GridViewColumn Header="Skills" DisplayMemberBinding="{Binding Path=CurrentSkill}" Width="Auto"/>
@@ -78,6 +81,11 @@
                     </ListView>
                 </StackPanel>
                 
+                <Label Grid.Column="0" Grid.Row="9" Name="SecretQuestionLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Secret Question:</Label>
+                <ComboBox Grid.Column="1" Grid.Row="9" ItemsSource="{Binding Categories}" DisplayMemberPath="Name" Height="5" VerticalAlignment="Center" SelectedValuePath="Id" SelectedValue="{Binding CurrentlySelectedCategoryId}" />
+
+                <Label Grid.Column="0" Grid.Row="10" Name="SecretAnswerLabel" VerticalAlignment="Top" HorizontalAlignment="Right" Padding="10px" >Secret Answer:</Label>
+                <TextBox Grid.Column="1" Grid.Row="10" VerticalAlignment="Center" Text="{Binding ConfirmPassword}" />
 
             </Grid>
         </GroupBox>
