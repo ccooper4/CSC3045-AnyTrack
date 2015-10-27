@@ -52,17 +52,17 @@ namespace AnyTrack.Backend.Service.Model
         /// <summary>
         /// Gets or Sets Project Manager
         /// </summary>
-        public User ProjectManager { get; set; }
+        public NewUser ProjectManager { get; set; }
 
         /// <summary>
         /// Gets or Sets Product Owner
         /// </summary>
-        public User ProductOwner { get; set; }
+        public NewUser ProductOwner { get; set; }
 
         /// <summary>
         /// Gets or Sets ScrumMasters
         /// </summary>
-        public List<User> ScrumMasters { get; set; }
+        public List<NewUser> ScrumMasters { get; set; }
 
         /*
         /// <summary>

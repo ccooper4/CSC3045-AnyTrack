@@ -49,7 +49,7 @@ namespace AnyTrack.Backend.Service
                     Description = project.Description,
                     Id = project.ProjectId,
                     Name = project.Name,
-                    ProductOwner = new User
+                    ProductOwner = new Data.Model.User
                     {
                         EmailAddress = project.ProductOwner.EmailAddress,
                         Password = project.ProductOwner.Password,
@@ -57,7 +57,7 @@ namespace AnyTrack.Backend.Service
                         LastName = project.ProductOwner.LastName
                         //skillset
                     },
-                    ProjectManager = new User
+                    ProjectManager = new Data.Model.User
                     {
                         EmailAddress = project.ProjectManager.EmailAddress,
                         Password = project.ProjectManager.Password,
@@ -118,15 +118,16 @@ namespace AnyTrack.Backend.Service
                     LastName = project.ProjectManager.LastName,
                 };
 
-                foreach (var scrumMaster in updatedProject.ScrumMasters)
+                updatedProject.ScrumMasters.Clear();
+                foreach (var scrumMaster in project.ScrumMasters)
                 {
-                    updatedProject.ScrumMasters = new Data.Model.User
+                    updatedProject.ScrumMasters.Add(new Data.Model.User
                     {
-                        EmailAddress = updatedProject.ScrumMasters.EmailAddress,
-                        Password = updatedProject.ScrumMasters.Password,
-                        FirstName = updatedProject.ScrumMasters.FirstName,
-                        LastName = updatedProject.ScrumMasters.LastName,
-                    };
+                        EmailAddress = scrumMaster.EmailAddress,
+                        Password = scrumMaster.Password,
+                        FirstName = scrumMaster.FirstName,
+                        LastName = scrumMaster.LastName,
+                    });
                 }
 
                 unitOfWork.Commit();
@@ -171,14 +172,14 @@ namespace AnyTrack.Backend.Service
                 Description = query.Description,
                 ProjectId = query.Id,
                 Name = query.Name,
-                ProductOwner = new User
+                ProductOwner = new NewUser
                 {
                     EmailAddress = query.ProductOwner.EmailAddress,
                     Password = query.ProductOwner.Password,
                     FirstName = query.ProductOwner.FirstName,
                     LastName = query.ProductOwner.LastName
                 },
-                ProjectManager = new User
+                ProjectManager = new NewUser
                 {
                     EmailAddress = query.ProjectManager.EmailAddress,
                     Password = query.ProjectManager.Password,
@@ -192,7 +193,7 @@ namespace AnyTrack.Backend.Service
 
             foreach (var scrumMaster in query.ScrumMasters)
             {
-                project.ScrumMasters.Add(new User
+                project.ScrumMasters.Add(new NewUser
                 {
                     EmailAddress = scrumMaster.EmailAddress,
                     Password = scrumMaster.Password,
@@ -211,13 +212,43 @@ namespace AnyTrack.Backend.Service
         /// <returns>List of all Projects in the database</returns>
         public List<Project> GetProjects()
         {
-            var query = unitOfWork.ProjectRepository.Items.Select(p => new Project{ProjectId = p.Id, Description = p.Description, Name = p.Name, VersionControl = p.VersionControl, StartedOn = p.StartedOn, ProductOwner = p.ProductOwner, ProjectManager = p.ProjectManager}).ToList();
-
-            if (query == null)
+            var query = unitOfWork.ProjectRepository.Items.Select(p => new Project
             {
-                throw new ArgumentException("No projects exist");
-            }
+                ProjectId = p.Id,
+                Description = p.Description,
+                Name = p.Name,
+                VersionControl = p.VersionControl,
+                StartedOn = p.StartedOn,
+                ProductOwner = new NewUser
+                {
+                    EmailAddress = p.ProductOwner.EmailAddress,
+                    Password = p.ProductOwner.Password,
+                    FirstName = p.ProductOwner.FirstName,
+                    LastName = p.ProductOwner.LastName
+                },
+                ProjectManager = new NewUser
+                {
+                    EmailAddress = p.ProjectManager.EmailAddress,
+                    Password = p.ProjectManager.Password,
+                    FirstName = p.ProjectManager.FirstName,
+                    LastName = p.ProjectManager.LastName
+                },
+            }).ToList();
 
+            foreach (var project in query)
+            {
+                var query2 = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Id == project.ProjectId);
+                foreach (var scrumMaster in query2.ScrumMasters)
+                {
+                    project.ScrumMasters.Add(new NewUser
+                    {
+                        EmailAddress = scrumMaster.EmailAddress,
+                        Password = scrumMaster.Password,
+                        FirstName = scrumMaster.FirstName,
+                        LastName = scrumMaster.LastName
+                    });
+                }
+            }
             return query;
         }
     }
