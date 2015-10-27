@@ -13,6 +13,10 @@ namespace AnyTrack.Backend.Data
     public interface IUnitOfWork
     {
         #region Properties 
+        /// <summary>
+        /// Gets the user repository controlled by this unit of work.
+        /// </summary>
+        IRepository<User> UserRepository { get; }
 
         /// <summary>
         /// Gets the Project Repository
