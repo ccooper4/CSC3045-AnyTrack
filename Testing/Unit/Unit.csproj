@@ -153,6 +153,7 @@
     <Compile Include="Backend\AnyTrack.Backend\Service\AccountServiceTests.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Modules\AnyTrack.Accounting\ServiceGateways\AccountServiceGatewayTests.cs" />
+    <Compile Include="Modules\AnyTrack.Accounting\Views\LoginViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Accounting\Views\RegistrationViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
