@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AnyTrack.Backend.Data.Model;
 
 namespace AnyTrack.Backend.Data
 {
@@ -12,6 +13,11 @@ namespace AnyTrack.Backend.Data
     public interface IUnitOfWork
     {
         #region Properties 
+
+        /// <summary>
+        /// Gets the Project Repository
+        /// </summary>
+        IRepository<Project> ProjectRepository { get; }
 
         #endregion 
 

@@ -21,12 +21,26 @@ namespace AnyTrack.Backend.Data
         /// </summary>
         public EntityUnitOfWork() : base("AnyTrackBackend")
         {
+            ProjectDbSetRepository = base.Set<Project>();
+            ProjectRepository = new EntityRepository<Project>(ProjectDbSetRepository);
+
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<EntityUnitOfWork, Configuration>());
         }
 
         #endregion 
 
         #region Properties
+
+        /// <summary>
+        /// Gets or Sets IDbSet representation Project Repository
+        /// </summary>
+        private IDbSet<Project> ProjectDbSetRepository { get; set; }
+
+        /// <summary>
+        /// Gets or Sets project repository
+        /// </summary>
+        public IRepository<Project> ProjectRepository { get; private set; }
+
 
         #endregion
 
@@ -51,5 +65,7 @@ namespace AnyTrack.Backend.Data
         }
 
         #endregion 
+    
+
     }
 }
