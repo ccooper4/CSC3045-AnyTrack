@@ -155,18 +155,13 @@ namespace AnyTrack.Accounting.Views
         }
 
         /// <summary>
-        /// Gets or sets the Skills property.
+        /// Gets the Skills property.
         /// </summary>
         public ObservableCollection<UserSkills> Skills
         {
             get
             {
                 return skills;
-            }
-
-            set
-            {
-                SetProperty(ref skills, value);
             }
         } 
 
