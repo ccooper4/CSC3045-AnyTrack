@@ -159,6 +159,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\AnyTrack\AnyTrack.csproj">
+      <Project>{2b4fcaaf-1ae0-42fa-a20a-86ac0d0130c1}</Project>
+      <Name>AnyTrack</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Backend\AnyTrack.Backend\AnyTrack.Backend.csproj">
       <Project>{8e06f61a-3fd1-419e-a45f-66babb282d60}</Project>
       <Name>AnyTrack.Backend</Name>
@@ -175,6 +179,9 @@
   <ItemGroup>
     <Folder Include="AnyTrack.Shell\" />
     <Folder Include="Common\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
