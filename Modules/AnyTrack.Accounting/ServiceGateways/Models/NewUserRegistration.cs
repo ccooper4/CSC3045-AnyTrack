@@ -4,20 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AnyTrack.Backend.Service.Model
+namespace AnyTrack.Accounting.ServiceGateways.Models
 {
     /// <summary>
-    /// Represents the fields required to create a user account.
+    /// Contains the fields required to register a user account. 
     /// </summary>
-    public class NewUser
+    public class NewUserRegistration
     {
         /// <summary>
-        /// Gets or sets the user's email address.
+        /// Gets or sets the email address.
         /// </summary>
         public string EmailAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the user's password.
+        /// Gets or sets the password.
         /// </summary>
         public string Password { get; set; }
 
@@ -32,17 +32,17 @@ namespace AnyTrack.Backend.Service.Model
         public string LastName { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the product owner flag has been set.
+        /// Gets or sets a value indicating whether user want to be a Product Owner.
         /// </summary>
         public bool ProductOwner { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the scrum master flag has been set.
+        /// Gets or sets a value indicating whether user want to be a Scrum Master.
         /// </summary>
         public bool ScrumMaster { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the developer flag has been set.
+        /// Gets or sets a value indicating whether user want to be a Developer.
         /// </summary>
         public bool Developer { get; set; }
     }

@@ -4,7 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AnyTrack.Accounting.BackendAccountService;
 using AnyTrack.Accounting.ServiceGateways;
+using AnyTrack.Infrastructure;
 using Microsoft.Practices.Unity;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -13,7 +15,7 @@ using Prism.Regions;
 namespace AnyTrack.Accounting.Views
 {
     /// <summary>
-    /// The view model for the registration page. 
+    /// The view model for the login page. 
     /// </summary>
     public class LoginViewModel : BindableBase
     {
@@ -23,6 +25,11 @@ namespace AnyTrack.Accounting.Views
         /// The region manager.
         /// </summary>
         private readonly IRegionManager regionManager;
+
+        /// <summary>
+        /// The account service gateway
+        /// </summary>
+        private readonly IAccountServiceGateway serviceGateway;
 
         /// <summary>
         /// The specified email address.
@@ -37,21 +44,28 @@ namespace AnyTrack.Accounting.Views
         #endregion
 
         /// <summary>
-        /// RegistrationViewModel constructor.
+        /// LoginViewModel constructor
         /// </summary>
         /// <param name="regionManager">The region manager.</param>
-        public LoginViewModel(IRegionManager regionManager)
+        /// <param name="gateway">The account service gateway.</param>
+        public LoginViewModel(IRegionManager regionManager, IAccountServiceGateway gateway)
         {
             if (regionManager == null)
             {
                 throw new ArgumentNullException("regionManager");
             }
+            
+            if (gateway == null)
+            {
+                throw new ArgumentNullException("gateway");
+            }
 
             this.regionManager = regionManager;
+            this.serviceGateway = gateway;
 
             LoginUserCommand = new DelegateCommand(this.LoginUser, this.CanLogin);
+            SignUpCommand = new DelegateCommand(this.SignUp, this.CanSignUp);
         }
-
         #region Properties
 
         /// <summary>
@@ -87,28 +101,57 @@ namespace AnyTrack.Accounting.Views
         }
             
         /// <summary>
-        /// Gets the command used to register a user. 
+        /// Gets the command used to login a user. 
         /// </summary>
         public DelegateCommand LoginUserCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command used to login a user. 
+        /// </summary>
+        public DelegateCommand SignUpCommand { get; private set; }
         #endregion
 
         #region Methods
 
         /// <summary>
-        /// Detects whether the registration can take place.
+        /// Detects whether the login can take place.
         /// </summary>
-        /// <returns>Proceed with registration or not.</returns>
+        /// <returns>Proceed with login or not.</returns>
         private bool CanLogin()
         {
             return true;
         }
 
         /// <summary>
-        /// Perform registration.
+        /// Detects whether the SignUp can take place.
+        /// </summary>
+        /// <returns>Proceed with SignUp or not.</returns>
+        private bool CanSignUp()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Perform login.
         /// </summary>
         private void LoginUser()
         {
+            var user = new UserCredential
+            {
+                EmailAddress = email,
+                Password = password
+            };
+
+            serviceGateway.LoginAccount(user);
             regionManager.RequestNavigate(Infrastructure.RegionNames.MainRegion, "Login");
+        }
+
+        /// <summary>
+        /// Navigate to SignUp
+        /// </summary>
+        private void SignUp()
+        {
+            regionManager.RequestNavigate(RegionNames.AppContainer, "Registration");
         }
 
         #endregion

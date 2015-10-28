@@ -5,10 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AnyTrack.Accounting.Views"
              xmlns:prism="http://www.codeplex.com/prism"
+             prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="600">
 
-    <Grid Background="LightGray" Margin="0,0,0,-58">
+    <Grid Background="LightGray" Margin="0,0,0,-210">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.75*" />
             <ColumnDefinition Width="5*" MaxWidth="600px"/>
@@ -39,10 +40,13 @@
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
 
                 <Label Grid.Column="0" Grid.Row="0" Name="EmailLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Email Address*:</Label>
-                <TextBox Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Text="{Binding Email}" />
+                <TextBox Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Text="{Binding Email}"  />
 
                 <Label Grid.Column="0" Grid.Row="1" Name="FirstLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >First Name*:</Label>
                 <TextBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Text="{Binding FirstName}" />
@@ -57,36 +61,36 @@
                 <TextBox Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" Text="{Binding ConfirmPassword}" />
 
                 <Label Grid.Column="0" Grid.Row="5" Name="RolesLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Roles:</Label>
-                <CheckBox Content="Product Owner" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="{Binding ProductOwner}"/>
-                <CheckBox Content="Scrum Master" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="{Binding ScrumMaster}"/>
-                <CheckBox Content="Developer" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="{Binding Developer}"/>
+                <CheckBox Name="ProductOwnerCheckbox" Content="Product Owner" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10px" IsChecked="{Binding ProductOwner}"/>
+                <CheckBox Name="ScrumMasterCheckbox" Content="Scrum Master" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left"  VerticalAlignment="Center" Padding="10px" IsChecked="{Binding ScrumMaster}"/>
+                <CheckBox Name="DeveloperCheckbox" Content="Developer" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left"  VerticalAlignment="Center" Padding="10px" IsChecked="{Binding Developer}"/>
                 
                 <Label Grid.Column="0" Grid.Row="8" Name="SkillSetLabel" VerticalAlignment="Top" HorizontalAlignment="Right" Padding="10px" >Skill Set:</Label>
-                <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Row="9" Grid.Column="1">
+                <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Row="8" Grid.Column="1">
                     <DockPanel VerticalAlignment="Center">
-                        <Button Content="Add Skill" DockPanel.Dock="Right" Command="{Binding AddCategoryCommand}" Height="4"/>
-                        <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Text="{Binding SkillSet}"/>
+                        <Button Content="Add Skill" DockPanel.Dock="Right" Command="{Binding AddSkillCommand}" Height="4"/>
+                        <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Text="{Binding CurrentSkill}"/>
                     </DockPanel>
 
-                    <ListView ItemsSource="{Binding Skills}">
-                        <ListView.Resources>
-                            <Style TargetType="GridViewColumnHeader">
-                                <Setter Property="Visibility" Value="Hidden" />
-                            </Style>
-                        </ListView.Resources>
-                        <ListView.View >
-                            <GridView>
-                                <GridViewColumn Header="Skills" DisplayMemberBinding="{Binding Path=Name}" Width="Auto"/>
+                    <ListView ItemsSource="{Binding Skills}" Padding="0,0,0,10px">
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Watch List" >
+                                <GridViewColumn Header="Skills" DisplayMemberBinding="{Binding Path=CurrentSkill}" Width="Auto"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
                 </StackPanel>
                 
+                <Label Grid.Column="0" Grid.Row="9" Name="SecretQuestionLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Secret Question:</Label>
+                <ComboBox Grid.Column="1" Grid.Row="9" ItemsSource="{Binding Categories}" DisplayMemberPath="Name" Height="5" VerticalAlignment="Center" SelectedValuePath="Id" SelectedValue="{Binding CurrentlySelectedCategoryId}" />
+
+                <Label Grid.Column="0" Grid.Row="10" Name="SecretAnswerLabel" VerticalAlignment="Top" HorizontalAlignment="Right" Padding="10px" >Secret Answer:</Label>
+                <TextBox Grid.Column="1" Grid.Row="10" VerticalAlignment="Center" Text="{Binding ConfirmPassword}" />
 
             </Grid>
         </GroupBox>
         <WrapPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Margin="10px, 0, 0, 0">Cancel</Button>
+            <Button Margin="10px, 0, 0, 0" Command="{Binding CancelRegisterUserCommand}" >Cancel</Button>
             <Button Margin="10px, 0, 0, 0" Command="{Binding RegisterUserCommand}" >Register</Button>
         </WrapPanel>
     </Grid>

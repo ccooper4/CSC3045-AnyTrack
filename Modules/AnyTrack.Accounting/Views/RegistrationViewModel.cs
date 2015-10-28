@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 using AnyTrack.Accounting.ServiceGateways;
-using Microsoft.Practices.Unity;
+using AnyTrack.Accounting.ServiceGateways.Models;
+using AnyTrack.Infrastructure;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -15,7 +14,7 @@ namespace AnyTrack.Accounting.Views
     /// <summary>
     /// The view model for the registration page. 
     /// </summary>
-    public class RegistrationViewModel : BindableBase
+    public class RegistrationViewModel : ValidatedBindableBase
     {
         #region Fields 
 
@@ -23,6 +22,11 @@ namespace AnyTrack.Accounting.Views
         /// The region manager.
         /// </summary>
         private readonly IRegionManager regionManager;
+
+        /// <summary>
+        /// The account service gateway
+        /// </summary>
+        private readonly IAccountServiceGateway serviceGateway;
 
         /// <summary>
         /// The specified email address.
@@ -65,33 +69,58 @@ namespace AnyTrack.Accounting.Views
         private bool developer;
 
         /// <summary>
+        /// The currently entered skill.
+        /// </summary>
+        private string currentSkill;
+
+        /// <summary>
         /// The specified user skills.
         /// </summary>
-        private ObservableCollection<UserSkills> skills;
+        private ObservableCollection<string> skills = new ObservableCollection<string>();
+
+        /// <summary>
+        /// The secret questions to present to the user. 
+        /// </summary>
+        private ObservableCollection<AvailableSecretQuestion> secretQuestions;
 
         #endregion
 
+        #region Constructor 
         /// <summary>
         /// RegistrationViewModel constructor.
         /// </summary>
         /// <param name="regionManager">The region manager.</param>
-        public RegistrationViewModel(IRegionManager regionManager)
+        /// <param name="gateway">The account service gateway.</param>
+        public RegistrationViewModel(IRegionManager regionManager, IAccountServiceGateway gateway)
         {
             if (regionManager == null)
             {
                 throw new ArgumentNullException("regionManager");
             }
 
-            this.regionManager = regionManager;
+            if (gateway == null)
+            {
+                throw new ArgumentNullException("gateway");
+            }
 
+            this.regionManager = regionManager;
+            this.serviceGateway = gateway;
+
+            // SecretQuestions = serviceGateway.SecretQuestions();
             RegisterUserCommand = new DelegateCommand(this.RegisterUser, this.CanRegister);
+            AddSkillCommand = new DelegateCommand(this.AddSkill, this.CanAddSkill);
+            CancelRegisterUserCommand = new DelegateCommand(this.CancelRegisterUser, this.CanCancel);
         }
+
+        #endregion
 
         #region Properties
 
         /// <summary>
         /// Gets or sets Email property.
         /// </summary>
+        [Required]
+        [EmailAddress(ErrorMessage = "The email address is required")]
         public string Email
         {
             get
@@ -108,6 +137,7 @@ namespace AnyTrack.Accounting.Views
         /// <summary>
         /// Gets or sets First name property.
         /// </summary>
+        [Required]
         public string FirstName
         {
             get
@@ -124,6 +154,7 @@ namespace AnyTrack.Accounting.Views
         /// <summary>
         /// Gets or sets Last name property.
         /// </summary>
+        [Required]
         public string LastName
         {
             get
@@ -140,6 +171,7 @@ namespace AnyTrack.Accounting.Views
         /// <summary>
         /// Gets or sets Password property.
         /// </summary>
+        [Required]
         public string Password
         {
             get
@@ -156,6 +188,8 @@ namespace AnyTrack.Accounting.Views
         /// <summary>
         /// Gets or sets Confirm Password property.
         /// </summary>
+        [Required]
+        [Compare("Password")]
         public string ConfirmPassword
         {
             get
@@ -218,20 +252,51 @@ namespace AnyTrack.Accounting.Views
         }
 
         /// <summary>
+        /// Gets or sets CurrentSkill property.
+        /// </summary>
+        public string CurrentSkill
+        {
+            get
+            {
+                return currentSkill;
+            }
+
+            set
+            {
+                SetProperty(ref currentSkill, value);
+            }
+        }
+
+        /// <summary>
         /// Gets the Skills property.
         /// </summary>
-        public ObservableCollection<UserSkills> Skills
+        public ObservableCollection<string> Skills
         {
             get
             {
                 return skills;
             }
-        } 
+        }
+
+        /// <summary>
+        /// Gets the SecretQuestions property.
+        /// </summary>
+        public List<AvailableSecretQuestion> SecretQuestions { get; private set; }
 
         /// <summary>
         /// Gets the command used to register a user. 
         /// </summary>
         public DelegateCommand RegisterUserCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command used to register a user. 
+        /// </summary>
+        public DelegateCommand CancelRegisterUserCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command used to register add a Skill.
+        /// </summary>
+        public DelegateCommand AddSkillCommand { get; private set; }
         #endregion
 
         #region Methods 
@@ -246,11 +311,59 @@ namespace AnyTrack.Accounting.Views
         }
 
         /// <summary>
+        /// Detects whether the registration can cancel.
+        /// </summary>
+        /// <returns>Cancel registration or not.</returns>
+        private bool CanCancel()
+        {
+            return true;
+        }
+
+        /// <summary>
         /// Perform registration.
         /// </summary>
         private void RegisterUser()
         {
-            regionManager.RequestNavigate(Infrastructure.RegionNames.MainRegion, "Login");
+            var newUser = new NewUserRegistration
+            {
+                EmailAddress = email,
+                FirstName = firstName,
+                LastName = lastName,
+                Password = password,
+                ProductOwner = productOwner,
+                ScrumMaster = scrumMaster,
+                Developer = developer
+            };
+
+            serviceGateway.RegisterAccount(newUser);
+
+            regionManager.RequestNavigate(Infrastructure.RegionNames.AppContainer, "Login");
+        }
+
+        /// <summary>
+        /// Cancel registration.
+        /// </summary>
+        private void CancelRegisterUser()
+        {
+            regionManager.RequestNavigate(RegionNames.AppContainer, "Login");
+        }
+
+        /// <summary>
+        /// Detects whether the entered skill can be added.
+        /// </summary>
+        /// <returns>Proceed with adding the skill or not.</returns>
+        private bool CanAddSkill()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Add a new skill.
+        /// </summary>
+        private void AddSkill()
+        {
+            Skills.Add(CurrentSkill);
+            CurrentSkill = string.Empty;
         }
 
         #endregion 

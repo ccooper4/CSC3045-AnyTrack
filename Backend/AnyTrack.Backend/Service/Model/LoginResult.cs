@@ -9,7 +9,7 @@ namespace AnyTrack.Backend.Service.Model
     /// <summary>
     /// Represents the fields required to create a user account.
     /// </summary>
-    public class NewUser
+    public class LoginResult
     {
         /// <summary>
         /// Gets or sets the user's email address.
@@ -45,5 +45,10 @@ namespace AnyTrack.Backend.Service.Model
         /// Gets or sets a value indicating whether the developer flag has been set.
         /// </summary>
         public bool Developer { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the success flag has been set.
+        /// </summary>
+        public bool Success { get; set; }
     }
 }

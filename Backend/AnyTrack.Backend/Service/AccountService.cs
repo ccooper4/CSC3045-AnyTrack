@@ -4,6 +4,7 @@ using System.Security.Principal;
 using System.Threading;
 using System.Web.Helpers;
 using System.Web.Security;
+using System.Windows;
 using AnyTrack.Backend.Data;
 using AnyTrack.Backend.Data.Model;
 using AnyTrack.Backend.Providers;
@@ -73,7 +74,10 @@ namespace AnyTrack.Backend.Service
                 EmailAddress = user.EmailAddress,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Password = Crypto.HashPassword(user.Password)
+                Password = Crypto.HashPassword(user.Password),
+                ProductOwner = user.ProductOwner,
+                ScrumMaster = user.ScrumMaster,
+                Developer = user.Developer
             };
 
             unitOfWork.UserRepository.Insert(dataUser);
@@ -86,18 +90,24 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         /// <param name="credential">The user's credential.</param>
         /// <returns>A flag indicating the outcome of the validation.</returns>
-        public bool LogIn(UserCredential credential)
+        public LoginResult LogIn(UserCredential credential)
         {
             var userAccount = unitOfWork.UserRepository.Items.SingleOrDefault(u => u.EmailAddress == credential.EmailAddress);
 
             if (userAccount == null)
             {
-                return false; 
+                return new LoginResult
+                {
+                    Success = false
+                };  
             }
 
             if (!Crypto.VerifyHashedPassword(userAccount.Password, credential.Password))
             {
-                return false; 
+                return new LoginResult
+                {
+                    Success = false
+                };  
             }
 
             formsAuthProvider.SetAuthCookie(credential.EmailAddress, false);
@@ -106,7 +116,16 @@ namespace AnyTrack.Backend.Service
 
             Thread.CurrentPrincipal = principal;
 
-            return true; 
+            return new LoginResult
+            {
+                EmailAddress = userAccount.EmailAddress,
+                FirstName = userAccount.FirstName,
+                LastName = userAccount.LastName,
+                Developer = userAccount.Developer,
+                ProductOwner = userAccount.ProductOwner,
+                ScrumMaster = userAccount.ScrumMaster,
+                Success = true
+            }; 
         }
 
         #endregion 

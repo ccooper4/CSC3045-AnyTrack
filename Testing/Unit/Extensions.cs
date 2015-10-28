@@ -23,7 +23,7 @@ namespace Unit
         {
             var type = o.GetType();
 
-            var methodInfo = type.GetMethod(method, System.Reflection.BindingFlags.NonPublic);
+            var methodInfo = type.GetMethod(method, System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
 
             return (T)methodInfo.Invoke(o, prms); 
         }
@@ -39,7 +39,7 @@ namespace Unit
         {
             var type = o.GetType();
 
-            var methodInfo = type.GetMethod(method, System.Reflection.BindingFlags.NonPublic);
+            var methodInfo = type.GetMethod(method, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
 
             methodInfo.Invoke(o, prms);
         }

@@ -121,7 +121,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.AccountServiceTests
 
             var result = service.LogIn(credentials);
 
-            result.Should().BeFalse();
+            result.Success.Should().BeFalse();
         }
 
         [Test]
@@ -146,7 +146,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.AccountServiceTests
 
             var result = service.LogIn(credentials);
 
-            result.Should().BeFalse();
+            result.Success.Should().BeFalse();
         }
 
         [Test]
@@ -174,7 +174,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.AccountServiceTests
             provider.Received().SetAuthCookie(dataUser.EmailAddress, false);
             Thread.CurrentPrincipal.Identity.Name.Should().Be(dataUser.EmailAddress);
 
-            result.Should().BeTrue();
+            result.Success.Should().BeTrue();
         }
 
         #endregion 

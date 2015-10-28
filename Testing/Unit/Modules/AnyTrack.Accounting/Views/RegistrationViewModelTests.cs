@@ -12,6 +12,8 @@ using NSubstitute;
 using NUnit.Framework;
 using Prism.Regions;
 using Unit.Backend.AnyTrack.Backend.Data.EntityRepositoryTests;
+using AnyTrack.Accounting.ServiceGateways;
+using AnyTrack.Accounting.ServiceGateways.Models;
 
 namespace Unit.Modules.AnyTrack.Accounting.Views.RegistrationViewModelTests
 {
@@ -20,13 +22,15 @@ namespace Unit.Modules.AnyTrack.Accounting.Views.RegistrationViewModelTests
     public class Context
     {
         public static IRegionManager regionManager;
+        public static IAccountServiceGateway gateway;
         public static RegistrationViewModel registrationViewModel;
 
         [SetUp]
         public void ContextSetup()
         {
             regionManager = Substitute.For<IRegionManager>();
-            registrationViewModel = new RegistrationViewModel(regionManager);
+            gateway = Substitute.For<IAccountServiceGateway>();
+            registrationViewModel = new RegistrationViewModel(regionManager, gateway);
         }
     }
 
@@ -36,12 +40,25 @@ namespace Unit.Modules.AnyTrack.Accounting.Views.RegistrationViewModelTests
 
     public class RegistrationViewModelTests : Context
     {
+        #region Constructor Tests 
+
         [Test]
         [ExpectedException (typeof(ArgumentNullException))]
         public void TestNullConstructor()
         {
-            registrationViewModel = new RegistrationViewModel(null);
+            registrationViewModel = new RegistrationViewModel(null, gateway);
         }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TestNullConstructorForGateway()
+        {
+            registrationViewModel = new RegistrationViewModel(regionManager, null);
+        }
+
+        #endregion
+
+        #region CanRegister() Tests 
 
         [Test]
         public void TestCanRegister()
@@ -50,12 +67,41 @@ namespace Unit.Modules.AnyTrack.Accounting.Views.RegistrationViewModelTests
             result.Should().BeTrue();
         }
 
+        #endregion
+
+        #region RegisterUser() Tests 
+
         [Test]
         public void TestRegisterUser()
         {
-            //registrationViewModel.Call("RegisterUser");
-            //regionManager.Received().RequestNavigate(RegionNames.MainRegion, "Login");
+            NewUserRegistration registration = null;
+
+            gateway.RegisterAccount(Arg.Do<NewUserRegistration>(r => registration = r));
+
+            registrationViewModel.Email = "test@agile.local";
+            registrationViewModel.Password = "Password";
+            registrationViewModel.FirstName = "Test";
+            registrationViewModel.LastName = "Test";
+            registrationViewModel.ProductOwner = false;
+            registrationViewModel.ScrumMaster = false;
+            registrationViewModel.Developer = false;
+
+            registrationViewModel.Call("RegisterUser");
+
+            registration.Should().NotBeNull();
+            registration.EmailAddress.Should().Be(registrationViewModel.Email);
+            registration.Password.Should().Be(registrationViewModel.Password);
+            registration.LastName.Should().Be(registrationViewModel.LastName);
+            registration.FirstName.Should().Be(registrationViewModel.FirstName);
+            registration.ProductOwner.Should().Be(registrationViewModel.ProductOwner);
+            registration.ScrumMaster.Should().Be(registrationViewModel.ScrumMaster);
+            registration.Developer.Should().Be(registrationViewModel.Developer);
+            gateway.Received().RegisterAccount(registration);
+
+            regionManager.Received().RequestNavigate(RegionNames.AppContainer, "Login");
         }
+
+        #endregion
 
     }
 
