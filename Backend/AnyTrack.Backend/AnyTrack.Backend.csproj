@@ -111,6 +111,7 @@
     <Compile Include="Data\EntityUnitOfWork.cs" />
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\IUnitOfWork.cs" />
+    <Compile Include="Data\Model\Role.cs" />
     <Compile Include="Data\Model\User.cs" />
     <Compile Include="Migrations\201510261641270_Adding user entity.cs" />
     <Compile Include="Migrations\201510261641270_Adding user entity.Designer.cs">

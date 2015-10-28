@@ -19,6 +19,11 @@ namespace AnyTrack.Backend.Data
         /// </summary>
         IRepository<User> UserRepository { get; }
 
+        /// <summary>
+        /// Gets the role repository controlled by this unit of work.
+        /// </summary>
+        IRepository<Role> RoleRepository { get; }
+
         #endregion 
 
         #region Methods 

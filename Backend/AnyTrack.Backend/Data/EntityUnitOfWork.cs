@@ -25,6 +25,9 @@ namespace AnyTrack.Backend.Data
 
             UserEntitySet = base.Set<User>();
             UserRepository = new EntityRepository<User>(UserEntitySet);
+
+            RoleEntitySet = base.Set<Role>();
+            RoleRepository = new EntityRepository<Role>(RoleEntitySet);
         }
 
         #endregion
@@ -36,6 +39,11 @@ namespace AnyTrack.Backend.Data
         /// </summary>
         public IRepository<User> UserRepository { get; private set; }
 
+        /// <summary>
+        /// Gets the role repository controlled by this unit of work.
+        /// </summary>
+        public IRepository<Role> RoleRepository { get; private set; }
+
         #endregion
 
         #region Fields
@@ -44,6 +52,11 @@ namespace AnyTrack.Backend.Data
         /// Gets or sets the User's Entity Set, as provided by Entity Framework.
         /// </summary>
         private DbSet<User> UserEntitySet { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Role Entity Set, as provided by Entity Framework.
+        /// </summary>
+        private DbSet<Role> RoleEntitySet { get; set; }
 
         #endregion 
 

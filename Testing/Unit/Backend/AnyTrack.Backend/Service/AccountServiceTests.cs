@@ -161,7 +161,8 @@ namespace Unit.Backend.AnyTrack.Backend.Service.AccountServiceTests
             var dataUser = new User
             {
                 EmailAddress = "test@agile.local",
-                Password = Crypto.HashPassword("Letmein")
+                Password = Crypto.HashPassword("Letmein"),
+                Roles = new List<Role>()
             };
 
             unitOfWork.UserRepository.Items.Returns(new List<User>()
@@ -172,7 +173,6 @@ namespace Unit.Backend.AnyTrack.Backend.Service.AccountServiceTests
             var result = service.LogIn(credentials);
 
             provider.Received().SetAuthCookie(dataUser.EmailAddress, false);
-            Thread.CurrentPrincipal.Identity.Name.Should().Be(dataUser.EmailAddress);
 
             result.Success.Should().BeTrue();
         }

@@ -112,10 +112,6 @@ namespace AnyTrack.Backend.Service
 
             formsAuthProvider.SetAuthCookie(credential.EmailAddress, false);
 
-            var principal = new GenericPrincipal(new GenericIdentity(credential.EmailAddress), Roles.Provider.GetRolesForUser(credential.EmailAddress));
-
-            Thread.CurrentPrincipal = principal;
-
             return new LoginResult
             {
                 EmailAddress = userAccount.EmailAddress,
