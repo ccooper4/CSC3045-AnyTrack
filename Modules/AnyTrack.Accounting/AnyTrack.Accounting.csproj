@@ -127,8 +127,8 @@
     </Compile>
     <Compile Include="ServiceGateways\AccountServiceGateway.cs" />
     <Compile Include="ServiceGateways\IAccountServiceGateway.cs" />
+    <Compile Include="ServiceGateways\Models\AvailableSecretQuestion.cs" />
     <Compile Include="ServiceGateways\Models\NewUserRegistration.cs" />
-    <Compile Include="ServiceGateways\Models\UserSkills.cs" />
     <Compile Include="Views\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
@@ -163,8 +163,8 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\Login.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Registration.xaml">
       <SubType>Designer</SubType>
