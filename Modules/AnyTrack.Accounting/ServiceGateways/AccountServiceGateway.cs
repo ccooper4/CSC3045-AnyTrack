@@ -74,7 +74,7 @@ namespace AnyTrack.Accounting.ServiceGateways
                 Password = login.Password
             };
 
-            client.LogIn(user);
+            var result = client.LogIn(user);
         }
 
         #endregion 

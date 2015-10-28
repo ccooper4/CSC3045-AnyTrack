@@ -22,6 +22,6 @@ namespace AnyTrack.Backend.Service
         /// <param name="credential">The login credentials.</param>
         /// <returns>A flag indicating if the login was successfu</returns>
         [OperationContract]
-        bool LogIn(UserCredential credential);
+        LoginResult LogIn(UserCredential credential);
     }
 }
