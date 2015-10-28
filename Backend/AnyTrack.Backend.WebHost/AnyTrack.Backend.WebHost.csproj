@@ -94,6 +94,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ProjectService.svc" />
     <Content Include="AccountService.svc" />
     <Content Include="Unity.Wcf.README.txt" />
     <Content Include="Web.config">
@@ -173,4 +174,3 @@
   </Target>
   -->
 </Project>
-

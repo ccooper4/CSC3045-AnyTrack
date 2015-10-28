@@ -22,7 +22,7 @@ namespace AnyTrack.Backend.Service
         void AddProject(Project project);
 
         /// <summary>
-        //  Update project in the database
+        /// Update project in the database
         /// </summary>
         /// <param name="project">Project to be updated</param>
         [OperationContract]
@@ -49,6 +49,5 @@ namespace AnyTrack.Backend.Service
         /// <returns>List of all Projects in the database</returns>
         [OperationContract]
         List<Project> GetProjects();
-
     }
 }

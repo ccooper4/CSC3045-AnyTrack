@@ -13,48 +13,48 @@ namespace AnyTrack.Backend.Data.Model
     public class Project : BaseEntity
     {
         /// <summary>
-        /// Gets or Sets Name
+        /// Gets or sets Name
         /// </summary>
         public virtual string Name { get; set; }
 
         /// <summary>
-        /// Gets or Sets Description
+        /// Gets or sets Description
         /// </summary>
         public virtual string Description { get; set; }
 
         /// <summary>
-        /// Gets or Sets Version Control
+        /// Gets or sets Version Control
         /// </summary>
         public virtual string VersionControl { get; set; }
 
         /// <summary>
-        /// Gets or Sets date Started On
+        /// Gets or sets date Started On
         /// </summary>
         public virtual DateTime StartedOn { get; set; }
 
         /// <summary>
-        /// Gets or Sets Project Manager
+        /// Gets or sets Project Manager
         /// </summary>
         public virtual User ProjectManager { get; set; }
 
         /// <summary>
-        /// Gets or Sets Product Owner
+        /// Gets or sets Product Owner
         /// </summary>
         public virtual User ProductOwner { get; set; }
 
         /// <summary>
-        /// Gets or Sets ScrumMasters
+        /// Gets or sets ScrumMasters
         /// </summary>
         public virtual List<User> ScrumMasters { get; set; }
 
         /*
         /// <summary>
-        /// Gets or Sets Sprints
+        /// Gets or sets Sprints
         /// </summary>
        public virtual ICollection<Sprint> Sprints { get; set; }
 
         /// <summary>
-        /// Gets or Sets Stories
+        /// Gets or sets Stories
         /// </summary>
         public virtual ICollection<Story> Stories { get; set; }
          */

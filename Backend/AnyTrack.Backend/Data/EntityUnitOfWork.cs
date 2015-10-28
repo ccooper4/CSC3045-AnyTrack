@@ -21,7 +21,6 @@ namespace AnyTrack.Backend.Data
         /// </summary>
         public EntityUnitOfWork() : base("AnyTrackBackend")
         {
-
             UserEntitySet = base.Set<User>();
             UserRepository = new EntityRepository<User>(UserEntitySet);
             
@@ -29,7 +28,6 @@ namespace AnyTrack.Backend.Data
             ProjectRepository = new EntityRepository<Project>(ProjectDbSetRepository);
 
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<EntityUnitOfWork, Configuration>());
-
         }
 
         #endregion
@@ -46,7 +44,6 @@ namespace AnyTrack.Backend.Data
         /// </summary>
         public IRepository<Project> ProjectRepository { get; private set; }
 
-
         #endregion
 
         #region Fields
@@ -57,7 +54,7 @@ namespace AnyTrack.Backend.Data
         private DbSet<User> UserEntitySet { get; set; }
 
         /// <summary>
-        /// Gets or Sets IDbSet representation Project Repository
+        /// Gets or sets IDbSet representation Project Repository
         /// </summary>
         private IDbSet<Project> ProjectDbSetRepository { get; set; }
 
@@ -83,8 +80,6 @@ namespace AnyTrack.Backend.Data
             this.SaveChanges();
         }
 
-        #endregion 
-    
-
+        #endregion   
     }
 }

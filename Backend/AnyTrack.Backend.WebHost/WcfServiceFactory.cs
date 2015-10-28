@@ -28,6 +28,7 @@ namespace AnyTrack.Backend.WebHost
 
             // AnyTrack.Backend.Services 
             container.RegisterType<IAccountService, AccountService>();
+            container.RegisterType<IProjectService, ProjectService>();
 
             // AnyTrack.Backend.Providers
             container.RegisterType<FormsAuthenticationProvider, FormsAuthenticationProvider>();

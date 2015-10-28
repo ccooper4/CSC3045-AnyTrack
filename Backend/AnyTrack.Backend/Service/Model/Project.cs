@@ -11,7 +11,6 @@ namespace AnyTrack.Backend.Service.Model
     /// </summary>
     public class Project
     {
-
         #region Constructor
 
         /// <summary>
@@ -25,53 +24,53 @@ namespace AnyTrack.Backend.Service.Model
         #endregion
 
         /// <summary>
-        /// Gets or Sets Project ID
+        /// Gets or sets Project ID
         /// </summary>
         public Guid ProjectId { get; set; }
 
         /// <summary>
-        /// Gets or Sets Name
+        /// Gets or sets Name
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or Sets Description
+        /// Gets or sets Description
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or Sets Version Control
+        /// Gets or sets Version Control
         /// </summary>
         public string VersionControl { get; set; }
 
         /// <summary>
-        /// Gets or Sets date Started On
+        /// Gets or sets date Started On
         /// </summary>
         public DateTime StartedOn { get; set; }
 
         /// <summary>
-        /// Gets or Sets Project Manager
+        /// Gets or sets Project Manager
         /// </summary>
         public NewUser ProjectManager { get; set; }
 
         /// <summary>
-        /// Gets or Sets Product Owner
+        /// Gets or sets Product Owner
         /// </summary>
         public NewUser ProductOwner { get; set; }
 
         /// <summary>
-        /// Gets or Sets ScrumMasters
+        /// Gets or sets ScrumMasters
         /// </summary>
         public List<NewUser> ScrumMasters { get; set; }
 
         /*
         /// <summary>
-        /// Gets or Sets Sprints
+        /// Gets or sets Sprints
         /// </summary>
        public ICollection<Sprint> Sprints { get; set; }
          
         /// <summary>
-        /// Gets or Sets Stories
+        /// Gets or sets Stories
         /// </summary>
         public ICollection<Story> Stories { get; set; }
          */

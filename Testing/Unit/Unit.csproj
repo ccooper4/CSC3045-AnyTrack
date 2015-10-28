@@ -159,6 +159,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\AnyTrack.Projects\AnyTrack.Projects.csproj">
+      <Project>{8fe42e8f-8e02-4d9c-971b-38e2b07dc83e}</Project>
+      <Name>AnyTrack.Projects</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\AnyTrack\AnyTrack.csproj">
       <Project>{2b4fcaaf-1ae0-42fa-a20a-86ac0d0130c1}</Project>
       <Name>AnyTrack</Name>
@@ -211,4 +215,3 @@
   </Target>
   -->
 </Project>
-

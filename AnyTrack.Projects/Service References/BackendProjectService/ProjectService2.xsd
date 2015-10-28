@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:5789/ProjectService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="Project">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductOwner" nillable="true" type="tns:NewUser" />
+      <xs:element minOccurs="0" name="ProjectId" type="ser:guid" />
+      <xs:element minOccurs="0" name="ProjectManager" nillable="true" type="tns:NewUser" />
+      <xs:element minOccurs="0" name="ScrumMasters" nillable="true" type="tns:ArrayOfNewUser" />
+      <xs:element minOccurs="0" name="StartedOn" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="VersionControl" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Project" nillable="true" type="tns:Project" />
+  <xs:complexType name="NewUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NewUser" nillable="true" type="tns:NewUser" />
+  <xs:complexType name="ArrayOfNewUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NewUser" nillable="true" type="tns:NewUser" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNewUser" nillable="true" type="tns:ArrayOfNewUser" />
+  <xs:complexType name="ArrayOfProject">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Project" nillable="true" type="tns:Project" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProject" nillable="true" type="tns:ArrayOfProject" />
+</xs:schema>

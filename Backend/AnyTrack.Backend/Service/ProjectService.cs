@@ -55,7 +55,8 @@ namespace AnyTrack.Backend.Service
                         Password = project.ProductOwner.Password,
                         FirstName = project.ProductOwner.FirstName,
                         LastName = project.ProductOwner.LastName
-                        //skillset
+
+                        // skillset
                     },
                     ProjectManager = new Data.Model.User
                     {
@@ -82,13 +83,14 @@ namespace AnyTrack.Backend.Service
                 unitOfWork.ProjectRepository.Insert(dataProject);
                 unitOfWork.Commit();
             }
-
             else
-                throw new ArgumentException("Project already exists in database");       
+            {
+                throw new ArgumentException("Project already exists in database");
+            }
         }
 
         /// <summary>
-        //  Update project in the database
+        /// Update project in the database
         /// </summary>
         /// <param name="project">Project to be updated</param>
         public void UpdateProject(Project project)
@@ -133,7 +135,9 @@ namespace AnyTrack.Backend.Service
                 unitOfWork.Commit();
             }
             else
-                throw new ArgumentException("Projext does not exist in database");       
+            {
+                throw new ArgumentException("Project does not exist in database");
+            }
         }
 
         /// <summary>
@@ -185,7 +189,8 @@ namespace AnyTrack.Backend.Service
                     Password = query.ProjectManager.Password,
                     FirstName = query.ProjectManager.FirstName,
                     LastName = query.ProjectManager.LastName
-                    //include skillset
+                    
+                    // include skillset
                 },
                 StartedOn = query.StartedOn,
                 VersionControl = query.VersionControl
@@ -199,7 +204,8 @@ namespace AnyTrack.Backend.Service
                     Password = scrumMaster.Password,
                     FirstName = scrumMaster.FirstName,
                     LastName = scrumMaster.LastName
-                    //include skillset
+                    
+                    // include skillset
                 });
             }
 
@@ -249,6 +255,7 @@ namespace AnyTrack.Backend.Service
                     });
                 }
             }
+
             return query;
         }
     }
