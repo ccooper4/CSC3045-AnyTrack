@@ -55,8 +55,7 @@ namespace AnyTrack.Backend.Service
                         Password = project.ProductOwner.Password,
                         FirstName = project.ProductOwner.FirstName,
                         LastName = project.ProductOwner.LastName
-
-                        // skillset
+                        //// skillset
                     },
                     ProjectManager = new Data.Model.User
                     {
@@ -66,7 +65,7 @@ namespace AnyTrack.Backend.Service
                         LastName = project.ProjectManager.LastName
                     },
                     StartedOn = project.StartedOn,
-                    VersionControl = project.VersionControl
+                    VersionControl = project.VersionControl,
                 };
 
                 foreach (var scrumMaster in project.ScrumMasters)
@@ -206,6 +205,19 @@ namespace AnyTrack.Backend.Service
                     LastName = scrumMaster.LastName
                     
                     // include skillset
+                });
+            }
+
+            foreach (var story in query.Stories)
+            {
+                project.Stories.Add(new Story
+                {
+                    StoryId = story.Id,
+                    StoryName = story.StoryName,
+                    Summary = story.Summary,
+                    ConditionsOfSatisfaction = story.ConditionsOfSatisfaction,
+                    Assignee = story.Assignee,
+                    Tester = story.Tester,
                 });
             }
 

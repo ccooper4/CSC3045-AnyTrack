@@ -68,11 +68,11 @@ namespace AnyTrack.Backend.Service.Model
         /// Gets or sets Sprints
         /// </summary>
        public ICollection<Sprint> Sprints { get; set; }
-         
+        */
+
         /// <summary>
         /// Gets or sets Stories
         /// </summary>
-        public ICollection<Story> Stories { get; set; }
-         */
+        public ICollection<Story> Stories { get; set; } 
     }
 }

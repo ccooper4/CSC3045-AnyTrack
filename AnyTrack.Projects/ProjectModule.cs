@@ -65,9 +65,11 @@ namespace AnyTrack.Projects
 
             container.RegisterType<IProjectServiceGateway, ProjectServiceGateway>();
 
-            container.RegisterType<object, CreateProject>("Project");
+            container.RegisterType<object, ProductBacklog>("ProductBacklog");
+            ////container.RegisterType<object, CreateProject>("Project");
 
-            regionManager.RequestNavigate(RegionNames.AppContainer, "Project");
+            regionManager.RequestNavigate(RegionNames.AppContainer, "ProductBacklog");
+            ////regionManager.RequestNavigate(RegionNames.AppContainer, "Project");
         }
 
         #endregion 

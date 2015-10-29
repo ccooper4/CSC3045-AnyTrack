@@ -92,10 +92,14 @@
     </Compile>
     <Compile Include="ServiceGateways\IProjectServiceGateway.cs" />
     <Compile Include="ServiceGateways\ProjectServiceGateway.cs" />
+    <Compile Include="ViewModels\ProductBacklogViewModel.cs" />
     <Compile Include="Views\CreateProject.xaml.cs">
       <DependentUpon>CreateProject.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CreateProjectViewModel.cs" />
+    <Compile Include="ViewModels\CreateProjectViewModel.cs" />
+    <Compile Include="Views\ProductBacklog.xaml.cs">
+      <DependentUpon>ProductBacklog.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -122,7 +126,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ServiceGateways\Model\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -147,6 +150,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\CreateProject.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProductBacklog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
