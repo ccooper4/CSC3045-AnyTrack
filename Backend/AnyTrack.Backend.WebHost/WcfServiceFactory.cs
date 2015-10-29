@@ -33,6 +33,7 @@ namespace AnyTrack.Backend.WebHost
             // AnyTrack.Backend.Providers
             container.RegisterType<FormsAuthenticationProvider, FormsAuthenticationProvider>();
             container.RegisterType<Providers.RoleProvider, Providers.RoleProvider>();
+            container.RegisterType<OperationContextProvider, OperationContextProvider>();
 
             ((Providers.RoleProvider)Roles.Provider).UnitOfWork = container.Resolve<IUnitOfWork>();
         }
