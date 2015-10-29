@@ -1,6 +1,6 @@
-﻿using AnyTrack.Accounting.BackendAccountService;
-using AnyTrack.Accounting.ServiceGateways;
+﻿using AnyTrack.Accounting.ServiceGateways;
 using AnyTrack.Accounting.ServiceGateways.Models;
+using AnyTrack.Infrastructure.BackendAccountService;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;

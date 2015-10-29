@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AnyTrack.Accounting.BackendAccountService {
+namespace AnyTrack.Infrastructure.BackendAccountService {
     using System.Runtime.Serialization;
     using System;
     
@@ -406,26 +406,26 @@ namespace AnyTrack.Accounting.BackendAccountService {
     public interface IAccountService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccountService/CreateAccount", ReplyAction="http://tempuri.org/IAccountService/CreateAccountResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(AnyTrack.Accounting.BackendAccountService.UserAlreadyExistsFault), Action="http://tempuri.org/IAccountService/CreateAccountUserAlreadyExistsFaultFault", Name="UserAlreadyExistsFault", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Faults")]
-        void CreateAccount(AnyTrack.Accounting.BackendAccountService.NewUser user);
+        [System.ServiceModel.FaultContractAttribute(typeof(AnyTrack.Infrastructure.BackendAccountService.UserAlreadyExistsFault), Action="http://tempuri.org/IAccountService/CreateAccountUserAlreadyExistsFaultFault", Name="UserAlreadyExistsFault", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Faults")]
+        void CreateAccount(AnyTrack.Infrastructure.BackendAccountService.NewUser user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccountService/CreateAccount", ReplyAction="http://tempuri.org/IAccountService/CreateAccountResponse")]
-        System.Threading.Tasks.Task CreateAccountAsync(AnyTrack.Accounting.BackendAccountService.NewUser user);
+        System.Threading.Tasks.Task CreateAccountAsync(AnyTrack.Infrastructure.BackendAccountService.NewUser user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccountService/LogIn", ReplyAction="http://tempuri.org/IAccountService/LogInResponse")]
-        AnyTrack.Accounting.BackendAccountService.LoginResult LogIn(AnyTrack.Accounting.BackendAccountService.UserCredential credential);
+        AnyTrack.Infrastructure.BackendAccountService.LoginResult LogIn(AnyTrack.Infrastructure.BackendAccountService.UserCredential credential);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccountService/LogIn", ReplyAction="http://tempuri.org/IAccountService/LogInResponse")]
-        System.Threading.Tasks.Task<AnyTrack.Accounting.BackendAccountService.LoginResult> LogInAsync(AnyTrack.Accounting.BackendAccountService.UserCredential credential);
+        System.Threading.Tasks.Task<AnyTrack.Infrastructure.BackendAccountService.LoginResult> LogInAsync(AnyTrack.Infrastructure.BackendAccountService.UserCredential credential);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IAccountServiceChannel : AnyTrack.Accounting.BackendAccountService.IAccountService, System.ServiceModel.IClientChannel {
+    public interface IAccountServiceChannel : AnyTrack.Infrastructure.BackendAccountService.IAccountService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class AccountServiceClient : System.ServiceModel.ClientBase<AnyTrack.Accounting.BackendAccountService.IAccountService>, AnyTrack.Accounting.BackendAccountService.IAccountService {
+    public partial class AccountServiceClient : System.ServiceModel.ClientBase<AnyTrack.Infrastructure.BackendAccountService.IAccountService>, AnyTrack.Infrastructure.BackendAccountService.IAccountService {
         
         public AccountServiceClient() {
         }
@@ -446,19 +446,19 @@ namespace AnyTrack.Accounting.BackendAccountService {
                 base(binding, remoteAddress) {
         }
         
-        public void CreateAccount(AnyTrack.Accounting.BackendAccountService.NewUser user) {
+        public void CreateAccount(AnyTrack.Infrastructure.BackendAccountService.NewUser user) {
             base.Channel.CreateAccount(user);
         }
         
-        public System.Threading.Tasks.Task CreateAccountAsync(AnyTrack.Accounting.BackendAccountService.NewUser user) {
+        public System.Threading.Tasks.Task CreateAccountAsync(AnyTrack.Infrastructure.BackendAccountService.NewUser user) {
             return base.Channel.CreateAccountAsync(user);
         }
         
-        public AnyTrack.Accounting.BackendAccountService.LoginResult LogIn(AnyTrack.Accounting.BackendAccountService.UserCredential credential) {
+        public AnyTrack.Infrastructure.BackendAccountService.LoginResult LogIn(AnyTrack.Infrastructure.BackendAccountService.UserCredential credential) {
             return base.Channel.LogIn(credential);
         }
         
-        public System.Threading.Tasks.Task<AnyTrack.Accounting.BackendAccountService.LoginResult> LogInAsync(AnyTrack.Accounting.BackendAccountService.UserCredential credential) {
+        public System.Threading.Tasks.Task<AnyTrack.Infrastructure.BackendAccountService.LoginResult> LogInAsync(AnyTrack.Infrastructure.BackendAccountService.UserCredential credential) {
             return base.Channel.LogInAsync(credential);
         }
     }
