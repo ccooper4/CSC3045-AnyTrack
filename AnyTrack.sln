@@ -28,6 +28,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyTrack", "AnyTrack\AnyTrack.csproj", "{2B4FCAAF-1AE0-42FA-A20A-86AC0D0130C1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyTrack.Infrastructure", "Common\AnyTrack.Infrastructure\AnyTrack.Infrastructure.csproj", "{A5A20403-C6E3-4475-88AA-762BD691F812}"
+	ProjectSection(ProjectDependencies) = postProject
+		{022C9F29-2FCD-4023-BB22-346F2D3845C5} = {022C9F29-2FCD-4023-BB22-346F2D3845C5}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyTrack.Accounting", "Modules\AnyTrack.Accounting\AnyTrack.Accounting.csproj", "{9F38C80A-2E8C-486F-8054-E235886E1A17}"
 	ProjectSection(ProjectDependencies) = postProject

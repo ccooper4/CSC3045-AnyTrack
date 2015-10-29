@@ -28,6 +28,7 @@ namespace AnyTrack.Backend.WebHost
 
             // AnyTrack.Backend.Services 
             container.RegisterType<IAccountService, AccountService>();
+            container.RegisterType<IDateTimeService, DateTimeService>();
             container.RegisterType<IProjectService, ProjectService>();
 
             // AnyTrack.Backend.Providers

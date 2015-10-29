@@ -1,12 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Net;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using AnyTrack.Accounting.BackendAccountService;
+using AnyTrack.Accounting.BackendTimeService;
 using AnyTrack.Accounting.ServiceGateways;
 using AnyTrack.Infrastructure;
+using AnyTrack.Infrastructure.BackendAccountService;
+using AnyTrack.Infrastructure.Extensions;
 using Microsoft.Practices.Unity;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -17,7 +24,7 @@ namespace AnyTrack.Accounting.Views
     /// <summary>
     /// The view model for the login page. 
     /// </summary>
-    public class LoginViewModel : BindableBase
+    public class LoginViewModel : ValidatedBindableBase
     {
         #region Fields
 
@@ -71,6 +78,8 @@ namespace AnyTrack.Accounting.Views
         /// <summary>
         /// Gets or sets Email property.
         /// </summary>
+        [Required]
+        [EmailAddress]
         public string Email
         {
             get
@@ -87,6 +96,7 @@ namespace AnyTrack.Accounting.Views
         /// <summary>
         /// Gets or sets Password property.
         /// </summary>
+        [Required]
         public string Password
         {
             get
@@ -143,7 +153,20 @@ namespace AnyTrack.Accounting.Views
             };
 
             serviceGateway.LoginAccount(user);
-            regionManager.RequestNavigate(Infrastructure.RegionNames.MainRegion, "Login");
+
+            // regionManager.RequestNavigate(Infrastructure.RegionNames.MainRegion, "Login");
+            var time = new DateTimeServiceClient();
+
+            var authCookie = Thread.CurrentPrincipal.GetAuthCookie();
+
+            using (new OperationContextScope(time.InnerChannel))
+            {
+                var request = new HttpRequestMessageProperty();
+                request.Headers[HttpResponseHeader.SetCookie] = authCookie;
+                OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = request;
+
+                var date = time.GetCurrentDate();
+            }
         }
 
         /// <summary>

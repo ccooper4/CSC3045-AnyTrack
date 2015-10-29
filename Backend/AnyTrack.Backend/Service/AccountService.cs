@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Principal;
+using System.ServiceModel;
 using System.Threading;
 using System.Web.Helpers;
 using System.Web.Security;
 using System.Windows;
 using AnyTrack.Backend.Data;
 using AnyTrack.Backend.Data.Model;
+using AnyTrack.Backend.Faults;
 using AnyTrack.Backend.Providers;
 using AnyTrack.Backend.Service.Model;
 
@@ -66,7 +68,7 @@ namespace AnyTrack.Backend.Service
         {
             if (unitOfWork.UserRepository.Items.Any(u => u.EmailAddress == user.EmailAddress))
             {
-                throw new MembershipCreateUserException(MembershipCreateStatus.DuplicateEmail);
+                throw new FaultException<UserAlreadyExistsFault>(new UserAlreadyExistsFault());
             }
 
             var dataUser = new User
@@ -111,10 +113,6 @@ namespace AnyTrack.Backend.Service
             }
 
             formsAuthProvider.SetAuthCookie(credential.EmailAddress, false);
-
-            var principal = new GenericPrincipal(new GenericIdentity(credential.EmailAddress), Roles.Provider.GetRolesForUser(credential.EmailAddress));
-
-            Thread.CurrentPrincipal = principal;
 
             return new LoginResult
             {

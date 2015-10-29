@@ -111,7 +111,9 @@
     <Compile Include="Data\EntityUnitOfWork.cs" />
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\IUnitOfWork.cs" />
+    <Compile Include="Data\Model\Role.cs" />
     <Compile Include="Data\Model\User.cs" />
+    <Compile Include="Faults\UserAlreadyExistsFault.cs" />
     <Compile Include="Data\Model\Project.cs" />
     <Compile Include="Migrations\201510261641270_Adding user entity.cs" />
     <Compile Include="Migrations\201510261641270_Adding user entity.Designer.cs">
@@ -120,6 +122,10 @@
     <Compile Include="Migrations\201510261759447_Making dates nullable.cs" />
     <Compile Include="Migrations\201510261759447_Making dates nullable.Designer.cs">
       <DependentUpon>201510261759447_Making dates nullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510282334577_Adding migration to cover T1 and T2 changes.cs" />
+    <Compile Include="Migrations\201510282334577_Adding migration to cover T1 and T2 changes.Designer.cs">
+      <DependentUpon>201510282334577_Adding migration to cover T1 and T2 changes.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -130,12 +136,13 @@
     <Compile Include="Service\IProjectService.cs" />
     <Compile Include="Service\Model\Project.cs" />
     <Compile Include="Service\ProjectService.cs" />
+    <Compile Include="Service\DateTimeService.cs" />
     <Compile Include="Service\IAccountService.cs" />
+    <Compile Include="Service\IDateTimeService.cs" />
     <Compile Include="Service\Model\LoginResult.cs" />
     <Compile Include="Service\Model\NewUser.cs" />
     <Compile Include="Service\Model\UserCredential.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
@@ -147,6 +154,15 @@
     <EmbeddedResource Include="Migrations\201510261759447_Making dates nullable.resx">
       <DependentUpon>201510261759447_Making dates nullable.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510282334577_Adding migration to cover T1 and T2 changes.resx">
+      <DependentUpon>201510282334577_Adding migration to cover T1 and T2 changes.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\AnyTrack.Infrastructure\AnyTrack.Infrastructure.csproj">
+      <Project>{a5a20403-c6e3-4475-88aa-762bd691f812}</Project>
+      <Name>AnyTrack.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets" Condition="Exists('..\..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets')" />

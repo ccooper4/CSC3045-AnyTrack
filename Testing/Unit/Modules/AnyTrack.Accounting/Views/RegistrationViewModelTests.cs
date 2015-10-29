@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using AnyTrack.Accounting.Views;
 using AnyTrack.Backend.Data;
 using AnyTrack.Infrastructure;
@@ -14,6 +15,11 @@ using Prism.Regions;
 using Unit.Backend.AnyTrack.Backend.Data.EntityRepositoryTests;
 using AnyTrack.Accounting.ServiceGateways;
 using AnyTrack.Accounting.ServiceGateways.Models;
+using AnyTrack.Infrastructure.Providers;
+using System.Windows.Threading;
+using MahApps.Metro.Controls.Dialogs;
+using System.ServiceModel;
+using AnyTrack.Backend.Faults;
 
 namespace Unit.Modules.AnyTrack.Accounting.Views.RegistrationViewModelTests
 {
@@ -77,6 +83,9 @@ namespace Unit.Modules.AnyTrack.Accounting.Views.RegistrationViewModelTests
             NewUserRegistration registration = null;
 
             gateway.RegisterAccount(Arg.Do<NewUserRegistration>(r => registration = r));
+            registrationViewModel.MainWindow = Substitute.For<WindowProvider>();
+            registrationViewModel.MainWindow.ShowMessageAsync(Arg.Any<string>(), Arg.Any<string>()).Returns(MessageDialogResult.Affirmative);
+            registrationViewModel.MainWindow.InvokeAction(Arg.Do<Action>(a => a()));
 
             registrationViewModel.Email = "test@agile.local";
             registrationViewModel.Password = "Password";

@@ -95,7 +95,9 @@ namespace AnyTrack.Backend.Providers
         /// <returns>The roles for the user.</returns>
         public override string[] GetRolesForUser(string username)
         {
-            return new string[0];
+            var user = UnitOfWork.UserRepository.Items.Single(u => u.EmailAddress == username);
+
+            return user.Roles.Select(r => r.RoleName).ToArray();
         }
 
         /// <summary>

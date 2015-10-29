@@ -14,6 +14,8 @@ using FluentAssertions;
 using System.Web.Security;
 using System.Web.Helpers;
 using System.Threading;
+using System.ServiceModel;
+using AnyTrack.Backend.Faults;
 
 namespace Unit.Backend.AnyTrack.Backend.Service.AccountServiceTests
 {
@@ -82,7 +84,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.AccountServiceTests
         }
 
         [Test]
-        [ExpectedException(typeof(MembershipCreateUserException))]
+        [ExpectedException(typeof(FaultException<UserAlreadyExistsFault>))]
         public void CreateNewAccountWithDuplicateEmail()
         {
             var userList = new List<User>()
@@ -161,7 +163,8 @@ namespace Unit.Backend.AnyTrack.Backend.Service.AccountServiceTests
             var dataUser = new User
             {
                 EmailAddress = "test@agile.local",
-                Password = Crypto.HashPassword("Letmein")
+                Password = Crypto.HashPassword("Letmein"),
+                Roles = new List<Role>()
             };
 
             unitOfWork.UserRepository.Items.Returns(new List<User>()
@@ -172,7 +175,6 @@ namespace Unit.Backend.AnyTrack.Backend.Service.AccountServiceTests
             var result = service.LogIn(credentials);
 
             provider.Received().SetAuthCookie(dataUser.EmailAddress, false);
-            Thread.CurrentPrincipal.Identity.Name.Should().Be(dataUser.EmailAddress);
 
             result.Success.Should().BeTrue();
         }

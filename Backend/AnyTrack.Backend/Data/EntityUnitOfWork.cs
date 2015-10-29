@@ -23,6 +23,9 @@ namespace AnyTrack.Backend.Data
         {
             UserEntitySet = base.Set<User>();
             UserRepository = new EntityRepository<User>(UserEntitySet);
+
+            RoleEntitySet = base.Set<Role>();
+            RoleRepository = new EntityRepository<Role>(RoleEntitySet);
             
             ProjectDbSetRepository = base.Set<Project>();
             ProjectRepository = new EntityRepository<Project>(ProjectDbSetRepository);
@@ -44,6 +47,11 @@ namespace AnyTrack.Backend.Data
         /// </summary>
         public IRepository<Project> ProjectRepository { get; private set; }
 
+        /// <summary>
+        /// Gets the role repository controlled by this unit of work.
+        /// </summary>
+        public IRepository<Role> RoleRepository { get; private set; }
+
         #endregion
 
         #region Fields
@@ -57,6 +65,11 @@ namespace AnyTrack.Backend.Data
         /// Gets or sets IDbSet representation Project Repository
         /// </summary>
         private IDbSet<Project> ProjectDbSetRepository { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Role Entity Set, as provided by Entity Framework.
+        /// </summary>
+        private DbSet<Role> RoleEntitySet { get; set; }
 
         #endregion 
 

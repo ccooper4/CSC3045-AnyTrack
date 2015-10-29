@@ -45,5 +45,10 @@ namespace AnyTrack.Backend.Data.Model
         /// Gets or sets a value indicating whether the developer flag has been set.
         /// </summary>
         public virtual bool Developer { get; set; }
+
+        /// <summary>
+        /// Gets or sets the roles a user is assigned to.
+        /// </summary>
+        public virtual ICollection<Role> Roles { get; set; }
     }
 }

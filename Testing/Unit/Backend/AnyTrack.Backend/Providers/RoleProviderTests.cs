@@ -1,5 +1,8 @@
-﻿using AnyTrack.Backend.Providers;
+﻿using AnyTrack.Backend.Data;
+using AnyTrack.Backend.Data.Model;
+using AnyTrack.Backend.Providers;
 using FluentAssertions;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -11,12 +14,15 @@ namespace Unit.Backend.AnyTrack.Backend.Providers.RoleProviderTests
 {
     public class Context
     {
+        public static IUnitOfWork unitOfWork;
         public static RoleProvider provider; 
 
         [SetUp]
         public void ContextSetup()
         {
+            unitOfWork = Substitute.For<IUnitOfWork>();
             provider = new RoleProvider();
+            provider.UnitOfWork = unitOfWork;
         }
     }
 
@@ -39,11 +45,21 @@ namespace Unit.Backend.AnyTrack.Backend.Providers.RoleProviderTests
         [Test]
         public void GetRolesForUser()
         {
-            var user = "tester001";
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>
+                {
+                    new Role { RoleName = "Project Manager" }
+                }
+            };
 
-            var roles = provider.GetRolesForUser(user);
+            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
 
-            roles.Length.Should().Be(0);
+            var roles = provider.GetRolesForUser(user.EmailAddress);
+
+            roles.Length.Should().Be(1);
+            roles.Single().Should().Be(user.Roles.Single().RoleName);
         }
 
 
