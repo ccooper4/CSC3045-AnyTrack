@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using AnyTrack.Accounting.BackendAccountService;
 using AnyTrack.Accounting.ServiceGateways.Models;
+using AnyTrack.Infrastructure;
+using AnyTrack.Infrastructure.BackendAccountService;
 
 namespace AnyTrack.Accounting.ServiceGateways
 {
@@ -74,7 +77,8 @@ namespace AnyTrack.Accounting.ServiceGateways
         /// Logins in a user with their provided details
         /// </summary>
         /// <param name="login">The login details.</param>
-        public void LoginAccount(UserCredential login)
+        /// <returns>The result of the login operation.</returns>
+        public LoginResult LoginAccount(UserCredential login)
         {
             var user = new UserCredential
             {
@@ -82,7 +86,21 @@ namespace AnyTrack.Accounting.ServiceGateways
                 Password = login.Password
             };
 
-            var result = client.LogIn(user);
+            using (new OperationContextScope((client as AccountServiceClient).InnerChannel))
+            {
+                var result = client.LogIn(user);
+
+                if (result.Success)
+                {
+                    var responseMessageProperty = (HttpResponseMessageProperty)OperationContext.Current.IncomingMessageProperties[HttpResponseMessageProperty.Name];
+                    var cookie = responseMessageProperty.Headers.Get("Set-Cookie");
+
+                    var principal = new ServiceUserPrincipal(result, cookie);
+                    Thread.CurrentPrincipal = principal;
+                }
+
+                return result;
+            }
         }
 
         /// <summary>

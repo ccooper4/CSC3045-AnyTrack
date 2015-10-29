@@ -120,7 +120,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Service References\BackendAccountService\Reference.cs">
+    <Compile Include="Service References\BackendTimeService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -147,14 +147,11 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Service References\BackendAccountService\AccountService.wsdl" />
-    <None Include="Service References\BackendAccountService\AccountService.xsd">
+    <None Include="Service References\BackendTimeService\TimeService.wsdl" />
+    <None Include="Service References\BackendTimeService\TimeService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\BackendAccountService\AccountService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BackendAccountService\AccountService2.xsd">
+    <None Include="Service References\BackendTimeService\TimeService1.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
@@ -181,25 +178,19 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\BackendAccountService\" />
+    <WCFMetadataStorage Include="Service References\BackendTimeService\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\BackendAccountService\AccountService.disco" />
+    <None Include="Service References\BackendTimeService\TimeService.disco" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\BackendAccountService\AccountService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BackendAccountService\AnyTrack.Accounting.BackendAccountService.LoginResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BackendAccountService\configuration91.svcinfo" />
+    <None Include="Service References\BackendTimeService\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\BackendAccountService\configuration.svcinfo" />
+    <None Include="Service References\BackendTimeService\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\BackendAccountService\Reference.svcmap">
+    <None Include="Service References\BackendTimeService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
