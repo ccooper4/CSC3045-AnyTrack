@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AnyTrack.Projects.Service_References.BackendProjectService;
+using AnyTrack.Projects.BackendProjectService;
 
 namespace AnyTrack.Projects.ServiceGateways
 {
@@ -82,7 +82,7 @@ namespace AnyTrack.Projects.ServiceGateways
         /// <returns>A list of all protects</returns>
         public List<Project> GetProjects()
         {
-            return client.GetProjects().ToList();
+            return client.GetProjects();
         }
         #endregion
     }

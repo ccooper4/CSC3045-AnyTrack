@@ -22,7 +22,10 @@
         </Grid.RowDefinitions>
 
 
-        <GroupBox Grid.Column="1" Grid.Row="0" Header="Registration" HorizontalAlignment="Stretch" Margin="0, 30px, 0, 10px" >
+        <GroupBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" Margin="0, 30px, 0, 10px" >
+            <GroupBox.Header>
+                <TextBlock Foreground="White" Text="Registration" />
+            </GroupBox.Header>
             <Grid Background="White">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="3*"></ColumnDefinition>

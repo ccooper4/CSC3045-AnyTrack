@@ -1,16 +1,18 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 using AnyTrack.Infrastructure;
 using AnyTrack.Projects.BackendProjectService;
 using AnyTrack.Projects.ServiceGateways;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using Prism.Commands;
+using Prism.Mvvm;
 using Prism.Regions;
 
-namespace AnyTrack.Projects.ViewModels
+namespace AnyTrack.Projects.Views
 {
     /// <summary>
     /// The view model for the project
@@ -183,7 +185,8 @@ namespace AnyTrack.Projects.ViewModels
                 ProductOwner = new NewUser()
             };
 
-            serviceGateway.CreateProject(project);
+            // serviceGateway.CreateProject(project);
+            Console.WriteLine("I am a button that was pressed");
         }
 
         /// <summary>

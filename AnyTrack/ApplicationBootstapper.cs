@@ -65,7 +65,7 @@ namespace AnyTrack.Client
 
             ViewModelLocationProvider.SetDefaultViewModelFactory((type) =>
             {
-                return this.Container.TryResolve(type);
+                return this.Container.Resolve(type);
             });
         }
 

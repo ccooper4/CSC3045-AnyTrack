@@ -8,41 +8,42 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Runtime.Serialization;
-
-namespace AnyTrack.Projects.Service_References.BackendProjectService {
+namespace AnyTrack.Projects.BackendProjectService {
+    using System.Runtime.Serialization;
+    using System;
+    
+    
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [DataContract(Name="Project", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
-    [Serializable()]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Project", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
+    [System.SerializableAttribute()]
     public partial class Project : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
-        [NonSerialized()]
+        [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
-        [OptionalField()]
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DescriptionField;
         
-        [OptionalField()]
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NameField;
         
-        [OptionalField()]
-        private NewUser ProductOwnerField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Projects.BackendProjectService.NewUser ProductOwnerField;
         
-        [OptionalField()]
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid ProjectIdField;
         
-        [OptionalField()]
-        private NewUser ProjectManagerField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Projects.BackendProjectService.NewUser ProjectManagerField;
         
-        [OptionalField()]
-        private NewUser[] ScrumMastersField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.NewUser> ScrumMastersField;
         
-        [OptionalField()]
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime StartedOnField;
         
-        [OptionalField()]
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string VersionControlField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -55,7 +56,7 @@ namespace AnyTrack.Projects.Service_References.BackendProjectService {
             }
         }
         
-        [DataMember()]
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Description {
             get {
                 return this.DescriptionField;
@@ -68,7 +69,7 @@ namespace AnyTrack.Projects.Service_References.BackendProjectService {
             }
         }
         
-        [DataMember()]
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Name {
             get {
                 return this.NameField;
@@ -81,8 +82,8 @@ namespace AnyTrack.Projects.Service_References.BackendProjectService {
             }
         }
         
-        [DataMember()]
-        public NewUser ProductOwner {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Projects.BackendProjectService.NewUser ProductOwner {
             get {
                 return this.ProductOwnerField;
             }
@@ -94,7 +95,7 @@ namespace AnyTrack.Projects.Service_References.BackendProjectService {
             }
         }
         
-        [DataMember()]
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Guid ProjectId {
             get {
                 return this.ProjectIdField;
@@ -107,8 +108,8 @@ namespace AnyTrack.Projects.Service_References.BackendProjectService {
             }
         }
         
-        [DataMember()]
-        public NewUser ProjectManager {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Projects.BackendProjectService.NewUser ProjectManager {
             get {
                 return this.ProjectManagerField;
             }
@@ -120,8 +121,8 @@ namespace AnyTrack.Projects.Service_References.BackendProjectService {
             }
         }
         
-        [DataMember()]
-        public NewUser[] ScrumMasters {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.NewUser> ScrumMasters {
             get {
                 return this.ScrumMastersField;
             }
@@ -133,7 +134,7 @@ namespace AnyTrack.Projects.Service_References.BackendProjectService {
             }
         }
         
-        [DataMember()]
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.DateTime StartedOn {
             get {
                 return this.StartedOnField;
@@ -146,7 +147,7 @@ namespace AnyTrack.Projects.Service_References.BackendProjectService {
             }
         }
         
-        [DataMember()]
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string VersionControl {
             get {
                 return this.VersionControlField;
@@ -171,24 +172,33 @@ namespace AnyTrack.Projects.Service_References.BackendProjectService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [DataContract(Name="NewUser", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
-    [Serializable()]
+    [System.Runtime.Serialization.DataContractAttribute(Name="NewUser", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
+    [System.SerializableAttribute()]
     public partial class NewUser : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
-        [NonSerialized()]
+        [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
-        [OptionalField()]
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool DeveloperField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string EmailAddressField;
         
-        [OptionalField()]
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string FirstNameField;
         
-        [OptionalField()]
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string LastNameField;
         
-        [OptionalField()]
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PasswordField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ProductOwnerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ScrumMasterField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -200,7 +210,20 @@ namespace AnyTrack.Projects.Service_References.BackendProjectService {
             }
         }
         
-        [DataMember()]
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Developer {
+            get {
+                return this.DeveloperField;
+            }
+            set {
+                if ((this.DeveloperField.Equals(value) != true)) {
+                    this.DeveloperField = value;
+                    this.RaisePropertyChanged("Developer");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string EmailAddress {
             get {
                 return this.EmailAddressField;
@@ -213,7 +236,7 @@ namespace AnyTrack.Projects.Service_References.BackendProjectService {
             }
         }
         
-        [DataMember()]
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string FirstName {
             get {
                 return this.FirstNameField;
@@ -226,7 +249,7 @@ namespace AnyTrack.Projects.Service_References.BackendProjectService {
             }
         }
         
-        [DataMember()]
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string LastName {
             get {
                 return this.LastNameField;
@@ -239,7 +262,7 @@ namespace AnyTrack.Projects.Service_References.BackendProjectService {
             }
         }
         
-        [DataMember()]
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Password {
             get {
                 return this.PasswordField;
@@ -248,6 +271,32 @@ namespace AnyTrack.Projects.Service_References.BackendProjectService {
                 if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
                     this.PasswordField = value;
                     this.RaisePropertyChanged("Password");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ProductOwner {
+            get {
+                return this.ProductOwnerField;
+            }
+            set {
+                if ((this.ProductOwnerField.Equals(value) != true)) {
+                    this.ProductOwnerField = value;
+                    this.RaisePropertyChanged("ProductOwner");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ScrumMaster {
+            get {
+                return this.ScrumMasterField;
+            }
+            set {
+                if ((this.ScrumMasterField.Equals(value) != true)) {
+                    this.ScrumMasterField = value;
+                    this.RaisePropertyChanged("ScrumMaster");
                 }
             }
         }
@@ -267,16 +316,16 @@ namespace AnyTrack.Projects.Service_References.BackendProjectService {
     public interface IProjectService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/AddProject", ReplyAction="http://tempuri.org/IProjectService/AddProjectResponse")]
-        void AddProject(Project project);
+        void AddProject(AnyTrack.Projects.BackendProjectService.Project project);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/AddProject", ReplyAction="http://tempuri.org/IProjectService/AddProjectResponse")]
-        System.Threading.Tasks.Task AddProjectAsync(Project project);
+        System.Threading.Tasks.Task AddProjectAsync(AnyTrack.Projects.BackendProjectService.Project project);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/UpdateProject", ReplyAction="http://tempuri.org/IProjectService/UpdateProjectResponse")]
-        void UpdateProject(Project project);
+        void UpdateProject(AnyTrack.Projects.BackendProjectService.Project project);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/UpdateProject", ReplyAction="http://tempuri.org/IProjectService/UpdateProjectResponse")]
-        System.Threading.Tasks.Task UpdateProjectAsync(Project project);
+        System.Threading.Tasks.Task UpdateProjectAsync(AnyTrack.Projects.BackendProjectService.Project project);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/DeleteProject", ReplyAction="http://tempuri.org/IProjectService/DeleteProjectResponse")]
         void DeleteProject(System.Guid projectId);
@@ -285,25 +334,25 @@ namespace AnyTrack.Projects.Service_References.BackendProjectService {
         System.Threading.Tasks.Task DeleteProjectAsync(System.Guid projectId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetProject", ReplyAction="http://tempuri.org/IProjectService/GetProjectResponse")]
-        Project GetProject(System.Guid projectId);
+        AnyTrack.Projects.BackendProjectService.Project GetProject(System.Guid projectId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetProject", ReplyAction="http://tempuri.org/IProjectService/GetProjectResponse")]
-        System.Threading.Tasks.Task<Project> GetProjectAsync(System.Guid projectId);
+        System.Threading.Tasks.Task<AnyTrack.Projects.BackendProjectService.Project> GetProjectAsync(System.Guid projectId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetProjects", ReplyAction="http://tempuri.org/IProjectService/GetProjectsResponse")]
-        Project[] GetProjects();
+        System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.Project> GetProjects();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetProjects", ReplyAction="http://tempuri.org/IProjectService/GetProjectsResponse")]
-        System.Threading.Tasks.Task<Project[]> GetProjectsAsync();
+        System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.Project>> GetProjectsAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IProjectServiceChannel : IProjectService, System.ServiceModel.IClientChannel {
+    public interface IProjectServiceChannel : AnyTrack.Projects.BackendProjectService.IProjectService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ProjectServiceClient : System.ServiceModel.ClientBase<IProjectService>, IProjectService {
+    public partial class ProjectServiceClient : System.ServiceModel.ClientBase<AnyTrack.Projects.BackendProjectService.IProjectService>, AnyTrack.Projects.BackendProjectService.IProjectService {
         
         public ProjectServiceClient() {
         }
@@ -324,19 +373,19 @@ namespace AnyTrack.Projects.Service_References.BackendProjectService {
                 base(binding, remoteAddress) {
         }
         
-        public void AddProject(Project project) {
+        public void AddProject(AnyTrack.Projects.BackendProjectService.Project project) {
             base.Channel.AddProject(project);
         }
         
-        public System.Threading.Tasks.Task AddProjectAsync(Project project) {
+        public System.Threading.Tasks.Task AddProjectAsync(AnyTrack.Projects.BackendProjectService.Project project) {
             return base.Channel.AddProjectAsync(project);
         }
         
-        public void UpdateProject(Project project) {
+        public void UpdateProject(AnyTrack.Projects.BackendProjectService.Project project) {
             base.Channel.UpdateProject(project);
         }
         
-        public System.Threading.Tasks.Task UpdateProjectAsync(Project project) {
+        public System.Threading.Tasks.Task UpdateProjectAsync(AnyTrack.Projects.BackendProjectService.Project project) {
             return base.Channel.UpdateProjectAsync(project);
         }
         
@@ -348,19 +397,19 @@ namespace AnyTrack.Projects.Service_References.BackendProjectService {
             return base.Channel.DeleteProjectAsync(projectId);
         }
         
-        public Project GetProject(System.Guid projectId) {
+        public AnyTrack.Projects.BackendProjectService.Project GetProject(System.Guid projectId) {
             return base.Channel.GetProject(projectId);
         }
         
-        public System.Threading.Tasks.Task<Project> GetProjectAsync(System.Guid projectId) {
+        public System.Threading.Tasks.Task<AnyTrack.Projects.BackendProjectService.Project> GetProjectAsync(System.Guid projectId) {
             return base.Channel.GetProjectAsync(projectId);
         }
         
-        public Project[] GetProjects() {
+        public System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.Project> GetProjects() {
             return base.Channel.GetProjects();
         }
         
-        public System.Threading.Tasks.Task<Project[]> GetProjectsAsync() {
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.Project>> GetProjectsAsync() {
             return base.Channel.GetProjectsAsync();
         }
     }

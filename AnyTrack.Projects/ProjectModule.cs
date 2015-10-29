@@ -1,5 +1,8 @@
 ﻿using System;
-using AnyTrack.Projects.Service_References.BackendProjectService;
+using AnyTrack.Infrastructure;
+using AnyTrack.Projects.BackendProjectService;
+using AnyTrack.Projects.ServiceGateways;
+using AnyTrack.Projects.Views;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Regions;
@@ -59,6 +62,12 @@ namespace AnyTrack.Projects
         {
             // regionManager.RequestNavigate(RegionNames.AppContainer, )
             container.RegisterType<IProjectService, ProjectServiceClient>(new InjectionConstructor());
+
+            container.RegisterType<IProjectServiceGateway, ProjectServiceGateway>();
+
+            container.RegisterType<object, CreateProject>("Project");
+
+            regionManager.RequestNavigate(RegionNames.AppContainer, "Project");
         }
 
         #endregion 

@@ -16,10 +16,13 @@
   <xs:element name="Project" nillable="true" type="tns:Project" />
   <xs:complexType name="NewUser">
     <xs:sequence>
+      <xs:element minOccurs="0" name="Developer" type="xs:boolean" />
       <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductOwner" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ScrumMaster" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="NewUser" nillable="true" type="tns:NewUser" />
