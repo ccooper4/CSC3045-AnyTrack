@@ -95,7 +95,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AccountService.svc" />
-    <Content Include="DateTimeService.svc" />
     <Content Include="Unity.Wcf.README.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

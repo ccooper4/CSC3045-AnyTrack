@@ -135,9 +135,7 @@
     <Compile Include="Security\GeneratedServiceUserIdentity.cs" />
     <Compile Include="Security\GeneratedServiceUserPrincipal.cs" />
     <Compile Include="Service\AccountService.cs" />
-    <Compile Include="Service\DateTimeService.cs" />
     <Compile Include="Service\IAccountService.cs" />
-    <Compile Include="Service\IDateTimeService.cs" />
     <Compile Include="Service\Model\LoginResult.cs" />
     <Compile Include="Service\Model\NewUser.cs" />
     <Compile Include="Service\Model\UserCredential.cs" />

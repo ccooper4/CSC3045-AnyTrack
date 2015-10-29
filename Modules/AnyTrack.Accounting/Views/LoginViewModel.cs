@@ -154,12 +154,7 @@ namespace AnyTrack.Accounting.Views
 
             serviceGateway.LoginAccount(user);
 
-            // regionManager.RequestNavigate(Infrastructure.RegionNames.MainRegion, "Login");
-            var time = new DateTimeServiceClient();
-
-            var authCookie = Thread.CurrentPrincipal.GetAuthCookie();
-
-            var date = time.GetCurrentDate();
+            regionManager.RequestNavigate(Infrastructure.RegionNames.MainRegion, "Login");
         }
 
         /// <summary>
