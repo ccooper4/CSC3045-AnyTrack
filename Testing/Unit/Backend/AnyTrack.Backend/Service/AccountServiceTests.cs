@@ -14,6 +14,8 @@ using FluentAssertions;
 using System.Web.Security;
 using System.Web.Helpers;
 using System.Threading;
+using System.ServiceModel;
+using AnyTrack.Backend.Faults;
 
 namespace Unit.Backend.AnyTrack.Backend.Service.AccountServiceTests
 {
@@ -82,7 +84,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.AccountServiceTests
         }
 
         [Test]
-        [ExpectedException(typeof(MembershipCreateUserException))]
+        [ExpectedException(typeof(FaultException<UserAlreadyExistsFault>))]
         public void CreateNewAccountWithDuplicateEmail()
         {
             var userList = new List<User>()

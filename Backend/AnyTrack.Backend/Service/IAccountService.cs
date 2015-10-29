@@ -1,4 +1,6 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
+using AnyTrack.Backend.Faults;
 using AnyTrack.Backend.Service.Model;
 
 namespace AnyTrack.Backend.Service
@@ -14,6 +16,7 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         /// <param name="user">The user to register in the membership system.</param>
         [OperationContract]
+        [FaultContract(typeof(UserAlreadyExistsFault))]
         void CreateAccount(NewUser user);
 
         /// <summary>

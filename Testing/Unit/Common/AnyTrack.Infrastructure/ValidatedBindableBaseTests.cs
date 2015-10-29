@@ -1,6 +1,9 @@
 ﻿using AnyTrack.Infrastructure;
+using AnyTrack.Infrastructure.Providers;
 using FluentAssertions;
+using NSubstitute;
 using NUnit.Framework;
+using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +11,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
+using System.Windows;
+using System.Threading;
 
 namespace Unit.Common.AnyTrack.Infrastructure.ValidatedBindableBaseTests
 {
@@ -148,6 +154,50 @@ namespace Unit.Common.AnyTrack.Infrastructure.ValidatedBindableBaseTests
             var errors = vm.GetErrors("Name") as List<string>;
 
             errors.Should().BeNull();
+        }
+
+        #endregion 
+
+        #region ShowMetroDialog(string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, Action<MessageDialogResult> callback = null) Tests 
+
+        [Test]
+        public void ShowMetroDialogWithNoCallBack()
+        {
+            var title = "Test";
+            var message = "Message";
+            vm.MainWindow = Substitute.For<WindowProvider>();
+
+            vm.MainWindow.ShowMessageAsync(Arg.Any<string>(), Arg.Any<string>()).Returns(MessageDialogResult.Affirmative);
+
+            vm.ShowMetroDialog(title, message);
+
+            vm.MainWindow.Received().ShowMessageAsync(title, message);
+        }
+
+        [Test]
+        public void ShowMetroDialogWithCallBack()
+        {
+            var wait = new ManualResetEvent(false); 
+
+            var title = "Test";
+            var message = "Message";
+            var style = MessageDialogStyle.Affirmative;
+            var callback = new Action<MessageDialogResult>(m =>
+            {
+                m.Should().Be(MessageDialogResult.Affirmative);
+                wait.Set();
+            });
+
+            var window = Substitute.For<WindowProvider>();
+
+            window.ShowMessageAsync(Arg.Any<string>(), Arg.Any<string>()).Returns(MessageDialogResult.Affirmative);
+            window.InvokeAction(Arg.Do<Action>(a => a()));
+            vm.MainWindow = window;
+
+            vm.ShowMetroDialog(title, message, style, callback);
+
+            vm.MainWindow.Received().ShowMessageAsync(title, message, style);
+            wait.WaitOne();
         }
 
         #endregion 

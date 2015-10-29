@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.ServiceModel;
+using System.Windows;
+using AnyTrack.Accounting.BackendAccountService;
 using AnyTrack.Accounting.ServiceGateways;
 using AnyTrack.Accounting.ServiceGateways.Models;
 using AnyTrack.Infrastructure;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -307,7 +312,7 @@ namespace AnyTrack.Accounting.Views
         /// <returns>Proceed with registration or not.</returns>
         private bool CanRegister()
         {
-            return true;
+            return !this.HasErrors;
         }
 
         /// <summary>
@@ -335,9 +340,24 @@ namespace AnyTrack.Accounting.Views
                 Developer = developer
             };
 
-            serviceGateway.RegisterAccount(newUser);
+            try
+            {
+                serviceGateway.RegisterAccount(newUser);
 
-            regionManager.RequestNavigate(Infrastructure.RegionNames.AppContainer, "Login");
+                var callback = new Action<MessageDialogResult>(m =>
+                {
+                    if (m == MessageDialogResult.Affirmative)
+                    {
+                        regionManager.RequestNavigate(Infrastructure.RegionNames.AppContainer, "Login");
+                    }
+                });
+
+                this.ShowMetroDialog("Registration successful", "Your user account has been successfully registered.", MessageDialogStyle.Affirmative, callback);
+            }
+            catch (FaultException<UserAlreadyExistsFault>)
+            {
+                this.ShowMetroDialog("Registration was not successful", "Your user account could not be registered because an account with that email address already exists. Please try logging in.", MessageDialogStyle.Affirmative);
+            }
         }
 
         /// <summary>

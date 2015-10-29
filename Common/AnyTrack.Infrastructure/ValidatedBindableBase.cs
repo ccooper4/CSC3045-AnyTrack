@@ -4,9 +4,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using AnyTrack.Infrastructure.Providers;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using Microsoft.Practices.Unity;
 
 namespace AnyTrack.Infrastructure
 {
@@ -63,6 +67,12 @@ namespace AnyTrack.Infrastructure
             }
         }
 
+        /// <summary>
+        /// Gets or sets the Main Window of the application
+        /// </summary>
+        [Dependency]
+        public WindowProvider MainWindow { get; set; }
+
         #endregion
 
         #region Methods 
@@ -75,7 +85,7 @@ namespace AnyTrack.Infrastructure
         /// <param name="propertyName">The property name.</param>
         /// <typeparam name="T">The property type.</typeparam>
         /// <returns>True or false to indicate if the property was changed.</returns>
-        public bool SetProperty<T>(ref T storage, T newValue, [CallerMemberName()]string propertyName = null)
+        public bool SetProperty<T>(ref T storage, T newValue, [System.Runtime.CompilerServices.CallerMemberName()]string propertyName = null)
         {
             if (object.Equals(storage, newValue))
             {
@@ -126,6 +136,30 @@ namespace AnyTrack.Infrastructure
             }
         }
 
+        /// <summary>
+        /// Shows the given message on the UI using the MahMetro Dialog box.
+        /// </summary>
+        /// <param name="title">The title.</param>
+        /// <param name="message">The message to show.</param>
+        /// <param name="style">The dialog style.</param>
+        /// <param name="callback">An action to execute when the user makes a selection. This callback is ran on the UI Thread.</param>
+        public void ShowMetroDialog(string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, Action<MessageDialogResult> callback = null)
+        {
+            var window = MainWindow; 
+
+            var result = MainWindow.ShowMessageAsync(title, message, style).ContinueWith(t =>
+            {
+                if (callback != null)
+                {
+                    var dispatcherAction = new Action(() =>
+                    {
+                        callback(t.Result);
+                    });
+
+                    window.InvokeAction(dispatcherAction);
+                }
+            });
+        }
         #endregion
     }
 }

@@ -187,6 +187,12 @@
     <None Include="Service References\BackendAccountService\AccountService.disco" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Service References\BackendAccountService\AccountService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BackendAccountService\AnyTrack.Accounting.BackendAccountService.LoginResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\BackendAccountService\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>

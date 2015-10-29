@@ -75,7 +75,7 @@
                     <ListView ItemsSource="{Binding Skills}" Padding="0,0,0,10px">
                         <ListView.View>
                             <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Watch List" >
-                                <GridViewColumn Header="Skills" DisplayMemberBinding="{Binding Path=CurrentSkill}" Width="Auto"/>
+                                <GridViewColumn Header="Skills" Width="Auto"/>
                             </GridView>
                         </ListView.View>
                     </ListView>

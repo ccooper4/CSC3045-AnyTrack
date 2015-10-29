@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using AnyTrack.Accounting.BackendAccountService;
@@ -59,7 +60,14 @@ namespace AnyTrack.Accounting.ServiceGateways
                 Developer = registration.Developer,
             };
 
-            client.CreateAccount(newUser);
+            try
+            {
+                client.CreateAccount(newUser);
+            }
+            catch (FaultException<UserAlreadyExistsFault> e)
+            {
+                throw e;
+            }
         }
 
         /// <summary>
