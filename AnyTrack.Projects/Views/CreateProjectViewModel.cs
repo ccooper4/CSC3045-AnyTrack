@@ -130,6 +130,7 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Gets or sets the start date for the project
         /// </summary>
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Project must have start date")]
         public DateTime StartedOn
         {
             get { return startedOn; }

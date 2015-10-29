@@ -127,6 +127,10 @@
     <Compile Include="Migrations\201510282334577_Adding migration to cover T1 and T2 changes.Designer.cs">
       <DependentUpon>201510282334577_Adding migration to cover T1 and T2 changes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510291434411_Adding Project.cs" />
+    <Compile Include="Migrations\201510291434411_Adding Project.Designer.cs">
+      <DependentUpon>201510291434411_Adding Project.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Model\BaseEntity.cs" />
@@ -156,6 +160,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510282334577_Adding migration to cover T1 and T2 changes.resx">
       <DependentUpon>201510282334577_Adding migration to cover T1 and T2 changes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510291434411_Adding Project.resx">
+      <DependentUpon>201510291434411_Adding Project.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
