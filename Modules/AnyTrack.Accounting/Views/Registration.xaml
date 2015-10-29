@@ -42,7 +42,7 @@
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
+                    <RowDefinition ></RowDefinition>
                 </Grid.RowDefinitions>
 
                 <Label Grid.Column="0" Grid.Row="0" Name="EmailLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Email Address*:</Label>
@@ -67,31 +67,31 @@
                 
                 <Label Grid.Column="0" Grid.Row="8" Name="SkillSetLabel" VerticalAlignment="Top" HorizontalAlignment="Right" Padding="10px" >Skill Set:</Label>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Row="8" Grid.Column="1">
-                    <DockPanel VerticalAlignment="Center">
-                        <Button Content="Add Skill" DockPanel.Dock="Right" Command="{Binding AddSkillCommand}" Height="4"/>
+                    <DockPanel>
+                        <Button Content="Add" DockPanel.Dock="Right" Command="{Binding AddSkillCommand}" BorderThickness="0" Background="LightGray" Margin="10px,0,0,0" Height="4"/>
                         <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Text="{Binding CurrentSkill}"/>
                     </DockPanel>
 
-                    <ListView ItemsSource="{Binding Skills}" Padding="0,0,0,10px">
-                        <ListView.View>
-                            <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Watch List" >
-                                <GridViewColumn Header="Skills" Width="Auto"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                    <ListBox ItemsSource="{Binding Skills}" Padding="0,0,0,0" Margin="0,10px,0,0" BorderThickness="0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding Path=.}"></Label>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </StackPanel>
                 
                 <Label Grid.Column="0" Grid.Row="9" Name="SecretQuestionLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Secret Question:</Label>
-                <ComboBox Grid.Column="1" Grid.Row="9" ItemsSource="{Binding Categories}" DisplayMemberPath="Name" Height="5" VerticalAlignment="Center" SelectedValuePath="Id" SelectedValue="{Binding CurrentlySelectedCategoryId}" />
+                <ComboBox Grid.Column="1" Grid.Row="9" ItemsSource="{Binding SecretQuestions}" Height="5" VerticalAlignment="Center" />
 
                 <Label Grid.Column="0" Grid.Row="10" Name="SecretAnswerLabel" VerticalAlignment="Top" HorizontalAlignment="Right" Padding="10px" >Secret Answer:</Label>
-                <TextBox Grid.Column="1" Grid.Row="10" VerticalAlignment="Center" Text="{Binding ConfirmPassword}" />
+                <TextBox Grid.Column="1" Grid.Row="10" VerticalAlignment="Center" Text="{Binding ConfirmPassword}"/>
 
             </Grid>
         </GroupBox>
         <WrapPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Margin="10px, 0, 0, 0" Command="{Binding CancelRegisterUserCommand}" >Cancel</Button>
-            <Button Margin="10px, 0, 0, 0" Command="{Binding RegisterUserCommand}" >Register</Button>
+            <Button Margin="10px, 0, 0, 0" Command="{Binding CancelRegisterUserCommand}" BorderThickness="0" Background="LightGray">Cancel</Button>
+            <Button Margin="10px, 0, 0, 0" Command="{Binding RegisterUserCommand}" BorderThickness="0" Background="LightGray" >Register</Button>
         </WrapPanel>
     </Grid>
 </UserControl>

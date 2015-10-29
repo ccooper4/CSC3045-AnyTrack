@@ -123,7 +123,7 @@
     </Compile>
     <Compile Include="ServiceGateways\AccountServiceGateway.cs" />
     <Compile Include="ServiceGateways\IAccountServiceGateway.cs" />
-    <Compile Include="ServiceGateways\Models\AvailableSecretQuestion.cs" />
+    <Compile Include="ServiceGateways\Models\AvailableSecretQuestions.cs" />
     <Compile Include="ServiceGateways\Models\NewUserRegistration.cs" />
     <Compile Include="Views\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>

@@ -84,9 +84,9 @@ namespace AnyTrack.Accounting.Views
         private ObservableCollection<string> skills = new ObservableCollection<string>();
 
         /// <summary>
-        /// The secret questions to present to the user. 
+        /// The secret questions to ask the user.
         /// </summary>
-        private ObservableCollection<AvailableSecretQuestion> secretQuestions;
+        private ObservableCollection<string> secretQuestions;
 
         #endregion
 
@@ -110,6 +110,7 @@ namespace AnyTrack.Accounting.Views
 
             this.regionManager = regionManager;
             this.serviceGateway = gateway;
+            this.secretQuestions = new ObservableCollection<string>(AvailableSecretQuestions.All());
 
             // SecretQuestions = serviceGateway.SecretQuestions();
             RegisterUserCommand = new DelegateCommand(this.RegisterUser, this.CanRegister);
@@ -286,7 +287,10 @@ namespace AnyTrack.Accounting.Views
         /// <summary>
         /// Gets the SecretQuestions property.
         /// </summary>
-        public List<AvailableSecretQuestion> SecretQuestions { get; private set; }
+        public ObservableCollection<string> SecretQuestions
+        {
+            get { return secretQuestions; }
+        }
 
         /// <summary>
         /// Gets the command used to register a user. 
