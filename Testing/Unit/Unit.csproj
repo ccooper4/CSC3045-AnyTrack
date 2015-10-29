@@ -161,6 +161,7 @@
     <Compile Include="Backend\AnyTrack.Backend\Data\EntityRepositoryTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Providers\RoleProviderTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Service\AccountServiceTests.cs" />
+    <Compile Include="Common\AnyTrack.Infrastructure\CookieMessageInspectorTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Service\PrincipalBuilderServiceTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\ValidatedBindableBaseTests.cs" />
     <Compile Include="Extensions.cs" />
