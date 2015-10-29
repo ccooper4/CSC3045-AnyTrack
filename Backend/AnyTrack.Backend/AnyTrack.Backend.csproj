@@ -132,12 +132,12 @@
     <Compile Include="Providers\FormsAuthenticationProvider.cs" />
     <Compile Include="Providers\RoleProvider.cs" />
     <Compile Include="Service\AccountService.cs" />
+    <Compile Include="Service\DateTimeService.cs" />
     <Compile Include="Service\IAccountService.cs" />
-    <Compile Include="Service\ITimeService.cs" />
+    <Compile Include="Service\IDateTimeService.cs" />
     <Compile Include="Service\Model\LoginResult.cs" />
     <Compile Include="Service\Model\NewUser.cs" />
     <Compile Include="Service\Model\UserCredential.cs" />
-    <Compile Include="Service\TimeService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

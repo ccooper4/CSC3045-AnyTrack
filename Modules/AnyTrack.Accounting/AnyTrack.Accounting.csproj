@@ -147,11 +147,11 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Service References\BackendTimeService\TimeService.wsdl" />
-    <None Include="Service References\BackendTimeService\TimeService.xsd">
+    <None Include="Service References\BackendTimeService\DateTimeService.wsdl" />
+    <None Include="Service References\BackendTimeService\DateTimeService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\BackendTimeService\TimeService1.xsd">
+    <None Include="Service References\BackendTimeService\DateTimeService1.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
@@ -179,9 +179,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\BackendTimeService\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\BackendTimeService\TimeService.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\BackendTimeService\configuration91.svcinfo" />

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="819e7740-b143-4da0-abb8-9d829b7fe5f4" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="80613484-13a5-4cd1-b291-9a3f68255ee6" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,13 +19,12 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:5789/TimeService.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:5789/DateTimeService.svc?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="TimeService.disco" MetadataType="Disco" ID="433e2b61-3302-4eee-82b0-75974ad93571" SourceId="1" SourceUrl="http://localhost:5789/TimeService.svc?disco" />
-    <MetadataFile FileName="TimeService.wsdl" MetadataType="Wsdl" ID="6b9cd1c4-145b-48b8-9770-1c2246d80df1" SourceId="1" SourceUrl="http://localhost:5789/TimeService.svc?wsdl" />
-    <MetadataFile FileName="TimeService.xsd" MetadataType="Schema" ID="843cf3cd-6f07-4b4e-9719-719b452e95fe" SourceId="1" SourceUrl="http://localhost:5789/TimeService.svc?xsd=xsd1" />
-    <MetadataFile FileName="TimeService1.xsd" MetadataType="Schema" ID="bf516dd5-3c25-48c2-a2c3-58a6a4981384" SourceId="1" SourceUrl="http://localhost:5789/TimeService.svc?xsd=xsd0" />
+    <MetadataFile FileName="DateTimeService.wsdl" MetadataType="Wsdl" ID="d4d9d71e-5bba-48a4-8533-7ea6ad72796b" SourceId="1" SourceUrl="http://localhost:5789/DateTimeService.svc?wsdl" />
+    <MetadataFile FileName="DateTimeService.xsd" MetadataType="Schema" ID="21112f1f-3113-4f6b-bf3d-1f058e5f999c" SourceId="1" SourceUrl="http://localhost:5789/DateTimeService.svc?xsd=xsd1" />
+    <MetadataFile FileName="DateTimeService1.xsd" MetadataType="Schema" ID="43406a9f-c270-46e2-b6e9-6950de3de1e0" SourceId="1" SourceUrl="http://localhost:5789/DateTimeService.svc?xsd=xsd0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

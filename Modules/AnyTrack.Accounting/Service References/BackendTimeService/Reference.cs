@@ -12,49 +12,49 @@ namespace AnyTrack.Accounting.BackendTimeService {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="BackendTimeService.ITimeService")]
-    public interface ITimeService {
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="BackendTimeService.IDateTimeService")]
+    public interface IDateTimeService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITimeService/DoWork", ReplyAction="http://tempuri.org/ITimeService/DoWorkResponse")]
-        System.DateTime DoWork();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDateTimeService/GetCurrentDate", ReplyAction="http://tempuri.org/IDateTimeService/GetCurrentDateResponse")]
+        System.DateTime GetCurrentDate();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITimeService/DoWork", ReplyAction="http://tempuri.org/ITimeService/DoWorkResponse")]
-        System.Threading.Tasks.Task<System.DateTime> DoWorkAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDateTimeService/GetCurrentDate", ReplyAction="http://tempuri.org/IDateTimeService/GetCurrentDateResponse")]
+        System.Threading.Tasks.Task<System.DateTime> GetCurrentDateAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface ITimeServiceChannel : AnyTrack.Accounting.BackendTimeService.ITimeService, System.ServiceModel.IClientChannel {
+    public interface IDateTimeServiceChannel : AnyTrack.Accounting.BackendTimeService.IDateTimeService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class TimeServiceClient : System.ServiceModel.ClientBase<AnyTrack.Accounting.BackendTimeService.ITimeService>, AnyTrack.Accounting.BackendTimeService.ITimeService {
+    public partial class DateTimeServiceClient : System.ServiceModel.ClientBase<AnyTrack.Accounting.BackendTimeService.IDateTimeService>, AnyTrack.Accounting.BackendTimeService.IDateTimeService {
         
-        public TimeServiceClient() {
+        public DateTimeServiceClient() {
         }
         
-        public TimeServiceClient(string endpointConfigurationName) : 
+        public DateTimeServiceClient(string endpointConfigurationName) : 
                 base(endpointConfigurationName) {
         }
         
-        public TimeServiceClient(string endpointConfigurationName, string remoteAddress) : 
+        public DateTimeServiceClient(string endpointConfigurationName, string remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public TimeServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public DateTimeServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public TimeServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public DateTimeServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
         }
         
-        public System.DateTime DoWork() {
-            return base.Channel.DoWork();
+        public System.DateTime GetCurrentDate() {
+            return base.Channel.GetCurrentDate();
         }
         
-        public System.Threading.Tasks.Task<System.DateTime> DoWorkAsync() {
-            return base.Channel.DoWorkAsync();
+        public System.Threading.Tasks.Task<System.DateTime> GetCurrentDateAsync() {
+            return base.Channel.GetCurrentDateAsync();
         }
     }
 }

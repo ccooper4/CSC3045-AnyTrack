@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="AnyTrack.Backend.Service.TimeService" Factory="AnyTrack.Backend.WebHost.WcfServiceFactory" %>

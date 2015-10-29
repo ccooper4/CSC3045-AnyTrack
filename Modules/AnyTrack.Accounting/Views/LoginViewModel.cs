@@ -155,7 +155,7 @@ namespace AnyTrack.Accounting.Views
             serviceGateway.LoginAccount(user);
 
             // regionManager.RequestNavigate(Infrastructure.RegionNames.MainRegion, "Login");
-            var time = new TimeServiceClient();
+            var time = new DateTimeServiceClient();
 
             var authCookie = Thread.CurrentPrincipal.GetAuthCookie();
 
@@ -165,7 +165,7 @@ namespace AnyTrack.Accounting.Views
                 request.Headers[HttpResponseHeader.SetCookie] = authCookie;
                 OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = request;
 
-                var date = time.DoWork();
+                var date = time.GetCurrentDate();
             }
         }
 

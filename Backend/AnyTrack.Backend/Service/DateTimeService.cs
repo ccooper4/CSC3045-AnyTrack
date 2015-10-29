@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 namespace AnyTrack.Backend.Service
 {
     /// <summary>
-    /// The time service implementation.
+    /// Provides a service for getting the time.
     /// </summary>
-    public class TimeService : ITimeService
+    public class DateTimeService : IDateTimeService
     {
         #region Methods 
 
         /// <summary>
-        /// Returns the current date;
+        /// Gets the current date. 
         /// </summary>
         /// <returns>The current date.</returns>
-        [PrincipalPermission(SecurityAction.Demand, Authenticated = true)]
-        public DateTime GetDate()
+        [PrincipalPermission(SecurityAction.Demand, Name = "andrew.fletcher16@gmail.com")]
+        public DateTime GetCurrentDate()
         {
             return DateTime.Now;
         }
