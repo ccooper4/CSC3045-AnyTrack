@@ -25,11 +25,5 @@ namespace AnyTrack.Accounting.ServiceGateways
         /// <param name="login">The login details.</param>
         /// <returns>The result from the login operation.</returns>
         LoginResult LoginAccount(UserCredential login);
-
-        /// <summary>
-        /// Returns the supported list of secret questions.
-        /// </summary>
-        /// <returns>the supported list of secret questions.</returns>
-        List<AvailableSecretQuestion> SecretQuestions();
     }
 }
