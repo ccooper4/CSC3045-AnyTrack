@@ -51,7 +51,18 @@ namespace AnyTrack.Infrastructure
         {
             get
             {
-                return new GenericIdentity(loginResult.EmailAddress, "FormsAuthentication");
+                return new ServiceUserIdentity(loginResult.EmailAddress);
+            }
+        }
+
+        /// <summary>
+        /// Gets the auth cookie.
+        /// </summary>
+        public string AuthCookie
+        {
+            get
+            {
+                return authCookie;
             }
         }
 

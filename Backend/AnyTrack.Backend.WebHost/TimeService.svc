@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="AnyTrack.Backend.WebHost.TimeService" CodeBehind="TimeService.svc.cs" %>
