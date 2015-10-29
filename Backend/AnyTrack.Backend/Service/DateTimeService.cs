@@ -18,7 +18,7 @@ namespace AnyTrack.Backend.Service
         /// Gets the current date. 
         /// </summary>
         /// <returns>The current date.</returns>
-        [PrincipalPermission(SecurityAction.Demand, Name = "andrew.fletcher16@gmail.com")]
+        [PrincipalPermission(SecurityAction.Demand, Name = "test@agile.local")]
         public DateTime GetCurrentDate()
         {
             return DateTime.Now;

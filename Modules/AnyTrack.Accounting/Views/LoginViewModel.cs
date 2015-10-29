@@ -159,14 +159,7 @@ namespace AnyTrack.Accounting.Views
 
             var authCookie = Thread.CurrentPrincipal.GetAuthCookie();
 
-            using (new OperationContextScope(time.InnerChannel))
-            {
-                var request = new HttpRequestMessageProperty();
-                request.Headers[HttpResponseHeader.SetCookie] = authCookie;
-                OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = request;
-
-                var date = time.GetCurrentDate();
-            }
+            var date = time.GetCurrentDate();
         }
 
         /// <summary>
