@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.ServiceModel;
@@ -23,7 +24,7 @@ namespace AnyTrack.Accounting.Views
     /// <summary>
     /// The view model for the login page. 
     /// </summary>
-    public class LoginViewModel : BindableBase
+    public class LoginViewModel : ValidatedBindableBase
     {
         #region Fields
 
@@ -77,6 +78,8 @@ namespace AnyTrack.Accounting.Views
         /// <summary>
         /// Gets or sets Email property.
         /// </summary>
+        [Required]
+        [EmailAddress]
         public string Email
         {
             get
@@ -93,6 +96,7 @@ namespace AnyTrack.Accounting.Views
         /// <summary>
         /// Gets or sets Password property.
         /// </summary>
+        [Required]
         public string Password
         {
             get
