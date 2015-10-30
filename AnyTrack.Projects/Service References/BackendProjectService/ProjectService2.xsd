@@ -10,6 +10,8 @@
       <xs:element minOccurs="0" name="ProjectManager" nillable="true" type="tns:NewUser" />
       <xs:element minOccurs="0" name="ScrumMasters" nillable="true" type="tns:ArrayOfNewUser" />
       <xs:element minOccurs="0" name="StartedOn" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Stories" nillable="true" type="tns:ArrayOfStory" />
+      <xs:element minOccurs="0" name="StoryId" nillable="true" type="tns:Story" />
       <xs:element minOccurs="0" name="VersionControl" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
@@ -32,6 +34,26 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfNewUser" nillable="true" type="tns:ArrayOfNewUser" />
+  <xs:complexType name="ArrayOfStory">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Story" nillable="true" type="tns:Story" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfStory" nillable="true" type="tns:ArrayOfStory" />
+  <xs:complexType name="Story">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Assignee" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConditionsOfSatisfaction" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Project" nillable="true" type="tns:Project" />
+      <xs:element minOccurs="0" name="ProjectId" type="ser:guid" />
+      <xs:element minOccurs="0" name="StoryId" type="ser:guid" />
+      <xs:element minOccurs="0" name="StoryName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Summary" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tester" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Story" nillable="true" type="tns:Story" />
   <xs:complexType name="ArrayOfProject">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Project" nillable="true" type="tns:Project" />

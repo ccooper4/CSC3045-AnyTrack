@@ -50,9 +50,9 @@ namespace AnyTrack.Backend.Service.Model
         public string Tester { get; set; }
 
         /// <summary>
-        /// Gets the projectId
+        /// Gets or sets the projectId
         /// </summary>
-        public Guid ProjectId { get; }
+        public Guid ProjectId { get; set; }
 
         /// <summary>
         /// Gets or sets the conditions of satisfaction

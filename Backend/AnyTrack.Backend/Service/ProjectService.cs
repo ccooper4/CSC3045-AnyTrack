@@ -210,17 +210,18 @@ namespace AnyTrack.Backend.Service
 
             foreach (var story in query.Stories)
             {
-                project.Stories.Add(new Story
-                {
-                    StoryId = new Guid(),
-                    StoryName = "Adding implementation",
-                    Summary = "This will allow the user to imply things",
-                    Description = "As a user I would like to be able to implicate",
-                    ConditionsOfSatisfaction = "shit should work",
-                    Assignee = "Richard",
-                    Tester = "Chris",
-                });
             }
+
+            project.Stories.Add(new Story
+            {
+                StoryId = new Guid(),
+                StoryName = "Adding implementation",
+                Summary = "This will allow the user to imply things",
+                Description = "As a user I would like to be able to implicate",
+                ConditionsOfSatisfaction = "shit should work",
+                Assignee = "Richard",
+                Tester = "Chris",
+            });
 
             return project;
         }
@@ -285,6 +286,19 @@ namespace AnyTrack.Backend.Service
                         Password = scrumMaster.Password,
                         FirstName = scrumMaster.FirstName,
                         LastName = scrumMaster.LastName
+                    });
+                }
+
+                foreach (var story in query2.Stories)
+                {
+                    project.Stories.Add(new Story
+                    {
+                        StoryName = story.StoryName,
+                        Description = story.Description,
+                        Summary = story.Summary,
+                        Tester = story.Tester,
+                        ConditionsOfSatisfaction = story.ConditionsOfSatisfaction,
+                        Assignee = story.Assignee
                     });
                 }
             }

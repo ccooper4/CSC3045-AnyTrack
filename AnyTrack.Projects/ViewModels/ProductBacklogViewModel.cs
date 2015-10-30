@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Windows;
 using AnyTrack.Infrastructure;
+using AnyTrack.Infrastructure.BackendAccountService;
 using AnyTrack.Projects.BackendProjectService;
 using AnyTrack.Projects.ServiceGateways;
 using MahApps.Metro.Controls;
@@ -110,7 +111,7 @@ namespace AnyTrack.Projects.Views
             {
                 Name = "Project Name",
                 Description = "Description",
-                ProjectManager = new NewUser
+                ProjectManager = new NewUser()
                 {
                     EmailAddress = "rmoorhead03@qub.ac.uk",
                     FirstName = "Richard",
@@ -118,8 +119,21 @@ namespace AnyTrack.Projects.Views
                     Password = "abc123",
                     Developer = true
                 },
-                StartedOn = new DateTime(2015, 10, 12)
+                StartedOn = new DateTime(2015, 10, 12),
+                Stories = new List<Story>(),
+                ProjectId = new Guid()
             };
+
+            project.Stories.Add(new Story
+            {
+                StoryName = "Test Story",
+                Summary = "Test Summary",
+                Tester = "Joe Tester",
+                Assignee = "Bob",
+                Description = "Test description",
+                ConditionsOfSatisfaction = "None",
+                StoryId = new Guid()
+            });
 
             return project;
         }

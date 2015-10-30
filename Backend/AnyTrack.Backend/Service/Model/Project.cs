@@ -77,7 +77,7 @@ namespace AnyTrack.Backend.Service.Model
         /// <summary>
         /// Gets or sets Stories
         /// </summary>
-        public ICollection<Story> Stories { get; set; }
+        public List<Story> Stories { get; set; }
 
         #region Methods
 

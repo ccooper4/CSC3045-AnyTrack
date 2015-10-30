@@ -107,6 +107,9 @@
     <None Include="Service References\BackendProjectService\AnyTrack.Projects.BackendProjectService.Project.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\BackendProjectService\AnyTrack.Projects.BackendProjectService.Story.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\BackendProjectService\ProjectService.wsdl" />
     <None Include="Service References\BackendProjectService\ProjectService.xsd">
       <SubType>Designer</SubType>

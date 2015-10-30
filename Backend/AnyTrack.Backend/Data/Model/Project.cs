@@ -50,7 +50,7 @@ namespace AnyTrack.Backend.Data.Model
         /// <summary>
         /// Gets or sets Stories
         /// </summary>
-        public virtual ICollection<Story> Stories { get; set; }
+        public virtual List<Story> Stories { get; set; }
 
         /*
         /// <summary>
