@@ -43,6 +43,9 @@ namespace AnyTrack.Infrastructure.BackendAccountService {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool ScrumMasterField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SkillsField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -140,6 +143,19 @@ namespace AnyTrack.Infrastructure.BackendAccountService {
                 if ((this.ScrumMasterField.Equals(value) != true)) {
                     this.ScrumMasterField = value;
                     this.RaisePropertyChanged("ScrumMaster");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Skills {
+            get {
+                return this.SkillsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SkillsField, value) != true)) {
+                    this.SkillsField = value;
+                    this.RaisePropertyChanged("Skills");
                 }
             }
         }

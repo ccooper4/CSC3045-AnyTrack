@@ -47,6 +47,11 @@ namespace AnyTrack.Backend.Data.Model
         public virtual bool Developer { get; set; }
 
         /// <summary>
+        /// Gets or sets a comma seperated list of the skils.
+        /// </summary>
+        public virtual string Skills { get; set; }
+
+        /// <summary>
         /// Gets or sets the roles a user is assigned to.
         /// </summary>
         public virtual ICollection<Role> Roles { get; set; }

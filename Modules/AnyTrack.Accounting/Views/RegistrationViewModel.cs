@@ -341,7 +341,8 @@ namespace AnyTrack.Accounting.Views
                 Password = password,
                 ProductOwner = productOwner,
                 ScrumMaster = scrumMaster,
-                Developer = developer
+                Developer = developer,
+                Skills = string.Join(",", Skills)
             };
 
             try
