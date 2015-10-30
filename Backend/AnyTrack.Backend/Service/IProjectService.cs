@@ -19,14 +19,14 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         /// <param name="project">Project to be added</param>
         [OperationContract]
-        void AddProject(Project project);
+        void AddProject(ServiceProject project);
 
         /// <summary>
         /// Update project in the database
         /// </summary>
         /// <param name="project">Project to be updated</param>
         [OperationContract]
-        void UpdateProject(Project project);
+        void UpdateProject(ServiceProject project);
 
         /// <summary>
         /// Delete a project in the database
@@ -41,13 +41,13 @@ namespace AnyTrack.Backend.Service
         /// <param name="projectId">ID of the project to be retrieved from the database</param>
         /// <returns>Specified Project</returns>
         [OperationContract]
-        Project GetProject(Guid projectId);
+        ServiceProject GetProject(Guid projectId);
 
         /// <summary>
         /// Gets all existing projects from the database
         /// </summary>
         /// <returns>List of all Projects in the database</returns>
         [OperationContract]
-        List<Project> GetProjects();
+        List<ServiceProject> GetProjects();
     }
 }

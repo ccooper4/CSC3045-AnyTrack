@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using AnyTrack.Backend.Data;
+using AnyTrack.Backend.Data.Model;
 using AnyTrack.Backend.Service.Model;
 
 namespace AnyTrack.Backend.Service
@@ -29,6 +30,11 @@ namespace AnyTrack.Backend.Service
         /// <param name="unitOfWork">The unit of work</param>
         public ProjectService(IUnitOfWork unitOfWork)
         {
+            if (unitOfWork == null)
+            {
+                throw new ArgumentNullException("unitOfWork");
+            }
+
             this.unitOfWork = unitOfWork;
         }
 
@@ -38,16 +44,20 @@ namespace AnyTrack.Backend.Service
         /// Adds a Project to the database
         /// </summary>
         /// <param name="project">Project to be added</param>
-        public void AddProject(Project project)
+        public void AddProject(ServiceProject project)
         {
+            if (project == null)
+            {
+                throw new ArgumentNullException("project");
+            }
+
             var projectExists = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Id == project.ProjectId);
 
             if (projectExists == null)
             {
-                Data.Model.Project dataProject = new Data.Model.Project
+                Project dataProject = new Project
                 {
                     Description = project.Description,
-                    Id = project.ProjectId,
                     Name = project.Name,
                     ProductOwner = new Data.Model.User
                     {
@@ -68,6 +78,9 @@ namespace AnyTrack.Backend.Service
                     StartedOn = project.StartedOn,
                     VersionControl = project.VersionControl
                 };
+
+                dataProject.ScrumMasters = new List<User>();
+                dataProject.Id = project.ProjectId;
 
                 foreach (var scrumMaster in project.ScrumMasters)
                 {
@@ -93,7 +106,7 @@ namespace AnyTrack.Backend.Service
         /// Update project in the database
         /// </summary>
         /// <param name="project">Project to be updated</param>
-        public void UpdateProject(Project project)
+        public void UpdateProject(ServiceProject project)
         {
             var updatedProject = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Id == project.ProjectId);
 
@@ -162,7 +175,7 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         /// <param name="projectId">ID of the project to be retrieved from the database</param>
         /// <returns>Specified Project</returns>
-        public Project GetProject(Guid projectId)
+        public ServiceProject GetProject(Guid projectId)
         {
             var query = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Id == projectId);
 
@@ -171,7 +184,7 @@ namespace AnyTrack.Backend.Service
                 throw new ArgumentException("Project does not exist");
             }
 
-            Project project = new Project
+            ServiceProject project = new ServiceProject
             {
                 Description = query.Description,
                 ProjectId = query.Id,
@@ -216,9 +229,9 @@ namespace AnyTrack.Backend.Service
         /// Gets all existing projects from the database
         /// </summary>
         /// <returns>List of all Projects in the database</returns>
-        public List<Project> GetProjects()
+        public List<ServiceProject> GetProjects()
         {
-            var query = unitOfWork.ProjectRepository.Items.Select(p => new Project
+            var query = unitOfWork.ProjectRepository.Items.Select(p => new ServiceProject
             {
                 ProjectId = p.Id,
                 Description = p.Description,

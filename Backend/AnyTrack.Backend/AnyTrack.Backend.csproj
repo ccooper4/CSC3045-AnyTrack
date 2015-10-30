@@ -138,7 +138,7 @@
     <Compile Include="Providers\RoleProvider.cs" />
     <Compile Include="Service\AccountService.cs" />
     <Compile Include="Service\IProjectService.cs" />
-    <Compile Include="Service\Model\Project.cs" />
+    <Compile Include="Service\Model\ServiceProject.cs" />
     <Compile Include="Service\ProjectService.cs" />
     <Compile Include="Service\DateTimeService.cs" />
     <Compile Include="Service\IAccountService.cs" />
