@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Windows;
@@ -90,12 +91,23 @@ namespace AnyTrack.Projects.Views
         }
 
         /// <summary>
-        /// Gets or sets the story name
+        /// Gets or sets the story title
         /// </summary>
-        public string StoryName
+        public string StoryTitle
         {
             get { return storyName; }
             set { SetProperty(ref storyName, value); }
+        }
+
+        /// <summary>
+        /// Gets the stories
+        /// </summary>
+        public List<Story> Stories
+        {
+            get
+            {
+                return project.Stories;
+            }
         }
         #endregion Properties
 
@@ -126,7 +138,7 @@ namespace AnyTrack.Projects.Views
 
             project.Stories.Add(new Story
             {
-                StoryName = "Test Story",
+                StoryName = "sdfjsjgbn jsoghskfjhsjkf hsjkf hjskf hjafj jmaf ljald hjalf hjafl k",
                 Summary = "Test Summary",
                 Tester = "Joe Tester",
                 Assignee = "Bob",
@@ -135,8 +147,22 @@ namespace AnyTrack.Projects.Views
                 StoryId = new Guid()
             });
 
+            project.Stories.Add(new Story
+            {
+                StoryName = "jskgksfj ks gh kskf hjslkf hjslfjslll sgj ksfh ksf ps l jl",
+                Summary = "Test Summary",
+                Tester = "Joe Tester",
+                Assignee = "Bob",
+                Description = "Test description",
+                ConditionsOfSatisfaction = "None",
+                StoryId = new Guid()
+            });
+
+            projectName = "Project!";
+
             return project;
         }
+
         #endregion Methods
     }
 }
