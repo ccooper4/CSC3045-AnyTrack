@@ -215,6 +215,7 @@ namespace AnyTrack.Backend.Service
                     StoryId = story.Id,
                     StoryName = story.StoryName,
                     Summary = story.Summary,
+                    Description = story.Description,
                     ConditionsOfSatisfaction = story.ConditionsOfSatisfaction,
                     Assignee = story.Assignee,
                     Tester = story.Tester,

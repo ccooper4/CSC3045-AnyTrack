@@ -35,6 +35,11 @@ namespace AnyTrack.Backend.Service.Model
         public string Summary { get; set; }
 
         /// <summary>
+        /// Gets or sets the story description
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
         /// Gets or sets the assignee
         /// </summary>
         public string Assignee { get; set; }
