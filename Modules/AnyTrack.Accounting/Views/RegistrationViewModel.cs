@@ -333,7 +333,7 @@ namespace AnyTrack.Accounting.Views
         /// </summary>
         private void RegisterUser()
         {
-            var newUser = new NewUserRegistration
+            var newUser = new NewUser
             {
                 EmailAddress = email,
                 FirstName = firstName,

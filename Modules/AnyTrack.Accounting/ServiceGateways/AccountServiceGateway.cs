@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using AnyTrack.Accounting.ServiceGateways.Models;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.BackendAccountService;
+using AnyTrack.Infrastructure.Security;
 
 namespace AnyTrack.Accounting.ServiceGateways
 {
@@ -50,22 +51,11 @@ namespace AnyTrack.Accounting.ServiceGateways
         /// Registers an account given the user details.
         /// </summary>
         /// <param name="registration">The registration details.</param>
-        public void RegisterAccount(NewUserRegistration registration)
+        public void RegisterAccount(NewUser registration)
         {
-            var newUser = new NewUser
-            {
-                EmailAddress = registration.EmailAddress,
-                FirstName = registration.FirstName,
-                LastName = registration.LastName,
-                Password = registration.Password,
-                ProductOwner = registration.ProductOwner,
-                ScrumMaster = registration.ScrumMaster,
-                Developer = registration.Developer,
-            };
-
             try
             {
-                client.CreateAccount(newUser);
+                client.CreateAccount(registration);
             }
             catch (FaultException<UserAlreadyExistsFault> e)
             {
@@ -80,26 +70,44 @@ namespace AnyTrack.Accounting.ServiceGateways
         /// <returns>The result of the login operation.</returns>
         public LoginResult LoginAccount(UserCredential login)
         {
-            var user = new UserCredential
+            // We need to unit test this method, however, OperationContext doesn't lend it's self well to being mocked. 
+            // As a result, for this one occurance, we are best working around the issue. 
+            OperationContextScope scope = null;
+            try
             {
-                EmailAddress = login.EmailAddress,
-                Password = login.Password
-            };
+                if (client as AccountServiceClient != null)
+                {
+                    scope = new OperationContextScope((client as AccountServiceClient).InnerChannel);
+                }
 
-            using (new OperationContextScope((client as AccountServiceClient).InnerChannel))
-            {
-                var result = client.LogIn(user);
+                var result = client.LogIn(login);
+
+                var cookie = string.Empty;
 
                 if (result.Success)
                 {
-                    var responseMessageProperty = (HttpResponseMessageProperty)OperationContext.Current.IncomingMessageProperties[HttpResponseMessageProperty.Name];
-                    var cookie = responseMessageProperty.Headers.Get("Set-Cookie");
+                    if (scope != null)
+                    {
+                        var responseMessageProperty = (HttpResponseMessageProperty)OperationContext.Current.IncomingMessageProperties[HttpResponseMessageProperty.Name];
+                        cookie = responseMessageProperty.Headers.Get("Set-Cookie");
+                    }
 
                     var principal = new ServiceUserPrincipal(result, cookie);
                     Thread.CurrentPrincipal = principal;
                 }
 
                 return result;
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                if (scope != null)
+                {
+                    scope.Dispose();
+                }
             }
         }
 

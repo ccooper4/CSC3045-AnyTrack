@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AnyTrack.Infrastructure.BackendAccountService;
 
-namespace AnyTrack.Infrastructure
+namespace AnyTrack.Infrastructure.Security
 {
     /// <summary>
     /// Provides a custom IPrincipal that can store the data required to authenticate against the backend. 
@@ -77,7 +77,7 @@ namespace AnyTrack.Infrastructure
         /// <returns>A true or false flag.</returns>
         public bool IsInRole(string role)
         {
-            return true;
+            return loginResult.AssignedRoles.Any(r => r.Role == role);
         }
 
         #endregion 

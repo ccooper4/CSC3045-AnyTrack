@@ -5,7 +5,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AnyTrack.Infrastructure
+namespace AnyTrack.Infrastructure.Security
 {
     /// <summary>
     /// Represents a service user's identity.

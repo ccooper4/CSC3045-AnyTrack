@@ -17,11 +17,6 @@ namespace AnyTrack.Backend.Service.Model
         public string EmailAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the user's password.
-        /// </summary>
-        public string Password { get; set; }
-
-        /// <summary>
         /// Gets or sets the first name.
         /// </summary>
         public string FirstName { get; set; }
@@ -50,5 +45,10 @@ namespace AnyTrack.Backend.Service.Model
         /// Gets or sets a value indicating whether the success flag has been set.
         /// </summary>
         public bool Success { get; set; }
+
+        /// <summary>
+        /// Gets or sets information on the user's roles.
+        /// </summary>
+        public List<RoleInfo> AssignedRoles { get; set; }
     }
 }

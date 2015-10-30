@@ -98,8 +98,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="ServiceUserIdentity.cs" />
-    <Compile Include="ServiceUserPrincipal.cs" />
+    <Compile Include="Security\ServiceUserIdentity.cs" />
+    <Compile Include="Security\ServiceUserPrincipal.cs" />
     <Compile Include="ValidatedBindableBase.cs" />
   </ItemGroup>
   <ItemGroup>

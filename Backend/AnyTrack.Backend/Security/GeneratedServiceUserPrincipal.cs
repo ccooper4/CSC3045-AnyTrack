@@ -65,7 +65,7 @@ namespace AnyTrack.Backend.Security
         /// <returns>A true or false flag.</returns>
         public bool IsInRole(string role)
         {
-            return true;
+            return roles.Any(r => r == role);
         }
 
         #endregion 

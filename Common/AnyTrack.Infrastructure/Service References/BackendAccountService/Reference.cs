@@ -254,6 +254,9 @@ namespace AnyTrack.Infrastructure.BackendAccountService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Infrastructure.BackendAccountService.RoleInfo[] AssignedRolesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool DeveloperField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -264,9 +267,6 @@ namespace AnyTrack.Infrastructure.BackendAccountService {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string LastNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PasswordField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool ProductOwnerField;
@@ -284,6 +284,19 @@ namespace AnyTrack.Infrastructure.BackendAccountService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Infrastructure.BackendAccountService.RoleInfo[] AssignedRoles {
+            get {
+                return this.AssignedRolesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AssignedRolesField, value) != true)) {
+                    this.AssignedRolesField = value;
+                    this.RaisePropertyChanged("AssignedRoles");
+                }
             }
         }
         
@@ -340,19 +353,6 @@ namespace AnyTrack.Infrastructure.BackendAccountService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Password {
-            get {
-                return this.PasswordField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
-                    this.PasswordField = value;
-                    this.RaisePropertyChanged("Password");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool ProductOwner {
             get {
                 return this.ProductOwnerField;
@@ -387,6 +387,83 @@ namespace AnyTrack.Infrastructure.BackendAccountService {
                 if ((this.SuccessField.Equals(value) != true)) {
                     this.SuccessField = value;
                     this.RaisePropertyChanged("Success");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RoleInfo", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
+    [System.SerializableAttribute()]
+    public partial class RoleInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.Guid> ProjectIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RoleField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.Guid> SprintIDField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.Guid> ProjectID {
+            get {
+                return this.ProjectIDField;
+            }
+            set {
+                if ((this.ProjectIDField.Equals(value) != true)) {
+                    this.ProjectIDField = value;
+                    this.RaisePropertyChanged("ProjectID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Role {
+            get {
+                return this.RoleField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RoleField, value) != true)) {
+                    this.RoleField = value;
+                    this.RaisePropertyChanged("Role");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.Guid> SprintID {
+            get {
+                return this.SprintIDField;
+            }
+            set {
+                if ((this.SprintIDField.Equals(value) != true)) {
+                    this.SprintIDField = value;
+                    this.RaisePropertyChanged("SprintID");
                 }
             }
         }

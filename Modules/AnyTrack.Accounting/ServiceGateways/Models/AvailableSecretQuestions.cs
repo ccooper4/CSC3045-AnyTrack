@@ -28,11 +28,6 @@ namespace AnyTrack.Accounting.ServiceGateways.Models
         public static readonly string FIRSTPET = "What is the name of you first pet?";
 
         /// <summary>
-        /// The string representation of the question.
-        /// </summary>
-        private readonly string name;
-
-        /// <summary>
         /// All the secret questions.
         /// </summary>
         /// <returns>A list of the questions.</returns>

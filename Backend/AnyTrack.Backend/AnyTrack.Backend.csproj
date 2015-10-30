@@ -138,6 +138,7 @@
     <Compile Include="Service\IAccountService.cs" />
     <Compile Include="Service\Model\LoginResult.cs" />
     <Compile Include="Service\Model\NewUser.cs" />
+    <Compile Include="Service\Model\RoleInfo.cs" />
     <Compile Include="Service\Model\UserCredential.cs" />
     <Compile Include="Service\PrincipalBuilderService.cs" />
   </ItemGroup>
