@@ -84,6 +84,7 @@ namespace AnyTrack.Projects.ServiceGateways
         {
             return client.GetProjects();
         }
+
         #endregion
     }
 }

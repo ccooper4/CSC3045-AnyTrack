@@ -49,5 +49,12 @@ namespace AnyTrack.Backend.Service
         /// <returns>List of all Projects in the database</returns>
         [OperationContract]
         List<Project> GetProjects();
+
+        /// <summary>
+        /// Gets all existing stories from the database
+        /// </summary>
+        /// <returns>List of all Stories in the database</returns>
+        [OperationContract]
+        List<Story> GetStories();
     }
 }

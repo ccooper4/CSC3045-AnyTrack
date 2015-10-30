@@ -34,12 +34,20 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Project Name
         /// </summary>
+        [Required]
         private string projectName;
 
         /// <summary>
         /// Story Name
         /// </summary>
+        [Required]
         private string storyName;
+
+        /// <summary>
+        /// The project
+        /// </summary>
+        [Required]
+        private Project project;
 
         #endregion
 
@@ -64,6 +72,7 @@ namespace AnyTrack.Projects.Views
 
             this.regionManager = regionManager;
             this.serviceGateway = serviceGateway;
+            this.project = BuildMockProject();
         }
 
         #endregion
@@ -87,6 +96,33 @@ namespace AnyTrack.Projects.Views
             get { return storyName; }
             set { SetProperty(ref storyName, value); }
         }
-        #endregion
+        #endregion Properties
+
+        #region Methods
+
+        /// <summary>
+        /// Method to construct mock project for purpose of Backlog creation
+        /// </summary>
+        /// <returns>retruns a mock project</returns>
+        public Project BuildMockProject()
+        {
+            Project project = new Project
+            {
+                Name = "Project Name",
+                Description = "Description",
+                ProjectManager = new NewUser
+                {
+                    EmailAddress = "rmoorhead03@qub.ac.uk",
+                    FirstName = "Richard",
+                    LastName = "Moorhead",
+                    Password = "abc123",
+                    Developer = true
+                },
+                StartedOn = new DateTime(2015, 10, 12)
+            };
+
+            return project;
+        }
+        #endregion Methods
     }
 }

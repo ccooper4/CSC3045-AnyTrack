@@ -212,17 +212,37 @@ namespace AnyTrack.Backend.Service
             {
                 project.Stories.Add(new Story
                 {
-                    StoryId = story.Id,
-                    StoryName = story.StoryName,
-                    Summary = story.Summary,
-                    Description = story.Description,
-                    ConditionsOfSatisfaction = story.ConditionsOfSatisfaction,
-                    Assignee = story.Assignee,
-                    Tester = story.Tester,
+                    StoryId = new Guid(),
+                    StoryName = "Adding implementation",
+                    Summary = "This will allow the user to imply things",
+                    Description = "As a user I would like to be able to implicate",
+                    ConditionsOfSatisfaction = "shit should work",
+                    Assignee = "Richard",
+                    Tester = "Chris",
                 });
             }
 
             return project;
+        }
+
+        /// <summary>
+        /// Gets all existing stories from the database
+        /// </summary>
+        /// <returns>returns a list of stories</returns>
+        public List<Story> GetStories()
+        {
+            var query = unitOfWork.StoryRepository.Items.Select(s => new Story
+            {
+                StoryId = s.Id,
+                StoryName = s.StoryName,
+                Summary = s.Summary,
+                Description = s.Description,
+                ConditionsOfSatisfaction = s.ConditionsOfSatisfaction,
+                Assignee = s.Assignee,
+                Tester = s.Tester
+            }).ToList();
+
+            return query;
         }
 
         /// <summary>
