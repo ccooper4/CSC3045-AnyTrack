@@ -109,6 +109,17 @@ namespace AnyTrack.Projects.Views
                 return project.Stories;
             }
         }
+
+        /// <summary>
+        /// Gets the projects
+        /// </summary>
+        public List<Project> Projects
+        {
+            get
+            {
+                return serviceGateway.GetProjects();
+            }
+        }
         #endregion Properties
 
         #region Methods
@@ -116,7 +127,7 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Method to construct mock project for purpose of Backlog creation
         /// </summary>
-        /// <returns>retruns a mock project</returns>
+        /// <returns>returns a mock project</returns>
         public Project BuildMockProject()
         {
             Project project = new Project
