@@ -14,6 +14,7 @@ using Prism.Regions;
 using Unit.Backend.AnyTrack.Backend.Data.EntityRepositoryTests;
 using AnyTrack.Accounting.ServiceGateways;
 using AnyTrack.Accounting.ServiceGateways.Models;
+using AnyTrack.Infrastructure.BackendAccountService;
 
 namespace Unit.Modules.AnyTrack.Accounting.Views
 {
@@ -68,7 +69,55 @@ namespace Unit.Modules.AnyTrack.Accounting.Views
         }
 
         #endregion
-        
+
+        #region CanSignUp() Tests
+
+        [Test]
+        public void TestCanSignUp()
+        {
+            var result = loginViewModel.Call<bool>("CanSignUp");
+            result.Should().BeTrue();
+        }
+
+        #endregion
+
+        #region LoginUser() Tests 
+
+        [Test]
+        public void CallLoginUser()
+        {
+            UserCredential cred = null;
+            gateway.LoginAccount(Arg.Do<UserCredential>(c => cred = c));
+
+            loginViewModel.Email = "test@agile.local";
+            loginViewModel.Password = "test";
+
+            loginViewModel.Call("LoginUser");
+
+            cred.Should().NotBeNull();
+            cred.EmailAddress.Should().Be(loginViewModel.Email);
+            cred.Password.Should().Be(loginViewModel.Password);
+            gateway.Received().LoginAccount(cred);
+
+            regionManager.Received().RequestNavigate(RegionNames.MainRegion, "Login");
+
+        }
+
+        #endregion 
+
+        #region SignUp() Tests
+
+        [Test]
+        public void CallSignUp()
+        {
+            loginViewModel.Call("SignUp");
+
+            regionManager.Received().RequestNavigate(RegionNames.AppContainer, "Registration");
+
+        }
+
+        #endregion 
+
     }
 
     #endregion

@@ -20,6 +20,7 @@ using System.Windows.Threading;
 using MahApps.Metro.Controls.Dialogs;
 using System.ServiceModel;
 using AnyTrack.Backend.Faults;
+using AnyTrack.Infrastructure.BackendAccountService;
 
 namespace Unit.Modules.AnyTrack.Accounting.Views.RegistrationViewModelTests
 {
@@ -73,16 +74,76 @@ namespace Unit.Modules.AnyTrack.Accounting.Views.RegistrationViewModelTests
             result.Should().BeTrue();
         }
 
+        [Test]
+        public void TestCanRegisterWithValidationError()
+        {
+            registrationViewModel.Email = "wrong";
+            var result = registrationViewModel.Call<bool>("CanRegister");
+            result.Should().BeFalse();
+        }
+
         #endregion
 
-        #region RegisterUser() Tests 
+        #region CanCancel() Tests
+
+        [Test]
+        public void TestCanCancel()
+        {
+            var result = registrationViewModel.Call<bool>("CanCancel");
+            result.Should().BeTrue();
+        }
+
+        #endregion
+
+        #region CanAddSkill() Tests
+
+        [Test]
+        public void TestCanAddSkill()
+        {
+            var result = registrationViewModel.Call<bool>("CanAddSkill");
+            result.Should().BeTrue();
+        }
+
+        #endregion
+
+        #region AddSkill() Tests 
+
+        [Test]
+        public void CallAddSkill()
+        {
+            var skill = "Test";
+
+            registrationViewModel.CurrentSkill = skill;
+
+            registrationViewModel.Call("AddSkill");
+
+            registrationViewModel.Skills.Count.Should().Be(1);
+            registrationViewModel.Skills.Single().Should().Be(skill);
+            registrationViewModel.CurrentSkill.Should().BeEmpty();
+        }
+
+        #endregion 
+
+        #region CancelRegisterUser() Tests
+
+        [Test]
+        public void TestCancelRegisterUser()
+        {
+            registrationViewModel.Call("CancelRegisterUser");
+
+            regionManager.Received().RequestNavigate(RegionNames.AppContainer, "Login");
+        }
+
+        #endregion 
+
+        #region RegisterUser() Tests
 
         [Test]
         public void TestRegisterUser()
         {
-            NewUserRegistration registration = null;
+            NewUser registration = null;
 
-            gateway.RegisterAccount(Arg.Do<NewUserRegistration>(r => registration = r));
+            gateway.RegisterAccount(Arg.Do<NewUser>(r => registration = r));
             registrationViewModel.MainWindow = Substitute.For<WindowProvider>();
             registrationViewModel.MainWindow.ShowMessageAsync(Arg.Any<string>(), Arg.Any<string>()).Returns(MessageDialogResult.Affirmative);
             registrationViewModel.MainWindow.InvokeAction(Arg.Do<Action>(a => a()));

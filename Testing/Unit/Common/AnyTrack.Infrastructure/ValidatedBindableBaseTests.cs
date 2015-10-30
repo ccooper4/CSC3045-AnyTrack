@@ -15,7 +15,7 @@ using System.Windows.Threading;
 using System.Windows;
 using System.Threading;
 
-namespace Unit.Common.AnyTrack.Infrastructure.ValidatedBindableBaseTests
+namespace Unit.Common.AnyTrack.Infrastructure.InterceptorBehaviourTests
 {
     #region Supporting Types 
 

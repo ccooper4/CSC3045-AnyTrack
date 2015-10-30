@@ -5,21 +5,21 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AnyTrack.Infrastructure
+namespace AnyTrack.Backend.Security
 {
     /// <summary>
     /// Represents a service user's identity.
     /// </summary>
-    public class ServiceUserIdentity : IIdentity
+    public class GeneratedServiceUserIdentity : IIdentity
     {
-        #region Fields 
+        #region Fields
 
         /// <summary>
         /// The user's email address.
         /// </summary>
-        private string name; 
+        private string name;
 
-        #endregion 
+        #endregion
 
         #region Constructor
 
@@ -27,7 +27,7 @@ namespace AnyTrack.Infrastructure
         /// Constructs a new identity for the specified user.
         /// </summary>
         /// <param name="name">The user's email addres.</param>
-        public ServiceUserIdentity(string name)
+        public GeneratedServiceUserIdentity(string name)
         {
             this.name = name;
         }

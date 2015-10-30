@@ -28,12 +28,12 @@ namespace AnyTrack.Backend.WebHost
 
             // AnyTrack.Backend.Services 
             container.RegisterType<IAccountService, AccountService>();
-            container.RegisterType<IDateTimeService, DateTimeService>();
             container.RegisterType<IProjectService, ProjectService>();
 
             // AnyTrack.Backend.Providers
             container.RegisterType<FormsAuthenticationProvider, FormsAuthenticationProvider>();
             container.RegisterType<Providers.RoleProvider, Providers.RoleProvider>();
+            container.RegisterType<OperationContextProvider, OperationContextProvider>();
 
             ((Providers.RoleProvider)Roles.Provider).UnitOfWork = container.Resolve<IUnitOfWork>();
         }

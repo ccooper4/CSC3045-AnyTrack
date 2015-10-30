@@ -9,7 +9,6 @@ using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using AnyTrack.Accounting.BackendTimeService;
 using AnyTrack.Accounting.ServiceGateways;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.BackendAccountService;
@@ -154,19 +153,7 @@ namespace AnyTrack.Accounting.Views
 
             serviceGateway.LoginAccount(user);
 
-            // regionManager.RequestNavigate(Infrastructure.RegionNames.MainRegion, "Login");
-            var time = new DateTimeServiceClient();
-
-            var authCookie = Thread.CurrentPrincipal.GetAuthCookie();
-
-            using (new OperationContextScope(time.InnerChannel))
-            {
-                var request = new HttpRequestMessageProperty();
-                request.Headers[HttpResponseHeader.SetCookie] = authCookie;
-                OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = request;
-
-                var date = time.GetCurrentDate();
-            }
+            regionManager.RequestNavigate(Infrastructure.RegionNames.MainRegion, "Login");
         }
 
         /// <summary>
