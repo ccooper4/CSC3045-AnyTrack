@@ -29,5 +29,15 @@ namespace AnyTrack.Backend.Providers
         {
             FormsAuthentication.SignOut();
         }
+
+        /// <summary>
+        /// Decrypts and returns the specified auth cookie.
+        /// </summary>
+        /// <param name="authCookie">The auth cookie.</param>
+        /// <returns>The decrypted ticket.</returns>
+        public virtual FormsAuthenticationTicket Decrypt(string authCookie)
+        {
+            return FormsAuthentication.Decrypt(authCookie);
+        }
     }
 }

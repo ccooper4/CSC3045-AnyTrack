@@ -1,6 +1,7 @@
 ﻿using AnyTrack.Accounting.ServiceGateways;
 using AnyTrack.Accounting.ServiceGateways.Models;
 using AnyTrack.Infrastructure.BackendAccountService;
+using AnyTrack.Infrastructure.Security;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Unit.Modules.AnyTrack.Accounting.ServiceGateways.AccountServiceGatewayTests
@@ -46,7 +48,7 @@ namespace Unit.Modules.AnyTrack.Accounting.ServiceGateways.AccountServiceGateway
 
         #endregion
 
-        #region RegisterAccount(NewUserRegistration registration) Tests 
+        #region RegisterAccount(NewUser registration) Tests 
 
         [Test]
         public void RegisterAnAccount()
@@ -54,7 +56,7 @@ namespace Unit.Modules.AnyTrack.Accounting.ServiceGateways.AccountServiceGateway
             NewUser sentModel = null;
             accountService.CreateAccount(Arg.Do<NewUser>(n => sentModel = n));
 
-            var registration = new NewUserRegistration
+            var registration = new NewUser
             {
                 EmailAddress = "test@agile.local",
                 FirstName = "Test",
@@ -88,7 +90,7 @@ namespace Unit.Modules.AnyTrack.Accounting.ServiceGateways.AccountServiceGateway
 
             accountService.When(a => a.CreateAccount(Arg.Any<NewUser>())).Do(a => { throw exception;} );
 
-            var registration = new NewUserRegistration
+            var registration = new NewUser
             {
                 EmailAddress = "test@agile.local",
                 FirstName = "Test",
@@ -101,6 +103,42 @@ namespace Unit.Modules.AnyTrack.Accounting.ServiceGateways.AccountServiceGateway
 
             gateway.RegisterAccount(registration);
 
+        }
+
+        #endregion 
+
+        #region LoginAccount(UserCredential login) Tests 
+
+        [Test]
+        public void CallLoginForAValidLogin()
+        {
+            var creds = new UserCredential { EmailAddress = "test@agile.local", Password = "Letmein" }; 
+            var result = new LoginResult { Success = true};
+
+            accountService.LogIn(creds).Returns(result);
+
+            var gatewayResult = gateway.LoginAccount(creds);
+
+            gatewayResult.Should().NotBeNull();
+            gatewayResult.Should().BeSameAs(result);
+            accountService.Received().LogIn(creds);
+            Thread.CurrentPrincipal.Should().NotBeNull();
+            Thread.CurrentPrincipal.Should().BeOfType<ServiceUserPrincipal>();
+        }
+
+        public void CallLoginForInvalidLogin()
+        {
+            var creds = new UserCredential { EmailAddress = "test@agile.local", Password = "Letmein" };
+            var result = new LoginResult { Success = false };
+
+            accountService.LogIn(creds).Returns(result);
+
+            var gatewayResult = gateway.LoginAccount(creds);
+
+            gatewayResult.Should().NotBeNull();
+            gatewayResult.Should().BeSameAs(result);
+            accountService.Received().LogIn(creds);
+            Thread.CurrentPrincipal.Should().BeNull();
         }
 
         #endregion 

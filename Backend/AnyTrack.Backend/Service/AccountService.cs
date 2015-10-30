@@ -122,6 +122,11 @@ namespace AnyTrack.Backend.Service
                 Developer = userAccount.Developer,
                 ProductOwner = userAccount.ProductOwner,
                 ScrumMaster = userAccount.ScrumMaster,
+                AssignedRoles = userAccount.Roles.Select(r => new RoleInfo
+                {
+                    Role = r.RoleName,
+                    ProjectID = r.ProjectID
+                }).ToList(),
                 Success = true
             }; 
         }
