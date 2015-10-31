@@ -89,9 +89,10 @@ namespace AnyTrack.Accounting
             container.RegisterType<object, Login>("Login");
 
            // regionManager.RequestNavigate(RegionNames.AppContainer, "Login");
-
             menuService.AddMenuItem(new MenuItem { Color = "Teal", NavigationViewName = "Registration", Title = "Register", Icon = "Icons/edit.png" });
             menuService.AddMenuItem(new MenuItem { Color = "Goldenrod", NavigationViewName = "Login", Title = "Login", Icon = "Icons/edit.png" });
+
+            regionManager.RequestNavigate(RegionNames.AppContainer, "Login");
         }
 
         #endregion 
