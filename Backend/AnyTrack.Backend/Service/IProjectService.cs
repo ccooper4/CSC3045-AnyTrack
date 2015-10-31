@@ -24,9 +24,9 @@ namespace AnyTrack.Backend.Service
         /// <summary>
         /// Update project in the database
         /// </summary>
-        /// <param name="project">Project to be updated</param>
+        /// <param name="updatedProject">Project to be updated</param>
         [OperationContract]
-        void UpdateProject(ServiceProject project);
+        void UpdateProject(ServiceProject updatedProject);
 
         /// <summary>
         /// Delete a project in the database

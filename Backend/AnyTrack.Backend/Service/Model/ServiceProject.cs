@@ -18,8 +18,6 @@ namespace AnyTrack.Backend.Service.Model
         /// </summary>
         public ServiceProject()
         {
-            ProjectId = Guid.NewGuid();
-            ProductOwner = new NewUser();
             ScrumMasters = new List<NewUser>();
         }
 

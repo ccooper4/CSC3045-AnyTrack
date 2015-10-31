@@ -15,7 +15,9 @@ using System.Web.Security;
 using System.Web.Helpers;
 using System.Threading;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
 using AnyTrack.Backend.Faults;
+using Unit.Backend.AnyTrack.Backend.Service.PrincipalBuilderServiceTests;
 using Project = AnyTrack.Backend.Data.Model.Project;
 
 namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
@@ -27,7 +29,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
         public static ProjectService service;
 
         [SetUp]
-        public void ContextSetup()
+        public void SetUp()
         {
             unitOfWork = Substitute.For<IUnitOfWork>();
             service = new ProjectService(unitOfWork);
@@ -55,53 +57,110 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
         
         #endregion
 
-        #region AddProject(Project project) Tests
+        #region AddProject(ServiceProject project) Tests
 
         [Test]
         public void CreateNewProjectNoOtherRolesAssigned()
         {
-            Project dataProject = null;
-            
-           unitOfWork.ProjectRepository.Items.Returns(new List<Project>().AsQueryable());
-           unitOfWork.ProjectRepository.Insert(Arg.Do<Project>(p => dataProject = p));
+            #region Setup Thread.CurrentPrincipal
 
-           ServiceProject project = new ServiceProject
-           {
-               Name = "Project",
-               Description = "This is a new project",
-               VersionControl = "queens.git",
-               ProjectManager = new NewUser
-               {
-                   EmailAddress = "John@test.com",
+            FormsAuthenticationProvider provider = Substitute.For<FormsAuthenticationProvider>();
+            OperationContextProvider context = Substitute.For<OperationContextProvider>();
+            TestService testService;
+
+            var channel = Substitute.For<IContextChannel>();
+            var requestMessage = new HttpRequestMessageProperty();
+            var authCookie = "test";
+            var user = new User { EmailAddress = "tester@agile.local", Roles = new List<Role>() };
+            requestMessage.Headers.Set("Set-Cookie", "AuthCookie=" + authCookie + ";other=other");
+
+            var properties = new MessageProperties();
+            properties.Add(HttpRequestMessageProperty.Name, requestMessage);
+            context.IncomingMessageProperties.Returns(properties);
+
+            var decryptedTicket = new FormsAuthenticationTicket("tester@agile.local", false, 100);
+            provider.Decrypt(authCookie).Returns(decryptedTicket);
+
+            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
+
+            testService = new TestService(unitOfWork, provider, context);
+
+            provider.Received().Decrypt(authCookie);
+
+            #endregion
+
+            #region Test Data
+
+            List<User> userList = new List<User>()
+            {
+                new User 
+                { 
+                   EmailAddress = "tester@agile.local",
                    FirstName = "John",
                    LastName = "Test",
                    Password = "Password",
                    Developer = false,
                    ProductOwner = false,
-                   ScrumMaster = false
-               },
-               StartedOn = DateTime.Today
-           };
+                   ScrumMaster = false 
+                }
+            };
 
-            service.AddProject(project);
+            Project dataProject = null;
+
+            ServiceProject project = new ServiceProject
+            {
+                Name = "Project",
+                Description = "This is a new project",
+                VersionControl = "queens.git",
+                ProjectManager = new NewUser
+                {
+                    EmailAddress = "tester@agile.local",
+                    FirstName = "John",
+                    LastName = "Test",
+                    Password = "Password",
+                    Developer = false,
+                    ProductOwner = false,
+                    ScrumMaster = false
+                },
+                StartedOn = DateTime.Today
+            };
+
+            #endregion
+
+            #region Setup Fake Repos
+
+            unitOfWork.UserRepository.Items.Returns(userList.AsQueryable());
+            unitOfWork.ProjectRepository.Items.Returns(new List<Project>().AsQueryable());
+            unitOfWork.ProjectRepository.Insert(Arg.Do<Project>(p => dataProject = p));
+
+            #endregion
+
+            #region Test Checks
+
+           service.AddProject(project);
 
             dataProject.Should().NotBeNull();
-            dataProject.Name.Equals("Project");
-            dataProject.Description.Equals("This is a new project");
-            dataProject.VersionControl.Equals("queens.git");
+            dataProject.Name.Should().Be("Project");
+            dataProject.Description.Should().Be("This is a new project");
+            dataProject.VersionControl.Should().Be("queens.git");
 
             dataProject.ProjectManager.Should().NotBeNull();
-            dataProject.ProjectManager.EmailAddress.Equals("John@test.com");
-            dataProject.ProjectManager.FirstName.Equals("John");
-            dataProject.ProjectManager.LastName.Equals("Test");
-            dataProject.ProjectManager.Password.Equals("Password");
-            dataProject.ProjectManager.Developer.Equals(false);
-            dataProject.ProjectManager.ProductOwner.Equals(false);
-            dataProject.ProjectManager.ScrumMaster.Equals(false);
+            dataProject.ProjectManager.EmailAddress.Should().Be("tester@agile.local");
+            dataProject.ProjectManager.FirstName.Should().Be("John");
+            dataProject.ProjectManager.LastName.Should().Be("Test");
+            dataProject.ProjectManager.Password.Should().Be("Password");
+            dataProject.ProjectManager.Developer.Should().Be(false);
+            dataProject.ProjectManager.ProductOwner.Should().Be(false);
+            dataProject.ProjectManager.ScrumMaster.Should().Be(false);
 
-            dataProject.ProductOwner.EmailAddress.Should().BeNull();
+            dataProject.ProductOwner.Should().BeNull();
             dataProject.ScrumMasters.Count().Should().Be(0);
             dataProject.StartedOn.Should().Be(DateTime.Today);
+
+            unitOfWork.ProjectRepository.Received().Insert(dataProject);
+            unitOfWork.Received().Commit();
+
+           #endregion
         }
 
         [Test]
@@ -165,47 +224,47 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             service.AddProject(project);
 
             dataProject.Should().NotBeNull();
-            dataProject.Name.Equals("Project");
-            dataProject.Description.Equals("This is a new project");
-            dataProject.VersionControl.Equals("queens.git");
+            dataProject.Name.Should().Be("Project");
+            dataProject.Description.Should().Be("This is a new project");
+            dataProject.VersionControl.Should().Be("queens.git");
 
             dataProject.ProjectManager.Should().NotBeNull();
-            dataProject.ProjectManager.EmailAddress.Equals("John@test.com");
-            dataProject.ProjectManager.FirstName.Equals("John");
-            dataProject.ProjectManager.LastName.Equals("Test");
-            dataProject.ProjectManager.Password.Equals("Password");
-            dataProject.ProjectManager.Developer.Equals(false);
-            dataProject.ProjectManager.ProductOwner.Equals(false);
-            dataProject.ProjectManager.ScrumMaster.Equals(false);
+            dataProject.ProjectManager.EmailAddress.Should().Be("John@test.com");
+            dataProject.ProjectManager.FirstName.Should().Be("John");
+            dataProject.ProjectManager.LastName.Should().Be("Test");
+            dataProject.ProjectManager.Password.Should().Be("Password");
+            dataProject.ProjectManager.Developer.Should().Be(false);
+            dataProject.ProjectManager.ProductOwner.Should().Be(false);
+            dataProject.ProjectManager.ScrumMaster.Should().Be(false);
 
             dataProject.ProductOwner.Should().NotBeNull();
-            dataProject.ProductOwner.EmailAddress.Equals("PO@test.com");
-            dataProject.ProductOwner.FirstName.Equals("Julie");
-            dataProject.ProductOwner.LastName.Equals("Test");
-            dataProject.ProductOwner.Password.Equals("Password");
-            dataProject.ProductOwner.Developer.Equals(false);
-            dataProject.ProductOwner.ProductOwner.Equals(true);
-            dataProject.ProductOwner.ScrumMaster.Equals(false);
+            dataProject.ProductOwner.EmailAddress.Should().Be("PO@test.com");
+            dataProject.ProductOwner.FirstName.Should().Be("Julie");
+            dataProject.ProductOwner.LastName.Should().Be("Test");
+            dataProject.ProductOwner.Password.Should().Be("Password");
+            dataProject.ProductOwner.Developer.Should().Be(false);
+            dataProject.ProductOwner.ProductOwner.Should().Be(true);
+            dataProject.ProductOwner.ScrumMaster.Should().Be(false);
 
             dataProject.ScrumMasters.Count().Should().Be(2);
 
             dataProject.ScrumMasters[0].Should().NotBeNull();
-            dataProject.ScrumMasters[0].EmailAddress.Equals("S1@test.com");
-            dataProject.ScrumMasters[0].FirstName.Equals("Jack");
-            dataProject.ScrumMasters[0].LastName.Equals("Test");
-            dataProject.ScrumMasters[0].Password.Equals("Password");
-            dataProject.ScrumMasters[0].Developer.Equals(false);
-            dataProject.ScrumMasters[0].ProductOwner.Equals(false);
-            dataProject.ScrumMasters[0].ScrumMaster.Equals(true);
+            dataProject.ScrumMasters[0].EmailAddress.Should().Be("S1@test.com");
+            dataProject.ScrumMasters[0].FirstName.Should().Be("Jack");
+            dataProject.ScrumMasters[0].LastName.Should().Be("Test");
+            dataProject.ScrumMasters[0].Password.Should().Be("Password");
+            dataProject.ScrumMasters[0].Developer.Should().Be(false);
+            dataProject.ScrumMasters[0].ProductOwner.Should().Be(false);
+            dataProject.ScrumMasters[0].ScrumMaster.Should().Be(true);
 
-            dataProject.ScrumMasters[0].Should().NotBeNull();
-            dataProject.ScrumMasters[0].EmailAddress.Equals("S2@test.com");
-            dataProject.ScrumMasters[0].FirstName.Equals("Jane");
-            dataProject.ScrumMasters[0].LastName.Equals("Test");
-            dataProject.ScrumMasters[0].Password.Equals("Password");
-            dataProject.ScrumMasters[0].Developer.Equals(false);
-            dataProject.ScrumMasters[0].ProductOwner.Equals(true);
-            dataProject.ScrumMasters[0].ScrumMaster.Equals(true);
+            dataProject.ScrumMasters[1].Should().NotBeNull();
+            dataProject.ScrumMasters[1].EmailAddress.Should().Be("S2@test.com");
+            dataProject.ScrumMasters[1].FirstName.Should().Be("Jane");
+            dataProject.ScrumMasters[1].LastName.Should().Be("Test");
+            dataProject.ScrumMasters[1].Password.Should().Be("Password");
+            dataProject.ScrumMasters[1].Developer.Should().Be(false);
+            dataProject.ScrumMasters[1].ProductOwner.Should().Be(true);
+            dataProject.ScrumMasters[1].ScrumMaster.Should().Be(true);
 
             dataProject.StartedOn.Should().Be(DateTime.Today);
         }
@@ -279,6 +338,12 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
 
             service.AddProject(project);
         }
+        #endregion
+
+        #region UpdateProject(ServiceProject project) Tests
+
+
+
         #endregion
     }
 }
