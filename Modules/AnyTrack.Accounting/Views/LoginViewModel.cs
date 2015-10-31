@@ -151,10 +151,16 @@ namespace AnyTrack.Accounting.Views
                 Password = password
             };
 
-            serviceGateway.LoginAccount(user);
+            var response = serviceGateway.LoginAccount(user);
 
-            regionManager.RequestNavigate(RegionNames.AppContainer, "MainAppArea");
-            regionManager.RequestNavigate(RegionNames.MainRegion, "Registration");
+            if (response.Success)
+            {
+                regionManager.RequestNavigate(RegionNames.AppContainer, "MainAppArea");
+            }
+            else
+            {
+                this.ShowMetroDialog("Unable to login!", "Sorry! We were unable to log you into AnyTrack using the details provided. Please check them and try again. Alternatively, rest your password or create an account");
+            }
         }
 
         /// <summary>

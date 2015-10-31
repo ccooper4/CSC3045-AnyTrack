@@ -80,8 +80,6 @@ namespace Unit.Modules.AnyTrack.Accounting.AccountingModuleTests
             container.Received().RegisterType<object, Login>("Login");
 
             regionManager.Received().RequestNavigate(RegionNames.AppContainer, "Login");
-
-            menuService.Received().AddMenuItem(Arg.Any<MenuItem>());
         }
 
         #endregion 
