@@ -71,7 +71,9 @@ namespace Unit.Backend.AnyTrack.Backend.Service.AccountServiceTests
                 LastName = "Tester",
                 Password = "Letmein",
                 ScrumMaster = true,
-                Skills = "C#"
+                Skills = "C#",
+                SecretAnswer = "Test",
+                SecretQuestion = "Test"
             };
 
             service.CreateAccount(newUser);
@@ -84,6 +86,8 @@ namespace Unit.Backend.AnyTrack.Backend.Service.AccountServiceTests
             dataUser.ProductOwner.Should().BeFalse();
             dataUser.Developer.Should().BeFalse();
             dataUser.Skills.Should().Be("C#");
+            dataUser.SecretAnswer.Should().Be(newUser.SecretAnswer);
+            dataUser.SecretQuestion.Should().Be(newUser.SecretQuestion);
             Crypto.VerifyHashedPassword(dataUser.Password, newUser.Password).Should().BeTrue();
             unitOfWork.UserRepository.Received().Insert(dataUser);
             unitOfWork.Received().Commit();

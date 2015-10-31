@@ -47,6 +47,16 @@ namespace AnyTrack.Backend.Data.Model
         public virtual bool Developer { get; set; }
 
         /// <summary>
+        /// Gets or sets secret question.
+        /// </summary>
+        public virtual string SecretQuestion { get; set; }
+
+        /// <summary>
+        /// Gets or sets secret answer.
+        /// </summary>
+        public virtual string SecretAnswer { get; set; }
+
+        /// <summary>
         /// Gets or sets a comma seperated list of the skils.
         /// </summary>
         public virtual string Skills { get; set; }

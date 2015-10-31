@@ -131,6 +131,10 @@
     <Compile Include="Migrations\201510291434411_Adding Project.Designer.cs">
       <DependentUpon>201510291434411_Adding Project.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510310132086_Adding reset questions and skills to user.cs" />
+    <Compile Include="Migrations\201510310132086_Adding reset questions and skills to user.Designer.cs">
+      <DependentUpon>201510310132086_Adding reset questions and skills to user.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Model\BaseEntity.cs" />
@@ -166,6 +170,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510291434411_Adding Project.resx">
       <DependentUpon>201510291434411_Adding Project.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510310132086_Adding reset questions and skills to user.resx">
+      <DependentUpon>201510310132086_Adding reset questions and skills to user.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

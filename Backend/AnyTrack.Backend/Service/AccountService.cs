@@ -80,6 +80,8 @@ namespace AnyTrack.Backend.Service
                 ProductOwner = user.ProductOwner,
                 ScrumMaster = user.ScrumMaster,
                 Developer = user.Developer,
+                SecretQuestion = user.SecretQuestion,
+                SecretAnswer = user.SecretAnswer,
                 Skills = user.Skills
             };
 

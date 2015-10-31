@@ -47,6 +47,16 @@ namespace AnyTrack.Backend.Service.Model
         public bool Developer { get; set; }
 
         /// <summary>
+        /// Gets or sets the secret question.
+        /// </summary>
+        public string SecretQuestion { get; set; }
+
+        /// <summary>
+        /// Gets or sets the secret answer.
+        /// </summary>
+        public string SecretAnswer { get; set; }
+
+        /// <summary>
         /// Gets or sets the skills.
         /// </summary>
         public string Skills { get; set; }

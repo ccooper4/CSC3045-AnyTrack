@@ -44,6 +44,12 @@ namespace AnyTrack.Infrastructure.BackendAccountService {
         private bool ScrumMasterField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SecretAnswerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SecretQuestionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SkillsField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -143,6 +149,32 @@ namespace AnyTrack.Infrastructure.BackendAccountService {
                 if ((this.ScrumMasterField.Equals(value) != true)) {
                     this.ScrumMasterField = value;
                     this.RaisePropertyChanged("ScrumMaster");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SecretAnswer {
+            get {
+                return this.SecretAnswerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecretAnswerField, value) != true)) {
+                    this.SecretAnswerField = value;
+                    this.RaisePropertyChanged("SecretAnswer");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SecretQuestion {
+            get {
+                return this.SecretQuestionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecretQuestionField, value) != true)) {
+                    this.SecretQuestionField = value;
+                    this.RaisePropertyChanged("SecretQuestion");
                 }
             }
         }
