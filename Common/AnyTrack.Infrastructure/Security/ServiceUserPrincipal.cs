@@ -66,6 +66,17 @@ namespace AnyTrack.Infrastructure.Security
             }
         }
 
+        /// <summary>
+        /// Gets the user's full name.
+        /// </summary>
+        public string FullName
+        {
+            get
+            {
+                return loginResult.FirstName + " " + loginResult.LastName;
+            }
+        }
+
         #endregion 
 
         #region Methods 

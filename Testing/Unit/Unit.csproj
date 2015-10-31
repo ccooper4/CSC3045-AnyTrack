@@ -157,6 +157,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="AnyTrack\Views\MainAppAreaViewModelTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Data\EntityUnitOfWorkTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Data\EntityRepositoryTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Providers\RoleProviderTests.cs" />
@@ -166,8 +167,10 @@
     <Compile Include="Common\AnyTrack.Infrastructure\Extensions\IPrincipalExtensionsTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\Security\ServiceUserIdentityTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\Security\ServiceUserPrincipalTests.cs" />
+    <Compile Include="Common\AnyTrack.Infrastructure\Service\MenuServiceTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\ValidatedBindableBaseTests.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Modules\AnyTrack.Accounting\AccountingModuleTests.cs" />
     <Compile Include="Modules\AnyTrack.Accounting\ServiceGateways\AccountServiceGatewayTests.cs" />
     <Compile Include="Modules\AnyTrack.Accounting\ServiceGateways\Model\AvailableSecretQuestionsTests.cs" />
     <Compile Include="Modules\AnyTrack.Accounting\Views\LoginViewModelTests.cs" />
@@ -196,9 +199,7 @@
       <Name>AnyTrack.Accounting</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="AnyTrack.Shell\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
