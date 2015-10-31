@@ -153,7 +153,8 @@ namespace AnyTrack.Accounting.Views
 
             serviceGateway.LoginAccount(user);
 
-            regionManager.RequestNavigate(Infrastructure.RegionNames.MainRegion, "Login");
+            regionManager.RequestNavigate(RegionNames.AppContainer, "MainAppArea");
+            regionManager.RequestNavigate(RegionNames.MainRegion, "Registration");
         }
 
         /// <summary>

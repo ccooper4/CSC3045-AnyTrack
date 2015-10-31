@@ -63,6 +63,21 @@ namespace Unit.Common.AnyTrack.Infrastructure.Security.ServiceUserPrincipalTests
 
         #endregion 
 
+        #region FullName Tests
+
+        [Test]
+        public void GetFullName()
+        {
+            var loginResult = new LoginResult { FirstName = "David", LastName = "Tester" };
+            var cookie = "test";
+
+            principal = new ServiceUserPrincipal(loginResult, cookie);
+
+            principal.FullName.Should().Be(loginResult.FirstName + " " + loginResult.LastName);
+        }
+
+        #endregion 
+
         #region IsInRole(string role) Tests 
 
         [Test]

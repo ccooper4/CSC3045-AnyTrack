@@ -69,7 +69,9 @@ namespace Unit.Backend.AnyTrack.Backend.Service.AccountServiceTests
                 EmailAddress = "test@agile.local",
                 FirstName = "David",
                 LastName = "Tester",
-                Password = "Letmein"
+                Password = "Letmein",
+                ScrumMaster = true,
+                Skills = "C#"
             };
 
             service.CreateAccount(newUser);
@@ -78,6 +80,10 @@ namespace Unit.Backend.AnyTrack.Backend.Service.AccountServiceTests
             dataUser.EmailAddress.Should().Be(newUser.EmailAddress);
             dataUser.FirstName.Should().Be(newUser.FirstName);
             dataUser.LastName.Should().Be(newUser.LastName);
+            dataUser.ScrumMaster.Should().BeTrue();
+            dataUser.ProductOwner.Should().BeFalse();
+            dataUser.Developer.Should().BeFalse();
+            dataUser.Skills.Should().Be("C#");
             Crypto.VerifyHashedPassword(dataUser.Password, newUser.Password).Should().BeTrue();
             unitOfWork.UserRepository.Received().Insert(dataUser);
             unitOfWork.Received().Commit();

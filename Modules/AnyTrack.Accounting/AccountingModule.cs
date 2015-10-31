@@ -7,6 +7,8 @@ using AnyTrack.Accounting.ServiceGateways;
 using AnyTrack.Accounting.Views;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.BackendAccountService;
+using AnyTrack.Infrastructure.Service;
+using AnyTrack.Infrastructure.Service.Model;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Regions;
@@ -30,6 +32,11 @@ namespace AnyTrack.Accounting
         /// </summary>
         private readonly IRegionManager regionManager;
 
+        /// <summary>
+        /// The menu service.
+        /// </summary>
+        private readonly IMenuService menuService; 
+
         #endregion
 
         #region Constructor
@@ -39,7 +46,8 @@ namespace AnyTrack.Accounting
         /// </summary>
         /// <param name="container">The Unity container</param>
         /// <param name="regionManager">The Prism region manager</param>
-        public AccountingModule(IUnityContainer container, IRegionManager regionManager)
+        /// <param name="menuService">The menu service</param>
+        public AccountingModule(IUnityContainer container, IRegionManager regionManager, IMenuService menuService)
         {
             if (container == null)
             {
@@ -51,8 +59,14 @@ namespace AnyTrack.Accounting
                 throw new ArgumentNullException("regionManager");
             }
 
+            if (menuService == null)
+            {
+                throw new ArgumentNullException("menuService");
+            }
+
             this.container = container;
             this.regionManager = regionManager;
+            this.menuService = menuService;
         }
 
         #endregion
@@ -75,6 +89,9 @@ namespace AnyTrack.Accounting
             container.RegisterType<object, Login>("Login");
 
            // regionManager.RequestNavigate(RegionNames.AppContainer, "Login");
+
+            menuService.AddMenuItem(new MenuItem { Color = "Teal", NavigationViewName = "Registration", Title = "Register", Icon = "Icons/edit.png" });
+            menuService.AddMenuItem(new MenuItem { Color = "Goldenrod", NavigationViewName = "Login", Title = "Login", Icon = "Icons/edit.png" });
         }
 
         #endregion 

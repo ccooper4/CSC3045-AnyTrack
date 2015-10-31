@@ -33,6 +33,24 @@ namespace AnyTrack.Infrastructure.Extensions
             }
         }
 
+        /// <summary>
+        /// Returns the full name from a Service User principal.
+        /// </summary>
+        /// <param name="principal">The current principal.</param>
+        /// <returns>The full name.</returns>
+        public static string GetFullName(this IPrincipal principal)
+        {
+            var serviceUserPrincipal = principal as ServiceUserPrincipal;
+            if (serviceUserPrincipal != null)
+            {
+                return serviceUserPrincipal.FullName;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         #endregion 
     }
 }

@@ -99,7 +99,7 @@ namespace Unit.Modules.AnyTrack.Accounting.Views
             cred.Password.Should().Be(loginViewModel.Password);
             gateway.Received().LoginAccount(cred);
 
-            regionManager.Received().RequestNavigate(RegionNames.MainRegion, "Login");
+            regionManager.Received().RequestNavigate(RegionNames.AppContainer, "MainAppArea");
 
         }
 
