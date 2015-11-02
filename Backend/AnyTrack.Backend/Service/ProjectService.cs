@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Security;
 using AnyTrack.Backend.Data;
 using AnyTrack.Backend.Data.Model;
 using AnyTrack.Backend.Service.Model;
@@ -216,6 +217,7 @@ namespace AnyTrack.Backend.Service
 
             return projects;
         }
+        
         #endregion
 
         #region Helper Methods
@@ -249,7 +251,10 @@ namespace AnyTrack.Backend.Service
                     user.Roles = new List<Role>();
                 }
 
-                user.Roles.Add(role);
+                if (!user.Roles.Contains(role))
+                {
+                    user.Roles.Add(role);
+                }
 
                 return user;
             }
