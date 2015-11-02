@@ -84,6 +84,17 @@ namespace AnyTrack.Projects.ServiceGateways
         {
             return client.GetProjects();
         }
+
+        /// <summary>
+        /// Retrieves any users who match the specified filter.
+        /// </summary>
+        /// <param name="filter">The search filter.</param>
+        /// <returns>Returns a list of users who match the search filter.</returns>
+        public List<UserSearchInfo> SearchUsers(UserSearchFilter filter)
+        {
+            return client.SearchUsers(filter);
+        }
+
         #endregion
     }
 }
