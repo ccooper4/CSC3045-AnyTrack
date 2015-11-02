@@ -46,14 +46,14 @@ namespace Unit.Common.AnyTrack.SharedUtilities.Extensions.StringExtensionTests
         public void EmptyForANotEmptyString()
         {
             testString = "Test";
-            testString.IsNotEmpty().Should().BeFalse();
+            testString.IsEmpty().Should().BeFalse();
         }
 
         [Test]
         public void EmptyForAnEmptyString()
         {
             testString = "";
-            testString.IsNotEmpty().Should().BeTrue();
+            testString.IsEmpty().Should().BeTrue();
         }
 
         #endregion 
