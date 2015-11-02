@@ -47,6 +47,7 @@ namespace Acceptance.StepDefinitions
         /// Clicks the given element
         /// </summary>
         /// <param name="element">element to be clicked</param>
+        [Then(@"I click '(.*)'")]
         [When(@"I click '(.*)'")]
         public void WhenIClick(string element)
         {
@@ -69,6 +70,17 @@ namespace Acceptance.StepDefinitions
         /// <param name="table">Table of data to be entered</param>
         [When(@"I enter the following information:")]
         public void WhenIEnterTheFollowingInformation(Table table)
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        /// <summary>
+        /// Manage options of a given project
+        /// </summary>
+        /// <param name="optionName">option name to be checked</param>
+        /// <param name="projectName">project name to be checked</param>
+        [When(@"I click '(.*)' from the pop­up menu of '(.*)' project")]
+        public void WhenIClickFromThePopUpMenuOfProject(string optionName, string projectName)
         {
             ScenarioContext.Current.Pending();
         }
@@ -102,6 +114,7 @@ namespace Acceptance.StepDefinitions
         /// Checks the given screen is displayed
         /// </summary>
         /// <param name="screenName">screen name to be checked</param>
+        [Then(@"the '(.*)' screen is displayed")]
         [Then(@"a '(.*)' screen is displayed")]
         public void ThenAScreenIsDisplayed(string screenName)
         {
@@ -158,17 +171,27 @@ namespace Acceptance.StepDefinitions
             ScenarioContext.Current.Pending();
         }
 
+        /// <summary>
+        /// Being unable to click an element due to permissions
+        /// </summary>
+        /// <param name="element">element to be clicked</param>
+        [Then(@"I cannot click '(.*)'")]
+        public void ThenICannotClick(string element)
+        {
+            ScenarioContext.Current.Pending();
+        }
+
 
         #endregion Then Steps
 
-        
 
 
-        
 
-        
 
-        
+
+
+
+
 
     }
 }
