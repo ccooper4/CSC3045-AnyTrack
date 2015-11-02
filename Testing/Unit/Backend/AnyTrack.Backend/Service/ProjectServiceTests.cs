@@ -375,6 +375,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
 
         #region GetProject(Guid projectId) Tests
 
+        [Test]
         public void GetProject()
         {
             #region Test Data
@@ -383,17 +384,28 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             {
                 new Project
                 {
+                    Id = Guid.NewGuid(),
                     Name = "Project",
                     Description = "This is a new project",
                     VersionControl = "queens.git",
                     ProjectManager = new User
                     {
-                        EmailAddress = "tester@agile.local"
+                         EmailAddress = "tester@agile.local",
+                        FirstName = "John",
+                        LastName = "Test",
+                        Password = "Password",
+                        Developer = false,
+                        ProductOwner = false,
+                        ScrumMaster = false,
+                        Skills = "C#, Java",
+                        SecretQuestion = "Where do you live?",
+                        SecretAnswer = "At Home"
                     },
                     StartedOn = DateTime.Today
                 },
                 new Project
                 {
+                    Id = Guid.NewGuid(),
                     Name = "Project2",
                     Description = "This is a new project",
                     VersionControl = "queens.git",
@@ -410,10 +422,155 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
 
             unitOfWork.ProjectRepository.Items.Returns(projectList.AsQueryable());
 
+            ServiceProject project = service.GetProject(projectList[0].Id);
+
+            #region Test checks
+
+            project.ProjectId.Should().Be(projectList[0].Id);
+            project.Name.Should().Be("Project");
+            project.Description.Should().Be("This is a new project");
+            project.VersionControl.Should().Be("queens.git");
+            project.ProjectManager.EmailAddress.Should().Be("tester@agile.local");
+            project.ProductOwner.Should().BeNull();
+            project.ScrumMasters.Count.Should().Be(0);
+
             #endregion
+
         }
 
+        [Test]
+        [ExpectedException(typeof (ArgumentException))]
+        public void GetProjectInvalidGuid()
+        {
+            #region Test Data
+
+            List<Project> projectList = new List<Project>()
+            {
+                new Project
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Project",
+                    Description = "This is a new project",
+                    VersionControl = "queens.git",
+                    ProjectManager = new User
+                    {
+                         EmailAddress = "tester@agile.local",
+                        FirstName = "John",
+                        LastName = "Test",
+                        Password = "Password",
+                        Developer = false,
+                        ProductOwner = false,
+                        ScrumMaster = false,
+                        Skills = "C#, Java",
+                        SecretQuestion = "Where do you live?",
+                        SecretAnswer = "At Home"
+                    },
+                    StartedOn = DateTime.Today
+                },
+                new Project
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Project2",
+                    Description = "This is a new project",
+                    VersionControl = "queens.git",
+                    ProjectManager = new User
+                    {
+                        EmailAddress = "tester@agile.local"
+                    },
+                    StartedOn = DateTime.Today
+                }
+
+            };
+
+            #endregion
+
+            unitOfWork.ProjectRepository.Items.Returns(projectList.AsQueryable());
+
+            ServiceProject project = service.GetProject(Guid.Empty);
+        }
+        #endregion
+
         #region GetProjects() Tests
+
+        [Test]
+        public void GetProjects()
+        {
+            #region Test Data
+
+            List<Project> projectList = new List<Project>()
+            {
+                new Project
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Project",
+                    Description = "This is a new project",
+                    VersionControl = "queens.git",
+                    ProjectManager = new User
+                    {
+                         EmailAddress = "tester@agile.local",
+                        FirstName = "John",
+                        LastName = "Test",
+                        Password = "Password",
+                        Developer = false,
+                        ProductOwner = false,
+                        ScrumMaster = false,
+                        Skills = "C#, Java",
+                        SecretQuestion = "Where do you live?",
+                        SecretAnswer = "At Home"
+                    },
+                    StartedOn = DateTime.Today
+                },
+                new Project
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Project2",
+                    Description = "This is a new project",
+                    VersionControl = "queens.git",
+                    ProjectManager = new User
+                    {
+                         EmailAddress = "tester@agile.local",
+                        FirstName = "John",
+                        LastName = "Test",
+                        Password = "Password",
+                        Developer = false,
+                        ProductOwner = false,
+                        ScrumMaster = false,
+                        Skills = "C#, Java",
+                        SecretQuestion = "Where do you live?",
+                        SecretAnswer = "At Home"
+                    },
+                    StartedOn = DateTime.Today
+                }
+
+            };
+
+            #endregion
+
+            unitOfWork.ProjectRepository.Items.Returns(projectList.AsQueryable());
+
+            List<ServiceProject> project = service.GetProjects();
+
+            #region Test checks
+
+            project[0].ProjectId.Should().Be(projectList[0].Id);
+            project[0].Name.Should().Be("Project");
+            project[0].Description.Should().Be("This is a new project");
+            project[0].VersionControl.Should().Be("queens.git");
+            project[0].ProjectManager.EmailAddress.Should().Be("tester@agile.local");
+            project[0].ProductOwner.Should().BeNull();
+            project[0].ScrumMasters.Count.Should().Be(0);
+            
+            project[1].ProjectId.Should().Be(projectList[1].Id);
+            project[1].Name.Should().Be("Project2");
+            project[1].Description.Should().Be("This is a new project");
+            project[1].VersionControl.Should().Be("queens.git");
+            project[1].ProjectManager.EmailAddress.Should().Be("tester@agile.local");
+            project[1].ProductOwner.Should().BeNull();
+            project[1].ScrumMasters.Count.Should().Be(0);
+
+            #endregion
+        }
+        
         #endregion
 
         #region Helper Methods
