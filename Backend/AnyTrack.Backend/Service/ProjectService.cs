@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using AnyTrack.Backend.Data;
 using AnyTrack.Backend.Data.Model;
 using AnyTrack.Backend.Service.Model;
+using AnyTrack.SharedUtilities.Extensions;
 
 namespace AnyTrack.Backend.Service
 {
@@ -242,6 +243,41 @@ namespace AnyTrack.Backend.Service
 
             return projects;
         }
+
+        /// <summary>
+        /// Searches for users who can be added to a project.
+        /// </summary>
+        /// <param name="filter">The user filter.</param>
+        /// <returns>A list of user information objects.</returns>
+        public List<UserSearchInfo> SearchUsers(UserSearchFilter filter)
+        {
+            var users = unitOfWork.UserRepository.Items;
+
+            if (filter.EmailAddress.IsNotEmpty())
+            {
+                users = users.Where(u => u.EmailAddress == filter.EmailAddress);
+            }
+
+            if (filter.ProductOwner.HasValue)
+            {
+                users = users.Where(u => u.ProductOwner == filter.ProductOwner);
+            }
+
+            if (filter.ScrumMaster.HasValue)
+            {
+                users = users.Where(u => u.ScrumMaster == filter.ScrumMaster);
+            }
+
+            var userInfos = users.Select(u => new UserSearchInfo
+            {
+                EmailAddress = u.EmailAddress,
+                FullName = u.FirstName + " " + u.LastName,
+                UserID = u.Id
+            }).OrderBy(u => u.FullName);
+
+            return userInfos.ToList();
+        }
+
         #endregion
 
         #region Helper Methods

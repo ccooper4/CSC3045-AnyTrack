@@ -196,13 +196,13 @@
       <Project>{8fe42e8f-8e02-4d9c-971b-38e2b07dc83e}</Project>
       <Name>AnyTrack.Projects</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Backend\AnyTrack.Backend\AnyTrack.Backend.csproj">
-      <Project>{8e06f61a-3fd1-419e-a45f-66babb282d60}</Project>
-      <Name>AnyTrack.Backend</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Common\AnyTrack.Infrastructure\AnyTrack.Infrastructure.csproj">
       <Project>{a5a20403-c6e3-4475-88aa-762bd691f812}</Project>
       <Name>AnyTrack.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\AnyTrack.SharedUtilities\AnyTrack.SharedUtilities.csproj">
+      <Project>{4d4353ae-46fa-4b2e-b41a-a430fe6a8640}</Project>
+      <Name>AnyTrack.SharedUtilities</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modules\AnyTrack.Accounting\AnyTrack.Accounting.csproj">
       <Project>{9f38c80a-2e8c-486f-8054-e235886e1a17}</Project>

@@ -170,6 +170,7 @@
     <Compile Include="Common\AnyTrack.Infrastructure\Security\ServiceUserPrincipalTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\Service\MenuServiceTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\ValidatedBindableBaseTests.cs" />
+    <Compile Include="Common\AnyTrack.SharedUtilities\Extensions\StringExtensionTests.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Modules\AnyTrack.Accounting\AccountingModuleTests.cs" />
     <Compile Include="Modules\AnyTrack.Accounting\ServiceGateways\AccountServiceGatewayTests.cs" />
@@ -199,6 +200,10 @@
     <ProjectReference Include="..\..\Common\AnyTrack.Infrastructure\AnyTrack.Infrastructure.csproj">
       <Project>{a5a20403-c6e3-4475-88aa-762bd691f812}</Project>
       <Name>AnyTrack.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\AnyTrack.SharedUtilities\AnyTrack.SharedUtilities.csproj">
+      <Project>{4d4353ae-46fa-4b2e-b41a-a430fe6a8640}</Project>
+      <Name>AnyTrack.SharedUtilities</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\AnyTrack.Accounting\AnyTrack.Accounting.csproj">
       <Project>{9f38c80a-2e8c-486f-8054-e235886e1a17}</Project>
