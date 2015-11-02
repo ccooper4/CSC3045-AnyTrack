@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Windows;
@@ -79,7 +81,7 @@ namespace AnyTrack.Projects.Views
 
             this.regionManager = regionManager;
             this.serviceGateway = serviceGateway;
-            this.project = new Project { Stories = new List<Story>() };
+            this.project = new Project { Stories = new ObservableCollection<Story>() };
         }
 
         #endregion
@@ -114,11 +116,22 @@ namespace AnyTrack.Projects.Views
         }
 
         /// <summary>
-        /// Gets the stories
+        /// Gets or sets the stories
         /// </summary>
-        public List<Story> Stories
+        public ObservableCollection<Story> Stories
         {
-            get { return project.Stories; }
+            get
+            {
+                return project.Stories;
+            }
+
+            set
+            {
+                if (project.Stories != value)
+                {
+                    project.Stories = value;
+                }
+            }
         }
 
         /// <summary>
@@ -170,7 +183,7 @@ namespace AnyTrack.Projects.Views
                     Developer = true
                 },
                 StartedOn = new DateTime(2015, 10, 12),
-                Stories = new List<Story>(),
+                Stories = new ObservableCollection<Story>(),
                 ProjectId = new Guid()
             };
 

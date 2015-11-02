@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Collections.ObjectModel;
+
 namespace AnyTrack.Projects.BackendProjectService {
     using System.Runtime.Serialization;
     using System;
@@ -44,7 +46,7 @@ namespace AnyTrack.Projects.BackendProjectService {
         private System.DateTime StartedOnField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.Story> StoriesField;
+        private ObservableCollection<Story> StoriesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private AnyTrack.Projects.BackendProjectService.Story StoryIdField;
@@ -154,7 +156,7 @@ namespace AnyTrack.Projects.BackendProjectService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.Story> Stories {
+        public ObservableCollection<Story> Stories {
             get {
                 return this.StoriesField;
             }
