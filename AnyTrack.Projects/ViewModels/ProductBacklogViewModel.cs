@@ -51,6 +51,11 @@ namespace AnyTrack.Projects.Views
         [Required]
         private Project project;
 
+        /// <summary>
+        /// The project Id
+        /// </summary>
+        private string projectId;
+
         #endregion
 
         #region Constructor
@@ -74,7 +79,7 @@ namespace AnyTrack.Projects.Views
 
             this.regionManager = regionManager;
             this.serviceGateway = serviceGateway;
-            this.project = BuildMockProject();
+            this.project = new Project { Stories = new List<Story>() };
         }
 
         #endregion
@@ -91,6 +96,15 @@ namespace AnyTrack.Projects.Views
         }
 
         /// <summary>
+        /// Gets or sets the project name
+        /// </summary>
+        public string ProjectId
+        {
+            get { return projectId; }
+            set { SetProperty(ref projectId, value); }
+        }
+
+        /// <summary>
         /// Gets or sets the story title
         /// </summary>
         public string StoryTitle
@@ -104,9 +118,22 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         public List<Story> Stories
         {
+            get { return project.Stories; }
+        }
+
+        /// <summary>
+        /// Gets or sets the selected item
+        /// </summary>
+        public Project Project
+        {
             get
             {
-                return project.Stories;
+                return project;
+            }
+
+            set
+            {
+                project = value;
             }
         }
 

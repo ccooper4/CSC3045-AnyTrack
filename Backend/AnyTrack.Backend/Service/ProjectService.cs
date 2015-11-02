@@ -278,6 +278,7 @@ namespace AnyTrack.Backend.Service
             foreach (var project in query)
             {
                 var query2 = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Id == project.ProjectId);
+                project.Stories = new List<Story>();
                 foreach (var scrumMaster in query2.ScrumMasters)
                 {
                     project.ScrumMasters.Add(new NewUser
