@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Windows;
 using AnyTrack.Infrastructure;
+using AnyTrack.Infrastructure.BackendAccountService;
 using AnyTrack.Projects.BackendProjectService;
 using AnyTrack.Projects.ServiceGateways;
 using MahApps.Metro.Controls;
@@ -173,7 +174,7 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         public void SaveProject()
         {
-            Project project = new Project
+            ServiceProject project = new ServiceProject
             {
                 Name = this.ProjectName,
                 Description = this.Description,

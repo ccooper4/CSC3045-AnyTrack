@@ -100,7 +100,10 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Service References\BackendProjectService\AnyTrack.Projects.BackendProjectService.Project.datasource">
+    <None Include="Service References\BackendProjectService\AnyTrack.Projects.BackendProjectService.ServiceProject.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BackendProjectService\AnyTrack.Projects.BackendProjectService.UserSearchInfo.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BackendProjectService\ProjectService.wsdl" />

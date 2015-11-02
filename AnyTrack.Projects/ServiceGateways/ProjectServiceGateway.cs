@@ -43,7 +43,7 @@ namespace AnyTrack.Projects.ServiceGateways
         /// Adds the provided project to the database
         /// </summary>
         /// <param name="project">project to be added to the database</param>
-        public void CreateProject(Project project)
+        public void CreateProject(ServiceProject project)
         {
             client.AddProject(project);
         }
@@ -52,7 +52,7 @@ namespace AnyTrack.Projects.ServiceGateways
         /// Update specified project in the database
         /// </summary>
         /// <param name="project">The project to be updated</param>
-        public void UpdateProject(Project project)
+        public void UpdateProject(ServiceProject project)
         {
             client.UpdateProject(project);
         }
@@ -71,7 +71,7 @@ namespace AnyTrack.Projects.ServiceGateways
         /// </summary>
         /// <param name="id">id of the project to be retrieved</param>
         /// <returns>Specified project</returns>
-        public Project GetProject(Guid id)
+        public ServiceProject GetProject(Guid id)
         {
             return client.GetProject(id);
         }
@@ -80,7 +80,7 @@ namespace AnyTrack.Projects.ServiceGateways
         /// Retrieves all projects in the database
         /// </summary>
         /// <returns>A list of all protects</returns>
-        public List<Project> GetProjects()
+        public List<ServiceProject> GetProjects()
         {
             return client.GetProjects();
         }
