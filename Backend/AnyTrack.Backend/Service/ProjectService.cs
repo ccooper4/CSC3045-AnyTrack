@@ -113,14 +113,32 @@ namespace AnyTrack.Backend.Service
             project.StartedOn = project.StartedOn;
             project.VersionControl = updatedProject.VersionControl;
 
-            // Assign Product Owner
-            project.ProductOwner = new User
+            if (project.ProductOwner.EmailAddress != updatedProject.ProductOwner.EmailAddress)
             {
-                EmailAddress = updatedProject.ProductOwner.EmailAddress,
-                Password = updatedProject.ProductOwner.Password,
-                FirstName = updatedProject.ProductOwner.FirstName,
-                LastName = updatedProject.ProductOwner.LastName,
-            };
+                if (project.ProductOwner.EmailAddress != null)
+                {
+                    UnassignUserRole(project.Id, project.ProductOwner.EmailAddress, "Product Owner");
+                }
+
+                project.ProductOwner = AssignUserRole(project.Id, updatedProject.ProductOwner.EmailAddress, "Product Owner");
+            }
+
+            // Assign Scrum Master
+            foreach (var scrumMaster in project.ScrumMasters)
+            {
+                if (!updatedProject.ScrumMasters.Contains(MapUserToNewUser(scrumMaster)))
+                {
+                    project.ScrumMasters.Remove(UnassignUserRole(project.Id, scrumMaster.EmailAddress, "Scrum Master"));
+                }
+            }
+
+            foreach (var updatedScrumMaster in updatedProject.ScrumMasters)
+            {
+                if (!project.ScrumMasters.Contains(MapNewUserToUser(updatedScrumMaster)))
+                {
+                    project.ScrumMasters.Add(AssignUserRole(project.Id, updatedScrumMaster.EmailAddress, "Scrum Master"));
+                }
+            }
 
             // Assign Scrum Master
             foreach (var scrumMaster in updatedProject.ScrumMasters)
@@ -148,6 +166,14 @@ namespace AnyTrack.Backend.Service
             if (project == null)
             {
                 throw new ArgumentException("Project does not exist");
+            }
+
+            UnassignUserRole(projectId, project.ProductOwner.EmailAddress, "Product Owner");
+            UnassignUserRole(projectId, project.ProjectManager.EmailAddress, "Project Manager");
+
+            foreach (var scrumMaster in project.ScrumMasters)
+            {
+                UnassignUserRole(projectId, scrumMaster.EmailAddress, "Scrum Master");
             }
 
             unitOfWork.ProjectRepository.Delete(project);
@@ -260,6 +286,36 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
+        /// Retrieves user from database with email address and unassigns them from role on the project
+        /// </summary>
+        /// <param name="projectId">Id of project to be added to</param>
+        /// <param name="emailAddress">users email address</param>
+        /// <param name="roleName">Name of role in project</param>
+        /// <returns>user with added role</returns>
+        private User UnassignUserRole(Guid projectId, string emailAddress, string roleName)
+        {
+            User user =
+                        unitOfWork.UserRepository.Items.SingleOrDefault(
+                            u => u.EmailAddress == emailAddress);
+            if (user == null)
+            {
+                throw new Exception("User does not exist");
+            }
+
+            Role role =
+                        unitOfWork.RoleRepository.Items.SingleOrDefault(r => r.RoleName == roleName && r.User == user && r.ProjectID == projectId);
+
+            if (role == null)
+            {
+                throw new Exception("Role does not exist for user in project");
+            }
+
+            user.Roles.Remove(role);
+
+            return user;
+        }
+
+        /// <summary>
         /// Converts a User to a NewUser datatype
         /// </summary>
         /// <param name="user">User to be converted</param>
@@ -267,6 +323,28 @@ namespace AnyTrack.Backend.Service
         private NewUser MapUserToNewUser(User user)
         {
             return new NewUser
+            {
+                EmailAddress = user.EmailAddress,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Password = user.Password,
+                Developer = user.Developer,
+                ProductOwner = user.ProductOwner,
+                ScrumMaster = user.ScrumMaster,
+                Skills = user.Skills,
+                SecretQuestion = user.SecretQuestion,
+                SecretAnswer = user.SecretAnswer
+            };
+        }
+
+        /// <summary>
+        /// Maps a New User to User
+        /// </summary>
+        /// <param name="user">NewUser to be converted</param>
+        /// <returns>Returns a converted User</returns>
+        private User MapNewUserToUser(NewUser user)
+        {
+            return new User
             {
                 EmailAddress = user.EmailAddress,
                 FirstName = user.FirstName,
