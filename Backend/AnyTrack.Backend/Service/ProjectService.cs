@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Security;
 using AnyTrack.Backend.Data;
 using AnyTrack.Backend.Data.Model;
 using AnyTrack.Backend.Service.Model;
@@ -186,16 +187,20 @@ namespace AnyTrack.Backend.Service
             {
                 Description = dataProject.Description,
                 ProjectId = dataProject.Id,
-                Name = dataProject.Name,
-                ProductOwner = MapUserToNewUser(dataProject.ProductOwner),
+                Name = dataProject.Name,          
                 ProjectManager = MapUserToNewUser(dataProject.ProjectManager),
                 StartedOn = dataProject.StartedOn,
                 VersionControl = dataProject.VersionControl
             };
 
-            foreach (var scrumMaster in dataProject.ScrumMasters)
+            project.ProductOwner = dataProject.ProductOwner != null ? MapUserToNewUser(dataProject.ProductOwner) : null;
+
+            if (dataProject.ScrumMasters != null)
             {
-                project.ScrumMasters.Add(MapUserToNewUser(scrumMaster));
+                foreach (var scrumMaster in dataProject.ScrumMasters)
+                {
+                    project.ScrumMasters.Add(MapUserToNewUser(scrumMaster));
+                }
             }
 
             foreach (var story in dataProject.Stories)
@@ -249,7 +254,6 @@ namespace AnyTrack.Backend.Service
                 Name = p.Name,
                 VersionControl = p.VersionControl,
                 StartedOn = p.StartedOn,
-                ProductOwner = MapUserToNewUser(p.ProductOwner),
                 ProjectManager = MapUserToNewUser(p.ProjectManager),
             }).ToList();
 
@@ -257,9 +261,14 @@ namespace AnyTrack.Backend.Service
             {
                 var dataProject = unitOfWork.ProjectRepository.Items.Single(p => p.Id == project.ProjectId);
                 project.Stories = new List<Service.Model.Story>();
-                foreach (var scrumMaster in dataProject.ScrumMasters)
+                project.ProductOwner = dataProject.ProductOwner != null ? MapUserToNewUser(dataProject.ProductOwner) : null;
+
+                if (dataProject.ScrumMasters != null)
                 {
-                    project.ScrumMasters.Add(MapUserToNewUser(scrumMaster));
+                    foreach (var scrumMaster in dataProject.ScrumMasters)
+                    {
+                        project.ScrumMasters.Add(MapUserToNewUser(scrumMaster));
+                    }
                 }
 
                 foreach (var story in dataProject.Stories)
@@ -278,6 +287,7 @@ namespace AnyTrack.Backend.Service
 
             return projects;
         }
+        
         #endregion
 
         #region Helper Methods
@@ -311,7 +321,10 @@ namespace AnyTrack.Backend.Service
                     user.Roles = new List<Role>();
                 }
 
-                user.Roles.Add(role);
+                if (!user.Roles.Contains(role))
+                {
+                    user.Roles.Add(role);
+                }
 
                 return user;
             }
