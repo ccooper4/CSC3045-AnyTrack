@@ -205,7 +205,7 @@ namespace AnyTrack.Accounting.Views
         /// Gets or sets Confirm Password property.
         /// </summary>
         [Required]
-        [Compare("Password")]
+        [Compare("Password", ErrorMessage = "The passwords must match")]
         public string ConfirmPassword
         {
             get

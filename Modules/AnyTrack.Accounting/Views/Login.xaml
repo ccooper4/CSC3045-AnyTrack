@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AnyTrack.Accounting.Views"
              xmlns:prism="http://www.codeplex.com/prism"
+             xmlns:atph="clr-namespace:AnyTrack.Accounting.Controls"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="600">
@@ -44,7 +45,7 @@
                 <TextBox Name="EmailTextbox" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Text="{Binding Email}"/>
 
                 <Label Grid.Column="0" Grid.Row="1" Name="PasswordLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Password:</Label>
-                <TextBox Name="PasswordTextbox" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Text="{Binding Password}"/>
+                <PasswordBox Name="PasswordTextbox" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" atph:PasswordBoxBindingHelper.EnablePasswordBoxBinding="true"  atph:PasswordBoxBindingHelper.Binding="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Column="1" Grid.Row="3" Name="ForgotPasswordLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Forgot Password?</Label>
 

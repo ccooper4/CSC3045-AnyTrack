@@ -176,6 +176,7 @@
     <Compile Include="Modules\AnyTrack.Accounting\ServiceGateways\Model\AvailableSecretQuestionsTests.cs" />
     <Compile Include="Modules\AnyTrack.Accounting\Views\LoginViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Accounting\Views\RegistrationViewModelTests.cs" />
+    <Compile Include="Modules\AnyTrack.Projects\ServiceGateways\ProjectServiceGatewayTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -204,7 +205,9 @@
       <Name>AnyTrack.Accounting</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Modules\AnyTrack.Projects\Views\" />
+  </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
