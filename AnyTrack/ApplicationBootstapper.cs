@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows;
+using AnyTrack.Accounting;
+using AnyTrack.Client.Views;
+using AnyTrack.Infrastructure.Service;
+using Microsoft.Practices.Unity;
+using Prism.Modularity;
 using Prism.Mvvm;
 using Prism.Unity;
 
@@ -39,6 +44,9 @@ namespace AnyTrack.Client
         protected override void ConfigureModuleCatalog()
         {
             base.ConfigureModuleCatalog();
+
+            var moduleCatalog = (ModuleCatalog)this.ModuleCatalog;
+            moduleCatalog.AddModule(typeof(AccountingModule));
         }
 
         /// <summary>
@@ -56,8 +64,22 @@ namespace AnyTrack.Client
 
             ViewModelLocationProvider.SetDefaultViewModelFactory((type) =>
             {
-                return this.Container.TryResolve(type);
+                return this.Container.Resolve(type);
             });
+        }
+
+        /// <summary>
+        /// Configures the application's container.
+        /// </summary>
+        protected override void ConfigureContainer()
+        {
+            base.ConfigureContainer();
+
+            // AnyTrack.Infrastructure.Services 
+            this.Container.RegisterType<IMenuService, MenuService>(new ContainerControlledLifetimeManager());
+
+            // AnyTrack.Views
+            this.Container.RegisterType<object, MainAppArea>("MainAppArea");
         }
 
         #endregion 

@@ -1,4 +1,7 @@
+using System.Web.Security;
 using AnyTrack.Backend.Data;
+using AnyTrack.Backend.Providers;
+using AnyTrack.Backend.Service;
 using Microsoft.Practices.Unity;
 using Unity.Wcf;
 
@@ -22,6 +25,16 @@ namespace AnyTrack.Backend.WebHost
 
             // AnyTrack.Backend.Data 
             container.RegisterType<IUnitOfWork, EntityUnitOfWork>();
+
+            // AnyTrack.Backend.Services 
+            container.RegisterType<IAccountService, AccountService>();
+
+            // AnyTrack.Backend.Providers
+            container.RegisterType<FormsAuthenticationProvider, FormsAuthenticationProvider>();
+            container.RegisterType<Providers.RoleProvider, Providers.RoleProvider>();
+            container.RegisterType<OperationContextProvider, OperationContextProvider>();
+
+            ((Providers.RoleProvider)Roles.Provider).UnitOfWork = container.Resolve<IUnitOfWork>();
         }
     }    
 }

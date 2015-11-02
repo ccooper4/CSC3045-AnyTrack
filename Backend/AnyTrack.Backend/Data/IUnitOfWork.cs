@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AnyTrack.Backend.Data.Model;
 
 namespace AnyTrack.Backend.Data
 {
@@ -12,6 +13,16 @@ namespace AnyTrack.Backend.Data
     public interface IUnitOfWork
     {
         #region Properties 
+
+        /// <summary>
+        /// Gets the user repository controlled by this unit of work.
+        /// </summary>
+        IRepository<User> UserRepository { get; }
+
+        /// <summary>
+        /// Gets the role repository controlled by this unit of work.
+        /// </summary>
+        IRepository<Role> RoleRepository { get; }
 
         #endregion 
 
