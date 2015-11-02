@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Windows;
 using AnyTrack.Accounting;
 using AnyTrack.Client.Views;
+using AnyTrack.Infrastructure.Service;
 using AnyTrack.Projects;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
@@ -67,6 +68,20 @@ namespace AnyTrack.Client
             {
                 return this.Container.Resolve(type);
             });
+        }
+
+        /// <summary>
+        /// Configures the application's container.
+        /// </summary>
+        protected override void ConfigureContainer()
+        {
+            base.ConfigureContainer();
+
+            // AnyTrack.Infrastructure.Services 
+            this.Container.RegisterType<IMenuService, MenuService>(new ContainerControlledLifetimeManager());
+
+            // AnyTrack.Views
+            this.Container.RegisterType<object, MainAppArea>("MainAppArea");
         }
 
         #endregion 

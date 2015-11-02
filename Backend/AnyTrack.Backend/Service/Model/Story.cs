@@ -62,6 +62,6 @@ namespace AnyTrack.Backend.Service.Model
         /// <summary>
         /// Gets or sets the project the story is part of
         /// </summary>
-        public Project Project { get; set; }
+        public ServiceProject Project { get; set; }
     }
 }

@@ -45,5 +45,20 @@ namespace AnyTrack.Backend.Service.Model
         /// Gets or sets a value indicating whether the developer flag has been set.
         /// </summary>
         public bool Developer { get; set; }
+
+        /// <summary>
+        /// Gets or sets the secret question.
+        /// </summary>
+        public string SecretQuestion { get; set; }
+
+        /// <summary>
+        /// Gets or sets the secret answer.
+        /// </summary>
+        public string SecretAnswer { get; set; }
+
+        /// <summary>
+        /// Gets or sets the skills.
+        /// </summary>
+        public string Skills { get; set; }
     }
 }

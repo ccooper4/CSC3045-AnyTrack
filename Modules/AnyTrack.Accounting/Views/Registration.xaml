@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AnyTrack.Accounting.Views"
              xmlns:prism="http://www.codeplex.com/prism"
+             xmlns:atph="clr-namespace:AnyTrack.Accounting.Controls"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="600">
@@ -58,10 +59,10 @@
                 <TextBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Text="{Binding LastName}" />
 
                 <Label Grid.Column="0" Grid.Row="3" Name="PasswordLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Password*:</Label>
-                <TextBox Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Text="{Binding Password}" />
+                <PasswordBox Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" atph:PasswordBoxBindingHelper.EnablePasswordBoxBinding="true"  atph:PasswordBoxBindingHelper.Binding="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Column="0" Grid.Row="4" Name="ConfirmPasswordLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Confirm Password:</Label>
-                <TextBox Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" Text="{Binding ConfirmPassword}" />
+                <PasswordBox Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" atph:PasswordBoxBindingHelper.EnablePasswordBoxBinding="true"  atph:PasswordBoxBindingHelper.Binding="{Binding Path=ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Column="0" Grid.Row="5" Name="RolesLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Roles:</Label>
                 <CheckBox Name="ProductOwnerCheckbox" Content="Product Owner" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10px" IsChecked="{Binding ProductOwner}"/>
@@ -85,10 +86,10 @@
                 </StackPanel>
                 
                 <Label Grid.Column="0" Grid.Row="9" Name="SecretQuestionLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Secret Question:</Label>
-                <ComboBox Grid.Column="1" Grid.Row="9" ItemsSource="{Binding SecretQuestions}" Height="5" VerticalAlignment="Center" />
+                <ComboBox Grid.Column="1" Grid.Row="9" ItemsSource="{Binding SecretQuestions}" SelectedValuePath="." SelectedValue="{Binding SecretQuestion}" Height="5" VerticalAlignment="Center" />
 
                 <Label Grid.Column="0" Grid.Row="10" Name="SecretAnswerLabel" VerticalAlignment="Top" HorizontalAlignment="Right" Padding="10px" >Secret Answer:</Label>
-                <TextBox Grid.Column="1" Grid.Row="10" VerticalAlignment="Center" Text="{Binding ConfirmPassword}"/>
+                <TextBox Grid.Column="1" Grid.Row="10" VerticalAlignment="Center" Text="{Binding SecretAnswer}"/>
 
             </Grid>
         </GroupBox>

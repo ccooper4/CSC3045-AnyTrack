@@ -40,6 +40,7 @@ namespace Unit.Backend.AnyTrack.Backend.Data.EntityUnitOfWorkTests
 
             unitOfWork.UserRepository.Should().NotBeNull();
             unitOfWork.RoleRepository.Should().NotBeNull();
+            unitOfWork.ProjectRepository.Should().NotBeNull();
         }
 
         #endregion 

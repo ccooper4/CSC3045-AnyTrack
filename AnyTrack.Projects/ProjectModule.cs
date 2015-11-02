@@ -1,5 +1,7 @@
 ﻿using System;
 using AnyTrack.Infrastructure;
+using AnyTrack.Infrastructure.Service;
+using AnyTrack.Infrastructure.Service.Model;
 using AnyTrack.Projects.BackendProjectService;
 using AnyTrack.Projects.ServiceGateways;
 using AnyTrack.Projects.Views;
@@ -26,6 +28,11 @@ namespace AnyTrack.Projects
         /// </summary>
         private readonly IRegionManager regionManager;
 
+        /// <summary>
+        /// The menu service.
+        /// </summary>
+        private readonly IMenuService menuService; 
+
         #endregion
 
         #region Constructor
@@ -35,7 +42,8 @@ namespace AnyTrack.Projects
         /// </summary>
         /// <param name="container">The Unity container</param>
         /// <param name="regionManager">The Prism region manager</param>
-        public ProjectModule(IUnityContainer container, IRegionManager regionManager)
+        /// <param name="menuService">The menu service.</param>
+        public ProjectModule(IUnityContainer container, IRegionManager regionManager, IMenuService menuService)
         {
             if (container == null)
             {
@@ -47,8 +55,14 @@ namespace AnyTrack.Projects
                 throw new ArgumentNullException("regionManager");
             }
 
+            if (menuService == null)
+            {
+                throw new ArgumentNullException("menuService");
+            }
+
             this.container = container;
             this.regionManager = regionManager;
+            this.menuService = menuService;
         }
 
         #endregion
@@ -68,6 +82,7 @@ namespace AnyTrack.Projects
             container.RegisterType<object, ProductBacklog>("ProductBacklog");
             ////container.RegisterType<object, CreateProject>("Project");
 
+            menuService.AddMenuItem(new MenuItem { Color = "Goldenrod", Title = "Project", NavigationViewName = "Project" });
             regionManager.RequestNavigate(RegionNames.AppContainer, "ProductBacklog");
             ////regionManager.RequestNavigate(RegionNames.AppContainer, "Project");
         }

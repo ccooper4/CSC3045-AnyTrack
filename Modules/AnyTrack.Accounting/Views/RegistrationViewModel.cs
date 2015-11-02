@@ -79,6 +79,16 @@ namespace AnyTrack.Accounting.Views
         private string currentSkill;
 
         /// <summary>
+        /// The currently selected secret question.
+        /// </summary>
+        private string secretQuestion;
+
+        /// <summary>
+        /// The secret answer.
+        /// </summary>
+        private string secretAnswer; 
+
+        /// <summary>
         /// The specified user skills.
         /// </summary>
         private ObservableCollection<string> skills = new ObservableCollection<string>();
@@ -195,7 +205,7 @@ namespace AnyTrack.Accounting.Views
         /// Gets or sets Confirm Password property.
         /// </summary>
         [Required]
-        [Compare("Password")]
+        [Compare("Password", ErrorMessage = "The passwords must match")]
         public string ConfirmPassword
         {
             get
@@ -274,6 +284,40 @@ namespace AnyTrack.Accounting.Views
         }
 
         /// <summary>
+        /// Gets or sets Secret Question.
+        /// </summary>
+        [Required]
+        public string SecretQuestion
+        {
+            get
+            {
+                return secretQuestion; 
+            }
+
+            set
+            {
+                SetProperty(ref secretQuestion, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets Secret Answer.
+        /// </summary>
+        [Required]
+        public string SecretAnswer
+        {
+            get
+            {
+                return secretAnswer;
+            }
+
+            set
+            {
+                SetProperty(ref secretAnswer, value);
+            }
+        }
+
+        /// <summary>
         /// Gets the Skills property.
         /// </summary>
         public ObservableCollection<string> Skills
@@ -341,7 +385,10 @@ namespace AnyTrack.Accounting.Views
                 Password = password,
                 ProductOwner = productOwner,
                 ScrumMaster = scrumMaster,
-                Developer = developer
+                Developer = developer,
+                SecretQuestion = secretQuestion,
+                SecretAnswer = secretAnswer,
+                Skills = string.Join(",", Skills)
             };
 
             try

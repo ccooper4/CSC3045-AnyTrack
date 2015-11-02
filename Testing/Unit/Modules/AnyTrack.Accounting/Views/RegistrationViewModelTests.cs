@@ -21,6 +21,7 @@ using MahApps.Metro.Controls.Dialogs;
 using System.ServiceModel;
 using AnyTrack.Backend.Faults;
 using AnyTrack.Infrastructure.BackendAccountService;
+using System.Collections.ObjectModel;
 
 namespace Unit.Modules.AnyTrack.Accounting.Views.RegistrationViewModelTests
 {
@@ -155,6 +156,13 @@ namespace Unit.Modules.AnyTrack.Accounting.Views.RegistrationViewModelTests
             registrationViewModel.ProductOwner = false;
             registrationViewModel.ScrumMaster = false;
             registrationViewModel.Developer = false;
+            registrationViewModel.SecretQuestion = "Test";
+            registrationViewModel.SecretAnswer = "Test";
+
+            registrationViewModel.CurrentSkill = "C#";
+            registrationViewModel.Call("AddSkill");
+            registrationViewModel.CurrentSkill = "WCF";
+            registrationViewModel.Call("AddSkill");
 
             registrationViewModel.Call("RegisterUser");
 
@@ -166,6 +174,9 @@ namespace Unit.Modules.AnyTrack.Accounting.Views.RegistrationViewModelTests
             registration.ProductOwner.Should().Be(registrationViewModel.ProductOwner);
             registration.ScrumMaster.Should().Be(registrationViewModel.ScrumMaster);
             registration.Developer.Should().Be(registrationViewModel.Developer);
+            registration.SecretQuestion.Should().Be(registrationViewModel.SecretQuestion);
+            registrationViewModel.SecretAnswer.Should().Be(registrationViewModel.SecretAnswer);
+            registration.Skills.Should().Be("C#,WCF");
             gateway.Received().RegisterAccount(registration);
 
             regionManager.Received().RequestNavigate(RegionNames.AppContainer, "Login");

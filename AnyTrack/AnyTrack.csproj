@@ -127,9 +127,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ApplicationBootstapper.cs" />
+    <Compile Include="Views\MainAppArea.xaml.cs">
+      <DependentUpon>MainAppArea.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MainAppAreaViewModel.cs" />
     <Compile Include="Views\ShellViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +182,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\MainAppArea.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Shell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using AnyTrack.Backend.Data;
+using AnyTrack.Backend.Data.Model;
 using AnyTrack.Backend.Service.Model;
 
 namespace AnyTrack.Backend.Service
@@ -29,114 +31,116 @@ namespace AnyTrack.Backend.Service
         /// <param name="unitOfWork">The unit of work</param>
         public ProjectService(IUnitOfWork unitOfWork)
         {
+            if (unitOfWork == null)
+            {
+                throw new ArgumentNullException("unitOfWork");
+            }
+
             this.unitOfWork = unitOfWork;
         }
 
         #endregion
 
+        #region Methods
         /// <summary>
         /// Adds a Project to the database
         /// </summary>
         /// <param name="project">Project to be added</param>
-        public void AddProject(Project project)
+        public void AddProject(ServiceProject project)
         {
+            if (project == null)
+            {
+                throw new ArgumentNullException("project");
+            }
+
             var projectExists = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Id == project.ProjectId);
 
-            if (projectExists == null)
-            {
-                Data.Model.Project dataProject = new Data.Model.Project
-                {
-                    Description = project.Description,
-                    Id = project.ProjectId,
-                    Name = project.Name,
-                    ProductOwner = new Data.Model.User
-                    {
-                        EmailAddress = project.ProductOwner.EmailAddress,
-                        Password = project.ProductOwner.Password,
-                        FirstName = project.ProductOwner.FirstName,
-                        LastName = project.ProductOwner.LastName
-                        //// skillset
-                    },
-                    ProjectManager = new Data.Model.User
-                    {
-                        EmailAddress = project.ProjectManager.EmailAddress,
-                        Password = project.ProjectManager.Password,
-                        FirstName = project.ProjectManager.FirstName,
-                        LastName = project.ProjectManager.LastName
-                    },
-                    StartedOn = project.StartedOn,
-                    VersionControl = project.VersionControl,
-                };
-
-                foreach (var scrumMaster in project.ScrumMasters)
-                {
-                    dataProject.ScrumMasters.Add(new Data.Model.User
-                    {
-                        EmailAddress = scrumMaster.EmailAddress,
-                        Password = scrumMaster.Password,
-                        FirstName = scrumMaster.FirstName,
-                        LastName = scrumMaster.LastName
-                    });
-                }
-
-                unitOfWork.ProjectRepository.Insert(dataProject);
-                unitOfWork.Commit();
-            }
-            else
+            if (projectExists != null)
             {
                 throw new ArgumentException("Project already exists in database");
             }
+
+            // Assign Project initial values
+            Project dataProject = new Project
+            {
+                Description = project.Description,
+                Name = project.Name,
+                StartedOn = project.StartedOn,
+                VersionControl = project.VersionControl
+            };
+
+            // Assign Project Manager
+            dataProject.ProjectManager =
+                AssignUserRole(dataProject.Id, Thread.CurrentPrincipal.Identity.Name, "Project Manager");
+
+            // Assign Product Owner
+            dataProject.ProductOwner = project.ProductOwner != null
+                ? AssignUserRole(dataProject.Id, project.ProductOwner.EmailAddress, "Product Owner")
+                : null;
+
+            // Assign Scrum Masters
+            dataProject.ScrumMasters = new List<User>();
+            foreach (var scrumMaster in project.ScrumMasters)
+            {
+                dataProject.ScrumMasters.Add(AssignUserRole(dataProject.Id, scrumMaster.EmailAddress, "Scrum Master"));
+            }
+
+            unitOfWork.ProjectRepository.Insert(dataProject);
+
+            unitOfWork.Commit();
         }
 
         /// <summary>
         /// Update project in the database
         /// </summary>
-        /// <param name="project">Project to be updated</param>
-        public void UpdateProject(Project project)
+        /// <param name="updatedProject">Project to be updated</param>
+        public void UpdateProject(ServiceProject updatedProject)
         {
-            var updatedProject = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Id == project.ProjectId);
-
-            if (updatedProject != null)
+            if (updatedProject == null)
             {
-                updatedProject.Name = project.Name;
-                updatedProject.Description = project.Description;
-                updatedProject.StartedOn = updatedProject.StartedOn;
-                updatedProject.VersionControl = project.VersionControl;
-
-                updatedProject.ProductOwner = new Data.Model.User
-                {
-                    EmailAddress = project.ProductOwner.EmailAddress,
-                    Password = project.ProductOwner.Password,
-                    FirstName = project.ProductOwner.FirstName,
-                    LastName = project.ProductOwner.LastName,
-                };
-
-                updatedProject.ProjectManager = new Data.Model.User
-                {
-                    EmailAddress = project.ProjectManager.EmailAddress,
-                    Password = project.ProjectManager.Password,
-                    FirstName = project.ProjectManager.FirstName,
-                    LastName = project.ProjectManager.LastName,
-                };
-
-                updatedProject.ScrumMasters.Clear();
-                foreach (var scrumMaster in project.ScrumMasters)
-                {
-                    updatedProject.ScrumMasters.Add(new Data.Model.User
-                    {
-                        EmailAddress = scrumMaster.EmailAddress,
-                        Password = scrumMaster.Password,
-                        FirstName = scrumMaster.FirstName,
-                        LastName = scrumMaster.LastName,
-                    });
-                }
-
-                unitOfWork.Commit();
+                throw new ArgumentNullException("updatedProject");
             }
-            else
+
+            var project = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Id == updatedProject.ProjectId);
+
+            if (project == null)
             {
                 throw new ArgumentException("Project does not exist in database");
             }
+
+            project.Name = updatedProject.Name;
+            project.Description = updatedProject.Description;
+            project.StartedOn = project.StartedOn;
+            project.VersionControl = updatedProject.VersionControl;
+
+            if (project.ProductOwner.EmailAddress != updatedProject.ProductOwner.EmailAddress)
+            {
+                if (project.ProductOwner.EmailAddress != null)
+                {
+                    UnassignUserRole(project.Id, project.ProductOwner.EmailAddress, "Product Owner");
+                }
+
+                project.ProductOwner = AssignUserRole(project.Id, updatedProject.ProductOwner.EmailAddress, "Product Owner");
+            }
+
+            // Assign Scrum Master
+            foreach (var scrumMaster in project.ScrumMasters)
+            {
+                if (!updatedProject.ScrumMasters.Contains(MapUserToNewUser(scrumMaster)))
+                {
+                    project.ScrumMasters.Remove(UnassignUserRole(project.Id, scrumMaster.EmailAddress, "Scrum Master"));
+                }
+            }
+
+            foreach (var updatedScrumMaster in updatedProject.ScrumMasters)
+            {
+                if (!project.ScrumMasters.Contains(MapNewUserToUser(updatedScrumMaster)))
+                {
+                    project.ScrumMasters.Add(AssignUserRole(project.Id, updatedScrumMaster.EmailAddress, "Scrum Master"));
+                }
+            }
+
+            unitOfWork.Commit();
         }
 
         /// <summary>
@@ -152,6 +156,14 @@ namespace AnyTrack.Backend.Service
                 throw new ArgumentException("Project does not exist");
             }
 
+            UnassignUserRole(projectId, project.ProductOwner.EmailAddress, "Product Owner");
+            UnassignUserRole(projectId, project.ProjectManager.EmailAddress, "Project Manager");
+
+            foreach (var scrumMaster in project.ScrumMasters)
+            {
+                UnassignUserRole(projectId, scrumMaster.EmailAddress, "Scrum Master");
+            }
+
             unitOfWork.ProjectRepository.Delete(project);
             unitOfWork.Commit();
         }
@@ -161,58 +173,36 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         /// <param name="projectId">ID of the project to be retrieved from the database</param>
         /// <returns>Specified Project</returns>
-        public Project GetProject(Guid projectId)
+        public ServiceProject GetProject(Guid projectId)
         {
-            var query = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Id == projectId);
+            var dataProject = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Id == projectId);
 
-            if (query == null)
+            if (dataProject == null)
             {
                 throw new ArgumentException("Project does not exist");
             }
 
-            Project project = new Project
+            ServiceProject project = new ServiceProject
             {
-                Description = query.Description,
-                ProjectId = query.Id,
-                Name = query.Name,
-                ProductOwner = new NewUser
-                {
-                    EmailAddress = query.ProductOwner.EmailAddress,
-                    Password = query.ProductOwner.Password,
-                    FirstName = query.ProductOwner.FirstName,
-                    LastName = query.ProductOwner.LastName
-                },
-                ProjectManager = new NewUser
-                {
-                    EmailAddress = query.ProjectManager.EmailAddress,
-                    Password = query.ProjectManager.Password,
-                    FirstName = query.ProjectManager.FirstName,
-                    LastName = query.ProjectManager.LastName
-                    
-                    // include skillset
-                },
-                StartedOn = query.StartedOn,
-                VersionControl = query.VersionControl
+                Description = dataProject.Description,
+                ProjectId = dataProject.Id,
+                Name = dataProject.Name,
+                ProductOwner = MapUserToNewUser(dataProject.ProductOwner),
+                ProjectManager = MapUserToNewUser(dataProject.ProjectManager),
+                StartedOn = dataProject.StartedOn,
+                VersionControl = dataProject.VersionControl
             };
 
-            foreach (var scrumMaster in query.ScrumMasters)
+            foreach (var scrumMaster in dataProject.ScrumMasters)
             {
-                project.ScrumMasters.Add(new NewUser
-                {
-                    EmailAddress = scrumMaster.EmailAddress,
-                    Password = scrumMaster.Password,
-                    FirstName = scrumMaster.FirstName,
-                    LastName = scrumMaster.LastName
-                    
-                    // include skillset
-                });
+                project.ScrumMasters.Add(MapUserToNewUser(scrumMaster));
             }
 
-            foreach (var story in query.Stories)
+            foreach (var story in dataProject.Stories)
             {
             }
 
-            project.Stories.Add(new Story
+            project.Stories.Add(new Service.Model.Story
             {
                 StoryId = new Guid(),
                 StoryName = "Adding implementation",
@@ -230,9 +220,9 @@ namespace AnyTrack.Backend.Service
         /// Gets all existing stories from the database
         /// </summary>
         /// <returns>returns a list of stories</returns>
-        public List<Story> GetStories()
+        public List<Service.Model.Story> GetStories()
         {
-            var query = unitOfWork.StoryRepository.Items.Select(s => new Story
+            var query = unitOfWork.StoryRepository.Items.Select(s => new Service.Model.Story
             {
                 StoryId = s.Id,
                 StoryName = s.StoryName,
@@ -250,49 +240,31 @@ namespace AnyTrack.Backend.Service
         /// Gets all existing projects from the database
         /// </summary>
         /// <returns>List of all Projects in the database</returns>
-        public List<Project> GetProjects()
+        public List<ServiceProject> GetProjects()
         {
-            var query = unitOfWork.ProjectRepository.Items.Select(p => new Project
+            var projects = unitOfWork.ProjectRepository.Items.Select(p => new ServiceProject
             {
                 ProjectId = p.Id,
                 Description = p.Description,
                 Name = p.Name,
                 VersionControl = p.VersionControl,
                 StartedOn = p.StartedOn,
-                ProductOwner = new NewUser
-                {
-                    EmailAddress = p.ProductOwner.EmailAddress,
-                    Password = p.ProductOwner.Password,
-                    FirstName = p.ProductOwner.FirstName,
-                    LastName = p.ProductOwner.LastName
-                },
-                ProjectManager = new NewUser
-                {
-                    EmailAddress = p.ProjectManager.EmailAddress,
-                    Password = p.ProjectManager.Password,
-                    FirstName = p.ProjectManager.FirstName,
-                    LastName = p.ProjectManager.LastName
-                },
+                ProductOwner = MapUserToNewUser(p.ProductOwner),
+                ProjectManager = MapUserToNewUser(p.ProjectManager),
             }).ToList();
 
-            foreach (var project in query)
+            foreach (ServiceProject project in projects)
             {
-                var query2 = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Id == project.ProjectId);
-                project.Stories = new List<Story>();
-                foreach (var scrumMaster in query2.ScrumMasters)
+                var dataProject = unitOfWork.ProjectRepository.Items.Single(p => p.Id == project.ProjectId);
+                project.Stories = new List<Service.Model.Story>();
+                foreach (var scrumMaster in dataProject.ScrumMasters)
                 {
-                    project.ScrumMasters.Add(new NewUser
-                    {
-                        EmailAddress = scrumMaster.EmailAddress,
-                        Password = scrumMaster.Password,
-                        FirstName = scrumMaster.FirstName,
-                        LastName = scrumMaster.LastName
-                    });
+                    project.ScrumMasters.Add(MapUserToNewUser(scrumMaster));
                 }
 
-                foreach (var story in query2.Stories)
+                foreach (var story in dataProject.Stories)
                 {
-                    project.Stories.Add(new Story
+                    project.Stories.Add(new Service.Model.Story
                     {
                         StoryName = story.StoryName,
                         Description = story.Description,
@@ -304,7 +276,125 @@ namespace AnyTrack.Backend.Service
                 }
             }
 
-            return query;
+            return projects;
         }
+        #endregion
+
+        #region Helper Methods
+
+        /// <summary>
+        /// Retrieves user from database with email address and assigns them a role on the project
+        /// </summary>
+        /// <param name="projectId">Id of project to be added to</param>
+        /// <param name="emailAddress">users email address</param>
+        /// <param name="roleName">Name of role in project</param>
+        /// <returns>user with added role</returns>
+        private User AssignUserRole(Guid projectId, string emailAddress, string roleName)
+        {
+            User user =
+                        unitOfWork.UserRepository.Items.SingleOrDefault(
+                            u => u.EmailAddress == emailAddress);
+
+            if (user != null)
+            {
+                // Create role
+                Role role = new Role
+                {
+                    ProjectID = projectId,
+                    RoleName = roleName,
+                    User = user
+                };
+
+                // Add role to user
+                if (user.Roles == null)
+                {
+                    user.Roles = new List<Role>();
+                }
+
+                user.Roles.Add(role);
+
+                return user;
+            }
+            else
+            {
+                throw new Exception("User does not exist");
+            }
+        }
+
+        /// <summary>
+        /// Retrieves user from database with email address and unassigns them from role on the project
+        /// </summary>
+        /// <param name="projectId">Id of project to be added to</param>
+        /// <param name="emailAddress">users email address</param>
+        /// <param name="roleName">Name of role in project</param>
+        /// <returns>user with added role</returns>
+        private User UnassignUserRole(Guid projectId, string emailAddress, string roleName)
+        {
+            User user =
+                        unitOfWork.UserRepository.Items.SingleOrDefault(
+                            u => u.EmailAddress == emailAddress);
+            if (user == null)
+            {
+                throw new Exception("User does not exist");
+            }
+
+            Role role =
+                        unitOfWork.RoleRepository.Items.SingleOrDefault(r => r.RoleName == roleName && r.User == user && r.ProjectID == projectId);
+
+            if (role == null)
+            {
+                throw new Exception("Role does not exist for user in project");
+            }
+
+            user.Roles.Remove(role);
+
+            return user;
+        }
+
+        /// <summary>
+        /// Converts a User to a NewUser datatype
+        /// </summary>
+        /// <param name="user">User to be converted</param>
+        /// <returns>Converted NewUser</returns>
+        private NewUser MapUserToNewUser(User user)
+        {
+            return new NewUser
+            {
+                EmailAddress = user.EmailAddress,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Password = user.Password,
+                Developer = user.Developer,
+                ProductOwner = user.ProductOwner,
+                ScrumMaster = user.ScrumMaster,
+                Skills = user.Skills,
+                SecretQuestion = user.SecretQuestion,
+                SecretAnswer = user.SecretAnswer
+            };
+        }
+
+        /// <summary>
+        /// Maps a New User to User
+        /// </summary>
+        /// <param name="user">NewUser to be converted</param>
+        /// <returns>Returns a converted User</returns>
+        private User MapNewUserToUser(NewUser user)
+        {
+            return new User
+            {
+                EmailAddress = user.EmailAddress,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Password = user.Password,
+                Developer = user.Developer,
+                ProductOwner = user.ProductOwner,
+                ScrumMaster = user.ScrumMaster,
+                Skills = user.Skills,
+                SecretQuestion = user.SecretQuestion,
+                SecretAnswer = user.SecretAnswer
+            };
+        }
+
+        #endregion
     }
 }

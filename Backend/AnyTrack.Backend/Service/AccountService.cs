@@ -79,7 +79,10 @@ namespace AnyTrack.Backend.Service
                 Password = Crypto.HashPassword(user.Password),
                 ProductOwner = user.ProductOwner,
                 ScrumMaster = user.ScrumMaster,
-                Developer = user.Developer
+                Developer = user.Developer,
+                SecretQuestion = user.SecretQuestion,
+                SecretAnswer = user.SecretAnswer,
+                Skills = user.Skills
             };
 
             unitOfWork.UserRepository.Insert(dataUser);

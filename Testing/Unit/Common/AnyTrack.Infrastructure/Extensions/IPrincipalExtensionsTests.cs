@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
+using AnyTrack.Infrastructure.BackendAccountService;
 
 namespace Unit.Common.AnyTrack.Infrastructure.Extensions.IPrincipalExtensionsTests
 {
@@ -37,6 +38,23 @@ namespace Unit.Common.AnyTrack.Infrastructure.Extensions.IPrincipalExtensionsTes
             principal = new ServiceUserPrincipal(new global::AnyTrack.Infrastructure.BackendAccountService.LoginResult(), authCookie);
 
             principal.GetAuthCookie().Should().Be(authCookie);
+        }
+
+        #endregion
+
+        #region GetFullName(this IPrincipal principal) Tests
+
+        [Test]
+        public void CallGetFullName()
+        {
+            var loginResult = new LoginResult
+            {
+                FirstName = "David",
+                LastName = "Tester"
+            };
+            principal = new ServiceUserPrincipal(loginResult, "");
+
+            principal.GetFullName().Should().Be(loginResult.FirstName + " " + loginResult.LastName);
         }
 
         #endregion

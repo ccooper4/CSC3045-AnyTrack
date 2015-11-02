@@ -9,16 +9,16 @@ namespace AnyTrack.Backend.Service.Model
     /// <summary>
     /// Represents a Project entity
     /// </summary>
-    public class Project
+    public class ServiceProject
     {
         #region Constructor
 
         /// <summary>
         /// Creates a new Project Entity
         /// </summary>
-        public Project()
+        public ServiceProject()
         {
-            ProjectId = new Guid();
+            ScrumMasters = new List<NewUser>();
         }
         #endregion
 
