@@ -98,13 +98,6 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
                 }
                 #endregion
             };
-
-            #region Setup Fake Repos
-
-            unitOfWork.UserRepository.Items.Returns(userList.AsQueryable());
-            unitOfWork.ProjectRepository.Items.Returns(new List<Project>().AsQueryable());
-
-            #endregion
         }
     }
 
@@ -160,6 +153,8 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
 
             #endregion
 
+            unitOfWork.UserRepository.Items.Returns(userList.AsQueryable());
+            unitOfWork.ProjectRepository.Items.Returns(new List<Project>().AsQueryable());
             unitOfWork.ProjectRepository.Insert(Arg.Do<Project>(p => dataProject = p));
 
             service.AddProject(project);
@@ -232,6 +227,8 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
 
             #endregion
 
+            unitOfWork.UserRepository.Items.Returns(userList.AsQueryable());
+            unitOfWork.ProjectRepository.Items.Returns(new List<Project>().AsQueryable());
             unitOfWork.ProjectRepository.Insert(Arg.Do<Project>(p => dataProject = p));
 
             service.AddProject(project);
@@ -344,7 +341,8 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             projects.Add(project2);
 
             #endregion
-            
+
+            unitOfWork.UserRepository.Items.Returns(userList.AsQueryable());
             unitOfWork.ProjectRepository.Insert(Arg.Do<Project>(p => dataProject = p));
             unitOfWork.ProjectRepository.Items.Returns(projects.AsQueryable());
 
