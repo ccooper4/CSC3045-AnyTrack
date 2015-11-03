@@ -79,10 +79,29 @@ namespace AnyTrack.Projects.ServiceGateways
         /// <summary>
         /// Retrieves all projects in the database
         /// </summary>
-        /// <returns>A list of all protects</returns>
+        /// <returns>A list of all projects</returns>
         public List<ServiceProject> GetProjects()
         {
             return client.GetProjects();
+        }
+
+        /// <summary>
+        /// Retrieves all project names in the database
+        /// </summary>
+        /// <returns>A list of project names </returns>
+        public List<ProjectDetails> GetProjectNames()
+        {
+            return client.GetProjectNames();
+        }
+
+        /// <summary>
+        /// Retrieves all project stories in the database
+        /// </summary>
+        /// <param name="projectId">id of the project to be retrieved</param>
+        /// <returns>A list of project stories</returns>
+        public List<StoryDetails> Stories(Guid projectId)
+        {
+            return client.GetProjectStories(projectId);
         }
 
         #endregion
