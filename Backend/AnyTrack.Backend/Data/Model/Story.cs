@@ -20,7 +20,7 @@ namespace AnyTrack.Backend.Data.Model
         /// <summary>
         /// Gets or sets the user story.
         /// </summary>
-        public virtual UserStory UserStory { get; set; }
+        public virtual string StoryBreakdown { get; set; }
 
         /// <summary>
         /// Gets or sets the conditions of satisfaction

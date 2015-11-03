@@ -68,6 +68,10 @@
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -148,7 +152,7 @@
     <Compile Include="Service\IProjectService.cs" />
     <Compile Include="Service\Model\ServiceProject.cs" />
     <Compile Include="Service\Model\Story.cs" />
-    <Compile Include="Service\Model\UserStory.cs" />
+    <Compile Include="Service\Model\StoryBreakdown.cs" />
     <Compile Include="Service\ProjectService.cs" />
     <Compile Include="Service\IAccountService.cs" />
     <Compile Include="Service\Model\LoginResult.cs" />
