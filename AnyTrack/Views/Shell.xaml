@@ -1,0 +1,13 @@
+﻿<Controls:MetroWindow x:Class="AnyTrack.Client.Views.Shell"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:prism="http://www.codeplex.com/prism"
+        xmlns:infrastructure="clr-namespace:AnyTrack.Infrastructure;assembly=AnyTrack.Infrastructure"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        Title="AnyTrack" TitleCaps="False" Height="600" Width="1200" BorderBrush="Gray">
+
+    <DockPanel LastChildFill="True">
+        <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.AppContainer}"/>
+    </DockPanel>
+</Controls:MetroWindow>

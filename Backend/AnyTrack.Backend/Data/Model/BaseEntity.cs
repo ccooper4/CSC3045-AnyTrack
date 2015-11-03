@@ -34,12 +34,12 @@ namespace AnyTrack.Backend.Data.Model
         /// <summary>
         /// Gets or sets the updated date
         /// </summary>
-        public virtual DateTime Updated { get; set; }
+        public virtual DateTime? Updated { get; set; }
 
         /// <summary>
         /// Gets or sets the created date
         /// </summary>
-        public virtual DateTime Created { get; set; }
+        public virtual DateTime? Created { get; set; }
 
         #endregion 
     }

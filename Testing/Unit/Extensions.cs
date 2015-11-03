@@ -23,9 +23,25 @@ namespace Unit
         {
             var type = o.GetType();
 
-            var methodInfo = type.GetMethod(method, System.Reflection.BindingFlags.NonPublic);
+            var methodInfo = type.GetMethod(method, System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
 
             return (T)methodInfo.Invoke(o, prms); 
+        }
+
+        /// <summary>
+        /// Calls the specified method on the object. 
+        /// </summary>
+        /// <param name="o">The object.</param>
+        /// <param name="method">The method to call.</param>
+        /// <param name="prms">The list of paramaters.</param>
+        /// <returns>The result of the method.</returns>
+        public static void Call(this object o, string method, params object[] prms)
+        {
+            var type = o.GetType();
+
+            var methodInfo = type.GetMethod(method, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+
+            methodInfo.Invoke(o, prms);
         }
     }
 }

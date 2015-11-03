@@ -31,7 +31,19 @@ namespace Unit.Backend.AnyTrack.Backend.Data.EntityUnitOfWorkTests
 
     public class EntityUnitOfWorkTests : Context
     {
+        #region Constructor Tests 
 
+        [Test]
+        public void ConstructEntityUnitOfWork()
+        {
+            unitOfWork = new EntityUnitOfWork();
+
+            unitOfWork.UserRepository.Should().NotBeNull();
+            unitOfWork.RoleRepository.Should().NotBeNull();
+            unitOfWork.ProjectRepository.Should().NotBeNull();
+        }
+
+        #endregion 
     }
 
     #endregion
