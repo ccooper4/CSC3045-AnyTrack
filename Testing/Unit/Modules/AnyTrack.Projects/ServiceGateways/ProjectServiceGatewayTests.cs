@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AnyTrack.Accounting.ServiceGateways;
 using AnyTrack.Backend.Data.Model;
+using AnyTrack.Infrastructure.BackendAccountService;
 using AnyTrack.Projects.BackendProjectService;
 using AnyTrack.Projects.ServiceGateways;
 using FluentAssertions;

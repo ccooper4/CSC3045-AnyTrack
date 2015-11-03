@@ -30,6 +30,9 @@ namespace AnyTrack.Backend.Data
             ProjectDbSetRepository = base.Set<Project>();
             ProjectRepository = new EntityRepository<Project>(ProjectDbSetRepository);
 
+            StoryDbEntitySet = base.Set<Story>();
+            StoryRepository = new EntityRepository<Story>(StoryDbEntitySet);
+
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<EntityUnitOfWork, Configuration>());
         }
 
@@ -52,6 +55,11 @@ namespace AnyTrack.Backend.Data
         /// </summary>
         public IRepository<Role> RoleRepository { get; private set; }
 
+        /// <summary>
+        /// Gets the story repository controlled by this unit of work.
+        /// </summary>
+        public IRepository<Story> StoryRepository { get; private set; }
+
         #endregion
 
         #region Fields
@@ -70,6 +78,11 @@ namespace AnyTrack.Backend.Data
         /// Gets or sets the Role Entity Set, as provided by Entity Framework.
         /// </summary>
         private DbSet<Role> RoleEntitySet { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Story Entity Set, as provided by Entity Framework.
+        /// </summary>
+        private DbSet<Story> StoryDbEntitySet { get; set; }
 
         #endregion 
 

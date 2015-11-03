@@ -48,6 +48,7 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         /// <returns>List of all Projects in the database</returns>
         [OperationContract]
+<<<<<<< HEAD
         List<ServiceProject> GetProjects();
 
         /// <summary>
@@ -57,12 +58,15 @@ namespace AnyTrack.Backend.Service
         /// <returns>A list of user information objects.</returns>
         [OperationContract]
         List<UserSearchInfo> SearchUsers(UserSearchFilter filter);
-        
+=======
+        List<ServiceProject> GetProjects();
+
         /// <summary>
         /// Gets all existing stories from the database
         /// </summary>
         /// <returns>List of all Stories in the database</returns>
         [OperationContract]
         List<Story> GetStories();
+>>>>>>> t42-product_backlog_chris_richard
     }
 }

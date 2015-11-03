@@ -20,13 +20,17 @@ namespace AnyTrack.Backend.Service.Model
         {
             ScrumMasters = new List<NewUser>();
         }
-
         #endregion
 
         /// <summary>
         /// Gets or sets Project ID
         /// </summary>
         public Guid ProjectId { get; set; }
+
+        /// <summary>
+        /// Gets or sets Story ID
+        /// </summary>
+        public Story StoryId { get; set; }
 
         /// <summary>
         /// Gets or sets Name
@@ -68,11 +72,24 @@ namespace AnyTrack.Backend.Service.Model
         /// Gets or sets Sprints
         /// </summary>
        public ICollection<Sprint> Sprints { get; set; }
-         
+        */
+
         /// <summary>
         /// Gets or sets Stories
         /// </summary>
-        public ICollection<Story> Stories { get; set; }
-         */
+        public List<Story> Stories { get; set; }
+
+        #region Methods
+
+        /// <summary>
+        /// Create a new Story Entity
+        /// </summary>
+        /// <returns>Returns storyId</returns>
+        public Story Story()
+        {
+            StoryId = new Story();
+            return StoryId;
+        }
+        #endregion Methods
     }
 }

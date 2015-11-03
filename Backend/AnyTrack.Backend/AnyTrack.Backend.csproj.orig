@@ -1,0 +1,372 @@
+<<<<<<< HEAD
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8E06F61A-3FD1-419E-A45F-66BABB282D60}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AnyTrack.Backend</RootNamespace>
+    <AssemblyName>AnyTrack.Backend</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>ef01080a</NuGetPackageImportStamp>
+    <BuildToolsFxCopVersion>1.0.1</BuildToolsFxCopVersion>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisTreatWarningsAsErrors>True</CodeAnalysisTreatWarningsAsErrors>
+    <RunCodeAnalysisRestore>False</RunCodeAnalysisRestore>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>CodeAnalysisRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisTreatWarningsAsErrors>True</CodeAnalysisTreatWarningsAsErrors>
+    <RunCodeAnalysisRestore>True</RunCodeAnalysisRestore>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Scripted|AnyCPU'">
+    <OutputPath>bin\Scripted\</OutputPath>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Data\EntityRepository.cs" />
+    <Compile Include="Data\EntityUnitOfWork.cs" />
+    <Compile Include="Data\IRepository.cs" />
+    <Compile Include="Data\IUnitOfWork.cs" />
+    <Compile Include="Data\Model\Role.cs" />
+    <Compile Include="Data\Model\User.cs" />
+    <Compile Include="Faults\UserAlreadyExistsFault.cs" />
+    <Compile Include="Data\Model\Project.cs" />
+    <Compile Include="Migrations\201510261759447_Making dates nullable.cs" />
+    <Compile Include="Migrations\201510261759447_Making dates nullable.Designer.cs">
+      <DependentUpon>201510261759447_Making dates nullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510282334577_Adding migration to cover T1 and T2 changes.cs" />
+    <Compile Include="Migrations\201510282334577_Adding migration to cover T1 and T2 changes.Designer.cs">
+      <DependentUpon>201510282334577_Adding migration to cover T1 and T2 changes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510310132086_Adding reset questions and skills to user.cs" />
+    <Compile Include="Migrations\201510310132086_Adding reset questions and skills to user.Designer.cs">
+      <DependentUpon>201510310132086_Adding reset questions and skills to user.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Data\Model\BaseEntity.cs" />
+    <Compile Include="Providers\FormsAuthenticationProvider.cs" />
+    <Compile Include="Providers\OperationContextProvider.cs" />
+    <Compile Include="Providers\RoleProvider.cs" />
+    <Compile Include="Security\GeneratedServiceUserIdentity.cs" />
+    <Compile Include="Security\GeneratedServiceUserPrincipal.cs" />
+    <Compile Include="Service\AccountService.cs" />
+    <Compile Include="Service\IProjectService.cs" />
+    <Compile Include="Service\Model\ServiceProject.cs" />
+    <Compile Include="Service\Model\UserSearchFilter.cs" />
+    <Compile Include="Service\Model\UserSearchInfo.cs" />
+    <Compile Include="Service\ProjectService.cs" />
+    <Compile Include="Service\IAccountService.cs" />
+    <Compile Include="Service\Model\LoginResult.cs" />
+    <Compile Include="Service\Model\NewUser.cs" />
+    <Compile Include="Service\Model\RoleInfo.cs" />
+    <Compile Include="Service\Model\UserCredential.cs" />
+    <Compile Include="Service\PrincipalBuilderService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201510261759447_Making dates nullable.resx">
+      <DependentUpon>201510261759447_Making dates nullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510282334577_Adding migration to cover T1 and T2 changes.resx">
+      <DependentUpon>201510282334577_Adding migration to cover T1 and T2 changes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510310132086_Adding reset questions and skills to user.resx">
+      <DependentUpon>201510310132086_Adding reset questions and skills to user.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\AnyTrack.SharedUtilities\AnyTrack.SharedUtilities.csproj">
+      <Project>{4d4353ae-46fa-4b2e-b41a-a430fe6a8640}</Project>
+      <Name>AnyTrack.SharedUtilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets" Condition="Exists('..\..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets')" />
+  <Import Project="..\..\packages\StyleCop.Error.MSBuild.1.0.0\build\StyleCop.Error.MSBuild.Targets" Condition="Exists('..\..\packages\StyleCop.Error.MSBuild.1.0.0\build\StyleCop.Error.MSBuild.Targets')" />
+=======
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8E06F61A-3FD1-419E-A45F-66BABB282D60}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AnyTrack.Backend</RootNamespace>
+    <AssemblyName>AnyTrack.Backend</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>ef01080a</NuGetPackageImportStamp>
+    <BuildToolsFxCopVersion>1.0.1</BuildToolsFxCopVersion>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisTreatWarningsAsErrors>True</CodeAnalysisTreatWarningsAsErrors>
+    <RunCodeAnalysisRestore>False</RunCodeAnalysisRestore>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>CodeAnalysisRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisTreatWarningsAsErrors>True</CodeAnalysisTreatWarningsAsErrors>
+    <RunCodeAnalysisRestore>True</RunCodeAnalysisRestore>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Scripted|AnyCPU'">
+    <OutputPath>bin\Scripted\</OutputPath>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Data\EntityRepository.cs" />
+    <Compile Include="Data\EntityUnitOfWork.cs" />
+    <Compile Include="Data\IRepository.cs" />
+    <Compile Include="Data\IUnitOfWork.cs" />
+    <Compile Include="Data\Model\Role.cs" />
+    <Compile Include="Data\Model\Story.cs" />
+    <Compile Include="Data\Model\User.cs" />
+    <Compile Include="Faults\UserAlreadyExistsFault.cs" />
+    <Compile Include="Data\Model\Project.cs" />
+    <Compile Include="Migrations\201510261641270_Adding user entity.cs" />
+    <Compile Include="Migrations\201510261641270_Adding user entity.Designer.cs">
+      <DependentUpon>201510261641270_Adding user entity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510261759447_Making dates nullable.cs" />
+    <Compile Include="Migrations\201510261759447_Making dates nullable.Designer.cs">
+      <DependentUpon>201510261759447_Making dates nullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510282334577_Adding migration to cover T1 and T2 changes.cs" />
+    <Compile Include="Migrations\201510282334577_Adding migration to cover T1 and T2 changes.Designer.cs">
+      <DependentUpon>201510282334577_Adding migration to cover T1 and T2 changes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510291434411_Adding Project.cs" />
+    <Compile Include="Migrations\201510291434411_Adding Project.Designer.cs">
+      <DependentUpon>201510291434411_Adding Project.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511031252215_Adding Stories and T4 changes to a single migration.cs" />
+    <Compile Include="Migrations\201511031252215_Adding Stories and T4 changes to a single migration.Designer.cs">
+      <DependentUpon>201511031252215_Adding Stories and T4 changes to a single migration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Data\Model\BaseEntity.cs" />
+    <Compile Include="Providers\FormsAuthenticationProvider.cs" />
+    <Compile Include="Providers\OperationContextProvider.cs" />
+    <Compile Include="Providers\RoleProvider.cs" />
+    <Compile Include="Security\GeneratedServiceUserIdentity.cs" />
+    <Compile Include="Security\GeneratedServiceUserPrincipal.cs" />
+    <Compile Include="Service\AccountService.cs" />
+    <Compile Include="Service\IProjectService.cs" />
+    <Compile Include="Service\Model\ServiceProject.cs" />
+    <Compile Include="Service\Model\Story.cs" />
+    <Compile Include="Service\Model\StoryBreakdown.cs" />
+    <Compile Include="Service\ProjectService.cs" />
+    <Compile Include="Service\IAccountService.cs" />
+    <Compile Include="Service\Model\LoginResult.cs" />
+    <Compile Include="Service\Model\NewUser.cs" />
+    <Compile Include="Service\Model\RoleInfo.cs" />
+    <Compile Include="Service\Model\UserCredential.cs" />
+    <Compile Include="Service\PrincipalBuilderService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201510261641270_Adding user entity.resx">
+      <DependentUpon>201510261641270_Adding user entity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510261759447_Making dates nullable.resx">
+      <DependentUpon>201510261759447_Making dates nullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510282334577_Adding migration to cover T1 and T2 changes.resx">
+      <DependentUpon>201510282334577_Adding migration to cover T1 and T2 changes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510291434411_Adding Project.resx">
+      <DependentUpon>201510291434411_Adding Project.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511031252215_Adding Stories and T4 changes to a single migration.resx">
+      <DependentUpon>201511031252215_Adding Stories and T4 changes to a single migration.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets" Condition="Exists('..\..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets')" />
+  <Import Project="..\..\packages\StyleCop.Error.MSBuild.1.0.0\build\StyleCop.Error.MSBuild.Targets" Condition="Exists('..\..\packages\StyleCop.Error.MSBuild.1.0.0\build\StyleCop.Error.MSBuild.Targets')" />
+>>>>>>> t42-product_backlog_chris_richard
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

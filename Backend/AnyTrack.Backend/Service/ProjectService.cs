@@ -142,18 +142,6 @@ namespace AnyTrack.Backend.Service
                 }
             }
 
-            // Assign Scrum Master
-            foreach (var scrumMaster in updatedProject.ScrumMasters)
-            {
-                project.ScrumMasters.Add(new User
-                {
-                    EmailAddress = scrumMaster.EmailAddress,
-                    Password = scrumMaster.Password,
-                    FirstName = scrumMaster.FirstName,
-                    LastName = scrumMaster.LastName,
-                });
-            }
-
             unitOfWork.Commit();
         }
 
@@ -217,7 +205,34 @@ namespace AnyTrack.Backend.Service
                 }
             }
 
+            foreach (var story in dataProject.Stories)
+            {
+            }
+
+            project.Stories.Add(new Service.Model.Story
+            {
+                StoryId = new Guid(),
+                Summary = "This will allow the user to imply things",
+                ConditionsOfSatisfaction = "shit should work",
+            });
+
             return project;
+        }
+
+        /// <summary>
+        /// Gets all existing stories from the database
+        /// </summary>
+        /// <returns>returns a list of stories</returns>
+        public List<Service.Model.Story> GetStories()
+        {
+            var query = unitOfWork.StoryRepository.Items.Select(s => new Service.Model.Story
+            {
+                StoryId = s.Id,
+                Summary = s.Summary,
+                ConditionsOfSatisfaction = s.ConditionsOfSatisfaction,
+            }).ToList();
+
+            return query;
         }
 
         /// <summary>
@@ -240,7 +255,7 @@ namespace AnyTrack.Backend.Service
             foreach (ServiceProject project in projects)
             {
                 var dataProject = unitOfWork.ProjectRepository.Items.Single(p => p.Id == project.ProjectId);
-
+                project.Stories = new List<Service.Model.Story>();
                 project.ProductOwner = dataProject.ProductOwner != null ? MapUserToNewUser(dataProject.ProductOwner) : null;
 
                 if (dataProject.ScrumMasters != null)
@@ -249,6 +264,15 @@ namespace AnyTrack.Backend.Service
                     {
                         project.ScrumMasters.Add(MapUserToNewUser(scrumMaster));
                     }
+                }
+
+                foreach (var story in dataProject.Stories)
+                {
+                    project.Stories.Add(new Service.Model.Story
+                    {
+                        Summary = story.Summary,
+                        ConditionsOfSatisfaction = story.ConditionsOfSatisfaction,
+                    });
                 }
             }
 
