@@ -160,60 +160,7 @@ namespace AnyTrack.Projects.Views
                 return serviceGateway.GetProjects();
             }
         }
-        #endregion Properties
 
-        #region Methods
-
-        /// <summary>
-        /// Method to construct mock project for purpose of Backlog creation
-        /// </summary>
-        /// <returns>returns a mock project</returns>
-        public Project BuildMockProject()
-        {
-            Project project = new Project
-            {
-                Name = "Project Name",
-                Description = "Description",
-                ProjectManager = new NewUser()
-                {
-                    EmailAddress = "rmoorhead03@qub.ac.uk",
-                    FirstName = "Richard",
-                    LastName = "Moorhead",
-                    Password = "abc123",
-                    Developer = true
-                },
-                StartedOn = new DateTime(2015, 10, 12),
-                Stories = new ObservableCollection<Story>(),
-                ProjectId = new Guid()
-            };
-
-            project.Stories.Add(new Story
-            {
-                StoryName = "sdfjsjgbn jsoghskfjhsjkf hsjkf hjskf hjafj jmaf ljald hjalf hjafl k",
-                Summary = "Test Summary",
-                Tester = "Joe Tester",
-                Assignee = "Bob",
-                Description = "Test description",
-                ConditionsOfSatisfaction = "None",
-                StoryId = new Guid()
-            });
-
-            project.Stories.Add(new Story
-            {
-                StoryName = "jskgksfj ks gh kskf hjslkf hjslfjslll sgj ksfh ksf ps l jl",
-                Summary = "Test Summary",
-                Tester = "Joe Tester",
-                Assignee = "Bob",
-                Description = "Test description",
-                ConditionsOfSatisfaction = "None",
-                StoryId = new Guid()
-            });
-
-            projectName = "Project!";
-
-            return project;
-        }
-
-        #endregion Methods
+        #endregion 
     }
 }

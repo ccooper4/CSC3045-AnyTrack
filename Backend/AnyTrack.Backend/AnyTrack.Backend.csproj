@@ -132,9 +132,13 @@
     <Compile Include="Migrations\201510282334577_Adding migration to cover T1 and T2 changes.Designer.cs">
       <DependentUpon>201510282334577_Adding migration to cover T1 and T2 changes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201510310132086_Adding reset questions and skills to user.cs" />
-    <Compile Include="Migrations\201510310132086_Adding reset questions and skills to user.Designer.cs">
-      <DependentUpon>201510310132086_Adding reset questions and skills to user.cs</DependentUpon>
+    <Compile Include="Migrations\201510291434411_Adding Project.cs" />
+    <Compile Include="Migrations\201510291434411_Adding Project.Designer.cs">
+      <DependentUpon>201510291434411_Adding Project.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511031252215_Adding Stories and T4 changes to a single migration.cs" />
+    <Compile Include="Migrations\201511031252215_Adding Stories and T4 changes to a single migration.Designer.cs">
+      <DependentUpon>201511031252215_Adding Stories and T4 changes to a single migration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -147,6 +151,8 @@
     <Compile Include="Service\AccountService.cs" />
     <Compile Include="Service\IProjectService.cs" />
     <Compile Include="Service\Model\ServiceProject.cs" />
+    <Compile Include="Service\Model\Story.cs" />
+    <Compile Include="Service\Model\StoryBreakdown.cs" />
     <Compile Include="Service\Model\UserSearchFilter.cs" />
     <Compile Include="Service\Model\UserSearchInfo.cs" />
     <Compile Include="Service\ProjectService.cs" />
@@ -171,8 +177,11 @@
     <EmbeddedResource Include="Migrations\201510282334577_Adding migration to cover T1 and T2 changes.resx">
       <DependentUpon>201510282334577_Adding migration to cover T1 and T2 changes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510310132086_Adding reset questions and skills to user.resx">
-      <DependentUpon>201510310132086_Adding reset questions and skills to user.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201510291434411_Adding Project.resx">
+      <DependentUpon>201510291434411_Adding Project.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511031252215_Adding Stories and T4 changes to a single migration.resx">
+      <DependentUpon>201511031252215_Adding Stories and T4 changes to a single migration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
