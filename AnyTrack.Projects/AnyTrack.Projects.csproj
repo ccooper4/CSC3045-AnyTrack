@@ -100,7 +100,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Service References\BackendProjectService\AnyTrack.Projects.BackendProjectService.Project.datasource">
+    <None Include="Service References\BackendProjectService\AnyTrack.Projects.BackendProjectService.ServiceProject.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BackendProjectService\ProjectService.wsdl" />
@@ -140,6 +140,9 @@
     <None Include="Service References\BackendProjectService\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Service References\BackendProjectService\ProjectService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\BackendProjectService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

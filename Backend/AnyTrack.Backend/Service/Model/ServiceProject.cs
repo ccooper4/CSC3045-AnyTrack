@@ -18,7 +18,7 @@ namespace AnyTrack.Backend.Service.Model
         /// </summary>
         public ServiceProject()
         {
-            ScrumMasters = new List<NewUser>();
+            ScrumMasterEmailAddresses = new List<string>();
         }
 
         #endregion
@@ -51,17 +51,17 @@ namespace AnyTrack.Backend.Service.Model
         /// <summary>
         /// Gets or sets Project Manager
         /// </summary>
-        public NewUser ProjectManager { get; set; }
+        public string ProjectManagerEmailAddress { get; set; }
 
         /// <summary>
         /// Gets or sets Product Owner
         /// </summary>
-        public NewUser ProductOwner { get; set; }
+        public string ProductOwnerEmailAddress { get; set; }
 
         /// <summary>
         /// Gets or sets ScrumMasters
         /// </summary>
-        public List<NewUser> ScrumMasters { get; set; }
+        public List<string> ScrumMasterEmailAddresses { get; set; }
 
         /*
         /// <summary>

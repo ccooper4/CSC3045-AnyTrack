@@ -11,7 +11,7 @@ using AnyTrack.Projects.ServiceGateways;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
-using Project = AnyTrack.Projects.BackendProjectService.Project;
+using Project = AnyTrack.Projects.BackendProjectService.ServiceProject;
 
 namespace Unit.Modules.AnyTrack.Projects.ServiceGateways
 {
@@ -55,16 +55,8 @@ namespace Unit.Modules.AnyTrack.Projects.ServiceGateways
                     Description = "This is a project",
                     VersionControl = "V1",
                     StartedOn = new DateTime(2015, 9, 30),
-                    ProjectManager = new NewUser
-                    {
-                        EmailAddress = "test@agile.local",
-                        FirstName = "Test",
-                        LastName = "Test",
-                        Password = "Test",
-                        ProductOwner = false,
-                        ScrumMaster = false,
-                        Developer = false   
-                    }
+                    ProjectManagerEmailAddress = "test@agile.local"
+                
                 };
 
                 gateway.CreateProject(testProject);
@@ -72,13 +64,8 @@ namespace Unit.Modules.AnyTrack.Projects.ServiceGateways
                 Assert.AreEqual(sentModel.Description, "This is a project");
                 Assert.AreEqual(sentModel.VersionControl, "V1");
                 Assert.AreEqual(sentModel.StartedOn, new DateTime(2015, 9, 30));
-                Assert.AreEqual(sentModel.ProjectManager.EmailAddress, "test@agile.local");
-                Assert.AreEqual(sentModel.ProjectManager.FirstName, "Test");
-                Assert.AreEqual(sentModel.ProjectManager.LastName, "Test");
-                Assert.AreEqual(sentModel.ProjectManager.Password, "Test");
-                Assert.IsFalse(sentModel.ProjectManager.ProductOwner);
-                Assert.IsFalse(sentModel.ProjectManager.ScrumMaster);
-                Assert.IsFalse(sentModel.ProjectManager.Developer);
+                Assert.AreEqual(sentModel.ProjectManagerEmailAddress, "test@agile.local");
+
             }
 
             [Test]
@@ -94,16 +81,7 @@ namespace Unit.Modules.AnyTrack.Projects.ServiceGateways
                     Description = "This is a project",
                     VersionControl = "V1",
                     StartedOn = new DateTime(2015, 9, 30),
-                    ProjectManager = new NewUser
-                    {
-                        EmailAddress = "test@agile.local",
-                        FirstName = "Test",
-                        LastName = "Test",
-                        Password = "Test",
-                        ProductOwner = false,
-                        ScrumMaster = false,
-                        Developer = false
-                    }
+                    ProjectManagerEmailAddress = "test@agile.local",
                 };
 
                 gateway.CreateProject(testProject);
@@ -114,13 +92,7 @@ namespace Unit.Modules.AnyTrack.Projects.ServiceGateways
                 Assert.AreEqual(sentModel.Description, "This is a project");
                 Assert.AreEqual(sentModel.VersionControl, "V1");
                 Assert.AreEqual(sentModel.StartedOn, new DateTime(2015, 9, 30));
-                Assert.AreEqual(sentModel.ProjectManager.EmailAddress, "test@agile.local");
-                Assert.AreEqual(sentModel.ProjectManager.FirstName, "Test");
-                Assert.AreEqual(sentModel.ProjectManager.LastName, "Test");
-                Assert.AreEqual(sentModel.ProjectManager.Password, "Test");
-                Assert.IsFalse(sentModel.ProjectManager.ProductOwner);
-                Assert.IsFalse(sentModel.ProjectManager.ScrumMaster);
-                Assert.IsFalse(sentModel.ProjectManager.Developer);
+                Assert.AreEqual(sentModel.ProjectManagerEmailAddress, "test@agile.local");
             }
 
             [Test]
@@ -136,16 +108,7 @@ namespace Unit.Modules.AnyTrack.Projects.ServiceGateways
                     Description = "This is a project",
                     VersionControl = "V1",
                     StartedOn = new DateTime(2015, 9, 30),
-                    ProjectManager = new NewUser
-                    {
-                        EmailAddress = "test@agile.local",
-                        FirstName = "Test",
-                        LastName = "Test",
-                        Password = "Test",
-                        ProductOwner = false,
-                        ScrumMaster = false,
-                        Developer = false
-                    }
+                    ProjectManagerEmailAddress = "test@agile.local"
                 };
 
                 gateway.CreateProject(testProject);
