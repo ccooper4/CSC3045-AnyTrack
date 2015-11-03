@@ -12,7 +12,7 @@ using AnyTrack.Projects.ServiceGateways;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
-using Project = AnyTrack.Projects.BackendProjectService.Project;
+using Project = AnyTrack.Projects.BackendProjectService.ServiceProject;
 
 namespace Unit.Modules.AnyTrack.Projects.ServiceGateways
 {

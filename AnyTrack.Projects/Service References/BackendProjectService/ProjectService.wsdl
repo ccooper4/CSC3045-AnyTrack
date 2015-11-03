@@ -43,6 +43,18 @@
   <wsdl:message name="IProjectService_GetStories_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetStoriesResponse" />
   </wsdl:message>
+  <wsdl:message name="IProjectService_GetProjectNames_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProjectNames" />
+  </wsdl:message>
+  <wsdl:message name="IProjectService_GetProjectNames_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProjectNamesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProjectService_GetProjectStories_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProjectStories" />
+  </wsdl:message>
+  <wsdl:message name="IProjectService_GetProjectStories_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProjectStoriesResponse" />
+  </wsdl:message>
   <wsdl:portType name="IProjectService">
     <wsdl:operation name="AddProject">
       <wsdl:input wsaw:Action="http://tempuri.org/IProjectService/AddProject" message="tns:IProjectService_AddProject_InputMessage" />
@@ -67,6 +79,14 @@
     <wsdl:operation name="GetStories">
       <wsdl:input wsaw:Action="http://tempuri.org/IProjectService/GetStories" message="tns:IProjectService_GetStories_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IProjectService/GetStoriesResponse" message="tns:IProjectService_GetStories_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProjectNames">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProjectService/GetProjectNames" message="tns:IProjectService_GetProjectNames_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProjectService/GetProjectNamesResponse" message="tns:IProjectService_GetProjectNames_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProjectStories">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProjectService/GetProjectStories" message="tns:IProjectService_GetProjectStories_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProjectService/GetProjectStoriesResponse" message="tns:IProjectService_GetProjectStories_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IProjectService" type="tns:IProjectService">
@@ -118,6 +138,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetStories">
       <soap:operation soapAction="http://tempuri.org/IProjectService/GetStories" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProjectNames">
+      <soap:operation soapAction="http://tempuri.org/IProjectService/GetProjectNames" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProjectStories">
+      <soap:operation soapAction="http://tempuri.org/IProjectService/GetProjectStories" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

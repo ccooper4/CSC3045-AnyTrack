@@ -13,6 +13,11 @@ namespace AnyTrack.Backend.Data.Model
     public class Story : BaseEntity
     {
         /// <summary>
+        /// Gets or sets the story name
+        /// </summary>
+        public virtual string StoryName { get; set; }
+
+        /// <summary>
         /// Gets or sets the story summary
         /// </summary>
         public virtual string Summary { get; set; }

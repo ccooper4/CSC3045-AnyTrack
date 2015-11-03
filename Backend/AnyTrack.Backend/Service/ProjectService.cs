@@ -234,6 +234,36 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
+        /// Obtains a list of project names with respective id
+        /// </summary>
+        /// <returns>a list of projects</returns>
+        public List<ProjectDetails> GetProjectNames()
+        {
+            var projects = unitOfWork.ProjectRepository.Items.Select(p => new ProjectDetails
+            {
+                ProjectId = p.Id,
+                ProjectName = p.Name
+            }).ToList();
+            return projects;
+        }
+
+        /// <summary>
+        /// Method to get the project stories
+        /// </summary>
+        /// <param name="projectId">projectId to be checked</param>
+        /// <returns>a list of stories</returns>
+        public List<StoryDetails> GetProjectStories(Guid projectId)
+        {
+            List<StoryDetails> storyDetails = new List<StoryDetails>();
+            var stories = unitOfWork.StoryRepository.Items.Where(s => s.Project.Id == projectId).Select(s => new StoryDetails
+            {
+                StoryId = s.Id,
+                StoryName = s.StoryName
+            });
+            return storyDetails;
+        }
+
+        /// <summary>
         /// Gets all existing projects from the database
         /// </summary>
         /// <returns>List of all Projects in the database</returns>
