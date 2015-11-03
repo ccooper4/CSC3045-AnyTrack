@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Windows;
 using AnyTrack.Infrastructure;
+using AnyTrack.Infrastructure.BackendAccountService;
 using AnyTrack.Projects.BackendProjectService;
 using AnyTrack.Projects.ServiceGateways;
+using AnyTrack.SharedUtilities.Extensions;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Prism.Commands;
@@ -57,6 +60,26 @@ namespace AnyTrack.Projects.Views
         private NewUser projectManager;
 
         /// <summary>
+        /// The search email address for the product owner.
+        /// </summary>
+        private string productOwnerSearchEmailAddress; 
+
+        /// <summary>
+        /// The email address of the selected product owner.
+        /// </summary>
+        private string selectProductOwnerEmailAddress;
+
+        /// <summary>
+        /// Retrieves a flag indicating if the PO search grid is enabled.
+        /// </summary>
+        private bool enablePoSearchGrid;
+
+        /// <summary>
+        /// Retrieves a flag indicating if the PO has been confirmed.
+        /// </summary>
+        private bool productOwnerConfirmed;
+
+        /// <summary>
         /// Command to save a project
         /// </summary>
         private DelegateCommand saveProjectCommand;
@@ -92,6 +115,10 @@ namespace AnyTrack.Projects.Views
 
             saveProjectCommand = new DelegateCommand(SaveProject);
             cancelProjectCommand = new DelegateCommand(CancelProject);
+            SearchPOUserCommand = new DelegateCommand(SearchProjectOwners);
+            SetProductOwnerCommand = new DelegateCommand<string>(SetProductOwner);
+
+            POSearchUserResults = new ObservableCollection<UserSearchInfo>();
         }
 
         #endregion
@@ -145,6 +172,48 @@ namespace AnyTrack.Projects.Views
             get { return projectManager; }
             set { SetProperty(ref projectManager, value); }
         }
+
+        /// <summary>
+        /// Gets or sets the PO search email address.
+        /// </summary>
+        public string ProductOwnerSearchEmailAddress
+        {
+            get { return productOwnerSearchEmailAddress; }
+            set { SetProperty(ref productOwnerSearchEmailAddress, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the selected product owner's email address.
+        /// </summary>
+        public string SelectProductOwnerEmailAddress
+        {
+            get { return selectProductOwnerEmailAddress; }
+            set { SetProperty(ref selectProductOwnerEmailAddress, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the PO search grid is enabled.
+        /// </summary>
+        public bool EnablePoSearchGrid
+        {
+            get { return enablePoSearchGrid; }
+            set { SetProperty(ref enablePoSearchGrid, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the PO has been confirmed.
+        /// </summary>
+        public bool POConfirmed
+        {
+            get { return productOwnerConfirmed; }
+            set { SetProperty(ref productOwnerConfirmed, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the observable collection that stores the PO search results.
+        /// </summary>
+        public ObservableCollection<UserSearchInfo> POSearchUserResults { get; set; }
+
         #endregion
 
         #region Commands
@@ -164,6 +233,17 @@ namespace AnyTrack.Projects.Views
         {
             get { return cancelProjectCommand; }
         }
+
+        /// <summary>
+        /// Gets or sets the command that can be used to search for a PO.
+        /// </summary>
+        public DelegateCommand SearchPOUserCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the command that can be used to set a product owner on a new project.
+        /// </summary>
+        public DelegateCommand<string> SetProductOwnerCommand { get; set; }
+
         #endregion
 
         #region Methods
@@ -173,7 +253,7 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         public void SaveProject()
         {
-            Project project = new Project
+            ServiceProject project = new ServiceProject
             {
                 Name = this.ProjectName,
                 Description = this.Description,
@@ -196,6 +276,35 @@ namespace AnyTrack.Projects.Views
         public void CancelProject()
         {
         }
+
+        /// <summary>
+        /// Searches for a project owner using the details entered by the user.
+        /// </summary>
+        private void SearchProjectOwners()
+        {
+            var filter = new UserSearchFilter { EmailAddress = productOwnerSearchEmailAddress, ProductOwner = true, ScrumMaster = false };
+            var results = serviceGateway.SearchUsers(filter);
+
+            POSearchUserResults.Clear();
+            POSearchUserResults.AddRange(results);
+            EnablePoSearchGrid = true;
+            POConfirmed = false;
+        }
+
+        /// <summary>
+        /// Sets the product owner of this project to the user with the specified email address.
+        /// </summary>
+        /// <param name="emailAddress">The email address of the user to be set as the Product Owner.</param>
+        private void SetProductOwner(string emailAddress)
+        {
+            SelectProductOwnerEmailAddress = emailAddress;
+            POSearchUserResults.Clear();
+            EnablePoSearchGrid = false;
+            POConfirmed = true;
+            ProductOwnerSearchEmailAddress = string.Empty;
+            ShowMetroDialog("Product Owner confirmed", "The product owner has been successfully set to user - {0}".Substitute(emailAddress), MessageDialogStyle.Affirmative);
+        }
+
         #endregion
     }
 }

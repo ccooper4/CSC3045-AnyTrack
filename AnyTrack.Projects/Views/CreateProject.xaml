@@ -6,54 +6,100 @@
              xmlns:prism="http://www.codeplex.com/prism"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:converter="clr-namespace:AnyTrack.Projects.Converters"
              xml:lang="en-GB"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             mc:Ignorable="d" Width="277" Height="364.328">
+             mc:Ignorable="d" Width="1000" Height="364.328">
+    
+    <UserControl.Resources>
+        <converter:BooleanToVisibilityConverter x:Key="booleanToVisibility"/>
+    </UserControl.Resources>
 
-    <GroupBox HorizontalAlignment="Stretch"  Margin="0, 0, 0, 0" >
-        <GroupBox.Header>
-            <TextBlock Foreground="White" Text="Create A Project" />
-        </GroupBox.Header>
-        <Grid Background="White" Margin="2,0,-2,-5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
+    <Grid HorizontalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0"></RowDefinition>
-                <RowDefinition Height="5"/>
-                <RowDefinition Height="26"></RowDefinition>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="0"/>
-                <RowDefinition Height="26"></RowDefinition>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="26"></RowDefinition>
-                <RowDefinition Height="30"></RowDefinition>
-                <RowDefinition Height="0"></RowDefinition>
-                <RowDefinition Height="26"></RowDefinition>
-                <RowDefinition Height="0"/>
-                <RowDefinition Height="0"></RowDefinition>
-                <RowDefinition Height="0"></RowDefinition>
-                <RowDefinition Height="30"></RowDefinition>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="5"/>
-            </Grid.RowDefinitions>
+        <GroupBox HorizontalAlignment="Stretch"  Margin="0, 0, 0, 0" Grid.Column="0" >
+            <GroupBox.Header>
+                <TextBlock Foreground="White" Text="Create A Project" />
+            </GroupBox.Header>
+            <Grid Background="White" Margin="2,0,-2,-5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
 
-            <Label Grid.Row="2" FontWeight="Bold" Margin="10,0,0,0">Project Name</Label>
-            <TextBox Grid.Row="3" VerticalAlignment="Center" Height="26" Margin="16,2,127,1" Text="{Binding ProjectName}"  controls:TextBoxHelper.ClearTextButton="True" />
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0"></RowDefinition>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="26"></RowDefinition>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="0"/>
+                    <RowDefinition Height="26"></RowDefinition>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="26"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="0"></RowDefinition>
+                    <RowDefinition Height="26"></RowDefinition>
+                    <RowDefinition Height="0"/>
+                    <RowDefinition Height="0"></RowDefinition>
+                    <RowDefinition Height="0"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
 
-            <Label Grid.Row="5" FontWeight="Bold" Margin="10,0,0,0">Description</Label>
-            <TextBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="6" AcceptsReturn="True" Margin="16,0,22,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="63" Text="{Binding Description}" controls:TextBoxHelper.ClearTextButton="True"/>
+                <Label Grid.Row="2" FontWeight="Bold" Margin="10,0,0,0">Project Name</Label>
+                <TextBox Grid.Row="3" VerticalAlignment="Center" Height="26" Margin="16,2,127,1" Text="{Binding ProjectName}"  controls:TextBoxHelper.ClearTextButton="True" />
 
-            <Label Grid.Row="7" FontWeight="Bold" Margin="10,0,-10,0">Version Control</Label>
-            <TextBox Grid.Row="8" VerticalAlignment="Center" Height="26" Margin="16,2,22,2" Text="{Binding VersionControl}" controls:TextBoxHelper.ClearTextButton="True"/>
+                <Label Grid.Row="5" FontWeight="Bold" Margin="10,0,0,0">Description</Label>
+                <TextBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="6" AcceptsReturn="True" Margin="16,0,22,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="63" Text="{Binding Description}" controls:TextBoxHelper.ClearTextButton="True"/>
 
-            <Label Grid.Row="10" FontWeight="Bold" Margin="10,0,-10,0">Started On</Label>
-            <DatePicker Grid.Row="14" HorizontalAlignment="Left" Margin="17,1,0,0" VerticalAlignment="Top" Height="26" Width="121" SelectedDate="{x:Static sys:DateTime.Now}" Text="{Binding StartedOn}"/>
+                <Label Grid.Row="7" FontWeight="Bold" Margin="10,0,-10,0">Version Control</Label>
+                <TextBox Grid.Row="8" VerticalAlignment="Center" Height="26" Margin="16,2,22,2" Text="{Binding VersionControl}" controls:TextBoxHelper.ClearTextButton="True"/>
 
-            <Button Grid.Row="15" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Width="90" Height="27" VerticalAlignment="Bottom" Margin="95,0,0,0" Command="{Binding SaveProjectCommand}">Save Project</Button>
-            <Button Grid.Row="15" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Width="70" Height="27" VerticalAlignment="Bottom" Margin="190,0,0,0" Command="{Binding CancelProjectCommand}">Cancel</Button>
-        </Grid>
-    </GroupBox>
+                <Label Grid.Row="10" FontWeight="Bold" Margin="10,0,-10,0">Started On</Label>
+                <DatePicker Grid.Row="14" HorizontalAlignment="Left" Margin="17,1,0,0" VerticalAlignment="Top" Height="26" Width="121" SelectedDate="{x:Static sys:DateTime.Now}" Text="{Binding StartedOn}"/>
+
+                <Button Grid.Row="15" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Width="90" Height="27" VerticalAlignment="Bottom" Margin="95,0,0,0" Command="{Binding SaveProjectCommand}">Save Project</Button>
+                <Button Grid.Row="15" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Width="70" Height="27" VerticalAlignment="Bottom" Margin="190,0,0,0" Command="{Binding CancelProjectCommand}">Cancel</Button>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox HorizontalAlignment="Stretch"  Margin="0, 0, 0, 0" Grid.Column="1" >
+            <GroupBox.Header>
+                <TextBlock Foreground="White" Text="Select a Project Owner" />
+            </GroupBox.Header>
+            <StackPanel Background="White">
+                <Label Grid.Row="0" FontWeight="Bold" Margin="10px, 2px, 10px, 2px">Email address</Label>
+                <DockPanel Grid.Row="1" Margin="10px, 2px, 10px, 2px">
+                    <Button Content="Search" DockPanel.Dock="Right" Command="{Binding SearchPOUserCommand}" BorderThickness="0" Background="LightGray" Height="4"/>
+                    <TextBox Grid.Row="1" Text="{Binding ProductOwnerSearchEmailAddress}"  controls:TextBoxHelper.ClearTextButton="True" />
+                </DockPanel>
+                <StackPanel Orientation="Horizontal" Margin="10px, 20px, 10px, 2px" Visibility="{Binding POConfirmed, Converter={StaticResource booleanToVisibility}}">
+                    <Label FontWeight="Bold">Product owner confirmed:</Label>
+                    <Label FontWeight="Bold" Content="{Binding SelectProductOwnerEmailAddress}"></Label>
+                </StackPanel>
+                <DataGrid x:Name="poSearchGrid" Margin="10px, 20px, 10px, 2px" AutoGenerateColumns="False" IsReadOnly="True" IsEnabled="{Binding EnablePoSearchGrid}" SelectedValuePath="{Binding EmailAddress}" ItemsSource="{Binding POSearchUserResults}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding FullName}" Width="2*"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Email address" Binding="{Binding EmailAddress}" Width="4*"></DataGridTextColumn>
+                        <DataGridTemplateColumn Width="2*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Select" Command="{Binding Path=DataContext.SetProductOwnerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding EmailAddress}"></Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+            </StackPanel>
+        </GroupBox>
+    </Grid>
 
 </UserControl>

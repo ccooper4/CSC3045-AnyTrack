@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:5789/ProjectService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:complexType name="Project">
+  <xs:complexType name="ServiceProject">
     <xs:sequence>
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
@@ -13,7 +13,7 @@
       <xs:element minOccurs="0" name="VersionControl" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="Project" nillable="true" type="tns:Project" />
+  <xs:element name="ServiceProject" nillable="true" type="tns:ServiceProject" />
   <xs:complexType name="NewUser">
     <xs:sequence>
       <xs:element minOccurs="0" name="Developer" type="xs:boolean" />
@@ -23,6 +23,9 @@
       <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ProductOwner" type="xs:boolean" />
       <xs:element minOccurs="0" name="ScrumMaster" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SecretAnswer" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SecretQuestion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Skills" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="NewUser" nillable="true" type="tns:NewUser" />
@@ -32,10 +35,32 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfNewUser" nillable="true" type="tns:ArrayOfNewUser" />
-  <xs:complexType name="ArrayOfProject">
+  <xs:complexType name="ArrayOfServiceProject">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Project" nillable="true" type="tns:Project" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ServiceProject" nillable="true" type="tns:ServiceProject" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfProject" nillable="true" type="tns:ArrayOfProject" />
+  <xs:element name="ArrayOfServiceProject" nillable="true" type="tns:ArrayOfServiceProject" />
+  <xs:complexType name="UserSearchFilter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductOwner" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ScrumMaster" nillable="true" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserSearchFilter" nillable="true" type="tns:UserSearchFilter" />
+  <xs:complexType name="ArrayOfUserSearchInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UserSearchInfo" nillable="true" type="tns:UserSearchInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUserSearchInfo" nillable="true" type="tns:ArrayOfUserSearchInfo" />
+  <xs:complexType name="UserSearchInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserID" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserSearchInfo" nillable="true" type="tns:UserSearchInfo" />
 </xs:schema>

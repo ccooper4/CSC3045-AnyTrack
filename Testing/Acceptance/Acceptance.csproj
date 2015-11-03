@@ -212,6 +212,10 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\AnyTrack.SharedUtilities\AnyTrack.SharedUtilities.csproj">
+      <Project>{4d4353ae-46fa-4b2e-b41a-a430fe6a8640}</Project>
+      <Name>AnyTrack.SharedUtilities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\AnyTrack.Accounting\AnyTrack.Accounting.csproj">
       <Project>{9f38c80a-2e8c-486f-8054-e235886e1a17}</Project>
       <Name>AnyTrack.Accounting</Name>
@@ -252,4 +256,3 @@
   </Target>
   -->
 </Project>
-

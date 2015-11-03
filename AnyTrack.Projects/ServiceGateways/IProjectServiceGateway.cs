@@ -16,13 +16,13 @@ namespace AnyTrack.Projects.ServiceGateways
         /// Creates a new Project and adds it to the database
         /// </summary>
         /// <param name="project">Project to be inserted</param>
-        void CreateProject(Project project);
+        void CreateProject(ServiceProject project);
 
         /// <summary>
         /// Updates an existing project in the database
         /// </summary>
         /// <param name="project">Project to be updated</param>
-        void UpdateProject(Project project);
+        void UpdateProject(ServiceProject project);
 
         /// <summary>
         /// Deletes a specidied project in the database
@@ -35,12 +35,19 @@ namespace AnyTrack.Projects.ServiceGateways
         /// </summary>
         /// <param name="id">Id of the project needing retrieved</param>
         /// <returns>Returns the project which had its ID passed in</returns>
-        Project GetProject(Guid id);
+        ServiceProject GetProject(Guid id);
 
         /// <summary>
         /// Retrieves all the projects
         /// </summary>
         /// <returns>Returns a list of all the projects in the system</returns>
-        List<Project> GetProjects();
+        List<ServiceProject> GetProjects();
+
+        /// <summary>
+        /// Retrieves any users who match the specified filter.
+        /// </summary>
+        /// <param name="filter">The search filter.</param>
+        /// <returns>Returns a list of users who match the search filter.</returns>
+        List<UserSearchInfo> SearchUsers(UserSearchFilter filter);
     }
 }

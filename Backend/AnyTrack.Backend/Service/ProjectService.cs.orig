@@ -200,8 +200,7 @@ namespace AnyTrack.Backend.Service
             {
                 Description = dataProject.Description,
                 ProjectId = dataProject.Id,
-                Name = dataProject.Name,
-                ProductOwner = MapUserToNewUser(dataProject.ProductOwner),
+                Name = dataProject.Name,          
                 ProjectManager = MapUserToNewUser(dataProject.ProjectManager),
                 StartedOn = dataProject.StartedOn,
                 VersionControl = dataProject.VersionControl
@@ -233,7 +232,6 @@ namespace AnyTrack.Backend.Service
                 Name = p.Name,
                 VersionControl = p.VersionControl,
                 StartedOn = p.StartedOn,
-                ProductOwner = MapUserToNewUser(p.ProductOwner),
                 ProjectManager = MapUserToNewUser(p.ProjectManager),
             }).ToList();
 
@@ -254,6 +252,9 @@ namespace AnyTrack.Backend.Service
 
             return projects;
         }
+<<<<<<< HEAD
+        
+=======
 
         /// <summary>
         /// Searches for users who can be added to a project.
@@ -289,6 +290,7 @@ namespace AnyTrack.Backend.Service
             return userInfos.ToList();
         }
 
+>>>>>>> T5-addinguserstoproject
         #endregion
 
         #region Helper Methods
