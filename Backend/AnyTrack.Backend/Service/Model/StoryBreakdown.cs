@@ -9,7 +9,7 @@ namespace AnyTrack.Backend.Service.Model
     /// <summary>
     /// Class for storing the user story inside a story. i.e. the as.. i would.. so that.. section.
     /// </summary>
-    public class UserStory
+    public class StoryBreakdown
     {
         /// <summary>
         /// Constructs a user story.
@@ -17,7 +17,7 @@ namespace AnyTrack.Backend.Service.Model
         /// <param name="asA">The as a variable</param>
         /// <param name="i">The i would variable</param>
         /// <param name="so">The so that variable</param>
-        public UserStory(string asA, string i, string so)
+        public StoryBreakdown(string asA, string i, string so)
         {
             this.AsA = asA;
             this.IWould = i;
