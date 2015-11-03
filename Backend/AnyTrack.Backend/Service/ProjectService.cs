@@ -9,6 +9,7 @@ using System.Web.Security;
 using AnyTrack.Backend.Data;
 using AnyTrack.Backend.Data.Model;
 using AnyTrack.Backend.Service.Model;
+using AnyTrack.SharedUtilities.Extensions;
 
 namespace AnyTrack.Backend.Service
 {
@@ -114,20 +115,6 @@ namespace AnyTrack.Backend.Service
             project.StartedOn = project.StartedOn;
             project.VersionControl = updatedProject.VersionControl;
 
-            if (project.ProductOwner != null && updatedProject.ProductOwnerEmailAddress != null)
-            {
-                if (updatedProject.ProductOwnerEmailAddress != project.ProductOwner.EmailAddress)
-                {           
-                    UnassignUserRole(project.Id, project.ProductOwner.EmailAddress, "Product Owner");
-
-                    project.ProductOwner = AssignUserRole(project.Id, updatedProject.ProductOwnerEmailAddress, "Product Owner");
-                }
-            }
-            else if (updatedProject.ProductOwnerEmailAddress != null)
-            {
-                project.ProductOwner = AssignUserRole(project.Id, updatedProject.ProductOwnerEmailAddress, "Product Owner");
-            }
-
             // Assign Scrum Master
             if (project.ScrumMasters != null)
             {
@@ -226,7 +213,66 @@ namespace AnyTrack.Backend.Service
                 }
             }
 
+            if (dataProject.Stories != null)
+            {
+                foreach (var story in dataProject.Stories)
+                {
+                }
+
+                project.Stories.Add(new Service.Model.Story
+                {
+                    StoryId = new Guid(),
+                    Summary = "This will allow the user to imply things",
+                    ConditionsOfSatisfaction = "shit should work",
+                });
+            }
+
             return project;
+        }
+
+        /// <summary>
+        /// Gets all existing stories from the database
+        /// </summary>
+        /// <returns>returns a list of stories</returns>
+        public List<Service.Model.Story> GetStories()
+        {
+            var query = unitOfWork.StoryRepository.Items.Select(s => new Service.Model.Story
+            {
+                StoryId = s.Id,
+                Summary = s.Summary,
+                ConditionsOfSatisfaction = s.ConditionsOfSatisfaction,
+            }).ToList();
+
+            return query;
+        }
+
+        /// <summary>
+        /// Obtains a list of project names with respective id
+        /// </summary>
+        /// <returns>a list of projects</returns>
+        public List<ProjectDetails> GetProjectNames()
+        {
+            var projects = unitOfWork.ProjectRepository.Items.Select(p => new ProjectDetails
+            {
+                ProjectId = p.Id,
+                ProjectName = p.Name
+            }).ToList();
+            return projects;
+        }
+
+        /// <summary>
+        /// Method to get the project stories
+        /// </summary>
+        /// <param name="projectId">projectId to be checked</param>
+        /// <returns>a list of stories</returns>
+        public List<StoryDetails> GetProjectStories(Guid projectId)
+        {
+            var stories = unitOfWork.StoryRepository.Items.Where(s => s.Project.Id == projectId).Select(s => new StoryDetails
+            {
+                StoryId = s.Id,
+                StoryName = s.StoryName
+            });
+            return stories.ToList();
         }
 
         /// <summary>
@@ -250,6 +296,7 @@ namespace AnyTrack.Backend.Service
 
                 project.ProjectManagerEmailAddress = dataProject.ProjectManager.EmailAddress;
                 project.ProductOwnerEmailAddress = dataProject.ProductOwner != null ? dataProject.ProductOwner.EmailAddress : null;
+                project.Stories = new List<Service.Model.Story>();
 
                 if (dataProject.ScrumMasters != null)
                 {
@@ -258,11 +305,57 @@ namespace AnyTrack.Backend.Service
                         project.ScrumMasterEmailAddresses.Add(scrumMaster.EmailAddress);
                     }
                 }
+
+                if (dataProject.Stories != null)
+                {
+                    foreach (var story in dataProject.Stories)
+                    {
+                        project.Stories.Add(new Service.Model.Story
+                        {
+                            Summary = story.Summary,
+                            ConditionsOfSatisfaction = story.ConditionsOfSatisfaction,
+                        });
+                    }
+                }
             }
 
             return projects;
         }
-        
+
+        /// <summary>
+        /// Searches for users who can be added to a project.
+        /// </summary>
+        /// <param name="filter">The user filter.</param>
+        /// <returns>A list of user information objects.</returns>
+        public List<UserSearchInfo> SearchUsers(UserSearchFilter filter)
+        {
+            var users = unitOfWork.UserRepository.Items;
+
+            if (filter.EmailAddress.IsNotEmpty())
+            {
+                users = users.Where(u => u.EmailAddress == filter.EmailAddress);
+            }
+
+            if (filter.ProductOwner.HasValue)
+            {
+                users = users.Where(u => u.ProductOwner == filter.ProductOwner);
+            }
+
+            if (filter.ScrumMaster.HasValue)
+            {
+                users = users.Where(u => u.ScrumMaster == filter.ScrumMaster);
+            }
+
+            var userInfos = users.Select(u => new UserSearchInfo
+            {
+                EmailAddress = u.EmailAddress,
+                FullName = u.FirstName + " " + u.LastName,
+                UserID = u.Id
+            }).OrderBy(u => u.FullName);
+
+            return userInfos.ToList();
+        }
+
         #endregion
 
         #region Helper Methods

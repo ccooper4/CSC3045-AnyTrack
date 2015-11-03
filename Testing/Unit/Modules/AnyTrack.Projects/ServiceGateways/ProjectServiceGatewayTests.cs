@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AnyTrack.Accounting.ServiceGateways;
 using AnyTrack.Backend.Data.Model;
+using AnyTrack.Infrastructure.BackendAccountService;
 using AnyTrack.Projects.BackendProjectService;
 using AnyTrack.Projects.ServiceGateways;
 using FluentAssertions;
@@ -32,16 +33,22 @@ namespace Unit.Modules.AnyTrack.Projects.ServiceGateways
         }
         #endregion
 
-        #region Test Constructor
+        #region Tests
 
         public class ProjectServiceGatewayTests : Context
         {
+            #region Constructor Tests 
+
             [Test]
             [ExpectedException(typeof (ArgumentNullException))]
             public void ConstructWithNoClient()
             {
                 gateway = new ProjectServiceGateway(null);
             }
+
+            #endregion 
+
+            #region CreateProject(ServiceProject project) Tests 
 
             [Test]
             public void CreateProject()
@@ -67,6 +74,10 @@ namespace Unit.Modules.AnyTrack.Projects.ServiceGateways
                 Assert.AreEqual(sentModel.ProjectManagerEmailAddress, "test@agile.local");
 
             }
+
+            #endregion 
+
+            #region UpdateProject(ServiceProject project) Tests
 
             [Test]
             public void UpdateProject()
@@ -95,6 +106,10 @@ namespace Unit.Modules.AnyTrack.Projects.ServiceGateways
                 Assert.AreEqual(sentModel.ProjectManagerEmailAddress, "test@agile.local");
             }
 
+            #endregion
+
+            #region DeleteProject(Guid id) Tests
+
             [Test]
             public void DeleteProject()
             {
@@ -117,13 +132,40 @@ namespace Unit.Modules.AnyTrack.Projects.ServiceGateways
                 Assert.IsNull(sentModel);
             }
 
+            #endregion 
+
+            #region GetProject(Guid id) Tests 
+
             public void GetProject()
             {
             }
 
+            #endregion
+
+            #region GetProjects() Tests 
+
             public void GetProjects()
             {
             }
+
+            #endregion
+
+            #region SearchUsers(UserSearchFilter filter)
+
+            [Test]
+            public void CallSearchUsers()
+            {
+                var userFilter = new UserSearchFilter();
+                var results = new List<UserSearchInfo>();
+
+                projectService.SearchUsers(userFilter).Returns(results);
+
+                var gatewayResults = gateway.SearchUsers(userFilter);
+                gatewayResults.Should().NotBeNull();
+                gatewayResults.Equals(results).Should().BeTrue();
+            }
+
+            #endregion
         }
 
         

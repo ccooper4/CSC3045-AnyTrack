@@ -83,6 +83,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="ProjectModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\BackendProjectService\Reference.cs">
@@ -92,15 +93,32 @@
     </Compile>
     <Compile Include="ServiceGateways\IProjectServiceGateway.cs" />
     <Compile Include="ServiceGateways\ProjectServiceGateway.cs" />
+    <Compile Include="Views\ProductBacklogViewModel.cs" />
     <Compile Include="Views\CreateProject.xaml.cs">
       <DependentUpon>CreateProject.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CreateProjectViewModel.cs" />
+    <Compile Include="Views\ProductBacklog.xaml.cs">
+      <DependentUpon>ProductBacklog.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Service References\BackendProjectService\AnyTrack.Projects.BackendProjectService.ProjectDetails.datasource"/>
     <None Include="Service References\BackendProjectService\AnyTrack.Projects.BackendProjectService.ServiceProject.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BackendProjectService\AnyTrack.Projects.BackendProjectService.ServiceProject.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BackendProjectService\AnyTrack.Projects.BackendProjectService.UserSearchInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BackendProjectService\AnyTrack.Projects.BackendProjectService.Story1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BackendProjectService\AnyTrack.Projects.BackendProjectService.StoryDetails.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BackendProjectService\ProjectService.wsdl" />
@@ -119,10 +137,13 @@
       <Project>{a5a20403-c6e3-4475-88aa-762bd691f812}</Project>
       <Name>AnyTrack.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Common\AnyTrack.SharedUtilities\AnyTrack.SharedUtilities.csproj">
+      <Project>{4d4353ae-46fa-4b2e-b41a-a430fe6a8640}</Project>
+      <Name>AnyTrack.SharedUtilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ServiceGateways\Model\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -150,6 +171,14 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\CreateProject.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CreateStory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProductBacklog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -49,5 +49,35 @@ namespace AnyTrack.Backend.Service
         /// <returns>List of all Projects in the database</returns>
         [OperationContract]
         List<ServiceProject> GetProjects();
+
+        /// <summary>
+        /// Searches for users who can be added to a project.
+        /// </summary>
+        /// <param name="filter">The user filter.</param>
+        /// <returns>A list of user information objects.</returns>
+        [OperationContract]
+        List<UserSearchInfo> SearchUsers(UserSearchFilter filter);
+        
+        /// <summary>
+        /// Gets all existing stories from the database
+        /// </summary>
+        /// <returns>List of all Stories in the database</returns>
+        [OperationContract]
+        List<Story> GetStories();
+
+        /// <summary>
+        /// Gets all project names from the database
+        /// </summary>
+        /// <returns>A list of project names</returns>
+        [OperationContract]
+        List<ProjectDetails> GetProjectNames();
+
+        /// <summary>
+        /// Get all stories based on project from the database
+        /// </summary>
+        /// <param name="projectId">Project id to be checked</param>
+        /// <returns>A list of stories for a project</returns>
+        [OperationContract]
+        List<StoryDetails> GetProjectStories(Guid projectId);
     }
 }

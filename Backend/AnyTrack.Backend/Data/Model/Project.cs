@@ -47,16 +47,16 @@ namespace AnyTrack.Backend.Data.Model
         /// </summary>
         public virtual List<User> ScrumMasters { get; set; }
 
+        /// <summary>
+        /// Gets or sets Stories
+        /// </summary>
+        public virtual List<Story> Stories { get; set; }
+
         /*
         /// <summary>
         /// Gets or sets Sprints
         /// </summary>
        public virtual ICollection<Sprint> Sprints { get; set; }
-
-        /// <summary>
-        /// Gets or sets Stories
-        /// </summary>
-        public virtual ICollection<Story> Stories { get; set; }
-         */
+       */
     }
 }

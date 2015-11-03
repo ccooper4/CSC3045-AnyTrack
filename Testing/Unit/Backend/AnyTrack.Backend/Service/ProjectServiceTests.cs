@@ -185,8 +185,8 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             dataProject.ProjectManager.Skills.Should().Be("C#, Java");
             dataProject.ProjectManager.SecretQuestion.Should().Be("Where do you live?");
             dataProject.ProjectManager.SecretAnswer.Should().Be("At Home");
-            dataProject.ProjectManager.Roles.Count.Should().Be(1);
-            dataProject.ProjectManager.Roles.ToList()[0].RoleName.Should().Be("Project Manager");
+            dataProject.ProjectManager.Roles.Count.Should().Be(2);
+            dataProject.ProjectManager.Roles.ToList()[1].RoleName.Should().Be("Project Manager");
 
             dataProject.ProductOwner.Should().BeNull();
             dataProject.ScrumMasters.Count().Should().Be(0);
@@ -246,8 +246,8 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             dataProject.ProjectManager.Skills.Should().Be("C#, Java");
             dataProject.ProjectManager.SecretQuestion.Should().Be("Where do you live?");
             dataProject.ProjectManager.SecretAnswer.Should().Be("At Home");
-            dataProject.ProjectManager.Roles.Count.Should().Be(1);
-            dataProject.ProjectManager.Roles.ToList()[0].RoleName.Should().Be("Project Manager");
+            dataProject.ProjectManager.Roles.Count.Should().Be(2);
+            dataProject.ProjectManager.Roles.ToList()[1].RoleName.Should().Be("Project Manager");
 
             dataProject.ProductOwner.Should().NotBeNull();
             dataProject.ProductOwner.EmailAddress.Should().Be("PO@test.com");
@@ -721,5 +721,131 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
         }
        
         #endregion
+
+        #region SearchUsers(UserSearchFilter filter) Tests 
+
+        [Test]
+        public void CallSearchUsersWithEmptyFilter()
+        {
+            var users = new List<User>()
+            {
+                new User { Id = Guid.NewGuid(), EmailAddress = "test1@mail.com", FirstName = "Andrew", LastName = "Fletcher", ScrumMaster = true, ProductOwner = true},
+                new User { Id = Guid.NewGuid(), EmailAddress = "test1@mail.com", FirstName = "Liam", LastName = "Fletcher", ScrumMaster = false, ProductOwner = true},
+                new User { Id = Guid.NewGuid(), EmailAddress = "test1@mail.com", FirstName = "David", LastName = "Tester", ScrumMaster = true, ProductOwner = false},
+                new User { Id = Guid.NewGuid(), EmailAddress = "test1@mail.com", FirstName = "Bill", LastName = "Tester", ScrumMaster = false, ProductOwner = false}
+            };
+
+            unitOfWork.UserRepository.Items.Returns(users.AsQueryable());
+
+            var userFilter = new UserSearchFilter();
+
+            var result = service.SearchUsers(userFilter);
+
+            result.Count.Should().Be(4);
+            result.Select(r => r.FullName).Should().ContainInOrder("Andrew Fletcher", "Bill Tester", "David Tester", "Liam Fletcher");
+            var firstResult = result.First();
+            firstResult.FullName.Should().Be("Andrew Fletcher");
+            firstResult.EmailAddress.Should().Be("test1@mail.com");
+            firstResult.UserID.Should().Be(users.First().Id);
+
+        }
+
+        [Test]
+        public void CallSearchUsersWithNoResults()
+        {
+            var users = new List<User>()
+            {
+                new User { Id = Guid.NewGuid(), EmailAddress = "test1@mail.com", FirstName = "Andrew", LastName = "Fletcher", ScrumMaster = true, ProductOwner = true},
+                new User { Id = Guid.NewGuid(), EmailAddress = "test1@mail.com", FirstName = "Liam", LastName = "Fletcher", ScrumMaster = false, ProductOwner = true},
+                new User { Id = Guid.NewGuid(), EmailAddress = "test1@mail.com", FirstName = "David", LastName = "Tester", ScrumMaster = true, ProductOwner = false},
+                new User { Id = Guid.NewGuid(), EmailAddress = "test1@mail.com", FirstName = "Bill", LastName = "Tester", ScrumMaster = false, ProductOwner = false}
+            };
+
+            unitOfWork.UserRepository.Items.Returns(users.AsQueryable());
+
+            var userFilter = new UserSearchFilter { EmailAddress = "none@mail.com" };
+
+            var result = service.SearchUsers(userFilter);
+
+            result.Count.Should().Be(0);
+        }
+
+        [Test]
+        public void CallSearchFilterOnEmail()
+        {
+            var users = new List<User>()
+            {
+                new User { Id = Guid.NewGuid(), EmailAddress = "test1@mail.com", FirstName = "Andrew", LastName = "Fletcher", ScrumMaster = true, ProductOwner = true},
+                new User { Id = Guid.NewGuid(), EmailAddress = "test2@mail.com", FirstName = "Liam", LastName = "Fletcher", ScrumMaster = false, ProductOwner = true},
+                new User { Id = Guid.NewGuid(), EmailAddress = "test3@mail.com", FirstName = "David", LastName = "Tester", ScrumMaster = true, ProductOwner = false},
+                new User { Id = Guid.NewGuid(), EmailAddress = "test4@mail.com", FirstName = "Bill", LastName = "Tester", ScrumMaster = false, ProductOwner = false}
+            };
+
+            unitOfWork.UserRepository.Items.Returns(users.AsQueryable());
+
+            var userFilter = new UserSearchFilter { EmailAddress = "test4@mail.com" };
+
+            var result = service.SearchUsers(userFilter);
+
+            result.Count.Should().Be(1);
+            var singleResult = result.Single();
+            singleResult.FullName.Should().Be("Bill Tester");
+            singleResult.EmailAddress.Should().Be("test4@mail.com");
+            singleResult.UserID.Should().Be(users.Last().Id);
+        }
+
+        [Test]
+        public void CallSearchFilterOnScrumMaster()
+        {
+            var users = new List<User>()
+            {
+                new User { Id = Guid.NewGuid(), EmailAddress = "test1@mail.com", FirstName = "Andrew", LastName = "Fletcher", ScrumMaster = true, ProductOwner = true},
+                new User { Id = Guid.NewGuid(), EmailAddress = "test2@mail.com", FirstName = "Liam", LastName = "Fletcher", ScrumMaster = false, ProductOwner = true},
+                new User { Id = Guid.NewGuid(), EmailAddress = "test3@mail.com", FirstName = "David", LastName = "Tester", ScrumMaster = true, ProductOwner = false},
+                new User { Id = Guid.NewGuid(), EmailAddress = "test4@mail.com", FirstName = "Bill", LastName = "Tester", ScrumMaster = false, ProductOwner = false}
+            };
+
+            unitOfWork.UserRepository.Items.Returns(users.AsQueryable());
+
+            var userFilter = new UserSearchFilter { ScrumMaster = true, ProductOwner = false };
+
+            var result = service.SearchUsers(userFilter);
+
+            result.Count.Should().Be(1);
+
+            var userResult = result.Single();
+            userResult.FullName.Should().Be("David Tester");
+            userResult.EmailAddress.Should().Be("test3@mail.com");
+            userResult.UserID.Should().Be(users[2].Id);
+
+        }
+
+        [Test]
+        public void CallSearchFilterOnProductOwner()
+        {
+            var users = new List<User>()
+            {
+                new User { Id = Guid.NewGuid(), EmailAddress = "test1@mail.com", FirstName = "Andrew", LastName = "Fletcher", ScrumMaster = true, ProductOwner = true},
+                new User { Id = Guid.NewGuid(), EmailAddress = "test2@mail.com", FirstName = "Liam", LastName = "Fletcher", ScrumMaster = false, ProductOwner = true},
+                new User { Id = Guid.NewGuid(), EmailAddress = "test3@mail.com", FirstName = "David", LastName = "Tester", ScrumMaster = true, ProductOwner = false},
+                new User { Id = Guid.NewGuid(), EmailAddress = "test4@mail.com", FirstName = "Bill", LastName = "Tester", ScrumMaster = false, ProductOwner = false}
+            };
+
+            unitOfWork.UserRepository.Items.Returns(users.AsQueryable());
+
+            var userFilter = new UserSearchFilter { ScrumMaster = false, ProductOwner = true };
+
+            var result = service.SearchUsers(userFilter);
+
+            result.Count.Should().Be(1);
+
+            var lastResult = result.Last();
+            lastResult.FullName.Should().Be("Liam Fletcher");
+            lastResult.EmailAddress.Should().Be("test2@mail.com");
+            lastResult.UserID.Should().Be(users[1].Id);
+
+        }
+
+        #endregion 
     }
 }
