@@ -8,39 +8,69 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xml:lang="en-GB"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             mc:Ignorable="d" Width="603" Height="932.875">
+             mc:Ignorable="d" Width="500" Height="Auto">
 
-    <GroupBox Margin="5,5,26,359">
+    <GroupBox >
         <GroupBox.Header>
             <TextBlock Foreground="White" Text="Story Wizard" />
         </GroupBox.Header>
 
-        <Grid Background="White" Margin="-5,-5,-2,49" >
+        <Grid Background="White" Margin="-5,-5,-5,-5" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="56*"></ColumnDefinition>
-                <ColumnDefinition Width="370*"></ColumnDefinition>
-                <ColumnDefinition Width="84*"/>
-                
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="8*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"/>
+
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="40" ></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
+                <RowDefinition Height="30" ></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
 
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="1"  FontWeight="Bold">Project</Label>
-            <ComboBox Grid.Row="1" Grid.Column="1"/>
-        </Grid>
+            <Label Grid.Row="0" Grid.Column="1" FontWeight="Bold" Margin="0, 10px, 0, 0">Project</Label>
+            <ComboBox Grid.Row="1" Grid.Column="1" Width="200px" HorizontalAlignment="Left"/>
 
+            <Label Grid.Row="2" Grid.Column="1" FontWeight="Bold" Margin="0, 10px, 0, 0">Summary</Label>
+            <TextBox Grid.Row="3" Grid.Column="1" Height="30px" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Top" controls:TextBoxHelper.ClearTextButton="True"/>
+
+            <Grid Grid.Row="4" Grid.Column="1" Margin="0, 20px, 0, 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="7*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center">As a</Label>
+                <Label Grid.Row="1" Grid.Column="0" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center">I want</Label>
+                <Label Grid.Row="2" Grid.Column="0" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center">so that</Label>
+
+                <TextBox Grid.Row="0" Grid.Column="1" Height="30px" Margin="0, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Top" controls:TextBoxHelper.ClearTextButton="True"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Height="30px" Margin="0, 5px, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Top" controls:TextBoxHelper.ClearTextButton="True"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Height="30px" Margin="0, 5px, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Top" controls:TextBoxHelper.ClearTextButton="True"/>
+            </Grid>
+
+            <Label Grid.Row="5" Grid.Column="1" FontWeight="Bold" Margin="0,20px, 0, 0">Conditions of satisfaction</Label>
+            <TextBox Grid.Row="6" Grid.Column="1" Height="60px" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
+            <WrapPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10px,0,20px">
+                <Button Margin="10px, 0, 0, 0" Command="{Binding CancelRegisterUserCommand}" BorderThickness="0" Background="LightGray" Width="60px">Cancel</Button>
+                <Button Margin="10px, 0, 0, 0" Command="{Binding RegisterUserCommand}" BorderThickness="0" Background="LightGray" Width="60px">Save</Button>
+            </WrapPanel>
+            
+        </Grid>
     </GroupBox>
 
 </UserControl>

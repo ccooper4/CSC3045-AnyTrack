@@ -210,12 +210,8 @@ namespace AnyTrack.Backend.Service
             project.Stories.Add(new Service.Model.Story
             {
                 StoryId = new Guid(),
-                StoryName = "Adding implementation",
                 Summary = "This will allow the user to imply things",
-                Description = "As a user I would like to be able to implicate",
                 ConditionsOfSatisfaction = "shit should work",
-                Assignee = "Richard",
-                Tester = "Chris",
             });
 
             return project;
@@ -230,12 +226,8 @@ namespace AnyTrack.Backend.Service
             var query = unitOfWork.StoryRepository.Items.Select(s => new Service.Model.Story
             {
                 StoryId = s.Id,
-                StoryName = s.StoryName,
                 Summary = s.Summary,
-                Description = s.Description,
                 ConditionsOfSatisfaction = s.ConditionsOfSatisfaction,
-                Assignee = s.Assignee,
-                Tester = s.Tester
             }).ToList();
 
             return query;
@@ -275,12 +267,8 @@ namespace AnyTrack.Backend.Service
                 {
                     project.Stories.Add(new Service.Model.Story
                     {
-                        StoryName = story.StoryName,
-                        Description = story.Description,
                         Summary = story.Summary,
-                        Tester = story.Tester,
                         ConditionsOfSatisfaction = story.ConditionsOfSatisfaction,
-                        Assignee = story.Assignee
                     });
                 }
             }

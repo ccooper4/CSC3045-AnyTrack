@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AnyTrack.Backend.Service.Model;
 
 namespace AnyTrack.Backend.Data.Model
 {
@@ -12,29 +13,14 @@ namespace AnyTrack.Backend.Data.Model
     public class Story : BaseEntity
     {
         /// <summary>
-        /// Gets or sets the name of the story
-        /// </summary>
-        public virtual string StoryName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the description of the story
-        /// </summary>
-        public virtual string Description { get; set; }
-
-        /// <summary>
         /// Gets or sets the story summary
         /// </summary>
         public virtual string Summary { get; set; }
 
         /// <summary>
-        /// Gets or sets the assignee
+        /// Gets or sets the user story.
         /// </summary>
-        public virtual string Assignee { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tester
-        /// </summary>
-        public virtual string Tester { get; set; }
+        public virtual UserStory UserStory { get; set; }
 
         /// <summary>
         /// Gets or sets the conditions of satisfaction

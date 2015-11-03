@@ -144,6 +144,7 @@
     <Compile Include="Service\IProjectService.cs" />
     <Compile Include="Service\Model\ServiceProject.cs" />
     <Compile Include="Service\Model\Story.cs" />
+    <Compile Include="Service\Model\UserStory.cs" />
     <Compile Include="Service\ProjectService.cs" />
     <Compile Include="Service\IAccountService.cs" />
     <Compile Include="Service\Model\LoginResult.cs" />
