@@ -116,6 +116,10 @@
     <Compile Include="Data\Model\User.cs" />
     <Compile Include="Faults\UserAlreadyExistsFault.cs" />
     <Compile Include="Data\Model\Project.cs" />
+    <Compile Include="Migrations\201510261641270_Adding user entity.cs" />
+    <Compile Include="Migrations\201510261641270_Adding user entity.Designer.cs">
+      <DependentUpon>201510261641270_Adding user entity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201510261759447_Making dates nullable.cs" />
     <Compile Include="Migrations\201510261759447_Making dates nullable.Designer.cs">
       <DependentUpon>201510261759447_Making dates nullable.cs</DependentUpon>
@@ -124,13 +128,13 @@
     <Compile Include="Migrations\201510282334577_Adding migration to cover T1 and T2 changes.Designer.cs">
       <DependentUpon>201510282334577_Adding migration to cover T1 and T2 changes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201510310132086_Adding reset questions and skills to user.cs" />
-    <Compile Include="Migrations\201510310132086_Adding reset questions and skills to user.Designer.cs">
-      <DependentUpon>201510310132086_Adding reset questions and skills to user.cs</DependentUpon>
+    <Compile Include="Migrations\201510291434411_Adding Project.cs" />
+    <Compile Include="Migrations\201510291434411_Adding Project.Designer.cs">
+      <DependentUpon>201510291434411_Adding Project.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201510301342196_Adding story.cs" />
-    <Compile Include="Migrations\201510301342196_Adding story.Designer.cs">
-      <DependentUpon>201510301342196_Adding story.cs</DependentUpon>
+    <Compile Include="Migrations\201511031252215_Adding Stories and T4 changes to a single migration.cs" />
+    <Compile Include="Migrations\201511031252215_Adding Stories and T4 changes to a single migration.Designer.cs">
+      <DependentUpon>201511031252215_Adding Stories and T4 changes to a single migration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -158,17 +162,20 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Migrations\201510261641270_Adding user entity.resx">
+      <DependentUpon>201510261641270_Adding user entity.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510261759447_Making dates nullable.resx">
       <DependentUpon>201510261759447_Making dates nullable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510282334577_Adding migration to cover T1 and T2 changes.resx">
       <DependentUpon>201510282334577_Adding migration to cover T1 and T2 changes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510310132086_Adding reset questions and skills to user.resx">
-      <DependentUpon>201510310132086_Adding reset questions and skills to user.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201510291434411_Adding Project.resx">
+      <DependentUpon>201510291434411_Adding Project.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510301342196_Adding story.resx">
-      <DependentUpon>201510301342196_Adding story.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201511031252215_Adding Stories and T4 changes to a single migration.resx">
+      <DependentUpon>201511031252215_Adding Stories and T4 changes to a single migration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

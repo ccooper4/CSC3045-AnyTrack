@@ -7,13 +7,13 @@ namespace AnyTrack.Backend.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Addingstory : IMigrationMetadata
+    public sealed partial class AddingStoriesandT4changestoasinglemigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Addingstory));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddingStoriesandT4changestoasinglemigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "201510301342196_Adding story"; }
+            get { return "201511031252215_Adding Stories and T4 changes to a single migration"; }
         }
         
         string IMigrationMetadata.Source

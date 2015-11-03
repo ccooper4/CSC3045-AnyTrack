@@ -4,7 +4,7 @@ namespace AnyTrack.Backend.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Addingstory : DbMigration
+    public partial class AddingStoriesandT4changestoasinglemigration : DbMigration
     {
         public override void Up()
         {
@@ -13,11 +13,10 @@ namespace AnyTrack.Backend.Migrations
                 c => new
                     {
                         Id = c.Guid(nullable: false),
-                        StoryName = c.String(),
-                        Description = c.String(),
                         Summary = c.String(),
-                        Assignee = c.String(),
-                        Tester = c.String(),
+                        UserStory_AsA = c.String(),
+                        UserStory_IWould = c.String(),
+                        UserStory_SoThat = c.String(),
                         ConditionsOfSatisfaction = c.String(),
                         Updated = c.DateTime(),
                         Created = c.DateTime(),
@@ -27,12 +26,18 @@ namespace AnyTrack.Backend.Migrations
                 .ForeignKey("dbo.Projects", t => t.Project_Id)
                 .Index(t => t.Project_Id);
             
+            AddColumn("dbo.Users", "SecretQuestion", c => c.String());
+            AddColumn("dbo.Users", "SecretAnswer", c => c.String());
+            AddColumn("dbo.Users", "Skills", c => c.String());
         }
         
         public override void Down()
         {
             DropForeignKey("dbo.Stories", "Project_Id", "dbo.Projects");
             DropIndex("dbo.Stories", new[] { "Project_Id" });
+            DropColumn("dbo.Users", "Skills");
+            DropColumn("dbo.Users", "SecretAnswer");
+            DropColumn("dbo.Users", "SecretQuestion");
             DropTable("dbo.Stories");
         }
     }
