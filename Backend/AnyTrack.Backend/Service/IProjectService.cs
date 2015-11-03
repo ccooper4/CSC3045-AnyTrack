@@ -63,7 +63,7 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         /// <returns>List of all Stories in the database</returns>
         [OperationContract]
-        List<Story> GetStories();
+        List<ServiceStory> GetStories();
 
         /// <summary>
         /// Gets all project names from the database

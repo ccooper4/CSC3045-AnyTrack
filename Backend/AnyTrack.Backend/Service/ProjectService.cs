@@ -209,7 +209,7 @@ namespace AnyTrack.Backend.Service
             {
             }
 
-            project.Stories.Add(new Service.Model.Story
+            project.Stories.Add(new Service.Model.ServiceStory
             {
                 StoryId = new Guid(),
                 Summary = "This will allow the user to imply things",
@@ -223,9 +223,9 @@ namespace AnyTrack.Backend.Service
         /// Gets all existing stories from the database
         /// </summary>
         /// <returns>returns a list of stories</returns>
-        public List<Service.Model.Story> GetStories()
+        public List<Service.Model.ServiceStory> GetStories()
         {
-            var query = unitOfWork.StoryRepository.Items.Select(s => new Service.Model.Story
+            var query = unitOfWork.StoryRepository.Items.Select(s => new Service.Model.ServiceStory
             {
                 StoryId = s.Id,
                 Summary = s.Summary,
@@ -259,7 +259,7 @@ namespace AnyTrack.Backend.Service
             var stories = unitOfWork.StoryRepository.Items.Where(s => s.Project.Id == projectId).Select(s => new StoryDetails
             {
                 StoryId = s.Id,
-                StoryName = s.StoryName
+                Summary = s.Summary
             });
             return stories.ToList();
         }
@@ -284,7 +284,7 @@ namespace AnyTrack.Backend.Service
             foreach (ServiceProject project in projects)
             {
                 var dataProject = unitOfWork.ProjectRepository.Items.Single(p => p.Id == project.ProjectId);
-                project.Stories = new List<Service.Model.Story>();
+                project.Stories = new List<Service.Model.ServiceStory>();
                 project.ProductOwner = dataProject.ProductOwner != null ? MapUserToNewUser(dataProject.ProductOwner) : null;
 
                 if (dataProject.ScrumMasters != null)
@@ -297,7 +297,7 @@ namespace AnyTrack.Backend.Service
 
                 foreach (var story in dataProject.Stories)
                 {
-                    project.Stories.Add(new Service.Model.Story
+                    project.Stories.Add(new Service.Model.ServiceStory
                     {
                         Summary = story.Summary,
                         ConditionsOfSatisfaction = story.ConditionsOfSatisfaction,
@@ -340,6 +340,39 @@ namespace AnyTrack.Backend.Service
             }).OrderBy(u => u.FullName);
 
             return userInfos.ToList();
+        }
+
+        /// <summary>
+        /// Adds a story to the database and associates it with the specified project.
+        /// </summary>
+        /// <param name="projectGuid">The Guid of the project to add stories to</param>
+        /// <param name="story">The story to add to the project</param>
+        public void AddStoryToProject(Guid projectGuid, ServiceStory story)
+        {
+            var project = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Id == projectGuid);
+
+            if (project == null)
+            {
+                throw new ArgumentException("Project not found for Guid" + projectGuid.ToString());
+            }
+
+            var storyExists = unitOfWork.StoryRepository.Items.SingleOrDefault(s => s.Id == story.StoryId);
+            if (storyExists != null)
+            {
+                throw new ArgumentException("Story already exists in database");
+            }
+
+            Story newStory = new Story()
+            {
+                Summary = story.Summary,
+                ConditionsOfSatisfaction = story.ConditionsOfSatisfaction,
+                AsA = story.AsA,
+                IWant = story.IWant,
+                SoThat = story.SoThat
+            };
+            
+            project.Stories.Add(newStory);
+            unitOfWork.Commit();
         }
 
         #endregion

@@ -28,9 +28,9 @@ namespace AnyTrack.Backend.Service.Model
         public Guid ProjectId { get; set; }
 
         /// <summary>
-        /// Gets or sets Story ID
+        /// Gets or sets ServiceStory ID
         /// </summary>
-        public Story StoryId { get; set; }
+        public ServiceStory ServiceStoryId { get; set; }
 
         /// <summary>
         /// Gets or sets Name
@@ -77,18 +77,18 @@ namespace AnyTrack.Backend.Service.Model
         /// <summary>
         /// Gets or sets Stories
         /// </summary>
-        public List<Story> Stories { get; set; }
+        public List<ServiceStory> Stories { get; set; }
 
         #region Methods
 
         /// <summary>
-        /// Create a new Story Entity
+        /// Create a new ServiceStory Entity
         /// </summary>
         /// <returns>Returns storyId</returns>
-        public Story Story()
+        public ServiceStory Story()
         {
-            StoryId = new Story();
-            return StoryId;
+            ServiceStoryId = new ServiceStory();
+            return ServiceStoryId;
         }
         #endregion Methods
     }

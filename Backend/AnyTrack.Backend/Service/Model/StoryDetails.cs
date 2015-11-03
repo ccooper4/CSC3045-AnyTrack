@@ -19,7 +19,7 @@ namespace AnyTrack.Backend.Service.Model
         /// <summary>
         /// Gets or sets the story name.
         /// </summary>
-        public string StoryName { get; set; }
+        public string Summary { get; set; }
 
         /// <summary>
         /// Gets or sets the project id.
