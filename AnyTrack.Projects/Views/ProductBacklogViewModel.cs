@@ -38,25 +38,12 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Project Name
         /// </summary>
-        [Required]
         private string projectName;
-
-        /// <summary>
-        /// Story Name
-        /// </summary>
-        [Required]
-        private string storyName;
-
-        /// <summary>
-        /// The project
-        /// </summary>
-        [Required]
-        private Project project;
 
         /// <summary>
         /// The project Id
         /// </summary>
-        private string projectId;
+        private Guid projectId;
 
         #endregion
 
@@ -81,7 +68,8 @@ namespace AnyTrack.Projects.Views
 
             this.regionManager = regionManager;
             this.serviceGateway = serviceGateway;
-            this.project = new Project { Stories = new ObservableCollection<Story>() };
+            this.Stories = new ObservableCollection<StoryDetails>();
+            this.Projects = new ObservableCollection<ProjectDetails>();
         }
 
         #endregion
@@ -91,76 +79,22 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Gets or sets the project name
         /// </summary>
-        public string ProjectName
-        {
-            get { return projectName; }
-            set { SetProperty(ref projectName, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets the project name
-        /// </summary>
-        public string ProjectId
+        public Guid ProjectId
         {
             get { return projectId; }
             set { SetProperty(ref projectId, value); }
         }
 
         /// <summary>
-        /// Gets or sets the story title
-        /// </summary>
-        public string StoryTitle
-        {
-            get { return storyName; }
-            set { SetProperty(ref storyName, value); }
-        }
-
-        /// <summary>
         /// Gets or sets the stories
         /// </summary>
-        public ObservableCollection<Story> Stories
-        {
-            get
-            {
-                return project.Stories;
-            }
-
-            set
-            {
-                if (project.Stories != value)
-                {
-                    project.Stories = value;
-                }
-            }
-        }
+        public ObservableCollection<StoryDetails> Stories { get; set; }
 
         /// <summary>
-        /// Gets or sets the selected item
+        /// Gets or sets the project details.
         /// </summary>
-        public Project Project
-        {
-            get
-            {
-                return project;
-            }
+        public ObservableCollection<ProjectDetails> Projects { get; set; }
 
-            set
-            {
-                project = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets the projects
-        /// </summary>
-        public List<Project> Projects
-        {
-            get
-            {
-                return serviceGateway.GetProjects();
-            }
-        }
-
-        #endregion 
+        #endregion Properties
     }
 }

@@ -20,6 +20,11 @@ namespace AnyTrack.Backend.Service.Model
         }
 
         /// <summary>
+        /// Gets or sets Story Name
+        /// </summary>
+        public string StoryName { get; set; }
+
+        /// <summary>
         /// Gets or sets Story ID
         /// </summary>
         public Guid StoryId { get; set; }
