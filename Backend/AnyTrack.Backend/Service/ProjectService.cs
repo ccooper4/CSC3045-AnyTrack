@@ -256,13 +256,12 @@ namespace AnyTrack.Backend.Service
         /// <returns>a list of stories</returns>
         public List<StoryDetails> GetProjectStories(Guid projectId)
         {
-            List<StoryDetails> storyDetails = new List<StoryDetails>();
             var stories = unitOfWork.StoryRepository.Items.Where(s => s.Project.Id == projectId).Select(s => new StoryDetails
             {
                 StoryId = s.Id,
                 StoryName = s.StoryName
             });
-            return storyDetails;
+            return stories.ToList();
         }
 
         /// <summary>

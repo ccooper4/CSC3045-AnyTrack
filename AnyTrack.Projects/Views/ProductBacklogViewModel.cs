@@ -70,6 +70,7 @@ namespace AnyTrack.Projects.Views
             this.serviceGateway = serviceGateway;
             this.Stories = new ObservableCollection<StoryDetails>();
             this.Projects = new ObservableCollection<ProjectDetails>();
+            this.Projects.AddRange(serviceGateway.GetProjectNames());
         }
 
         #endregion
@@ -81,8 +82,20 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         public Guid ProjectId
         {
-            get { return projectId; }
-            set { SetProperty(ref projectId, value); }
+            get
+            {
+                return projectId;
+            }
+
+            set
+            {
+                var result = SetProperty(ref projectId, value);
+                if (result)
+                {
+                    Stories.Clear();
+                    Stories.AddRange(serviceGateway.Stories(value));
+                }
+            }
         }
 
         /// <summary>

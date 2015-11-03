@@ -44,6 +44,19 @@ namespace AnyTrack.Projects.ServiceGateways
         List<ServiceProject> GetProjects();
 
         /// <summary>
+        /// Retrieves all project names in the database
+        /// </summary>
+        /// <returns>Returns a list of all the project names in the system</returns>
+        List<ProjectDetails> GetProjectNames();
+
+        /// <summary>
+        /// Retrieves all project stories in the database
+        /// </summary>
+        /// <param name="projectId">the project id to be checked</param>
+        /// <returns>Returns a list of all the stories in the system</returns>
+        List<StoryDetails> Stories(Guid projectId);
+
+        /// <summary>
         /// Retrieves any users who match the specified filter.
         /// </summary>
         /// <param name="filter">The search filter.</param>
