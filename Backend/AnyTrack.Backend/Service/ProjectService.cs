@@ -375,6 +375,20 @@ namespace AnyTrack.Backend.Service
             unitOfWork.Commit();
         }
 
+        /// <summary>
+        /// Deleting a story from the product backlog
+        /// </summary>
+        /// <param name="projectId">the projectid to be unlinked and removed</param>
+        /// <param name="storyId">the storyid to be unlinked and removed</param>
+        public void DeleteStoryFromProductBacklog(Guid projectId, Guid storyId)
+        {
+            var storyEntity = unitOfWork.StoryRepository.Items.Single(s => s.Id == storyId);
+            var projectEntity = unitOfWork.ProjectRepository.Items.Single(p => p.Id == projectId);
+            projectEntity.Stories.Remove(storyEntity);
+            unitOfWork.StoryRepository.Delete(storyEntity);
+            unitOfWork.Commit();
+        }
+
         #endregion
 
         #region Helper Methods

@@ -36,6 +36,14 @@ namespace AnyTrack.Backend.Service
         void DeleteProject(Guid projectId);
 
         /// <summary>
+        /// Deleting a story from the product backlog
+        /// </summary>
+        /// <param name="projectId">the projectid to be unlinked and removed</param>
+        /// <param name="storyId">the storyid to be unlinked and removed</param>
+        [OperationContract]
+        void DeleteStoryFromProductBacklog(Guid projectId, Guid storyId);
+
+        /// <summary>
         /// Gets a specified project from the database
         /// </summary>
         /// <param name="projectId">ID of the project to be retrieved from the database</param>

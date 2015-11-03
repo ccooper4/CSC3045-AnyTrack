@@ -27,25 +27,5 @@ namespace AnyTrack.Projects.Views
         {
             InitializeComponent();
         }
-
-        #region Methods
-        /// <summary>
-        /// Handler to edit a given story
-        /// </summary>
-        /// <param name="sender">the sender</param>
-        /// <param name="e">the arguments</param>
-        private void EditStory(object sender, RoutedEventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// Handler to delete a given story
-        /// </summary>
-        /// <param name="sender">the sender</param>
-        /// <param name="e">the arguments</param>
-        private void DeleteStory(object sender, RoutedEventArgs e)
-        {
-        }
-        #endregion Methods
     }
 }

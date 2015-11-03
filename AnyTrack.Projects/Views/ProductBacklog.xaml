@@ -21,7 +21,7 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
             </Grid.RowDefinitions>
-            <ListBox ItemsSource="{Binding Stories}" Padding="0,0,0,0" Margin="15,90,7,10" BorderThickness="0">
+            <ListBox ItemsSource="{Binding Stories}" Padding="0,0,0,0" Margin="11,87,11,13" BorderThickness="0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -30,16 +30,15 @@
                                 <ColumnDefinition Width ="Auto"></ColumnDefinition>
                                 <ColumnDefinition Width ="Auto" ></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Label Content="{Binding Path=StoryName}" HorizontalAlignment="Right"></Label>
-                            <Button Grid.Column="1" Content="Edit" DockPanel.Dock="Right" Command="{Binding EditStory}" BorderThickness="0" Background="LightGray"></Button>
-                            <Button Grid.Column="2" Content="Delete" DockPanel.Dock="Right" Command="{Binding DeleteStory}" BorderThickness="0" Background="LightGray"></Button>
+                            <Label Content="{Binding Summary}" HorizontalAlignment="Right"></Label>
+                            <Button Grid.Column="1" Content="Edit" DockPanel.Dock="Right" BorderThickness="0" Background="LightGray"></Button>
+                            <Button Grid.Column="2" Content="Delete" DockPanel.Dock="Right" Command="{Binding Path=DataContext.DeleteStoryFromBacklog}" BorderThickness="0" Background="LightGray"></Button>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
             <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="96,49,0,0" VerticalAlignment="Top" Width="159" Height="26" ItemsSource="{Binding Projects}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}" />
             <Label x:Name="label" Content="Select Project" HorizontalAlignment="Left" Margin="10,49,0,0" VerticalAlignment="Top" Height="26" Width="81"/>
-            <Button x:Name="button" Content="Search" HorizontalAlignment="Left" Margin="260,50,0,0" VerticalAlignment="Top" Width="75" Height="25"/>
             <Button x:Name="button1" Content="+" HorizontalAlignment="Left" Margin="958,6,0,0" VerticalAlignment="Top" Width="22" Height="25"/>
             <Label x:Name="label1" Content="New Story" Margin="887,5,37,0" VerticalAlignment="Top" Height="26"/>
         </Grid>

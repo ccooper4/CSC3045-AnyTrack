@@ -75,6 +75,15 @@ namespace AnyTrack.Projects.Views
 
         #endregion
 
+        #region Commands
+
+        /// <summary>
+        /// Gets or sets a given story from the backlog
+        /// </summary>
+        public DelegateCommand<StoryDetails> DeleteStoryFromProductBacklog { get; set; }
+
+        #endregion Commands
+
         #region Properties
 
         /// <summary>

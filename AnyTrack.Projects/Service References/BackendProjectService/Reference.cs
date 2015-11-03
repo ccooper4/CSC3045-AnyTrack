@@ -41,13 +41,13 @@ namespace AnyTrack.Projects.BackendProjectService {
         private System.Collections.Generic.List<AnyTrack.Infrastructure.BackendAccountService.NewUser> ScrumMastersField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Projects.BackendProjectService.ServiceStory ServiceStoryIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime StartedOnField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.Story> StoriesField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private AnyTrack.Projects.BackendProjectService.Story StoryIdField;
+        private System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ServiceStory> StoriesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string VersionControlField;
@@ -141,6 +141,19 @@ namespace AnyTrack.Projects.BackendProjectService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Projects.BackendProjectService.ServiceStory ServiceStoryId {
+            get {
+                return this.ServiceStoryIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ServiceStoryIdField, value) != true)) {
+                    this.ServiceStoryIdField = value;
+                    this.RaisePropertyChanged("ServiceStoryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.DateTime StartedOn {
             get {
                 return this.StartedOnField;
@@ -154,7 +167,7 @@ namespace AnyTrack.Projects.BackendProjectService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.Story> Stories {
+        public System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ServiceStory> Stories {
             get {
                 return this.StoriesField;
             }
@@ -162,19 +175,6 @@ namespace AnyTrack.Projects.BackendProjectService {
                 if ((object.ReferenceEquals(this.StoriesField, value) != true)) {
                     this.StoriesField = value;
                     this.RaisePropertyChanged("Stories");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public AnyTrack.Projects.BackendProjectService.Story StoryId {
-            get {
-                return this.StoryIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.StoryIdField, value) != true)) {
-                    this.StoryIdField = value;
-                    this.RaisePropertyChanged("StoryId");
                 }
             }
         }
@@ -204,27 +204,30 @@ namespace AnyTrack.Projects.BackendProjectService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Story", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceStory", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
     [System.SerializableAttribute()]
-    public partial class Story : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class ServiceStory : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AsAField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ConditionsOfSatisfactionField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private AnyTrack.Projects.BackendProjectService.ServiceProject ProjectField;
+        private string IWantField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid ProjectIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid StoryIdField;
+        private string SoThatField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string StoryNameField;
+        private System.Guid StoryIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SummaryField;
@@ -236,6 +239,19 @@ namespace AnyTrack.Projects.BackendProjectService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string AsA {
+            get {
+                return this.AsAField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AsAField, value) != true)) {
+                    this.AsAField = value;
+                    this.RaisePropertyChanged("AsA");
+                }
             }
         }
         
@@ -253,14 +269,14 @@ namespace AnyTrack.Projects.BackendProjectService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public AnyTrack.Projects.BackendProjectService.ServiceProject Project {
+        public string IWant {
             get {
-                return this.ProjectField;
+                return this.IWantField;
             }
             set {
-                if ((object.ReferenceEquals(this.ProjectField, value) != true)) {
-                    this.ProjectField = value;
-                    this.RaisePropertyChanged("Project");
+                if ((object.ReferenceEquals(this.IWantField, value) != true)) {
+                    this.IWantField = value;
+                    this.RaisePropertyChanged("IWant");
                 }
             }
         }
@@ -279,6 +295,19 @@ namespace AnyTrack.Projects.BackendProjectService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SoThat {
+            get {
+                return this.SoThatField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SoThatField, value) != true)) {
+                    this.SoThatField = value;
+                    this.RaisePropertyChanged("SoThat");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Guid StoryId {
             get {
                 return this.StoryIdField;
@@ -287,19 +316,6 @@ namespace AnyTrack.Projects.BackendProjectService {
                 if ((this.StoryIdField.Equals(value) != true)) {
                     this.StoryIdField = value;
                     this.RaisePropertyChanged("StoryId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string StoryName {
-            get {
-                return this.StoryNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.StoryNameField, value) != true)) {
-                    this.StoryNameField = value;
-                    this.RaisePropertyChanged("StoryName");
                 }
             }
         }
@@ -558,7 +574,7 @@ namespace AnyTrack.Projects.BackendProjectService {
         private System.Guid StoryIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string StoryNameField;
+        private string SummaryField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -597,14 +613,14 @@ namespace AnyTrack.Projects.BackendProjectService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string StoryName {
+        public string Summary {
             get {
-                return this.StoryNameField;
+                return this.SummaryField;
             }
             set {
-                if ((object.ReferenceEquals(this.StoryNameField, value) != true)) {
-                    this.StoryNameField = value;
-                    this.RaisePropertyChanged("StoryName");
+                if ((object.ReferenceEquals(this.SummaryField, value) != true)) {
+                    this.SummaryField = value;
+                    this.RaisePropertyChanged("Summary");
                 }
             }
         }
@@ -641,6 +657,12 @@ namespace AnyTrack.Projects.BackendProjectService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/DeleteProject", ReplyAction="http://tempuri.org/IProjectService/DeleteProjectResponse")]
         System.Threading.Tasks.Task DeleteProjectAsync(System.Guid projectId);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/DeleteStoryFromProductBacklog", ReplyAction="http://tempuri.org/IProjectService/DeleteStoryFromProductBacklogResponse")]
+        void DeleteStoryFromProductBacklog(System.Guid projectId, System.Guid storyId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/DeleteStoryFromProductBacklog", ReplyAction="http://tempuri.org/IProjectService/DeleteStoryFromProductBacklogResponse")]
+        System.Threading.Tasks.Task DeleteStoryFromProductBacklogAsync(System.Guid projectId, System.Guid storyId);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetProject", ReplyAction="http://tempuri.org/IProjectService/GetProjectResponse")]
         AnyTrack.Projects.BackendProjectService.ServiceProject GetProject(System.Guid projectId);
         
@@ -660,10 +682,10 @@ namespace AnyTrack.Projects.BackendProjectService {
         System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.UserSearchInfo>> SearchUsersAsync(AnyTrack.Projects.BackendProjectService.UserSearchFilter filter);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetStories", ReplyAction="http://tempuri.org/IProjectService/GetStoriesResponse")]
-        System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.Story> GetStories();
+        System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ServiceStory> GetStories();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetStories", ReplyAction="http://tempuri.org/IProjectService/GetStoriesResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.Story>> GetStoriesAsync();
+        System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ServiceStory>> GetStoriesAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetProjectNames", ReplyAction="http://tempuri.org/IProjectService/GetProjectNamesResponse")]
         System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectDetails> GetProjectNames();
@@ -729,6 +751,14 @@ namespace AnyTrack.Projects.BackendProjectService {
             return base.Channel.DeleteProjectAsync(projectId);
         }
         
+        public void DeleteStoryFromProductBacklog(System.Guid projectId, System.Guid storyId) {
+            base.Channel.DeleteStoryFromProductBacklog(projectId, storyId);
+        }
+        
+        public System.Threading.Tasks.Task DeleteStoryFromProductBacklogAsync(System.Guid projectId, System.Guid storyId) {
+            return base.Channel.DeleteStoryFromProductBacklogAsync(projectId, storyId);
+        }
+        
         public AnyTrack.Projects.BackendProjectService.ServiceProject GetProject(System.Guid projectId) {
             return base.Channel.GetProject(projectId);
         }
@@ -753,11 +783,11 @@ namespace AnyTrack.Projects.BackendProjectService {
             return base.Channel.SearchUsersAsync(filter);
         }
         
-        public System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.Story> GetStories() {
+        public System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ServiceStory> GetStories() {
             return base.Channel.GetStories();
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.Story>> GetStoriesAsync() {
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ServiceStory>> GetStoriesAsync() {
             return base.Channel.GetStoriesAsync();
         }
         
