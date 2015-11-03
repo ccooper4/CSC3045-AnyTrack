@@ -254,7 +254,6 @@ namespace AnyTrack.Projects.Views
         public void SaveProject()
         {
             var project = new ServiceProject
-            ServiceProject project = new ServiceProject
             {
                 Name = this.ProjectName,
                 Description = this.Description,

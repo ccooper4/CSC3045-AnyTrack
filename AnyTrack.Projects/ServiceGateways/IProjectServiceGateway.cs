@@ -49,6 +49,5 @@ namespace AnyTrack.Projects.ServiceGateways
         /// <param name="filter">The search filter.</param>
         /// <returns>Returns a list of users who match the search filter.</returns>
         List<UserSearchInfo> SearchUsers(UserSearchFilter filter);
-
     }
 }

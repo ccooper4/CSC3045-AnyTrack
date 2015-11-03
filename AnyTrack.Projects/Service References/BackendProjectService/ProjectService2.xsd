@@ -60,6 +60,28 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfServiceProject" nillable="true" type="tns:ArrayOfServiceProject" />
+  <xs:complexType name="UserSearchFilter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductOwner" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ScrumMaster" nillable="true" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserSearchFilter" nillable="true" type="tns:UserSearchFilter" />
+  <xs:complexType name="ArrayOfUserSearchInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UserSearchInfo" nillable="true" type="tns:UserSearchInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUserSearchInfo" nillable="true" type="tns:ArrayOfUserSearchInfo" />
+  <xs:complexType name="UserSearchInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserID" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserSearchInfo" nillable="true" type="tns:UserSearchInfo" />
   <xs:complexType name="ArrayOfProjectDetails">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="ProjectDetails" nillable="true" type="tns:ProjectDetails" />
