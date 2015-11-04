@@ -174,7 +174,7 @@ namespace AnyTrack.Projects.BackendProjectService {
             set {
                 if ((object.ReferenceEquals(this.StoriesField, value) != true)) {
                     this.StoriesField = value;
-                    this.RaisePropertyChanged("Stories");
+                    this.RaisePropertyChanged("GetStories");
                 }
             }
         }

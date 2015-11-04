@@ -102,7 +102,7 @@ namespace AnyTrack.Projects.Views
                 if (result)
                 {
                     Stories.Clear();
-                    Stories.AddRange(serviceGateway.Stories(value));
+                    Stories.AddRange(serviceGateway.GetProjectStories(value));
                 }
             }
         }

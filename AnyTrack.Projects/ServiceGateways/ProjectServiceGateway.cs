@@ -109,7 +109,7 @@ namespace AnyTrack.Projects.ServiceGateways
         /// </summary>
         /// <param name="projectId">id of the project to be retrieved</param>
         /// <returns>A list of project stories</returns>
-        public List<StoryDetails> Stories(Guid projectId)
+        public List<StoryDetails> GetProjectStories(Guid projectId)
         {
             return client.GetProjectStories(projectId);
         }
