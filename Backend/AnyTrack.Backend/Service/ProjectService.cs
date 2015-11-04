@@ -295,10 +295,14 @@ namespace AnyTrack.Backend.Service
                 {
                     foreach (var story in dataProject.Stories)
                     {
-                    project.Stories.Add(new Service.Model.ServiceStory
+                        project.Stories.Add(new Service.Model.ServiceStory
                         {
+                            StoryId = story.Id,
                             Summary = story.Summary,
                             ConditionsOfSatisfaction = story.ConditionsOfSatisfaction,
+                            AsA = story.AsA,
+                            IWant = story.IWant,
+                            SoThat = story.IWant
                         });
                     }
                 }
