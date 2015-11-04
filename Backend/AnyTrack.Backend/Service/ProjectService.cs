@@ -217,33 +217,19 @@ namespace AnyTrack.Backend.Service
             {
                 foreach (var story in dataProject.Stories)
                 {
+                    project.Stories.Add(new Service.Model.ServiceStory
+                    {
+                        StoryId = story.Id,
+                        Summary = story.Summary,
+                        ConditionsOfSatisfaction = story.ConditionsOfSatisfaction,
+                        AsA = story.AsA,
+                        IWant = story.IWant,
+                        SoThat = story.IWant
+                    });
                 }
-
-            project.Stories.Add(new Service.Model.ServiceStory
-                {
-                    StoryId = new Guid(),
-                    Summary = "This will allow the user to imply things",
-                    ConditionsOfSatisfaction = "shit should work",
-                });
             }
 
             return project;
-        }
-
-        /// <summary>
-        /// Gets all existing stories from the database
-        /// </summary>
-        /// <returns>returns a list of stories</returns>
-        public List<Service.Model.ServiceStory> GetStories()
-        {
-            var query = unitOfWork.StoryRepository.Items.Select(s => new Service.Model.ServiceStory
-            {
-                StoryId = s.Id,
-                Summary = s.Summary,
-                ConditionsOfSatisfaction = s.ConditionsOfSatisfaction,
-            }).ToList();
-
-            return query;
         }
 
         /// <summary>
@@ -265,7 +251,7 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         /// <param name="projectId">projectId to be checked</param>
         /// <returns>a list of stories</returns>
-        public List<StoryDetails> GetProjectStories(Guid projectId)
+        public List<StoryDetails> GetProjectStoryDetails(Guid projectId)
         {
             var stories = unitOfWork.StoryRepository.Items.Where(s => s.Project.Id == projectId).Select(s => new StoryDetails
             {
