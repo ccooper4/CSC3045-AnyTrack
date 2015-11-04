@@ -19,8 +19,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="8*"></ColumnDefinition>
-                <ColumnDefinition Width="1*"/>
-
+                <ColumnDefinition Width="1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
@@ -29,7 +28,6 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
-
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
@@ -69,7 +67,7 @@
                 <Button Margin="10px, 0, 0, 0" Command="{Binding CancelStoryViewCommand}" BorderThickness="0" Background="LightGray" Width="60px">Cancel</Button>
                 <Button Margin="10px, 0, 0, 0" Command="{Binding SaveStoryCommand}" BorderThickness="0" Background="LightGray" Width="60px">Save</Button>
             </WrapPanel>
-            
+
         </Grid>
     </GroupBox>
 
