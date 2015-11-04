@@ -29,16 +29,16 @@ namespace AnyTrack.Projects.BackendProjectService {
         private string NameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private AnyTrack.Infrastructure.BackendAccountService.NewUser ProductOwnerField;
+        private string ProductOwnerEmailAddressField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid ProjectIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private AnyTrack.Infrastructure.BackendAccountService.NewUser ProjectManagerField;
+        private string ProjectManagerEmailAddressField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Collections.Generic.List<AnyTrack.Infrastructure.BackendAccountService.NewUser> ScrumMastersField;
+        private System.Collections.Generic.List<string> ScrumMasterEmailAddressesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private AnyTrack.Projects.BackendProjectService.ServiceStory ServiceStoryIdField;
@@ -89,14 +89,14 @@ namespace AnyTrack.Projects.BackendProjectService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public AnyTrack.Infrastructure.BackendAccountService.NewUser ProductOwner {
+        public string ProductOwnerEmailAddress {
             get {
-                return this.ProductOwnerField;
+                return this.ProductOwnerEmailAddressField;
             }
             set {
-                if ((object.ReferenceEquals(this.ProductOwnerField, value) != true)) {
-                    this.ProductOwnerField = value;
-                    this.RaisePropertyChanged("ProductOwner");
+                if ((object.ReferenceEquals(this.ProductOwnerEmailAddressField, value) != true)) {
+                    this.ProductOwnerEmailAddressField = value;
+                    this.RaisePropertyChanged("ProductOwnerEmailAddress");
                 }
             }
         }
@@ -115,27 +115,27 @@ namespace AnyTrack.Projects.BackendProjectService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public AnyTrack.Infrastructure.BackendAccountService.NewUser ProjectManager {
+        public string ProjectManagerEmailAddress {
             get {
-                return this.ProjectManagerField;
+                return this.ProjectManagerEmailAddressField;
             }
             set {
-                if ((object.ReferenceEquals(this.ProjectManagerField, value) != true)) {
-                    this.ProjectManagerField = value;
-                    this.RaisePropertyChanged("ProjectManager");
+                if ((object.ReferenceEquals(this.ProjectManagerEmailAddressField, value) != true)) {
+                    this.ProjectManagerEmailAddressField = value;
+                    this.RaisePropertyChanged("ProjectManagerEmailAddress");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<AnyTrack.Infrastructure.BackendAccountService.NewUser> ScrumMasters {
+        public System.Collections.Generic.List<string> ScrumMasterEmailAddresses {
             get {
-                return this.ScrumMastersField;
+                return this.ScrumMasterEmailAddressesField;
             }
             set {
-                if ((object.ReferenceEquals(this.ScrumMastersField, value) != true)) {
-                    this.ScrumMastersField = value;
-                    this.RaisePropertyChanged("ScrumMasters");
+                if ((object.ReferenceEquals(this.ScrumMasterEmailAddressesField, value) != true)) {
+                    this.ScrumMasterEmailAddressesField = value;
+                    this.RaisePropertyChanged("ScrumMasterEmailAddresses");
                 }
             }
         }

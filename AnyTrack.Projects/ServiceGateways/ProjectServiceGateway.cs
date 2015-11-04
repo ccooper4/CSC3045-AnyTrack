@@ -79,7 +79,7 @@ namespace AnyTrack.Projects.ServiceGateways
         /// <summary>
         /// Retrieves all projects in the database
         /// </summary>
-        /// <returns>A list of all projects</returns>
+        /// <returns>A list of all protects</returns>
         public List<ServiceProject> GetProjects()
         {
             return client.GetProjects();
