@@ -80,5 +80,13 @@ namespace AnyTrack.Backend.Service
         /// <returns>A list of stories for a project</returns>
         [OperationContract]
         List<StoryDetails> GetProjectStoryDetails(Guid projectId);
+
+        /// <summary>
+        /// Adds a story to a project
+        /// </summary>
+        /// <param name="projectGuid">takes in the project id</param>
+        /// <param name="story">takes in the story to add</param>
+        [OperationContract]
+        void AddStoryToProject(Guid projectGuid, ServiceStory story);
     }
 }

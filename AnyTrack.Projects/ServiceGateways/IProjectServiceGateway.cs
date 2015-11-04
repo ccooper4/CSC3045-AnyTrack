@@ -62,5 +62,12 @@ namespace AnyTrack.Projects.ServiceGateways
         /// <param name="filter">The search filter.</param>
         /// <returns>Returns a list of users who match the search filter.</returns>
         List<UserSearchInfo> SearchUsers(UserSearchFilter filter);
+
+        /// <summary>
+        /// Adds a story to a project
+        /// </summary>
+        /// <param name="projectGuid">Project id</param>
+        /// <param name="story">The story to add</param>
+        void AddStory(Guid projectGuid, ServiceStory story);
     }
 }

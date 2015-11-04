@@ -111,7 +111,17 @@ namespace AnyTrack.Projects.ServiceGateways
         /// <returns>A list of project stories</returns>
         public List<StoryDetails> GetProjectStories(Guid projectId)
         {
-            return client.GetProjectStories(projectId);
+            return client.GetProjectStoryDetails(projectId);
+        }
+
+        /// <summary>
+        /// Adds a story to a project
+        /// </summary>
+        /// <param name="projectGuid">id of project to add to</param>
+        /// <param name="story">story to add to project</param>
+        public void AddStory(Guid projectGuid, ServiceStory story)
+        {
+            client.AddStoryToProject(projectGuid, story);
         }
 
         #endregion
