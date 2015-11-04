@@ -65,7 +65,8 @@ namespace AnyTrack.Projects.Views
             this.Projects = new ObservableCollection<ProjectDetails>();
             this.Projects.AddRange(serviceGateway.GetProjectNames());
 
-            // SaveStoryCommand = new DelegateCommand(this.SaveStory, this.CanAddStory);
+            SaveStoryCommand = new DelegateCommand(this.SaveStory, this.CanAddStory);
+            CancelStoryViewCommand = new DelegateCommand(this.CancelStoryView, this.CanCancel);
         }
 
         #endregion
@@ -108,10 +109,79 @@ namespace AnyTrack.Projects.Views
         public string ConditionsOfSatisfaction { get; set; }
 
         /// <summary>
+        /// Gets or sets the project name
+        /// </summary>
+        public Guid ProjectId
+        {
+            get
+            {
+                return projectId;
+            }
+
+            set
+            {
+                SetProperty(ref projectId, value);
+            }
+        }
+
+        /// <summary>
         /// Gets the Save Story Command.
         /// </summary>
         public DelegateCommand SaveStoryCommand { get; private set; }
 
+        /// <summary>
+        /// Gets the cancel Command.
+        /// </summary>
+        public DelegateCommand CancelStoryViewCommand { get; private set; }
+
         #endregion Properties
+
+        #region Methods
+
+        /// <summary>
+        /// Save a story to the database.
+        /// </summary>
+        private void SaveStory()
+        {
+            Story = new ServiceStory()
+            {
+                Summary = this.Summary,
+                AsA = this.AsA,
+                IWant = this.IWant,
+                SoThat = this.SoThat,
+                ConditionsOfSatisfaction = this.ConditionsOfSatisfaction,
+                ProjectId = this.projectId
+            };
+
+            serviceGateway.AddStory(projectId, Story);
+        }
+
+        /// <summary>
+        /// Check if a a story can be added.
+        /// </summary>
+        /// <returns>If a can story can be added</returns>
+        private bool CanAddStory()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Cancel story creation.
+        /// </summary>
+        private void CancelStoryView()
+        {
+            regionManager.RequestNavigate(RegionNames.AppContainer, "ProductBacklog");
+        }
+
+        /// <summary>
+        /// Detects whether the story view / create can cancel.
+        /// </summary>
+        /// <returns>Cancel the view or not.</returns>
+        private bool CanCancel()
+        {
+            return true;
+        }
+
+        #endregion
     }
 }

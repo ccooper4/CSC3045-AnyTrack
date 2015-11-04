@@ -36,11 +36,6 @@ namespace AnyTrack.Projects.Views
         private readonly IProjectServiceGateway serviceGateway;
 
         /// <summary>
-        /// Project Name
-        /// </summary>
-        private string projectName;
-
-        /// <summary>
         /// The project Id
         /// </summary>
         private Guid projectId;

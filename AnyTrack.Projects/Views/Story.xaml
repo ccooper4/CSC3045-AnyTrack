@@ -36,7 +36,7 @@
             </Grid.RowDefinitions>
 
             <Label Grid.Row="0" Grid.Column="1" FontWeight="Bold" Margin="0, 10px, 0, 0">Project</Label>
-            <ComboBox Grid.Row="1" Grid.Column="1" Width="200px" HorizontalAlignment="Left"/>
+            <ComboBox Grid.Row="1" Grid.Column="1" Width="200px" HorizontalAlignment="Left" ItemsSource="{Binding Projects}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}"/>
 
             <Label Grid.Row="2" Grid.Column="1" FontWeight="Bold" Margin="0, 10px, 0, 0">Summary</Label>
             <TextBox Grid.Row="3" Grid.Column="1" Height="30px" Text="{Binding Summary}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Top" controls:TextBoxHelper.ClearTextButton="True"/>
@@ -66,8 +66,8 @@
             <TextBox Grid.Row="6" Grid.Column="1" Height="60px" Text="{Binding ConditionsOfSatisfaction}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
             <WrapPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10px,0,20px">
-                <Button Margin="10px, 0, 0, 0" Command="{Binding CancelRegisterUserCommand}" BorderThickness="0" Background="LightGray" Width="60px">Cancel</Button>
-                <Button Margin="10px, 0, 0, 0" Command="{Binding RegisterUserCommand}" BorderThickness="0" Background="LightGray" Width="60px">Save</Button>
+                <Button Margin="10px, 0, 0, 0" Command="{Binding CancelStoryViewCommand}" BorderThickness="0" Background="LightGray" Width="60px">Cancel</Button>
+                <Button Margin="10px, 0, 0, 0" Command="{Binding SaveStoryCommand}" BorderThickness="0" Background="LightGray" Width="60px">Save</Button>
             </WrapPanel>
             
         </Grid>
