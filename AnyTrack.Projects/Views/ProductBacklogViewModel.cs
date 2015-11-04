@@ -66,6 +66,7 @@ namespace AnyTrack.Projects.Views
             this.Stories = new ObservableCollection<StoryDetails>();
             this.Projects = new ObservableCollection<ProjectDetails>();
             this.Projects.AddRange(serviceGateway.GetProjectNames());
+            OpenStoryViewCommand = new DelegateCommand(this.OpenStoryView, this.CanOpenStoryView);
         }
 
         #endregion
@@ -76,6 +77,11 @@ namespace AnyTrack.Projects.Views
         /// Gets or sets a given story from the backlog
         /// </summary>
         public DelegateCommand<StoryDetails> DeleteStoryFromProductBacklog { get; set; }
+
+        /// <summary>
+        /// Gets the command used to open story view. 
+        /// </summary>
+        public DelegateCommand OpenStoryViewCommand { get; private set; }
 
         #endregion Commands
 
@@ -113,5 +119,26 @@ namespace AnyTrack.Projects.Views
         public ObservableCollection<ProjectDetails> Projects { get; set; }
 
         #endregion Properties
+
+        #region Methods
+
+        /// <summary>
+        /// Detects whether the story view can open.
+        /// </summary>
+        /// <returns>Open story view or not.</returns>
+        private bool CanOpenStoryView()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Open story view.
+        /// </summary>
+        private void OpenStoryView()
+        {
+            regionManager.RequestNavigate(RegionNames.AppContainer, "Story");
+        }
+
+        #endregion
     }
 }
