@@ -144,6 +144,33 @@ namespace AnyTrack.Infrastructure
         }
 
         /// <summary>
+        /// Runs the validator logic for the entire viewmodel on-demand. 
+        /// </summary>
+        public void ValidateViewModelNow()
+        {
+            validationResults.Clear();
+
+            var validatorResults = new List<ValidationResult>();
+            var context = new ValidationContext(this);
+
+            Validator.TryValidateObject(this, context, validatorResults, true);
+
+            var memberNames = validatorResults.SelectMany(vr => vr.MemberNames).Distinct();
+            foreach (var memberName in memberNames)
+            {
+                var errors = validatorResults.Where(vr => vr.MemberNames.Contains(memberName)).ToList();
+                if (errors.Count > 0)
+                {
+                    validationResults.Add(memberName, errors);
+                    if (ErrorsChanged != null)
+                    {
+                        ErrorsChanged(this, new DataErrorsChangedEventArgs(memberName));
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Shows the given message on the UI using the MahMetro Dialog box.
         /// </summary>
         /// <param name="title">The title.</param>
@@ -167,6 +194,7 @@ namespace AnyTrack.Infrastructure
                 }
             });
         }
+        
         #endregion
     }
 }

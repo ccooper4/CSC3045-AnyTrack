@@ -158,7 +158,27 @@ namespace Unit.Common.AnyTrack.Infrastructure.InterceptorBehaviourTests
 
         #endregion 
 
-        #region ShowMetroDialog(string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, Action<MessageDialogResult> callback = null) Tests 
+        #region ValidateViewModelNow() Tests 
+
+        [Test]
+        public void CallValidateViewModelNowWithNoErrors()
+        {
+            vm = new TestViewModel { Name = "Test"};
+            vm.ValidateViewModelNow();
+            vm.HasErrors.Should().BeFalse();
+        }
+
+        [Test]
+        public void CallValidateViewModelNowWithErrors()
+        {
+            vm = new TestViewModel { Name = "" };
+            vm.ValidateViewModelNow();
+            vm.HasErrors.Should().BeTrue();
+        }
+
+        #endregion 
+
+        #region ShowMetroDialog(string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, Action<MessageDialogResult> callback = null) Tests
 
         [Test]
         public void ShowMetroDialogWithNoCallBack()
