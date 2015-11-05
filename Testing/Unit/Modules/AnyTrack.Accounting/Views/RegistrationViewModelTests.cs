@@ -144,10 +144,12 @@ namespace Unit.Modules.AnyTrack.Accounting.Views.RegistrationViewModelTests
         {
             NewUser registration = null;
 
+            var waitObject = new ManualResetEvent(false);
+
             gateway.RegisterAccount(Arg.Do<NewUser>(r => registration = r));
             registrationViewModel.MainWindow = Substitute.For<WindowProvider>();
             registrationViewModel.MainWindow.ShowMessageAsync(Arg.Any<string>(), Arg.Any<string>()).Returns(MessageDialogResult.Affirmative);
-            registrationViewModel.MainWindow.InvokeAction(Arg.Do<Action>(a => a()));
+            registrationViewModel.MainWindow.InvokeAction(Arg.Do<Action>(a => { a(); waitObject.Set(); }));
 
             registrationViewModel.Email = "test@agile.local";
             registrationViewModel.Password = "Password";
@@ -178,6 +180,8 @@ namespace Unit.Modules.AnyTrack.Accounting.Views.RegistrationViewModelTests
             registrationViewModel.SecretAnswer.Should().Be(registrationViewModel.SecretAnswer);
             registration.Skills.Should().Be("C#,WCF");
             gateway.Received().RegisterAccount(registration);
+
+            waitObject.WaitOne();
 
             regionManager.Received().RequestNavigate(RegionNames.AppContainer, "Login");
         }

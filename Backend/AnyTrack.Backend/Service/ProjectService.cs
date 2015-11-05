@@ -73,7 +73,7 @@ namespace AnyTrack.Backend.Service
 
             // Assign Project Manager
             dataProject.ProjectManager =
-                AssignUserRole(dataProject.Id, Thread.CurrentPrincipal.Identity.Name, "Project Manager");
+                AssignUserRole(dataProject.Id, project.ProjectManagerEmailAddress, "Project Manager");
 
             // Assign Product Owner
             dataProject.ProductOwner = project.ProductOwnerEmailAddress != null
@@ -82,9 +82,12 @@ namespace AnyTrack.Backend.Service
 
             // Assign Scrum Masters
             dataProject.ScrumMasters = new List<User>();
-            foreach (var scrumMasterEmailAddress in project.ScrumMasterEmailAddresses)
+            if (project.ScrumMasterEmailAddresses != null)
             {
-                dataProject.ScrumMasters.Add(AssignUserRole(dataProject.Id, scrumMasterEmailAddress, "Scrum Master"));
+                foreach (var scrumMasterEmailAddress in project.ScrumMasterEmailAddresses)
+                {
+                    dataProject.ScrumMasters.Add(AssignUserRole(dataProject.Id, scrumMasterEmailAddress, "Scrum Master"));
+                }
             }
 
             unitOfWork.ProjectRepository.Insert(dataProject);

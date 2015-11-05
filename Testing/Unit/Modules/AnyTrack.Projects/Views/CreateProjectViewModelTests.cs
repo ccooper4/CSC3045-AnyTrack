@@ -12,6 +12,11 @@ using FluentAssertions;
 using AnyTrack.Projects.BackendProjectService;
 using AnyTrack.Infrastructure.Providers;
 using System.Collections.ObjectModel;
+using AnyTrack.Infrastructure.Security;
+using AnyTrack.Infrastructure.BackendAccountService;
+using MahApps.Metro.Controls.Dialogs;
+using AnyTrack.SharedUtilities.Extensions;
+using System.Security.Principal;
 
 namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
 {
@@ -62,6 +67,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
             vm.CancelProjectCommand.Should().NotBeNull();
             vm.SetProductOwnerCommand.Should().NotBeNull();
             vm.POSearchUserResults.Should().NotBeNull();
+            vm.StartedOn.ToString("d").Should().Be(DateTime.Now.ToString("d"));
         }
 
         #endregion 
@@ -85,7 +91,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
             sentFilter.Should().NotBeNull();
             sentFilter.EmailAddress.Should().Be(vm.ProductOwnerSearchEmailAddress);
             sentFilter.ProductOwner.Should().BeTrue();
-            sentFilter.ScrumMaster.Should().BeFalse();
+            sentFilter.ScrumMaster.HasValue.Should().BeFalse();
             gateway.Received().SearchUsers(sentFilter);
 
             vm.POSearchUserResults.Should().Contain(gatewayResponse);
@@ -127,23 +133,55 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
         public void SaveProject()
         {
             var windowProvider = Substitute.For<WindowProvider>();
+
+            var currentPrincipal = new ServiceUserPrincipal(new LoginResult { EmailAddress = "testmanager@agile.local" }, "");
+
+            vm.LoggedInUserPrincipal = currentPrincipal;
             vm.MainWindow = windowProvider;
+
             vm.ProjectName = "Test Project";
             vm.Description = "This is a description";
             vm.VersionControl = "V4";
             vm.StartedOn = new DateTime(30, 09, 15);
+            vm.SelectProductOwnerEmailAddress = "test@agile.local";
 
+            ServiceProject sentProject = null;
 
-
-            ServiceProject projectService;
-
-            var gatewayResponse = new ServiceProject();
-            gateway.CreateProject(Arg.Do<ServiceProject>(n => projectService = n));
+            gateway.CreateProject(Arg.Do<ServiceProject>(n => sentProject = n));
 
             vm.Call("SaveProject");
 
+            sentProject.Should().NotBeNull();
+            sentProject.Description.Should().Be(vm.Description);
+            sentProject.Name.Should().Be(vm.ProjectName);
+            sentProject.VersionControl.Should().Be(vm.VersionControl);
+            sentProject.StartedOn.Should().Be(vm.StartedOn);
+            sentProject.ProductOwnerEmailAddress.Should().Be(vm.SelectProductOwnerEmailAddress);
+            sentProject.ProjectManagerEmailAddress.Should().Be("testmanager@agile.local");
+            gateway.Received().CreateProject(sentProject);
+            windowProvider.Received().ShowMessageAsync("Project created", "The {0} project has successfully been created".Substitute(vm.ProjectName), MessageDialogStyle.Affirmative);
+
         }
         #endregion
+
+        #region CanSave Test 
+
+        [Test]
+        public void CallCanSaveWithNoErrors()
+        {
+            var result = vm.Call<bool>("CanSave");
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void CallCanSaveWithErrors()
+        {
+            vm.ProjectName = "";
+            var result = vm.Call<bool>("CanSave");
+            result.Should().BeFalse();
+        }
+
+        #endregion 
     }
 
     #endregion 
