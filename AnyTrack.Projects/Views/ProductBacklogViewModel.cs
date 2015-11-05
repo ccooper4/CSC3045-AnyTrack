@@ -21,7 +21,7 @@ namespace AnyTrack.Projects.Views
     /// <summary>
     /// The view model for the product backlog
     /// </summary>
-    public class ProductBacklogViewModel : ValidatedBindableBase
+    public class ProductBacklogViewModel : ValidatedBindableBase, INavigationAware
     {
         #region Fields
 
@@ -66,7 +66,7 @@ namespace AnyTrack.Projects.Views
             this.Stories = new ObservableCollection<StoryDetails>();
             this.Projects = new ObservableCollection<ProjectDetails>();
             this.Projects.AddRange(serviceGateway.GetProjectNames());
-            OpenStoryViewCommand = new DelegateCommand(this.OpenStoryView, this.CanOpenStoryView);
+            OpenStoryViewCommand = new DelegateCommand(this.OpenStoryView);
         }
 
         #endregion
@@ -123,12 +123,34 @@ namespace AnyTrack.Projects.Views
         #region Methods
 
         /// <summary>
-        /// Detects whether the story view can open.
+        /// Handles the Is Navigation target event. 
         /// </summary>
-        /// <returns>Open story view or not.</returns>
-        private bool CanOpenStoryView()
+        /// <param name="navigationContext">The navigation context.</param>
+        /// <returns>A true or false value indicating if this viewmodel can handle the navigation request.</returns>
+        public bool IsNavigationTarget(NavigationContext navigationContext)
         {
-            return true;
+            return false;
+        }
+
+        /// <summary>
+        /// Handles the on navigated from event. 
+        /// </summary>
+        /// <param name="navigationContext">The navigation context.</param>
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+        }
+
+        /// <summary>
+        /// Handles the navigated to.
+        /// </summary>
+        /// <param name="navigationContext">The navigation context.</param>
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            if (navigationContext.Parameters.ContainsKey("projectId"))
+            {
+                var projectId = (Guid)navigationContext.Parameters["projectId"];
+                this.ProjectId = projectId;
+            }
         }
 
         /// <summary>
@@ -136,7 +158,9 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         private void OpenStoryView()
         {
-            regionManager.RequestNavigate(RegionNames.AppContainer, "Story");
+            var navParams = new NavigationParameters();
+            navParams.Add("projectId", ProjectId);
+            regionManager.RequestNavigate(RegionNames.MainRegion, "Story", navParams);
         }
 
         #endregion

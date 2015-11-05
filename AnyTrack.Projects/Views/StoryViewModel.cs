@@ -15,7 +15,7 @@ namespace AnyTrack.Projects.Views
     /// <summary>
     /// View model to represent a story.
     /// </summary>
-    public class StoryViewModel : ValidatedBindableBase
+    public class StoryViewModel : ValidatedBindableBase, INavigationAware
     {
         #region Fields
 
@@ -139,6 +139,37 @@ namespace AnyTrack.Projects.Views
         #region Methods
 
         /// <summary>
+        /// Handles the Is Navigation Target event.
+        /// </summary>
+        /// <param name="navigationContext">The navigation context.</param>
+        /// <returns>A true or false flag indicating if this view model can handle the navigation request.</returns>
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return false; 
+        }
+
+        /// <summary>
+        /// Handles the navigation from event.
+        /// </summary>
+        /// <param name="navigationContext">The navigation context.</param>
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+        }
+
+        /// <summary>
+        /// Handles the on navigated to event.
+        /// </summary>
+        /// <param name="navigationContext">The navigation context.</param>
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            if (navigationContext.Parameters.ContainsKey("projectId"))
+            {
+                var projectId = (Guid)navigationContext.Parameters["projectId"];
+                this.ProjectId = projectId;
+            }
+        }
+
+        /// <summary>
         /// Save a story to the database.
         /// </summary>
         private void SaveStory()
@@ -154,6 +185,10 @@ namespace AnyTrack.Projects.Views
             };
 
             serviceGateway.AddStory(projectId, Story);
+
+            var navParams = new NavigationParameters();
+            navParams.Add("projectId", projectId);
+            regionManager.RequestNavigate(RegionNames.MainRegion, "ProductBacklog", navParams);
         }
 
         /// <summary>
