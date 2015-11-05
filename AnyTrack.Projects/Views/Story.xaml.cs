@@ -26,6 +26,6 @@ namespace AnyTrack.Projects.Views
         public Story()
         {
             InitializeComponent();
-        }
+        }        
     }
 }
