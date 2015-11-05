@@ -113,7 +113,7 @@ namespace AnyTrack.Projects.Views
             this.regionManager = regionManager;
             this.serviceGateway = serviceGateway;
 
-            saveProjectCommand = new DelegateCommand(SaveProject);
+            saveProjectCommand = new DelegateCommand(SaveProject, CanSave);
             cancelProjectCommand = new DelegateCommand(CancelProject);
             SearchPOUserCommand = new DelegateCommand(SearchProjectOwners);
             SetProductOwnerCommand = new DelegateCommand<string>(SetProductOwner);
@@ -261,7 +261,18 @@ namespace AnyTrack.Projects.Views
                 StartedOn = this.StartedOn
             };
 
-            serviceGateway.CreateProject(project);     
+            serviceGateway.CreateProject(project);
+            ShowMetroDialog("Project created", "The {0} project has successfully been created".Substitute(this.ProjectName), MessageDialogStyle.Affirmative);
+        }
+
+        /// <summary>
+        /// This is a method that checks for validation errors and retruns the result of
+        /// whether a save can be made
+        /// </summary>
+        /// <returns>bool of whether a save can be made</returns>
+        public bool CanSave()
+        {
+            return !base.HasErrors;
         }
 
         /// <summary>

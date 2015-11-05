@@ -312,6 +312,48 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
+        /// Retrieves the a list summarising the logged in users projects and roles
+        /// </summary>
+        /// <returns>A list containing Project role summaries</returns>
+        public List<ProjectRoleSummary> GetUserProjectRoleSummaries()
+        {          
+            User loggedInUser =
+                unitOfWork.UserRepository.Items.Single(u => u.EmailAddress == Thread.CurrentPrincipal.Identity.Name);
+
+            var projectIds =
+                unitOfWork.RoleRepository.Items.Where(r => r.User == loggedInUser)
+                    .Select(r => r.ProjectID).Distinct().ToList();
+
+            if (projectIds.Count == 0)
+            {
+                return new List<ProjectRoleSummary>();
+            }
+
+            List<ProjectRoleSummary> projectRoleDetails = new List<ProjectRoleSummary>();
+
+            foreach (var projectId in projectIds)
+            {
+                var project =
+                    unitOfWork.ProjectRepository.Items.Single(p => p.Id == projectId);
+
+                var tempRoles = loggedInUser.Roles.Where(r => r.ProjectID == projectId).Select(r => r.RoleName).ToList();
+
+                projectRoleDetails.Add(new ProjectRoleSummary
+                {
+                    ProjectId = projectId,
+                    Name = project.Name,
+                    Description = project.Description,
+                    ProjectManager = tempRoles.Contains("Project Manager"),
+                    ProductOwner = tempRoles.Contains("Product Owner"),
+                    ScrumMaster = tempRoles.Contains("Scrum Master"),
+                    Developer = tempRoles.Contains("Developer")
+                });
+            }
+
+            return projectRoleDetails;
+        }
+
+        /// <summary>
         /// Searches for users who can be added to a project.
         /// </summary>
         /// <param name="filter">The user filter.</param>

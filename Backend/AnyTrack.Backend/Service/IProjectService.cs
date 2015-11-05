@@ -88,5 +88,12 @@ namespace AnyTrack.Backend.Service
         /// <param name="story">takes in the story to add</param>
         [OperationContract]
         void AddStoryToProject(Guid projectGuid, ServiceStory story);
+
+        /// <summary>
+        /// Retrieves the logged in users projects that they are a member of
+        /// </summary>
+        /// <returns>List of the users project role details</returns>
+        [OperationContract]
+        List<ProjectRoleSummary> GetUserProjectRoleSummaries();
     }
 }
