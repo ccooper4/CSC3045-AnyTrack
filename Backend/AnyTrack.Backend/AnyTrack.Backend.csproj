@@ -163,6 +163,7 @@
     <Compile Include="Service\AccountService.cs" />
     <Compile Include="Service\IProjectService.cs" />
     <Compile Include="Service\Model\ProjectDetails.cs" />
+    <Compile Include="Service\Model\ProjectRoleSummary.cs" />
     <Compile Include="Service\Model\ServiceProject.cs" />
     <Compile Include="Service\Model\ServiceStory.cs" />
     <Compile Include="Service\Model\StoryDetails.cs" />

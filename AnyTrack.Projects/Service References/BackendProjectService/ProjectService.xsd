@@ -130,4 +130,16 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetUserProjectRoleSummaries">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserProjectRoleSummariesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetUserProjectRoleSummariesResult" nillable="true" type="q16:ArrayOfProjectRoleSummary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

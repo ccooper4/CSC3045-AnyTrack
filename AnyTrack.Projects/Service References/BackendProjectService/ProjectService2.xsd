@@ -90,4 +90,22 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="StoryDetails" nillable="true" type="tns:StoryDetails" />
+  <xs:complexType name="ArrayOfProjectRoleSummary">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ProjectRoleSummary" nillable="true" type="tns:ProjectRoleSummary" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProjectRoleSummary" nillable="true" type="tns:ArrayOfProjectRoleSummary" />
+  <xs:complexType name="ProjectRoleSummary">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Developer" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductOwner" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ProjectId" type="ser:guid" />
+      <xs:element minOccurs="0" name="ProjectManager" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ScrumMaster" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProjectRoleSummary" nillable="true" type="tns:ProjectRoleSummary" />
 </xs:schema>

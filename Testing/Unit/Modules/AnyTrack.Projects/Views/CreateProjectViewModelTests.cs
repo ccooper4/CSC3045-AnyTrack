@@ -122,6 +122,29 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
         }
 
         #endregion 
+
+        #region CreateAProject Test
+        [Test]
+        public void SaveProject()
+        {
+            var windowProvider = Substitute.For<WindowProvider>();
+            vm.MainWindow = windowProvider;
+            vm.ProjectName = "Test Project";
+            vm.Description = "This is a description";
+            vm.VersionControl = "V4";
+            vm.StartedOn = new DateTime(30, 09, 15);
+
+
+
+            ServiceProject projectService;
+
+            var gatewayResponse = new ServiceProject();
+            gateway.CreateProject(Arg.Do<ServiceProject>(n => projectService = n));
+
+            vm.Call("SaveProject");
+
+        }
+        #endregion
     }
 
     #endregion 

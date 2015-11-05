@@ -114,7 +114,7 @@ namespace AnyTrack.Projects.Views
             this.regionManager = regionManager;
             this.serviceGateway = serviceGateway;
 
-            saveProjectCommand = new DelegateCommand(SaveProject);
+            saveProjectCommand = new DelegateCommand(SaveProject, CanSave);
             cancelProjectCommand = new DelegateCommand(CancelProject);
             SearchPOUserCommand = new DelegateCommand(SearchProjectOwners);
             SetProductOwnerCommand = new DelegateCommand<string>(SetProductOwner);
@@ -252,9 +252,16 @@ namespace AnyTrack.Projects.Views
         #region Methods
 
         /// <summary>
+        /// This is a method to cancel the project wizard
+        /// </summary>
+        public void CancelProject()
+        {
+        }
+
+        /// <summary>
         /// This is the method to save a project from the view
         /// </summary>
-        public void SaveProject()
+        private void SaveProject()
         {
             ServiceProject project = new ServiceProject
             {
@@ -266,22 +273,18 @@ namespace AnyTrack.Projects.Views
                 ProjectManagerEmailAddress = this.LoggedInUserPrincipal.Identity.Name,
             };
 
-            try
-            {
-                serviceGateway.CreateProject(project);
-                this.ShowMetroDialog("Project has been created!", "The project {0} has been successfully created.".Substitute(this.ProjectName), MessageDialogStyle.Affirmative);
-            }
-            catch
-            {
-                this.ShowMetroDialog("Project could not be created!", "We were unable to create the project {0}. Please try again.".Substitute(this.ProjectName), MessageDialogStyle.Affirmative);
-            }
+            serviceGateway.CreateProject(project);
+            ShowMetroDialog("Project created", "The {0} project has successfully been created".Substitute(this.ProjectName), MessageDialogStyle.Affirmative);
         }
 
         /// <summary>
-        /// This is a method to cancel the project wizard
+        /// This is a method that checks for validation errors and retruns the result of
+        /// whether a save can be made
         /// </summary>
-        public void CancelProject()
+        /// <returns>bool of whether a save can be made</returns>
+        private bool CanSave()
         {
+            return !base.HasErrors;
         }
 
         /// <summary>

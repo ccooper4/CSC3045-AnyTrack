@@ -86,6 +86,16 @@ namespace AnyTrack.Projects.ServiceGateways
         }
 
         /// <summary>
+        /// Retrieves a list containing a summary of the projects the logged in user
+        /// is a member of along with the roles they have in them
+        /// </summary>
+        /// <returns>List containg project role summaries</returns>
+        public List<ProjectRoleSummary> GetLoggedInUserProjectRoleSummaries()
+        {
+            return client.GetUserProjectRoleSummaries();
+        }
+
+        /// <summary>
         /// Retrieves any users who match the specified filter.
         /// </summary>
         /// <param name="filter">The search filter.</param>
