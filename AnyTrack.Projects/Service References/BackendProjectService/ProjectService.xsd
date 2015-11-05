@@ -38,17 +38,30 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetProject">
+  <xs:element name="DeleteStoryFromProductBacklog">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="projectId" type="q4:guid" />
+        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="storyId" type="q5:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteStoryFromProductBacklogResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetProject">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="projectId" type="q6:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetProjectResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetProjectResult" nillable="true" type="q5:ServiceProject" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetProjectResult" nillable="true" type="q7:ServiceProject" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -60,33 +73,21 @@
   <xs:element name="GetProjectsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetProjectsResult" nillable="true" type="q6:ArrayOfServiceProject" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetProjectsResult" nillable="true" type="q8:ArrayOfServiceProject" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SearchUsers">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="filter" nillable="true" type="q7:UserSearchFilter" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="filter" nillable="true" type="q9:UserSearchFilter" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SearchUsersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="SearchUsersResult" nillable="true" type="q8:ArrayOfUserSearchInfo" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetStories">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetStoriesResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetStoriesResult" nillable="true" type="q9:ArrayOfStory" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="SearchUsersResult" nillable="true" type="q10:ArrayOfUserSearchInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -98,22 +99,35 @@
   <xs:element name="GetProjectNamesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetProjectNamesResult" nillable="true" type="q10:ArrayOfProjectDetails" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetProjectNamesResult" nillable="true" type="q11:ArrayOfProjectDetails" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetProjectStories">
+  <xs:element name="GetProjectStoryDetails">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="projectId" type="q11:guid" />
+        <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="projectId" type="q12:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetProjectStoriesResponse">
+  <xs:element name="GetProjectStoryDetailsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetProjectStoriesResult" nillable="true" type="q12:ArrayOfStoryDetails" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetProjectStoryDetailsResult" nillable="true" type="q13:ArrayOfStoryDetails" />
       </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddStoryToProject">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="projectGuid" type="q14:guid" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="story" nillable="true" type="q15:ServiceStory" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddStoryToProjectResponse">
+    <xs:complexType>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
 </xs:schema>

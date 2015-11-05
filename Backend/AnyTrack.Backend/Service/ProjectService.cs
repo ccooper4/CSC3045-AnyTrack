@@ -220,33 +220,19 @@ namespace AnyTrack.Backend.Service
             {
                 foreach (var story in dataProject.Stories)
                 {
+                    project.Stories.Add(new Service.Model.ServiceStory
+                    {
+                        StoryId = story.Id,
+                        Summary = story.Summary,
+                        ConditionsOfSatisfaction = story.ConditionsOfSatisfaction,
+                        AsA = story.AsA,
+                        IWant = story.IWant,
+                        SoThat = story.IWant
+                    });
                 }
-
-                project.Stories.Add(new Service.Model.Story
-                {
-                    StoryId = new Guid(),
-                    Summary = "This will allow the user to imply things",
-                    ConditionsOfSatisfaction = "shit should work",
-                });
             }
 
             return project;
-        }
-
-        /// <summary>
-        /// Gets all existing stories from the database
-        /// </summary>
-        /// <returns>returns a list of stories</returns>
-        public List<Service.Model.Story> GetStories()
-        {
-            var query = unitOfWork.StoryRepository.Items.Select(s => new Service.Model.Story
-            {
-                StoryId = s.Id,
-                Summary = s.Summary,
-                ConditionsOfSatisfaction = s.ConditionsOfSatisfaction,
-            }).ToList();
-
-            return query;
         }
 
         /// <summary>
@@ -268,12 +254,12 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         /// <param name="projectId">projectId to be checked</param>
         /// <returns>a list of stories</returns>
-        public List<StoryDetails> GetProjectStories(Guid projectId)
+        public List<StoryDetails> GetProjectStoryDetails(Guid projectId)
         {
             var stories = unitOfWork.StoryRepository.Items.Where(s => s.Project.Id == projectId).Select(s => new StoryDetails
             {
                 StoryId = s.Id,
-                StoryName = s.StoryName
+                Summary = s.Summary
             });
             return stories.ToList();
         }
@@ -296,10 +282,9 @@ namespace AnyTrack.Backend.Service
             foreach (ServiceProject project in projects)
             {
                 var dataProject = unitOfWork.ProjectRepository.Items.Single(p => p.Id == project.ProjectId);
-
+                project.Stories = new List<Service.Model.ServiceStory>();
                 project.ProjectManagerEmailAddress = dataProject.ProjectManager.EmailAddress;
                 project.ProductOwnerEmailAddress = dataProject.ProductOwner != null ? dataProject.ProductOwner.EmailAddress : null;
-                project.Stories = new List<Service.Model.Story>();
 
                 if (dataProject.ScrumMasters != null)
                 {
@@ -313,10 +298,14 @@ namespace AnyTrack.Backend.Service
                 {
                     foreach (var story in dataProject.Stories)
                     {
-                        project.Stories.Add(new Service.Model.Story
+                        project.Stories.Add(new Service.Model.ServiceStory
                         {
+                            StoryId = story.Id,
                             Summary = story.Summary,
                             ConditionsOfSatisfaction = story.ConditionsOfSatisfaction,
+                            AsA = story.AsA,
+                            IWant = story.IWant,
+                            SoThat = story.IWant
                         });
                     }
                 }
@@ -357,6 +346,53 @@ namespace AnyTrack.Backend.Service
             }).OrderBy(u => u.FullName);
 
             return userInfos.ToList();
+        }
+
+        /// <summary>
+        /// Adds a story to the database and associates it with the specified project.
+        /// </summary>
+        /// <param name="projectGuid">The Guid of the project to add stories to</param>
+        /// <param name="story">The story to add to the project</param>
+        public void AddStoryToProject(Guid projectGuid, ServiceStory story)
+        {
+            var project = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Id == projectGuid);
+
+            if (project == null)
+            {
+                throw new ArgumentException("Project not found for Guid" + projectGuid.ToString());
+            }
+
+            var storyExists = unitOfWork.StoryRepository.Items.SingleOrDefault(s => s.Id == story.StoryId);
+            if (storyExists != null)
+            {
+                throw new ArgumentException("Story already exists in database");
+            }
+
+            Story newStory = new Story()
+            {
+                Summary = story.Summary,
+                ConditionsOfSatisfaction = story.ConditionsOfSatisfaction,
+                AsA = story.AsA,
+                IWant = story.IWant,
+                SoThat = story.SoThat
+            };
+            
+            project.Stories.Add(newStory);
+            unitOfWork.Commit();
+        }
+
+        /// <summary>
+        /// Deleting a story from the product backlog
+        /// </summary>
+        /// <param name="projectId">the projectid to be unlinked and removed</param>
+        /// <param name="storyId">the storyid to be unlinked and removed</param>
+        public void DeleteStoryFromProductBacklog(Guid projectId, Guid storyId)
+        {
+            var storyEntity = unitOfWork.StoryRepository.Items.Single(s => s.Id == storyId);
+            var projectEntity = unitOfWork.ProjectRepository.Items.Single(p => p.Id == projectId);
+            projectEntity.Stories.Remove(storyEntity);
+            unitOfWork.StoryRepository.Delete(storyEntity);
+            unitOfWork.Commit();
         }
 
         #endregion

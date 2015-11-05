@@ -13,19 +13,9 @@ namespace AnyTrack.Backend.Data.Model
     public class Story : BaseEntity
     {
         /// <summary>
-        /// Gets or sets the story name
-        /// </summary>
-        public virtual string StoryName { get; set; }
-
-        /// <summary>
         /// Gets or sets the story summary
         /// </summary>
         public virtual string Summary { get; set; }
-
-        /// <summary>
-        /// Gets or sets the user story.
-        /// </summary>
-        public virtual string StoryBreakdown { get; set; }
 
         /// <summary>
         /// Gets or sets the conditions of satisfaction
@@ -33,7 +23,22 @@ namespace AnyTrack.Backend.Data.Model
         public virtual string ConditionsOfSatisfaction { get; set; }
 
         /// <summary>
-        /// Gets or sets the project the story is part of
+        /// Gets or sets the asA value.
+        /// </summary>
+        public string AsA { get; set; }
+
+        /// <summary>
+        /// Gets or sets the iWant value.
+        /// </summary>
+        public string IWant { get; set; }
+
+        /// <summary>
+        /// Gets or sets the soThat value.
+        /// </summary>
+        public string SoThat { get; set; }
+
+        /// <summary>
+        /// Gets or sets the project the story is part of.
         /// </summary>
         public virtual Project Project { get; set; }
     }

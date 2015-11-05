@@ -144,6 +144,14 @@
     <Compile Include="Migrations\201511031351105_Adding story name to models for backlog view.Designer.cs">
       <DependentUpon>201511031351105_Adding story name to models for backlog view.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511031901088_Extra field on story model for story creation.cs" />
+    <Compile Include="Migrations\201511031901088_Extra field on story model for story creation.Designer.cs">
+      <DependentUpon>201511031901088_Extra field on story model for story creation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511042021444_Adding Story.cs" />
+    <Compile Include="Migrations\201511042021444_Adding Story.Designer.cs">
+      <DependentUpon>201511042021444_Adding Story.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Model\BaseEntity.cs" />
@@ -156,8 +164,7 @@
     <Compile Include="Service\IProjectService.cs" />
     <Compile Include="Service\Model\ProjectDetails.cs" />
     <Compile Include="Service\Model\ServiceProject.cs" />
-    <Compile Include="Service\Model\Story.cs" />
-    <Compile Include="Service\Model\StoryBreakdown.cs" />
+    <Compile Include="Service\Model\ServiceStory.cs" />
     <Compile Include="Service\Model\StoryDetails.cs" />
     <Compile Include="Service\Model\UserSearchFilter.cs" />
     <Compile Include="Service\Model\UserSearchInfo.cs" />
@@ -191,6 +198,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511031351105_Adding story name to models for backlog view.resx">
       <DependentUpon>201511031351105_Adding story name to models for backlog view.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511031901088_Extra field on story model for story creation.resx">
+      <DependentUpon>201511031901088_Extra field on story model for story creation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511042021444_Adding Story.resx">
+      <DependentUpon>201511042021444_Adding Story.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
