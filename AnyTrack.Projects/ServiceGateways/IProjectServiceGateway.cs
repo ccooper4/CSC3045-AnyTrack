@@ -69,5 +69,12 @@ namespace AnyTrack.Projects.ServiceGateways
         /// <param name="projectGuid">Project id</param>
         /// <param name="story">The story to add</param>
         void AddStory(Guid projectGuid, ServiceStory story);
+
+        /// <summary>
+        /// Deleting a story from the product backlog
+        /// </summary>
+        /// <param name="projectId">the projectid to be unlinked and removed</param>
+        /// <param name="storyId">the storyid to be unlinked and removed</param>
+        void DeleteStoryFromProductBacklog(Guid projectId, Guid storyId);
     }
 }
