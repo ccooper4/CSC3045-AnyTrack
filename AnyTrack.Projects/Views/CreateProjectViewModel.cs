@@ -277,7 +277,7 @@ namespace AnyTrack.Projects.Views
         /// whether a save can be made
         /// </summary>
         /// <returns>bool of whether a save can be made</returns>
-        public bool CanSave()
+        private bool CanSave()
         {
             return !base.HasErrors;
         }
