@@ -62,5 +62,12 @@ namespace AnyTrack.Projects.ServiceGateways
         /// <param name="filter">The search filter.</param>
         /// <returns>Returns a list of users who match the search filter.</returns>
         List<UserSearchInfo> SearchUsers(UserSearchFilter filter);
+
+        /// <summary>
+        /// Deleting a story from the product backlog
+        /// </summary>
+        /// <param name="projectId">the projectid to be unlinked and removed</param>
+        /// <param name="storyId">the storyid to be unlinked and removed</param>
+        void DeleteStoryFromProductBacklog(Guid projectId, Guid storyId);
     }
 }

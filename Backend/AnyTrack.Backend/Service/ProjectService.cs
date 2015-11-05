@@ -382,10 +382,10 @@ namespace AnyTrack.Backend.Service
         /// <param name="storyId">the storyid to be unlinked and removed</param>
         public void DeleteStoryFromProductBacklog(Guid projectId, Guid storyId)
         {
-            var storyEntity = unitOfWork.StoryRepository.Items.Single(s => s.Id == storyId);
-            var projectEntity = unitOfWork.ProjectRepository.Items.Single(p => p.Id == projectId);
-            projectEntity.Stories.Remove(storyEntity);
-            unitOfWork.StoryRepository.Delete(storyEntity);
+            var story = unitOfWork.StoryRepository.Items.Single(s => s.Id == storyId);
+            var project = unitOfWork.ProjectRepository.Items.Single(p => p.Id == projectId);
+            project.Stories.Remove(story);
+            unitOfWork.StoryRepository.Delete(story);
             unitOfWork.Commit();
         }
 

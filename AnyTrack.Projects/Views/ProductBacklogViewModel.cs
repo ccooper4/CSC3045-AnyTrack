@@ -71,16 +71,18 @@ namespace AnyTrack.Projects.Views
             this.Stories = new ObservableCollection<StoryDetails>();
             this.Projects = new ObservableCollection<ProjectDetails>();
             this.Projects.AddRange(serviceGateway.GetProjectNames());
+
+            DeleteStoryCommand = new DelegateCommand<string>(DeleteStory);
         }
 
         #endregion
 
         #region Commands
-
+        
         /// <summary>
-        /// Gets or sets a given story from the backlog
+        /// Gets or sets the delegate command for deleting a story from the product backlog.
         /// </summary>
-        public DelegateCommand<StoryDetails> DeleteStoryFromProductBacklog { get; set; }
+        public DelegateCommand<string> DeleteStoryCommand { get; set; }
 
         #endregion Commands
 
@@ -118,5 +120,30 @@ namespace AnyTrack.Projects.Views
         public ObservableCollection<ProjectDetails> Projects { get; set; }
 
         #endregion Properties
+
+        #region Methods
+
+        /// <summary>
+        /// Deleting a story from the product backlog view
+        /// </summary>
+        /// <param name="storyId">The story id.</param>
+        public void DeleteStory(string storyId)
+        {
+            var guid = Guid.Parse(storyId);
+            var callbackAction = new Action<MessageDialogResult>(mr =>
+            {
+                if (mr == MessageDialogResult.Affirmative)
+                {
+                    serviceGateway.DeleteStoryFromProductBacklog(projectId, guid);
+
+                    Stories.Clear();
+                    Stories.AddRange(serviceGateway.Stories(projectId));
+                }
+            });
+
+            this.ShowMetroDialog("Delete story - confirmation", "Are you sure that you want to delete this story from the backlog?", MessageDialogStyle.AffirmativeAndNegative, callbackAction); 
+        }
+
+        #endregion Methods
     }
 }

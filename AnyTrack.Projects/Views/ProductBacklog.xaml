@@ -6,9 +6,14 @@
              xmlns:prism="http://www.codeplex.com/prism"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:converters="clr-namespace:AnyTrack.Projects.Converters"
              xml:lang="en-GB"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" Width="1000" Height="364.328">
+
+    <UserControl.Resources>
+        <converters:GuidToStringConverter x:Key="guidToStringConverter"></converters:GuidToStringConverter>
+    </UserControl.Resources>
 
     <GroupBox HorizontalAlignment="Stretch"  Margin="0, 0, 0, 0" >
         <GroupBox.Header>
@@ -30,9 +35,9 @@
                                 <ColumnDefinition Width ="Auto"></ColumnDefinition>
                                 <ColumnDefinition Width ="Auto" ></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Label Content="{Binding Summary}" HorizontalAlignment="Right"></Label>
+                            <Label Content="{Binding Summary}" HorizontalAlignment="Left"></Label>
                             <Button Grid.Column="1" Content="Edit" DockPanel.Dock="Right" BorderThickness="0" Background="LightGray"></Button>
-                            <Button Grid.Column="2" Content="Delete" DockPanel.Dock="Right" Command="{Binding Path=DataContext.DeleteStoryFromBacklog}" BorderThickness="0" Background="LightGray"></Button>
+                            <Button Grid.Column="2" Content="Delete" DockPanel.Dock="Right" Command="{Binding DataContext.DeleteStoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding StoryId, Converter={StaticResource guidToStringConverter}}" BorderThickness="0" Background="LightGray"></Button>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

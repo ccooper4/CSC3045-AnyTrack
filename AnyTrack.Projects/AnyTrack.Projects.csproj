@@ -83,6 +83,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\GuidToStringConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="ProjectModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -105,7 +106,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Service References\BackendProjectService\AnyTrack.Projects.BackendProjectService.ProjectDetails.datasource"/>
+    <None Include="Service References\BackendProjectService\AnyTrack.Projects.BackendProjectService.ProjectDetails.datasource" />
     <None Include="Service References\BackendProjectService\AnyTrack.Projects.BackendProjectService.ServiceProject.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
