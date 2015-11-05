@@ -39,7 +39,7 @@ namespace AnyTrack.Projects.Views
         /// The project Id
         /// </summary>
         private Guid projectId;
-
+                
         #endregion
 
         #region Constructor
@@ -67,6 +67,7 @@ namespace AnyTrack.Projects.Views
             this.Projects = new ObservableCollection<ProjectDetails>();
             this.Projects.AddRange(serviceGateway.GetProjectNames());
             OpenStoryViewCommand = new DelegateCommand(this.OpenStoryView, this.CanOpenStoryView);
+            EditStoryCommand = new DelegateCommand<StoryDetails>(this.EditStory);
         }
 
         #endregion
@@ -76,7 +77,12 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Gets or sets a given story from the backlog
         /// </summary>
-        public DelegateCommand<StoryDetails> DeleteStoryFromProductBacklog { get; set; }
+        public DelegateCommand<StoryDetails> DeleteStoryFromProductBacklogCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets a given story from the backlog
+        /// </summary>
+        public DelegateCommand<StoryDetails> EditStoryCommand { get; set; }
 
         /// <summary>
         /// Gets the command used to open story view. 
@@ -121,7 +127,7 @@ namespace AnyTrack.Projects.Views
         #endregion Properties
 
         #region Methods
-
+        
         /// <summary>
         /// Detects whether the story view can open.
         /// </summary>
@@ -138,6 +144,20 @@ namespace AnyTrack.Projects.Views
         {
             regionManager.RequestNavigate(RegionNames.AppContainer, "Story");
         }
+
+        /// <summary>
+        /// Open story view.
+        /// </summary>
+        /// <param name="story">story object</param>
+        private void EditStory(StoryDetails story)
+        {
+            this.ShowMetroDialog("Called EditStorySuccessfully", "SID:" + story.StoryId + ". PID:" + projectId, MessageDialogStyle.Affirmative);
+
+            var navParams = new NavigationParameters();
+            navParams.Add("projectId", projectId);
+            navParams.Add("storyId", story.StoryId);
+            regionManager.RequestNavigate(RegionNames.AppContainer, "Story", navParams);
+        }             
 
         #endregion
     }
