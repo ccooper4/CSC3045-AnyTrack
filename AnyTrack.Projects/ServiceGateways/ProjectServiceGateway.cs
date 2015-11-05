@@ -79,7 +79,7 @@ namespace AnyTrack.Projects.ServiceGateways
         /// <summary>
         /// Retrieves all projects in the database
         /// </summary>
-        /// <returns>A list of all projects</returns>
+        /// <returns>A list of all protects</returns>
         public List<ServiceProject> GetProjects()
         {
             return client.GetProjects();
@@ -109,9 +109,19 @@ namespace AnyTrack.Projects.ServiceGateways
         /// </summary>
         /// <param name="projectId">id of the project to be retrieved</param>
         /// <returns>A list of project stories</returns>
-        public List<StoryDetails> Stories(Guid projectId)
+        public List<StoryDetails> GetProjectStories(Guid projectId)
         {
-            return client.GetProjectStories(projectId);
+            return client.GetProjectStoryDetails(projectId);
+        }
+
+        /// <summary>
+        /// Adds a story to a project
+        /// </summary>
+        /// <param name="projectGuid">id of project to add to</param>
+        /// <param name="story">story to add to project</param>
+        public void AddStory(Guid projectGuid, ServiceStory story)
+        {
+            client.AddStoryToProject(projectGuid, story);
         }
 
         /// <summary>

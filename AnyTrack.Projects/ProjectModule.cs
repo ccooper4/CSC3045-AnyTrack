@@ -80,7 +80,8 @@ namespace AnyTrack.Projects
             container.RegisterType<IProjectServiceGateway, ProjectServiceGateway>();
 
             container.RegisterType<object, ProductBacklog>("ProductBacklog");
-            ////container.RegisterType<object, CreateProject>("Project");
+            container.RegisterType<object, Story>("Story");
+            container.RegisterType<object, CreateProject>("Project");
 
             menuService.AddMenuItem(new MenuItem { Color = "Goldenrod", Title = "Project", NavigationViewName = "Project" });
             regionManager.RequestNavigate(RegionNames.AppContainer, "ProductBacklog");

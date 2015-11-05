@@ -24,6 +24,7 @@
     <MetadataSource Address="http://localhost:5789/ProjectService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
+    <MetadataFile FileName="ProjectService3.xsd" MetadataType="Schema" ID="285a8218-3f5d-4dd5-b070-237386a78f94" SourceId="1" SourceUrl="http://localhost:5789/ProjectService.svc?xsd=xsd3" />
     <MetadataFile FileName="ProjectService.wsdl" MetadataType="Wsdl" ID="90e31b1e-efe0-44ae-a687-70806e743bc8" SourceId="1" SourceUrl="http://localhost:5789/ProjectService.svc?wsdl" />
     <MetadataFile FileName="ProjectService.disco" MetadataType="Disco" ID="8caa339e-d4fb-42cd-acd3-67dd4c7af954" SourceId="1" SourceUrl="http://localhost:5789/ProjectService.svc?disco" />
     <MetadataFile FileName="ProjectService.xsd" MetadataType="Schema" ID="caaa4ca2-c30a-42c3-a096-141df966d586" SourceId="1" SourceUrl="http://localhost:5789/ProjectService.svc?xsd=xsd0" />

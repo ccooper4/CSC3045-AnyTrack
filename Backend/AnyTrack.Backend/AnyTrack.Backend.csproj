@@ -148,6 +148,10 @@
     <Compile Include="Migrations\201511031901088_Extra field on story model for story creation.Designer.cs">
       <DependentUpon>201511031901088_Extra field on story model for story creation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511042021444_Adding Story.cs" />
+    <Compile Include="Migrations\201511042021444_Adding Story.Designer.cs">
+      <DependentUpon>201511042021444_Adding Story.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Model\BaseEntity.cs" />
@@ -197,6 +201,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511031901088_Extra field on story model for story creation.resx">
       <DependentUpon>201511031901088_Extra field on story model for story creation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511042021444_Adding Story.resx">
+      <DependentUpon>201511042021444_Adding Story.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

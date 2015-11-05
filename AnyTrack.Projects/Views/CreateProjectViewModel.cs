@@ -57,7 +57,7 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Project Manager
         /// </summary>
-        private NewUser projectManager;
+        private string projectManagerEmailAddress;
 
         /// <summary>
         /// The search email address for the product owner.
@@ -167,10 +167,10 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Gets or sets the project manager of the project
         /// </summary>
-        public NewUser ProjectManager
+        public string ProjectManagerEmailAddress
         {
-            get { return projectManager; }
-            set { SetProperty(ref projectManager, value); }
+            get { return projectManagerEmailAddress; }
+            set { SetProperty(ref projectManagerEmailAddress, value); }
         }
 
         /// <summary>
@@ -253,21 +253,15 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         public void SaveProject()
         {
-            var project = new ServiceProject
+            ServiceProject project = new ServiceProject
             {
                 Name = this.ProjectName,
                 Description = this.Description,
                 VersionControl = this.VersionControl,
-                StartedOn = this.StartedOn,
-
-                // Need to find out who the active user is for this
-                ProjectManager = this.ProjectManager,
-                ScrumMasters = new List<NewUser>(),
-                ProductOwner = new NewUser()
+                StartedOn = this.StartedOn
             };
 
-            // serviceGateway.CreateProject(project);
-            Console.WriteLine("I am a button that was pressed");
+            serviceGateway.CreateProject(project);     
         }
 
         /// <summary>

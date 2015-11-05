@@ -68,8 +68,10 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -94,6 +96,10 @@
     </Compile>
     <Compile Include="ServiceGateways\IProjectServiceGateway.cs" />
     <Compile Include="ServiceGateways\ProjectServiceGateway.cs" />
+    <Compile Include="Views\Story.xaml.cs">
+      <DependentUpon>Story.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StoryViewModel.cs" />
     <Compile Include="Views\ProductBacklogViewModel.cs" />
     <Compile Include="Views\CreateProject.xaml.cs">
       <DependentUpon>CreateProject.xaml</DependentUpon>
@@ -162,6 +168,9 @@
     <None Include="Service References\BackendProjectService\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Service References\BackendProjectService\ProjectService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\BackendProjectService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -172,11 +181,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CreateStory.xaml">
+    <Page Include="Views\ProductBacklog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ProductBacklog.xaml">
+    <Page Include="Views\Story.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
