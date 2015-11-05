@@ -156,20 +156,6 @@ namespace AnyTrack.Projects.Views
         }
 
         /// <summary>
-        /// Open story view.
-        /// </summary>
-        private void OpenStoryView()
-        {
-            var navParams = new NavigationParameters();
-            navParams.Add("projectId", ProjectId);
-            regionManager.RequestNavigate(RegionNames.MainRegion, "Story", navParams);
-        }
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
         /// Deleting a story from the product backlog view
         /// </summary>
         /// <param name="storyId">The story id.</param>
@@ -183,11 +169,21 @@ namespace AnyTrack.Projects.Views
                     serviceGateway.DeleteStoryFromProductBacklog(projectId, guid);
 
                     Stories.Clear();
-                    Stories.AddRange(serviceGateway.Stories(projectId));
+                    Stories.AddRange(serviceGateway.GetProjectStories(projectId));
                 }
             });
 
             this.ShowMetroDialog("Delete story - confirmation", "Are you sure that you want to delete this story from the backlog?", MessageDialogStyle.AffirmativeAndNegative, callbackAction); 
+        }
+
+        /// <summary>
+        /// Open story view.
+        /// </summary>
+        private void OpenStoryView()
+        {
+            var navParams = new NavigationParameters();
+            navParams.Add("projectId", ProjectId);
+            regionManager.RequestNavigate(RegionNames.MainRegion, "Story", navParams);
         }
 
         #endregion Methods
