@@ -3,11 +3,13 @@ using AnyTrack.Accounting.ServiceGateways.Models;
 using AnyTrack.Infrastructure.BackendAccountService;
 using AnyTrack.Infrastructure.Security;
 using FluentAssertions;
+using Microsoft.Practices.Unity;
 using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.ServiceModel;
 using System.Text;
 using System.Threading;
@@ -21,13 +23,16 @@ namespace Unit.Modules.AnyTrack.Accounting.ServiceGateways.AccountServiceGateway
     {
         public static IAccountService accountService;
 
+        public static IUnityContainer container;
+
         public static AccountServiceGateway gateway;
 
         [SetUp]
         public void ContextSetup()
         {
             accountService = Substitute.For<IAccountService>();
-            gateway = new AccountServiceGateway(accountService);
+            container = Substitute.For<IUnityContainer>();
+            gateway = new AccountServiceGateway(container, accountService);
         }
     }
 
@@ -43,7 +48,14 @@ namespace Unit.Modules.AnyTrack.Accounting.ServiceGateways.AccountServiceGateway
         [ExpectedException(typeof(ArgumentNullException))]
         public void ConstructWithNoClient()
         {
-            gateway = new AccountServiceGateway(null);
+            gateway = new AccountServiceGateway(container, null);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ConstructWithNoContainer()
+        {
+            gateway = new AccountServiceGateway(null, accountService);
         }
 
         #endregion
@@ -124,6 +136,7 @@ namespace Unit.Modules.AnyTrack.Accounting.ServiceGateways.AccountServiceGateway
             accountService.Received().LogIn(creds);
             Thread.CurrentPrincipal.Should().NotBeNull();
             Thread.CurrentPrincipal.Should().BeOfType<ServiceUserPrincipal>();
+            container.Received().RegisterInstance<IPrincipal>(Arg.Any<ServiceUserPrincipal>(), Arg.Any < ContainerControlledLifetimeManager>());
         }
 
         public void CallLoginForInvalidLogin()

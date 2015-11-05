@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.BackendAccountService;
@@ -11,6 +12,7 @@ using AnyTrack.Projects.ServiceGateways;
 using AnyTrack.SharedUtilities.Extensions;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Microsoft.Practices.Unity;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -90,7 +92,6 @@ namespace AnyTrack.Projects.Views
         private DelegateCommand cancelProjectCommand;
 
         #endregion
-
         #region Constructor
 
         /// <summary>
@@ -117,6 +118,8 @@ namespace AnyTrack.Projects.Views
             cancelProjectCommand = new DelegateCommand(CancelProject);
             SearchPOUserCommand = new DelegateCommand(SearchProjectOwners);
             SetProductOwnerCommand = new DelegateCommand<string>(SetProductOwner);
+
+            startedOn = DateTime.Now;
 
             POSearchUserResults = new ObservableCollection<UserSearchInfo>();
         }
@@ -258,10 +261,20 @@ namespace AnyTrack.Projects.Views
                 Name = this.ProjectName,
                 Description = this.Description,
                 VersionControl = this.VersionControl,
-                StartedOn = this.StartedOn
+                StartedOn = this.StartedOn,
+                ProductOwnerEmailAddress = selectProductOwnerEmailAddress,
+                ProjectManagerEmailAddress = this.LoggedInUserPrincipal.Identity.Name,
             };
 
-            serviceGateway.CreateProject(project);     
+            try
+            {
+                serviceGateway.CreateProject(project);
+                this.ShowMetroDialog("Project has been created!", "The project {0} has been successfully created.".Substitute(this.ProjectName), MessageDialogStyle.Affirmative);
+            }
+            catch
+            {
+                this.ShowMetroDialog("Project could not be created!", "We were unable to create the project {0}. Please try again.".Substitute(this.ProjectName), MessageDialogStyle.Affirmative);
+            }
         }
 
         /// <summary>
@@ -276,7 +289,7 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         private void SearchProjectOwners()
         {
-            var filter = new UserSearchFilter { EmailAddress = productOwnerSearchEmailAddress, ProductOwner = true, ScrumMaster = false };
+            var filter = new UserSearchFilter { EmailAddress = productOwnerSearchEmailAddress, ProductOwner = true };
             var results = serviceGateway.SearchUsers(filter);
 
             POSearchUserResults.Clear();

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -72,6 +73,12 @@ namespace AnyTrack.Infrastructure
         /// </summary>
         [Dependency]
         public WindowProvider MainWindow { get; set; }
+
+        /// <summary>
+        /// Gets or sets the logged in user principal.
+        /// </summary>
+        [Dependency]
+        public IPrincipal LoggedInUserPrincipal { get; set; }
 
         #endregion
 

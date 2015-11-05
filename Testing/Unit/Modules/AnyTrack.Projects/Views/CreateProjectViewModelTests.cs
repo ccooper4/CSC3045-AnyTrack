@@ -62,6 +62,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
             vm.CancelProjectCommand.Should().NotBeNull();
             vm.SetProductOwnerCommand.Should().NotBeNull();
             vm.POSearchUserResults.Should().NotBeNull();
+            vm.StartedOn.ToString("d").Should().Be(DateTime.Now.ToString("d"));
         }
 
         #endregion 
@@ -85,7 +86,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
             sentFilter.Should().NotBeNull();
             sentFilter.EmailAddress.Should().Be(vm.ProductOwnerSearchEmailAddress);
             sentFilter.ProductOwner.Should().BeTrue();
-            sentFilter.ScrumMaster.Should().BeFalse();
+            sentFilter.ScrumMaster.HasValue.Should().BeFalse();
             gateway.Received().SearchUsers(sentFilter);
 
             vm.POSearchUserResults.Should().Contain(gatewayResponse);
