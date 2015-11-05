@@ -122,7 +122,7 @@ namespace Unit.Modules.AnyTrack.Accounting.Views
             gateway.Received().LoginAccount(cred);
 
             regionManager.DidNotReceive().RequestNavigate(RegionNames.AppContainer, "MainAppArea");
-            windowProvider.Received().ShowMessageAsync("Unable to login!", "Sorry! We were unable to log you into AnyTrack using the details provided. Please check them and try again. Alternatively, rest your password or create an account", MessageDialogStyle.Affirmative);
+            windowProvider.Received().ShowMessageAsync("Unable to login!", "Sorry! We were unable to log you into AnyTrack using the details provided. Please check them and try again. Alternatively, reset your password or create an account", MessageDialogStyle.Affirmative);
         }
 
         #endregion 
