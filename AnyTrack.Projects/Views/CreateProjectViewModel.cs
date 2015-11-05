@@ -249,9 +249,16 @@ namespace AnyTrack.Projects.Views
         #region Methods
 
         /// <summary>
+        /// This is a method to cancel the project wizard
+        /// </summary>
+        public void CancelProject()
+        {
+        }
+
+        /// <summary>
         /// This is the method to save a project from the view
         /// </summary>
-        public void SaveProject()
+        private void SaveProject()
         {
             ServiceProject project = new ServiceProject
             {
@@ -273,13 +280,6 @@ namespace AnyTrack.Projects.Views
         public bool CanSave()
         {
             return !base.HasErrors;
-        }
-
-        /// <summary>
-        /// This is a method to cancel the project wizard
-        /// </summary>
-        public void CancelProject()
-        {
         }
 
         /// <summary>
