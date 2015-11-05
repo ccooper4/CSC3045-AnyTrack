@@ -240,7 +240,8 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         private void SaveUpdateStory()
         {
-            this.ShowMetroDialog("im save update", ".", MessageDialogStyle.Affirmative);
+            // this.ShowMetroDialog("im save update", ".", MessageDialogStyle.Affirmative);
+
             Story = new ServiceStory()
             {
                 Summary = this.Summary,

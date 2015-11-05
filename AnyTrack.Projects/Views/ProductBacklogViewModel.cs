@@ -151,7 +151,7 @@ namespace AnyTrack.Projects.Views
         /// <param name="story">story object</param>
         private void EditStory(StoryDetails story)
         {
-            this.ShowMetroDialog("Called EditStorySuccessfully", "SID:" + story.StoryId + ". PID:" + projectId, MessageDialogStyle.Affirmative);
+            // this.ShowMetroDialog("Called EditStorySuccessfully", "SID:" + story.StoryId + ". PID:" + projectId, MessageDialogStyle.Affirmative);
 
             var navParams = new NavigationParameters();
             navParams.Add("projectId", projectId);
