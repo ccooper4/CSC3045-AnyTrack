@@ -234,6 +234,75 @@ namespace Unit.Modules.AnyTrack.Projects.ServiceGateways
             }
 
             #endregion
+
+            #region  List<ProjectRoleSummary> GetLoggedInUserProjectRoleSummaries(string currentUserEmailAddress)
+
+            [Test]
+            public void GetLoggedInUserProjectRoleSummaries()
+            {
+                List<ProjectRoleSummary> projectRoleSummaries
+                    = new List<ProjectRoleSummary>()
+                    {
+                        new ProjectRoleSummary()
+                        {
+                            ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
+                            Name = "Project",
+                            Description = "This is a new project",
+                            ProjectManager = true,
+                            ProductOwner = false,
+                            ScrumMaster = true,
+                            Developer = false
+                        },
+                        new ProjectRoleSummary()
+                        {
+                            ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFAA"),
+                            Name = "Project2",
+                            Description = "This is a new project2",
+                            ProjectManager = false,
+                            ProductOwner = true,
+                            ScrumMaster = false,
+                            Developer = true
+                        }
+                    };
+
+                projectService.GetUserProjectRoleSummaries("tester@agile.local").Returns(projectRoleSummaries);
+
+                var result = gateway.GetLoggedInUserProjectRoleSummaries("tester@agile.local");
+
+                projectService.Received().GetUserProjectRoleSummaries("tester@agile.local");
+                result.Should().NotBeNull();
+                result.Count.Should().Be(2);
+                result[0].ProjectId.Should().Be("11223344-5566-7788-99AA-BBCCDDEEFFFF");
+                result[0].Name.Should().Be("Project");
+                result[0].Description.Should().Be("This is a new project");
+                result[0].Developer.Should().BeFalse();
+                result[0].ProductOwner.Should().BeFalse();
+                result[0].ProjectManager.Should().BeTrue();
+                result[0].ScrumMaster.Should().BeTrue();
+                result[1].ProjectId.Should().Be("11223344-5566-7788-99AA-BBCCDDEEFFAA");
+                result[1].Name.Should().Be("Project2");
+                result[1].Description.Should().Be("This is a new project2");
+                result[1].Developer.Should().BeTrue();
+                result[1].ProductOwner.Should().BeTrue();
+                result[1].ProjectManager.Should().BeFalse();
+                result[1].ScrumMaster.Should().BeFalse();
+            }
+
+            [Test]
+            public void UserHasNoRoles()
+            {
+                List<ProjectRoleSummary> projectRoleSummaries = new List<ProjectRoleSummary>();
+
+                projectService.GetUserProjectRoleSummaries("tester@agile.local").Returns(projectRoleSummaries);
+
+                var result = gateway.GetLoggedInUserProjectRoleSummaries("tester@agile.local");
+
+                projectService.Received().GetUserProjectRoleSummaries("tester@agile.local");
+                result.Should().NotBeNull();
+                result.Count.Should().Be(0);
+            }
+            
+            #endregion
         }
 
         

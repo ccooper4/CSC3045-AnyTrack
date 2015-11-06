@@ -64,45 +64,15 @@ namespace Unit.Modules.AnyTrack.Accounting.Views.RegistrationViewModelTests
             registrationViewModel = new RegistrationViewModel(regionManager, null);
         }
 
-        #endregion
-
-        #region CanRegister() Tests 
-
         [Test]
-        public void TestCanRegister()
+        public void ConstructWithAllRequirements()
         {
-            var result = registrationViewModel.Call<bool>("CanRegister");
-            result.Should().BeTrue();
-        }
-
-        [Test]
-        public void TestCanRegisterWithValidationError()
-        {
-            registrationViewModel.Email = "wrong";
-            var result = registrationViewModel.Call<bool>("CanRegister");
-            result.Should().BeFalse();
-        }
-
-        #endregion
-
-        #region CanCancel() Tests
-
-        [Test]
-        public void TestCanCancel()
-        {
-            var result = registrationViewModel.Call<bool>("CanCancel");
-            result.Should().BeTrue();
-        }
-
-        #endregion
-
-        #region CanAddSkill() Tests
-
-        [Test]
-        public void TestCanAddSkill()
-        {
-            var result = registrationViewModel.Call<bool>("CanAddSkill");
-            result.Should().BeTrue();
+            registrationViewModel = new RegistrationViewModel(regionManager, gateway);
+            registrationViewModel.SecretQuestions.Should().NotBeNull();
+            registrationViewModel.Skills.Should().NotBeNull();
+            registrationViewModel.AddSkillCommand.Should().NotBeNull();
+            registrationViewModel.RegisterUserCommand.Should().NotBeNull();
+            registrationViewModel.CancelRegisterUserCommand.Should().NotBeNull();
         }
 
         #endregion
@@ -140,17 +110,20 @@ namespace Unit.Modules.AnyTrack.Accounting.Views.RegistrationViewModelTests
         #region RegisterUser() Tests
 
         [Test]
-        public void TestRegisterUser()
+        public void TestRegisterUserWithAllFields()
         {
             NewUser registration = null;
+
+            var waitObject = new ManualResetEvent(false);
 
             gateway.RegisterAccount(Arg.Do<NewUser>(r => registration = r));
             registrationViewModel.MainWindow = Substitute.For<WindowProvider>();
             registrationViewModel.MainWindow.ShowMessageAsync(Arg.Any<string>(), Arg.Any<string>()).Returns(MessageDialogResult.Affirmative);
-            registrationViewModel.MainWindow.InvokeAction(Arg.Do<Action>(a => a()));
+            registrationViewModel.MainWindow.InvokeAction(Arg.Do<Action>(a => { a(); waitObject.Set(); }));
 
             registrationViewModel.Email = "test@agile.local";
             registrationViewModel.Password = "Password";
+            registrationViewModel.ConfirmPassword = "Password";
             registrationViewModel.FirstName = "Test";
             registrationViewModel.LastName = "Test";
             registrationViewModel.ProductOwner = false;
@@ -179,7 +152,34 @@ namespace Unit.Modules.AnyTrack.Accounting.Views.RegistrationViewModelTests
             registration.Skills.Should().Be("C#,WCF");
             gateway.Received().RegisterAccount(registration);
 
+            waitObject.WaitOne();
+
             regionManager.Received().RequestNavigate(RegionNames.AppContainer, "Login");
+        }
+
+        [Test]
+        public void TestRegisterUserWithInvalidFields()
+        {
+            registrationViewModel.Email = "invalid";
+            registrationViewModel.Password = "Password";
+            registrationViewModel.ConfirmPassword = "Password";
+            registrationViewModel.FirstName = "Test";
+            registrationViewModel.LastName = "Test";
+            registrationViewModel.ProductOwner = false;
+            registrationViewModel.ScrumMaster = false;
+            registrationViewModel.Developer = false;
+            registrationViewModel.SecretQuestion = "Test";
+            registrationViewModel.SecretAnswer = "Test";
+
+            registrationViewModel.CurrentSkill = "C#";
+            registrationViewModel.Call("AddSkill");
+            registrationViewModel.CurrentSkill = "WCF";
+            registrationViewModel.Call("AddSkill");
+
+            registrationViewModel.Call("RegisterUser");
+
+            gateway.DidNotReceive().RegisterAccount(Arg.Any<NewUser>());
+            registrationViewModel.HasErrors.Should().BeTrue();
         }
 
         #endregion

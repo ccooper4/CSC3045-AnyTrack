@@ -635,6 +635,147 @@ namespace AnyTrack.Projects.BackendProjectService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ProjectRoleSummary", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
+    [System.SerializableAttribute()]
+    public partial class ProjectRoleSummary : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool DeveloperField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ProductOwnerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid ProjectIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ProjectManagerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ScrumMasterField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Developer {
+            get {
+                return this.DeveloperField;
+            }
+            set {
+                if ((this.DeveloperField.Equals(value) != true)) {
+                    this.DeveloperField = value;
+                    this.RaisePropertyChanged("Developer");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ProductOwner {
+            get {
+                return this.ProductOwnerField;
+            }
+            set {
+                if ((this.ProductOwnerField.Equals(value) != true)) {
+                    this.ProductOwnerField = value;
+                    this.RaisePropertyChanged("ProductOwner");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid ProjectId {
+            get {
+                return this.ProjectIdField;
+            }
+            set {
+                if ((this.ProjectIdField.Equals(value) != true)) {
+                    this.ProjectIdField = value;
+                    this.RaisePropertyChanged("ProjectId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ProjectManager {
+            get {
+                return this.ProjectManagerField;
+            }
+            set {
+                if ((this.ProjectManagerField.Equals(value) != true)) {
+                    this.ProjectManagerField = value;
+                    this.RaisePropertyChanged("ProjectManager");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ScrumMaster {
+            get {
+                return this.ScrumMasterField;
+            }
+            set {
+                if ((this.ScrumMasterField.Equals(value) != true)) {
+                    this.ScrumMasterField = value;
+                    this.RaisePropertyChanged("ScrumMaster");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="BackendProjectService.IProjectService")]
     public interface IProjectService {
@@ -698,6 +839,30 @@ namespace AnyTrack.Projects.BackendProjectService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/AddStoryToProject", ReplyAction="http://tempuri.org/IProjectService/AddStoryToProjectResponse")]
         System.Threading.Tasks.Task AddStoryToProjectAsync(System.Guid projectGuid, AnyTrack.Projects.BackendProjectService.ServiceStory story);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetUserProjectRoleSummaries", ReplyAction="http://tempuri.org/IProjectService/GetUserProjectRoleSummariesResponse")]
+        System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectRoleSummary> GetUserProjectRoleSummaries(string currentUserEmailAddress);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetUserProjectRoleSummaries", ReplyAction="http://tempuri.org/IProjectService/GetUserProjectRoleSummariesResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectRoleSummary>> GetUserProjectRoleSummariesAsync(string currentUserEmailAddress);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetProjectStory", ReplyAction="http://tempuri.org/IProjectService/GetProjectStoryResponse")]
+        AnyTrack.Projects.BackendProjectService.ServiceStory GetProjectStory(System.Guid projectId, System.Guid storyId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetProjectStory", ReplyAction="http://tempuri.org/IProjectService/GetProjectStoryResponse")]
+        System.Threading.Tasks.Task<AnyTrack.Projects.BackendProjectService.ServiceStory> GetProjectStoryAsync(System.Guid projectId, System.Guid storyId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/EditStory", ReplyAction="http://tempuri.org/IProjectService/EditStoryResponse")]
+        void EditStory([System.ServiceModel.MessageParameterAttribute(Name="editStory")] AnyTrack.Projects.BackendProjectService.ServiceStory editStory1);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/EditStory", ReplyAction="http://tempuri.org/IProjectService/EditStoryResponse")]
+        System.Threading.Tasks.Task EditStoryAsync(AnyTrack.Projects.BackendProjectService.ServiceStory editStory);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/SaveUpdateStory", ReplyAction="http://tempuri.org/IProjectService/SaveUpdateStoryResponse")]
+        void SaveUpdateStory(System.Guid projectId, System.Guid storyId, AnyTrack.Projects.BackendProjectService.ServiceStory story);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/SaveUpdateStory", ReplyAction="http://tempuri.org/IProjectService/SaveUpdateStoryResponse")]
+        System.Threading.Tasks.Task SaveUpdateStoryAsync(System.Guid projectId, System.Guid storyId, AnyTrack.Projects.BackendProjectService.ServiceStory story);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -805,6 +970,38 @@ namespace AnyTrack.Projects.BackendProjectService {
         
         public System.Threading.Tasks.Task AddStoryToProjectAsync(System.Guid projectGuid, AnyTrack.Projects.BackendProjectService.ServiceStory story) {
             return base.Channel.AddStoryToProjectAsync(projectGuid, story);
+        }
+        
+        public System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectRoleSummary> GetUserProjectRoleSummaries(string currentUserEmailAddress) {
+            return base.Channel.GetUserProjectRoleSummaries(currentUserEmailAddress);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectRoleSummary>> GetUserProjectRoleSummariesAsync(string currentUserEmailAddress) {
+            return base.Channel.GetUserProjectRoleSummariesAsync(currentUserEmailAddress);
+        }
+        
+        public AnyTrack.Projects.BackendProjectService.ServiceStory GetProjectStory(System.Guid projectId, System.Guid storyId) {
+            return base.Channel.GetProjectStory(projectId, storyId);
+        }
+        
+        public System.Threading.Tasks.Task<AnyTrack.Projects.BackendProjectService.ServiceStory> GetProjectStoryAsync(System.Guid projectId, System.Guid storyId) {
+            return base.Channel.GetProjectStoryAsync(projectId, storyId);
+        }
+        
+        public void EditStory(AnyTrack.Projects.BackendProjectService.ServiceStory editStory1) {
+            base.Channel.EditStory(editStory1);
+        }
+        
+        public System.Threading.Tasks.Task EditStoryAsync(AnyTrack.Projects.BackendProjectService.ServiceStory editStory) {
+            return base.Channel.EditStoryAsync(editStory);
+        }
+        
+        public void SaveUpdateStory(System.Guid projectId, System.Guid storyId, AnyTrack.Projects.BackendProjectService.ServiceStory story) {
+            base.Channel.SaveUpdateStory(projectId, storyId, story);
+        }
+        
+        public System.Threading.Tasks.Task SaveUpdateStoryAsync(System.Guid projectId, System.Guid storyId, AnyTrack.Projects.BackendProjectService.ServiceStory story) {
+            return base.Channel.SaveUpdateStoryAsync(projectId, storyId, story);
         }
     }
 }

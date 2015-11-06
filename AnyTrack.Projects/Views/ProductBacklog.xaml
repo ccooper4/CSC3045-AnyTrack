@@ -36,6 +36,8 @@
                                 <ColumnDefinition Width ="Auto" ></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Label Content="{Binding Summary}" HorizontalAlignment="Left"></Label>
+                            <Button Grid.Column="1" Content="Edit" DockPanel.Dock="Right" BorderThickness="0" Background="LightGray" CommandParameter="{Binding Path=.}" Command="{Binding Path=DataContext.EditStoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
+                            <Button Grid.Column="2" Content="Delete" DockPanel.Dock="Right" BorderThickness="0" Background="LightGray" CommandParameter="{Binding Path=.}" Command="{Binding Path=DataContext.DeleteStoryFromBacklogCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
                             <Button Grid.Column="1" Content="Edit" DockPanel.Dock="Right" BorderThickness="0" Background="LightGray"></Button>
                             <Button Grid.Column="2" Content="Delete" DockPanel.Dock="Right" Command="{Binding DataContext.DeleteStoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding StoryId, Converter={StaticResource guidToStringConverter}}" BorderThickness="0" Background="LightGray"></Button>
                         </Grid>

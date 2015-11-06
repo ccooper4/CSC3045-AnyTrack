@@ -16,16 +16,13 @@ using System.Windows.Shapes;
 namespace AnyTrack.Projects.Views
 {
     /// <summary>
-    /// Interaction logic for Story.xaml
+    /// Interaction logic for MyProjectsView.xaml
     /// </summary>
-    public partial class Story : UserControl
+    public partial class MyProjectsView : UserControl
     {
-        /// <summary>
-        /// Constructor for story.xaml.cs.
-        /// </summary>
-        public Story()
+        public MyProjectsView()
         {
             InitializeComponent();
-        }        
+        }
     }
 }

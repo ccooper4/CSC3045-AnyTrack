@@ -152,6 +152,10 @@
     <Compile Include="Migrations\201511042021444_Adding Story.Designer.cs">
       <DependentUpon>201511042021444_Adding Story.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511061057447_Configuring projects to users as many-many for scrum masters.cs" />
+    <Compile Include="Migrations\201511061057447_Configuring projects to users as many-many for scrum masters.Designer.cs">
+      <DependentUpon>201511061057447_Configuring projects to users as many-many for scrum masters.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Model\BaseEntity.cs" />
@@ -163,6 +167,7 @@
     <Compile Include="Service\AccountService.cs" />
     <Compile Include="Service\IProjectService.cs" />
     <Compile Include="Service\Model\ProjectDetails.cs" />
+    <Compile Include="Service\Model\ProjectRoleSummary.cs" />
     <Compile Include="Service\Model\ServiceProject.cs" />
     <Compile Include="Service\Model\ServiceStory.cs" />
     <Compile Include="Service\Model\StoryDetails.cs" />
@@ -204,6 +209,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511042021444_Adding Story.resx">
       <DependentUpon>201511042021444_Adding Story.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511061057447_Configuring projects to users as many-many for scrum masters.resx">
+      <DependentUpon>201511061057447_Configuring projects to users as many-many for scrum masters.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AnyTrack.Infrastructure;
 using AnyTrack.Projects.BackendProjectService;
 using AnyTrack.Projects.ServiceGateways;
+using MahApps.Metro.Controls.Dialogs;
 using Prism.Commands;
 using Prism.Regions;
 
@@ -39,6 +40,36 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         private Guid projectId;
 
+        /// <summary>
+        /// The project Id
+        /// </summary>
+        private Guid storyId;
+
+        /// <summary>
+        /// summary field
+        /// </summary>
+        private string summary;
+
+        /// <summary>
+        /// as a
+        /// </summary>
+        private string asA;
+
+        /// <summary>
+        /// I want
+        /// </summary>
+        private string iWant;
+
+        /// <summary>
+        /// so that
+        /// </summary>
+        private string soThat;
+
+        /// <summary>
+        /// conditionsOfSatisfaction var
+        /// </summary>
+        private string conditionsOfSatisfaction;        
+
         #endregion
 
         #region Constructor
@@ -65,8 +96,8 @@ namespace AnyTrack.Projects.Views
             this.Projects = new ObservableCollection<ProjectDetails>();
             this.Projects.AddRange(serviceGateway.GetProjectNames());
 
-            SaveStoryCommand = new DelegateCommand(this.SaveStory, this.CanAddStory);
-            CancelStoryViewCommand = new DelegateCommand(this.CancelStoryView, this.CanCancel);
+            SaveUpdateStoryCommand = new DelegateCommand(this.SaveUpdateStory);
+            CancelStoryViewCommand = new DelegateCommand(this.CancelStoryView, this.CanCancel);            
         }
 
         #endregion
@@ -86,27 +117,47 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Gets or sets Summary property represented by this view.
         /// </summary>
-        public string Summary { get; set; }
+        public string Summary
+        {
+            get { return summary; }
+            set { SetProperty(ref summary, value); }
+        }
 
         /// <summary>
         /// Gets or sets AsA property represented by this view.
         /// </summary>
-        public string AsA { get; set; }
+        public string AsA
+        {
+            get { return asA; }
+            set { SetProperty(ref asA, value); }
+        }
 
         /// <summary>
         /// Gets or sets IWant property represented by this view.
         /// </summary>
-        public string IWant { get; set; }
+        public string IWant
+        {
+            get { return iWant; }
+            set { SetProperty(ref iWant, value); }
+        }
 
         /// <summary>
         /// Gets or sets SoThat property represented by this view.
         /// </summary>
-        public string SoThat { get; set; }
+        public string SoThat
+        {
+            get { return soThat; }
+            set { SetProperty(ref soThat, value); }
+        }
 
         /// <summary>
         /// Gets or sets Conditions of satisfaction property represented by this view.
         /// </summary>
-        public string ConditionsOfSatisfaction { get; set; }
+        public string ConditionsOfSatisfaction
+        {
+            get { return conditionsOfSatisfaction; }
+            set { SetProperty(ref conditionsOfSatisfaction, value); }
+        }
 
         /// <summary>
         /// Gets or sets the project name
@@ -123,11 +174,11 @@ namespace AnyTrack.Projects.Views
                 SetProperty(ref projectId, value);
             }
         }
-
+        
         /// <summary>
         /// Gets the Save Story Command.
         /// </summary>
-        public DelegateCommand SaveStoryCommand { get; private set; }
+        public DelegateCommand SaveUpdateStoryCommand { get; private set; }
 
         /// <summary>
         /// Gets the cancel Command.
@@ -137,6 +188,52 @@ namespace AnyTrack.Projects.Views
         #endregion Properties
 
         #region Methods
+        
+        /// <summary>
+        /// handles navigated to
+        /// </summary>
+        /// <param name="navigationContext">naviggation Conetxt</param>
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            if (navigationContext.Parameters.ContainsKey("projectId") && navigationContext.Parameters.ContainsKey("storyId"))
+            {
+                var projectId = (Guid)navigationContext.Parameters["projectId"];
+                this.projectId = projectId;
+                var storyId = (Guid)navigationContext.Parameters["storyId"];
+                this.storyId = storyId;
+                
+                var existingDetails = serviceGateway.GetProjectStory(projectId, storyId);
+
+                this.Summary = existingDetails.Summary;
+                this.AsA = existingDetails.AsA;
+                this.IWant = existingDetails.IWant;
+                this.SoThat = existingDetails.SoThat;
+                this.ConditionsOfSatisfaction = existingDetails.ConditionsOfSatisfaction;
+
+                this.storyId = storyId;
+                this.projectId = projectId;
+                
+                // this.ShowMetroDialog("Navigated to StoryViewModel", "SID:" + storyId + ". PID:" + projectId, MessageDialogStyle.Affirmative);
+            }
+        }
+
+        /// <summary>
+        /// IsNavigationTarget summary
+        /// </summary>
+        /// <param name="navigationContext">nav contxt</param>
+        /// <returns>true or false</returns>
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// OnNavigatedFrom summary
+        /// </summary>
+        /// <param name="navigationContext">nav contxt</param>
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+        }
 
         /// <summary>
         /// Handles the Is Navigation Target event.
@@ -172,8 +269,9 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Save a story to the database.
         /// </summary>
-        private void SaveStory()
+        private void SaveUpdateStory()
         {
+            // this.ShowMetroDialog("im save update", ".", MessageDialogStyle.Affirmative);
             Story = new ServiceStory()
             {
                 Summary = this.Summary,
@@ -182,15 +280,17 @@ namespace AnyTrack.Projects.Views
                 SoThat = this.SoThat,
                 ConditionsOfSatisfaction = this.ConditionsOfSatisfaction,
                 ProjectId = this.projectId
-            };
+            };                    
 
-            serviceGateway.AddStory(projectId, Story);
+            serviceGateway.SaveUpdateStory(projectId, storyId, Story);
+            this.ShowMetroDialog("Story has been saved!", "Success", MessageDialogStyle.Affirmative);
+            regionManager.RequestNavigate(RegionNames.AppContainer, "ProductBacklog");
 
             var navParams = new NavigationParameters();
             navParams.Add("projectId", projectId);
             regionManager.RequestNavigate(RegionNames.MainRegion, "ProductBacklog", navParams);
         }
-
+                
         /// <summary>
         /// Check if a a story can be added.
         /// </summary>
@@ -215,7 +315,7 @@ namespace AnyTrack.Projects.Views
         private bool CanCancel()
         {
             return true;
-        }
+        }       
 
         #endregion
     }

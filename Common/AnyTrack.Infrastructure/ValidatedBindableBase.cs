@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -73,6 +74,12 @@ namespace AnyTrack.Infrastructure
         [Dependency]
         public WindowProvider MainWindow { get; set; }
 
+        /// <summary>
+        /// Gets or sets the logged in user principal.
+        /// </summary>
+        [Dependency]
+        public IPrincipal LoggedInUserPrincipal { get; set; }
+
         #endregion
 
         #region Methods 
@@ -137,6 +144,33 @@ namespace AnyTrack.Infrastructure
         }
 
         /// <summary>
+        /// Runs the validator logic for the entire viewmodel on-demand. 
+        /// </summary>
+        public void ValidateViewModelNow()
+        {
+            validationResults.Clear();
+
+            var validatorResults = new List<ValidationResult>();
+            var context = new ValidationContext(this);
+
+            Validator.TryValidateObject(this, context, validatorResults, true);
+
+            var memberNames = validatorResults.SelectMany(vr => vr.MemberNames).Distinct();
+            foreach (var memberName in memberNames)
+            {
+                var errors = validatorResults.Where(vr => vr.MemberNames.Contains(memberName)).ToList();
+                if (errors.Count > 0)
+                {
+                    validationResults.Add(memberName, errors);
+                    if (ErrorsChanged != null)
+                    {
+                        ErrorsChanged(this, new DataErrorsChangedEventArgs(memberName));
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Shows the given message on the UI using the MahMetro Dialog box.
         /// </summary>
         /// <param name="title">The title.</param>
@@ -160,6 +194,7 @@ namespace AnyTrack.Infrastructure
                 }
             });
         }
+        
         #endregion
     }
 }
