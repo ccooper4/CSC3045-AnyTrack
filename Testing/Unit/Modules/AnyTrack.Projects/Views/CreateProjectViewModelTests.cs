@@ -132,7 +132,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
 
         #endregion 
 
-        #region CreateAProject Test
+        #region SaveProject Test
         [Test]
         public void SaveProject()
         {
@@ -148,6 +148,11 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
             vm.VersionControl = "V4";
             vm.StartedOn = new DateTime(30, 09, 15);
             vm.SelectProductOwnerEmailAddress = "test@agile.local";
+            vm.POConfirmed = true;
+            vm.SelectedScrumMasters = new ObservableCollection<UserSearchInfo>()
+            {
+                new UserSearchInfo { EmailAddress = "test@agile.local"}
+            };
 
             ServiceProject sentProject = null;
 
@@ -186,6 +191,30 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
             vm.Call("SaveProject");
 
             gateway.DidNotReceive().CreateProject(Arg.Any<ServiceProject>());
+
+        }
+
+        [Test]
+        public void SaveProjectNoScrumMasterOrPO()
+        {
+            var windowProvider = Substitute.For<WindowProvider>();
+
+            var currentPrincipal = new ServiceUserPrincipal(new LoginResult { EmailAddress = "testmanager@agile.local" }, "");
+
+            vm.LoggedInUserPrincipal = currentPrincipal;
+            vm.MainWindow = windowProvider;
+
+            vm.ProjectName = "Project name";
+            vm.Description = "This is a description";
+            vm.VersionControl = "V4";
+            vm.StartedOn = new DateTime(30, 09, 15);
+            vm.SelectProductOwnerEmailAddress = "test@agile.local";
+
+            vm.Call("SaveProject");
+
+            gateway.DidNotReceive().CreateProject(Arg.Any<ServiceProject>());
+
+            windowProvider.Received().ShowMessageAsync("The project cannot be saved!", "This project cannot be saved because both a product owner and at least one scrum master is required.");
 
         }
 

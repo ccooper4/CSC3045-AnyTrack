@@ -179,7 +179,6 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Gets or sets the selected product owner's email address.
         /// </summary>
-        [Required]
         public string SelectProductOwnerEmailAddress
         {
             get { return selectProductOwnerEmailAddress; }
@@ -304,6 +303,17 @@ namespace AnyTrack.Projects.Views
             this.ValidateViewModelNow();
             if (!this.HasErrors)
             {
+                var hasScrumMasters = this.SelectedScrumMasters.Count > 0;
+                var hasPo = this.POConfirmed;
+
+                var hasBoth = hasScrumMasters && hasPo;
+
+                if (!hasBoth)
+                {
+                    this.ShowMetroDialog("The project cannot be saved!", "This project cannot be saved because both a product owner and at least one scrum master is required.");
+                    return;
+                }
+
                 ServiceProject project = new ServiceProject
                 {
                     Name = this.ProjectName,
@@ -312,6 +322,7 @@ namespace AnyTrack.Projects.Views
                     StartedOn = this.StartedOn,
                     ProductOwnerEmailAddress = selectProductOwnerEmailAddress,
                     ProjectManagerEmailAddress = this.LoggedInUserPrincipal.Identity.Name,
+                    ScrumMasterEmailAddresses = this.SelectedScrumMasters.Select(sm => sm.EmailAddress).ToList()
                 };
 
                 serviceGateway.CreateProject(project);

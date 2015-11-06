@@ -106,6 +106,16 @@ namespace AnyTrack.Backend.Data
             this.SaveChanges();
         }
 
+        /// <summary>
+        /// Provides a method by which the model creation can be modified.
+        /// </summary>
+        /// <param name="modelBuilder">The EF model builder.</param>
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Project>().HasMany(p => p.ScrumMasters).WithMany();
+            base.OnModelCreating(modelBuilder);
+        }
+
         #endregion   
     }
 }
