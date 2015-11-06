@@ -192,7 +192,7 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// handles navigated to
         /// </summary>
-        /// <param name="navigationContext">naviggation Conetxt</param>
+        /// <param name="navigationContext">navigation Context</param>
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             if (navigationContext.Parameters.ContainsKey("projectId") && navigationContext.Parameters.ContainsKey("storyId"))
@@ -218,24 +218,6 @@ namespace AnyTrack.Projects.Views
         }
 
         /// <summary>
-        /// IsNavigationTarget summary
-        /// </summary>
-        /// <param name="navigationContext">nav contxt</param>
-        /// <returns>true or false</returns>
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return true;
-        }
-
-        /// <summary>
-        /// OnNavigatedFrom summary
-        /// </summary>
-        /// <param name="navigationContext">nav contxt</param>
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-        }
-
-        /// <summary>
         /// Handles the Is Navigation Target event.
         /// </summary>
         /// <param name="navigationContext">The navigation context.</param>
@@ -251,19 +233,6 @@ namespace AnyTrack.Projects.Views
         /// <param name="navigationContext">The navigation context.</param>
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-        }
-
-        /// <summary>
-        /// Handles the on navigated to event.
-        /// </summary>
-        /// <param name="navigationContext">The navigation context.</param>
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            if (navigationContext.Parameters.ContainsKey("projectId"))
-            {
-                var projectId = (Guid)navigationContext.Parameters["projectId"];
-                this.ProjectId = projectId;
-            }
         }
 
         /// <summary>

@@ -32,7 +32,6 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
         {
             regionManager = Substitute.For<IRegionManager>();
             gateway = Substitute.For<IProjectServiceGateway>();
-
             vm = new CreateProjectViewModel(regionManager, gateway);
         }
     }

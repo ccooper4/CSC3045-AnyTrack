@@ -489,6 +489,7 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
+        /// Deleting a story from the project
         /// Update story in the database
         /// </summary>
         /// <param name="editStory">story to be updated</param>
@@ -527,7 +528,7 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         /// <param name="projectId">the projectid to be unlinked and removed</param>
         /// <param name="storyId">the storyid to be unlinked and removed</param>
-        public void DeleteStoryFromProductBacklog(Guid projectId, Guid storyId)
+        public void DeleteStoryFromProject(Guid projectId, Guid storyId)
         {
             var story = unitOfWork.StoryRepository.Items.Single(s => s.Id == storyId);
             var project = unitOfWork.ProjectRepository.Items.Single(p => p.Id == projectId);

@@ -65,9 +65,9 @@ namespace AnyTrack.Projects.Views
             this.serviceGateway = serviceGateway;
             this.Stories = new ObservableCollection<StoryDetails>();
             this.Projects = new ObservableCollection<ProjectDetails>();
+            var results = serviceGateway.GetProjectNames();
             this.Projects.AddRange(serviceGateway.GetProjectNames());
             OpenStoryViewCommand = new DelegateCommand(this.OpenStoryView);
-
             DeleteStoryCommand = new DelegateCommand<string>(DeleteStory);
             EditStoryCommand = new DelegateCommand<StoryDetails>(this.EditStory);
         }
@@ -75,11 +75,10 @@ namespace AnyTrack.Projects.Views
         #endregion
 
         #region Commands
-        
+
         /// <summary>
-        /// Gets or sets the delegate command for deleting a story from the product backlog.
+        /// Gets or sets a given story to delete from the backlog
         /// </summary>
-        public DelegateCommand<StoryDetails> DeleteStoryFromProductBacklogCommand { get; set; }
         public DelegateCommand<string> DeleteStoryCommand { get; set; }
 
         /// <summary>
@@ -206,7 +205,6 @@ namespace AnyTrack.Projects.Views
             regionManager.RequestNavigate(RegionNames.AppContainer, "Story", navParams);
         }             
 
-        #endregion
         #endregion Methods
     }
 }
