@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Security;
 using AnyTrack.Backend.Data;
 using AnyTrack.Backend.Data.Model;
+using AnyTrack.Backend.Providers;
 using AnyTrack.Backend.Service.Model;
 using AnyTrack.SharedUtilities.Extensions;
 
@@ -16,7 +17,7 @@ namespace AnyTrack.Backend.Service
     /// <summary>
     /// Provides the methods of the ProjectService
     /// </summary>
-    public class ProjectService : IProjectService
+    public class ProjectService : PrincipalBuilderService, IProjectService
     {
         #region Fields
         /// <summary>
@@ -31,7 +32,9 @@ namespace AnyTrack.Backend.Service
         /// Creates a new ProjectService
         /// </summary>
         /// <param name="unitOfWork">The unit of work</param>
-        public ProjectService(IUnitOfWork unitOfWork)
+        /// <param name="formsProvider">The forms provider.</param>
+        /// <param name="contextProvider">The context provider.</param>
+        public ProjectService(IUnitOfWork unitOfWork, FormsAuthenticationProvider formsProvider, OperationContextProvider contextProvider) : base(unitOfWork, formsProvider, contextProvider)
         {
             if (unitOfWork == null)
             {
@@ -271,16 +274,43 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
-        /// Obtains a list of project names with respective id
+        /// Returns the list of project names that this user can see.
         /// </summary>
-        /// <returns>a list of projects</returns>
-        public List<ProjectDetails> GetProjectNames()
+        /// <param name="scrumMaster">The Scrum master flag.</param>
+        /// <param name="po">The PO flag.</param>
+        /// <param name="dev">The developer flag.</param>
+        /// <returns>A list of project detail models.</returns>
+        public List<ProjectDetails> GetProjectNames(bool scrumMaster, bool po, bool dev)
         {
-            var projects = unitOfWork.ProjectRepository.Items.Select(p => new ProjectDetails
+            var userEmail = Thread.CurrentPrincipal.Identity.Name;
+            var user = unitOfWork.UserRepository.Items.SingleOrDefault(u => u.EmailAddress == userEmail);
+
+            var projectIds = new List<Guid>();
+
+            if (scrumMaster)
+            {
+                var smProjects = user.Roles.Where(r => r.RoleName == "Scrum Master").Select(r => r.ProjectID);
+                projectIds = projectIds.Union(smProjects).ToList();
+            }
+
+            if (po)
+            {
+                var poProjects = user.Roles.Where(r => r.RoleName == "Product Owner").Select(r => r.ProjectID);
+                projectIds = projectIds.Union(poProjects).ToList();                
+            }
+
+            if (dev)
+            {
+                var devProjects = user.Roles.Where(r => r.RoleName == "Developer").Select(r => r.ProjectID);
+                projectIds = projectIds.Union(devProjects).ToList();
+            }
+
+            var projects = unitOfWork.ProjectRepository.Items.Where(project => projectIds.Contains(project.Id)).Select(p => new ProjectDetails
             {
                 ProjectId = p.Id,
                 ProjectName = p.Name
             }).ToList();
+
             return projects;
         }
 

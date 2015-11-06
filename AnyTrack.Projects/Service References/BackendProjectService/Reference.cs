@@ -798,11 +798,11 @@ namespace AnyTrack.Projects.BackendProjectService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/DeleteProject", ReplyAction="http://tempuri.org/IProjectService/DeleteProjectResponse")]
         System.Threading.Tasks.Task DeleteProjectAsync(System.Guid projectId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/DeleteStoryFromProductBacklog", ReplyAction="http://tempuri.org/IProjectService/DeleteStoryFromProductBacklogResponse")]
-        void DeleteStoryFromProductBacklog(System.Guid projectId, System.Guid storyId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/DeleteStoryFromProject", ReplyAction="http://tempuri.org/IProjectService/DeleteStoryFromProjectResponse")]
+        void DeleteStoryFromProject(System.Guid projectId, System.Guid storyId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/DeleteStoryFromProductBacklog", ReplyAction="http://tempuri.org/IProjectService/DeleteStoryFromProductBacklogResponse")]
-        System.Threading.Tasks.Task DeleteStoryFromProductBacklogAsync(System.Guid projectId, System.Guid storyId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/DeleteStoryFromProject", ReplyAction="http://tempuri.org/IProjectService/DeleteStoryFromProjectResponse")]
+        System.Threading.Tasks.Task DeleteStoryFromProjectAsync(System.Guid projectId, System.Guid storyId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetProject", ReplyAction="http://tempuri.org/IProjectService/GetProjectResponse")]
         AnyTrack.Projects.BackendProjectService.ServiceProject GetProject(System.Guid projectId);
@@ -823,10 +823,10 @@ namespace AnyTrack.Projects.BackendProjectService {
         System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.UserSearchInfo>> SearchUsersAsync(AnyTrack.Projects.BackendProjectService.UserSearchFilter filter);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetProjectNames", ReplyAction="http://tempuri.org/IProjectService/GetProjectNamesResponse")]
-        System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectDetails> GetProjectNames();
+        System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectDetails> GetProjectNames(bool scrumMaster, bool po, bool dev);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetProjectNames", ReplyAction="http://tempuri.org/IProjectService/GetProjectNamesResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectDetails>> GetProjectNamesAsync();
+        System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectDetails>> GetProjectNamesAsync(bool scrumMaster, bool po, bool dev);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetProjectStoryDetails", ReplyAction="http://tempuri.org/IProjectService/GetProjectStoryDetailsResponse")]
         System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.StoryDetails> GetProjectStoryDetails(System.Guid projectId);
@@ -916,12 +916,12 @@ namespace AnyTrack.Projects.BackendProjectService {
             return base.Channel.DeleteProjectAsync(projectId);
         }
         
-        public void DeleteStoryFromProductBacklog(System.Guid projectId, System.Guid storyId) {
-            base.Channel.DeleteStoryFromProductBacklog(projectId, storyId);
+        public void DeleteStoryFromProject(System.Guid projectId, System.Guid storyId) {
+            base.Channel.DeleteStoryFromProject(projectId, storyId);
         }
         
-        public System.Threading.Tasks.Task DeleteStoryFromProductBacklogAsync(System.Guid projectId, System.Guid storyId) {
-            return base.Channel.DeleteStoryFromProductBacklogAsync(projectId, storyId);
+        public System.Threading.Tasks.Task DeleteStoryFromProjectAsync(System.Guid projectId, System.Guid storyId) {
+            return base.Channel.DeleteStoryFromProjectAsync(projectId, storyId);
         }
         
         public AnyTrack.Projects.BackendProjectService.ServiceProject GetProject(System.Guid projectId) {
@@ -948,12 +948,12 @@ namespace AnyTrack.Projects.BackendProjectService {
             return base.Channel.SearchUsersAsync(filter);
         }
         
-        public System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectDetails> GetProjectNames() {
-            return base.Channel.GetProjectNames();
+        public System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectDetails> GetProjectNames(bool scrumMaster, bool po, bool dev) {
+            return base.Channel.GetProjectNames(scrumMaster, po, dev);
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectDetails>> GetProjectNamesAsync() {
-            return base.Channel.GetProjectNamesAsync();
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectDetails>> GetProjectNamesAsync(bool scrumMaster, bool po, bool dev) {
+            return base.Channel.GetProjectNamesAsync(scrumMaster, po, dev);
         }
         
         public System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.StoryDetails> GetProjectStoryDetails(System.Guid projectId) {

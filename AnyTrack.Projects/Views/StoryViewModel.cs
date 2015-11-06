@@ -94,7 +94,7 @@ namespace AnyTrack.Projects.Views
             this.regionManager = regionManager;
             this.serviceGateway = serviceGateway;
             this.Projects = new ObservableCollection<ProjectDetails>();
-            this.Projects.AddRange(serviceGateway.GetProjectNames());
+            this.Projects.AddRange(serviceGateway.GetProjectNames(false, true, false));
 
             SaveUpdateStoryCommand = new DelegateCommand(this.SaveUpdateStory);
             CancelStoryViewCommand = new DelegateCommand(this.CancelStoryView, this.CanCancel);            

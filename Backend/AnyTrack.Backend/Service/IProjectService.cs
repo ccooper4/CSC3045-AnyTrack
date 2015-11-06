@@ -67,11 +67,14 @@ namespace AnyTrack.Backend.Service
         List<UserSearchInfo> SearchUsers(UserSearchFilter filter);
 
         /// <summary>
-        /// Gets all project names from the database
+        /// Returns the list of project names that this user can see.
         /// </summary>
-        /// <returns>A list of project names</returns>
+        /// <param name="scrumMaster">The Scrum master flag.</param>
+        /// <param name="po">The PO flag.</param>
+        /// <param name="dev">The developer flag.</param>
+        /// <returns>A list of project detail models.</returns>
         [OperationContract]
-        List<ProjectDetails> GetProjectNames();
+        List<ProjectDetails> GetProjectNames(bool scrumMaster, bool po, bool dev);
 
         /// <summary>
         /// Get all stories based on project from the database

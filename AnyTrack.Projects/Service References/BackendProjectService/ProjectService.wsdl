@@ -26,11 +26,11 @@
   <wsdl:message name="IProjectService_DeleteProject_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteProjectResponse" />
   </wsdl:message>
-  <wsdl:message name="IProjectService_DeleteStoryFromProductBacklog_InputMessage">
-    <wsdl:part name="parameters" element="tns:DeleteStoryFromProductBacklog" />
+  <wsdl:message name="IProjectService_DeleteStoryFromProject_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteStoryFromProject" />
   </wsdl:message>
-  <wsdl:message name="IProjectService_DeleteStoryFromProductBacklog_OutputMessage">
-    <wsdl:part name="parameters" element="tns:DeleteStoryFromProductBacklogResponse" />
+  <wsdl:message name="IProjectService_DeleteStoryFromProject_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteStoryFromProjectResponse" />
   </wsdl:message>
   <wsdl:message name="IProjectService_GetProject_InputMessage">
     <wsdl:part name="parameters" element="tns:GetProject" />
@@ -105,9 +105,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IProjectService/DeleteProject" message="tns:IProjectService_DeleteProject_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IProjectService/DeleteProjectResponse" message="tns:IProjectService_DeleteProject_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="DeleteStoryFromProductBacklog">
-      <wsdl:input wsaw:Action="http://tempuri.org/IProjectService/DeleteStoryFromProductBacklog" message="tns:IProjectService_DeleteStoryFromProductBacklog_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IProjectService/DeleteStoryFromProductBacklogResponse" message="tns:IProjectService_DeleteStoryFromProductBacklog_OutputMessage" />
+    <wsdl:operation name="DeleteStoryFromProject">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProjectService/DeleteStoryFromProject" message="tns:IProjectService_DeleteStoryFromProject_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProjectService/DeleteStoryFromProjectResponse" message="tns:IProjectService_DeleteStoryFromProject_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetProject">
       <wsdl:input wsaw:Action="http://tempuri.org/IProjectService/GetProject" message="tns:IProjectService_GetProject_InputMessage" />
@@ -179,8 +179,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="DeleteStoryFromProductBacklog">
-      <soap:operation soapAction="http://tempuri.org/IProjectService/DeleteStoryFromProductBacklog" style="document" />
+    <wsdl:operation name="DeleteStoryFromProject">
+      <soap:operation soapAction="http://tempuri.org/IProjectService/DeleteStoryFromProject" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -65,8 +65,8 @@ namespace AnyTrack.Projects.Views
             this.serviceGateway = serviceGateway;
             this.Stories = new ObservableCollection<StoryDetails>();
             this.Projects = new ObservableCollection<ProjectDetails>();
-            var results = serviceGateway.GetProjectNames();
-            this.Projects.AddRange(serviceGateway.GetProjectNames());
+            var results = serviceGateway.GetProjectNames(false, true, false);
+            this.Projects.AddRange(results);
             OpenStoryViewCommand = new DelegateCommand(this.OpenStoryView);
             DeleteStoryCommand = new DelegateCommand<string>(DeleteStory);
             EditStoryCommand = new DelegateCommand<StoryDetails>(this.EditStory);

@@ -17,6 +17,9 @@ using System.Threading;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using AnyTrack.Backend.Faults;
+using AnyTrack.Backend.Security;
+using AnyTrack.Infrastructure.BackendAccountService;
+using AnyTrack.Infrastructure.Security;
 using Unit.Backend.AnyTrack.Backend.Service.PrincipalBuilderServiceTests;
 using Project = AnyTrack.Backend.Data.Model.Project;
 
@@ -39,7 +42,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             unitOfWork = Substitute.For<IUnitOfWork>();
             provider = Substitute.For<FormsAuthenticationProvider>();
             context = Substitute.For<OperationContextProvider>();
-            service = new ProjectService(unitOfWork);
+            service = new ProjectService(unitOfWork, provider, context);
            
             userList = new List<User>()
             {
@@ -126,13 +129,27 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
         [ExpectedException(typeof(ArgumentNullException))]
         public void ConstructProjectServiceNoUnitOfWork()
         {
-            service = new ProjectService(null);
+            service = new ProjectService(null, provider, context);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ConstructProjectServiceNoProvider()
+        {
+            service = new ProjectService(unitOfWork, null, context);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ConstructProjectServiceNoContextProvider()
+        {
+            service = new ProjectService(unitOfWork, provider, null);
         }
 
         [Test]
         public void ConstructProjectService()
         {
-            service = new ProjectService(unitOfWork);
+            service = new ProjectService(unitOfWork, provider, context);
 
             service.Should().NotBeNull();
         }
@@ -691,6 +708,89 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             #endregion
         }
         
+        #endregion
+
+        #region GetProjectNames() Tests
+
+        [Test]
+        public void GetProjectNames()
+        {
+            #region Test Data
+
+            var projectId1 = Guid.NewGuid();
+            var projectId2 = Guid.NewGuid(); 
+
+            User user = new User
+            {
+                EmailAddress = "tester@agile.local",
+                FirstName = "John",
+                LastName = "Test",
+                Password = "Password",
+                Developer = false,
+                ProductOwner = true,
+                ScrumMaster = false,
+                Skills = "C#, Java",
+                SecretQuestion = "Where do you live?",
+                SecretAnswer = "At Home",
+                Roles = new List<Role>() {new Role() {RoleName = "Product Owner", ProjectID = projectId1}}
+
+            };
+            
+            User user2 = new User
+            {
+                EmailAddress = "tester2@agile.local",
+                FirstName = "John",
+                LastName = "Test",
+                Password = "Password",
+                Developer = false,
+                ProductOwner = false,
+                ScrumMaster = false,
+                Skills = "C#, Java",
+                SecretQuestion = "Where do you live?",
+                SecretAnswer = "At Home",
+                Roles = new List<Role>()
+            };
+
+            List<Project> projectList = new List<Project>()
+            {
+                new Project
+                {
+                    Id = projectId1,
+                    Name = "Project",
+                    Description = "This is a new project",
+                    VersionControl = "queens.git",
+                    ProjectManager = user,
+                    StartedOn = DateTime.Today
+                },
+                new Project
+                {
+                    Id = projectId2,
+                    Name = "Project2",
+                    Description = "This is a new project",
+                    VersionControl = "queens.git",
+                    ProjectManager = user2,
+                    StartedOn = DateTime.Today
+                }
+            };
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            var users = new List<User>() {user, user2};
+            unitOfWork.UserRepository.Items.Returns(users.AsQueryable());
+
+            #endregion
+
+            unitOfWork.ProjectRepository.Items.Returns(projectList.AsQueryable());
+
+            List<ProjectDetails> projectNames = service.GetProjectNames(false, true, false);
+
+            #region Test checks
+
+            projectNames.Count.Should().Be(1);
+
+            #endregion
+        }
+
         #endregion
 
         #region List<ProjectRoleSummary> GetUserProjectRoleSummaries(string currentUserEmailAddress)

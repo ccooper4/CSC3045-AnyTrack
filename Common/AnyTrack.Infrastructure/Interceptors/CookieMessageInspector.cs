@@ -7,7 +7,6 @@ using System.ServiceModel.Dispatcher;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using AnyTrack.Infrastructure.Extensions;
 
 namespace AnyTrack.Infrastructure.Interceptors
@@ -27,7 +26,7 @@ namespace AnyTrack.Infrastructure.Interceptors
         /// </summary>
         public CookieMessageInspector()
         {
-            cookie = Thread.CurrentPrincipal.GetAuthCookie();
+            cookie = UserDetailsStore.AuthCookie;
         }
 
        /// <summary>

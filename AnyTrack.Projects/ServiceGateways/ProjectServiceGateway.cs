@@ -127,12 +127,15 @@ namespace AnyTrack.Projects.ServiceGateways
         }
 
         /// <summary>
-        /// Retrieves all project names in the database
+        /// Gets the project names for the current user.
         /// </summary>
-        /// <returns>A list of project names </returns>
-        public List<ProjectDetails> GetProjectNames()
+        /// <param name="scrumMaster">The scrum master flag.</param>
+        /// <param name="productOwner">The PO flag.</param>
+        /// <param name="developer">The developer flag.</param>
+        /// <returns>The list of project details.</returns>
+        public List<ProjectDetails> GetProjectNames(bool scrumMaster, bool productOwner, bool developer)
         {
-            return client.GetProjectNames();
+            return client.GetProjectNames(scrumMaster, productOwner, developer);
         }
 
         /// <summary>
@@ -173,7 +176,7 @@ namespace AnyTrack.Projects.ServiceGateways
         /// <param name="storyId">the storyid to be unlinked and removed</param>
         public void DeleteStoryFromProductBacklog(Guid projectId, Guid storyId)
         {
-            client.DeleteStoryFromProductBacklog(projectId, storyId);
+            client.DeleteStoryFromProject(projectId, storyId);
         }
 
         #endregion

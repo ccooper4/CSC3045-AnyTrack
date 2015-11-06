@@ -30,7 +30,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.ProductBacklogViewModelTests
         {
             regionManager = Substitute.For<IRegionManager>();
             gateway = Substitute.For<IProjectServiceGateway>();
-            gateway.GetProjectNames().Returns(new List<ProjectDetails>());
+            gateway.GetProjectNames(Arg.Any<bool>(),Arg.Any<bool>(),Arg.Any<bool>()).Returns(new List<ProjectDetails>());
             vm = new ProductBacklogViewModel(regionManager, gateway);
         }
 

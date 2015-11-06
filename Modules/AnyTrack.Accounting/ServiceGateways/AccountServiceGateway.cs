@@ -111,6 +111,8 @@ namespace AnyTrack.Accounting.ServiceGateways
                     container.RegisterInstance<IPrincipal>(principal);
 
                     Thread.CurrentPrincipal = principal;
+
+                    UserDetailsStore.AuthCookie = cookie;
                 }
 
                 return result;

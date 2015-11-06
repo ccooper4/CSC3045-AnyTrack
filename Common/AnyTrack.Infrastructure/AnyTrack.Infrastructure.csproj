@@ -103,6 +103,7 @@
     <Compile Include="Service\IMenuService.cs" />
     <Compile Include="Service\MenuService.cs" />
     <Compile Include="Service\Model\MenuItem.cs" />
+    <Compile Include="UserDetailsStore.cs" />
     <Compile Include="ValidatedBindableBase.cs" />
   </ItemGroup>
   <ItemGroup>

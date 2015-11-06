@@ -44,10 +44,13 @@ namespace AnyTrack.Projects.ServiceGateways
         List<ServiceProject> GetProjects();
 
         /// <summary>
-        /// Retrieves all project names in the database
+        /// Gets the project names for the current user.
         /// </summary>
-        /// <returns>Returns a list of all the project names in the system</returns>
-        List<ProjectDetails> GetProjectNames();
+        /// <param name="scrumMaster">The scrum master flag.</param>
+        /// <param name="productOwner">The PO flag.</param>
+        /// <param name="developer">The developer flag.</param>
+        /// <returns>The list of project details.</returns>
+        List<ProjectDetails> GetProjectNames(bool scrumMaster, bool productOwner, bool developer);
 
         /// <summary>
         /// Retrieves all project stories in the database
