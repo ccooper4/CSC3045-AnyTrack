@@ -252,6 +252,8 @@ namespace AnyTrack.Projects.Views
             };                    
 
             serviceGateway.SaveUpdateStory(projectId, storyId, Story);
+            this.ShowMetroDialog("Story has been saved!", "Success", MessageDialogStyle.Affirmative);
+            regionManager.RequestNavigate(RegionNames.AppContainer, "ProductBacklog");
         }
                 
         /// <summary>
