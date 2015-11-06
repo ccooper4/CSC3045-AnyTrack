@@ -293,6 +293,7 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         public void CancelProject()
         {
+            regionManager.RequestNavigate(RegionNames.AppContainer, "MyProjects");
         }
 
         /// <summary>

@@ -86,8 +86,6 @@ namespace AnyTrack.Projects
 
             menuService.AddMenuItem(new MenuItem { Color = "Goldenrod", Title = "Project", NavigationViewName = "Project" });
             menuService.AddMenuItem(new MenuItem { Color = "Teal", Title = "Backlog", NavigationViewName = "ProductBacklog" });
-
-            regionManager.RequestNavigate(RegionNames.AppContainer, "MyProjects");
         }
 
         #endregion 

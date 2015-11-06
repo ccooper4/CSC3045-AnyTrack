@@ -70,16 +70,9 @@ namespace AnyTrack.Projects.Views
             this.regionManager = regionManager;
             this.serviceGateway = serviceGateway;
 
-            this.Tiles = serviceGateway.GetLoggedInUserProjectRoleSummaries();
-            
-            if (this.Tiles.Count == 0)
-            {
-                emptyProject = true;
-            }
-            else
-            {
-                emptyProject = false;
-            }
+            this.Tiles = serviceGateway.GetLoggedInUserProjectRoleSummaries(this.LoggedInUserPrincipal.Identity.Name);
+
+            emptyProject = this.Tiles.Count == 0;
 
             CreateProjectCommand = new DelegateCommand(AddProjectView);
             ManageProjectCommand = new DelegateCommand(ManageProjectView);
