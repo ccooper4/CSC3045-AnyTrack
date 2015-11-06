@@ -21,27 +21,34 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Image x:Key="MyImage" Source="../Resources/dropdown.png"/>
     </UserControl.Resources>
     <GroupBox>
         <GroupBox.Header>
             <TextBlock Foreground="White" Text="My Projects" />
         </GroupBox.Header>
         <Grid Background="White">
-            <ListBox x:Name="tileList" ItemsSource="{Binding Tiles}" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30px"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="tileList" ItemsSource="{Binding Tiles}" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
                         <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                            <controls:Tile Grid.Column="0" Title="{Binding Name}" Width="100" Height="100" CommandParameter="{Binding Path=.}" Command="{Binding Path=DataContext.ManageBacklogCommandyy, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"> </controls:Tile>
+                            <controls:Tile Grid.Column="0" Title="{Binding Name}" Width="100" Height="100" CommandParameter="{Binding Path=.}" Command="{Binding Path=DataContext.ManageBacklogCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"> </controls:Tile>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Content="Add A Project&#xD;&#xA;" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Margin="470,0,0,0" VerticalAlignment="Top" Width="128" Height="25" Command="{Binding CreateProjectCommand}"/>
-            <Label Content="There are no Projects" Visibility="{Binding EmptyProject, Converter={StaticResource booleanToVisibility}}"/>
+            <Button Grid.Row="0" Grid.Column="1" Content="Add A Project;" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="128" Height="25" Command="{Binding CreateProjectCommand}"/>
+            <Label Grid.Row="0" Grid.Column="0" Content="There are no Projects" Visibility="{Binding EmptyProject, Converter={StaticResource booleanToVisibility}}"/>
         </Grid>
     </GroupBox>
 </UserControl>

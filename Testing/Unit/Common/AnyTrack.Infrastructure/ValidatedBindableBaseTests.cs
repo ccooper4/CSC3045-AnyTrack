@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Windows;
 using System.Threading;
+using Prism.Regions;
 
 namespace Unit.Common.AnyTrack.Infrastructure.InterceptorBehaviourTests
 {
@@ -45,12 +46,15 @@ namespace Unit.Common.AnyTrack.Infrastructure.InterceptorBehaviourTests
 
     public class Context
     {
-        public static TestViewModel vm; 
+        public static TestViewModel vm;
+        public static IRegionManager regionManager; 
 
         [SetUp]
         public void Setup()
         {
+            regionManager = Substitute.For<IRegionManager>();
             vm = new TestViewModel();
+            vm.RegionManager = regionManager;
         }
     }
 
@@ -218,6 +222,25 @@ namespace Unit.Common.AnyTrack.Infrastructure.InterceptorBehaviourTests
 
             vm.MainWindow.Received().ShowMessageAsync(title, message, style);
             wait.WaitOne();
+        }
+
+        #endregion 
+
+        #region NavigateToItem(string view, NavigationParameters navParams = null) Tests 
+
+        [Test]
+        public void CallNavigateToItemWithParams()
+        {
+            var np = new NavigationParameters();
+            vm.NavigateToItem("test", np);
+            regionManager.Received().RequestNavigate(RegionNames.MainRegion, "test", np);
+        }
+
+        [Test]
+        public void CallNavigateToItemWithNoParams()
+        {
+            vm.NavigateToItem("test");
+            regionManager.Received().RequestNavigate(RegionNames.MainRegion, "test");
         }
 
         #endregion 

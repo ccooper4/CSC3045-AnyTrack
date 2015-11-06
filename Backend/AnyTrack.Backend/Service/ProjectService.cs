@@ -386,12 +386,9 @@ namespace AnyTrack.Backend.Service
         /// <returns>A list containing Project role summaries</returns>
         public List<ProjectRoleSummary> GetUserProjectRoleSummaries(string currentUserEmailAddress)
         {          
-            User loggedInUser =
-                unitOfWork.UserRepository.Items.Single(u => u.EmailAddress == currentUserEmailAddress);
+            User loggedInUser = unitOfWork.UserRepository.Items.Single(u => u.EmailAddress == currentUserEmailAddress);
 
-            var projectIds =
-                unitOfWork.RoleRepository.Items.Where(r => r.User == loggedInUser)
-                    .Select(r => r.ProjectID).Distinct().ToList();
+            var projectIds = unitOfWork.RoleRepository.Items.Where(r => r.User.EmailAddress == loggedInUser.EmailAddress).Select(r => r.ProjectID).Distinct().ToList();
 
             if (projectIds.Count == 0)
             {

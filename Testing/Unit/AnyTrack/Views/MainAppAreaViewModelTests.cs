@@ -109,7 +109,7 @@ namespace Unit.AnyTrack.Views.MainAppAreaViewModelTests
         {
             var view = "test";
 
-            vm.Call("NavigateToItem", view);
+            vm.Call("NavigateToItemFromMenu", view);
 
             regionManager.Received().RequestNavigate(RegionNames.MainRegion, view);
         }

@@ -19,6 +19,7 @@ using AnyTrack.Infrastructure;
 namespace Unit.Modules.AnyTrack.Projects.Views.ProductBacklogViewModelTests
 {
     #region Context 
+
     public class Context
     {
         public static IRegionManager regionManager;
@@ -31,92 +32,89 @@ namespace Unit.Modules.AnyTrack.Projects.Views.ProductBacklogViewModelTests
             regionManager = Substitute.For<IRegionManager>();
             gateway = Substitute.For<IProjectServiceGateway>();
             gateway.GetProjectNames(Arg.Any<bool>(),Arg.Any<bool>(),Arg.Any<bool>()).Returns(new List<ProjectDetails>());
-            vm = new ProductBacklogViewModel(regionManager, gateway);
+            vm = new ProductBacklogViewModel(gateway);
+
+            vm.RegionManager = regionManager;
+        }
+    }
+
+    #endregion
+
+    #region Tests
+
+    public class ProductBacklogViewModelTests : Context
+    {
+        #region Constructor Tests
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ConstructNoGateway()
+        {
+            vm = new ProductBacklogViewModel(null);
+        }
+
+        [Test]
+        public void ConstructVm()
+        {
+            vm = new ProductBacklogViewModel(gateway);
+            vm.DeleteStoryCommand.Should().NotBeNull();
+            vm.OpenStoryViewCommand.Should().NotBeNull();
         }
 
         #endregion
 
-        #region Tests 
+        #region DeleteStory() Tests
 
-        public class ProductBacklogViewModelTests : Context
+        [Test]
+        public void DeleteStoryTests()
         {
-            #region Constructor Tests 
+            gateway.GetProjectStories(Arg.Any<Guid>()).Returns(new List<StoryDetails>());
 
-            [Test]
-            [ExpectedException(typeof(ArgumentNullException))]
-            public void ConstructNoRegionManager()
+            var waitObject = new ManualResetEvent(false);
+
+            vm.MainWindow = Substitute.For<WindowProvider>();
+            vm.MainWindow.ShowMessageAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<MessageDialogStyle>()).Returns(MessageDialogResult.Affirmative);
+            vm.MainWindow.InvokeAction(Arg.Do<Action>(a => { a(); waitObject.Set(); }));
+            var story = new StoryDetails
             {
-                vm = new ProductBacklogViewModel(null, gateway);
-            }
+                ProjectId = new Guid("11111111-1111-1111-1111-111111111111"),
+                StoryId = new Guid("21111111-1111-1111-1111-111111111111")
+            };
+            vm.ProjectId = new Guid("11111111-1111-1111-1111-111111111111");
+            vm.Stories.Add(story);
 
-            [Test]
-            [ExpectedException(typeof(ArgumentNullException))]
-            public void ConstructNoGateway()
-            {
-                vm = new ProductBacklogViewModel(regionManager, null);
-            }
+            vm.DeleteStory(story.StoryId.ToString());
 
-            [Test]
-            public void ConstructVm()
-            {
-                vm = new ProductBacklogViewModel(regionManager, gateway);
-                vm.DeleteStoryCommand.Should().NotBeNull();
-                vm.OpenStoryViewCommand.Should().NotBeNull();
-            }
-            #endregion
+            waitObject.WaitOne();
 
-            #region DeleteStory() Tests 
+            vm.MainWindow.Received().ShowMessageAsync("Delete story - confirmation", "Are you sure that you want to delete this story from the backlog?", MessageDialogStyle.AffirmativeAndNegative);
 
-            [Test]
-            public void DeleteStoryTests()
-            {
-                gateway.GetProjectStories(Arg.Any<Guid>()).Returns(new List<StoryDetails>());
-
-                var waitObject = new ManualResetEvent(false);
-
-                vm.MainWindow = Substitute.For<WindowProvider>();
-                vm.MainWindow.ShowMessageAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<MessageDialogStyle>()).Returns(MessageDialogResult.Affirmative);
-                vm.MainWindow.InvokeAction(Arg.Do<Action>(a => { a(); waitObject.Set(); }));
-                var story = new StoryDetails
-                {
-                    ProjectId = new Guid("11111111-1111-1111-1111-111111111111"),
-                    StoryId = new Guid("21111111-1111-1111-1111-111111111111")
-                };
-                vm.ProjectId = new Guid("11111111-1111-1111-1111-111111111111");
-                vm.Stories.Add(story);
-
-                vm.DeleteStory(story.StoryId.ToString());
-
-                waitObject.WaitOne();
-
-                vm.MainWindow.Received().ShowMessageAsync("Delete story - confirmation", "Are you sure that you want to delete this story from the backlog?", MessageDialogStyle.AffirmativeAndNegative);
-
-                gateway.Received().DeleteStoryFromProductBacklog(story.ProjectId, story.StoryId);
-                gateway.Received().GetProjectStories(story.ProjectId);
-                vm.Stories.Should().BeEmpty();
-            }
-
-            #endregion DeleteStory() Tests
-
-            #region OpenStoryView() Tests
-
-            [Test]
-            public void OpenStoryViewTests()
-            {
-                NavigationParameters navParams = null;
-                regionManager.RequestNavigate(Arg.Any<string>(), Arg.Any<string>(), Arg.Do<NavigationParameters>(np => navParams = np));
-
-                gateway.GetProjectStories(Arg.Any<Guid>()).Returns(new List<StoryDetails>());
-
-                vm.ProjectId = Guid.NewGuid();
-                vm.Call("OpenStoryView");
-                navParams.Should().NotBeNull();
-                navParams.ContainsKey("projectId").Should().BeTrue();
-                regionManager.Received().RequestNavigate(RegionNames.MainRegion, "Story", navParams);
-            }
-
-            #endregion OpenStoryView() Tests
-            #endregion Tests
+            gateway.Received().DeleteStoryFromProductBacklog(story.ProjectId, story.StoryId);
+            gateway.Received().GetProjectStories(story.ProjectId);
+            vm.Stories.Should().BeEmpty();
         }
+
+        #endregion DeleteStory() Tests
+
+        #region OpenStoryView() Tests
+
+        [Test]
+        public void OpenStoryViewTests()
+        {
+            NavigationParameters navParams = null;
+            regionManager.RequestNavigate(Arg.Any<string>(), Arg.Any<string>(), Arg.Do<NavigationParameters>(np => navParams = np));
+
+            gateway.GetProjectStories(Arg.Any<Guid>()).Returns(new List<StoryDetails>());
+
+            vm.ProjectId = Guid.NewGuid();
+            vm.Call("OpenStoryView");
+            navParams.Should().NotBeNull();
+            navParams.ContainsKey("projectId").Should().BeTrue();
+            regionManager.Received().RequestNavigate(RegionNames.MainRegion, "Story", navParams);
+        }
+
+        #endregion OpenStoryView() Tests
     }
+
+    #endregion Tests
 }

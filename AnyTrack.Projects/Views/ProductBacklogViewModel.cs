@@ -26,11 +26,6 @@ namespace AnyTrack.Projects.Views
         #region Fields
 
         /// <summary>
-        /// The region manager
-        /// </summary>
-        private readonly IRegionManager regionManager;
-
-        /// <summary>
         /// The project service gateway
         /// </summary>
         private readonly IProjectServiceGateway serviceGateway;
@@ -47,21 +42,14 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Creates a new Product Backlog View Model
         /// </summary>
-        /// <param name="regionManager">The region manager</param>
         /// <param name="serviceGateway">The project service gateway</param>
-        public ProductBacklogViewModel(IRegionManager regionManager, IProjectServiceGateway serviceGateway)
+        public ProductBacklogViewModel(IProjectServiceGateway serviceGateway)
         {
-            if (regionManager == null)
-            {
-                throw new ArgumentNullException("regionManager");
-            }
-
             if (serviceGateway == null)
             {
                 throw new ArgumentNullException("serviceGateway");
             }
 
-            this.regionManager = regionManager;
             this.serviceGateway = serviceGateway;
             this.Stories = new ObservableCollection<StoryDetails>();
             this.Projects = new ObservableCollection<ProjectDetails>();
@@ -195,8 +183,9 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         private void OpenStoryView()
         {
-            NavigateToItem("Story");
-            ////regionManager.RequestNavigate(RegionNames.AppContainer, "Story");
+            var navParams = new NavigationParameters();
+            navParams.Add("projectId", projectId);
+            NavigateToItem("Story", navParams);
         }
 
         /// <summary>
@@ -205,31 +194,10 @@ namespace AnyTrack.Projects.Views
         /// <param name="story">story object</param>
         private void EditStory(StoryDetails story)
         {
-            // this.ShowMetroDialog("Called EditStorySuccessfully", "SID:" + story.StoryId + ". PID:" + projectId, MessageDialogStyle.Affirmative);
             var navParams = new NavigationParameters();
             navParams.Add("projectId", projectId);
             navParams.Add("storyId", story.StoryId);
             NavigateToItem("Story", navParams);
-            ////regionManager.RequestNavigate(RegionNames.AppContainer, "Story", navParams);
-        }
-
-        /// <summary>
-        /// Navigates to the region specified in the menu item.
-        /// </summary>
-        /// <param name="view">The view to navigate to.</param>
-        private void NavigateToItem(string view)
-        {
-            regionManager.RequestNavigate(RegionNames.MainRegion, view);
-        }
-
-        /// <summary>
-        /// Navigates to the region specified in the menu item.
-        /// </summary>
-        /// <param name="view">The view to navigate to.</param>
-        /// <param name="navParams">nav params</param>
-        private void NavigateToItem(string view, NavigationParameters navParams)
-        {
-            regionManager.RequestNavigate(RegionNames.MainRegion, view, navParams);
         }
 
         #endregion

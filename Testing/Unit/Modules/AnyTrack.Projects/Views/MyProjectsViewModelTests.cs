@@ -12,6 +12,8 @@ using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
 using Prism.Regions;
+using AnyTrack.Infrastructure.Security;
+using AnyTrack.Infrastructure.BackendAccountService;
 
 namespace Unit.Modules.AnyTrack.Projects.Views
 {
@@ -28,39 +30,38 @@ namespace Unit.Modules.AnyTrack.Projects.Views
             regionManager = Substitute.For<IRegionManager>();
             gateway = Substitute.For<IProjectServiceGateway>();
 
-            vm = new MyProjectsViewModel(regionManager, gateway);
+            var listOfProjects = new List<ProjectRoleSummary>()
+            {
+                new ProjectRoleSummary()
+            };
+
+            UserDetailsStore.LoggedInUserPrincipal = new ServiceUserPrincipal(new LoginResult { EmailAddress = "test@agile.local" }, "");
+            gateway.GetLoggedInUserProjectRoleSummaries("test@agile.local").Returns(listOfProjects);
+
+            vm = new MyProjectsViewModel(gateway);
+            vm.RegionManager = regionManager;
         }
     }
 
     #endregion
 
+    #region Tests
+
     public class MyProjectsViewModelTests : Context
     {
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ConstructNoRegionManager()
-        {
-            vm = new MyProjectsViewModel(null, gateway);
-        }
-
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ConstructNoGateway()
         {
-            vm = new MyProjectsViewModel(regionManager, null);
+            vm = new MyProjectsViewModel(null);
         }
 
         [Test]
         public void ConstructVm()
         {
-            vm = new MyProjectsViewModel(regionManager, gateway);
+            vm = new MyProjectsViewModel(gateway);
             vm.CreateProjectCommand.Should().NotBeNull();
-            vm.BurndownChartsCommand.Should().NotBeNull();
             vm.ManageBacklogCommand.Should().NotBeNull();
-            vm.ManageSprintsCommand.Should().NotBeNull();
-            vm.OfflineModeCommand.Should().NotBeNull();
-            vm.ManageProjectCommand.Should().NotBeNull();
-            vm.ProjectSettingsCommand.Should().NotBeNull();
         }
 
         [Test]
@@ -68,7 +69,9 @@ namespace Unit.Modules.AnyTrack.Projects.Views
         {
             var windowProvider = Substitute.For<WindowProvider>();
             vm.Call("AddProjectView");
-            regionManager.Received().RequestNavigate(RegionNames.AppContainer, "Project");      
+            regionManager.Received().RequestNavigate(RegionNames.MainRegion, "Project");      
         }
     }
+
+    #endregion 
 }

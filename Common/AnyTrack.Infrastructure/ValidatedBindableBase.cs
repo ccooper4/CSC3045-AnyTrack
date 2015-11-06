@@ -12,6 +12,7 @@ using AnyTrack.Infrastructure.Providers;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Practices.Unity;
+using Prism.Regions;
 
 namespace AnyTrack.Infrastructure
 {
@@ -75,10 +76,10 @@ namespace AnyTrack.Infrastructure
         public WindowProvider MainWindow { get; set; }
 
         /// <summary>
-        /// Gets or sets the logged in user principal.
+        /// Gets or sets the region manager.
         /// </summary>
         [Dependency]
-        public IPrincipal LoggedInUserPrincipal { get; set; }
+        public IRegionManager RegionManager { get; set; }
 
         #endregion
 
@@ -193,6 +194,23 @@ namespace AnyTrack.Infrastructure
                     window.InvokeAction(dispatcherAction);
                 }
             });
+        }
+
+        /// <summary>
+        /// Navigates to the region specified in the menu item.
+        /// </summary>
+        /// <param name="view">The view to navigate to.</param>
+        /// <param name="navParams">nav params</param>
+        public void NavigateToItem(string view, NavigationParameters navParams = null)
+        {
+            if (navParams == null)
+            {
+                RegionManager.RequestNavigate(RegionNames.MainRegion, view);
+            }
+            else
+            {
+                RegionManager.RequestNavigate(RegionNames.MainRegion, view, navParams);
+            }
         }
         
         #endregion

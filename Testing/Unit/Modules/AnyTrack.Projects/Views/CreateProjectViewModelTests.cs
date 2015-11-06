@@ -17,6 +17,7 @@ using AnyTrack.Infrastructure.BackendAccountService;
 using MahApps.Metro.Controls.Dialogs;
 using AnyTrack.SharedUtilities.Extensions;
 using System.Security.Principal;
+using AnyTrack.Infrastructure;
 
 namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
 {
@@ -32,7 +33,8 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
         {
             regionManager = Substitute.For<IRegionManager>();
             gateway = Substitute.For<IProjectServiceGateway>();
-            vm = new CreateProjectViewModel(regionManager, gateway);
+            vm = new CreateProjectViewModel(gateway);
+            vm.RegionManager = regionManager;
         }
     }
 
@@ -46,22 +48,15 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ConstructNoRegionManager()
-        {
-            vm = new CreateProjectViewModel(null, gateway); 
-        }
-
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ConstructNoGateway()
         {
-            vm = new CreateProjectViewModel(regionManager, null);
+            vm = new CreateProjectViewModel(null);
         }
 
         [Test]
         public void ConstructVm()
         {
-            vm = new CreateProjectViewModel(regionManager, gateway);
+            vm = new CreateProjectViewModel(gateway);
             vm.SaveProjectCommand.Should().NotBeNull();
             vm.CancelProjectCommand.Should().NotBeNull();
             vm.SetProductOwnerCommand.Should().NotBeNull();
@@ -132,6 +127,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
         #endregion 
 
         #region SaveProject Test
+
         [Test]
         public void SaveProject()
         {
@@ -139,7 +135,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
 
             var currentPrincipal = new ServiceUserPrincipal(new LoginResult { EmailAddress = "testmanager@agile.local" }, "");
 
-            vm.LoggedInUserPrincipal = currentPrincipal;
+            UserDetailsStore.LoggedInUserPrincipal = currentPrincipal;
             vm.MainWindow = windowProvider;
 
             vm.ProjectName = "Test Project";
@@ -168,6 +164,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
             sentProject.ProjectManagerEmailAddress.Should().Be("testmanager@agile.local");
             gateway.Received().CreateProject(sentProject);
             windowProvider.Received().ShowMessageAsync("Project created", "The {0} project has successfully been created".Substitute(vm.ProjectName), MessageDialogStyle.Affirmative);
+            regionManager.Received().RequestNavigate(RegionNames.MainRegion, "MyProjects");
 
         }
 
@@ -178,7 +175,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
 
             var currentPrincipal = new ServiceUserPrincipal(new LoginResult { EmailAddress = "testmanager@agile.local" }, "");
 
-            vm.LoggedInUserPrincipal = currentPrincipal;
+            UserDetailsStore.LoggedInUserPrincipal = currentPrincipal;
             vm.MainWindow = windowProvider;
 
             vm.ProjectName = "Mi";
@@ -200,7 +197,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
 
             var currentPrincipal = new ServiceUserPrincipal(new LoginResult { EmailAddress = "testmanager@agile.local" }, "");
 
-            vm.LoggedInUserPrincipal = currentPrincipal;
+            UserDetailsStore.LoggedInUserPrincipal = currentPrincipal;
             vm.MainWindow = windowProvider;
 
             vm.ProjectName = "Project name";

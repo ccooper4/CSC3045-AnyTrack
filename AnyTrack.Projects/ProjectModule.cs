@@ -74,7 +74,6 @@ namespace AnyTrack.Projects
         /// </summary>
         public void Initialize()
         {
-            // regionManager.RequestNavigate(RegionNames.AppContainer, )
             container.RegisterType<IProjectService, ProjectServiceClient>(new InjectionConstructor());
 
             container.RegisterType<IProjectServiceGateway, ProjectServiceGateway>();
@@ -84,8 +83,7 @@ namespace AnyTrack.Projects
             container.RegisterType<object, CreateProject>("Project");
             container.RegisterType<object, MyProjects>("MyProjects");
 
-            menuService.AddMenuItem(new MenuItem { Color = "Goldenrod", Title = "Project", NavigationViewName = "Project" });
-            menuService.AddMenuItem(new MenuItem { Color = "Teal", Title = "Backlog", NavigationViewName = "ProductBacklog" });
+            menuService.AddMenuItem(new MenuItem { Color = "Goldenrod", Title = "Projects", NavigationViewName = "MyProjects" });
             regionManager.RequestNavigate(RegionNames.MainRegion, "ProductBacklog");
         }
 

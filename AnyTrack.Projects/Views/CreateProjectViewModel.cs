@@ -27,11 +27,6 @@ namespace AnyTrack.Projects.Views
         #region Fields
 
         /// <summary>
-        /// The region manager
-        /// </summary>
-        private readonly IRegionManager regionManager;
-
-        /// <summary>
         /// The project service gateway
         /// </summary>
         private readonly IProjectServiceGateway serviceGateway;
@@ -93,21 +88,14 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Creates a new Create Project View Model
         /// </summary>
-        /// <param name="regionManager">The region manager</param>
         /// <param name="serviceGateway">The project service gateway</param>
-        public CreateProjectViewModel(IRegionManager regionManager, IProjectServiceGateway serviceGateway)
+        public CreateProjectViewModel(IProjectServiceGateway serviceGateway)
         {
-            if (regionManager == null)
-            {
-                throw new ArgumentNullException("regionManager");
-            }
-
             if (serviceGateway == null)
             {
                 throw new ArgumentNullException("serviceGateway");
             }
 
-            this.regionManager = regionManager;
             this.serviceGateway = serviceGateway;
 
             SaveProjectCommand = new DelegateCommand(SaveProject);
@@ -293,7 +281,7 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         public void CancelProject()
         {
-            regionManager.RequestNavigate(RegionNames.AppContainer, "MyProjects");
+            NavigateToItem("MyProjects");
         }
 
         /// <summary>
@@ -322,12 +310,13 @@ namespace AnyTrack.Projects.Views
                     VersionControl = this.VersionControl,
                     StartedOn = this.StartedOn,
                     ProductOwnerEmailAddress = selectProductOwnerEmailAddress,
-                    ProjectManagerEmailAddress = this.LoggedInUserPrincipal.Identity.Name,
+                    ProjectManagerEmailAddress = UserDetailsStore.LoggedInUserPrincipal.Identity.Name,
                     ScrumMasterEmailAddresses = this.SelectedScrumMasters.Select(sm => sm.EmailAddress).ToList()
                 };
 
                 serviceGateway.CreateProject(project);
                 ShowMetroDialog("Project created", "The {0} project has successfully been created".Substitute(this.ProjectName), MessageDialogStyle.Affirmative);
+                NavigateToItem("MyProjects");
             }
         }
 

@@ -56,7 +56,7 @@ namespace AnyTrack.Client.Views
             this.menuService = service;
             this.regionManager = regionManager;
 
-            NavigateCommand = new DelegateCommand<string>(NavigateToItem);
+            NavigateCommand = new DelegateCommand<string>(NavigateToItemFromMenu);
         }
 
         #endregion
@@ -98,7 +98,7 @@ namespace AnyTrack.Client.Views
         /// Navigates to the region specified in the menu item.
         /// </summary>
         /// <param name="view">The view to navigate to.</param>
-        private void NavigateToItem(string view)
+        private void NavigateToItemFromMenu(string view)
         {
             regionManager.RequestNavigate(RegionNames.MainRegion, view);
         }

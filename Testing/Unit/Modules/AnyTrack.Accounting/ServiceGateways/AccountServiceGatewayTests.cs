@@ -1,5 +1,6 @@
 ﻿using AnyTrack.Accounting.ServiceGateways;
 using AnyTrack.Accounting.ServiceGateways.Models;
+using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.BackendAccountService;
 using AnyTrack.Infrastructure.Security;
 using FluentAssertions;
@@ -134,9 +135,8 @@ namespace Unit.Modules.AnyTrack.Accounting.ServiceGateways.AccountServiceGateway
             gatewayResult.Should().NotBeNull();
             gatewayResult.Should().BeSameAs(result);
             accountService.Received().LogIn(creds);
-            Thread.CurrentPrincipal.Should().NotBeNull();
-            Thread.CurrentPrincipal.Should().BeOfType<ServiceUserPrincipal>();
-            container.Received().RegisterInstance<IPrincipal>(Arg.Any<ServiceUserPrincipal>(), Arg.Any < ContainerControlledLifetimeManager>());
+            UserDetailsStore.LoggedInUserPrincipal.Should().NotBeNull();
+            UserDetailsStore.LoggedInUserPrincipal.Should().BeOfType<ServiceUserPrincipal>();
         }
 
         public void CallLoginForInvalidLogin()

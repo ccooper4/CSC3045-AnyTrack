@@ -24,14 +24,9 @@ namespace AnyTrack.Projects.Views
     /// <summary>
     /// The view model for the project
     /// </summary>
-    public class MyProjectsViewModel : ValidatedBindableBase
+    public class MyProjectsViewModel : ValidatedBindableBase, INavigationAware
     {
         #region Fields
-
-        /// <summary>
-        /// The region manager
-        /// </summary>
-        private readonly IRegionManager regionManager;
 
         /// <summary>
         /// The project service gateway
@@ -47,39 +42,29 @@ namespace AnyTrack.Projects.Views
         /// Value to store whether projects there are no projects for active user
         /// </summary>
         private bool emptyProject;
+
         #endregion
 
         #region Constructor
         /// <summary>
         /// Creates a new Create Project View Model
         /// </summary>
-        /// <param name="regionManager">The region manager</param>
         /// <param name="serviceGateway">The project service gateway</param>
-        public MyProjectsViewModel(IRegionManager regionManager, IProjectServiceGateway serviceGateway)
+        public MyProjectsViewModel(IProjectServiceGateway serviceGateway)
         {
-            if (regionManager == null)
-            {
-                throw new ArgumentNullException("regionManager");
-            }
-
             if (serviceGateway == null)
             {
                 throw new ArgumentNullException("serviceGateway");
             }
 
-            this.regionManager = regionManager;
             this.serviceGateway = serviceGateway;
 
-            this.Tiles = serviceGateway.GetLoggedInUserProjectRoleSummaries(this.LoggedInUserPrincipal.Identity.Name);
+            this.Tiles = serviceGateway.GetLoggedInUserProjectRoleSummaries(UserDetailsStore.LoggedInUserPrincipal.Identity.Name);
 
             emptyProject = this.Tiles.Count == 0;
 
             CreateProjectCommand = new DelegateCommand(AddProjectView);
-            ManageProjectCommand = new DelegateCommand(ManageProjectView);
             ManageBacklogCommand = new DelegateCommand<ProjectRoleSummary>(ManageBacklogView);
-            ManageSprintsCommand = new DelegateCommand(ManageSprintsView);
-            BurndownChartsCommand = new DelegateCommand(BurndownChartsView);
-            OfflineModeCommand = new DelegateCommand(OfflineModeView);
         }
         #endregion
 
@@ -109,52 +94,46 @@ namespace AnyTrack.Projects.Views
         public DelegateCommand CreateProjectCommand { get; set; }
 
         /// <summary>
-        /// Gets or sets manage project command
-        /// </summary>
-        public DelegateCommand ManageProjectCommand { get; set; }
-
-        /// <summary>
         /// Gets or sets manage backlog command
         /// </summary>
         public DelegateCommand<ProjectRoleSummary> ManageBacklogCommand { get; set; }
 
-        /// <summary>
-        /// Gets or sets manage sprint command
-        /// </summary>
-        public DelegateCommand ManageSprintsCommand { get; set; }
-
-        /// <summary>
-        /// Gets or sets burndown charts command
-        /// </summary>
-        public DelegateCommand BurndownChartsCommand { get; set; }
-
-        /// <summary>
-        /// Gets or sets project settings command
-        /// </summary>
-        public DelegateCommand ProjectSettingsCommand { get; set; }
-
-        /// <summary>
-        /// Gets or sets offline mode command
-        /// </summary>
-        public DelegateCommand OfflineModeCommand { get; set; }
-
-#endregion
+        #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Handles the event where this view is the navigation target. 
+        /// </summary>
+        /// <param name="navigationContext">The navigation context.</param>
+        /// <returns>A true or false value indicating if this is the navigation target.</returns>
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Handles on navigated from.
+        /// </summary>
+        /// <param name="navigationContext">The navigation context.</param>
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+        }
+
+        /// <summary>
+        /// Handles this view's on navigated to.
+        /// </summary>
+        /// <param name="navigationContext">The navigation context.</param>
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+        }
+
         /// <summary>
         /// Add A Project
         /// </summary>
         private void AddProjectView()
         {
-            regionManager.RequestNavigate(RegionNames.AppContainer, "Project");
-        }
-
-        /// <summary>
-        /// Manage A Project
-        /// </summary>
-        private void ManageProjectView()
-        {
-            ShowMetroDialog("Not Implemented", "This would lead you to the Manage Project View", MessageDialogStyle.Affirmative);
+            NavigateToItem("Project");
         }
 
         /// <summary>
@@ -165,32 +144,9 @@ namespace AnyTrack.Projects.Views
         {
             var navParams = new NavigationParameters();
             navParams.Add("projectId", summary.ProjectId);
-            regionManager.RequestNavigate(RegionNames.MainRegion, "ProductBacklog", navParams);
+            NavigateToItem("ProductBacklog", navParams);
         }
 
-        /// <summary>
-        /// Manage Sprints View
-        /// </summary>
-        private void ManageSprintsView()
-        {
-            ShowMetroDialog("Not Implemented", "This would lead you to the ManageSprints View", MessageDialogStyle.Affirmative);
-        }
-
-        /// <summary>
-        /// Burndown Charts View
-        /// </summary>
-        private void BurndownChartsView()
-        {
-            ShowMetroDialog("Not Implemented", "This would lead you to the BurndownCharts View", MessageDialogStyle.Affirmative);
-        }
-
-        /// <summary>
-        /// Offline Mode View
-        /// </summary>
-        private void OfflineModeView()
-        {
-            ShowMetroDialog("Not Implemented", "This would lead you to the Offline Mode View", MessageDialogStyle.Affirmative);
-        }
         #endregion
     }
 }

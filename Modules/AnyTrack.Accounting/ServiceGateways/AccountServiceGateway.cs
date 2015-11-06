@@ -108,11 +108,8 @@ namespace AnyTrack.Accounting.ServiceGateways
 
                     var principal = new ServiceUserPrincipal(result, cookie);
 
-                    container.RegisterInstance<IPrincipal>(principal);
-
-                    Thread.CurrentPrincipal = principal;
-
                     UserDetailsStore.AuthCookie = cookie;
+                    UserDetailsStore.LoggedInUserPrincipal = principal;
                 }
 
                 return result;
