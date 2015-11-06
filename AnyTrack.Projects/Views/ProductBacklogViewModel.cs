@@ -21,7 +21,7 @@ namespace AnyTrack.Projects.Views
     /// <summary>
     /// The view model for the product backlog
     /// </summary>
-    public class ProductBacklogViewModel : ValidatedBindableBase, INavigationAware
+    public class ProductBacklogViewModel : ValidatedBindableBase, IRegionMemberLifetime, INavigationAware
     {
         #region Fields
 
@@ -126,10 +126,18 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         public ObservableCollection<ProjectDetails> Projects { get; set; }
 
+        /// <summary>
+        /// Gets a value indicating whether it should refresh everytime
+        /// </summary>
+        public bool KeepAlive
+        {
+            get { return false; }
+        }
+
         #endregion Properties
 
         #region Methods
-        
+
         /// <summary>
         /// Handles the Is Navigation target event. 
         /// </summary>
@@ -187,9 +195,8 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         private void OpenStoryView()
         {
-            var navParams = new NavigationParameters();
-            navParams.Add("projectId", ProjectId);
-            regionManager.RequestNavigate(RegionNames.MainRegion, "Story", navParams);
+            NavigateToItem("Story");
+            ////regionManager.RequestNavigate(RegionNames.AppContainer, "Story");
         }
 
         /// <summary>
@@ -202,9 +209,29 @@ namespace AnyTrack.Projects.Views
             var navParams = new NavigationParameters();
             navParams.Add("projectId", projectId);
             navParams.Add("storyId", story.StoryId);
-            regionManager.RequestNavigate(RegionNames.AppContainer, "Story", navParams);
-        }             
+            NavigateToItem("Story", navParams);
+            ////regionManager.RequestNavigate(RegionNames.AppContainer, "Story", navParams);
+        }
 
-        #endregion Methods
+        /// <summary>
+        /// Navigates to the region specified in the menu item.
+        /// </summary>
+        /// <param name="view">The view to navigate to.</param>
+        private void NavigateToItem(string view)
+        {
+            regionManager.RequestNavigate(RegionNames.MainRegion, view);
+        }
+
+        /// <summary>
+        /// Navigates to the region specified in the menu item.
+        /// </summary>
+        /// <param name="view">The view to navigate to.</param>
+        /// <param name="navParams">nav params</param>
+        private void NavigateToItem(string view, NavigationParameters navParams)
+        {
+            regionManager.RequestNavigate(RegionNames.MainRegion, view, navParams);
+        }
+
+        #endregion
     }
 }

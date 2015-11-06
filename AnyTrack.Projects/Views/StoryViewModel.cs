@@ -16,7 +16,7 @@ namespace AnyTrack.Projects.Views
     /// <summary>
     /// View model to represent a story.
     /// </summary>
-    public class StoryViewModel : ValidatedBindableBase, INavigationAware
+    public class StoryViewModel : ValidatedBindableBase, INavigationAware, IRegionMemberLifetime
     {
         #region Fields
 
@@ -95,9 +95,17 @@ namespace AnyTrack.Projects.Views
             this.serviceGateway = serviceGateway;
             this.Projects = new ObservableCollection<ProjectDetails>();
             this.Projects.AddRange(serviceGateway.GetProjectNames(false, true, false));
-
+            
             SaveUpdateStoryCommand = new DelegateCommand(this.SaveUpdateStory);
             CancelStoryViewCommand = new DelegateCommand(this.CancelStoryView, this.CanCancel);            
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether it should refresh everytime
+        /// </summary>
+        public bool KeepAlive
+        {
+            get { return false; }
         }
 
         #endregion
@@ -253,7 +261,8 @@ namespace AnyTrack.Projects.Views
 
             serviceGateway.SaveUpdateStory(projectId, storyId, Story);
             this.ShowMetroDialog("Story has been saved!", "Success", MessageDialogStyle.Affirmative);
-            regionManager.RequestNavigate(RegionNames.AppContainer, "ProductBacklog");
+            NavigateToItem("ProductBacklog");
+            ////regionManager.RequestNavigate(RegionNames.AppContainer, "ProductBacklog");
 
             var navParams = new NavigationParameters();
             navParams.Add("projectId", projectId);
@@ -274,7 +283,8 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         private void CancelStoryView()
         {
-            regionManager.RequestNavigate(RegionNames.AppContainer, "ProductBacklog");
+            NavigateToItem("ProductBacklog");
+            ////regionManager.RequestNavigate(RegionNames.AppContainer, "ProductBacklog");
         }
 
         /// <summary>
@@ -284,6 +294,15 @@ namespace AnyTrack.Projects.Views
         private bool CanCancel()
         {
             return true;
+        }
+
+        /// <summary>
+        /// Navigates to the region specified in the menu item.
+        /// </summary>
+        /// <param name="view">The view to navigate to.</param>
+        private void NavigateToItem(string view)
+        {
+            regionManager.RequestNavigate(RegionNames.MainRegion, view);
         }       
 
         #endregion

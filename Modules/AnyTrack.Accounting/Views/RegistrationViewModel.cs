@@ -19,7 +19,7 @@ namespace AnyTrack.Accounting.Views
     /// <summary>
     /// The view model for the registration page. 
     /// </summary>
-    public class RegistrationViewModel : ValidatedBindableBase
+    public class RegistrationViewModel : ValidatedBindableBase, IRegionMemberLifetime
     {
         #region Fields 
 
@@ -332,6 +332,14 @@ namespace AnyTrack.Accounting.Views
         /// Gets the command used to register add a Skill.
         /// </summary>
         public DelegateCommand AddSkillCommand { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether it should refresh everytime
+        /// </summary>
+        public bool KeepAlive
+        {
+            get { return false; }
+        }
 
         #endregion
 

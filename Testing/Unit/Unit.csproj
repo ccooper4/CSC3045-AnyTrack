@@ -182,6 +182,7 @@
     <Compile Include="Modules\AnyTrack.Projects\Converters\BooleanToVisibilityConverterTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\ServiceGateways\ProjectServiceGatewayTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Views\CreateProjectViewModelTests.cs" />
+    <Compile Include="Modules\AnyTrack.Projects\Views\MyProjectsViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Views\ProductBacklogViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

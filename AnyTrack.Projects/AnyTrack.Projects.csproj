@@ -97,6 +97,10 @@
     </Compile>
     <Compile Include="ServiceGateways\IProjectServiceGateway.cs" />
     <Compile Include="ServiceGateways\ProjectServiceGateway.cs" />
+    <Compile Include="Views\MyProjects.xaml.cs">
+      <DependentUpon>MyProjects.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MyProjectsViewModel.cs" />
     <Compile Include="Views\Story.xaml.cs">
       <DependentUpon>Story.xaml</DependentUpon>
     </Compile>
@@ -179,6 +183,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\CreateProject.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MyProjects.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
