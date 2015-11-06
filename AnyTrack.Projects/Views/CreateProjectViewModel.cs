@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.BackendAccountService;
@@ -11,6 +12,7 @@ using AnyTrack.Projects.ServiceGateways;
 using AnyTrack.SharedUtilities.Extensions;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Microsoft.Practices.Unity;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -55,11 +57,6 @@ namespace AnyTrack.Projects.Views
         private DateTime startedOn;
 
         /// <summary>
-        /// Project Manager
-        /// </summary>
-        private string projectManagerEmailAddress;
-
-        /// <summary>
         /// The search email address for the product owner.
         /// </summary>
         private string productOwnerSearchEmailAddress; 
@@ -79,18 +76,8 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         private bool productOwnerConfirmed;
 
-        /// <summary>
-        /// Command to save a project
-        /// </summary>
-        private DelegateCommand saveProjectCommand;
-
-        /// <summary>
-        /// Command to cancel a project
-        /// </summary>
-        private DelegateCommand cancelProjectCommand;
-
         #endregion
-
+        
         #region Constructor
 
         /// <summary>
@@ -113,10 +100,12 @@ namespace AnyTrack.Projects.Views
             this.regionManager = regionManager;
             this.serviceGateway = serviceGateway;
 
-            saveProjectCommand = new DelegateCommand(SaveProject, CanSave);
-            cancelProjectCommand = new DelegateCommand(CancelProject);
+            SaveProjectCommand = new DelegateCommand(SaveProject, CanSave);
+            CancelProjectCommand = new DelegateCommand(CancelProject);
             SearchPOUserCommand = new DelegateCommand(SearchProjectOwners);
             SetProductOwnerCommand = new DelegateCommand<string>(SetProductOwner);
+
+            startedOn = DateTime.Now;
 
             POSearchUserResults = new ObservableCollection<UserSearchInfo>();
         }
@@ -165,15 +154,6 @@ namespace AnyTrack.Projects.Views
         }
 
         /// <summary>
-        /// Gets or sets the project manager of the project
-        /// </summary>
-        public string ProjectManagerEmailAddress
-        {
-            get { return projectManagerEmailAddress; }
-            set { SetProperty(ref projectManagerEmailAddress, value); }
-        }
-
-        /// <summary>
         /// Gets or sets the PO search email address.
         /// </summary>
         public string ProductOwnerSearchEmailAddress
@@ -185,6 +165,7 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Gets or sets the selected product owner's email address.
         /// </summary>
+        [Required]
         public string SelectProductOwnerEmailAddress
         {
             get { return selectProductOwnerEmailAddress; }
@@ -219,20 +200,14 @@ namespace AnyTrack.Projects.Views
         #region Commands
 
         /// <summary>
-        /// Gets the project save command
+        /// Gets or sets the project save command
         /// </summary>
-        public DelegateCommand SaveProjectCommand
-        {
-            get { return saveProjectCommand; }
-        }
+        public DelegateCommand SaveProjectCommand { get; set; }
 
         /// <summary>
-        /// Gets the project cancel command
+        /// Gets or sets the project cancel command
         /// </summary>
-        public DelegateCommand CancelProjectCommand
-        {
-            get { return cancelProjectCommand; }
-        }
+        public DelegateCommand CancelProjectCommand { get; set; }
 
         /// <summary>
         /// Gets or sets the command that can be used to search for a PO.
@@ -265,7 +240,9 @@ namespace AnyTrack.Projects.Views
                 Name = this.ProjectName,
                 Description = this.Description,
                 VersionControl = this.VersionControl,
-                StartedOn = this.StartedOn
+                StartedOn = this.StartedOn,
+                ProductOwnerEmailAddress = selectProductOwnerEmailAddress,
+                ProjectManagerEmailAddress = this.LoggedInUserPrincipal.Identity.Name,
             };
 
             serviceGateway.CreateProject(project);
@@ -287,7 +264,7 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         private void SearchProjectOwners()
         {
-            var filter = new UserSearchFilter { EmailAddress = productOwnerSearchEmailAddress, ProductOwner = true, ScrumMaster = false };
+            var filter = new UserSearchFilter { EmailAddress = productOwnerSearchEmailAddress, ProductOwner = true };
             var results = serviceGateway.SearchUsers(filter);
 
             POSearchUserResults.Clear();

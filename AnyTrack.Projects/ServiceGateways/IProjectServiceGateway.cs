@@ -72,10 +72,32 @@ namespace AnyTrack.Projects.ServiceGateways
         List<UserSearchInfo> SearchUsers(UserSearchFilter filter);
 
         /// <summary>
+        /// Updates an existing story in the database
+        /// </summary>
+        /// <param name="editedStory">Story to be updated</param>
+        void EditStory(ServiceStory editedStory);
+
+        /// <summary>
         /// Adds a story to a project
         /// </summary>
         /// <param name="projectGuid">Project id</param>
         /// <param name="story">The story to add</param>
         void AddStory(Guid projectGuid, ServiceStory story);
+
+        /// <summary>
+        /// Retrieves the project by its id
+        /// </summary>
+        /// <param name="projectId">id of the project to be retrieved</param>
+        /// <param name="storyId">id of the story to be retrieved</param>
+        /// <returns>Specified project</returns>
+        ServiceStory GetProjectStory(Guid projectId, Guid storyId);
+
+        /// <summary>
+        /// Adds or updates a story to/in the database and associates it with the specified project.
+        /// </summary>
+        /// <param name="projectId">The Guid of the project to add stories to</param>
+        /// <param name="storyId">The Guid of the story to add stories to</param>
+        /// <param name="story">The story to add/update</param>
+        void SaveUpdateStory(Guid projectId, Guid storyId, ServiceStory story);
     }
 }

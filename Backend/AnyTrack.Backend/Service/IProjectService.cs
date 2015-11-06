@@ -96,5 +96,30 @@ namespace AnyTrack.Backend.Service
         /// <returns>List of the users project role details</returns>
         [OperationContract]
         List<ProjectRoleSummary> GetUserProjectRoleSummaries(string currentUserEmailAddress);
+
+        /// <summary>
+        /// Gets a specified project from the database
+        /// </summary>
+        /// <param name="projectId">ID of the project to be retrieved from the database</param>
+        /// <param name = "storyId" > ID of the story to be retrieved from the database</param>
+        /// <returns>Specified Project</returns>
+        [OperationContract]
+        ServiceStory GetProjectStory(Guid projectId, Guid storyId);
+
+        /// <summary>
+        /// Update story in the database
+        /// </summary>
+        /// <param name="editStory">story to be updated</param>
+        [OperationContract]
+        void EditStory(ServiceStory editStory);
+
+        /// <summary>
+        /// Update story in the database
+        /// </summary>        
+        /// <param name="projectId">ID of the project to be retrieved from the database</param>
+        /// <param name = "storyId" > ID of the story to be retrieved from the database</param>
+        /// <param name="story">story to be updated</param>
+        [OperationContract]
+        void SaveUpdateStory(Guid projectId, Guid storyId, ServiceStory story);
     }
 }

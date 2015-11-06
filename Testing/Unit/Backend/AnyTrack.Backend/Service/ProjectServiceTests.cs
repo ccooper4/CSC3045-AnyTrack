@@ -156,7 +156,8 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
                 Description = "This is a new project",
                 VersionControl = "queens.git",
                 ProjectManagerEmailAddress = "tester@agile.local",
-                StartedOn = DateTime.Today
+                StartedOn = DateTime.Today,
+                ProductOwnerEmailAddress = "tester@agile.local"
             };
 
             #endregion
@@ -185,10 +186,10 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             dataProject.ProjectManager.Skills.Should().Be("C#, Java");
             dataProject.ProjectManager.SecretQuestion.Should().Be("Where do you live?");
             dataProject.ProjectManager.SecretAnswer.Should().Be("At Home");
-            dataProject.ProjectManager.Roles.Count.Should().Be(2);
+            dataProject.ProjectManager.Roles.Count.Should().Be(3);
             dataProject.ProjectManager.Roles.ToList()[1].RoleName.Should().Be("Project Manager");
 
-            dataProject.ProductOwner.Should().BeNull();
+            dataProject.ProductOwner.Should().NotBeNull();
             dataProject.ScrumMasters.Count().Should().Be(0);
             dataProject.StartedOn.Should().Be(DateTime.Today);
 
@@ -213,7 +214,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
                 Description = "This is a new project",
                 VersionControl = "queens.git",
                 ProjectManagerEmailAddress = "tester@agile.local",
-                ProductOwnerEmailAddress = "PO@test.com",
+                ProductOwnerEmailAddress = "tester@agile.local",
                 StartedOn = DateTime.Today
             };
 
@@ -246,22 +247,22 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             dataProject.ProjectManager.Skills.Should().Be("C#, Java");
             dataProject.ProjectManager.SecretQuestion.Should().Be("Where do you live?");
             dataProject.ProjectManager.SecretAnswer.Should().Be("At Home");
-            dataProject.ProjectManager.Roles.Count.Should().Be(2);
-            dataProject.ProjectManager.Roles.ToList()[1].RoleName.Should().Be("Project Manager");
+            dataProject.ProjectManager.Roles.Count.Should().Be(3);
+            dataProject.ProjectManager.Roles.ToList().Select(r => r.RoleName).Should().Contain("Project Manager");
 
             dataProject.ProductOwner.Should().NotBeNull();
-            dataProject.ProductOwner.EmailAddress.Should().Be("PO@test.com");
-            dataProject.ProductOwner.FirstName.Should().Be("Julie");
+            dataProject.ProductOwner.EmailAddress.Should().Be("tester@agile.local");
+            dataProject.ProductOwner.FirstName.Should().Be("John");
             dataProject.ProductOwner.LastName.Should().Be("Test");
             dataProject.ProductOwner.Password.Should().Be("Password");
             dataProject.ProductOwner.Developer.Should().Be(false);
-            dataProject.ProductOwner.ProductOwner.Should().Be(true);
+            dataProject.ProductOwner.ProductOwner.Should().Be(false);
             dataProject.ProductOwner.ScrumMaster.Should().Be(false);
-            dataProject.ProductOwner.Skills.Should().Be("C#");
+            dataProject.ProductOwner.Skills.Should().Be("C#, Java");
             dataProject.ProductOwner.SecretQuestion.Should().Be("Where do you live?");
-            dataProject.ProductOwner.SecretAnswer.Should().Be("A car");
-            dataProject.ProductOwner.Roles.Count.Should().Be(1);
-            dataProject.ProductOwner.Roles.ToList()[0].RoleName.Should().Be("Product Owner");
+            dataProject.ProductOwner.SecretAnswer.Should().Be("At Home");
+            dataProject.ProductOwner.Roles.Count.Should().Be(3);
+            dataProject.ProductOwner.Roles.ToList().Select(r => r.RoleName).Should().Contain("Product Owner");
 
             dataProject.ScrumMasters.Count().Should().Be(2);
 
@@ -277,7 +278,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             dataProject.ScrumMasters[0].SecretQuestion.Should().Be("Where do you live?");
             dataProject.ScrumMasters[0].SecretAnswer.Should().Be("A Tent");
             dataProject.ScrumMasters[0].Roles.Count.Should().Be(1);
-            dataProject.ScrumMasters[0].Roles.ToList()[0].RoleName.Should().Be("Scrum Master");
+            dataProject.ScrumMasters[0].Roles.ToList().Select(r => r.RoleName).Should().Contain("Scrum Master");
 
             dataProject.ScrumMasters[1].Should().NotBeNull();
             dataProject.ScrumMasters[1].EmailAddress.Should().Be("S2@test.com");
@@ -290,7 +291,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             dataProject.ScrumMasters[1].SecretQuestion.Should().Be("Where do you live?");
             dataProject.ScrumMasters[1].SecretAnswer.Should().Be("A Tent");
             dataProject.ScrumMasters[1].Roles.Count.Should().Be(1);
-            dataProject.ScrumMasters[1].Roles.ToList()[0].RoleName.Should().Be("Scrum Master");
+            dataProject.ScrumMasters[1].Roles.ToList().Select(r => r.RoleName).Should().Contain("Scrum Master");
 
             dataProject.StartedOn.Should().Be(DateTime.Today);
             #endregion

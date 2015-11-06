@@ -88,16 +88,6 @@ namespace AnyTrack.Accounting.Views
         /// </summary>
         private string secretAnswer; 
 
-        /// <summary>
-        /// The specified user skills.
-        /// </summary>
-        private ObservableCollection<string> skills = new ObservableCollection<string>();
-
-        /// <summary>
-        /// The secret questions to ask the user.
-        /// </summary>
-        private ObservableCollection<string> secretQuestions;
-
         #endregion
 
         #region Constructor 
@@ -120,12 +110,13 @@ namespace AnyTrack.Accounting.Views
 
             this.regionManager = regionManager;
             this.serviceGateway = gateway;
-            this.secretQuestions = new ObservableCollection<string>(AvailableSecretQuestions.All());
+            this.SecretQuestions = new ObservableCollection<string>(AvailableSecretQuestions.All());
+            this.Skills = new ObservableCollection<string>();
 
             // SecretQuestions = serviceGateway.SecretQuestions();
-            RegisterUserCommand = new DelegateCommand(this.RegisterUser, this.CanRegister);
-            AddSkillCommand = new DelegateCommand(this.AddSkill, this.CanAddSkill);
-            CancelRegisterUserCommand = new DelegateCommand(this.CancelRegisterUser, this.CanCancel);
+            RegisterUserCommand = new DelegateCommand(this.RegisterUser);
+            AddSkillCommand = new DelegateCommand(this.AddSkill);
+            CancelRegisterUserCommand = new DelegateCommand(this.CancelRegisterUser);
         }
 
         #endregion
@@ -318,23 +309,14 @@ namespace AnyTrack.Accounting.Views
         }
 
         /// <summary>
-        /// Gets the Skills property.
+        /// Gets or sets the Skills property.
         /// </summary>
-        public ObservableCollection<string> Skills
-        {
-            get
-            {
-                return skills;
-            }
-        }
+        public ObservableCollection<string> Skills { get; set; }
 
         /// <summary>
-        /// Gets the SecretQuestions property.
+        /// Gets or sets the SecretQuestions property.
         /// </summary>
-        public ObservableCollection<string> SecretQuestions
-        {
-            get { return secretQuestions; }
-        }
+        public ObservableCollection<string> SecretQuestions { get; set; }
 
         /// <summary>
         /// Gets the command used to register a user. 
@@ -350,64 +332,52 @@ namespace AnyTrack.Accounting.Views
         /// Gets the command used to register add a Skill.
         /// </summary>
         public DelegateCommand AddSkillCommand { get; private set; }
+
         #endregion
 
         #region Methods 
-
-        /// <summary>
-        /// Detects whether the registration can take place.
-        /// </summary>
-        /// <returns>Proceed with registration or not.</returns>
-        private bool CanRegister()
-        {
-            return !this.HasErrors;
-        }
-
-        /// <summary>
-        /// Detects whether the registration can cancel.
-        /// </summary>
-        /// <returns>Cancel registration or not.</returns>
-        private bool CanCancel()
-        {
-            return true;
-        }
 
         /// <summary>
         /// Perform registration.
         /// </summary>
         private void RegisterUser()
         {
-            var newUser = new NewUser
-            {
-                EmailAddress = email,
-                FirstName = firstName,
-                LastName = lastName,
-                Password = password,
-                ProductOwner = productOwner,
-                ScrumMaster = scrumMaster,
-                Developer = developer,
-                SecretQuestion = secretQuestion,
-                SecretAnswer = secretAnswer,
-                Skills = string.Join(",", Skills)
-            };
+            this.ValidateViewModelNow();
 
-            try
+            if (!this.HasErrors)
             {
-                serviceGateway.RegisterAccount(newUser);
-
-                var callback = new Action<MessageDialogResult>(m =>
+                var newUser = new NewUser
                 {
-                    if (m == MessageDialogResult.Affirmative)
-                    {
-                        regionManager.RequestNavigate(Infrastructure.RegionNames.AppContainer, "Login");
-                    }
-                });
+                    EmailAddress = email,
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Password = password,
+                    ProductOwner = productOwner,
+                    ScrumMaster = scrumMaster,
+                    Developer = developer,
+                    SecretQuestion = secretQuestion,
+                    SecretAnswer = secretAnswer,
+                    Skills = string.Join(",", Skills)
+                };
 
-                this.ShowMetroDialog("Registration successful", "Your user account has been successfully registered.", MessageDialogStyle.Affirmative, callback);
-            }
-            catch (FaultException<UserAlreadyExistsFault>)
-            {
-                this.ShowMetroDialog("Registration was not successful", "Your user account could not be registered because an account with that email address already exists. Please try logging in.", MessageDialogStyle.Affirmative);
+                try
+                {
+                    serviceGateway.RegisterAccount(newUser);
+
+                    var callback = new Action<MessageDialogResult>(m =>
+                    {
+                        if (m == MessageDialogResult.Affirmative)
+                        {
+                            regionManager.RequestNavigate(Infrastructure.RegionNames.AppContainer, "Login");
+                        }
+                    });
+
+                    this.ShowMetroDialog("Registration successful", "Your user account has been successfully registered.", MessageDialogStyle.Affirmative, callback);
+                }
+                catch (FaultException<UserAlreadyExistsFault>)
+                {
+                    this.ShowMetroDialog("Registration was not successful", "Your user account could not be registered because an account with that email address already exists. Please try logging in.", MessageDialogStyle.Affirmative);
+                }
             }
         }
 
@@ -417,15 +387,6 @@ namespace AnyTrack.Accounting.Views
         private void CancelRegisterUser()
         {
             regionManager.RequestNavigate(RegionNames.AppContainer, "Login");
-        }
-
-        /// <summary>
-        /// Detects whether the entered skill can be added.
-        /// </summary>
-        /// <returns>Proceed with adding the skill or not.</returns>
-        private bool CanAddSkill()
-        {
-            return true;
         }
 
         /// <summary>

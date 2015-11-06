@@ -73,7 +73,7 @@ namespace AnyTrack.Backend.Service
 
             // Assign Project Manager
             dataProject.ProjectManager =
-                AssignUserRole(dataProject.Id, Thread.CurrentPrincipal.Identity.Name, "Project Manager");
+                AssignUserRole(dataProject.Id, project.ProjectManagerEmailAddress, "Project Manager");
 
             // Assign Product Owner
             dataProject.ProductOwner = project.ProductOwnerEmailAddress != null
@@ -82,9 +82,12 @@ namespace AnyTrack.Backend.Service
 
             // Assign Scrum Masters
             dataProject.ScrumMasters = new List<User>();
-            foreach (var scrumMasterEmailAddress in project.ScrumMasterEmailAddresses)
+            if (project.ScrumMasterEmailAddresses != null)
             {
-                dataProject.ScrumMasters.Add(AssignUserRole(dataProject.Id, scrumMasterEmailAddress, "Scrum Master"));
+                foreach (var scrumMasterEmailAddress in project.ScrumMasterEmailAddresses)
+                {
+                    dataProject.ScrumMasters.Add(AssignUserRole(dataProject.Id, scrumMasterEmailAddress, "Scrum Master"));
+                }
             }
 
             unitOfWork.ProjectRepository.Insert(dataProject);
@@ -230,6 +233,41 @@ namespace AnyTrack.Backend.Service
             }
 
             return project;
+        }
+
+        /// <summary>
+        /// Gets a specified project from the database
+        /// </summary>
+        /// <param name="projectId">ID of the project to be retrieved from the database</param>
+        /// <param name = "storyId" > ID of the story to be retrieved from the database</param>
+        /// <returns>Specified Project</returns>
+        public ServiceStory GetProjectStory(Guid projectId, Guid storyId)
+        {
+            var dataProject = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Id == projectId);
+
+            if (dataProject == null)
+            {
+                throw new ArgumentException("Project does not exist");
+            }
+
+            var dataStory = dataProject.Stories.SingleOrDefault(p => p.Id == storyId);
+
+            if (dataStory == null)
+            {
+                throw new ArgumentException("Story does not exist");
+            }
+
+            ServiceStory story = new ServiceStory
+            {
+                StoryId = dataStory.Id,
+                Summary = dataStory.Summary,
+                ConditionsOfSatisfaction = dataStory.ConditionsOfSatisfaction,
+                AsA = dataStory.AsA,
+                IWant = dataStory.IWant,
+                SoThat = dataStory.IWant
+            };           
+
+            return story;
         }
 
         /// <summary>
@@ -389,6 +427,35 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
+        /// Adds or updates a story to/in the database and associates it with the specified project.
+        /// </summary>
+        /// <param name="projectId">The Guid of the project to add stories to</param>
+        /// <param name="storyId">The Guid of the story to add stories to</param>
+        /// <param name="story">The story to add/update</param>
+        public void SaveUpdateStory(Guid projectId, Guid storyId, ServiceStory story)
+        {
+            var project = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Id == projectId);
+
+            Story dataStory = null;
+
+            dataStory = project.Stories.SingleOrDefault(s => s.Id == storyId);
+
+            if (dataStory == null)
+            {
+                dataStory = new Story();
+                project.Stories.Add(dataStory);
+            }
+
+            dataStory.Summary = story.Summary;
+            dataStory.ConditionsOfSatisfaction = story.ConditionsOfSatisfaction;
+            dataStory.AsA = story.AsA;
+            dataStory.IWant = story.IWant;
+            dataStory.SoThat = story.SoThat;
+
+            unitOfWork.Commit();
+        }
+
+        /// <summary>
         /// Adds a story to the database and associates it with the specified project.
         /// </summary>
         /// <param name="projectGuid">The Guid of the project to add stories to</param>
@@ -418,6 +485,40 @@ namespace AnyTrack.Backend.Service
             };
             
             project.Stories.Add(newStory);
+            unitOfWork.Commit();
+        }
+
+        /// <summary>
+        /// Update story in the database
+        /// </summary>
+        /// <param name="editStory">story to be updated</param>
+        public void EditStory(ServiceStory editStory)
+        {
+            if (editStory == null)
+            {
+                throw new ArgumentNullException("editStory");
+            }
+
+            var project = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Id == editStory.ProjectId);
+
+            if (project == null)
+            {
+                throw new ArgumentException("Project does not exist in database");
+            }
+
+            var story = project.Stories.SingleOrDefault(p => p.Id == editStory.StoryId);
+
+            if (story == null)
+            {
+                throw new ArgumentException("story does not exist in database");
+            }
+            
+            story.Summary = editStory.Summary;
+            story.ConditionsOfSatisfaction = editStory.ConditionsOfSatisfaction;
+            story.AsA = editStory.AsA;
+            story.IWant = editStory.IWant;
+            story.SoThat = editStory.SoThat;           
+            
             unitOfWork.Commit();
         }
 

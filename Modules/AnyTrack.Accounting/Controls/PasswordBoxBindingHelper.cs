@@ -18,7 +18,7 @@ namespace AnyTrack.Accounting.Controls
         /// <summary>
         /// The binding property that can be used to expose a password as a Dependency Property
         /// </summary>
-        public static readonly DependencyProperty Binding = DependencyProperty.RegisterAttached("Binding", typeof(string), typeof(PasswordBoxBindingHelper), new PropertyMetadata(string.Empty, OnPasswordBindingChanged));
+        public static readonly DependencyProperty Binding = DependencyProperty.RegisterAttached("Binding", typeof(string), typeof(PasswordBoxBindingHelper), new PropertyMetadata(string.Empty, null));
 
         /// <summary>
         /// A flag indicating if this helper is enabled on the password box.
@@ -88,28 +88,6 @@ namespace AnyTrack.Accounting.Controls
             {
                 passwordBox.PasswordChanged -= PushPasswordToDependencyObject;
             }
-        }
-
-        /// <summary>
-        /// Handles the event that is raised when the Binding DP is changed. 
-        /// </summary>
-        /// <param name="d">The dependency object, in this case the password box.</param>
-        /// <param name="e">The evenr args.</param>
-        public static void OnPasswordBindingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var passwordBox = d as PasswordBox;
-
-            if (!GetEnablePasswordBoxBinding(passwordBox))
-            {
-                return; 
-            }
-
-            // Need to disable the password boxes event to prevent a potential loop
-            passwordBox.PasswordChanged -= PushPasswordToDependencyObject;
-
-            passwordBox.Password = (string)e.NewValue;
-
-            passwordBox.PasswordChanged += PushPasswordToDependencyObject;
         }
 
         /// <summary>

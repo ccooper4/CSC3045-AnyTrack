@@ -173,10 +173,12 @@
     <Compile Include="Common\AnyTrack.SharedUtilities\Extensions\StringExtensionTests.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Modules\AnyTrack.Accounting\AccountingModuleTests.cs" />
+    <Compile Include="Modules\AnyTrack.Accounting\Controls\PasswordBoxBindingHelperTests.cs" />
     <Compile Include="Modules\AnyTrack.Accounting\ServiceGateways\AccountServiceGatewayTests.cs" />
     <Compile Include="Modules\AnyTrack.Accounting\ServiceGateways\Model\AvailableSecretQuestionsTests.cs" />
     <Compile Include="Modules\AnyTrack.Accounting\Views\LoginViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Accounting\Views\RegistrationViewModelTests.cs" />
+    <Compile Include="Modules\AnyTrack.Projects\Converters\DateConverterTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Converters\BooleanToVisibilityConverterTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\ServiceGateways\ProjectServiceGatewayTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Views\CreateProjectViewModelTests.cs" />

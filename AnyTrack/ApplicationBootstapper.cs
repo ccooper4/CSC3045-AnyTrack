@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Globalization;
+using System.Security.Principal;
+using System.Threading;
 using System.Windows;
 using AnyTrack.Accounting;
 using AnyTrack.Client.Views;
@@ -82,6 +84,9 @@ namespace AnyTrack.Client
 
             // AnyTrack.Views
             this.Container.RegisterType<object, MainAppArea>("MainAppArea");
+
+            // IPrincipal default. 
+            this.Container.RegisterInstance<IPrincipal>(Thread.CurrentPrincipal);
         }
 
         #endregion 

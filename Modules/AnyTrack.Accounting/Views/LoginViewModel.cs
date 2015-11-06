@@ -69,8 +69,8 @@ namespace AnyTrack.Accounting.Views
             this.regionManager = regionManager;
             this.serviceGateway = gateway;
 
-            LoginUserCommand = new DelegateCommand(this.LoginUser, this.CanLogin);
-            SignUpCommand = new DelegateCommand(this.SignUp, this.CanSignUp);
+            LoginUserCommand = new DelegateCommand(this.LoginUser);
+            SignUpCommand = new DelegateCommand(this.SignUp);
         }
         #region Properties
 
@@ -118,48 +118,35 @@ namespace AnyTrack.Accounting.Views
         /// Gets the command used to login a user. 
         /// </summary>
         public DelegateCommand SignUpCommand { get; private set; }
+
         #endregion
 
         #region Methods
-
-        /// <summary>
-        /// Detects whether the login can take place.
-        /// </summary>
-        /// <returns>Proceed with login or not.</returns>
-        private bool CanLogin()
-        {
-            return true;
-        }
-
-        /// <summary>
-        /// Detects whether the SignUp can take place.
-        /// </summary>
-        /// <returns>Proceed with SignUp or not.</returns>
-        private bool CanSignUp()
-        {
-            return true;
-        }
 
         /// <summary>
         /// Perform login.
         /// </summary>
         private void LoginUser()
         {
-            var user = new UserCredential
+            this.ValidateViewModelNow();
+            if (!this.HasErrors)
             {
-                EmailAddress = email,
-                Password = password
-            };
+                var user = new UserCredential
+                {
+                    EmailAddress = email,
+                    Password = password
+                };
 
-            var response = serviceGateway.LoginAccount(user);
+                var response = serviceGateway.LoginAccount(user);
 
-            if (response.Success)
-            {
-                regionManager.RequestNavigate(RegionNames.AppContainer, "MainAppArea");
-            }
-            else
-            {
-                this.ShowMetroDialog("Unable to login!", "Sorry! We were unable to log you into AnyTrack using the details provided. Please check them and try again. Alternatively, rest your password or create an account");
+                if (response.Success)
+                {
+                    regionManager.RequestNavigate(RegionNames.AppContainer, "MainAppArea");
+                }
+                else
+                {
+                    this.ShowMetroDialog("Unable to login!", "Sorry! We were unable to log you into AnyTrack using the details provided. Please check them and try again. Alternatively, rest your password or create an account");
+                }
             }
         }
 

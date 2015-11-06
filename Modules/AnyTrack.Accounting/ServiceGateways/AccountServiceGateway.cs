@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Text;
@@ -10,6 +11,7 @@ using AnyTrack.Accounting.ServiceGateways.Models;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.BackendAccountService;
 using AnyTrack.Infrastructure.Security;
+using Microsoft.Practices.Unity;
 
 namespace AnyTrack.Accounting.ServiceGateways
 {
@@ -25,6 +27,11 @@ namespace AnyTrack.Accounting.ServiceGateways
         /// </summary>
         private readonly IAccountService client;
 
+        /// <summary>
+        /// The unity container.
+        /// </summary>
+        private readonly IUnityContainer container; 
+
         #endregion
 
         #region Constructor 
@@ -32,14 +39,21 @@ namespace AnyTrack.Accounting.ServiceGateways
         /// <summary>
         /// Constructs a new AccountServiceGateway with the specified web service client.
         /// </summary>
+        /// <param name="container">The unity container.</param>
         /// <param name="client">The web service client.</param>
-        public AccountServiceGateway(IAccountService client)
+        public AccountServiceGateway(IUnityContainer container, IAccountService client)
         {
+            if (container == null)
+            {
+                throw new ArgumentNullException("container");
+            }
+
             if (client == null)
             {
                 throw new ArgumentNullException("client");
             }
 
+            this.container = container;
             this.client = client;
         }
 
@@ -93,6 +107,9 @@ namespace AnyTrack.Accounting.ServiceGateways
                     }
 
                     var principal = new ServiceUserPrincipal(result, cookie);
+
+                    container.RegisterInstance<IPrincipal>(principal);
+
                     Thread.CurrentPrincipal = principal;
                 }
 

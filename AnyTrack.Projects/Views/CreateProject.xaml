@@ -13,6 +13,7 @@
     
     <UserControl.Resources>
         <converter:BooleanToVisibilityConverter x:Key="booleanToVisibility"/>
+        <converter:DateConverter x:Key="dateConverter"/>
     </UserControl.Resources>
 
     <Grid HorizontalAlignment="Stretch">

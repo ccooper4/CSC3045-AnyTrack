@@ -59,26 +59,11 @@ namespace Unit.Modules.AnyTrack.Accounting.Views
             loginViewModel = new LoginViewModel(regionManager, null);
         }
 
-        #endregion
-
-        #region CanLogin() Tests
-
         [Test]
-        public void TestCanLogin()
+        public void ConstructWithAllRequirements()
         {
-            var result = loginViewModel.Call<bool>("CanLogin");
-            result.Should().BeTrue();
-        }
-
-        #endregion
-
-        #region CanSignUp() Tests
-
-        [Test]
-        public void TestCanSignUp()
-        {
-            var result = loginViewModel.Call<bool>("CanSignUp");
-            result.Should().BeTrue();
+            loginViewModel.SignUpCommand.Should().NotBeNull();
+            loginViewModel.LoginUserCommand.Should().NotBeNull();
         }
 
         #endregion
@@ -103,6 +88,17 @@ namespace Unit.Modules.AnyTrack.Accounting.Views
             gateway.Received().LoginAccount(cred);
 
             regionManager.Received().RequestNavigate(RegionNames.AppContainer, "MainAppArea");
+        }
+
+        [Test]
+        public void CallLoginUserFieldErrors()
+        {
+            loginViewModel.Email = "notAnEmail";
+            loginViewModel.Password = "test";
+
+            loginViewModel.Call("LoginUser");
+
+            gateway.DidNotReceive().LoginAccount(Arg.Any<UserCredential>());
         }
 
         [Test]
