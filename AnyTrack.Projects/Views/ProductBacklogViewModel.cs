@@ -21,7 +21,7 @@ namespace AnyTrack.Projects.Views
     /// <summary>
     /// The view model for the product backlog
     /// </summary>
-    public class ProductBacklogViewModel : ValidatedBindableBase
+    public class ProductBacklogViewModel : ValidatedBindableBase, IRegionMemberLifetime
     {
         #region Fields
 
@@ -124,10 +124,18 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         public ObservableCollection<ProjectDetails> Projects { get; set; }
 
+        /// <summary>
+        /// Gets a value indicating whether it should refresh everytime
+        /// </summary>
+        public bool KeepAlive
+        {
+            get { return false; }
+        }
+
         #endregion Properties
 
         #region Methods
-        
+
         /// <summary>
         /// Detects whether the story view can open.
         /// </summary>

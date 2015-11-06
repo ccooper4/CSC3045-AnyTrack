@@ -16,7 +16,7 @@ namespace AnyTrack.Projects.Views
     /// <summary>
     /// View model to represent a story.
     /// </summary>
-    public class StoryViewModel : ValidatedBindableBase, INavigationAware
+    public class StoryViewModel : ValidatedBindableBase, INavigationAware, IRegionMemberLifetime
     {
         #region Fields
 
@@ -98,6 +98,14 @@ namespace AnyTrack.Projects.Views
             
             SaveUpdateStoryCommand = new DelegateCommand(this.SaveUpdateStory);
             CancelStoryViewCommand = new DelegateCommand(this.CancelStoryView, this.CanCancel);            
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether it should refresh everytime
+        /// </summary>
+        public bool KeepAlive
+        {
+            get { return false; }
         }
 
         #endregion
@@ -291,7 +299,7 @@ namespace AnyTrack.Projects.Views
         private void NavigateToItem(string view)
         {
             regionManager.RequestNavigate(RegionNames.MainRegion, view);
-        }
+        }       
 
         #endregion
     }
