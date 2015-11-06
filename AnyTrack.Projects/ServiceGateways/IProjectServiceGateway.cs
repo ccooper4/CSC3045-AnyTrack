@@ -60,8 +60,9 @@ namespace AnyTrack.Projects.ServiceGateways
         /// Retrieves a list containing a summary of the projects the logged in user
         /// is a member of along with the roles they have in them
         /// </summary>
+        /// <param name="currentUserEmailAddress">The logged in users email address</param>
         /// <returns>List containg project role summaries</returns>
-        List<ProjectRoleSummary> GetLoggedInUserProjectRoleSummaries();
+        List<ProjectRoleSummary> GetLoggedInUserProjectRoleSummaries(string currentUserEmailAddress);
 
             /// <summary>
         /// Retrieves any users who match the specified filter.

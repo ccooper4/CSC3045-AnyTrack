@@ -841,10 +841,10 @@ namespace AnyTrack.Projects.BackendProjectService {
         System.Threading.Tasks.Task AddStoryToProjectAsync(System.Guid projectGuid, AnyTrack.Projects.BackendProjectService.ServiceStory story);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetUserProjectRoleSummaries", ReplyAction="http://tempuri.org/IProjectService/GetUserProjectRoleSummariesResponse")]
-        System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectRoleSummary> GetUserProjectRoleSummaries();
+        System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectRoleSummary> GetUserProjectRoleSummaries(string currentUserEmailAddress);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetUserProjectRoleSummaries", ReplyAction="http://tempuri.org/IProjectService/GetUserProjectRoleSummariesResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectRoleSummary>> GetUserProjectRoleSummariesAsync();
+        System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectRoleSummary>> GetUserProjectRoleSummariesAsync(string currentUserEmailAddress);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -954,12 +954,12 @@ namespace AnyTrack.Projects.BackendProjectService {
             return base.Channel.AddStoryToProjectAsync(projectGuid, story);
         }
         
-        public System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectRoleSummary> GetUserProjectRoleSummaries() {
-            return base.Channel.GetUserProjectRoleSummaries();
+        public System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectRoleSummary> GetUserProjectRoleSummaries(string currentUserEmailAddress) {
+            return base.Channel.GetUserProjectRoleSummaries(currentUserEmailAddress);
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectRoleSummary>> GetUserProjectRoleSummariesAsync() {
-            return base.Channel.GetUserProjectRoleSummariesAsync();
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectRoleSummary>> GetUserProjectRoleSummariesAsync(string currentUserEmailAddress) {
+            return base.Channel.GetUserProjectRoleSummariesAsync(currentUserEmailAddress);
         }
     }
 }

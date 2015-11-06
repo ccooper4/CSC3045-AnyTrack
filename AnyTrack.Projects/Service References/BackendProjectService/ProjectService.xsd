@@ -132,7 +132,9 @@
   </xs:element>
   <xs:element name="GetUserProjectRoleSummaries">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="currentUserEmailAddress" nillable="true" type="xs:string" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetUserProjectRoleSummariesResponse">

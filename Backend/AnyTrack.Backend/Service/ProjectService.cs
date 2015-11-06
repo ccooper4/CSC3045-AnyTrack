@@ -314,11 +314,12 @@ namespace AnyTrack.Backend.Service
         /// <summary>
         /// Retrieves the a list summarising the logged in users projects and roles
         /// </summary>
+        /// <param name="currentUserEmailAddress">The email of the currently logged in user</param>
         /// <returns>A list containing Project role summaries</returns>
-        public List<ProjectRoleSummary> GetUserProjectRoleSummaries()
+        public List<ProjectRoleSummary> GetUserProjectRoleSummaries(string currentUserEmailAddress)
         {          
             User loggedInUser =
-                unitOfWork.UserRepository.Items.Single(u => u.EmailAddress == Thread.CurrentPrincipal.Identity.Name);
+                unitOfWork.UserRepository.Items.Single(u => u.EmailAddress == currentUserEmailAddress);
 
             var projectIds =
                 unitOfWork.RoleRepository.Items.Where(r => r.User == loggedInUser)

@@ -92,8 +92,9 @@ namespace AnyTrack.Backend.Service
         /// <summary>
         /// Retrieves the logged in users projects that they are a member of
         /// </summary>
+        /// <param name="currentUserEmailAddress">The email of the currently logged in user</param>
         /// <returns>List of the users project role details</returns>
         [OperationContract]
-        List<ProjectRoleSummary> GetUserProjectRoleSummaries();
+        List<ProjectRoleSummary> GetUserProjectRoleSummaries(string currentUserEmailAddress);
     }
 }
