@@ -20,6 +20,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -85,7 +86,7 @@
                     <Label FontWeight="Bold">Product owner confirmed:</Label>
                     <Label FontWeight="Bold" Content="{Binding SelectProductOwnerEmailAddress}"></Label>
                 </StackPanel>
-                <DataGrid x:Name="poSearchGrid" Margin="10px, 20px, 10px, 2px" AutoGenerateColumns="False" IsReadOnly="True" IsEnabled="{Binding EnablePoSearchGrid}" SelectedValuePath="{Binding EmailAddress}" ItemsSource="{Binding POSearchUserResults}">
+                <DataGrid x:Name="poSearchGrid" Margin="10px, 20px, 10px, 2px" AutoGenerateColumns="False" IsReadOnly="True" IsEnabled="{Binding EnablePoSearchGrid}" ItemsSource="{Binding POSearchUserResults}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding FullName}" Width="2*"></DataGridTextColumn>
                         <DataGridTextColumn Header="Email address" Binding="{Binding EmailAddress}" Width="4*"></DataGridTextColumn>
@@ -96,6 +97,42 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox HorizontalAlignment="Stretch"  Margin="0, 0, 0, 0" Grid.Column="2" >
+            <GroupBox.Header>
+                <TextBlock Foreground="White" Text="Select Scrum Masters" />
+            </GroupBox.Header>
+            <StackPanel Background="White">
+                <Label Grid.Row="0" FontWeight="Bold" Margin="10px, 2px, 10px, 2px">Email address</Label>
+                <DockPanel Grid.Row="1" Margin="10px, 2px, 10px, 2px">
+                    <Button Content="Search" DockPanel.Dock="Right" Command="{Binding SearchScrumMasterCommand}" BorderThickness="0" Background="LightGray" Height="4"/>
+                    <TextBox Grid.Row="1" Text="{Binding ScrumMasterSearchEmailAddress}"  controls:TextBoxHelper.ClearTextButton="True" />
+                </DockPanel>
+                <DataGrid Margin="10px, 20px, 10px, 2px" AutoGenerateColumns="False" IsReadOnly="True" IsEnabled="{Binding EnableScrumMasterSearchGrid}" ItemsSource="{Binding ScrumMasterSearchUserResults}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding FullName}" Width="2*"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Email address" Binding="{Binding EmailAddress}" Width="4*"></DataGridTextColumn>
+                        <DataGridTemplateColumn Width="2*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Select" Command="{Binding Path=DataContext.SelectScrumMasterCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding Path=.}"></Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <Label FontWeight="Bold" Margin="10px, 10px, 10px, 2px">Selected scrum masters:</Label>
+
+                <DataGrid Margin="10px, 10px, 10px, 2px" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding SelectedScrumMasters}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding FullName}" Width="2*"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Email address" Binding="{Binding EmailAddress}" Width="4*"></DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
 
