@@ -21,7 +21,7 @@ namespace AnyTrack.Projects.Views
     /// <summary>
     /// The view model for the product backlog
     /// </summary>
-    public class ProductBacklogViewModel : ValidatedBindableBase
+    public class ProductBacklogViewModel : ValidatedBindableBase, IRegionMemberLifetime
     {
         #region Fields
 
@@ -39,7 +39,7 @@ namespace AnyTrack.Projects.Views
         /// The project Id
         /// </summary>
         private Guid projectId;
-
+                
         #endregion
 
         #region Constructor
@@ -67,6 +67,7 @@ namespace AnyTrack.Projects.Views
             this.Projects = new ObservableCollection<ProjectDetails>();
             this.Projects.AddRange(serviceGateway.GetProjectNames());
             OpenStoryViewCommand = new DelegateCommand(this.OpenStoryView, this.CanOpenStoryView);
+            EditStoryCommand = new DelegateCommand<StoryDetails>(this.EditStory);
         }
 
         #endregion
@@ -76,7 +77,12 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Gets or sets a given story from the backlog
         /// </summary>
-        public DelegateCommand<StoryDetails> DeleteStoryFromProductBacklog { get; set; }
+        public DelegateCommand<StoryDetails> DeleteStoryFromProductBacklogCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets a given story from the backlog
+        /// </summary>
+        public DelegateCommand<StoryDetails> EditStoryCommand { get; set; }
 
         /// <summary>
         /// Gets the command used to open story view. 
@@ -118,6 +124,14 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         public ObservableCollection<ProjectDetails> Projects { get; set; }
 
+        /// <summary>
+        /// Gets a value indicating whether it should refresh everytime
+        /// </summary>
+        public bool KeepAlive
+        {
+            get { return false; }
+        }
+
         #endregion Properties
 
         #region Methods
@@ -136,7 +150,41 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         private void OpenStoryView()
         {
-            regionManager.RequestNavigate(RegionNames.AppContainer, "Story");
+            NavigateToItem("Story");
+            ////regionManager.RequestNavigate(RegionNames.AppContainer, "Story");
+        }
+
+        /// <summary>
+        /// Open story view.
+        /// </summary>
+        /// <param name="story">story object</param>
+        private void EditStory(StoryDetails story)
+        {
+            // this.ShowMetroDialog("Called EditStorySuccessfully", "SID:" + story.StoryId + ". PID:" + projectId, MessageDialogStyle.Affirmative);
+            var navParams = new NavigationParameters();
+            navParams.Add("projectId", projectId);
+            navParams.Add("storyId", story.StoryId);
+            NavigateToItem("Story", navParams);
+            ////regionManager.RequestNavigate(RegionNames.AppContainer, "Story", navParams);
+        }
+
+        /// <summary>
+        /// Navigates to the region specified in the menu item.
+        /// </summary>
+        /// <param name="view">The view to navigate to.</param>
+        private void NavigateToItem(string view)
+        {
+            regionManager.RequestNavigate(RegionNames.MainRegion, view);
+        }
+
+        /// <summary>
+        /// Navigates to the region specified in the menu item.
+        /// </summary>
+        /// <param name="view">The view to navigate to.</param>
+        /// <param name="navParams">nav params</param>
+        private void NavigateToItem(string view, NavigationParameters navParams)
+        {
+            regionManager.RequestNavigate(RegionNames.MainRegion, view, navParams);
         }
 
         #endregion

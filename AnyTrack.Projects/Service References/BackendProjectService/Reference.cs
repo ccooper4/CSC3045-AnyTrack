@@ -841,10 +841,28 @@ namespace AnyTrack.Projects.BackendProjectService {
         System.Threading.Tasks.Task AddStoryToProjectAsync(System.Guid projectGuid, AnyTrack.Projects.BackendProjectService.ServiceStory story);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetUserProjectRoleSummaries", ReplyAction="http://tempuri.org/IProjectService/GetUserProjectRoleSummariesResponse")]
-        System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectRoleSummary> GetUserProjectRoleSummaries();
+        System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectRoleSummary> GetUserProjectRoleSummaries(string currentUserEmailAddress);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetUserProjectRoleSummaries", ReplyAction="http://tempuri.org/IProjectService/GetUserProjectRoleSummariesResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectRoleSummary>> GetUserProjectRoleSummariesAsync();
+        System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectRoleSummary>> GetUserProjectRoleSummariesAsync(string currentUserEmailAddress);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetProjectStory", ReplyAction="http://tempuri.org/IProjectService/GetProjectStoryResponse")]
+        AnyTrack.Projects.BackendProjectService.ServiceStory GetProjectStory(System.Guid projectId, System.Guid storyId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetProjectStory", ReplyAction="http://tempuri.org/IProjectService/GetProjectStoryResponse")]
+        System.Threading.Tasks.Task<AnyTrack.Projects.BackendProjectService.ServiceStory> GetProjectStoryAsync(System.Guid projectId, System.Guid storyId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/EditStory", ReplyAction="http://tempuri.org/IProjectService/EditStoryResponse")]
+        void EditStory([System.ServiceModel.MessageParameterAttribute(Name="editStory")] AnyTrack.Projects.BackendProjectService.ServiceStory editStory1);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/EditStory", ReplyAction="http://tempuri.org/IProjectService/EditStoryResponse")]
+        System.Threading.Tasks.Task EditStoryAsync(AnyTrack.Projects.BackendProjectService.ServiceStory editStory);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/SaveUpdateStory", ReplyAction="http://tempuri.org/IProjectService/SaveUpdateStoryResponse")]
+        void SaveUpdateStory(System.Guid projectId, System.Guid storyId, AnyTrack.Projects.BackendProjectService.ServiceStory story);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/SaveUpdateStory", ReplyAction="http://tempuri.org/IProjectService/SaveUpdateStoryResponse")]
+        System.Threading.Tasks.Task SaveUpdateStoryAsync(System.Guid projectId, System.Guid storyId, AnyTrack.Projects.BackendProjectService.ServiceStory story);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -954,12 +972,36 @@ namespace AnyTrack.Projects.BackendProjectService {
             return base.Channel.AddStoryToProjectAsync(projectGuid, story);
         }
         
-        public System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectRoleSummary> GetUserProjectRoleSummaries() {
-            return base.Channel.GetUserProjectRoleSummaries();
+        public System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectRoleSummary> GetUserProjectRoleSummaries(string currentUserEmailAddress) {
+            return base.Channel.GetUserProjectRoleSummaries(currentUserEmailAddress);
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectRoleSummary>> GetUserProjectRoleSummariesAsync() {
-            return base.Channel.GetUserProjectRoleSummariesAsync();
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ProjectRoleSummary>> GetUserProjectRoleSummariesAsync(string currentUserEmailAddress) {
+            return base.Channel.GetUserProjectRoleSummariesAsync(currentUserEmailAddress);
+        }
+        
+        public AnyTrack.Projects.BackendProjectService.ServiceStory GetProjectStory(System.Guid projectId, System.Guid storyId) {
+            return base.Channel.GetProjectStory(projectId, storyId);
+        }
+        
+        public System.Threading.Tasks.Task<AnyTrack.Projects.BackendProjectService.ServiceStory> GetProjectStoryAsync(System.Guid projectId, System.Guid storyId) {
+            return base.Channel.GetProjectStoryAsync(projectId, storyId);
+        }
+        
+        public void EditStory(AnyTrack.Projects.BackendProjectService.ServiceStory editStory1) {
+            base.Channel.EditStory(editStory1);
+        }
+        
+        public System.Threading.Tasks.Task EditStoryAsync(AnyTrack.Projects.BackendProjectService.ServiceStory editStory) {
+            return base.Channel.EditStoryAsync(editStory);
+        }
+        
+        public void SaveUpdateStory(System.Guid projectId, System.Guid storyId, AnyTrack.Projects.BackendProjectService.ServiceStory story) {
+            base.Channel.SaveUpdateStory(projectId, storyId, story);
+        }
+        
+        public System.Threading.Tasks.Task SaveUpdateStoryAsync(System.Guid projectId, System.Guid storyId, AnyTrack.Projects.BackendProjectService.ServiceStory story) {
+            return base.Channel.SaveUpdateStoryAsync(projectId, storyId, story);
         }
     }
 }

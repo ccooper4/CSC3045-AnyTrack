@@ -68,6 +68,10 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
             vm.SetProductOwnerCommand.Should().NotBeNull();
             vm.POSearchUserResults.Should().NotBeNull();
             vm.StartedOn.ToString("d").Should().Be(DateTime.Now.ToString("d"));
+            vm.SearchScrumMasterCommand.Should().NotBeNull();
+            vm.SelectScrumMasterCommand.Should().NotBeNull();
+            vm.ScrumMasterSearchUserResults.Should().NotBeNull();
+            vm.SelectedScrumMasters.Should().NotBeNull();
         }
 
         #endregion 
@@ -128,7 +132,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
 
         #endregion 
 
-        #region CreateAProject Test
+        #region SaveProject Test
         [Test]
         public void SaveProject()
         {
@@ -144,6 +148,11 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
             vm.VersionControl = "V4";
             vm.StartedOn = new DateTime(30, 09, 15);
             vm.SelectProductOwnerEmailAddress = "test@agile.local";
+            vm.POConfirmed = true;
+            vm.SelectedScrumMasters = new ObservableCollection<UserSearchInfo>()
+            {
+                new UserSearchInfo { EmailAddress = "test@agile.local"}
+            };
 
             ServiceProject sentProject = null;
 
@@ -162,26 +171,143 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
             windowProvider.Received().ShowMessageAsync("Project created", "The {0} project has successfully been created".Substitute(vm.ProjectName), MessageDialogStyle.Affirmative);
 
         }
-        #endregion
-
-        #region CanSave Test 
 
         [Test]
-        public void CallCanSaveWithNoErrors()
+        public void SaveProjectWithErrors()
         {
-            var result = vm.Call<bool>("CanSave");
-            result.Should().BeTrue();
+            var windowProvider = Substitute.For<WindowProvider>();
+
+            var currentPrincipal = new ServiceUserPrincipal(new LoginResult { EmailAddress = "testmanager@agile.local" }, "");
+
+            vm.LoggedInUserPrincipal = currentPrincipal;
+            vm.MainWindow = windowProvider;
+
+            vm.ProjectName = "Mi";
+            vm.Description = "This is a description";
+            vm.VersionControl = "V4";
+            vm.StartedOn = new DateTime(30, 09, 15);
+            vm.SelectProductOwnerEmailAddress = "test@agile.local";
+
+            vm.Call("SaveProject");
+
+            gateway.DidNotReceive().CreateProject(Arg.Any<ServiceProject>());
+
         }
 
         [Test]
-        public void CallCanSaveWithErrors()
+        public void SaveProjectNoScrumMasterOrPO()
         {
-            vm.ProjectName = "";
-            var result = vm.Call<bool>("CanSave");
-            result.Should().BeFalse();
+            var windowProvider = Substitute.For<WindowProvider>();
+
+            var currentPrincipal = new ServiceUserPrincipal(new LoginResult { EmailAddress = "testmanager@agile.local" }, "");
+
+            vm.LoggedInUserPrincipal = currentPrincipal;
+            vm.MainWindow = windowProvider;
+
+            vm.ProjectName = "Project name";
+            vm.Description = "This is a description";
+            vm.VersionControl = "V4";
+            vm.StartedOn = new DateTime(30, 09, 15);
+            vm.SelectProductOwnerEmailAddress = "test@agile.local";
+
+            vm.Call("SaveProject");
+
+            gateway.DidNotReceive().CreateProject(Arg.Any<ServiceProject>());
+
+            windowProvider.Received().ShowMessageAsync("The project cannot be saved!", "This project cannot be saved because both a product owner and at least one scrum master is required.");
+
+        }
+
+        #endregion
+
+        #region SearchScrumMastters() Tests 
+
+        [Test]
+        public void TestSearchScrumMasters()
+        {
+            var serviceResult = new List<UserSearchInfo>()
+            {
+                new UserSearchInfo()
+            };
+            UserSearchFilter filter = null;
+
+            gateway.SearchUsers(Arg.Do<UserSearchFilter>(f => filter = f)).Returns(serviceResult);
+
+            vm.ScrumMasterSearchEmailAddress = "test@agile.local";
+
+            vm.Call("SearchScrumMastters");
+
+            filter.Should().NotBeNull();
+            filter.ScrumMaster.Should().BeTrue();
+            filter.EmailAddress.Should().Be(vm.ScrumMasterSearchEmailAddress);
+            gateway.Received().SearchUsers(filter);
+            vm.ScrumMasterSearchUserResults.Should().Contain(serviceResult);
+            vm.EnableScrumMasterSearchGrid.Should().BeTrue();
         }
 
         #endregion 
+
+        #region CanAddScrumMaster(UserSearchInfo selectedScrumMaster) 
+
+        [Test]
+        public void CanAddScrumMasterWithScrumMasterNotInResults()
+        {
+            var currentResults = new List<UserSearchInfo>();
+            vm.SelectedScrumMasters = new ObservableCollection<UserSearchInfo>(currentResults);
+
+            var newScrumMaster = new UserSearchInfo { EmailAddress = "test@agile.local" };
+
+            var result = vm.Call<bool>("CanAddScrumMaster", newScrumMaster);
+
+           result.Should().BeTrue();
+
+        }
+
+        [Test]
+        public void CanAddScrumMasterWithScrumMasterInResults()
+        {
+            var currentResults = new List<UserSearchInfo>()
+            {
+                new UserSearchInfo() { EmailAddress = "test@agile.local"}
+            };
+
+            vm.SelectedScrumMasters = new ObservableCollection<UserSearchInfo>(currentResults);
+
+            var newScrumMaster = new UserSearchInfo { EmailAddress = "test@agile.local" };
+
+            var windowProvider = Substitute.For<WindowProvider>();
+            vm.MainWindow = windowProvider;
+
+            var result = vm.Call<bool>("CanAddScrumMaster", newScrumMaster);
+
+            result.Should().BeFalse();
+            windowProvider.Received().ShowMessageAsync("Unable to add this scrum master to the selected scrum masters!", "The selected scrum master has already been added as a scrum master for this project.");
+
+        }
+
+        #endregion 
+
+        #region AddScrumMaster(UserSearchInfo selectedScrumMaster) Tests 
+
+        [Test]
+        public void CallAddScrumMaster()
+        {
+            var addScrumMaster = new UserSearchInfo { EmailAddress = "test@agile.local" };
+
+            vm.ScrumMasterSearchUserResults = new ObservableCollection<UserSearchInfo>()
+            {
+                new UserSearchInfo()
+            };
+
+            vm.Call("AddScrumMaster", addScrumMaster);
+
+            vm.SelectedScrumMasters.Should().Contain(addScrumMaster);
+            vm.ScrumMasterSearchUserResults.Should().BeEmpty();
+            vm.EnableScrumMasterSearchGrid.Should().BeFalse();
+        }
+
+        #endregion 
+
     }
 
     #endregion 

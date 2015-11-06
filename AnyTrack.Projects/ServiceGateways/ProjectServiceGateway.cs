@@ -77,6 +77,26 @@ namespace AnyTrack.Projects.ServiceGateways
         }
 
         /// <summary>
+        /// Retrieves the project by its id
+        /// </summary>
+        /// <param name="projectId">id of the project to be retrieved</param>
+        /// <param name="storyId">id of the story to be retrieved</param>
+        /// <returns>Specified project</returns>
+        public ServiceStory GetProjectStory(Guid projectId, Guid storyId)
+        {
+            return client.GetProjectStory(projectId, storyId);
+        }
+
+        /// <summary>
+        /// Update specified story in the database
+        /// </summary>
+        /// <param name="editedStory">The story to be updated</param>
+        public void EditStory(ServiceStory editedStory)
+        {
+            client.EditStory(editedStory);
+        }
+
+        /// <summary>
         /// Retrieves all projects in the database
         /// </summary>
         /// <returns>A list of all protects</returns>
@@ -89,10 +109,11 @@ namespace AnyTrack.Projects.ServiceGateways
         /// Retrieves a list containing a summary of the projects the logged in user
         /// is a member of along with the roles they have in them
         /// </summary>
+        /// <param name="currentUserEmailAddress">The logged in users email address</param>
         /// <returns>List containg project role summaries</returns>
-        public List<ProjectRoleSummary> GetLoggedInUserProjectRoleSummaries()
+        public List<ProjectRoleSummary> GetLoggedInUserProjectRoleSummaries(string currentUserEmailAddress)
         {
-            return client.GetUserProjectRoleSummaries();
+            return client.GetUserProjectRoleSummaries(currentUserEmailAddress);
         }
 
         /// <summary>
@@ -132,6 +153,17 @@ namespace AnyTrack.Projects.ServiceGateways
         public void AddStory(Guid projectGuid, ServiceStory story)
         {
             client.AddStoryToProject(projectGuid, story);
+        }
+
+        /// <summary>
+        /// Adds a story to a project
+        /// </summary>
+        /// <param name="projectGuid">id of project to add tos</param>
+        /// <param name="storyGuid">storyid to add to projects</param>
+        /// <param name="story">story to add to projects</param>
+        public void SaveUpdateStory(Guid projectGuid, Guid storyGuid, ServiceStory story)
+        {
+            client.SaveUpdateStory(projectGuid, storyGuid, story);
         }
 
         #endregion

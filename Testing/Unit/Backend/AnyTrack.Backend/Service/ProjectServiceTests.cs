@@ -693,37 +693,211 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
         
         #endregion
 
-        #region Helper Methods
+        #region List<ProjectRoleSummary> GetUserProjectRoleSummaries(string currentUserEmailAddress)
 
-        private void SetUpThreadCurrent()
+        [Test]
+        public void GetUserProjectRoleSummary()
         {
-            FormsAuthenticationProvider provider = Substitute.For<FormsAuthenticationProvider>();
-            OperationContextProvider context = Substitute.For<OperationContextProvider>();
-            TestService testService;
+            #region Test Data
 
-            var channel = Substitute.For<IContextChannel>();
-            var requestMessage = new HttpRequestMessageProperty();
-            var authCookie = "test";
-            var user = new User { EmailAddress = "tester@agile.local", Roles = new List<Role>() };
-            requestMessage.Headers.Set("Set-Cookie", "AuthCookie=" + authCookie + ";other=other");
+            List<User> users = new List<User>()
+            {
+                #region User Data
+                new User()
+                {
+                    EmailAddress = "tester@agile.local",
+                    FirstName = "John",
+                    LastName = "Test",
+                    Password = "Password",
+                    Developer = false,
+                    ProductOwner = false,
+                    ScrumMaster = false,
+                    Skills = "C#, Java",
+                    SecretQuestion = "Where do you live?",
+                    SecretAnswer = "At Home"
+                }
+                #endregion
+            };
 
-            var properties = new MessageProperties();
-            properties.Add(HttpRequestMessageProperty.Name, requestMessage);
-            context.IncomingMessageProperties.Returns(properties);
+            List<Role> roles = new List<Role>()
+            {
+                #region Role Data
+                new Role()
+                {
+                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    RoleName = "Project Manager",
+                    User = users[0]
+                },
+                new Role()
+                {
+                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    RoleName = "Scrum Master",
+                    User = users[0]
+                },
+                new Role()
+                {
+                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
+                    RoleName = "Product Owner",
+                    User = users[0]
+                },
+                new Role()
+                {
+                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
+                    RoleName = "Developer",
+                    User = users[0]
+                }
+               #endregion
+            };
 
-            var decryptedTicket = new FormsAuthenticationTicket("tester@agile.local", false, 100);
-            provider.Decrypt(authCookie).Returns(decryptedTicket);
+            users[0].Roles = roles;
 
-            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
+            List<Project> projects = new List<Project>()
+            {
+                #region Project Data
+                new Project
+                {
+                    Id = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    Name = "Project",
+                    Description = "This is a new project",
+                    VersionControl = "queens.git",
+                    ProjectManager = users[0],
+                    StartedOn = DateTime.Today
+                },
+                new Project
+                {
+                    Id = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
+                    Name = "Project2",
+                    Description = "This is a new project2",
+                    VersionControl = "queens.git",
+                    ProjectManager = new User
+                    {
+                        EmailAddress = "p@hotmail.com",
+                        FirstName = "John",
+                        LastName = "Test",
+                        Password = "Password",
+                        Developer = false,
+                        ProductOwner = false,
+                        ScrumMaster = false,
+                        Skills = "C#, Java",
+                        SecretQuestion = "Where do you live?",
+                        SecretAnswer = "At Home"
+                    },
+                    ProductOwner = users[0],
+                    StartedOn = DateTime.Today
+                }
+                #endregion
+            };
 
-            testService = new TestService(unitOfWork, provider, context);
+            projects[0].ScrumMasters = new List<User>() {users[0]};
 
-            provider.Received().Decrypt(authCookie);
+            #endregion
+
+            unitOfWork.UserRepository.Items.Returns(users.AsQueryable());
+            unitOfWork.RoleRepository.Items.Returns(roles.AsQueryable());
+            unitOfWork.ProjectRepository.Items.Returns(projects.AsQueryable());
+
+            var result = service.GetUserProjectRoleSummaries("tester@agile.local");
+
+            result.Should().NotBeNull();
+            result.Count.Should().Be(2);
+            result[0].ProjectId.Should().Be("11223344-5566-7788-99AA-BBCCDDEEFF00");
+            result[0].Name.Should().Be("Project");
+            result[0].Description.Should().Be("This is a new project");
+            result[0].Developer.Should().BeFalse();
+            result[0].ProductOwner.Should().BeFalse();
+            result[0].ProjectManager.Should().BeTrue();
+            result[0].ScrumMaster.Should().BeTrue();
+            result[1].Name.Should().Be("Project2");
+            result[1].Description.Should().Be("This is a new project2");
+            result[1].Developer.Should().BeTrue();
+            result[1].ProductOwner.Should().BeTrue();
+            result[1].ProjectManager.Should().BeFalse();
+            result[1].ScrumMaster.Should().BeFalse();
         }
-       
+
+
+        [Test]
+        public void UserHasNoRoles()
+        {
+            #region Test Data
+
+            List<User> users = new List<User>()
+            {
+                #region User Data
+                new User()
+                {
+                    EmailAddress = "tester@agile.local",
+                    FirstName = "John",
+                    LastName = "Test",
+                    Password = "Password",
+                    Developer = false,
+                    ProductOwner = false,
+                    ScrumMaster = false,
+                    Skills = "C#, Java",
+                    SecretQuestion = "Where do you live?",
+                    SecretAnswer = "At Home"
+                },
+                new User()
+                {
+                    EmailAddress = "PO@agile.local",
+                    FirstName = "John",
+                    LastName = "Test",
+                    Password = "Password",
+                    Developer = false,
+                    ProductOwner = false,
+                    ScrumMaster = false,
+                    Skills = "C#, Java",
+                    SecretQuestion = "Where do you live?",
+                    SecretAnswer = "At Home"
+                }
+                #endregion
+            };
+
+            List<Role> roles = new List<Role>()
+            {
+                #region Role Data
+                new Role()
+                {
+                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    RoleName = "Project Manager",
+                    User = users[1]
+                },
+                new Role()
+                {
+                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    RoleName = "Scrum Master",
+                    User = users[1]
+                },
+                new Role()
+                {
+                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
+                    RoleName = "Product Owner",
+                    User = users[1]
+                },
+                new Role()
+                {
+                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
+                    RoleName = "Developer",
+                    User = users[1]
+                }
+               #endregion
+            };
+
+            users[0].Roles = new List<Role>();
+
+            #endregion
+
+            unitOfWork.UserRepository.Items.Returns(users.AsQueryable());
+            unitOfWork.RoleRepository.Items.Returns(roles.AsQueryable());
+
+            var result = service.GetUserProjectRoleSummaries("tester@agile.local");
+
+            result.Should().NotBeNull();
+            result.Count.Should().Be(0);
+        }
         #endregion
 
-        #region SearchUsers(UserSearchFilter filter) Tests 
+        #region SearchUsers(UserSearchFilter filter) Tests
 
         [Test]
         public void CallSearchUsersWithEmptyFilter()
@@ -848,5 +1022,37 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
         }
 
         #endregion 
+
+        #region Helper Methods
+
+        private void SetUpThreadCurrent()
+        {
+            FormsAuthenticationProvider provider = Substitute.For<FormsAuthenticationProvider>();
+            OperationContextProvider context = Substitute.For<OperationContextProvider>();
+            TestService testService;
+
+            var channel = Substitute.For<IContextChannel>();
+            var requestMessage = new HttpRequestMessageProperty();
+            var authCookie = "test";
+            var user = new User { EmailAddress = "tester@agile.local", Roles = new List<Role>() };
+            requestMessage.Headers.Set("Set-Cookie", "AuthCookie=" + authCookie + ";other=other");
+
+            var properties = new MessageProperties();
+            properties.Add(HttpRequestMessageProperty.Name, requestMessage);
+            context.IncomingMessageProperties.Returns(properties);
+
+            var decryptedTicket = new FormsAuthenticationTicket("tester@agile.local", false, 100);
+            provider.Decrypt(authCookie).Returns(decryptedTicket);
+
+            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
+
+            testService = new TestService(unitOfWork, provider, context);
+
+            provider.Received().Decrypt(authCookie);
+        }
+       
+        #endregion
+
+        
     }
 }

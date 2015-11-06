@@ -65,7 +65,7 @@
 
             <WrapPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10px,0,20px">
                 <Button Margin="10px, 0, 0, 0" Command="{Binding CancelStoryViewCommand}" BorderThickness="0" Background="LightGray" Width="60px">Cancel</Button>
-                <Button Margin="10px, 0, 0, 0" Command="{Binding SaveStoryCommand}" BorderThickness="0" Background="LightGray" Width="60px">Save</Button>
+                <Button Margin="10px, 0, 0, 0" Command="{Binding SaveUpdateStoryCommand}" BorderThickness="0" Background="LightGray" Width="60px">Save</Button>
             </WrapPanel>
 
         </Grid>

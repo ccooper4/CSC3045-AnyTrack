@@ -76,6 +76,16 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         private bool productOwnerConfirmed;
 
+        /// <summary>
+        /// The scrum master email address. being searched for. 
+        /// </summary>
+        private string scrumMasterSearchEmailAddress;
+
+        /// <summary>
+        /// A flag indicating if the scrum master search grid is enabled.
+        /// </summary>
+        private bool enableScrumMasterSearchGrid; 
+
         #endregion
         
         #region Constructor
@@ -100,14 +110,18 @@ namespace AnyTrack.Projects.Views
             this.regionManager = regionManager;
             this.serviceGateway = serviceGateway;
 
-            SaveProjectCommand = new DelegateCommand(SaveProject, CanSave);
+            SaveProjectCommand = new DelegateCommand(SaveProject);
             CancelProjectCommand = new DelegateCommand(CancelProject);
             SearchPOUserCommand = new DelegateCommand(SearchProjectOwners);
             SetProductOwnerCommand = new DelegateCommand<string>(SetProductOwner);
+            SearchScrumMasterCommand = new DelegateCommand(SearchScrumMastters);
+            SelectScrumMasterCommand = new DelegateCommand<UserSearchInfo>(AddScrumMaster, CanAddScrumMaster);
 
             startedOn = DateTime.Now;
 
             POSearchUserResults = new ObservableCollection<UserSearchInfo>();
+            ScrumMasterSearchUserResults = new ObservableCollection<UserSearchInfo>();
+            SelectedScrumMasters = new ObservableCollection<UserSearchInfo>();
         }
 
         #endregion
@@ -165,7 +179,6 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Gets or sets the selected product owner's email address.
         /// </summary>
-        [Required]
         public string SelectProductOwnerEmailAddress
         {
             get { return selectProductOwnerEmailAddress; }
@@ -195,6 +208,48 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         public ObservableCollection<UserSearchInfo> POSearchUserResults { get; set; }
 
+        /// <summary>
+        /// Gets or sets the scrum master email address being searched.
+        /// </summary>
+        public string ScrumMasterSearchEmailAddress
+        {
+            get
+            {
+                return scrumMasterSearchEmailAddress;
+            }
+
+            set
+            {
+                SetProperty(ref scrumMasterSearchEmailAddress, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the scrum master search grid is enabled.
+        /// </summary>
+        public bool EnableScrumMasterSearchGrid
+        {
+            get
+            {
+                return enableScrumMasterSearchGrid;
+            }
+
+            set
+            {
+                SetProperty(ref enableScrumMasterSearchGrid, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the collection containing scrum master search results.
+        /// </summary>
+        public ObservableCollection<UserSearchInfo> ScrumMasterSearchUserResults { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection of selected scrum masters.
+        /// </summary>
+        public ObservableCollection<UserSearchInfo> SelectedScrumMasters { get; set; }
+
         #endregion
 
         #region Commands
@@ -219,6 +274,16 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         public DelegateCommand<string> SetProductOwnerCommand { get; set; }
 
+        /// <summary>
+        /// Gets or sets the command that can be used to search for scrum masters.
+        /// </summary>
+        public DelegateCommand SearchScrumMasterCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the command that can be used to select a scrum master.
+        /// </summary>
+        public DelegateCommand<UserSearchInfo> SelectScrumMasterCommand { get; set; }
+
         #endregion
 
         #region Methods
@@ -235,28 +300,34 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         private void SaveProject()
         {
-            ServiceProject project = new ServiceProject
+            this.ValidateViewModelNow();
+            if (!this.HasErrors)
             {
-                Name = this.ProjectName,
-                Description = this.Description,
-                VersionControl = this.VersionControl,
-                StartedOn = this.StartedOn,
-                ProductOwnerEmailAddress = selectProductOwnerEmailAddress,
-                ProjectManagerEmailAddress = this.LoggedInUserPrincipal.Identity.Name,
-            };
+                var hasScrumMasters = this.SelectedScrumMasters.Count > 0;
+                var hasPo = this.POConfirmed;
 
-            serviceGateway.CreateProject(project);
-            ShowMetroDialog("Project created", "The {0} project has successfully been created".Substitute(this.ProjectName), MessageDialogStyle.Affirmative);
-        }
+                var hasBoth = hasScrumMasters && hasPo;
 
-        /// <summary>
-        /// This is a method that checks for validation errors and retruns the result of
-        /// whether a save can be made
-        /// </summary>
-        /// <returns>bool of whether a save can be made</returns>
-        private bool CanSave()
-        {
-            return !base.HasErrors;
+                if (!hasBoth)
+                {
+                    this.ShowMetroDialog("The project cannot be saved!", "This project cannot be saved because both a product owner and at least one scrum master is required.");
+                    return;
+                }
+
+                ServiceProject project = new ServiceProject
+                {
+                    Name = this.ProjectName,
+                    Description = this.Description,
+                    VersionControl = this.VersionControl,
+                    StartedOn = this.StartedOn,
+                    ProductOwnerEmailAddress = selectProductOwnerEmailAddress,
+                    ProjectManagerEmailAddress = this.LoggedInUserPrincipal.Identity.Name,
+                    ScrumMasterEmailAddresses = this.SelectedScrumMasters.Select(sm => sm.EmailAddress).ToList()
+                };
+
+                serviceGateway.CreateProject(project);
+                ShowMetroDialog("Project created", "The {0} project has successfully been created".Substitute(this.ProjectName), MessageDialogStyle.Affirmative);
+            }
         }
 
         /// <summary>
@@ -274,6 +345,19 @@ namespace AnyTrack.Projects.Views
         }
 
         /// <summary>
+        /// Searches for scrum masters using the details entered by the user.
+        /// </summary>
+        private void SearchScrumMastters()
+        {
+            var filter = new UserSearchFilter { EmailAddress = scrumMasterSearchEmailAddress, ScrumMaster = true };
+            var results = serviceGateway.SearchUsers(filter);
+
+            ScrumMasterSearchUserResults.Clear();
+            ScrumMasterSearchUserResults.AddRange(results);
+            EnableScrumMasterSearchGrid = true; 
+        }
+
+        /// <summary>
         /// Sets the product owner of this project to the user with the specified email address.
         /// </summary>
         /// <param name="emailAddress">The email address of the user to be set as the Product Owner.</param>
@@ -285,6 +369,37 @@ namespace AnyTrack.Projects.Views
             POConfirmed = true;
             ProductOwnerSearchEmailAddress = string.Empty;
             ShowMetroDialog("Product Owner confirmed", "The product owner has been successfully set to user - {0}".Substitute(emailAddress), MessageDialogStyle.Affirmative);
+        }
+
+        /// <summary>
+        /// Verifies that the selected scrum master can be added to this project.
+        /// </summary>
+        /// <param name="selectedScrumMaster">The selected scrum master.</param>
+        /// <returns>A true or false flag indicating if this scrum master can be added to this project.</returns>
+        private bool CanAddScrumMaster(UserSearchInfo selectedScrumMaster)
+        {
+            if (selectedScrumMaster != null)
+            {
+                var result = SelectedScrumMasters.Any(u => u.EmailAddress == selectedScrumMaster.EmailAddress);
+                if (result)
+                {
+                    this.ShowMetroDialog("Unable to add this scrum master to the selected scrum masters!", "The selected scrum master has already been added as a scrum master for this project.");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Adds the specified scrum master to this project.
+        /// </summary>
+        /// <param name="selectedScrumMaster">The selected scrum master.</param>
+        private void AddScrumMaster(UserSearchInfo selectedScrumMaster)
+        {
+            SelectedScrumMasters.Add(selectedScrumMaster);
+            ScrumMasterSearchUserResults.Clear();
+            EnableScrumMasterSearchGrid = false;
         }
 
         #endregion
