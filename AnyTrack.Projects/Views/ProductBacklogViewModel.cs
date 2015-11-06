@@ -142,7 +142,8 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         private void OpenStoryView()
         {
-            regionManager.RequestNavigate(RegionNames.AppContainer, "Story");
+            NavigateToItem("Story");
+            ////regionManager.RequestNavigate(RegionNames.AppContainer, "Story");
         }
 
         /// <summary>
@@ -155,8 +156,28 @@ namespace AnyTrack.Projects.Views
             var navParams = new NavigationParameters();
             navParams.Add("projectId", projectId);
             navParams.Add("storyId", story.StoryId);
-            regionManager.RequestNavigate(RegionNames.AppContainer, "Story", navParams);
-        }             
+            NavigateToItem("Story", navParams);
+            ////regionManager.RequestNavigate(RegionNames.AppContainer, "Story", navParams);
+        }
+
+        /// <summary>
+        /// Navigates to the region specified in the menu item.
+        /// </summary>
+        /// <param name="view">The view to navigate to.</param>
+        private void NavigateToItem(string view)
+        {
+            regionManager.RequestNavigate(RegionNames.MainRegion, view);
+        }
+
+        /// <summary>
+        /// Navigates to the region specified in the menu item.
+        /// </summary>
+        /// <param name="view">The view to navigate to.</param>
+        /// <param name="navParams">nav params</param>
+        private void NavigateToItem(string view, NavigationParameters navParams)
+        {
+            regionManager.RequestNavigate(RegionNames.MainRegion, view, navParams);
+        }
 
         #endregion
     }

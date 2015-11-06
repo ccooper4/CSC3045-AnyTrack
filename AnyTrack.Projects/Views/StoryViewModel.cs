@@ -95,7 +95,7 @@ namespace AnyTrack.Projects.Views
             this.serviceGateway = serviceGateway;
             this.Projects = new ObservableCollection<ProjectDetails>();
             this.Projects.AddRange(serviceGateway.GetProjectNames());
-
+            
             SaveUpdateStoryCommand = new DelegateCommand(this.SaveUpdateStory);
             CancelStoryViewCommand = new DelegateCommand(this.CancelStoryView, this.CanCancel);            
         }
@@ -253,7 +253,8 @@ namespace AnyTrack.Projects.Views
 
             serviceGateway.SaveUpdateStory(projectId, storyId, Story);
             this.ShowMetroDialog("Story has been saved!", "Success", MessageDialogStyle.Affirmative);
-            regionManager.RequestNavigate(RegionNames.AppContainer, "ProductBacklog");
+            NavigateToItem("ProductBacklog");
+            ////regionManager.RequestNavigate(RegionNames.AppContainer, "ProductBacklog");
         }
                 
         /// <summary>
@@ -270,7 +271,8 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         private void CancelStoryView()
         {
-            regionManager.RequestNavigate(RegionNames.AppContainer, "ProductBacklog");
+            NavigateToItem("ProductBacklog");
+            ////regionManager.RequestNavigate(RegionNames.AppContainer, "ProductBacklog");
         }
 
         /// <summary>
@@ -280,7 +282,16 @@ namespace AnyTrack.Projects.Views
         private bool CanCancel()
         {
             return true;
-        }       
+        }
+
+        /// <summary>
+        /// Navigates to the region specified in the menu item.
+        /// </summary>
+        /// <param name="view">The view to navigate to.</param>
+        private void NavigateToItem(string view)
+        {
+            regionManager.RequestNavigate(RegionNames.MainRegion, view);
+        }
 
         #endregion
     }

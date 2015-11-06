@@ -37,10 +37,10 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="96,49,0,0" VerticalAlignment="Top" Width="159" Height="26" ItemsSource="{Binding Projects}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}" />
-            <Label x:Name="label" Content="Select Project" HorizontalAlignment="Left" Margin="10,49,0,0" VerticalAlignment="Top" Height="26" Width="81"/>
-            <Button x:Name="button1" Content="+" HorizontalAlignment="Left" Margin="958,6,0,0" VerticalAlignment="Top" Width="22" Height="25" Command="{Binding OpenStoryViewCommand}"/>
-            <Label x:Name="label1" Content="New Story" Margin="887,5,37,0" VerticalAlignment="Top" Height="26"/>
+            <ComboBox x:Name="selectProjectCmb" HorizontalAlignment="Left" Margin="96,49,0,0" VerticalAlignment="Top" Width="159" Height="26" ItemsSource="{Binding Projects}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}" />
+            <Label x:Name="selectProjectLbl" Content="Select Project" HorizontalAlignment="Left" Margin="10,49,0,0" VerticalAlignment="Top" Height="26" Width="81"/>
+            <Button x:Name="newStoryBtn" Content="+" HorizontalAlignment="Left" Margin="958,6,0,0" VerticalAlignment="Top" Width="22" Height="25" Command="{Binding OpenStoryViewCommand}"/>
+            <Label x:Name="newStoryLbl" Content="New Story" Margin="887,5,37,0" VerticalAlignment="Top" Height="26"/>
         </Grid>
     </GroupBox>
 </UserControl>
