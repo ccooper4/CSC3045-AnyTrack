@@ -23,7 +23,7 @@ namespace AnyTrack.Accounting.Views
     /// <summary>
     /// The view model for the login page. 
     /// </summary>
-    public class LoginViewModel : ValidatedBindableBase
+    public class LoginViewModel : ValidatedBindableBase, IRegionMemberLifetime
     {
         #region Fields
 
@@ -118,6 +118,14 @@ namespace AnyTrack.Accounting.Views
         /// Gets the command used to login a user. 
         /// </summary>
         public DelegateCommand SignUpCommand { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether it should refresh everytime
+        /// </summary>
+        public bool KeepAlive
+        {
+            get { return false; }
+        }
 
         #endregion
 
