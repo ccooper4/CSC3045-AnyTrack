@@ -83,7 +83,7 @@ namespace AnyTrack.Projects
             container.RegisterType<object, CreateProject>("Project");
             container.RegisterType<object, MyProjects>("MyProjects");
 
-            menuService.AddMenuItem(new MenuItem { Color = "Goldenrod", Title = "Projects", NavigationViewName = "MyProjects" });
+            menuService.AddMenuItem(new MenuItem { Color = "Gray", Title = "Projects", NavigationViewName = "MyProjects" });
             regionManager.RequestNavigate(RegionNames.MainRegion, "ProductBacklog");
         }
 

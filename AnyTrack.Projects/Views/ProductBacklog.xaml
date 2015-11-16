@@ -9,44 +9,51 @@
              xmlns:converters="clr-namespace:AnyTrack.Projects.Converters"
              xml:lang="en-GB"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             mc:Ignorable="d" Width="1000" Height="364.328">
+             mc:Ignorable="d">
 
     <UserControl.Resources>
         <converters:GuidToStringConverter x:Key="guidToStringConverter"></converters:GuidToStringConverter>
     </UserControl.Resources>
 
-    <GroupBox HorizontalAlignment="Stretch"  Margin="0, 0, 0, 0" >
-        <GroupBox.Header>
-            <TextBlock Foreground="White" Text="Product Backlog" />
-        </GroupBox.Header>
-        <Grid Background="White" Margin="2,0,-2,-5">
+    <Grid>
+        <Grid Background="LightGray" >
+            
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="0*"/>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="8*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
+            
             <Grid.RowDefinitions>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="8*"></RowDefinition>
             </Grid.RowDefinitions>
-            <ListBox ItemsSource="{Binding Stories}" Padding="0,0,0,0" Margin="11,87,11,13" BorderThickness="0">
+
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" VerticalAlignment="Bottom" Margin="0,0,0,10px">
+                <Label Content="Select Project" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="159" Height="26" Margin="10px, 0,0,0" ItemsSource="{Binding Projects}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}" />
+            </StackPanel>
+
+            <Button Grid.Column="2" Grid.Row="0" Content="+" HorizontalAlignment="Center" VerticalAlignment="Center" Width="25" Height="25" Command="{Binding OpenStoryViewCommand}"/>
+
+            <ListBox ItemsSource="{Binding Stories}" Grid.Column="1" Grid.Row="1" Margin="0,10px,0,0" BorderThickness="1">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
+                        <Grid Background="White" >
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width ="10"></ColumnDefinition>
-                                <ColumnDefinition Width ="500"></ColumnDefinition>
-                                <ColumnDefinition Width ="Auto"></ColumnDefinition>
-                                <ColumnDefinition Width ="Auto" ></ColumnDefinition>
+                                <ColumnDefinition Width ="25px"></ColumnDefinition>
+                                <ColumnDefinition Width ="1*"></ColumnDefinition>
+                                <ColumnDefinition Width ="50px"></ColumnDefinition>
+                                <ColumnDefinition Width ="65px"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="1" Content="{Binding Summary}" HorizontalAlignment="Left"></Label>
-                            <Button Grid.Column="2" Content="Edit" Command="{Binding DataContext.EditStoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding Path=.}" DockPanel.Dock="Right" BorderThickness="0" Background="LightGray"></Button>
-                            <Button Grid.Column="3" Content="Delete" DockPanel.Dock="Right" Command="{Binding DataContext.DeleteStoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding StoryId, Converter={StaticResource guidToStringConverter}}" BorderThickness="0" Background="LightGray"></Button>
+
+                            <Canvas Background="CornflowerBlue" Grid.Column="0" Margin="10px,0,0,0"></Canvas>
+                            <Label Content="{Binding Summary}" Grid.Column="1" HorizontalAlignment="Left"></Label>
+                            <Button Grid.Column="3" Content="Delete" DockPanel.Dock="Right" Margin="0,0,15px,0" Command="{Binding DataContext.DeleteStoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding StoryId, Converter={StaticResource guidToStringConverter}}" BorderThickness="0" Background="LightGray"></Button>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <ComboBox x:Name="selectProjectCmb" HorizontalAlignment="Left" Margin="96,49,0,0" VerticalAlignment="Top" Width="159" Height="26" ItemsSource="{Binding Projects}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}" />
-            <Label x:Name="selectProjectLbl" Content="Select Project" HorizontalAlignment="Left" Margin="10,49,0,0" VerticalAlignment="Top" Height="26" Width="81"/>
-            <Button x:Name="newStoryBtn" Content="+" HorizontalAlignment="Left" Margin="958,6,0,0" VerticalAlignment="Top" Width="22" Height="25" Command="{Binding OpenStoryViewCommand}"/>
-            <Label x:Name="newStoryLbl" Content="New Story" Margin="887,5,37,0" VerticalAlignment="Top" Height="26"/>
-        </Grid>
-    </GroupBox>
+            </Grid>
+    </Grid>
 </UserControl>
