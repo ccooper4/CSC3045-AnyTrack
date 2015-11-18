@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:AnyTrack.Accounting.Views"
              xmlns:prism="http://www.codeplex.com/prism"
              xmlns:atph="clr-namespace:AnyTrack.Accounting.Controls"
+             xmlns:Views="clr-namespace:AnyTrack.Client.CustomControls"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="600">
@@ -29,7 +30,7 @@
             </GroupBox.Header>
             <Grid Background="White" Margin="0,0,0,-5">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
                     <ColumnDefinition Width="4*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
@@ -42,12 +43,20 @@
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Column="0" Grid.Row="0" Name="EmailLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Email Address:</Label>
-                <TextBox Name="EmailTextbox" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Text="{Binding Email}"/>
+                <Views:LabelledTextBox Label="Email Address:" Text="{Binding Email}" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"/>
 
-                <Label Grid.Column="0" Grid.Row="1" Name="PasswordLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Password:</Label>
-                <PasswordBox Name="PasswordTextbox" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" atph:PasswordBoxBindingHelper.EnablePasswordBoxBinding="true"  atph:PasswordBoxBindingHelper.Binding="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-
+                <Grid Background="White" Grid.Column="1" Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                        <ColumnDefinition Width="6*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Name="PasswordLabel" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" >Password:</Label>
+                    <PasswordBox Name="PasswordTextbox" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" atph:PasswordBoxBindingHelper.EnablePasswordBoxBinding="true"  atph:PasswordBoxBindingHelper.Binding="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="300" />
+                </Grid>
+                
                 <Label Grid.Column="1" Grid.Row="3" Name="ForgotPasswordLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Forgot Password?</Label>
 
                 <WrapPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Width="131" Margin="29,0,10,0" Grid.Column="1">
@@ -57,7 +66,7 @@
                             Template="{StaticResource customButton}"/>
                 </WrapPanel>
 
-            </Grid>
+                </Grid>
         </GroupBox>
         <WrapPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" Width="200" Margin="10,0,0,0">
             <Button x:Name="OfflineButton"
@@ -74,5 +83,6 @@
                     Content="Sign Up"
                     Template="{StaticResource customButton}" />
         </WrapPanel>
+
     </Grid>
 </UserControl>

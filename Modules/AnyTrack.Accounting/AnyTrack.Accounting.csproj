@@ -125,6 +125,9 @@
     <Compile Include="ServiceGateways\AccountServiceGateway.cs" />
     <Compile Include="ServiceGateways\IAccountServiceGateway.cs" />
     <Compile Include="ServiceGateways\Models\AvailableSecretQuestions.cs" />
+    <Compile Include="Views\CustomControls\LabelledTextBox.xaml.cs">
+      <DependentUpon>LabelledTextBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
@@ -148,6 +151,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\CustomControls\LabelledTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Login.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -158,6 +165,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Backend\AnyTrack.Backend\AnyTrack.Backend.csproj">
+      <Project>{8e06f61a-3fd1-419e-a45f-66babb282d60}</Project>
+      <Name>AnyTrack.Backend</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Common\AnyTrack.Infrastructure\AnyTrack.Infrastructure.csproj">
       <Project>{a5a20403-c6e3-4475-88aa-762bd691f812}</Project>
       <Name>AnyTrack.Infrastructure</Name>
