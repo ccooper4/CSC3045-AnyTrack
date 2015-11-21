@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\IPrincipalExtensions.cs" />
+    <Compile Include="FlyoutViewModelBase.cs" />
     <Compile Include="Interceptors\CookieMessageInspector.cs" />
     <Compile Include="Interceptors\InterceptorBehaviourExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -100,6 +101,8 @@
     </Compile>
     <Compile Include="Security\ServiceUserIdentity.cs" />
     <Compile Include="Security\ServiceUserPrincipal.cs" />
+    <Compile Include="Service\FlyoutService.cs" />
+    <Compile Include="Service\IFlyoutService.cs" />
     <Compile Include="Service\IMenuService.cs" />
     <Compile Include="Service\MenuService.cs" />
     <Compile Include="Service\Model\MenuItem.cs" />

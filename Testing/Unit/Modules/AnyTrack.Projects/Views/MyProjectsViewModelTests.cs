@@ -67,7 +67,6 @@ namespace Unit.Modules.AnyTrack.Projects.Views
         [Test]
         public void AddProject()
         {
-            var windowProvider = Substitute.For<WindowProvider>();
             vm.Call("AddProjectView");
             regionManager.Received().RequestNavigate(RegionNames.MainRegion, "Project");      
         }

@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using AnyTrack.Infrastructure.Providers;
+using AnyTrack.Infrastructure.Service;
+using AnyTrack.SharedUtilities.Extensions;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Practices.Unity;
@@ -80,6 +82,12 @@ namespace AnyTrack.Infrastructure
         /// </summary>
         [Dependency]
         public IRegionManager RegionManager { get; set; }
+
+        /// <summary>
+        /// Gets or sets the flyout service.
+        /// </summary>
+        [Dependency]
+        public IFlyoutService FlyoutService { get; set; }
 
         #endregion
 
@@ -211,6 +219,16 @@ namespace AnyTrack.Infrastructure
             {
                 RegionManager.RequestNavigate(RegionNames.MainRegion, view, navParams);
             }
+        }
+
+        /// <summary>
+        /// Shows the specified metro flyout on the Shell.
+        /// </summary>
+        /// <param name="viewName">The view to show.</param>
+        /// <param name="navParams">Any paramaters to pass into the view model.</param>
+        public void ShowMetroFlyout(string viewName, NavigationParameters navParams = null)
+        {
+            FlyoutService.ShowMetroFlyout(viewName, navParams);
         }
         
         #endregion

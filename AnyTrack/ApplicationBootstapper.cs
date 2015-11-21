@@ -5,6 +5,7 @@ using System.Threading;
 using System.Windows;
 using AnyTrack.Accounting;
 using AnyTrack.Client.Views;
+using AnyTrack.Infrastructure.Providers;
 using AnyTrack.Infrastructure.Service;
 using AnyTrack.Projects;
 using Microsoft.Practices.Unity;
@@ -81,6 +82,7 @@ namespace AnyTrack.Client
 
             // AnyTrack.Infrastructure.Services 
             this.Container.RegisterType<IMenuService, MenuService>(new ContainerControlledLifetimeManager());
+            this.Container.RegisterType<IFlyoutService, FlyoutService>();
 
             // AnyTrack.Views
             this.Container.RegisterType<object, MainAppArea>("MainAppArea");

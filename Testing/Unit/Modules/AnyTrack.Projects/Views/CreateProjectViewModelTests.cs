@@ -171,12 +171,9 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
         [Test]
         public void SaveProjectWithErrors()
         {
-            var windowProvider = Substitute.For<WindowProvider>();
-
             var currentPrincipal = new ServiceUserPrincipal(new LoginResult { EmailAddress = "testmanager@agile.local" }, "");
 
             UserDetailsStore.LoggedInUserPrincipal = currentPrincipal;
-            vm.MainWindow = windowProvider;
 
             vm.ProjectName = "Mi";
             vm.Description = "This is a description";

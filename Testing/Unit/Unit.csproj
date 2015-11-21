@@ -168,6 +168,7 @@
     <Compile Include="Common\AnyTrack.Infrastructure\Extensions\IPrincipalExtensionsTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\Security\ServiceUserIdentityTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\Security\ServiceUserPrincipalTests.cs" />
+    <Compile Include="Common\AnyTrack.Infrastructure\Service\FlyoutServiceTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\Service\MenuServiceTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\ValidatedBindableBaseTests.cs" />
     <Compile Include="Common\AnyTrack.SharedUtilities\Extensions\StringExtensionTests.cs" />
@@ -184,6 +185,7 @@
     <Compile Include="Modules\AnyTrack.Projects\Views\CreateProjectViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Views\MyProjectsViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Views\ProductBacklogViewModelTests.cs" />
+    <Compile Include="Modules\AnyTrack.Projects\Views\StoryViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

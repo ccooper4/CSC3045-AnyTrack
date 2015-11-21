@@ -17,7 +17,7 @@ namespace AnyTrack.Projects.Views
     /// <summary>
     /// View model to represent a story.
     /// </summary>
-    public class StoryViewModel : ValidatedBindableBase, INavigationAware, IRegionMemberLifetime
+    public class StoryViewModel : FlyoutViewModelBase, INavigationAware, IRegionMemberLifetime
     {
         #region Fields
 
@@ -83,10 +83,9 @@ namespace AnyTrack.Projects.Views
 
             this.serviceGateway = serviceGateway;
             this.Projects = new ObservableCollection<ProjectDetails>();
-            this.Projects.AddRange(serviceGateway.GetProjectNames(false, true, false));
+            this.Header = "Story";
             
-            SaveUpdateStoryCommand = new DelegateCommand(this.SaveUpdateStory);
-            CancelStoryViewCommand = new DelegateCommand(this.CancelStoryView);            
+            SaveUpdateStoryCommand = new DelegateCommand(this.SaveUpdateStory);           
         }
 
         /// <summary>
@@ -182,11 +181,6 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         public DelegateCommand SaveUpdateStoryCommand { get; private set; }
 
-        /// <summary>
-        /// Gets the cancel Command.
-        /// </summary>
-        public DelegateCommand CancelStoryViewCommand { get; private set; }
-
         #endregion Properties
 
         #region Methods
@@ -197,6 +191,9 @@ namespace AnyTrack.Projects.Views
         /// <param name="navigationContext">navigation Context</param>
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            this.Projects.Clear();
+            this.Projects.AddRange(serviceGateway.GetProjectNames(false, true, false));
+
             if (navigationContext.Parameters.ContainsKey("projectId"))
             {
                 var projectId = (Guid)navigationContext.Parameters["projectId"];
@@ -246,7 +243,6 @@ namespace AnyTrack.Projects.Views
             this.ValidateViewModelNow();
             if (!HasErrors)
             {
-                // this.ShowMetroDialog("im save update", ".", MessageDialogStyle.Affirmative);
                 Story = new ServiceStory()
                 {
                     Summary = this.Summary,
@@ -263,17 +259,8 @@ namespace AnyTrack.Projects.Views
                 var navParams = new NavigationParameters();
                 navParams.Add("projectId", projectId);
                 NavigateToItem("ProductBacklog", navParams);
+                this.IsOpen = false;
             }
-        }
-
-        /// <summary>
-        /// Cancel story creation.
-        /// </summary>
-        private void CancelStoryView()
-        {
-            var navParams = new NavigationParameters();
-            navParams.Add("projectId", projectId);
-            NavigateToItem("ProductBacklog", navParams);
         }
 
         #endregion
