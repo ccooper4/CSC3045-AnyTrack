@@ -22,14 +22,9 @@ namespace AnyTrack.Projects.Views
     /// <summary>
     /// The view model for the project
     /// </summary>
-    public class CreateProjectViewModel : ValidatedBindableBase
+    public class CreateProjectViewModel : BaseViewModel
     {
         #region Fields
-
-        /// <summary>
-        /// The project service gateway
-        /// </summary>
-        private readonly IProjectServiceGateway serviceGateway;
 
         /// <summary>
         /// Project Name
@@ -88,16 +83,10 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Creates a new Create Project View Model
         /// </summary>
-        /// <param name="serviceGateway">The project service gateway</param>
-        public CreateProjectViewModel(IProjectServiceGateway serviceGateway)
+        /// <param name="iProjectServiceGateway">The project service gateway</param>
+        public CreateProjectViewModel(IProjectServiceGateway iProjectServiceGateway)
+            : base(iProjectServiceGateway)
         {
-            if (serviceGateway == null)
-            {
-                throw new ArgumentNullException("serviceGateway");
-            }
-
-            this.serviceGateway = serviceGateway;
-
             SaveProjectCommand = new DelegateCommand(SaveProject);
             CancelProjectCommand = new DelegateCommand(CancelProject);
             SearchPOUserCommand = new DelegateCommand(SearchProjectOwners);
@@ -314,7 +303,7 @@ namespace AnyTrack.Projects.Views
                     ScrumMasterEmailAddresses = this.SelectedScrumMasters.Select(sm => sm.EmailAddress).ToList()
                 };
 
-                serviceGateway.CreateProject(project);
+                ServiceGateway.CreateProject(project);
                 ShowMetroDialog("Project created", "The {0} project has successfully been created".Substitute(this.ProjectName), MessageDialogStyle.Affirmative);
                 NavigateToItem("MyProjects");
             }
@@ -326,7 +315,7 @@ namespace AnyTrack.Projects.Views
         private void SearchProjectOwners()
         {
             var filter = new UserSearchFilter { EmailAddress = productOwnerSearchEmailAddress, ProductOwner = true };
-            var results = serviceGateway.SearchUsers(filter);
+            var results = ServiceGateway.SearchUsers(filter);
 
             POSearchUserResults.Clear();
             POSearchUserResults.AddRange(results);
@@ -340,7 +329,7 @@ namespace AnyTrack.Projects.Views
         private void SearchScrumMastters()
         {
             var filter = new UserSearchFilter { EmailAddress = scrumMasterSearchEmailAddress, ScrumMaster = true };
-            var results = serviceGateway.SearchUsers(filter);
+            var results = ServiceGateway.SearchUsers(filter);
 
             ScrumMasterSearchUserResults.Clear();
             ScrumMasterSearchUserResults.AddRange(results);
