@@ -26,7 +26,6 @@ namespace AnyTrack.Projects.Views
         public CreateProject()
         {
             InitializeComponent();
-        }
-        
+        }        
     }
 }
