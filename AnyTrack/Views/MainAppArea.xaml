@@ -9,7 +9,7 @@
             prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    
+
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -31,9 +31,10 @@
             </Grid.RowDefinitions>
 
             <Label HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1" Content="{Binding FullName}" Padding="15px"></Label>
+            <Button Grid.Column="0" Content="Logout" HorizontalAlignment="Left" Command="{Binding LogoutUserCommand}" Margin="26,0,0,0"  />
 
         </Grid>
-        
+
         <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="110px"/>
@@ -42,7 +43,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            
+
             <ListBox Grid.Row="0" Grid.Column="0" Margin="0" ItemsSource="{Binding MenuItems}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource GrayBrush1}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -50,11 +51,11 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            
+
             <ContentControl Grid.Row="0" Grid.Column="1" prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.MainRegion}">
             </ContentControl>
         </Grid>
-        
+
     </DockPanel>
 
 
