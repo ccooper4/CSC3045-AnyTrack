@@ -1,7 +1,8 @@
 ﻿using System;
+using AnyTrack.Infrastructure;
 using AnyTrack.Projects.ServiceGateways;
 
-namespace AnyTrack.Infrastructure
+namespace AnyTrack.Projects.Views
 {
     /// <summary>
     /// BaseViewModel class
@@ -21,7 +22,7 @@ namespace AnyTrack.Infrastructure
         /// Constructor for BaseViewModel
         /// </summary>
         /// <param name="serviceGateway">The Project Service Gateway</param>
-        public BaseViewModel(IProjectServiceGateway serviceGateway)
+        protected BaseViewModel(IProjectServiceGateway serviceGateway)
         {
             if (serviceGateway == null)
             {
