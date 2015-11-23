@@ -35,9 +35,9 @@
             <Label Grid.Row="0" Grid.Column="1" FontWeight="Bold" Margin="0, 10px, 0, 0">Project</Label>
             <ComboBox Grid.Row="1" Grid.Column="1" Width="390" HorizontalAlignment="Left" ItemsSource="{Binding Projects}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}"/>
 
-            <Views:LabelledTextBox Label="Summary" Text="{Binding Summary}" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Height="85" Margin="0,0,0,95" Grid.RowSpan="2" Loaded="LabelledTextBox_Loaded"/>
+            <Views:LabelledTextBox Label="Summary" Text="{Binding Summary}" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Height="85" Margin="0,0,0,95" Grid.RowSpan="2"/>
 
-            <Views:LabelledTextBox Label="Conditions of satisfaction" Text="{Binding ConditionsOfSatisfaction}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Height="85" Margin="0,0,0,95" Grid.RowSpan="2" Loaded="LabelledTextBox_Loaded"/>
+            <Views:LabelledTextBox Label="Conditions of satisfaction" Text="{Binding ConditionsOfSatisfaction}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Height="85" Margin="0,0,0,95" Grid.RowSpan="2"/>
 
             <Grid Grid.Row="4" Grid.Column="1" Margin="0, 20px, 0, 0">
                 <Grid.ColumnDefinitions>
