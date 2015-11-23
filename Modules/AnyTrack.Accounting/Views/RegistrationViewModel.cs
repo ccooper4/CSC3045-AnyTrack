@@ -19,19 +19,9 @@ namespace AnyTrack.Accounting.Views
     /// <summary>
     /// The view model for the registration page. 
     /// </summary>
-    public class RegistrationViewModel : ValidatedBindableBase, IRegionMemberLifetime
+    public class RegistrationViewModel : BaseViewModel, IRegionMemberLifetime
     {
         #region Fields 
-
-        /// <summary>
-        /// The region manager.
-        /// </summary>
-        private readonly IRegionManager regionManager;
-
-        /// <summary>
-        /// The account service gateway
-        /// </summary>
-        private readonly IAccountServiceGateway serviceGateway;
 
         /// <summary>
         /// The specified email address.
@@ -97,19 +87,8 @@ namespace AnyTrack.Accounting.Views
         /// <param name="regionManager">The region manager.</param>
         /// <param name="gateway">The account service gateway.</param>
         public RegistrationViewModel(IRegionManager regionManager, IAccountServiceGateway gateway)
+            : base(gateway, regionManager)
         {
-            if (regionManager == null)
-            {
-                throw new ArgumentNullException("regionManager");
-            }
-
-            if (gateway == null)
-            {
-                throw new ArgumentNullException("gateway");
-            }
-
-            this.regionManager = regionManager;
-            this.serviceGateway = gateway;
             this.SecretQuestions = new ObservableCollection<string>(AvailableSecretQuestions.All());
             this.Skills = new ObservableCollection<string>();
 
@@ -370,13 +349,13 @@ namespace AnyTrack.Accounting.Views
 
                 try
                 {
-                    serviceGateway.RegisterAccount(newUser);
+                    ServiceGateway.RegisterAccount(newUser);
 
                     var callback = new Action<MessageDialogResult>(m =>
                     {
                         if (m == MessageDialogResult.Affirmative)
                         {
-                            regionManager.RequestNavigate(Infrastructure.RegionNames.AppContainer, "Login");
+                            RegionManager.RequestNavigate(Infrastructure.RegionNames.AppContainer, "Login");
                         }
                     });
 
@@ -394,7 +373,7 @@ namespace AnyTrack.Accounting.Views
         /// </summary>
         private void CancelRegisterUser()
         {
-            regionManager.RequestNavigate(RegionNames.AppContainer, "Login");
+            RegionManager.RequestNavigate(RegionNames.AppContainer, "Login");
         }
 
         /// <summary>

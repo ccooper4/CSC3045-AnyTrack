@@ -24,14 +24,9 @@ namespace AnyTrack.Projects.Views
     /// <summary>
     /// The view model for the project
     /// </summary>
-    public class MyProjectsViewModel : ValidatedBindableBase, INavigationAware
+    public class MyProjectsViewModel : BaseViewModel, INavigationAware
     {
         #region Fields
-
-        /// <summary>
-        /// The project service gateway
-        /// </summary>
-        private readonly IProjectServiceGateway serviceGateway;
 
         /// <summary>
         /// The list of project tiles
@@ -49,17 +44,11 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Creates a new Create Project View Model
         /// </summary>
-        /// <param name="serviceGateway">The project service gateway</param>
-        public MyProjectsViewModel(IProjectServiceGateway serviceGateway)
+        /// <param name="iProjectServiceGateway">The project service gateway</param>
+        public MyProjectsViewModel(IProjectServiceGateway iProjectServiceGateway)
+            : base(iProjectServiceGateway)
         {
-            if (serviceGateway == null)
-            {
-                throw new ArgumentNullException("serviceGateway");
-            }
-
-            this.serviceGateway = serviceGateway;
-
-            this.Tiles = serviceGateway.GetLoggedInUserProjectRoleSummaries(UserDetailsStore.LoggedInUserPrincipal.Identity.Name);
+            this.Tiles = ServiceGateway.GetLoggedInUserProjectRoleSummaries(UserDetailsStore.LoggedInUserPrincipal.Identity.Name);
 
             emptyProject = this.Tiles.Count == 0;
 

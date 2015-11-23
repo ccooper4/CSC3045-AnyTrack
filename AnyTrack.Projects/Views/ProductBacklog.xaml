@@ -10,13 +10,14 @@
              xml:lang="en-GB"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d">
+<!--             mc:Ignorable="d" Height="500" Width="800">-->
 
     <UserControl.Resources>
         <converters:GuidToStringConverter x:Key="guidToStringConverter"></converters:GuidToStringConverter>
     </UserControl.Resources>
 
     <Grid>
-        <Grid Background="LightGray" >
+        <Grid Background="LightGray">
             
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -25,35 +26,62 @@
             </Grid.ColumnDefinitions>
             
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
                 <RowDefinition Height="8*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" VerticalAlignment="Bottom" Margin="0,0,0,10px">
-                <Label Content="Select Project" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="159" Height="26" Margin="10px, 0,0,0" ItemsSource="{Binding Projects}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}" />
-            </StackPanel>
 
-            <Button Grid.Column="2" Grid.Row="0" Content="+" HorizontalAlignment="Center" VerticalAlignment="Center" Width="25" Height="25" Command="{Binding OpenStoryViewCommand}"/>
+            <ComboBox Grid.Column="1" Grid.Row="0" IsEditable="True" BorderBrush="Gray" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200px" Height="26" ItemsSource="{Binding Projects}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}" />
 
-            <ListBox ItemsSource="{Binding Stories}" Grid.Column="1" Grid.Row="1" Margin="0,10px,0,0" BorderThickness="1">
+            <Button Grid.Column="2" Grid.Row="0" Background="Transparent" BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="Auto" Width="Auto" Command="{Binding OpenStoryViewCommand}"> 
+                <Image Source="../Images/add_icon.png" Width="25px" Height="25px"></Image>
+            </Button>
+
+            <Border Grid.Column="1" Grid.Row="1" CornerRadius="9" BorderBrush="Gray" Background="Gray" BorderThickness="2">
+                <DockPanel Background="White" >
+                <ListBox DockPanel.Dock="Top" ItemsSource="{Binding Stories}" Margin="20px,10px,20px,0" BorderThickness="0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid Background="White" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width ="25px"></ColumnDefinition>
-                                <ColumnDefinition Width ="1*"></ColumnDefinition>
-                                <ColumnDefinition Width ="50px"></ColumnDefinition>
-                                <ColumnDefinition Width ="65px"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
+                                <Border CornerRadius="0" BorderBrush="Gray" Background="Gray" BorderThickness="2" Margin="0,0,0,-5px">
+                                    <Grid Background="#fcfcfc">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10px"></ColumnDefinition>
+                                            <ColumnDefinition Width ="1*"></ColumnDefinition>
+                                            <ColumnDefinition Width ="50px"></ColumnDefinition>
+                                            <ColumnDefinition Width ="50px"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
 
-                            <Canvas Background="CornflowerBlue" Grid.Column="0" Margin="10px,0,0,0"></Canvas>
-                            <Label Content="{Binding Summary}" Grid.Column="1" HorizontalAlignment="Left"></Label>
-                            <Button Grid.Column="3" Content="Delete" DockPanel.Dock="Right" Margin="0,0,15px,0" Command="{Binding DataContext.DeleteStoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding StoryId, Converter={StaticResource guidToStringConverter}}" BorderThickness="0" Background="LightGray"></Button>
-                        </Grid>
-                    </DataTemplate>
+                                        <Canvas Background="LightGray" Grid.Column="0"></Canvas>
+                                        <Label Content="{Binding Summary}" Grid.Column="1" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="15px,0,0,0"></Label>
+
+                                        <Button Grid.Column="2" Command="{Binding DataContext.EditStoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding Path=.}">
+                                            <Button.Template>
+                                                <ControlTemplate>
+                                                    <Border CornerRadius="0" BorderBrush="Gray" BorderThickness="1" Margin="0,-1px,-1px,-1px">
+                                                        <Image Margin="0,3px,0,3px" Source="../Images/edit_icon.png" Height="25px"></Image>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+
+                                        <Button Grid.Column="3" Command="{Binding DataContext.DeleteStoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding StoryId, Converter={StaticResource guidToStringConverter}}">
+                                            <Button.Template>
+                                                <ControlTemplate>
+                                                    <Border CornerRadius="0" BorderBrush="Gray" BorderThickness="1" Margin="0,-1px,-1px,-1px">
+                                                        <Image Margin="0,3px,0,3px" Source="../Images/delete_icon.png" Height="25px"></Image>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            </Grid>
+
+            </DockPanel>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>

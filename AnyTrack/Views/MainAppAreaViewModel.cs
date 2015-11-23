@@ -56,6 +56,7 @@ namespace AnyTrack.Client.Views
             this.menuService = service;
             this.regionManager = regionManager;
 
+            LogoutUserCommand = new DelegateCommand(this.Logout);
             NavigateCommand = new DelegateCommand<string>(NavigateToItemFromMenu);
         }
 
@@ -90,6 +91,11 @@ namespace AnyTrack.Client.Views
         /// </summary>
         public DelegateCommand<string> NavigateCommand { get; private set; }
 
+        /// <summary>
+        /// Gets the command used to logout a user. 
+        /// </summary>
+        public DelegateCommand LogoutUserCommand { get; private set; }
+
         #endregion 
 
         #region Methods 
@@ -101,6 +107,15 @@ namespace AnyTrack.Client.Views
         private void NavigateToItemFromMenu(string view)
         {
             regionManager.RequestNavigate(RegionNames.MainRegion, view);
+        }
+
+        /// <summary>
+        /// Perform login.
+        /// </summary>
+        private void Logout()
+        {
+            Thread.CurrentPrincipal = null;
+            RegionManager.RequestNavigate(RegionNames.AppContainer, "Login");
         }
 
         #endregion 

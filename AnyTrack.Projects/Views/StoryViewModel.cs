@@ -17,14 +17,9 @@ namespace AnyTrack.Projects.Views
     /// <summary>
     /// View model to represent a story.
     /// </summary>
-    public class StoryViewModel : ValidatedBindableBase, INavigationAware, IRegionMemberLifetime
+    public class StoryViewModel : BaseViewModel, INavigationAware, IRegionMemberLifetime
     {
         #region Fields
-
-        /// <summary>
-        /// The project service gateway
-        /// </summary>
-        private readonly IProjectServiceGateway serviceGateway;
 
         /// <summary>
         /// Project Name
@@ -64,7 +59,7 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// conditionsOfSatisfaction var
         /// </summary>
-        private string conditionsOfSatisfaction;        
+        private string conditionsOfSatisfaction;
 
         #endregion
 
@@ -73,17 +68,11 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Creates a new Create Story View Model
         /// </summary>
-        /// <param name="serviceGateway">The project service gateway</param>
-        public StoryViewModel(IProjectServiceGateway serviceGateway)
+        /// <param name="iProjectServiceGateway">The Project Service Gateway</param>
+        public StoryViewModel(IProjectServiceGateway iProjectServiceGateway) : base(iProjectServiceGateway)
         {
-            if (serviceGateway == null)
-            {
-                throw new ArgumentNullException("serviceGateway");
-            }
-
-            this.serviceGateway = serviceGateway;
             this.Projects = new ObservableCollection<ProjectDetails>();
-            this.Projects.AddRange(serviceGateway.GetProjectNames(false, true, false));
+            this.Projects.AddRange(ServiceGateway.GetProjectNames(false, true, false));
             
             SaveUpdateStoryCommand = new DelegateCommand(this.SaveUpdateStory);
             CancelStoryViewCommand = new DelegateCommand(this.CancelStoryView);            
@@ -207,7 +196,7 @@ namespace AnyTrack.Projects.Views
                     var storyId = (Guid)navigationContext.Parameters["storyId"];
                     this.storyId = storyId;
 
-                    var existingDetails = serviceGateway.GetProjectStory(projectId, storyId);
+                    var existingDetails = ServiceGateway.GetProjectStory(projectId, storyId);
 
                     this.Summary = existingDetails.Summary;
                     this.AsA = existingDetails.AsA;
@@ -257,7 +246,7 @@ namespace AnyTrack.Projects.Views
                     ProjectId = this.projectId
                 };
 
-                serviceGateway.SaveUpdateStory(projectId, storyId, Story);
+                ServiceGateway.SaveUpdateStory(projectId, storyId, Story);
                 this.ShowMetroDialog("Story has been saved!", "Success", MessageDialogStyle.Affirmative);
 
                 var navParams = new NavigationParameters();

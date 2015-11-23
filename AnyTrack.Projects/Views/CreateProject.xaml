@@ -7,6 +7,7 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:converter="clr-namespace:AnyTrack.Projects.Converters"
+             xmlns:Views="clr-namespace:AnyTrack.Projects.Views.CustomControls"
              xml:lang="en-GB"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" Width="1000" Height="364.328">
@@ -36,39 +37,25 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="0"></RowDefinition>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="26"></RowDefinition>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="0"/>
-                    <RowDefinition Height="26"></RowDefinition>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="26"></RowDefinition>
-                    <RowDefinition Height="30"></RowDefinition>
-                    <RowDefinition Height="0"></RowDefinition>
-                    <RowDefinition Height="26"></RowDefinition>
-                    <RowDefinition Height="0"/>
-                    <RowDefinition Height="0"></RowDefinition>
-                    <RowDefinition Height="0"></RowDefinition>
-                    <RowDefinition Height="30"></RowDefinition>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="4*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="2" FontWeight="Bold" Margin="10,0,0,0">Project Name</Label>
-                <TextBox Grid.Row="3" VerticalAlignment="Center" Height="26" Margin="16,2,127,1" Text="{Binding ProjectName}"  controls:TextBoxHelper.ClearTextButton="True" />
+                <Views:LabelledTextBox Label="Project Name" Text="{Binding ProjectName}" Grid.Row="0" VerticalAlignment="Center" Height="85" Margin="0,0,0,95" Grid.RowSpan="2"/>
 
-                <Label Grid.Row="5" FontWeight="Bold" Margin="10,0,0,0">Description</Label>
-                <TextBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="6" AcceptsReturn="True" Margin="16,0,22,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="63" Text="{Binding Description}" controls:TextBoxHelper.ClearTextButton="True"/>
+                <Views:LabelledTextBox Label="Description" Text="{Binding Description}" Grid.Row="1" VerticalAlignment="Center"/>
 
-                <Label Grid.Row="7" FontWeight="Bold" Margin="10,0,-10,0">Version Control</Label>
-                <TextBox Grid.Row="8" VerticalAlignment="Center" Height="26" Margin="16,2,22,2" Text="{Binding VersionControl}" controls:TextBoxHelper.ClearTextButton="True"/>
+                <Views:LabelledTextBox Label="Version Control" Text="{Binding VersionControl}" Grid.Row="2" VerticalAlignment="Center"/>
 
-                <Label Grid.Row="10" FontWeight="Bold" Margin="10,0,-10,0">Started On</Label>
-                <DatePicker Grid.Row="14" HorizontalAlignment="Left" Margin="17,1,0,0" VerticalAlignment="Top" Height="26" Width="121" SelectedDate="{x:Static sys:DateTime.Now}" Text="{Binding StartedOn}"/>
+                <Label Grid.Row="3" FontWeight="Bold">Started On</Label>
+                <DatePicker Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="121" SelectedDate="{x:Static sys:DateTime.Now}" Text="{Binding StartedOn}"/>
 
-                <Button Grid.Row="15" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Width="90" Height="27" VerticalAlignment="Bottom" Margin="95,0,0,0" Command="{Binding SaveProjectCommand}">Save Project</Button>
-                <Button Grid.Row="15" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Width="70" Height="27" VerticalAlignment="Bottom" Margin="190,0,0,0" Command="{Binding CancelProjectCommand}">Cancel</Button>
+                <Button Grid.Row="5" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Width="90" Height="27" VerticalAlignment="Bottom" Margin="95,0,0,0" Command="{Binding SaveProjectCommand}">Save Project</Button>
+                <Button Grid.Row="5" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Width="70" Height="27" VerticalAlignment="Bottom" Margin="190,0,0,0" Command="{Binding CancelProjectCommand}">Cancel</Button>
             </Grid>
         </GroupBox>
 
