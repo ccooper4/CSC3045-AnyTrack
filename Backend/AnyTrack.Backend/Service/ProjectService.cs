@@ -267,7 +267,7 @@ namespace AnyTrack.Backend.Service
                 ConditionsOfSatisfaction = dataStory.ConditionsOfSatisfaction,
                 AsA = dataStory.AsA,
                 IWant = dataStory.IWant,
-                SoThat = dataStory.IWant
+                SoThat = dataStory.SoThat
             };           
 
             return story;
