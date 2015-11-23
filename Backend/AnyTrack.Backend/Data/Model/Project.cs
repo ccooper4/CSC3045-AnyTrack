@@ -8,55 +8,53 @@ using Microsoft.Win32;
 namespace AnyTrack.Backend.Data.Model
 {
     /// <summary>
-    /// Represents a Project Entity
+    /// Represents a Project Entity.
     /// </summary>
     public class Project : BaseEntity
     {
         /// <summary>
-        /// Gets or sets Name
+        /// Gets or sets the project's Name.
         /// </summary>
         public virtual string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets Description
+        /// Gets or sets the project's Description.
         /// </summary>
         public virtual string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets Version Control
+        /// Gets or sets the project's Version Control.
         /// </summary>
         public virtual string VersionControl { get; set; }
 
         /// <summary>
-        /// Gets or sets date Started On
+        /// Gets or sets the date project is Started On.
         /// </summary>
         public virtual DateTime StartedOn { get; set; }
 
         /// <summary>
-        /// Gets or sets Project Manager
+        /// Gets or sets the project's Project Manager.
         /// </summary>
         public virtual User ProjectManager { get; set; }
 
         /// <summary>
-        /// Gets or sets Product Owner
+        /// Gets or sets the project's Product Owner.
         /// </summary>
         public virtual User ProductOwner { get; set; }
 
         /// <summary>
-        /// Gets or sets ScrumMasters
+        /// Gets or sets the project's ScrumMasters.
         /// </summary>
-        public virtual List<User> ScrumMasters { get; set; }
+        public virtual ICollection<User> ScrumMasters { get; set; }
 
         /// <summary>
-        /// Gets or sets Stories
+        /// Gets or sets the projects Stories (Product Backlog).
         /// </summary>
-        public virtual List<Story> Stories { get; set; }
-
-        /*
+        public virtual ICollection<Story> Stories { get; set; }
+     
         /// <summary>
-        /// Gets or sets Sprints
+        /// Gets or sets the project's sprints.
         /// </summary>
-       public virtual ICollection<Sprint> Sprints { get; set; }
-       */
+       public virtual ICollection<Sprint> Sprints { get; set; }     
     }
 }
