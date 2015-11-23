@@ -28,7 +28,7 @@
 
 
         <!-- Logo-->
-        <Image Grid.Column="1" Grid.Row="0" Source="../Images/AnyTrack_logo_full.png" Width="350px" Margin="0,20px,0,20px"></Image>
+        <Image Grid.Column="1" Grid.Row="0" Source="../Images/AnyTrack_logo_full.png" Width="350px" Margin="0,80px,0,20px"></Image>
 
 
         <!-- Log In section-->
