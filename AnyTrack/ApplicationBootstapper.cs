@@ -7,6 +7,7 @@ using AnyTrack.Accounting;
 using AnyTrack.Client.Views;
 using AnyTrack.Infrastructure.Service;
 using AnyTrack.Projects;
+using AnyTrack.Sprints;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Mvvm;
@@ -51,6 +52,7 @@ namespace AnyTrack.Client
             var moduleCatalog = (ModuleCatalog)this.ModuleCatalog;
             moduleCatalog.AddModule(typeof(AccountingModule));
             moduleCatalog.AddModule(typeof(ProjectModule));
+            moduleCatalog.AddModule(typeof(SprintModule));
         }
 
         /// <summary>
