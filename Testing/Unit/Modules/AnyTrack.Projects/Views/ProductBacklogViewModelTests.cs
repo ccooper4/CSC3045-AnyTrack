@@ -133,9 +133,9 @@ namespace Unit.Modules.AnyTrack.Projects.Views.ProductBacklogViewModelTests
 
             vm.FlyoutService = flyoutService;
 
-            gateway.GetProjectStories(Arg.Any<Guid>()).Returns(new List<StoryDetails>());
+            gateway.GetProjectStories(Arg.Any<Guid>()).Returns(new List<ServiceStorySummary>());
 
-            var story = new StoryDetails { StoryId = Guid.NewGuid() };
+            var story = new ServiceStorySummary { StoryId = Guid.NewGuid() };
 
             vm.ProjectId = Guid.NewGuid();
 

@@ -98,7 +98,11 @@ namespace AnyTrack.Projects.Views
         public StoryViewModel(IProjectServiceGateway iProjectServiceGateway) : base(iProjectServiceGateway)
         {
             this.Projects = new ObservableCollection<ServiceProjectSummary>();
+
             this.Header = "Story";
+            this.Theme = FlyoutTheme.Accent;
+            this.Position = Position.Right;
+            this.IsModal = true;
             
             SaveUpdateStoryCommand = new DelegateCommand(this.SaveUpdateStory);           
         }
@@ -258,7 +262,7 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Gets or sets a value indicating whether or not this flyout is a model.
         /// </summary>
-        public bool IsModel
+        public bool IsModal
         {
             get
             {

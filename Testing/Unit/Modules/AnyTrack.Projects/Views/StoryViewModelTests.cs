@@ -67,16 +67,16 @@ namespace Unit.Modules.AnyTrack.Projects.Views.StoryViewModelTests
 
             var context = new NavigationContext(navService, new Uri("Story", UriKind.Relative));
 
-            var projectDetails = new List<ProjectDetails>()
+            var projectDetails = new List<ServiceProjectSummary>()
             {
-                new ProjectDetails { ProjectId = Guid.NewGuid(), ProjectName = "Test"}
+                new ServiceProjectSummary { ProjectId = Guid.NewGuid(), ProjectName = "Test"}
             };
 
             serviceGateway.GetProjectNames(false, true, false).Returns(projectDetails);
 
-            vm.Projects = new ObservableCollection<ProjectDetails>()
+            vm.Projects = new ObservableCollection<ServiceProjectSummary>()
             {
-                new ProjectDetails() { ProjectId = Guid.NewGuid(), ProjectName = "Old"}
+                new ServiceProjectSummary() { ProjectId = Guid.NewGuid(), ProjectName = "Old"}
             };
 
             vm.OnNavigatedTo(context);
@@ -96,16 +96,16 @@ namespace Unit.Modules.AnyTrack.Projects.Views.StoryViewModelTests
             var context = new NavigationContext(navService, new Uri("Story", UriKind.Relative));
             context.Parameters.Add("projectId", projectId);
 
-            var projectDetails = new List<ProjectDetails>()
+            var projectDetails = new List<ServiceProjectSummary>()
             {
-                new ProjectDetails { ProjectId = Guid.NewGuid(), ProjectName = "Test"}
+                new ServiceProjectSummary { ProjectId = Guid.NewGuid(), ProjectName = "Test"}
             };
 
             serviceGateway.GetProjectNames(false, true, false).Returns(projectDetails);
 
-            vm.Projects = new ObservableCollection<ProjectDetails>()
+            vm.Projects = new ObservableCollection<ServiceProjectSummary>()
             {
-                new ProjectDetails() { ProjectId = Guid.NewGuid(), ProjectName = "Old"}
+                new ServiceProjectSummary() { ProjectId = Guid.NewGuid(), ProjectName = "Old"}
             };
 
             vm.OnNavigatedTo(context);
@@ -128,16 +128,16 @@ namespace Unit.Modules.AnyTrack.Projects.Views.StoryViewModelTests
             context.Parameters.Add("projectId", projectId);
             context.Parameters.Add("storyId", storyId);
 
-            var projectDetails = new List<ProjectDetails>()
+            var projectDetails = new List<ServiceProjectSummary>()
             {
-                new ProjectDetails { ProjectId = Guid.NewGuid(), ProjectName = "Test"}
+                new ServiceProjectSummary { ProjectId = Guid.NewGuid(), ProjectName = "Test"}
             };
 
             serviceGateway.GetProjectNames(false, true, false).Returns(projectDetails);
 
-            vm.Projects = new ObservableCollection<ProjectDetails>()
+            vm.Projects = new ObservableCollection<ServiceProjectSummary>()
             {
-                new ProjectDetails() { ProjectId = Guid.NewGuid(), ProjectName = "Old"}
+                new ServiceProjectSummary() { ProjectId = Guid.NewGuid(), ProjectName = "Old"}
             };
 
             var story = new ServiceStory

@@ -12,14 +12,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using FluentAssertions;
+using MahApps.Metro.Controls;
 
 namespace Unit.Common.AnyTrack.Infrastructure.Service.FlyoutServiceTests
 {
     #region Supporting Types 
 
-    public class FlyoutViewModel : FlyoutViewModelBase, IRegionMemberLifetime, INavigationAware
+    public class FlyoutViewModel : ValidatedBindableBase, IFlyoutCompatibleViewModel, IRegionMemberLifetime, INavigationAware
     {
         private bool reuseableView = false;
+        private bool isOpen;
+        private bool isModal;
+        private Position position;
+        private FlyoutTheme theme;
+        private string header;
 
         public NavigationParameters SentParams; 
 
@@ -46,6 +52,66 @@ namespace Unit.Common.AnyTrack.Infrastructure.Service.FlyoutServiceTests
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             SentParams = navigationContext.Parameters;
+        }
+
+        public bool IsOpen
+        {
+            get
+            {
+                return isOpen;
+            }
+            set
+            {
+                SetProperty(ref isOpen, value);
+            }
+        }
+
+        public string Header
+        {
+            get
+            {
+                return header;
+            }
+            set
+            {
+                SetProperty(ref header, value);
+            }
+        }
+
+        public MahApps.Metro.Controls.Position Position
+        {
+            get
+            {
+                return position;
+            }
+            set
+            {
+                SetProperty(ref position, value);
+            }
+        }
+
+        public FlyoutTheme Theme
+        {
+            get
+            {
+                return theme;
+            }
+            set
+            {
+                SetProperty(ref theme, value);
+            }
+        }
+
+        public bool IsModal
+        {
+            get
+            {
+                return isModal; 
+            }
+            set
+            {
+                SetProperty(ref isModal, value);
+            }
         }
     }
 

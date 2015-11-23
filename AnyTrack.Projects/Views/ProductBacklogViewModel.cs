@@ -152,7 +152,7 @@ namespace AnyTrack.Projects.Views
         {
             if (navigationContext.Parameters.ContainsKey("projectId"))
             {
-                projectId = (Guid)navigationContext.Parameters["projectId"];
+                ProjectId = (Guid)navigationContext.Parameters["projectId"];
             }
         }
 

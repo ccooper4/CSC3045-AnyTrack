@@ -228,7 +228,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
 
             vm.ScrumMasterSearchEmailAddress = "test@agile.local";
 
-            vm.Call("SearchScrumMastters");
+            vm.Call("SearchScrumMasters");
 
             filter.Should().NotBeNull();
             filter.ScrumMaster.Should().BeTrue();

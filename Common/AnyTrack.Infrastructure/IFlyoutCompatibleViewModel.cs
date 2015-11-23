@@ -37,7 +37,7 @@ namespace AnyTrack.Infrastructure
         /// <summary>
         /// Gets or sets a value indicating whether or not this flyout is a model flyout.
         /// </summary>
-        bool IsModel { get; set; }
+        bool IsModal { get; set; }
 
         #endregion 
     }

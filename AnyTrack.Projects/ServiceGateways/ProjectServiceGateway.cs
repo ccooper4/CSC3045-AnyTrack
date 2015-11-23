@@ -145,7 +145,7 @@ namespace AnyTrack.Projects.ServiceGateways
         /// <returns>A list of project stories</returns>
         public List<ServiceStorySummary> GetProjectStories(Guid projectId)
         {
-            return client.GetProjectServiceStorySummary(projectId);
+            return client.GetProjectStoryDetails(projectId);
         }
 
         /// <summary>
