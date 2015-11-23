@@ -6,13 +6,13 @@
              xmlns:local="clr-namespace:AnyTrack.Projects.Views.CustomControls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-        <Grid x:Name="Root" >
-            <Grid.RowDefinitions>
-                <RowDefinition MinHeight="30" Height="1*"></RowDefinition>
-                <RowDefinition MinHeight="30" Height="99*"></RowDefinition>
-            </Grid.RowDefinitions>
+    <Grid x:Name="Root" >
+        <Grid.RowDefinitions>
+            <RowDefinition MinHeight="30" Height="1*"></RowDefinition>
+            <RowDefinition MinHeight="30" Height="99*"></RowDefinition>
+        </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Content="{Binding Label}" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontWeight="Bold"/>
-            <TextBox Grid.Row="1" Text="{Binding Text}"/>
-        </Grid>
+        <TextBox Grid.Row="1" Text="{Binding Text}"/>
+    </Grid>
 </UserControl>

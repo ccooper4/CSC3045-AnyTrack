@@ -16,7 +16,7 @@
                         <Grid>
                             <Rectangle Fill="{TemplateBinding Background}"
                                        HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Center" />
+                                       VerticalAlignment="Center"/>
                             <ContentControl HorizontalAlignment="Stretch"
                                             VerticalAlignment="Center"
                                             Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=ActualWidth}"

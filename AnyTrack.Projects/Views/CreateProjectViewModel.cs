@@ -316,11 +316,10 @@ namespace AnyTrack.Projects.Views
         {
             var filter = new ServiceUserSearchFilter { EmailAddress = productOwnerSearchEmailAddress, ProductOwner = true };
             var results = ServiceGateway.SearchUsers(filter);
-
+            
             ProductOwnerSearchUserResults.Clear();
             ProductOwnerSearchUserResults.AddRange(results);
             EnableProductOwnerSearchGrid = true;
-            ProductOwnerConfirmed = false;
         }
 
         /// <summary>
