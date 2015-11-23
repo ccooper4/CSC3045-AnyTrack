@@ -64,7 +64,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.AccountServiceTests
             unitOfWork.UserRepository.Items.Returns(new List<User>().AsQueryable());
             unitOfWork.UserRepository.Insert(Arg.Do<User>(u => dataUser = u));
 
-            var newUser = new NewUser
+            var newUser = new ServiceUser
             {
                 EmailAddress = "test@agile.local",
                 FirstName = "David",
@@ -104,7 +104,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.AccountServiceTests
 
             unitOfWork.UserRepository.Items.Returns(userList.AsQueryable());
 
-            var newUser = new NewUser
+            var newUser = new ServiceUser
             {
                 EmailAddress = "test@agile.local",
                 FirstName = "David",
@@ -123,7 +123,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.AccountServiceTests
         [Test]
         public void LogInWithNoAccount()
         {
-            var credentials = new UserCredential
+            var credentials = new ServiceUserCredential
             {
                 EmailAddress = "test@agile.local",
                 Password = "Letmein"
@@ -139,7 +139,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.AccountServiceTests
         [Test]
         public void LogInWithWrongPassword()
         {
-            var credentials = new UserCredential
+            var credentials = new ServiceUserCredential
             {
                 EmailAddress = "test@agile.local",
                 Password = "Letmein"
@@ -164,7 +164,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.AccountServiceTests
         [Test]
         public void LogIn()
         {
-            var credentials = new UserCredential
+            var credentials = new ServiceUserCredential
             {
                 EmailAddress = "test@agile.local",
                 Password = "Letmein"

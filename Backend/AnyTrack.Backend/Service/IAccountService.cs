@@ -17,7 +17,7 @@ namespace AnyTrack.Backend.Service
         /// <param name="user">The user to register in the membership system.</param>
         [OperationContract]
         [FaultContract(typeof(UserAlreadyExistsFault))]
-        void CreateAccount(NewUser user);
+        void CreateAccount(ServiceUser user);
 
         /// <summary>
         /// Validates a user's credentials against the user store.
@@ -25,6 +25,6 @@ namespace AnyTrack.Backend.Service
         /// <param name="credential">The login credentials.</param>
         /// <returns>A flag indicating if the login was successfu</returns>
         [OperationContract]
-        LoginResult LogIn(UserCredential credential);
+        ServiceLoginResult LogIn(ServiceUserCredential credential);
     }
 }

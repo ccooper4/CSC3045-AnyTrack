@@ -23,19 +23,9 @@ namespace AnyTrack.Accounting.Views
     /// <summary>
     /// The view model for the login page. 
     /// </summary>
-    public class LoginViewModel : ValidatedBindableBase, IRegionMemberLifetime
+    public class LoginViewModel : BaseViewModel, IRegionMemberLifetime
     {
         #region Fields
-
-        /// <summary>
-        /// The region manager.
-        /// </summary>
-        private readonly IRegionManager regionManager;
-
-        /// <summary>
-        /// The account service gateway
-        /// </summary>
-        private readonly IAccountServiceGateway serviceGateway;
 
         /// <summary>
         /// The specified email address.
@@ -55,20 +45,8 @@ namespace AnyTrack.Accounting.Views
         /// <param name="regionManager">The region manager.</param>
         /// <param name="gateway">The account service gateway.</param>
         public LoginViewModel(IRegionManager regionManager, IAccountServiceGateway gateway)
+            : base(gateway, regionManager)
         {
-            if (regionManager == null)
-            {
-                throw new ArgumentNullException("regionManager");
-            }
-            
-            if (gateway == null)
-            {
-                throw new ArgumentNullException("gateway");
-            }
-
-            this.regionManager = regionManager;
-            this.serviceGateway = gateway;
-
             LoginUserCommand = new DelegateCommand(this.LoginUser);
             SignUpCommand = new DelegateCommand(this.SignUp);
         }
@@ -145,11 +123,11 @@ namespace AnyTrack.Accounting.Views
                     Password = password
                 };
 
-                var response = serviceGateway.LoginAccount(user);
+                var response = ServiceGateway.LoginAccount(user);
 
                 if (response.Success)
                 {
-                    regionManager.RequestNavigate(RegionNames.AppContainer, "MainAppArea");
+                    RegionManager.RequestNavigate(RegionNames.AppContainer, "MainAppArea");
                 }
                 else
                 {
@@ -163,7 +141,7 @@ namespace AnyTrack.Accounting.Views
         /// </summary>
         private void SignUp()
         {
-            regionManager.RequestNavigate(RegionNames.AppContainer, "Registration");
+            RegionManager.RequestNavigate(RegionNames.AppContainer, "Registration");
         }
 
         #endregion

@@ -23,47 +23,42 @@ namespace AnyTrack.Backend.Service.Model
         #endregion
 
         /// <summary>
-        /// Gets or sets Project ID
+        /// Gets or sets the Project Id.
         /// </summary>
         public Guid ProjectId { get; set; }
 
         /// <summary>
-        /// Gets or sets ServiceStory ID
-        /// </summary>
-        public ServiceStory ServiceStoryId { get; set; }
-
-        /// <summary>
-        /// Gets or sets Name
+        /// Gets or sets the project name.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets Description
+        /// Gets or sets the project's description.
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets Version Control
+        /// Gets or sets the project's version control.
         /// </summary>
         public string VersionControl { get; set; }
 
         /// <summary>
-        /// Gets or sets date Started On
+        /// Gets or sets the project start date.
         /// </summary>
         public DateTime StartedOn { get; set; }
 
         /// <summary>
-        /// Gets or sets Project Manager
+        /// Gets or sets the Project Manager's email address.
         /// </summary>
         public string ProjectManagerEmailAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets Product Owner
+        /// Gets or sets the Product Owner's email address.
         /// </summary>
         public string ProductOwnerEmailAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets ScrumMasters
+        /// Gets or sets the list of the scrumMasters' email addresses.
         /// </summary>
         public List<string> ScrumMasterEmailAddresses { get; set; }
 
@@ -78,18 +73,5 @@ namespace AnyTrack.Backend.Service.Model
         /// Gets or sets Stories
         /// </summary>
         public List<ServiceStory> Stories { get; set; }
-
-        #region Methods
-
-        /// <summary>
-        /// Create a new ServiceStory Entity
-        /// </summary>
-        /// <returns>Returns storyId</returns>
-        public ServiceStory Story()
-        {
-            ServiceStoryId = new ServiceStory();
-            return ServiceStoryId;
-        }
-        #endregion Methods
     }
 }

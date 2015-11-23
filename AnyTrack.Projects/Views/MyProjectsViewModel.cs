@@ -24,19 +24,14 @@ namespace AnyTrack.Projects.Views
     /// <summary>
     /// The view model for the project
     /// </summary>
-    public class MyProjectsViewModel : ValidatedBindableBase, INavigationAware
+    public class MyProjectsViewModel : BaseViewModel, INavigationAware
     {
         #region Fields
 
         /// <summary>
-        /// The project service gateway
-        /// </summary>
-        private readonly IProjectServiceGateway serviceGateway;
-
-        /// <summary>
         /// The list of project tiles
         /// </summary>
-        private List<ProjectRoleSummary> tiles;
+        private List<ServiceProjectRoleSummary> tiles;
 
         /// <summary>
         /// Value to store whether projects there are no projects for active user
@@ -49,31 +44,25 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Creates a new Create Project View Model
         /// </summary>
-        /// <param name="serviceGateway">The project service gateway</param>
-        public MyProjectsViewModel(IProjectServiceGateway serviceGateway)
+        /// <param name="iProjectServiceGateway">The project service gateway</param>
+        public MyProjectsViewModel(IProjectServiceGateway iProjectServiceGateway)
+            : base(iProjectServiceGateway)
         {
-            if (serviceGateway == null)
-            {
-                throw new ArgumentNullException("serviceGateway");
-            }
-
-            this.serviceGateway = serviceGateway;
-
-            this.Tiles = serviceGateway.GetLoggedInUserProjectRoleSummaries(UserDetailsStore.LoggedInUserPrincipal.Identity.Name);
+            this.Tiles = ServiceGateway.GetLoggedInUserProjectRoleSummaries(UserDetailsStore.LoggedInUserPrincipal.Identity.Name);
 
             emptyProject = this.Tiles.Count == 0;
 
             CreateProjectCommand = new DelegateCommand(AddProjectView);
-            ManageBacklogCommand = new DelegateCommand<ProjectRoleSummary>(ManageBacklogView);
+            ManageBacklogCommand = new DelegateCommand<ServiceProjectRoleSummary>(ManageBacklogView);
         }
         #endregion
 
-        #region Mutators
+        #region Properties
 
         /// <summary>
         /// Gets or sets the Project Tiles for the active user
         /// </summary>
-        public List<ProjectRoleSummary> Tiles
+        public List<ServiceProjectRoleSummary> Tiles
         {
             get { return tiles; }
             set { SetProperty(ref tiles, value); }
@@ -88,6 +77,10 @@ namespace AnyTrack.Projects.Views
             set { SetProperty(ref emptyProject, value); }
         }
 
+        #endregion
+
+        #region Commands
+
         /// <summary>
         /// Gets or sets create project command
         /// </summary>
@@ -96,7 +89,7 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Gets or sets manage backlog command
         /// </summary>
-        public DelegateCommand<ProjectRoleSummary> ManageBacklogCommand { get; set; }
+        public DelegateCommand<ServiceProjectRoleSummary> ManageBacklogCommand { get; set; }
 
         #endregion
 
@@ -140,7 +133,7 @@ namespace AnyTrack.Projects.Views
         /// Manage Backlog View
         /// </summary>
         /// <param name="summary">The project summary.</param>
-        private void ManageBacklogView(ProjectRoleSummary summary)
+        private void ManageBacklogView(ServiceProjectRoleSummary summary)
         {
             var navParams = new NavigationParameters();
             navParams.Add("projectId", summary.ProjectId);

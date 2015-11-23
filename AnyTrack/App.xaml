@@ -9,7 +9,33 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Steel.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>           
+            <ControlTemplate x:Key="customButton">
+                <Grid x:Name="customButtonGrid">
+                    <Border x:Name="border" BorderBrush="Gainsboro" BorderThickness="0">
+                        <Grid>
+                            <Rectangle Fill="{TemplateBinding Background}"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Center" />
+                            <ContentControl HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Center"
+                                            Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=ActualWidth}"
+                                            Padding="10px"
+                                            Content="{TemplateBinding Property=ContentControl.Content}" />
+                        </Grid>
+                    </Border>
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="Button.IsPressed" Value="True">
+                        <Setter Property="BorderThickness" TargetName="border" Value="1"/>
+                        <Setter Property="Grid.RenderTransform" TargetName="customButtonGrid">
+                            <Setter.Value>
+                                <ScaleTransform ScaleX="0.95" ScaleY="0.95" />
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </ControlTemplate.Triggers>        
+            </ControlTemplate>            
+        </ResourceDictionary>        
     </Application.Resources>
 </Application>

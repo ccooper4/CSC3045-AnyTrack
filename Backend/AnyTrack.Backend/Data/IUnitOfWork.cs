@@ -29,7 +29,7 @@ namespace AnyTrack.Backend.Data
         IRepository<Story> StoryRepository { get; }
 
         /// <summary>
-        /// Gets the Project Repository
+        /// Gets the project repository controlled by this unit of work.
         /// </summary>
         IRepository<Project> ProjectRepository { get; }
 

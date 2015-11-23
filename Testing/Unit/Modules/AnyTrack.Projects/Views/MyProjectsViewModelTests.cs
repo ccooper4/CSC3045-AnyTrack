@@ -30,9 +30,9 @@ namespace Unit.Modules.AnyTrack.Projects.Views
             regionManager = Substitute.For<IRegionManager>();
             gateway = Substitute.For<IProjectServiceGateway>();
 
-            var listOfProjects = new List<ProjectRoleSummary>()
+            var listOfProjects = new List<ServiceProjectRoleSummary>()
             {
-                new ProjectRoleSummary()
+                new ServiceProjectRoleSummary()
             };
 
             UserDetailsStore.LoggedInUserPrincipal = new ServiceUserPrincipal(new LoginResult { EmailAddress = "test@agile.local" }, "");

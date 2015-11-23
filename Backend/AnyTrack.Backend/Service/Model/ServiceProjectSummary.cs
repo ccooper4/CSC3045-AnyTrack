@@ -9,7 +9,7 @@ namespace AnyTrack.Backend.Service.Model
     /// <summary>
     /// Represents the fields required to obtain a project.
     /// </summary>
-    public class ProjectDetails
+    public class ServiceProjectSummary
     {
         /// <summary>
         /// Gets or sets the project id.

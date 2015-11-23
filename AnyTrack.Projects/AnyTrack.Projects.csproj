@@ -97,6 +97,10 @@
     </Compile>
     <Compile Include="ServiceGateways\IProjectServiceGateway.cs" />
     <Compile Include="ServiceGateways\ProjectServiceGateway.cs" />
+    <Compile Include="Views\BaseViewModel.cs" />
+    <Compile Include="Views\CustomControls\LabelledTextBox.xaml.cs">
+      <DependentUpon>LabelledTextBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MyProjects.xaml.cs">
       <DependentUpon>MyProjects.xaml</DependentUpon>
     </Compile>
@@ -181,6 +185,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\CreateProject.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CustomControls\LabelledTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

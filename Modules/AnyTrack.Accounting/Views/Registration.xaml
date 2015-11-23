@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:AnyTrack.Accounting.Views"
              xmlns:prism="http://www.codeplex.com/prism"
              xmlns:atph="clr-namespace:AnyTrack.Accounting.Controls"
+             xmlns:Views="clr-namespace:AnyTrack.Client.CustomControls"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="600">
@@ -13,7 +14,7 @@
     <Grid Background="LightGray" Margin="0,0,0,-210">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.75*" />
-            <ColumnDefinition Width="5*" MaxWidth="600px"/>
+            <ColumnDefinition Width="6.75*" MaxWidth="600px"/>
             <ColumnDefinition Width="1.75*"/>
         </Grid.ColumnDefinitions>
 
@@ -29,8 +30,8 @@
             </GroupBox.Header>
             <Grid Background="White">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"></ColumnDefinition>
-                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                    <ColumnDefinition Width="0*"></ColumnDefinition>
+                    <ColumnDefinition Width="6*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
        
@@ -49,48 +50,79 @@
                     <RowDefinition ></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Column="0" Grid.Row="0" Name="EmailLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Email Address*:</Label>
-                <TextBox Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Text="{Binding Email}"  />
+                <Views:LabelledTextBox Label="Email Address*:" Text="{Binding Email}" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"/>
 
-                <Label Grid.Column="0" Grid.Row="1" Name="FirstLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >First Name*:</Label>
-                <TextBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Text="{Binding FirstName}" />
+                <Views:LabelledTextBox Label="First Name*:" Text="{Binding FirstName}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"/>
 
-                <Label Grid.Column="0" Grid.Row="2" Name="LastLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Last Name*:</Label>
-                <TextBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Text="{Binding LastName}" />
+                <Views:LabelledTextBox Label="Last Name*:" Text="{Binding LastName}" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center"/>
 
-                <Label Grid.Column="0" Grid.Row="3" Name="PasswordLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Password*:</Label>
-                <PasswordBox Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" atph:PasswordBoxBindingHelper.EnablePasswordBoxBinding="true"  atph:PasswordBoxBindingHelper.Binding="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <Grid Grid.Column="1" Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*" SharedSizeGroup="Labels"/>
+                        <ColumnDefinition Width="6*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label  Grid.Column="0" Name="PasswordLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Password*:</Label>
+                    <PasswordBox  Grid.Column="1" VerticalAlignment="Center" atph:PasswordBoxBindingHelper.EnablePasswordBoxBinding="true" atph:PasswordBoxBindingHelper.Binding="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </Grid>
 
-                <Label Grid.Column="0" Grid.Row="4" Name="ConfirmPasswordLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Confirm Password:</Label>
-                <PasswordBox Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" atph:PasswordBoxBindingHelper.EnablePasswordBoxBinding="true"  atph:PasswordBoxBindingHelper.Binding="{Binding Path=ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <Grid Grid.Column="1" Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*" SharedSizeGroup="Labels"/>
+                        <ColumnDefinition Width="6*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="ConfirmPasswordLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Confirm Password:</Label>
+                    <PasswordBox Grid.Column="1" VerticalAlignment="Center" atph:PasswordBoxBindingHelper.EnablePasswordBoxBinding="true"  atph:PasswordBoxBindingHelper.Binding="{Binding Path=ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </Grid>
 
-                <Label Grid.Column="0" Grid.Row="5" Name="RolesLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Roles:</Label>
-                <CheckBox Name="ProductOwnerCheckbox" Content="Product Owner" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10px" IsChecked="{Binding ProductOwner}"/>
-                <CheckBox Name="ScrumMasterCheckbox" Content="Scrum Master" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left"  VerticalAlignment="Center" Padding="10px" IsChecked="{Binding ScrumMaster}"/>
-                <CheckBox Name="DeveloperCheckbox" Content="Developer" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left"  VerticalAlignment="Center" Padding="10px" IsChecked="{Binding Developer}"/>
+                <Grid Grid.Column="1" Grid.Row="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*" SharedSizeGroup="Labels"/>
+                        <ColumnDefinition Width="6*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Column="0" Grid.Row="0" Name="RolesLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Roles:</Label>
+                    <CheckBox Grid.Column="1" Grid.Row="0" Name="ProductOwnerCheckbox" Content="Product Owner" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10px" IsChecked="{Binding ProductOwner}"/>
+                    <CheckBox Grid.Column="1" Grid.Row="1" Name="ScrumMasterCheckbox" Content="Scrum Master" HorizontalAlignment="Left"  VerticalAlignment="Center" Padding="10px" IsChecked="{Binding ScrumMaster}"/>
+                    <CheckBox Grid.Column="1" Grid.Row="2" Name="DeveloperCheckbox" Content="Developer" HorizontalAlignment="Left"  VerticalAlignment="Center" Padding="10px" IsChecked="{Binding Developer}"/>
+                </Grid>
+
+                <Grid Grid.Column="1" Grid.Row="6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*" SharedSizeGroup="Labels"/>
+                        <ColumnDefinition Width="6*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="SkillSetLabel" VerticalAlignment="Top" HorizontalAlignment="Right" Padding="10px" >Skill Set:</Label>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Column="1">
+                        <DockPanel>
+                            <Button Content="Add" DockPanel.Dock="Right" Command="{Binding AddSkillCommand}" BorderThickness="0" Background="LightGray" Margin="10px,0,0,0" Height="4"/>
+                            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Text="{Binding CurrentSkill}"/>
+                        </DockPanel>
+
+                        <ListBox ItemsSource="{Binding Skills}" Padding="0,0,0,0" Margin="0,10px,0,0" BorderThickness="0">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding Path=.}"></Label>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Grid.Column="1" Grid.Row="7">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*" SharedSizeGroup="Labels"/>
+                        <ColumnDefinition Width="6*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Name="SecretQuestionLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Secret Question:</Label>
+                    <ComboBox Grid.Column="1" ItemsSource="{Binding SecretQuestions}" SelectedValuePath="." SelectedValue="{Binding SecretQuestion}" Height="5" VerticalAlignment="Center" />
+                </Grid>
+
+                <Views:LabelledTextBox Label="Secret Answer:" Text="{Binding SecretAnswer}" Grid.Column="1" Grid.Row="8" VerticalAlignment="Center"/>
                 
-                <Label Grid.Column="0" Grid.Row="8" Name="SkillSetLabel" VerticalAlignment="Top" HorizontalAlignment="Right" Padding="10px" >Skill Set:</Label>
-                <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Row="8" Grid.Column="1">
-                    <DockPanel>
-                        <Button Content="Add" DockPanel.Dock="Right" Command="{Binding AddSkillCommand}" BorderThickness="0" Background="LightGray" Margin="10px,0,0,0" Height="4"/>
-                        <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Text="{Binding CurrentSkill}"/>
-                    </DockPanel>
-
-                    <ListBox ItemsSource="{Binding Skills}" Padding="0,0,0,0" Margin="0,10px,0,0" BorderThickness="0">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Label Content="{Binding Path=.}"></Label>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </StackPanel>
-                
-                <Label Grid.Column="0" Grid.Row="9" Name="SecretQuestionLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Secret Question:</Label>
-                <ComboBox Grid.Column="1" Grid.Row="9" ItemsSource="{Binding SecretQuestions}" SelectedValuePath="." SelectedValue="{Binding SecretQuestion}" Height="5" VerticalAlignment="Center" />
-
-                <Label Grid.Column="0" Grid.Row="10" Name="SecretAnswerLabel" VerticalAlignment="Top" HorizontalAlignment="Right" Padding="10px" >Secret Answer:</Label>
-                <TextBox Grid.Column="1" Grid.Row="10" VerticalAlignment="Center" Text="{Binding SecretAnswer}"/>
-
             </Grid>
         </GroupBox>
         <WrapPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">

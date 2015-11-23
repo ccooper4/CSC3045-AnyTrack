@@ -29,7 +29,7 @@ namespace AnyTrack.Backend.Service
 
         #region Constructor
         /// <summary>
-        /// Creates a new ProjectService
+        /// Creates a new ProjectService.
         /// </summary>
         /// <param name="unitOfWork">The unit of work</param>
         /// <param name="formsProvider">The forms provider.</param>
@@ -99,7 +99,7 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
-        /// Update project in the database
+        /// Update project in the database.
         /// </summary>
         /// <param name="updatedProject">Project to be updated</param>
         public void UpdateProject(ServiceProject updatedProject)
@@ -154,7 +154,7 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
-        /// Delete a project in the database
+        /// Delete a project in the database.
         /// </summary>
         /// <param name="projectId">ID of the project to be deleted</param>
         public void DeleteProject(Guid projectId)
@@ -186,7 +186,7 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
-        /// Gets a specified project from the database
+        /// Gets a specified project from the database.
         /// </summary>
         /// <param name="projectId">ID of the project to be retrieved from the database</param>
         /// <returns>Specified Project</returns>
@@ -223,7 +223,7 @@ namespace AnyTrack.Backend.Service
             {
                 foreach (var story in dataProject.Stories)
                 {
-                    project.Stories.Add(new Service.Model.ServiceStory
+                    project.Stories.Add(new ServiceStory
                     {
                         StoryId = story.Id,
                         Summary = story.Summary,
@@ -239,7 +239,7 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
-        /// Gets a specified project from the database
+        /// Gets a specified project from the database.
         /// </summary>
         /// <param name="projectId">ID of the project to be retrieved from the database</param>
         /// <param name = "storyId" > ID of the story to be retrieved from the database</param>
@@ -277,35 +277,40 @@ namespace AnyTrack.Backend.Service
         /// Returns the list of project names that this user can see.
         /// </summary>
         /// <param name="scrumMaster">The Scrum master flag.</param>
-        /// <param name="po">The PO flag.</param>
-        /// <param name="dev">The developer flag.</param>
+        /// <param name="productOwner">The PO flag.</param>
+        /// <param name="developer">The developer flag.</param>
         /// <returns>A list of project detail models.</returns>
-        public List<ProjectDetails> GetProjectNames(bool scrumMaster, bool po, bool dev)
+        public List<ServiceProjectSummary> GetProjectNames(bool scrumMaster, bool productOwner, bool developer)
         {
             var userEmail = Thread.CurrentPrincipal.Identity.Name;
             var user = unitOfWork.UserRepository.Items.SingleOrDefault(u => u.EmailAddress == userEmail);
+
+            if (user == null)
+            {
+                throw new ArgumentException("User does not exist");
+            }
 
             var projectIds = new List<Guid>();
 
             if (scrumMaster)
             {
-                var smProjects = user.Roles.Where(r => r.RoleName == "Scrum Master").Select(r => r.ProjectID);
+                var smProjects = user.Roles.Where(r => r.RoleName == "Scrum Master").Select(r => r.ProjectId);
                 projectIds = projectIds.Union(smProjects).ToList();
             }
 
-            if (po)
+            if (productOwner)
             {
-                var poProjects = user.Roles.Where(r => r.RoleName == "Product Owner").Select(r => r.ProjectID);
+                var poProjects = user.Roles.Where(r => r.RoleName == "Product Owner").Select(r => r.ProjectId);
                 projectIds = projectIds.Union(poProjects).ToList();                
             }
 
-            if (dev)
+            if (developer)
             {
-                var devProjects = user.Roles.Where(r => r.RoleName == "Developer").Select(r => r.ProjectID);
+                var devProjects = user.Roles.Where(r => r.RoleName == "Developer").Select(r => r.ProjectId);
                 projectIds = projectIds.Union(devProjects).ToList();
             }
 
-            var projects = unitOfWork.ProjectRepository.Items.Where(project => projectIds.Contains(project.Id)).Select(p => new ProjectDetails
+            var projects = unitOfWork.ProjectRepository.Items.Where(project => projectIds.Contains(project.Id)).Select(p => new ServiceProjectSummary
             {
                 ProjectId = p.Id,
                 ProjectName = p.Name
@@ -315,13 +320,13 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
-        /// Method to get the project stories
+        /// Method to get the project stories.
         /// </summary>
         /// <param name="projectId">projectId to be checked</param>
         /// <returns>a list of stories</returns>
-        public List<StoryDetails> GetProjectStoryDetails(Guid projectId)
+        public List<ServiceStorySummary> GetProjectStoryDetails(Guid projectId)
         {
-            var stories = unitOfWork.StoryRepository.Items.Where(s => s.Project.Id == projectId).Select(s => new StoryDetails
+            var stories = unitOfWork.StoryRepository.Items.Where(s => s.Project.Id == projectId).Select(s => new ServiceStorySummary
             {
                 StoryId = s.Id,
                 Summary = s.Summary
@@ -330,7 +335,7 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
-        /// Gets all existing projects from the database
+        /// Gets all existing projects from the database.
         /// </summary>
         /// <returns>List of all Projects in the database</returns>
         public List<ServiceProject> GetProjects()
@@ -363,7 +368,7 @@ namespace AnyTrack.Backend.Service
                 {
                     foreach (var story in dataProject.Stories)
                     {
-                        project.Stories.Add(new Service.Model.ServiceStory
+                        project.Stories.Add(new ServiceStory
                         {
                             StoryId = story.Id,
                             Summary = story.Summary,
@@ -384,27 +389,27 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         /// <param name="currentUserEmailAddress">The email of the currently logged in user</param>
         /// <returns>A list containing Project role summaries</returns>
-        public List<ProjectRoleSummary> GetUserProjectRoleSummaries(string currentUserEmailAddress)
+        public List<ServiceProjectRoleSummary> GetUserProjectRoleSummaries(string currentUserEmailAddress)
         {          
             User loggedInUser = unitOfWork.UserRepository.Items.Single(u => u.EmailAddress == currentUserEmailAddress);
 
-            var projectIds = unitOfWork.RoleRepository.Items.Where(r => r.User.EmailAddress == loggedInUser.EmailAddress).Select(r => r.ProjectID).Distinct().ToList();
+            var projectIds = unitOfWork.RoleRepository.Items.Where(r => r.User.EmailAddress == loggedInUser.EmailAddress).Select(r => r.ProjectId).Distinct().ToList();
 
             if (projectIds.Count == 0)
             {
-                return new List<ProjectRoleSummary>();
+                return new List<ServiceProjectRoleSummary>();
             }
 
-            List<ProjectRoleSummary> projectRoleDetails = new List<ProjectRoleSummary>();
+            List<ServiceProjectRoleSummary> projectRoleDetails = new List<ServiceProjectRoleSummary>();
 
             foreach (var projectId in projectIds)
             {
                 var project =
                     unitOfWork.ProjectRepository.Items.Single(p => p.Id == projectId);
 
-                var tempRoles = loggedInUser.Roles.Where(r => r.ProjectID == projectId).Select(r => r.RoleName).ToList();
+                var tempRoles = loggedInUser.Roles.Where(r => r.ProjectId == projectId).Select(r => r.RoleName).ToList();
 
-                projectRoleDetails.Add(new ProjectRoleSummary
+                projectRoleDetails.Add(new ServiceProjectRoleSummary
                 {
                     ProjectId = projectId,
                     Name = project.Name,
@@ -424,7 +429,7 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         /// <param name="filter">The user filter.</param>
         /// <returns>A list of user information objects.</returns>
-        public List<UserSearchInfo> SearchUsers(UserSearchFilter filter)
+        public List<ServiceUserSearchInfo> SearchUsers(ServiceUserSearchFilter filter)
         {
             var users = unitOfWork.UserRepository.Items;
 
@@ -443,11 +448,11 @@ namespace AnyTrack.Backend.Service
                 users = users.Where(u => u.ScrumMaster == filter.ScrumMaster);
             }
 
-            var userInfos = users.Select(u => new UserSearchInfo
+            var userInfos = users.Select(u => new ServiceUserSearchInfo
             {
                 EmailAddress = u.EmailAddress,
                 FullName = u.FirstName + " " + u.LastName,
-                UserID = u.Id
+                UserId = u.Id
             }).OrderBy(u => u.FullName);
 
             return userInfos.ToList();
@@ -463,9 +468,12 @@ namespace AnyTrack.Backend.Service
         {
             var project = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Id == projectId);
 
-            Story dataStory = null;
+            if (project == null)
+            {
+                throw new ArgumentException("Project does not exist in the database");
+            }
 
-            dataStory = project.Stories.SingleOrDefault(s => s.Id == storyId);
+            var dataStory = project.Stories.SingleOrDefault(s => s.Id == storyId);
 
             if (dataStory == null)
             {
@@ -496,8 +504,8 @@ namespace AnyTrack.Backend.Service
                 throw new ArgumentException("Project not found for Guid" + projectGuid.ToString());
             }
 
-            var storyExists = unitOfWork.StoryRepository.Items.SingleOrDefault(s => s.Id == story.StoryId);
-            if (storyExists != null)
+            var dataStory = unitOfWork.StoryRepository.Items.SingleOrDefault(s => s.Id == story.StoryId);
+            if (dataStory != null)
             {
                 throw new ArgumentException("Story already exists in database");
             }
@@ -516,36 +524,35 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
-        /// Deleting a story from the project
-        /// Update story in the database
+        /// Update story in the database.
         /// </summary>
-        /// <param name="editStory">story to be updated</param>
-        public void EditStory(ServiceStory editStory)
+        /// <param name="story">story to be updated</param>
+        public void EditStory(ServiceStory story)
         {
-            if (editStory == null)
+            if (story == null)
             {
-                throw new ArgumentNullException("editStory");
+                throw new ArgumentNullException("story");
             }
 
-            var project = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Id == editStory.ProjectId);
+            var project = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Id == story.ProjectId);
 
             if (project == null)
             {
                 throw new ArgumentException("Project does not exist in database");
             }
 
-            var story = project.Stories.SingleOrDefault(p => p.Id == editStory.StoryId);
+            var dataStory = project.Stories.SingleOrDefault(p => p.Id == story.StoryId);
 
-            if (story == null)
+            if (dataStory == null)
             {
                 throw new ArgumentException("story does not exist in database");
             }
             
-            story.Summary = editStory.Summary;
-            story.ConditionsOfSatisfaction = editStory.ConditionsOfSatisfaction;
-            story.AsA = editStory.AsA;
-            story.IWant = editStory.IWant;
-            story.SoThat = editStory.SoThat;           
+            dataStory.Summary = story.Summary;
+            dataStory.ConditionsOfSatisfaction = story.ConditionsOfSatisfaction;
+            dataStory.AsA = story.AsA;
+            dataStory.IWant = story.IWant;
+            dataStory.SoThat = story.SoThat;           
             
             unitOfWork.Commit();
         }
@@ -586,7 +593,7 @@ namespace AnyTrack.Backend.Service
                 // Create role
                 Role role = new Role
                 {
-                    ProjectID = projectId,
+                    ProjectId = projectId,
                     RoleName = roleName,
                     User = user
                 };
@@ -628,7 +635,7 @@ namespace AnyTrack.Backend.Service
             }
 
             Role role =
-                        unitOfWork.RoleRepository.Items.SingleOrDefault(r => r.RoleName == roleName && r.User == user && r.ProjectID == projectId);
+                        unitOfWork.RoleRepository.Items.SingleOrDefault(r => r.RoleName == roleName && r.User == user && r.ProjectId == projectId);
 
             if (role == null)
             {
