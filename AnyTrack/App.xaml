@@ -15,11 +15,10 @@
                     <Border x:Name="border" BorderBrush="Gainsboro" BorderThickness="0">
                         <Grid>
                             <Rectangle Fill="{TemplateBinding Background}"
-                                       HorizontalAlignment="Stretch"
+                                       HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
-                            <ContentControl HorizontalAlignment="Stretch"
+                            <ContentControl HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
-                                            Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=ActualWidth}"
                                             Padding="10px"
                                             Content="{TemplateBinding Property=ContentControl.Content}" />
                         </Grid>
