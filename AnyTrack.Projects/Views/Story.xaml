@@ -4,13 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:prism="http://www.codeplex.com/prism"
-             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"             
+             xmlns:Views="clr-namespace:AnyTrack.Projects.Views.CustomControls"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xml:lang="en-GB"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" Width="500" Height="Auto">
 
-        <Grid Margin="-5,-5,-5,-5" >
+    <GroupBox >
+        <GroupBox.Header>
+            <TextBlock Foreground="White" Text="Story Wizard" />
+        </GroupBox.Header>
+
+        <Grid Background="White" Margin="-5,-5,-5,-5" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="8*"></ColumnDefinition>
@@ -18,21 +24,20 @@
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="30" ></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="30"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="3*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
             </Grid.RowDefinitions>
 
             <Label Grid.Row="0" Grid.Column="1" FontWeight="Bold" Margin="0, 10px, 0, 0">Project</Label>
-            <ComboBox Grid.Row="1" Grid.Column="1" Width="200px" HorizontalAlignment="Left" ItemsSource="{Binding Projects}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}"/>
+            <ComboBox Grid.Row="1" Grid.Column="1" Width="390" HorizontalAlignment="Left" ItemsSource="{Binding Projects}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}"/>
 
-            <Label Grid.Row="2" Grid.Column="1" FontWeight="Bold" Margin="0, 10px, 0, 0">Summary</Label>
-            <TextBox Grid.Row="3" Grid.Column="1" Height="30px" Text="{Binding Summary}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Top" controls:TextBoxHelper.ClearTextButton="True"/>
+            <Views:LabelledTextBox Label="Summary" Text="{Binding Summary}" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Height="85" Margin="0,0,0,95" Grid.RowSpan="2"/>
+
+            <Views:LabelledTextBox Label="Conditions of satisfaction" Text="{Binding ConditionsOfSatisfaction}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Height="85" Margin="0,0,0,95" Grid.RowSpan="2"/>
 
             <Grid Grid.Row="4" Grid.Column="1" Margin="0, 20px, 0, 0">
                 <Grid.ColumnDefinitions>
@@ -55,13 +60,13 @@
                 <TextBox Grid.Row="2" Grid.Column="1" Height="30px" Margin="0, 5px, 0, 0" Text="{Binding SoThat}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Top" controls:TextBoxHelper.ClearTextButton="True"/>
             </Grid>
 
-            <Label Grid.Row="5" Grid.Column="1" FontWeight="Bold" Margin="0,20px, 0, 0">Conditions of satisfaction</Label>
-            <TextBox Grid.Row="6" Grid.Column="1" Height="60px" Text="{Binding ConditionsOfSatisfaction}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Top"/>
-
-        <WrapPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10px,0,20px">
-            <Button Margin="10px, 0, 0, 0" Command="{Binding SaveUpdateStoryCommand}" BorderThickness="0" Background="LightGray" Width="60px">Save</Button>
+            
+            <WrapPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10px,0,20px">
+                <Button Margin="10px, 0, 0, 0" Command="{Binding CancelStoryViewCommand}" BorderThickness="0" Background="LightGray" Width="60px">Cancel</Button>
+                <Button Margin="10px, 0, 0, 0" Command="{Binding SaveUpdateStoryCommand}" BorderThickness="0" Background="LightGray" Width="60px">Save</Button>
             </WrapPanel>
 
         </Grid>
+    </GroupBox>
 
 </UserControl>
