@@ -64,7 +64,7 @@ namespace AnyTrack.Backend.Service
         /// Creates a new user account given the captured data.
         /// </summary>
         /// <param name="user">The user to register in the membership system.</param>
-        public void CreateAccount(NewUser user)
+        public void CreateAccount(ServiceUser user)
         {
             if (unitOfWork.UserRepository.Items.Any(u => u.EmailAddress == user.EmailAddress))
             {
@@ -95,13 +95,13 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         /// <param name="credential">The user's credential.</param>
         /// <returns>A flag indicating the outcome of the validation.</returns>
-        public LoginResult LogIn(UserCredential credential)
+        public ServiceLoginResult LogIn(ServiceUserCredential credential)
         {
             var userAccount = unitOfWork.UserRepository.Items.SingleOrDefault(u => u.EmailAddress == credential.EmailAddress);
 
             if (userAccount == null)
             {
-                return new LoginResult
+                return new ServiceLoginResult
                 {
                     Success = false
                 };  
@@ -109,7 +109,7 @@ namespace AnyTrack.Backend.Service
 
             if (!Crypto.VerifyHashedPassword(userAccount.Password, credential.Password))
             {
-                return new LoginResult
+                return new ServiceLoginResult
                 {
                     Success = false
                 };  
@@ -117,7 +117,7 @@ namespace AnyTrack.Backend.Service
 
             formsAuthProvider.SetAuthCookie(credential.EmailAddress, false);
 
-            return new LoginResult
+            return new ServiceLoginResult
             {
                 EmailAddress = userAccount.EmailAddress,
                 FirstName = userAccount.FirstName,
@@ -125,10 +125,10 @@ namespace AnyTrack.Backend.Service
                 Developer = userAccount.Developer,
                 ProductOwner = userAccount.ProductOwner,
                 ScrumMaster = userAccount.ScrumMaster,
-                AssignedRoles = userAccount.Roles.Select(r => new RoleInfo
+                AssignedRoles = userAccount.Roles.Select(r => new ServiceRoleInfo
                 {
                     Role = r.RoleName,
-                    ProjectID = r.ProjectID
+                    ProjectId = r.ProjectId
                 }).ToList(),
                 Success = true
             }; 

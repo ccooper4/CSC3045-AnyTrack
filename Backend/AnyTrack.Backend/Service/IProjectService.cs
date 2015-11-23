@@ -15,28 +15,28 @@ namespace AnyTrack.Backend.Service
     public interface IProjectService
     {
         /// <summary>
-        /// Adds a Project to the database
+        /// Adds a Project to the database.
         /// </summary>
         /// <param name="project">Project to be added</param>
         [OperationContract]
         void AddProject(ServiceProject project);
 
         /// <summary>
-        /// Update project in the database
+        /// Update project in the database.
         /// </summary>
         /// <param name="updatedProject">Project to be updated</param>
         [OperationContract]
         void UpdateProject(ServiceProject updatedProject);
 
         /// <summary>
-        /// Delete a project in the database
+        /// Delete a project in the database.
         /// </summary>
         /// <param name="projectId">ID of the project to be deleted</param>
         [OperationContract]
         void DeleteProject(Guid projectId);
 
         /// <summary>
-        /// Deleting a story from the project
+        /// Deleting a story from the project.
         /// </summary>
         /// <param name="projectId">the projectid to be unlinked and removed</param>
         /// <param name="storyId">the storyid to be unlinked and removed</param>
@@ -44,7 +44,7 @@ namespace AnyTrack.Backend.Service
         void DeleteStoryFromProject(Guid projectId, Guid storyId);
 
         /// <summary>
-        /// Gets a specified project from the database
+        /// Gets a specified project from the database.
         /// </summary>
         /// <param name="projectId">ID of the project to be retrieved from the database</param>
         /// <returns>Specified Project</returns>
@@ -52,7 +52,7 @@ namespace AnyTrack.Backend.Service
         ServiceProject GetProject(Guid projectId);
 
         /// <summary>
-        /// Gets all existing projects from the database
+        /// Gets all existing projects from the database.
         /// </summary>
         /// <returns>List of all Projects in the database</returns>
         [OperationContract]
@@ -64,28 +64,28 @@ namespace AnyTrack.Backend.Service
         /// <param name="filter">The user filter.</param>
         /// <returns>A list of user information objects.</returns>
         [OperationContract]
-        List<UserSearchInfo> SearchUsers(UserSearchFilter filter);
+        List<ServiceUserSearchInfo> SearchUsers(ServiceUserSearchFilter filter);
 
         /// <summary>
         /// Returns the list of project names that this user can see.
         /// </summary>
         /// <param name="scrumMaster">The Scrum master flag.</param>
-        /// <param name="po">The PO flag.</param>
-        /// <param name="dev">The developer flag.</param>
+        /// <param name="productOwner">The PO flag.</param>
+        /// <param name="developer">The developer flag.</param>
         /// <returns>A list of project detail models.</returns>
         [OperationContract]
-        List<ProjectDetails> GetProjectNames(bool scrumMaster, bool po, bool dev);
+        List<ServiceProjectSummary> GetProjectNames(bool scrumMaster, bool productOwner, bool developer);
 
         /// <summary>
-        /// Get all stories based on project from the database
+        /// Get all stories based on project from the database.
         /// </summary>
         /// <param name="projectId">Project id to be checked</param>
         /// <returns>A list of stories for a project</returns>
         [OperationContract]
-        List<StoryDetails> GetProjectStoryDetails(Guid projectId);
+        List<ServiceStorySummary> GetProjectStoryDetails(Guid projectId);
 
         /// <summary>
-        /// Adds a story to a project
+        /// Adds a story to a project.
         /// </summary>
         /// <param name="projectGuid">takes in the project id</param>
         /// <param name="story">takes in the story to add</param>
@@ -93,15 +93,15 @@ namespace AnyTrack.Backend.Service
         void AddStoryToProject(Guid projectGuid, ServiceStory story);
 
         /// <summary>
-        /// Retrieves the logged in users projects that they are a member of
+        /// Retrieves the logged in users projects that they are a member of.
         /// </summary>
         /// <param name="currentUserEmailAddress">The email of the currently logged in user</param>
         /// <returns>List of the users project role details</returns>
         [OperationContract]
-        List<ProjectRoleSummary> GetUserProjectRoleSummaries(string currentUserEmailAddress);
+        List<ServiceProjectRoleSummary> GetUserProjectRoleSummaries(string currentUserEmailAddress);
 
         /// <summary>
-        /// Gets a specified project from the database
+        /// Gets a specified project from the database.
         /// </summary>
         /// <param name="projectId">ID of the project to be retrieved from the database</param>
         /// <param name = "storyId" > ID of the story to be retrieved from the database</param>
@@ -110,14 +110,14 @@ namespace AnyTrack.Backend.Service
         ServiceStory GetProjectStory(Guid projectId, Guid storyId);
 
         /// <summary>
-        /// Update story in the database
+        /// Update story in the database.
         /// </summary>
-        /// <param name="editStory">story to be updated</param>
+        /// <param name="story">story to be updated</param>
         [OperationContract]
-        void EditStory(ServiceStory editStory);
+        void EditStory(ServiceStory story);
 
         /// <summary>
-        /// Update story in the database
+        /// Update story in the database.
         /// </summary>        
         /// <param name="projectId">ID of the project to be retrieved from the database</param>
         /// <param name = "storyId" > ID of the story to be retrieved from the database</param>

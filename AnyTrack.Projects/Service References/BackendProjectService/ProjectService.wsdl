@@ -56,11 +56,11 @@
   <wsdl:message name="IProjectService_GetProjectNames_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetProjectNamesResponse" />
   </wsdl:message>
-  <wsdl:message name="IProjectService_GetProjectStoryDetails_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetProjectStoryDetails" />
+  <wsdl:message name="IProjectService_GetProjectServiceStorySummary_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProjectServiceStorySummary" />
   </wsdl:message>
-  <wsdl:message name="IProjectService_GetProjectStoryDetails_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetProjectStoryDetailsResponse" />
+  <wsdl:message name="IProjectService_GetProjectServiceStorySummary_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProjectServiceStorySummaryResponse" />
   </wsdl:message>
   <wsdl:message name="IProjectService_AddStoryToProject_InputMessage">
     <wsdl:part name="parameters" element="tns:AddStoryToProject" />
@@ -125,9 +125,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IProjectService/GetProjectNames" message="tns:IProjectService_GetProjectNames_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IProjectService/GetProjectNamesResponse" message="tns:IProjectService_GetProjectNames_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetProjectStoryDetails">
-      <wsdl:input wsaw:Action="http://tempuri.org/IProjectService/GetProjectStoryDetails" message="tns:IProjectService_GetProjectStoryDetails_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IProjectService/GetProjectStoryDetailsResponse" message="tns:IProjectService_GetProjectStoryDetails_OutputMessage" />
+    <wsdl:operation name="GetProjectServiceStorySummary">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProjectService/GetProjectServiceStorySummary" message="tns:IProjectService_GetProjectServiceStorySummary_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProjectService/GetProjectServiceStorySummaryResponse" message="tns:IProjectService_GetProjectServiceStorySummary_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="AddStoryToProject">
       <wsdl:input wsaw:Action="http://tempuri.org/IProjectService/AddStoryToProject" message="tns:IProjectService_AddStoryToProject_InputMessage" />
@@ -224,8 +224,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetProjectStoryDetails">
-      <soap:operation soapAction="http://tempuri.org/IProjectService/GetProjectStoryDetails" style="document" />
+    <wsdl:operation name="GetProjectServiceStorySummary">
+      <soap:operation soapAction="http://tempuri.org/IProjectService/GetProjectServiceStorySummary" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

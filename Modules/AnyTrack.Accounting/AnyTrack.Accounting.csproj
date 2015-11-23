@@ -124,7 +124,7 @@
     </Compile>
     <Compile Include="ServiceGateways\AccountServiceGateway.cs" />
     <Compile Include="ServiceGateways\IAccountServiceGateway.cs" />
-    <Compile Include="ServiceGateways\Models\AvailableSecretQuestions.cs" />
+    <Compile Include="ServiceGateways\Models\ClientAvailableSecretQuestions.cs" />
     <Compile Include="Views\BaseViewModel.cs" />
     <Compile Include="Views\CustomControls\LabelledTextBox.xaml.cs">
       <DependentUpon>LabelledTextBox.xaml</DependentUpon>

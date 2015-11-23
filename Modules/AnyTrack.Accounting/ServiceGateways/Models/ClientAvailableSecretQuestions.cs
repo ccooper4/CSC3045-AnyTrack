@@ -10,22 +10,22 @@ namespace AnyTrack.Accounting.ServiceGateways.Models
     /// <summary>
     /// Class representing the available secret questions.
     /// </summary>
-    public sealed class AvailableSecretQuestions
+    public sealed class ClientAvailableSecretQuestions
     {
         /// <summary>
         /// Secret question 1.
         /// </summary>
-        public static readonly string MAIDENNAME = "What is your mothers maiden name?";
+        public static readonly string MaidenName = "What is your mothers maiden name?";
 
         /// <summary>
         /// Secret question 2.
         /// </summary>
-        public static readonly string FIRSTSCHOOL = "What is the name of your first school?";
+        public static readonly string FirstSchool = "What is the name of your first school?";
 
         /// <summary>
         /// Secret question 3.
         /// </summary>
-        public static readonly string FIRSTPET = "What is the name of you first pet?";
+        public static readonly string FirstPet = "What is the name of you first pet?";
 
         /// <summary>
         /// All the secret questions.
@@ -34,9 +34,9 @@ namespace AnyTrack.Accounting.ServiceGateways.Models
         public static List<string> All()
         {
             List<string> questionsList = new List<string>();
-            questionsList.Add(MAIDENNAME);
-            questionsList.Add(FIRSTSCHOOL);
-            questionsList.Add(FIRSTPET);
+            questionsList.Add(MaidenName);
+            questionsList.Add(FirstSchool);
+            questionsList.Add(FirstPet);
             return questionsList;
         } 
     }

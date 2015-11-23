@@ -9,7 +9,7 @@ namespace AnyTrack.Backend.Service.Model
     /// <summary>
     /// Represents the fields required to obtain a story from given projects.
     /// </summary>
-    public class StoryDetails
+    public class ServiceStorySummary
     {
         /// <summary>
         /// Gets or sets the story id.
