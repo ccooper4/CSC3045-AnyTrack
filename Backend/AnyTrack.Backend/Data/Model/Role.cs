@@ -24,6 +24,6 @@ namespace AnyTrack.Backend.Data.Model
         /// <summary>
         /// Gets or sets the project id.
         /// </summary>
-        public virtual Guid ProjectID { get; set; }
+        public virtual Guid ProjectId { get; set; }
     }
 }

@@ -71,7 +71,7 @@ namespace AnyTrack.Projects.Views
         /// <param name="iProjectServiceGateway">The Project Service Gateway</param>
         public StoryViewModel(IProjectServiceGateway iProjectServiceGateway) : base(iProjectServiceGateway)
         {
-            this.Projects = new ObservableCollection<ProjectDetails>();
+            this.Projects = new ObservableCollection<ServiceProjectSummary>();
             this.Projects.AddRange(ServiceGateway.GetProjectNames(false, true, false));
             
             SaveUpdateStoryCommand = new DelegateCommand(this.SaveUpdateStory);
@@ -93,7 +93,7 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Gets or sets the project details.
         /// </summary>
-        public ObservableCollection<ProjectDetails> Projects { get; set; }
+        public ObservableCollection<ServiceProjectSummary> Projects { get; set; }
 
         /// <summary>
         /// Gets or sets story represented by this view.
@@ -235,7 +235,6 @@ namespace AnyTrack.Projects.Views
             this.ValidateViewModelNow();
             if (!HasErrors)
             {
-                // this.ShowMetroDialog("im save update", ".", MessageDialogStyle.Affirmative);
                 Story = new ServiceStory()
                 {
                     Summary = this.Summary,

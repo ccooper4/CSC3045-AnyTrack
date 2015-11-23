@@ -13,12 +13,12 @@ namespace Unit.Modules.AnyTrack.Accounting.ServiceGateways.Model.AvailableSecret
 
     public class Context
     {
-        public static AvailableSecretQuestions model; 
+        public static ClientAvailableSecretQuestions model; 
 
         [SetUp]
         public void SetUp()
         {
-            model = new AvailableSecretQuestions();
+            model = new ClientAvailableSecretQuestions();
         }
     }
 
@@ -33,12 +33,12 @@ namespace Unit.Modules.AnyTrack.Accounting.ServiceGateways.Model.AvailableSecret
         [Test]
         public void GetAllQuestions()
         {
-            var all = AvailableSecretQuestions.All();
+            var all = ClientAvailableSecretQuestions.All();
 
             all.Count.Should().Be(3);
-            all[0].Should().Be(AvailableSecretQuestions.MAIDENNAME);
-            all[1].Should().Be(AvailableSecretQuestions.FIRSTSCHOOL);
-            all[2].Should().Be(AvailableSecretQuestions.FIRSTPET);
+            all[0].Should().Be(ClientAvailableSecretQuestions.MaidenName);
+            all[1].Should().Be(ClientAvailableSecretQuestions.FirstSchool);
+            all[2].Should().Be(ClientAvailableSecretQuestions.FirstPet);
         }
 
         #endregion 

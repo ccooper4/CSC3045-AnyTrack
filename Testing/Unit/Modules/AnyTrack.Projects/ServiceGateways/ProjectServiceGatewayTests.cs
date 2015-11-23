@@ -218,13 +218,13 @@ namespace Unit.Modules.AnyTrack.Projects.ServiceGateways
 
             #endregion
 
-            #region SearchUsers(UserSearchFilter filter)
+            #region SearchUsers(ServiceUserSearchFilter filter)
 
             [Test]
             public void CallSearchUsers()
             {
-                var userFilter = new UserSearchFilter();
-                var results = new List<UserSearchInfo>();
+                var userFilter = new ServiceUserSearchFilter();
+                var results = new List<ServiceUserSearchInfo>();
 
                 projectService.SearchUsers(userFilter).Returns(results);
 
@@ -240,10 +240,10 @@ namespace Unit.Modules.AnyTrack.Projects.ServiceGateways
             [Test]
             public void GetLoggedInUserProjectRoleSummaries()
             {
-                List<ProjectRoleSummary> projectRoleSummaries
-                    = new List<ProjectRoleSummary>()
+                List<ServiceProjectRoleSummary> projectRoleSummaries
+                    = new List<ServiceProjectRoleSummary>()
                     {
-                        new ProjectRoleSummary()
+                        new ServiceProjectRoleSummary()
                         {
                             ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
                             Name = "Project",
@@ -253,7 +253,7 @@ namespace Unit.Modules.AnyTrack.Projects.ServiceGateways
                             ScrumMaster = true,
                             Developer = false
                         },
-                        new ProjectRoleSummary()
+                        new ServiceProjectRoleSummary()
                         {
                             ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFAA"),
                             Name = "Project2",
@@ -291,7 +291,7 @@ namespace Unit.Modules.AnyTrack.Projects.ServiceGateways
             [Test]
             public void UserHasNoRoles()
             {
-                List<ProjectRoleSummary> projectRoleSummaries = new List<ProjectRoleSummary>();
+                List<ServiceProjectRoleSummary> projectRoleSummaries = new List<ServiceProjectRoleSummary>();
 
                 projectService.GetUserProjectRoleSummaries("tester@agile.local").Returns(projectRoleSummaries);
 

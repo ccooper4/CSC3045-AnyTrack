@@ -9,7 +9,7 @@ namespace AnyTrack.Backend.Service.Model
     /// <summary>
     /// Represents the fields that can be used to filter a user search.
     /// </summary>
-    public class UserSearchFilter
+    public class ServiceUserSearchFilter
     {
         /// <summary>
         /// Gets or sets the user's email address.

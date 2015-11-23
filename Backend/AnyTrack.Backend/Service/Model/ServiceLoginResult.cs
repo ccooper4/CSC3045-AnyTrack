@@ -9,17 +9,12 @@ namespace AnyTrack.Backend.Service.Model
     /// <summary>
     /// Represents the fields required to create a user account.
     /// </summary>
-    public class NewUser
+    public class ServiceLoginResult
     {
         /// <summary>
         /// Gets or sets the user's email address.
         /// </summary>
         public string EmailAddress { get; set; }
-
-        /// <summary>
-        /// Gets or sets the user's password.
-        /// </summary>
-        public string Password { get; set; }
 
         /// <summary>
         /// Gets or sets the first name.
@@ -47,18 +42,13 @@ namespace AnyTrack.Backend.Service.Model
         public bool Developer { get; set; }
 
         /// <summary>
-        /// Gets or sets the secret question.
+        /// Gets or sets a value indicating whether the success flag has been set.
         /// </summary>
-        public string SecretQuestion { get; set; }
+        public bool Success { get; set; }
 
         /// <summary>
-        /// Gets or sets the secret answer.
+        /// Gets or sets information on the user's roles.
         /// </summary>
-        public string SecretAnswer { get; set; }
-
-        /// <summary>
-        /// Gets or sets the skills.
-        /// </summary>
-        public string Skills { get; set; }
+        public List<ServiceRoleInfo> AssignedRoles { get; set; }
     }
 }

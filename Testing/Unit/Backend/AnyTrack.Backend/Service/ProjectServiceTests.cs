@@ -109,7 +109,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
                 
                 new Role()
                 {
-                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
                     RoleName = "Project Manager",
                     User = userList[0]
                 }
@@ -732,7 +732,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
                 Skills = "C#, Java",
                 SecretQuestion = "Where do you live?",
                 SecretAnswer = "At Home",
-                Roles = new List<Role>() {new Role() {RoleName = "Product Owner", ProjectID = projectId1}}
+                Roles = new List<Role>() {new Role() {RoleName = "Product Owner", ProjectId = projectId1}}
 
             };
             
@@ -782,7 +782,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
 
             unitOfWork.ProjectRepository.Items.Returns(projectList.AsQueryable());
 
-            List<ProjectDetails> projectNames = service.GetProjectNames(false, true, false);
+            List<ServiceProjectSummary> projectNames = service.GetProjectNames(false, true, false);
 
             #region Test checks
 
@@ -824,25 +824,25 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
                 #region Role Data
                 new Role()
                 {
-                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
                     RoleName = "Project Manager",
                     User = users[0]
                 },
                 new Role()
                 {
-                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
                     RoleName = "Scrum Master",
                     User = users[0]
                 },
                 new Role()
                 {
-                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
                     RoleName = "Product Owner",
                     User = users[0]
                 },
                 new Role()
                 {
-                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
                     RoleName = "Developer",
                     User = users[0]
                 }
@@ -958,25 +958,25 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
                 #region Role Data
                 new Role()
                 {
-                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
                     RoleName = "Project Manager",
                     User = users[1]
                 },
                 new Role()
                 {
-                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
                     RoleName = "Scrum Master",
                     User = users[1]
                 },
                 new Role()
                 {
-                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
                     RoleName = "Product Owner",
                     User = users[1]
                 },
                 new Role()
                 {
-                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
                     RoleName = "Developer",
                     User = users[1]
                 }
@@ -997,7 +997,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
         }
         #endregion
 
-        #region SearchUsers(UserSearchFilter filter) Tests
+        #region SearchUsers(ServiceUserSearchFilter filter) Tests
 
         [Test]
         public void CallSearchUsersWithEmptyFilter()
@@ -1012,7 +1012,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
 
             unitOfWork.UserRepository.Items.Returns(users.AsQueryable());
 
-            var userFilter = new UserSearchFilter();
+            var userFilter = new ServiceUserSearchFilter();
 
             var result = service.SearchUsers(userFilter);
 
@@ -1021,7 +1021,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             var firstResult = result.First();
             firstResult.FullName.Should().Be("Andrew Fletcher");
             firstResult.EmailAddress.Should().Be("test1@mail.com");
-            firstResult.UserID.Should().Be(users.First().Id);
+            firstResult.UserId.Should().Be(users.First().Id);
 
         }
 
@@ -1038,7 +1038,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
 
             unitOfWork.UserRepository.Items.Returns(users.AsQueryable());
 
-            var userFilter = new UserSearchFilter { EmailAddress = "none@mail.com" };
+            var userFilter = new ServiceUserSearchFilter { EmailAddress = "none@mail.com" };
 
             var result = service.SearchUsers(userFilter);
 
@@ -1058,7 +1058,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
 
             unitOfWork.UserRepository.Items.Returns(users.AsQueryable());
 
-            var userFilter = new UserSearchFilter { EmailAddress = "test4@mail.com" };
+            var userFilter = new ServiceUserSearchFilter { EmailAddress = "test4@mail.com" };
 
             var result = service.SearchUsers(userFilter);
 
@@ -1066,7 +1066,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             var singleResult = result.Single();
             singleResult.FullName.Should().Be("Bill Tester");
             singleResult.EmailAddress.Should().Be("test4@mail.com");
-            singleResult.UserID.Should().Be(users.Last().Id);
+            singleResult.UserId.Should().Be(users.Last().Id);
         }
 
         [Test]
@@ -1082,7 +1082,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
 
             unitOfWork.UserRepository.Items.Returns(users.AsQueryable());
 
-            var userFilter = new UserSearchFilter { ScrumMaster = true, ProductOwner = false };
+            var userFilter = new ServiceUserSearchFilter { ScrumMaster = true, ProductOwner = false };
 
             var result = service.SearchUsers(userFilter);
 
@@ -1091,7 +1091,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             var userResult = result.Single();
             userResult.FullName.Should().Be("David Tester");
             userResult.EmailAddress.Should().Be("test3@mail.com");
-            userResult.UserID.Should().Be(users[2].Id);
+            userResult.UserId.Should().Be(users[2].Id);
 
         }
 
@@ -1108,7 +1108,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
 
             unitOfWork.UserRepository.Items.Returns(users.AsQueryable());
 
-            var userFilter = new UserSearchFilter { ScrumMaster = false, ProductOwner = true };
+            var userFilter = new ServiceUserSearchFilter { ScrumMaster = false, ProductOwner = true };
 
             var result = service.SearchUsers(userFilter);
 
@@ -1117,7 +1117,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             var lastResult = result.Last();
             lastResult.FullName.Should().Be("Liam Fletcher");
             lastResult.EmailAddress.Should().Be("test2@mail.com");
-            lastResult.UserID.Should().Be(users[1].Id);
+            lastResult.UserId.Should().Be(users[1].Id);
 
         }
 

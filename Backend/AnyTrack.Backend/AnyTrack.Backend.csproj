@@ -166,19 +166,19 @@
     <Compile Include="Security\GeneratedServiceUserPrincipal.cs" />
     <Compile Include="Service\AccountService.cs" />
     <Compile Include="Service\IProjectService.cs" />
-    <Compile Include="Service\Model\ProjectDetails.cs" />
-    <Compile Include="Service\Model\ProjectRoleSummary.cs" />
+    <Compile Include="Service\Model\ServiceProjectSummary.cs" />
+    <Compile Include="Service\Model\ServiceProjectRoleSummary.cs" />
     <Compile Include="Service\Model\ServiceProject.cs" />
     <Compile Include="Service\Model\ServiceStory.cs" />
-    <Compile Include="Service\Model\StoryDetails.cs" />
-    <Compile Include="Service\Model\UserSearchFilter.cs" />
-    <Compile Include="Service\Model\UserSearchInfo.cs" />
+    <Compile Include="Service\Model\ServiceStorySummary.cs" />
+    <Compile Include="Service\Model\ServiceUserSearchFilter.cs" />
+    <Compile Include="Service\Model\ServiceUserSearchInfo.cs" />
     <Compile Include="Service\ProjectService.cs" />
     <Compile Include="Service\IAccountService.cs" />
-    <Compile Include="Service\Model\LoginResult.cs" />
-    <Compile Include="Service\Model\NewUser.cs" />
-    <Compile Include="Service\Model\RoleInfo.cs" />
-    <Compile Include="Service\Model\UserCredential.cs" />
+    <Compile Include="Service\Model\ServiceLoginResult.cs" />
+    <Compile Include="Service\Model\ServiceUser.cs" />
+    <Compile Include="Service\Model\ServiceRoleInfo.cs" />
+    <Compile Include="Service\Model\ServiceUserCredential.cs" />
     <Compile Include="Service\PrincipalBuilderService.cs" />
   </ItemGroup>
   <ItemGroup>

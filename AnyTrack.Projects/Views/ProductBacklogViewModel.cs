@@ -51,35 +51,16 @@ namespace AnyTrack.Projects.Views
             }
 
             this.serviceGateway = serviceGateway;
-            this.Stories = new ObservableCollection<StoryDetails>();
-            this.Projects = new ObservableCollection<ProjectDetails>();
+            this.Stories = new ObservableCollection<ServiceStorySummary>();
+            this.Projects = new ObservableCollection<ServiceProjectSummary>();
             var results = serviceGateway.GetProjectNames(false, true, false);
             this.Projects.AddRange(results);
             OpenStoryViewCommand = new DelegateCommand(this.OpenStoryView);
             DeleteStoryCommand = new DelegateCommand<string>(DeleteStory);
-            EditStoryCommand = new DelegateCommand<StoryDetails>(this.EditStory);
+            EditStoryCommand = new DelegateCommand<ServiceStorySummary>(this.EditStory);
         }
 
         #endregion
-
-        #region Commands
-
-        /// <summary>
-        /// Gets or sets a given story to delete from the backlog
-        /// </summary>
-        public DelegateCommand<string> DeleteStoryCommand { get; set; }
-
-        /// <summary>
-        /// Gets or sets a given story from the backlog
-        /// </summary>
-        public DelegateCommand<StoryDetails> EditStoryCommand { get; set; }
-
-        /// <summary>
-        /// Gets the command used to open story view. 
-        /// </summary>
-        public DelegateCommand OpenStoryViewCommand { get; private set; }
-
-        #endregion Commands
 
         #region Properties
 
@@ -107,12 +88,12 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Gets or sets the stories
         /// </summary>
-        public ObservableCollection<StoryDetails> Stories { get; set; }
+        public ObservableCollection<ServiceStorySummary> Stories { get; set; }
 
         /// <summary>
         /// Gets or sets the project details.
         /// </summary>
-        public ObservableCollection<ProjectDetails> Projects { get; set; }
+        public ObservableCollection<ServiceProjectSummary> Projects { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether it should refresh everytime
@@ -123,6 +104,25 @@ namespace AnyTrack.Projects.Views
         }
 
         #endregion Properties
+
+        #region Commands
+
+        /// <summary>
+        /// Gets or sets a given story to delete from the backlog
+        /// </summary>
+        public DelegateCommand<string> DeleteStoryCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets a given story from the backlog
+        /// </summary>
+        public DelegateCommand<ServiceStorySummary> EditStoryCommand { get; set; }
+
+        /// <summary>
+        /// Gets the command used to open story view. 
+        /// </summary>
+        public DelegateCommand OpenStoryViewCommand { get; private set; }
+
+        #endregion Commands
 
         #region Methods
 
@@ -152,8 +152,7 @@ namespace AnyTrack.Projects.Views
         {
             if (navigationContext.Parameters.ContainsKey("projectId"))
             {
-                var projectId = (Guid)navigationContext.Parameters["projectId"];
-                this.ProjectId = projectId;
+                projectId = (Guid)navigationContext.Parameters["projectId"];
             }
         }
 
@@ -164,9 +163,9 @@ namespace AnyTrack.Projects.Views
         public void DeleteStory(string storyId)
         {
             var guid = Guid.Parse(storyId);
-            var callbackAction = new Action<MessageDialogResult>(mr =>
+            var callbackAction = new Action<MessageDialogResult>(mdr =>
             {
-                if (mr == MessageDialogResult.Affirmative)
+                if (mdr == MessageDialogResult.Affirmative)
                 {
                     serviceGateway.DeleteStoryFromProductBacklog(projectId, guid);
 
@@ -192,7 +191,7 @@ namespace AnyTrack.Projects.Views
         /// Open story view.
         /// </summary>
         /// <param name="story">story object</param>
-        private void EditStory(StoryDetails story)
+        private void EditStory(ServiceStorySummary story)
         {
             var navParams = new NavigationParameters();
             navParams.Add("projectId", projectId);
