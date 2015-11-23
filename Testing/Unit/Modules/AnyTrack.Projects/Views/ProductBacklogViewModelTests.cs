@@ -15,6 +15,8 @@ using System.Collections.ObjectModel;
 using MahApps.Metro.Controls.Dialogs;
 using System.Threading;
 using AnyTrack.Infrastructure;
+using Microsoft.Practices.Unity;
+using AnyTrack.Infrastructure.Service;
 
 namespace Unit.Modules.AnyTrack.Projects.Views.ProductBacklogViewModelTests
 {
@@ -31,7 +33,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.ProductBacklogViewModelTests
         {
             regionManager = Substitute.For<IRegionManager>();
             gateway = Substitute.For<IProjectServiceGateway>();
-            gateway.GetProjectNames(Arg.Any<bool>(),Arg.Any<bool>(),Arg.Any<bool>()).Returns(new List<ProjectDetails>());
+            gateway.GetProjectNames(Arg.Any<bool>(),Arg.Any<bool>(),Arg.Any<bool>()).Returns(new List<ServiceProjectSummary>());
             vm = new ProductBacklogViewModel(gateway);
 
             vm.RegionManager = regionManager;
@@ -68,14 +70,14 @@ namespace Unit.Modules.AnyTrack.Projects.Views.ProductBacklogViewModelTests
         [Test]
         public void DeleteStoryTests()
         {
-            gateway.GetProjectStories(Arg.Any<Guid>()).Returns(new List<StoryDetails>());
+            gateway.GetProjectStories(Arg.Any<Guid>()).Returns(new List<ServiceStorySummary>());
 
             var waitObject = new ManualResetEvent(false);
 
             vm.MainWindow = Substitute.For<WindowProvider>();
             vm.MainWindow.ShowMessageAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<MessageDialogStyle>()).Returns(MessageDialogResult.Affirmative);
             vm.MainWindow.InvokeAction(Arg.Do<Action>(a => { a(); waitObject.Set(); }));
-            var story = new StoryDetails
+            var story = new ServiceStorySummary
             {
                 ProjectId = new Guid("11111111-1111-1111-1111-111111111111"),
                 StoryId = new Guid("21111111-1111-1111-1111-111111111111")
@@ -102,18 +104,49 @@ namespace Unit.Modules.AnyTrack.Projects.Views.ProductBacklogViewModelTests
         public void OpenStoryViewTests()
         {
             NavigationParameters navParams = null;
-            regionManager.RequestNavigate(Arg.Any<string>(), Arg.Any<string>(), Arg.Do<NavigationParameters>(np => navParams = np));
+            var flyoutService = Substitute.For<IFlyoutService>();
+            flyoutService.ShowMetroFlyout(Arg.Any<string>(), Arg.Do<NavigationParameters>(np => navParams = np));
 
-            gateway.GetProjectStories(Arg.Any<Guid>()).Returns(new List<StoryDetails>());
+            vm.FlyoutService = flyoutService;
+
+            gateway.GetProjectStories(Arg.Any<Guid>()).Returns(new List<ServiceStorySummary>());
 
             vm.ProjectId = Guid.NewGuid();
             vm.Call("OpenStoryView");
             navParams.Should().NotBeNull();
             navParams.ContainsKey("projectId").Should().BeTrue();
-            regionManager.Received().RequestNavigate(RegionNames.MainRegion, "Story", navParams);
+            flyoutService.Received().ShowMetroFlyout("Story", navParams);
         }
 
         #endregion OpenStoryView() Tests
+
+        #region EditStory() Tests
+
+        [Test]
+        public void EditStoryTests()
+        {
+            NavigationParameters navParams = null;
+
+            var windowProvider = Substitute.For<WindowProvider>();
+            var flyoutService = Substitute.For<IFlyoutService>();
+            flyoutService.ShowMetroFlyout(Arg.Any<string>(), Arg.Do<NavigationParameters>(np => navParams = np));
+
+            vm.FlyoutService = flyoutService;
+
+            gateway.GetProjectStories(Arg.Any<Guid>()).Returns(new List<ServiceStorySummary>());
+
+            var story = new ServiceStorySummary { StoryId = Guid.NewGuid() };
+
+            vm.ProjectId = Guid.NewGuid();
+
+            vm.Call("EditStory", story);
+            navParams.Should().NotBeNull();
+            navParams.ContainsKey("projectId").Should().BeTrue();
+            navParams.ContainsKey("storyId").Should().BeTrue();
+            flyoutService.Received().ShowMetroFlyout("Story", navParams);
+        }
+
+        #endregion EditStory() Tests
     }
 
     #endregion Tests

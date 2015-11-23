@@ -12,14 +12,14 @@ namespace AnyTrack.Projects.Views
         #region Fields
 
         /// <summary>
-        /// The project service gateway
+        /// The project service gateway.
         /// </summary>
         protected readonly IProjectServiceGateway ServiceGateway;
 
         #endregion
         
         /// <summary>
-        /// Constructor for BaseViewModel
+        /// Constructor for BaseViewModel.
         /// </summary>
         /// <param name="serviceGateway">The Project Service Gateway</param>
         protected BaseViewModel(IProjectServiceGateway serviceGateway)

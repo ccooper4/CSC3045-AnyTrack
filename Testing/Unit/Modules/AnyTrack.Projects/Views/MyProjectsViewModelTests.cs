@@ -30,9 +30,9 @@ namespace Unit.Modules.AnyTrack.Projects.Views
             regionManager = Substitute.For<IRegionManager>();
             gateway = Substitute.For<IProjectServiceGateway>();
 
-            var listOfProjects = new List<ProjectRoleSummary>()
+            var listOfProjects = new List<ServiceProjectRoleSummary>()
             {
-                new ProjectRoleSummary()
+                new ServiceProjectRoleSummary()
             };
 
             UserDetailsStore.LoggedInUserPrincipal = new ServiceUserPrincipal(new LoginResult { EmailAddress = "test@agile.local" }, "");
@@ -67,7 +67,6 @@ namespace Unit.Modules.AnyTrack.Projects.Views
         [Test]
         public void AddProject()
         {
-            var windowProvider = Substitute.For<WindowProvider>();
             vm.Call("AddProjectView");
             regionManager.Received().RequestNavigate(RegionNames.MainRegion, "Project");      
         }

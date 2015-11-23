@@ -59,7 +59,7 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Retrieves a flag indicating if the PO search grid is enabled.
         /// </summary>
-        private bool enablePoSearchGrid;
+        private bool enableProductOwnerSearchGrid;
 
         /// <summary>
         /// Retrieves a flag indicating if the PO has been confirmed.
@@ -81,7 +81,7 @@ namespace AnyTrack.Projects.Views
         #region Constructor
 
         /// <summary>
-        /// Creates a new Create Project View Model
+        /// Creates a new Create Project View Model.
         /// </summary>
         /// <param name="iProjectServiceGateway">The project service gateway</param>
         public CreateProjectViewModel(IProjectServiceGateway iProjectServiceGateway)
@@ -89,16 +89,16 @@ namespace AnyTrack.Projects.Views
         {
             SaveProjectCommand = new DelegateCommand(SaveProject);
             CancelProjectCommand = new DelegateCommand(CancelProject);
-            SearchPOUserCommand = new DelegateCommand(SearchProjectOwners);
+            SearchProductOwnerUserCommand = new DelegateCommand(SearchProjectOwners);
             SetProductOwnerCommand = new DelegateCommand<string>(SetProductOwner);
-            SearchScrumMasterCommand = new DelegateCommand(SearchScrumMastters);
-            SelectScrumMasterCommand = new DelegateCommand<UserSearchInfo>(AddScrumMaster, CanAddScrumMaster);
+            SearchScrumMasterCommand = new DelegateCommand(SearchScrumMasters);
+            SelectScrumMasterCommand = new DelegateCommand<ServiceUserSearchInfo>(AddScrumMaster, CanAddScrumMaster);
 
             startedOn = DateTime.Now;
 
-            POSearchUserResults = new ObservableCollection<UserSearchInfo>();
-            ScrumMasterSearchUserResults = new ObservableCollection<UserSearchInfo>();
-            SelectedScrumMasters = new ObservableCollection<UserSearchInfo>();
+            ProductOwnerSearchUserResults = new ObservableCollection<ServiceUserSearchInfo>();
+            ScrumMasterSearchUserResults = new ObservableCollection<ServiceUserSearchInfo>();
+            SelectedScrumMasters = new ObservableCollection<ServiceUserSearchInfo>();
         }
 
         #endregion
@@ -106,7 +106,7 @@ namespace AnyTrack.Projects.Views
         #region Properties
 
         /// <summary>
-        /// Gets or sets the project name
+        /// Gets or sets the project name.
         /// </summary>
         [Required(AllowEmptyStrings = false, ErrorMessage = "A Project Name is Required")]
         [MinLength(3, ErrorMessage = "Project name must be atleast 3 characters")]
@@ -117,7 +117,7 @@ namespace AnyTrack.Projects.Views
         }
 
         /// <summary>
-        /// Gets or sets the description for the project
+        /// Gets or sets the description for the project.
         /// </summary>
         public string Description
         {
@@ -126,7 +126,7 @@ namespace AnyTrack.Projects.Views
         }
 
         /// <summary>
-        /// Gets or sets the version control for the project
+        /// Gets or sets the version control for the project.
         /// </summary>
         public string VersionControl
         {
@@ -135,7 +135,7 @@ namespace AnyTrack.Projects.Views
         }
 
         /// <summary>
-        /// Gets or sets the start date for the project
+        /// Gets or sets the start date for the project.
         /// </summary>
         [Required(AllowEmptyStrings = false, ErrorMessage = "Project must have start date")]
         public DateTime StartedOn
@@ -145,7 +145,7 @@ namespace AnyTrack.Projects.Views
         }
 
         /// <summary>
-        /// Gets or sets the PO search email address.
+        /// Gets or sets the Product Owner search email address.
         /// </summary>
         public string ProductOwnerSearchEmailAddress
         {
@@ -165,25 +165,25 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Gets or sets a value indicating whether the PO search grid is enabled.
         /// </summary>
-        public bool EnablePoSearchGrid
+        public bool EnableProductOwnerSearchGrid
         {
-            get { return enablePoSearchGrid; }
-            set { SetProperty(ref enablePoSearchGrid, value); }
+            get { return enableProductOwnerSearchGrid; }
+            set { SetProperty(ref enableProductOwnerSearchGrid, value); }
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether the PO has been confirmed.
         /// </summary>
-        public bool POConfirmed
+        public bool ProductOwnerConfirmed
         {
             get { return productOwnerConfirmed; }
             set { SetProperty(ref productOwnerConfirmed, value); }
         }
 
         /// <summary>
-        /// Gets or sets the observable collection that stores the PO search results.
+        /// Gets or sets the observable collection that stores the Product Owner search results.
         /// </summary>
-        public ObservableCollection<UserSearchInfo> POSearchUserResults { get; set; }
+        public ObservableCollection<ServiceUserSearchInfo> ProductOwnerSearchUserResults { get; set; }
 
         /// <summary>
         /// Gets or sets the scrum master email address being searched.
@@ -220,12 +220,12 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Gets or sets the collection containing scrum master search results.
         /// </summary>
-        public ObservableCollection<UserSearchInfo> ScrumMasterSearchUserResults { get; set; }
+        public ObservableCollection<ServiceUserSearchInfo> ScrumMasterSearchUserResults { get; set; }
 
         /// <summary>
         /// Gets or sets the collection of selected scrum masters.
         /// </summary>
-        public ObservableCollection<UserSearchInfo> SelectedScrumMasters { get; set; }
+        public ObservableCollection<ServiceUserSearchInfo> SelectedScrumMasters { get; set; }
 
         #endregion
 
@@ -244,7 +244,7 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Gets or sets the command that can be used to search for a PO.
         /// </summary>
-        public DelegateCommand SearchPOUserCommand { get; set; }
+        public DelegateCommand SearchProductOwnerUserCommand { get; set; }
 
         /// <summary>
         /// Gets or sets the command that can be used to set a product owner on a new project.
@@ -259,7 +259,7 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Gets or sets the command that can be used to select a scrum master.
         /// </summary>
-        public DelegateCommand<UserSearchInfo> SelectScrumMasterCommand { get; set; }
+        public DelegateCommand<ServiceUserSearchInfo> SelectScrumMasterCommand { get; set; }
 
         #endregion
 
@@ -282,9 +282,9 @@ namespace AnyTrack.Projects.Views
             if (!this.HasErrors)
             {
                 var hasScrumMasters = this.SelectedScrumMasters.Count > 0;
-                var hasPo = this.POConfirmed;
+                var hasProductOwner = this.ProductOwnerConfirmed;
 
-                var hasBoth = hasScrumMasters && hasPo;
+                var hasBoth = hasScrumMasters && hasProductOwner;
 
                 if (!hasBoth)
                 {
@@ -314,21 +314,20 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         private void SearchProjectOwners()
         {
-            var filter = new UserSearchFilter { EmailAddress = productOwnerSearchEmailAddress, ProductOwner = true };
+            var filter = new ServiceUserSearchFilter { EmailAddress = productOwnerSearchEmailAddress, ProductOwner = true };
             var results = ServiceGateway.SearchUsers(filter);
-
-            POSearchUserResults.Clear();
-            POSearchUserResults.AddRange(results);
-            EnablePoSearchGrid = true;
-            POConfirmed = false;
+            
+            ProductOwnerSearchUserResults.Clear();
+            ProductOwnerSearchUserResults.AddRange(results);
+            EnableProductOwnerSearchGrid = true;
         }
 
         /// <summary>
         /// Searches for scrum masters using the details entered by the user.
         /// </summary>
-        private void SearchScrumMastters()
+        private void SearchScrumMasters()
         {
-            var filter = new UserSearchFilter { EmailAddress = scrumMasterSearchEmailAddress, ScrumMaster = true };
+            var filter = new ServiceUserSearchFilter { EmailAddress = scrumMasterSearchEmailAddress, ScrumMaster = true };
             var results = ServiceGateway.SearchUsers(filter);
 
             ScrumMasterSearchUserResults.Clear();
@@ -343,9 +342,9 @@ namespace AnyTrack.Projects.Views
         private void SetProductOwner(string emailAddress)
         {
             SelectProductOwnerEmailAddress = emailAddress;
-            POSearchUserResults.Clear();
-            EnablePoSearchGrid = false;
-            POConfirmed = true;
+            ProductOwnerSearchUserResults.Clear();
+            EnableProductOwnerSearchGrid = false;
+            ProductOwnerConfirmed = true;
             ProductOwnerSearchEmailAddress = string.Empty;
             ShowMetroDialog("Product Owner confirmed", "The product owner has been successfully set to user - {0}".Substitute(emailAddress), MessageDialogStyle.Affirmative);
         }
@@ -355,7 +354,7 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         /// <param name="selectedScrumMaster">The selected scrum master.</param>
         /// <returns>A true or false flag indicating if this scrum master can be added to this project.</returns>
-        private bool CanAddScrumMaster(UserSearchInfo selectedScrumMaster)
+        private bool CanAddScrumMaster(ServiceUserSearchInfo selectedScrumMaster)
         {
             if (selectedScrumMaster != null)
             {
@@ -374,7 +373,7 @@ namespace AnyTrack.Projects.Views
         /// Adds the specified scrum master to this project.
         /// </summary>
         /// <param name="selectedScrumMaster">The selected scrum master.</param>
-        private void AddScrumMaster(UserSearchInfo selectedScrumMaster)
+        private void AddScrumMaster(ServiceUserSearchInfo selectedScrumMaster)
         {
             SelectedScrumMasters.Add(selectedScrumMaster);
             ScrumMasterSearchUserResults.Clear();

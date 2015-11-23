@@ -80,14 +80,14 @@
   <xs:element name="SearchUsers">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="filter" nillable="true" type="q9:UserSearchFilter" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="filter" nillable="true" type="q9:ServiceUserSearchFilter" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SearchUsersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="SearchUsersResult" nillable="true" type="q10:ArrayOfUserSearchInfo" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="SearchUsersResult" nillable="true" type="q10:ArrayOfServiceUserSearchInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -95,15 +95,15 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="scrumMaster" type="xs:boolean" />
-        <xs:element minOccurs="0" name="po" type="xs:boolean" />
-        <xs:element minOccurs="0" name="dev" type="xs:boolean" />
+        <xs:element minOccurs="0" name="productOwner" type="xs:boolean" />
+        <xs:element minOccurs="0" name="developer" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetProjectNamesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetProjectNamesResult" nillable="true" type="q11:ArrayOfProjectDetails" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetProjectNamesResult" nillable="true" type="q11:ArrayOfServiceProjectSummary" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -117,7 +117,7 @@
   <xs:element name="GetProjectStoryDetailsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetProjectStoryDetailsResult" nillable="true" type="q13:ArrayOfStoryDetails" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetProjectStoryDetailsResult" nillable="true" type="q13:ArrayOfServiceStorySummary" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -144,7 +144,7 @@
   <xs:element name="GetUserProjectRoleSummariesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetUserProjectRoleSummariesResult" nillable="true" type="q16:ArrayOfProjectRoleSummary" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetUserProjectRoleSummariesResult" nillable="true" type="q16:ArrayOfServiceProjectRoleSummary" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -166,7 +166,7 @@
   <xs:element name="EditStory">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="editStory" nillable="true" type="q20:ServiceStory" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="story" nillable="true" type="q20:ServiceStory" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -109,7 +109,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
                 
                 new Role()
                 {
-                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
                     RoleName = "Project Manager",
                     User = userList[0]
                 }
@@ -283,32 +283,32 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
 
             dataProject.ScrumMasters.Count().Should().Be(2);
 
-            dataProject.ScrumMasters[0].Should().NotBeNull();
-            dataProject.ScrumMasters[0].EmailAddress.Should().Be("S1@test.com");
-            dataProject.ScrumMasters[0].FirstName.Should().Be("Jack");
-            dataProject.ScrumMasters[0].LastName.Should().Be("Test");
-            dataProject.ScrumMasters[0].Password.Should().Be("Password");
-            dataProject.ScrumMasters[0].Developer.Should().Be(false);
-            dataProject.ScrumMasters[0].ProductOwner.Should().Be(false);
-            dataProject.ScrumMasters[0].ScrumMaster.Should().Be(true);
-            dataProject.ScrumMasters[0].Skills.Should().Be("C#, Java");
-            dataProject.ScrumMasters[0].SecretQuestion.Should().Be("Where do you live?");
-            dataProject.ScrumMasters[0].SecretAnswer.Should().Be("A Tent");
-            dataProject.ScrumMasters[0].Roles.Count.Should().Be(1);
-            dataProject.ScrumMasters[0].Roles.ToList().Select(r => r.RoleName).Should().Contain("Scrum Master");
+            dataProject.ScrumMasters.First().Should().NotBeNull();
+            dataProject.ScrumMasters.First().EmailAddress.Should().Be("S1@test.com");
+            dataProject.ScrumMasters.First().FirstName.Should().Be("Jack");
+            dataProject.ScrumMasters.First().LastName.Should().Be("Test");
+            dataProject.ScrumMasters.First().Password.Should().Be("Password");
+            dataProject.ScrumMasters.First().Developer.Should().Be(false);
+            dataProject.ScrumMasters.First().ProductOwner.Should().Be(false);
+            dataProject.ScrumMasters.First().ScrumMaster.Should().Be(true);
+            dataProject.ScrumMasters.First().Skills.Should().Be("C#, Java");
+            dataProject.ScrumMasters.First().SecretQuestion.Should().Be("Where do you live?");
+            dataProject.ScrumMasters.First().SecretAnswer.Should().Be("A Tent");
+            dataProject.ScrumMasters.First().Roles.Count.Should().Be(1);
+            dataProject.ScrumMasters.First().Roles.ToList().Select(r => r.RoleName).Should().Contain("Scrum Master");
 
-            dataProject.ScrumMasters[1].Should().NotBeNull();
-            dataProject.ScrumMasters[1].EmailAddress.Should().Be("S2@test.com");
-            dataProject.ScrumMasters[1].FirstName.Should().Be("Jane");
-            dataProject.ScrumMasters[1].LastName.Should().Be("Test");
-            dataProject.ScrumMasters[1].Password.Should().Be("Password");
-            dataProject.ScrumMasters[1].Developer.Should().Be(false);
-            dataProject.ScrumMasters[1].ProductOwner.Should().Be(true);
-            dataProject.ScrumMasters[1].ScrumMaster.Should().Be(true);
-            dataProject.ScrumMasters[1].SecretQuestion.Should().Be("Where do you live?");
-            dataProject.ScrumMasters[1].SecretAnswer.Should().Be("A Tent");
-            dataProject.ScrumMasters[1].Roles.Count.Should().Be(1);
-            dataProject.ScrumMasters[1].Roles.ToList().Select(r => r.RoleName).Should().Contain("Scrum Master");
+            dataProject.ScrumMasters.Last().Should().NotBeNull();
+            dataProject.ScrumMasters.Last().EmailAddress.Should().Be("S2@test.com");
+            dataProject.ScrumMasters.Last().FirstName.Should().Be("Jane");
+            dataProject.ScrumMasters.Last().LastName.Should().Be("Test");
+            dataProject.ScrumMasters.Last().Password.Should().Be("Password");
+            dataProject.ScrumMasters.Last().Developer.Should().Be(false);
+            dataProject.ScrumMasters.Last().ProductOwner.Should().Be(true);
+            dataProject.ScrumMasters.Last().ScrumMaster.Should().Be(true);
+            dataProject.ScrumMasters.Last().SecretQuestion.Should().Be("Where do you live?");
+            dataProject.ScrumMasters.Last().SecretAnswer.Should().Be("A Tent");
+            dataProject.ScrumMasters.Last().Roles.Count.Should().Be(1);
+            dataProject.ScrumMasters.Last().Roles.ToList().Select(r => r.RoleName).Should().Contain("Scrum Master");
 
             dataProject.StartedOn.Should().Be(DateTime.Today);
             #endregion
@@ -446,7 +446,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             projectList[0].Description.Should().Be("Updated Description");
             projectList[0].ProjectManager.EmailAddress.Should().Be("tester@agile.local");
             projectList[0].ScrumMasters.Count.Should().Be(1);
-            projectList[0].ScrumMasters[0].EmailAddress.Should().Be("S1@test.com");
+            projectList[0].ScrumMasters.First().EmailAddress.Should().Be("S1@test.com");
         }
 
         #endregion
@@ -732,7 +732,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
                 Skills = "C#, Java",
                 SecretQuestion = "Where do you live?",
                 SecretAnswer = "At Home",
-                Roles = new List<Role>() {new Role() {RoleName = "Product Owner", ProjectID = projectId1}}
+                Roles = new List<Role>() {new Role() {RoleName = "Product Owner", ProjectId = projectId1}}
 
             };
             
@@ -782,7 +782,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
 
             unitOfWork.ProjectRepository.Items.Returns(projectList.AsQueryable());
 
-            List<ProjectDetails> projectNames = service.GetProjectNames(false, true, false);
+            List<ServiceProjectSummary> projectNames = service.GetProjectNames(false, true, false);
 
             #region Test checks
 
@@ -824,25 +824,25 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
                 #region Role Data
                 new Role()
                 {
-                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
                     RoleName = "Project Manager",
                     User = users[0]
                 },
                 new Role()
                 {
-                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
                     RoleName = "Scrum Master",
                     User = users[0]
                 },
                 new Role()
                 {
-                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
                     RoleName = "Product Owner",
                     User = users[0]
                 },
                 new Role()
                 {
-                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
                     RoleName = "Developer",
                     User = users[0]
                 }
@@ -958,25 +958,25 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
                 #region Role Data
                 new Role()
                 {
-                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
                     RoleName = "Project Manager",
                     User = users[1]
                 },
                 new Role()
                 {
-                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
                     RoleName = "Scrum Master",
                     User = users[1]
                 },
                 new Role()
                 {
-                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
                     RoleName = "Product Owner",
                     User = users[1]
                 },
                 new Role()
                 {
-                    ProjectID = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
                     RoleName = "Developer",
                     User = users[1]
                 }
@@ -997,7 +997,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
         }
         #endregion
 
-        #region SearchUsers(UserSearchFilter filter) Tests
+        #region SearchUsers(ServiceUserSearchFilter filter) Tests
 
         [Test]
         public void CallSearchUsersWithEmptyFilter()
@@ -1012,7 +1012,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
 
             unitOfWork.UserRepository.Items.Returns(users.AsQueryable());
 
-            var userFilter = new UserSearchFilter();
+            var userFilter = new ServiceUserSearchFilter();
 
             var result = service.SearchUsers(userFilter);
 
@@ -1021,7 +1021,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             var firstResult = result.First();
             firstResult.FullName.Should().Be("Andrew Fletcher");
             firstResult.EmailAddress.Should().Be("test1@mail.com");
-            firstResult.UserID.Should().Be(users.First().Id);
+            firstResult.UserId.Should().Be(users.First().Id);
 
         }
 
@@ -1038,7 +1038,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
 
             unitOfWork.UserRepository.Items.Returns(users.AsQueryable());
 
-            var userFilter = new UserSearchFilter { EmailAddress = "none@mail.com" };
+            var userFilter = new ServiceUserSearchFilter { EmailAddress = "none@mail.com" };
 
             var result = service.SearchUsers(userFilter);
 
@@ -1058,7 +1058,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
 
             unitOfWork.UserRepository.Items.Returns(users.AsQueryable());
 
-            var userFilter = new UserSearchFilter { EmailAddress = "test4@mail.com" };
+            var userFilter = new ServiceUserSearchFilter { EmailAddress = "test4@mail.com" };
 
             var result = service.SearchUsers(userFilter);
 
@@ -1066,7 +1066,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             var singleResult = result.Single();
             singleResult.FullName.Should().Be("Bill Tester");
             singleResult.EmailAddress.Should().Be("test4@mail.com");
-            singleResult.UserID.Should().Be(users.Last().Id);
+            singleResult.UserId.Should().Be(users.Last().Id);
         }
 
         [Test]
@@ -1082,7 +1082,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
 
             unitOfWork.UserRepository.Items.Returns(users.AsQueryable());
 
-            var userFilter = new UserSearchFilter { ScrumMaster = true, ProductOwner = false };
+            var userFilter = new ServiceUserSearchFilter { ScrumMaster = true, ProductOwner = false };
 
             var result = service.SearchUsers(userFilter);
 
@@ -1091,7 +1091,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             var userResult = result.Single();
             userResult.FullName.Should().Be("David Tester");
             userResult.EmailAddress.Should().Be("test3@mail.com");
-            userResult.UserID.Should().Be(users[2].Id);
+            userResult.UserId.Should().Be(users[2].Id);
 
         }
 
@@ -1108,7 +1108,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
 
             unitOfWork.UserRepository.Items.Returns(users.AsQueryable());
 
-            var userFilter = new UserSearchFilter { ScrumMaster = false, ProductOwner = true };
+            var userFilter = new ServiceUserSearchFilter { ScrumMaster = false, ProductOwner = true };
 
             var result = service.SearchUsers(userFilter);
 
@@ -1117,7 +1117,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             var lastResult = result.Last();
             lastResult.FullName.Should().Be("Liam Fletcher");
             lastResult.EmailAddress.Should().Be("test2@mail.com");
-            lastResult.UserID.Should().Be(users[1].Id);
+            lastResult.UserId.Should().Be(users[1].Id);
 
         }
 

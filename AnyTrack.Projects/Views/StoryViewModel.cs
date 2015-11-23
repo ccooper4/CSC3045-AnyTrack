@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using AnyTrack.Infrastructure;
 using AnyTrack.Projects.BackendProjectService;
 using AnyTrack.Projects.ServiceGateways;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Prism.Commands;
 using Prism.Regions;
@@ -17,7 +18,7 @@ namespace AnyTrack.Projects.Views
     /// <summary>
     /// View model to represent a story.
     /// </summary>
-    public class StoryViewModel : BaseViewModel, INavigationAware, IRegionMemberLifetime
+    public class StoryViewModel : BaseViewModel, INavigationAware, IRegionMemberLifetime, IFlyoutCompatibleViewModel
     {
         #region Fields
 
@@ -61,6 +62,31 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         private string conditionsOfSatisfaction;
 
+        /// <summary>
+        /// The is open field.
+        /// </summary>
+        private bool isOpen;
+
+        /// <summary>
+        /// The header field.
+        /// </summary>
+        private string header;
+
+        /// <summary>
+        /// The position field.
+        /// </summary>
+        private Position position;
+
+        /// <summary>
+        /// The is model field. 
+        /// </summary>
+        private bool isModel;
+
+        /// <summary>
+        /// The flyout theme field.
+        /// </summary>
+        private FlyoutTheme theme; 
+
         #endregion
 
         #region Constructor
@@ -71,11 +97,14 @@ namespace AnyTrack.Projects.Views
         /// <param name="iProjectServiceGateway">The Project Service Gateway</param>
         public StoryViewModel(IProjectServiceGateway iProjectServiceGateway) : base(iProjectServiceGateway)
         {
-            this.Projects = new ObservableCollection<ProjectDetails>();
-            this.Projects.AddRange(ServiceGateway.GetProjectNames(false, true, false));
+            this.Projects = new ObservableCollection<ServiceProjectSummary>();
+
+            this.Header = "Story";
+            this.Theme = FlyoutTheme.Accent;
+            this.Position = Position.Right;
+            this.IsModal = true;
             
-            SaveUpdateStoryCommand = new DelegateCommand(this.SaveUpdateStory);
-            CancelStoryViewCommand = new DelegateCommand(this.CancelStoryView);            
+            SaveUpdateStoryCommand = new DelegateCommand(this.SaveUpdateStory);           
         }
 
         /// <summary>
@@ -93,7 +122,7 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Gets or sets the project details.
         /// </summary>
-        public ObservableCollection<ProjectDetails> Projects { get; set; }
+        public ObservableCollection<ServiceProjectSummary> Projects { get; set; }
 
         /// <summary>
         /// Gets or sets story represented by this view.
@@ -165,16 +194,91 @@ namespace AnyTrack.Projects.Views
                 SetProperty(ref projectId, value);
             }
         }
-        
+
+        /// <summary>
+        /// Gets or sets a value indicating whether or not this flyout is open.
+        /// </summary>
+        public bool IsOpen
+        {
+            get
+            {
+                return isOpen;
+            }
+
+            set
+            {
+                SetProperty(ref isOpen, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the header.
+        /// </summary>
+        public string Header
+        {
+            get
+            {
+                return header; 
+            }
+
+            set
+            {
+                SetProperty(ref header, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets position.
+        /// </summary>
+        public Position Position
+        {
+            get
+            {
+                return position; 
+            }
+
+            set
+            {
+                SetProperty(ref position, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the flyout theme.
+        /// </summary>
+        public FlyoutTheme Theme
+        {
+            get
+            {
+                return theme;
+            }
+
+            set
+            {
+                SetProperty(ref theme, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether or not this flyout is a model.
+        /// </summary>
+        public bool IsModal
+        {
+            get
+            {
+                return isModel;
+            }
+
+            set
+            {
+                SetProperty(ref isModel, value);
+            }
+        }
+
         /// <summary>
         /// Gets the Save Story Command.
         /// </summary>
         public DelegateCommand SaveUpdateStoryCommand { get; private set; }
-
-        /// <summary>
-        /// Gets the cancel Command.
-        /// </summary>
-        public DelegateCommand CancelStoryViewCommand { get; private set; }
 
         #endregion Properties
 
@@ -186,6 +290,9 @@ namespace AnyTrack.Projects.Views
         /// <param name="navigationContext">navigation Context</param>
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            this.Projects.Clear();
+            this.Projects.AddRange(ServiceGateway.GetProjectNames(false, true, false));
+
             if (navigationContext.Parameters.ContainsKey("projectId"))
             {
                 var projectId = (Guid)navigationContext.Parameters["projectId"];
@@ -235,7 +342,6 @@ namespace AnyTrack.Projects.Views
             this.ValidateViewModelNow();
             if (!HasErrors)
             {
-                // this.ShowMetroDialog("im save update", ".", MessageDialogStyle.Affirmative);
                 Story = new ServiceStory()
                 {
                     Summary = this.Summary,
@@ -252,17 +358,8 @@ namespace AnyTrack.Projects.Views
                 var navParams = new NavigationParameters();
                 navParams.Add("projectId", projectId);
                 NavigateToItem("ProductBacklog", navParams);
+                this.IsOpen = false;
             }
-        }
-
-        /// <summary>
-        /// Cancel story creation.
-        /// </summary>
-        private void CancelStoryView()
-        {
-            var navParams = new NavigationParameters();
-            navParams.Add("projectId", projectId);
-            NavigateToItem("ProductBacklog", navParams);
         }
 
         #endregion

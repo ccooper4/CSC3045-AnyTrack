@@ -89,7 +89,7 @@ namespace AnyTrack.Accounting.Views
         public RegistrationViewModel(IRegionManager regionManager, IAccountServiceGateway gateway)
             : base(gateway, regionManager)
         {
-            this.SecretQuestions = new ObservableCollection<string>(AvailableSecretQuestions.All());
+            this.SecretQuestions = new ObservableCollection<string>(ClientAvailableSecretQuestions.All());
             this.Skills = new ObservableCollection<string>();
 
             // SecretQuestions = serviceGateway.SecretQuestions();

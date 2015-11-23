@@ -13,32 +13,32 @@ namespace AnyTrack.Projects.ServiceGateways
     public interface IProjectServiceGateway
     {
         /// <summary>
-        /// Creates a new Project and adds it to the database
+        /// Creates a new Project and adds it to the database.
         /// </summary>
         /// <param name="project">Project to be inserted</param>
         void CreateProject(ServiceProject project);
 
         /// <summary>
-        /// Updates an existing project in the database
+        /// Updates an existing project in the database.
         /// </summary>
         /// <param name="project">Project to be updated</param>
         void UpdateProject(ServiceProject project);
 
         /// <summary>
-        /// Deletes a specidied project in the database
+        /// Deletes a specidied project in the database.
         /// </summary>
         /// <param name="id">Id of the project needing deleted</param>
         void DeleteProject(Guid id);
 
         /// <summary>
-        /// Retrieves a specified Project from the database
+        /// Retrieves a specified Project from the database.
         /// </summary>
         /// <param name="id">Id of the project needing retrieved</param>
         /// <returns>Returns the project which had its ID passed in</returns>
         ServiceProject GetProject(Guid id);
 
         /// <summary>
-        /// Retrieves all the projects
+        /// Retrieves all the projects.
         /// </summary>
         /// <returns>Returns a list of all the projects in the system</returns>
         List<ServiceProject> GetProjects();
@@ -50,45 +50,45 @@ namespace AnyTrack.Projects.ServiceGateways
         /// <param name="productOwner">The PO flag.</param>
         /// <param name="developer">The developer flag.</param>
         /// <returns>The list of project details.</returns>
-        List<ProjectDetails> GetProjectNames(bool scrumMaster, bool productOwner, bool developer);
+        List<ServiceProjectSummary> GetProjectNames(bool scrumMaster, bool productOwner, bool developer);
 
         /// <summary>
-        /// Retrieves all project stories in the database
+        /// Retrieves all project stories in the database.
         /// </summary>
         /// <param name="projectId">the project id to be checked</param>
         /// <returns>Returns a list of all the stories in the system</returns>
-        List<StoryDetails> GetProjectStories(Guid projectId);
+        List<ServiceStorySummary> GetProjectStories(Guid projectId);
 
         /// <summary>
         /// Retrieves a list containing a summary of the projects the logged in user
-        /// is a member of along with the roles they have in them
+        /// is a member of along with the roles they have in them.
         /// </summary>
         /// <param name="currentUserEmailAddress">The logged in users email address</param>
         /// <returns>List containg project role summaries</returns>
-        List<ProjectRoleSummary> GetLoggedInUserProjectRoleSummaries(string currentUserEmailAddress);
+        List<ServiceProjectRoleSummary> GetLoggedInUserProjectRoleSummaries(string currentUserEmailAddress);
 
             /// <summary>
         /// Retrieves any users who match the specified filter.
         /// </summary>
         /// <param name="filter">The search filter.</param>
         /// <returns>Returns a list of users who match the search filter.</returns>
-        List<UserSearchInfo> SearchUsers(UserSearchFilter filter);
+        List<ServiceUserSearchInfo> SearchUsers(ServiceUserSearchFilter filter);
 
         /// <summary>
-        /// Updates an existing story in the database
+        /// Updates an existing story in the database.
         /// </summary>
-        /// <param name="editedStory">Story to be updated</param>
-        void EditStory(ServiceStory editedStory);
+        /// <param name="story">Story to be updated</param>
+        void EditStory(ServiceStory story);
 
         /// <summary>
-        /// Adds a story to a project
+        /// Adds a story to a project.
         /// </summary>
         /// <param name="projectGuid">Project id</param>
         /// <param name="story">The story to add</param>
         void AddStory(Guid projectGuid, ServiceStory story);
 
         /// <summary>
-        /// Retrieves the project by its id
+        /// Retrieves the project by its id.
         /// </summary>
         /// <param name="projectId">id of the project to be retrieved</param>
         /// <param name="storyId">id of the story to be retrieved</param>
@@ -104,7 +104,7 @@ namespace AnyTrack.Projects.ServiceGateways
         void SaveUpdateStory(Guid projectId, Guid storyId, ServiceStory story);
 
         /// <summary>
-        /// Deleting a story from the product backlog
+        /// Deleting a story from the product backlog.
         /// </summary>
         /// <param name="projectId">the projectid to be unlinked and removed</param>
         /// <param name="storyId">the storyid to be unlinked and removed</param>

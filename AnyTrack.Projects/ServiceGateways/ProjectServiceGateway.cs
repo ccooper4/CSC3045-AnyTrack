@@ -90,10 +90,10 @@ namespace AnyTrack.Projects.ServiceGateways
         /// <summary>
         /// Update specified story in the database
         /// </summary>
-        /// <param name="editedStory">The story to be updated</param>
-        public void EditStory(ServiceStory editedStory)
+        /// <param name="story">The story to be updated</param>
+        public void EditStory(ServiceStory story)
         {
-            client.EditStory(editedStory);
+            client.EditStory(story);
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace AnyTrack.Projects.ServiceGateways
         /// </summary>
         /// <param name="currentUserEmailAddress">The logged in users email address</param>
         /// <returns>List containg project role summaries</returns>
-        public List<ProjectRoleSummary> GetLoggedInUserProjectRoleSummaries(string currentUserEmailAddress)
+        public List<ServiceProjectRoleSummary> GetLoggedInUserProjectRoleSummaries(string currentUserEmailAddress)
         {
             return client.GetUserProjectRoleSummaries(currentUserEmailAddress);
         }
@@ -121,7 +121,7 @@ namespace AnyTrack.Projects.ServiceGateways
         /// </summary>
         /// <param name="filter">The search filter.</param>
         /// <returns>Returns a list of users who match the search filter.</returns>
-        public List<UserSearchInfo> SearchUsers(UserSearchFilter filter)
+        public List<ServiceUserSearchInfo> SearchUsers(ServiceUserSearchFilter filter)
         {
             return client.SearchUsers(filter);
         }
@@ -133,7 +133,7 @@ namespace AnyTrack.Projects.ServiceGateways
         /// <param name="productOwner">The PO flag.</param>
         /// <param name="developer">The developer flag.</param>
         /// <returns>The list of project details.</returns>
-        public List<ProjectDetails> GetProjectNames(bool scrumMaster, bool productOwner, bool developer)
+        public List<ServiceProjectSummary> GetProjectNames(bool scrumMaster, bool productOwner, bool developer)
         {
             return client.GetProjectNames(scrumMaster, productOwner, developer);
         }
@@ -143,7 +143,7 @@ namespace AnyTrack.Projects.ServiceGateways
         /// </summary>
         /// <param name="projectId">id of the project to be retrieved</param>
         /// <returns>A list of project stories</returns>
-        public List<StoryDetails> GetProjectStories(Guid projectId)
+        public List<ServiceStorySummary> GetProjectStories(Guid projectId)
         {
             return client.GetProjectStoryDetails(projectId);
         }

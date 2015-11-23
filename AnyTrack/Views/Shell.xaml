@@ -7,6 +7,20 @@
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="AnyTrack" TitleCaps="False" Height="600" Width="1200" BorderBrush="Gray">
 
+    <Controls:MetroWindow.Flyouts>
+        <Controls:FlyoutsControl x:Name="Flyouts">
+            <Controls:FlyoutsControl.ItemContainerStyle>
+                <Style BasedOn="{StaticResource {x:Type Controls:Flyout}}" TargetType="{x:Type Controls:Flyout}">
+                    <Setter Property="Header" Value="{Binding Path=DataContext.Header}" />
+                    <Setter Property="IsOpen" Value="{Binding Path=DataContext.IsOpen}" />
+                    <Setter Property="Position" Value="{Binding Path=DataContext.Position}" />
+                    <Setter Property="Theme" Value="{Binding Path=DataContext.Theme}" />
+                    <Setter Property="IsModal" Value="{Binding Path=DataContext.IsModal}" />
+                </Style>
+            </Controls:FlyoutsControl.ItemContainerStyle>
+        </Controls:FlyoutsControl>
+    </Controls:MetroWindow.Flyouts>
+    
     <DockPanel LastChildFill="True">
         <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.AppContainer}"/>
     </DockPanel>

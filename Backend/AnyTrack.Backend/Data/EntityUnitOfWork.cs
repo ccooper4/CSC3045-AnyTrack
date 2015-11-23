@@ -1,4 +1,5 @@
 ﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -27,11 +28,14 @@ namespace AnyTrack.Backend.Data
             RoleEntitySet = base.Set<Role>();
             RoleRepository = new EntityRepository<Role>(RoleEntitySet);
             
-            ProjectDbSetRepository = base.Set<Project>();
-            ProjectRepository = new EntityRepository<Project>(ProjectDbSetRepository);
+            ProjectEntitySet = base.Set<Project>();
+            ProjectRepository = new EntityRepository<Project>(ProjectEntitySet);
 
-            StoryDbEntitySet = base.Set<Story>();
-            StoryRepository = new EntityRepository<Story>(StoryDbEntitySet);
+            StoryEntitySet = base.Set<Story>();
+            StoryRepository = new EntityRepository<Story>(StoryEntitySet);
+
+            SprintEntitySet = base.Set<Sprint>();
+            SprintRepository = new EntityRepository<Sprint>(SprintEntitySet);
 
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<EntityUnitOfWork, Configuration>());
         }
@@ -46,7 +50,7 @@ namespace AnyTrack.Backend.Data
         public IRepository<User> UserRepository { get; private set; }
 
         /// <summary>
-        /// Gets or Sets project repository
+        /// Gets the project repository controlled by this unit of work.
         /// </summary>
         public IRepository<Project> ProjectRepository { get; private set; }
 
@@ -60,6 +64,11 @@ namespace AnyTrack.Backend.Data
         /// </summary>
         public IRepository<Story> StoryRepository { get; private set; }
 
+        /// <summary>
+        /// Gets the sprint repository controlled by this unit of work.
+        /// </summary>
+        public IRepository<Sprint> SprintRepository { get; private set; } 
+
         #endregion
 
         #region Fields
@@ -70,9 +79,9 @@ namespace AnyTrack.Backend.Data
         private DbSet<User> UserEntitySet { get; set; }
 
         /// <summary>
-        /// Gets or sets IDbSet representation Project Repository
+        /// Gets or sets the Project's Entity Set, as provided by Entity Framework.
         /// </summary>
-        private IDbSet<Project> ProjectDbSetRepository { get; set; }
+        private IDbSet<Project> ProjectEntitySet { get; set; }
 
         /// <summary>
         /// Gets or sets the Role Entity Set, as provided by Entity Framework.
@@ -82,7 +91,12 @@ namespace AnyTrack.Backend.Data
         /// <summary>
         /// Gets or sets the Story Entity Set, as provided by Entity Framework.
         /// </summary>
-        private DbSet<Story> StoryDbEntitySet { get; set; }
+        private DbSet<Story> StoryEntitySet { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Sprint Entity Set, as provided by Entity Framework.
+        /// </summary>
+        private DbSet<Sprint> SprintEntitySet { get; set; }
 
         #endregion 
 

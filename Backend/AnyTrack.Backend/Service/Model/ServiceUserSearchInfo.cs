@@ -9,12 +9,12 @@ namespace AnyTrack.Backend.Service.Model
     /// <summary>
     /// Represents the information provided about a user in a search.
     /// </summary>
-    public class UserSearchInfo
+    public class ServiceUserSearchInfo
     {
         /// <summary>
         /// Gets or sets the user id.
         /// </summary>
-        public Guid UserID { get; set; }
+        public Guid UserId { get; set; }
 
         /// <summary>
         /// Gets or sets the full name.

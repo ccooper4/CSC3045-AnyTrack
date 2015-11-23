@@ -9,7 +9,7 @@ namespace AnyTrack.Backend.Service.Model
     /// <summary>
     /// Provides information about the roles a user is assigned to.
     /// </summary>
-    public class RoleInfo
+    public class ServiceRoleInfo
     {
         #region Properties 
 
@@ -19,14 +19,14 @@ namespace AnyTrack.Backend.Service.Model
         public string Role { get; set; }
 
         /// <summary>
-        /// Gets or sets the project ID
+        /// Gets or sets the project Id.
         /// </summary>
-        public Guid? ProjectID { get; set; }
+        public Guid? ProjectId { get; set; }
 
         /// <summary>
-        /// Gets or sets the sprint id
+        /// Gets or sets the sprint Id.
         /// </summary>
-        public Guid? SprintID { get; set; }
+        public Guid? SprintId { get; set; }
 
         #endregion 
     }

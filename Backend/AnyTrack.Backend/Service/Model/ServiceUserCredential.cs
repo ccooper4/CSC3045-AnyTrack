@@ -9,7 +9,7 @@ namespace AnyTrack.Backend.Service.Model
     /// <summary>
     /// Represents a user's login credentials.
     /// </summary>
-    public class UserCredential
+    public class ServiceUserCredential
     {
         /// <summary>
         /// Gets or sets the email address.

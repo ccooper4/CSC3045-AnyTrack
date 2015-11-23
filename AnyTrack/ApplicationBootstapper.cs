@@ -5,8 +5,10 @@ using System.Threading;
 using System.Windows;
 using AnyTrack.Accounting;
 using AnyTrack.Client.Views;
+using AnyTrack.Infrastructure.Providers;
 using AnyTrack.Infrastructure.Service;
 using AnyTrack.Projects;
+using AnyTrack.Sprints;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Mvvm;
@@ -51,6 +53,7 @@ namespace AnyTrack.Client
             var moduleCatalog = (ModuleCatalog)this.ModuleCatalog;
             moduleCatalog.AddModule(typeof(AccountingModule));
             moduleCatalog.AddModule(typeof(ProjectModule));
+            moduleCatalog.AddModule(typeof(SprintModule));
         }
 
         /// <summary>
@@ -81,6 +84,7 @@ namespace AnyTrack.Client
 
             // AnyTrack.Infrastructure.Services 
             this.Container.RegisterType<IMenuService, MenuService>(new ContainerControlledLifetimeManager());
+            this.Container.RegisterType<IFlyoutService, FlyoutService>();
 
             // AnyTrack.Views
             this.Container.RegisterType<object, MainAppArea>("MainAppArea");
