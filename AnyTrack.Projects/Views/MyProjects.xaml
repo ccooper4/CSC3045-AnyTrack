@@ -31,7 +31,7 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
 
-        <Button Grid.Row="0" Margin="0,15px,15px,0" HorizontalAlignment="Right" Background="Transparent" BorderThickness="0" VerticalAlignment="Center" Height="Auto" Width="Auto" Command="{Binding CreateProjectCommand}">
+        <Button Grid.Row="0" Margin="0,30px,30px,0" HorizontalAlignment="Right" Background="Transparent" BorderThickness="0" VerticalAlignment="Center" Height="Auto" Width="Auto" Command="{Binding CreateProjectCommand}">
             <Image Source="../Images/add_icon.png" Width="25px" Height="25px"></Image>
         </Button>
 

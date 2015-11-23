@@ -8,31 +8,36 @@
              xmlns:atph="clr-namespace:AnyTrack.Accounting.Controls"
              xmlns:Views="clr-namespace:AnyTrack.Client.CustomControls"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             mc:Ignorable="d" 
-             d:DesignHeight="350" d:DesignWidth="600">
+             mc:Ignorable="d">
+    <!--                 d:DesignHeight="350" d:DesignWidth="600">-->
 
-    <Grid Background="LightGray" Margin="0,0,0,-135">
+<!--    Main Area-->
+    <Grid Background="LightGray">
         
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1.75*" />
-            <ColumnDefinition Width="5*" MaxWidth="600px" MinWidth="600px"/>
-            <ColumnDefinition Width="1.75*"/>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition MaxWidth="500px" />
+            <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <GroupBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" Margin="0, 30px, 0, 10px" >
-            <GroupBox.Header>
-                <TextBlock Foreground="White" Text="Login"/>
-            </GroupBox.Header>
-            <Grid Background="White" Margin="0,0,0,-5">
+
+        <!-- Logo-->
+        <Image Grid.Column="1" Grid.Row="0" Source="../Images/AnyTrack_logo_full.png" Width="350px" Margin="0,20px,0,20px"></Image>
+
+
+        <!-- Log In section-->
+        <Border Grid.Column="1" Grid.Row="1" CornerRadius="9" BorderBrush="Gray" Background="Gray" BorderThickness="3">
+            <Grid Background="#fcfcfc">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                    <ColumnDefinition Width="4*"></ColumnDefinition>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"> </ColumnDefinition>
+                    <ColumnDefinition Width="7*"> </ColumnDefinition>
+                    <ColumnDefinition Width="1*"> </ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
@@ -40,49 +45,67 @@
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Views:LabelledTextBox Label="Email Address:" Text="{Binding Email}" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"/>
-
+               <!-- Grid for email and password fields--> 
                 <Grid Background="White" Grid.Column="1" Grid.Row="1">
+                    
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="4*"></ColumnDefinition>
                         <ColumnDefinition Width="6*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
+                    
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Label Name="PasswordLabel" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" >Password:</Label>
-                    <PasswordBox Name="PasswordTextbox" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" atph:PasswordBoxBindingHelper.EnablePasswordBoxBinding="true"  atph:PasswordBoxBindingHelper.Binding="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="300" />
+
+                    <!-- Email Label and box-->
+                    <Label Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="0,20px,5px,10px" HorizontalAlignment="Right" >Email Address</Label>
+                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Email}" Margin="0,20px,0,10px"></TextBox>
+
+                    <!-- Password label and box-->
+                    <Label Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="0,0,5px,10px" HorizontalAlignment="Right" >Password:</Label>
+                    <PasswordBox Name="PasswordTextbox" Grid.Column="1" Grid.Row="1" Margin="0,0,0,10px" HorizontalAlignment="Stretch" atph:PasswordBoxBindingHelper.EnablePasswordBoxBinding="true"  atph:PasswordBoxBindingHelper.Binding="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
+
+                <!-- Forgot Password -->
+                <Button HorizontalAlignment="Right" Grid.Column="1" Foreground="DarkBlue" Grid.Row="2" Command="{Binding SignUpCommand}" BorderThickness="0" >
+                    <Button.Content>
+                        <TextBlock>
+                            <Underline>Forgot Password?</Underline>
+                        </TextBlock>
+                    </Button.Content>
+                </Button>
                 
-                <Label Grid.Column="1" Grid.Row="3" Name="ForgotPasswordLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Forgot Password?</Label>
+                <!-- Log in-->
+                <Button Grid.Row="3" Grid.Column="1" Margin="0,0,0,10px" HorizontalAlignment="Center" Command="{Binding LoginUserCommand}">
+                    <Button.Content>
+                        <TextBlock FontSize="11">
+                            Log in
+                        </TextBlock>
+                    </Button.Content>
+                </Button>
+            </Grid>
+        </Border>
+      
 
-                <WrapPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Width="131" Margin="29,0,10,0" Grid.Column="1">
-                    <Button x:Name="LoginButton" 
-                            Command="{Binding LoginUserCommand}" 
-                            Content="Login"
-                            Template="{StaticResource customButton}"/>
-                </WrapPanel>
+        <!-- Offline Mode-->
+        <Button Margin="20px,0,0,0" HorizontalAlignment="Left" Grid.Column="1" Foreground="DarkBlue" Grid.Row="2" Command="{Binding OfflineModeCommand}" BorderThickness="0" Background="Transparent">
+            <Button.Content>
+                <TextBlock>
+                    <Underline>Offline Mode</Underline>
+                </TextBlock>
+            </Button.Content>
+        </Button>
 
-                </Grid>
-        </GroupBox>
-        <WrapPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" Width="200" Margin="10,0,0,0">
-            <Button x:Name="OfflineButton"
-                    Background="LightGray" 
-                    Command="{Binding OfflineModeCommand}"
-                    Content="Offline Mode"
-                    Template="{StaticResource customButton}" />
-        </WrapPanel>
-
-        <WrapPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Width="91" Grid.Row="1">
-            <Button x:Name="RegistrationButton"
-                    Background="LightGray"
-                    Command="{Binding SignUpCommand}"
-                    Content="Sign Up"
-                    Template="{StaticResource customButton}" />
-        </WrapPanel>
-
+        <!-- Sign Up-->
+        <Button Margin="0,0,20px,0" HorizontalAlignment="Right" Grid.Column="1" Foreground="DarkBlue" Grid.Row="2" Command="{Binding SignUpCommand}" BorderThickness="0" Background="Transparent">
+            <Button.Content>
+                <TextBlock>
+                    <Underline>Sign Up</Underline>
+                </TextBlock>
+            </Button.Content>
+        </Button>
     </Grid>
 </UserControl>
