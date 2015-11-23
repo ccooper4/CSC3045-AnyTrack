@@ -88,7 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\IPrincipalExtensions.cs" />
-    <Compile Include="FlyoutViewModelBase.cs" />
+    <Compile Include="IFlyoutCompatibleViewModel.cs" />
     <Compile Include="Interceptors\CookieMessageInspector.cs" />
     <Compile Include="Interceptors\InterceptorBehaviourExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

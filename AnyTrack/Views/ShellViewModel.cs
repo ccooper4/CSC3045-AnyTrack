@@ -21,7 +21,7 @@ namespace AnyTrack.Client.Views
         /// <summary>
         /// The collection of flyouts. 
         /// </summary>
-        private ObservableCollection<FlyoutViewModelBase> flyouts; 
+        private ObservableCollection<IFlyoutCompatibleViewModel> flyouts; 
 
         #endregion 
 
@@ -30,7 +30,7 @@ namespace AnyTrack.Client.Views
         /// <summary>
         /// Gets or sets the flyouts on the shell.
         /// </summary>
-        public ObservableCollection<FlyoutViewModelBase> Flyouts
+        public ObservableCollection<IFlyoutCompatibleViewModel> Flyouts
         {
             get
             {

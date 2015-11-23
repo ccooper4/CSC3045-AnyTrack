@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using AnyTrack.Infrastructure;
 using AnyTrack.Projects.BackendProjectService;
 using AnyTrack.Projects.ServiceGateways;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Prism.Commands;
 using Prism.Regions;
@@ -17,7 +18,7 @@ namespace AnyTrack.Projects.Views
     /// <summary>
     /// View model to represent a story.
     /// </summary>
-    public class StoryViewModel : FlyoutViewModelBase, INavigationAware, IRegionMemberLifetime
+    public class StoryViewModel : BaseViewModel, INavigationAware, IRegionMemberLifetime, IFlyoutCompatibleViewModel
     {
         #region Fields
 
@@ -61,6 +62,31 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         private string conditionsOfSatisfaction;
 
+        /// <summary>
+        /// The is open field.
+        /// </summary>
+        private bool isOpen;
+
+        /// <summary>
+        /// The header field.
+        /// </summary>
+        private string header;
+
+        /// <summary>
+        /// The position field.
+        /// </summary>
+        private Position position;
+
+        /// <summary>
+        /// The is model field. 
+        /// </summary>
+        private bool isModel;
+
+        /// <summary>
+        /// The flyout theme field.
+        /// </summary>
+        private FlyoutTheme theme; 
+
         #endregion
 
         #region Constructor
@@ -71,13 +97,7 @@ namespace AnyTrack.Projects.Views
         /// <param name="iProjectServiceGateway">The Project Service Gateway</param>
         public StoryViewModel(IProjectServiceGateway iProjectServiceGateway) : base(iProjectServiceGateway)
         {
-            if (serviceGateway == null)
-            {
-                throw new ArgumentNullException("serviceGateway");
-            }
-
-            this.serviceGateway = serviceGateway;
-            this.Projects = new ObservableCollection<ProjectDetails>();
+            this.Projects = new ObservableCollection<ServiceProjectSummary>();
             this.Header = "Story";
             
             SaveUpdateStoryCommand = new DelegateCommand(this.SaveUpdateStory);           
@@ -170,7 +190,87 @@ namespace AnyTrack.Projects.Views
                 SetProperty(ref projectId, value);
             }
         }
-        
+
+        /// <summary>
+        /// Gets or sets a value indicating whether or not this flyout is open.
+        /// </summary>
+        public bool IsOpen
+        {
+            get
+            {
+                return isOpen;
+            }
+
+            set
+            {
+                SetProperty(ref isOpen, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the header.
+        /// </summary>
+        public string Header
+        {
+            get
+            {
+                return header; 
+            }
+
+            set
+            {
+                SetProperty(ref header, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets position.
+        /// </summary>
+        public Position Position
+        {
+            get
+            {
+                return position; 
+            }
+
+            set
+            {
+                SetProperty(ref position, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the flyout theme.
+        /// </summary>
+        public FlyoutTheme Theme
+        {
+            get
+            {
+                return theme;
+            }
+
+            set
+            {
+                SetProperty(ref theme, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether or not this flyout is a model.
+        /// </summary>
+        public bool IsModel
+        {
+            get
+            {
+                return isModel;
+            }
+
+            set
+            {
+                SetProperty(ref isModel, value);
+            }
+        }
+
         /// <summary>
         /// Gets the Save Story Command.
         /// </summary>
@@ -187,7 +287,7 @@ namespace AnyTrack.Projects.Views
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             this.Projects.Clear();
-            this.Projects.AddRange(serviceGateway.GetProjectNames(false, true, false));
+            this.Projects.AddRange(ServiceGateway.GetProjectNames(false, true, false));
 
             if (navigationContext.Parameters.ContainsKey("projectId"))
             {

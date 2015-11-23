@@ -115,7 +115,7 @@ namespace AnyTrack.Infrastructure.Service
                     throw new ArgumentException("Could not resolve a view with the name '{0}'".Substitute(viewName));
                 }
 
-                var vm = flyout.DataContext as FlyoutViewModelBase;
+                var vm = flyout.DataContext as IFlyoutCompatibleViewModel;
 
                 if (vm == null)
                 {
@@ -141,7 +141,7 @@ namespace AnyTrack.Infrastructure.Service
                 iNavigationAwareFinalFlyout.OnNavigatedTo(context);
             }
 
-            (flyout.DataContext as FlyoutViewModelBase).IsOpen = true; 
+            (flyout.DataContext as IFlyoutCompatibleViewModel).IsOpen = true; 
         }
 
     #endregion
