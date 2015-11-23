@@ -283,32 +283,32 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
 
             dataProject.ScrumMasters.Count().Should().Be(2);
 
-            dataProject.ScrumMasters[0].Should().NotBeNull();
-            dataProject.ScrumMasters[0].EmailAddress.Should().Be("S1@test.com");
-            dataProject.ScrumMasters[0].FirstName.Should().Be("Jack");
-            dataProject.ScrumMasters[0].LastName.Should().Be("Test");
-            dataProject.ScrumMasters[0].Password.Should().Be("Password");
-            dataProject.ScrumMasters[0].Developer.Should().Be(false);
-            dataProject.ScrumMasters[0].ProductOwner.Should().Be(false);
-            dataProject.ScrumMasters[0].ScrumMaster.Should().Be(true);
-            dataProject.ScrumMasters[0].Skills.Should().Be("C#, Java");
-            dataProject.ScrumMasters[0].SecretQuestion.Should().Be("Where do you live?");
-            dataProject.ScrumMasters[0].SecretAnswer.Should().Be("A Tent");
-            dataProject.ScrumMasters[0].Roles.Count.Should().Be(1);
-            dataProject.ScrumMasters[0].Roles.ToList().Select(r => r.RoleName).Should().Contain("Scrum Master");
+            dataProject.ScrumMasters.First().Should().NotBeNull();
+            dataProject.ScrumMasters.First().EmailAddress.Should().Be("S1@test.com");
+            dataProject.ScrumMasters.First().FirstName.Should().Be("Jack");
+            dataProject.ScrumMasters.First().LastName.Should().Be("Test");
+            dataProject.ScrumMasters.First().Password.Should().Be("Password");
+            dataProject.ScrumMasters.First().Developer.Should().Be(false);
+            dataProject.ScrumMasters.First().ProductOwner.Should().Be(false);
+            dataProject.ScrumMasters.First().ScrumMaster.Should().Be(true);
+            dataProject.ScrumMasters.First().Skills.Should().Be("C#, Java");
+            dataProject.ScrumMasters.First().SecretQuestion.Should().Be("Where do you live?");
+            dataProject.ScrumMasters.First().SecretAnswer.Should().Be("A Tent");
+            dataProject.ScrumMasters.First().Roles.Count.Should().Be(1);
+            dataProject.ScrumMasters.First().Roles.ToList().Select(r => r.RoleName).Should().Contain("Scrum Master");
 
-            dataProject.ScrumMasters[1].Should().NotBeNull();
-            dataProject.ScrumMasters[1].EmailAddress.Should().Be("S2@test.com");
-            dataProject.ScrumMasters[1].FirstName.Should().Be("Jane");
-            dataProject.ScrumMasters[1].LastName.Should().Be("Test");
-            dataProject.ScrumMasters[1].Password.Should().Be("Password");
-            dataProject.ScrumMasters[1].Developer.Should().Be(false);
-            dataProject.ScrumMasters[1].ProductOwner.Should().Be(true);
-            dataProject.ScrumMasters[1].ScrumMaster.Should().Be(true);
-            dataProject.ScrumMasters[1].SecretQuestion.Should().Be("Where do you live?");
-            dataProject.ScrumMasters[1].SecretAnswer.Should().Be("A Tent");
-            dataProject.ScrumMasters[1].Roles.Count.Should().Be(1);
-            dataProject.ScrumMasters[1].Roles.ToList().Select(r => r.RoleName).Should().Contain("Scrum Master");
+            dataProject.ScrumMasters.Last().Should().NotBeNull();
+            dataProject.ScrumMasters.Last().EmailAddress.Should().Be("S2@test.com");
+            dataProject.ScrumMasters.Last().FirstName.Should().Be("Jane");
+            dataProject.ScrumMasters.Last().LastName.Should().Be("Test");
+            dataProject.ScrumMasters.Last().Password.Should().Be("Password");
+            dataProject.ScrumMasters.Last().Developer.Should().Be(false);
+            dataProject.ScrumMasters.Last().ProductOwner.Should().Be(true);
+            dataProject.ScrumMasters.Last().ScrumMaster.Should().Be(true);
+            dataProject.ScrumMasters.Last().SecretQuestion.Should().Be("Where do you live?");
+            dataProject.ScrumMasters.Last().SecretAnswer.Should().Be("A Tent");
+            dataProject.ScrumMasters.Last().Roles.Count.Should().Be(1);
+            dataProject.ScrumMasters.Last().Roles.ToList().Select(r => r.RoleName).Should().Contain("Scrum Master");
 
             dataProject.StartedOn.Should().Be(DateTime.Today);
             #endregion
@@ -446,7 +446,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             projectList[0].Description.Should().Be("Updated Description");
             projectList[0].ProjectManager.EmailAddress.Should().Be("tester@agile.local");
             projectList[0].ScrumMasters.Count.Should().Be(1);
-            projectList[0].ScrumMasters[0].EmailAddress.Should().Be("S1@test.com");
+            projectList[0].ScrumMasters.First().EmailAddress.Should().Be("S1@test.com");
         }
 
         #endregion

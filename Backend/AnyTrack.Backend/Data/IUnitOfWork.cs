@@ -33,6 +33,11 @@ namespace AnyTrack.Backend.Data
         /// </summary>
         IRepository<Project> ProjectRepository { get; }
 
+        /// <summary>
+        /// Gets the sprint repository controlled by this unit of work.
+        /// </summary>
+        IRepository<Sprint> SprintRepository { get; } 
+
         #endregion 
 
         #region Methods 

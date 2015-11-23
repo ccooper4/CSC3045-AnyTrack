@@ -1,4 +1,5 @@
 ﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -33,6 +34,9 @@ namespace AnyTrack.Backend.Data
             StoryEntitySet = base.Set<Story>();
             StoryRepository = new EntityRepository<Story>(StoryEntitySet);
 
+            SprintEntitySet = base.Set<Sprint>();
+            SprintRepository = new EntityRepository<Sprint>(SprintEntitySet);
+
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<EntityUnitOfWork, Configuration>());
         }
 
@@ -60,6 +64,11 @@ namespace AnyTrack.Backend.Data
         /// </summary>
         public IRepository<Story> StoryRepository { get; private set; }
 
+        /// <summary>
+        /// Gets the sprint repository controlled by this unit of work.
+        /// </summary>
+        public IRepository<Sprint> SprintRepository { get; private set; } 
+
         #endregion
 
         #region Fields
@@ -83,6 +92,11 @@ namespace AnyTrack.Backend.Data
         /// Gets or sets the Story Entity Set, as provided by Entity Framework.
         /// </summary>
         private DbSet<Story> StoryEntitySet { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Sprint Entity Set, as provided by Entity Framework.
+        /// </summary>
+        private DbSet<Sprint> SprintEntitySet { get; set; }
 
         #endregion 
 
