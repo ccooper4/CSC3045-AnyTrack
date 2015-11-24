@@ -7,9 +7,10 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:vm="clr-namespace:AnyTrack.Projects.Views"
              xmlns:converter="clr-namespace:AnyTrack.Projects.Converters"
-             mc:Ignorable="d" Width="620.212" Height="345.745"
+             mc:Ignorable="d" 
              prism:ViewModelLocator.AutoWireViewModel="True"
              xml:lang="en-GB">
+    
     <UserControl.Resources>
         <converter:BooleanToVisibilityConverter x:Key="booleanToVisibility"/>
         <Style TargetType="ListBox">
@@ -22,33 +23,34 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    <GroupBox>
-        <GroupBox.Header>
-            <TextBlock Foreground="White" Text="My Projects" />
-        </GroupBox.Header>
-        <Grid Background="White">
+    
+    <Grid Background="LightGray" >
+        
             <Grid.RowDefinitions>
-                <RowDefinition Height="30px"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="tileList" ItemsSource="{Binding Tiles}" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+        <Button Grid.Row="0" Margin="0,30px,30px,0" HorizontalAlignment="Right" Background="Transparent" BorderThickness="0" VerticalAlignment="Center" Height="Auto" Width="Auto" Command="{Binding CreateProjectCommand}">
+            <Image Source="../Images/add_icon.png" Width="25px" Height="25px"></Image>
+        </Button>
+
+        <DockPanel Grid.Row="1">
+            <ListBox DockPanel.Dock="Top" Background="LightGray" HorizontalAlignment="Center" BorderThickness="0" ItemsSource="{Binding Tiles}" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
-                        <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                            <controls:Tile Grid.Column="0" Title="{Binding Name}" Width="100" Height="100" CommandParameter="{Binding Path=.}" Command="{Binding Path=DataContext.ViewProjectOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"> </controls:Tile>
+                        <Grid Width="Auto" Margin="30px,30px,30px,30px" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"></RowDefinition>
+                                <RowDefinition Height="9*"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Label HorizontalAlignment="Left" Grid.Row="0" Content="{Binding Name}" ></Label>
+                            <controls:Tile Grid.Row="1" Width="200" Height="120" CommandParameter="{Binding Path=.}" Command="{Binding Path=DataContext.ManageBacklogCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"></controls:Tile>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Grid.Row="0" Grid.Column="1" Content="Add A Project;" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="128" Height="25" Command="{Binding CreateProjectCommand}"/>
-            <Label Grid.Row="0" Grid.Column="0" Content="There are no Projects" Visibility="{Binding EmptyProject, Converter={StaticResource booleanToVisibility}}"/>
-        </Grid>
-    </GroupBox>
+        </DockPanel>
+    </Grid>
 </UserControl>

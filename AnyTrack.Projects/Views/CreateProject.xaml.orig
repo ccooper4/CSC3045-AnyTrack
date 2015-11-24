@@ -45,7 +45,11 @@
                     <RowDefinition Height="1*"></RowDefinition>
                 </Grid.RowDefinitions>
 
+<<<<<<< HEAD
+                <Views:LabelledTextBox Label="Project Name" Text="{Binding ProjectName}" Grid.Row="0" VerticalAlignment="Center" Height="85" Margin="0,0,0,95" Grid.RowSpan="2"/>
+=======
                 <Views:LabelledTextBox Label="Project Name" Text="{Binding ProjectName}" Grid.Row="0" VerticalAlignment="Center" Height="85" Margin="0,0,0,95" Grid.RowSpan="2" />
+>>>>>>> development
 
                 <Views:LabelledTextBox Label="Description" Text="{Binding Description}" Grid.Row="1" VerticalAlignment="Center"/>
 
