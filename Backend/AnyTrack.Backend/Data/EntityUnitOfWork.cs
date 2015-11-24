@@ -37,6 +37,9 @@ namespace AnyTrack.Backend.Data
             SprintEntitySet = base.Set<Sprint>();
             SprintRepository = new EntityRepository<Sprint>(SprintEntitySet);
 
+            TaskEntitySet = base.Set<AnyTrack.Backend.Data.Model.Task>();
+            TaskRepository = new EntityRepository<AnyTrack.Backend.Data.Model.Task>(TaskEntitySet);
+
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<EntityUnitOfWork, Configuration>());
         }
 
@@ -63,6 +66,11 @@ namespace AnyTrack.Backend.Data
         /// Gets the story repository controlled by this unit of work.
         /// </summary>
         public IRepository<Story> StoryRepository { get; private set; }
+
+        /// <summary>
+        /// Gets the task repository controlled by this unit of work.
+        /// </summary>
+        public IRepository<AnyTrack.Backend.Data.Model.Task> TaskRepository { get; private set; }
 
         /// <summary>
         /// Gets the sprint repository controlled by this unit of work.
@@ -92,6 +100,11 @@ namespace AnyTrack.Backend.Data
         /// Gets or sets the Story Entity Set, as provided by Entity Framework.
         /// </summary>
         private DbSet<Story> StoryEntitySet { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Task Entity Set, as provided by Entity Framework.
+        /// </summary>
+        private DbSet<AnyTrack.Backend.Data.Model.Task> TaskEntitySet { get; set; }
 
         /// <summary>
         /// Gets or sets the Sprint Entity Set, as provided by Entity Framework.
