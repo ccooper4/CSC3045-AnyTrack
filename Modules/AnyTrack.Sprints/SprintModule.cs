@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.Service;
+using AnyTrack.Sprints.Views;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Regions;
@@ -74,6 +76,8 @@ namespace AnyTrack.Sprints
         /// </summary>
         public void Initialize()
         {
+            container.RegisterType<object, BurnDown>("BurnDown");
+            regionManager.RequestNavigate(RegionNames.AppContainer, "BurnDown");
         }
 
         #endregion 
