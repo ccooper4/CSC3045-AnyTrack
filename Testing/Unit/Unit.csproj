@@ -181,10 +181,12 @@
     <Compile Include="Modules\AnyTrack.Accounting\Views\RegistrationViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Converters\DateConverterTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Converters\BooleanToVisibilityConverterTests.cs" />
+    <Compile Include="Modules\AnyTrack.Projects\ProjectModuleTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\ServiceGateways\ProjectServiceGatewayTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Views\CreateProjectViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Views\MyProjectsViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Views\ProductBacklogViewModelTests.cs" />
+    <Compile Include="Modules\AnyTrack.Projects\Views\ProjectOptionsViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Views\StoryViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -105,6 +105,10 @@
       <DependentUpon>MyProjects.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MyProjectsViewModel.cs" />
+    <Compile Include="Views\ProjectOptions.xaml.cs">
+      <DependentUpon>ProjectOptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProjectOptionsViewModel.cs" />
     <Compile Include="Views\Story.xaml.cs">
       <DependentUpon>Story.xaml</DependentUpon>
     </Compile>
@@ -197,6 +201,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ProductBacklog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProjectOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
