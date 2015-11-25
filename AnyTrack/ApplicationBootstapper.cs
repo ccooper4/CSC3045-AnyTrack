@@ -13,6 +13,7 @@ using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Mvvm;
 using Prism.Unity;
+using AnyTrack.PlanningPoker;
 
 namespace AnyTrack.Client
 {
@@ -54,6 +55,7 @@ namespace AnyTrack.Client
             moduleCatalog.AddModule(typeof(AccountingModule));
             moduleCatalog.AddModule(typeof(ProjectModule));
             moduleCatalog.AddModule(typeof(SprintModule));
+            moduleCatalog.AddModule(typeof(PlanningPokerModule));
         }
 
         /// <summary>

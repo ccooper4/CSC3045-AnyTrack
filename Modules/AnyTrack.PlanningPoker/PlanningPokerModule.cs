@@ -1,0 +1,80 @@
+﻿using AnyTrack.Infrastructure.Service;
+using Microsoft.Practices.Unity;
+using Prism.Modularity;
+using Prism.Regions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AnyTrack.PlanningPoker
+{
+    /// <summary>
+    /// The module initalization logic for the planning poker module.
+    /// </summary>
+    public class PlanningPokerModule : IModule
+    {
+        #region Fields 
+
+        /// <summary>
+        /// The Unity Container. 
+        /// </summary>
+        private readonly IUnityContainer container;
+
+        /// <summary>
+        /// The region Manager.
+        /// </summary>
+        private readonly IRegionManager regionManager;
+
+        /// <summary>
+        /// The menu service.
+        /// </summary>
+        private readonly IMenuService menuService; 
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Constructs the overall Planning Poker Module. 
+        /// </summary>
+        /// <param name="container">The Unity container</param>
+        /// <param name="regionManager">The Prism region manager</param>
+        /// <param name="menuService">The menu service.</param>
+        public PlanningPokerModule(IUnityContainer container, IRegionManager regionManager, IMenuService menuService)
+        {
+            if (container == null)
+            {
+                throw new ArgumentNullException("container");
+            }
+
+            if (regionManager == null)
+            {
+                throw new ArgumentNullException("regionManager");
+            }
+
+            if (menuService == null)
+            {
+                throw new ArgumentNullException("menuService");
+            }
+
+            this.container = container;
+            this.regionManager = regionManager;
+            this.menuService = menuService;
+        }
+
+        #endregion
+
+        #region Methods 
+
+        /// <summary>
+        /// Runs any setup logic for the planning poker module.
+        /// </summary>
+        public void Initialize()
+        {
+        }
+
+        #endregion 
+    }
+}
