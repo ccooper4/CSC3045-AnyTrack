@@ -165,12 +165,18 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Model\BaseEntity.cs" />
+    <Compile Include="Providers\ConnectedClientsProvider.cs" />
     <Compile Include="Providers\FormsAuthenticationProvider.cs" />
     <Compile Include="Providers\OperationContextProvider.cs" />
     <Compile Include="Providers\RoleProvider.cs" />
+    <Compile Include="Security\BuildPrincipalUnityExtension.cs" />
+    <Compile Include="Security\BuildPrincipalUnityStrategy.cs" />
+    <Compile Include="Security\CreatePrincipalAttribute.cs" />
     <Compile Include="Security\GeneratedServiceUserIdentity.cs" />
     <Compile Include="Security\GeneratedServiceUserPrincipal.cs" />
     <Compile Include="Service\AccountService.cs" />
+    <Compile Include="Service\IPlanningPokerClientService.cs" />
+    <Compile Include="Service\IPlanningPokerManagerService.cs" />
     <Compile Include="Service\IProjectService.cs" />
     <Compile Include="Service\Model\ServiceProjectSummary.cs" />
     <Compile Include="Service\Model\ServiceProjectRoleSummary.cs" />
@@ -179,13 +185,13 @@
     <Compile Include="Service\Model\ServiceStorySummary.cs" />
     <Compile Include="Service\Model\ServiceUserSearchFilter.cs" />
     <Compile Include="Service\Model\ServiceUserSearchInfo.cs" />
+    <Compile Include="Service\PlanningPokerManagerService.cs" />
     <Compile Include="Service\ProjectService.cs" />
     <Compile Include="Service\IAccountService.cs" />
     <Compile Include="Service\Model\ServiceLoginResult.cs" />
     <Compile Include="Service\Model\ServiceUser.cs" />
     <Compile Include="Service\Model\ServiceRoleInfo.cs" />
     <Compile Include="Service\Model\ServiceUserCredential.cs" />
-    <Compile Include="Service\PrincipalBuilderService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

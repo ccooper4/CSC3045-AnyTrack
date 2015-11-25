@@ -1,6 +1,7 @@
 using System.Web.Security;
 using AnyTrack.Backend.Data;
 using AnyTrack.Backend.Providers;
+using AnyTrack.Backend.Security;
 using AnyTrack.Backend.Service;
 using Microsoft.Practices.Unity;
 using Unity.Wcf;
@@ -34,6 +35,9 @@ namespace AnyTrack.Backend.WebHost
             container.RegisterType<FormsAuthenticationProvider, FormsAuthenticationProvider>();
             container.RegisterType<Providers.RoleProvider, Providers.RoleProvider>();
             container.RegisterType<OperationContextProvider, OperationContextProvider>();
+            container.RegisterType<ConnectedClientsProvider, ConnectedClientsProvider>(new ContainerControlledLifetimeManager());
+
+            container.AddExtension(new BuildPrincipalUnityExtension());
 
             ((Providers.RoleProvider)Roles.Provider).UnitOfWork = container.Resolve<IUnitOfWork>();
         }
