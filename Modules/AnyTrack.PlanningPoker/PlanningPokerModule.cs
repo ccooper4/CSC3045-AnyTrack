@@ -1,12 +1,12 @@
-﻿using AnyTrack.Infrastructure.Service;
-using Microsoft.Practices.Unity;
-using Prism.Modularity;
-using Prism.Regions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AnyTrack.Infrastructure.Service;
+using Microsoft.Practices.Unity;
+using Prism.Modularity;
+using Prism.Regions;
 
 namespace AnyTrack.PlanningPoker
 {

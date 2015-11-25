@@ -7,13 +7,13 @@ using AnyTrack.Accounting;
 using AnyTrack.Client.Views;
 using AnyTrack.Infrastructure.Providers;
 using AnyTrack.Infrastructure.Service;
+using AnyTrack.PlanningPoker;
 using AnyTrack.Projects;
 using AnyTrack.Sprints;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Mvvm;
 using Prism.Unity;
-using AnyTrack.PlanningPoker;
 
 namespace AnyTrack.Client
 {
