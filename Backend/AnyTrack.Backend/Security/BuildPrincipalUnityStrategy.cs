@@ -23,7 +23,12 @@ namespace AnyTrack.Backend.Security
         /// <summary>
         /// The unity container.
         /// </summary>
-        private readonly IUnityContainer container; 
+        private readonly IUnityContainer container;
+
+        /// <summary>
+        /// Types that are excluded from being affected by this extension.
+        /// </summary>
+        private readonly Type[] excludedTypes = new Type[] { typeof(IUnitOfWork), typeof(OperationContextProvider), typeof(FormsAuthenticationProvider) }; 
 
         #endregion 
 
@@ -55,15 +60,25 @@ namespace AnyTrack.Backend.Security
         {
             base.PostBuildUp(context);
 
-            var operationContext = container.Resolve<OperationContextProvider>();
-
             var obj = context.Existing;
             var objType = obj.GetType();
+
+            //// We must not run this logic at all for classes this extension depends on,
+            //// if we do that, a StackoverflowException happens - 
+            //// The container attempts to resolve the extension dependency which then
+            //// attempts to re-run this logic. 
+            
+            if (excludedTypes.Contains(objType))
+            {
+                return; 
+            }
+
+            var operationContext = container.Resolve<OperationContextProvider>();
 
             var objHasAttribute = objType.CustomAttributes.SingleOrDefault(a => a.AttributeType == typeof(CreatePrincipalAttribute)) != null;
 
             var callMethod = operationContext.GetMethodInfoForServiceCall();
-            var callMethodHasAttribute = callMethod.CustomAttributes.SingleOrDefault(a => a.AttributeType == typeof(CreatePrincipalAttribute)) != null;
+            var callMethodHasAttribute = callMethod == null ? false : callMethod.CustomAttributes.SingleOrDefault(a => a.AttributeType == typeof(CreatePrincipalAttribute)) != null;
 
             if (objHasAttribute || callMethodHasAttribute)
             {

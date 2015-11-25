@@ -42,6 +42,11 @@ namespace AnyTrack.Backend.Providers
         /// <returns>The client channel.</returns>
         public virtual T GetClientChannel<T>()
         {
+            if (OperationContext.Current == null)
+            {
+                return default(T);
+            }
+
             return OperationContext.Current.GetCallbackChannel<T>();
         }
 
@@ -51,6 +56,12 @@ namespace AnyTrack.Backend.Providers
         /// <returns>The reflected method info.</returns>
         public virtual MethodInfo GetMethodInfoForServiceCall()
         {
+            //// Operation Context current may be null, if so, there is no method. Return null.
+            if (OperationContext.Current == null)
+            {
+                return null; 
+            }
+
             var methodName = OperationContext.Current.IncomingMessageProperties["HttpOperationName"].ToString();
 
             if (methodName.IsEmpty())
