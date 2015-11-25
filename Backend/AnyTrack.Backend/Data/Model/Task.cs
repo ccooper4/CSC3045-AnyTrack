@@ -15,7 +15,7 @@ namespace AnyTrack.Backend.Data.Model
         /// <summary>
         /// Gets or sets the story this task is part of.
         /// </summary>
-        public virtual Story Story { get; set; }
+        public virtual SprintStory SprintStory { get; set; }
 
         /// <summary>
         /// Gets or sets the Conditions Of Satisfaction
