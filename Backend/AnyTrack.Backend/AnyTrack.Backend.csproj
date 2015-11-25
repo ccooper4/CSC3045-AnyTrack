@@ -119,6 +119,7 @@
     <Compile Include="Data\Model\Sprint.cs" />
     <Compile Include="Data\Model\SprintStory.cs" />
     <Compile Include="Data\Model\Story.cs" />
+    <Compile Include="Data\Model\Task.cs" />
     <Compile Include="Data\Model\User.cs" />
     <Compile Include="Faults\UserAlreadyExistsFault.cs" />
     <Compile Include="Data\Model\Project.cs" />
@@ -161,6 +162,10 @@
     <Compile Include="Migrations\201511231434077_Adding Sprint Data Layer Entities.cs" />
     <Compile Include="Migrations\201511231434077_Adding Sprint Data Layer Entities.Designer.cs">
       <DependentUpon>201511231434077_Adding Sprint Data Layer Entities.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511242323120_Adding Task.cs" />
+    <Compile Include="Migrations\201511242323120_Adding Task.Designer.cs">
+      <DependentUpon>201511242323120_Adding Task.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -227,6 +232,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511231434077_Adding Sprint Data Layer Entities.resx">
       <DependentUpon>201511231434077_Adding Sprint Data Layer Entities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511242323120_Adding Task.resx">
+      <DependentUpon>201511242323120_Adding Task.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
