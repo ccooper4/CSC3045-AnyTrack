@@ -166,10 +166,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Backend\AnyTrack.Backend\AnyTrack.Backend.csproj">
-      <Project>{8e06f61a-3fd1-419e-a45f-66babb282d60}</Project>
-      <Name>AnyTrack.Backend</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Common\AnyTrack.Infrastructure\AnyTrack.Infrastructure.csproj">
       <Project>{a5a20403-c6e3-4475-88aa-762bd691f812}</Project>
       <Name>AnyTrack.Infrastructure</Name>
