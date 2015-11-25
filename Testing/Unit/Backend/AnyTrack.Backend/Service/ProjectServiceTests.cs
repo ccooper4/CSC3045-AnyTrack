@@ -871,6 +871,8 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
 
             projects[0].ScrumMasters = new List<User>() {users[0]};
 
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(users[0]);
+
             #endregion
 
             unitOfWork.UserRepository.Items.Returns(users.AsQueryable());
@@ -965,6 +967,8 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             };
 
             users[0].Roles = new List<Role>();
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(users[0]);
 
             #endregion
 
