@@ -200,6 +200,8 @@
     <Compile Include="Service\Model\ServiceSprintStory.cs" />
     <Compile Include="Service\Model\ServiceStory.cs" />
     <Compile Include="Service\Model\ServiceStorySummary.cs" />
+    <Compile Include="Service\Model\ServiceTask.cs" />
+    <Compile Include="Service\Model\ServiceUpdatedHours.cs" />
     <Compile Include="Service\Model\ServiceUserSearchFilter.cs" />
     <Compile Include="Service\Model\ServiceUserSearchInfo.cs" />
     <Compile Include="Service\PlanningPokerManagerService.cs" />
