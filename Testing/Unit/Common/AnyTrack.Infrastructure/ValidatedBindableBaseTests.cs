@@ -15,6 +15,7 @@ using System.Windows.Threading;
 using System.Windows;
 using System.Threading;
 using Prism.Regions;
+using AnyTrack.Infrastructure.Service;
 
 namespace Unit.Common.AnyTrack.Infrastructure.InterceptorBehaviourTests
 {
@@ -226,7 +227,24 @@ namespace Unit.Common.AnyTrack.Infrastructure.InterceptorBehaviourTests
 
         #endregion 
 
-        #region NavigateToItem(string view, NavigationParameters navParams = null) Tests 
+        #region ShowMetroFlyout(string viewName, NavigationParameters navParams = null) Tests 
+
+        [Test]
+        public void CallShowMetroFlyout()
+        {
+            var viewName = "Test";
+            var navParams = new NavigationParameters();
+
+            vm.FlyoutService = Substitute.For<IFlyoutService>();
+
+            vm.ShowMetroFlyout(viewName, navParams);
+
+            vm.FlyoutService.Received().ShowMetroFlyout(viewName, navParams);            
+        }
+
+        #endregion 
+
+        #region NavigateToItem(string view, NavigationParameters navParams = null) Tests
 
         [Test]
         public void CallNavigateToItemWithParams()

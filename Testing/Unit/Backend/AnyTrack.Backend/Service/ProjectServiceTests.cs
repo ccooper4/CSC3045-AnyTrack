@@ -20,11 +20,11 @@ using AnyTrack.Backend.Faults;
 using AnyTrack.Backend.Security;
 using AnyTrack.Infrastructure.BackendAccountService;
 using AnyTrack.Infrastructure.Security;
-using Unit.Backend.AnyTrack.Backend.Service.PrincipalBuilderServiceTests;
 using Project = AnyTrack.Backend.Data.Model.Project;
 
 namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
 {
+    #region Setup 
 
     public class Context
     {
@@ -32,7 +32,6 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
         public static ProjectService service;
         public static FormsAuthenticationProvider provider;
         public static OperationContextProvider context;
-        public static TestService testService;
         public static List<User> userList;
         public static List<Role> roleList;
 
@@ -40,9 +39,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
         public void SetUp()
         {
             unitOfWork = Substitute.For<IUnitOfWork>();
-            provider = Substitute.For<FormsAuthenticationProvider>();
-            context = Substitute.For<OperationContextProvider>();
-            service = new ProjectService(unitOfWork, provider, context);
+            service = new ProjectService(unitOfWork);
            
             userList = new List<User>()
             {
@@ -121,6 +118,10 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
         }
     }
 
+    #endregion
+
+    #region Tests 
+
     public class ProjectServiceTests : Context
     {
         #region Constructor Tests
@@ -129,27 +130,13 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
         [ExpectedException(typeof(ArgumentNullException))]
         public void ConstructProjectServiceNoUnitOfWork()
         {
-            service = new ProjectService(null, provider, context);
-        }
-
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void ConstructProjectServiceNoProvider()
-        {
-            service = new ProjectService(unitOfWork, null, context);
-        }
-
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void ConstructProjectServiceNoContextProvider()
-        {
-            service = new ProjectService(unitOfWork, provider, null);
+            service = new ProjectService(null);
         }
 
         [Test]
         public void ConstructProjectService()
         {
-            service = new ProjectService(unitOfWork, provider, context);
+            service = new ProjectService(unitOfWork);
 
             service.Should().NotBeNull();
         }
@@ -161,8 +148,6 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
         [Test]
         public void CreateNewProjectNoOtherRolesAssigned()
         {
-            SetUpThreadCurrent();
-
             #region Test Data
 
             Project dataProject = null;
@@ -219,8 +204,6 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
         [Test]
         public void CreateProjectAllRolesAssigned()
         {
-            SetUpThreadCurrent();
-
             #region Test Data
 
             Project dataProject = null;
@@ -318,8 +301,6 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
         [ExpectedException(typeof(ArgumentException))]
         public void CreateProjectAlreadyAdded()
         {
-            SetUpThreadCurrent();
-
             #region Test Data
 
             Project dataProject = null;
@@ -890,6 +871,8 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
 
             projects[0].ScrumMasters = new List<User>() {users[0]};
 
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(users[0]);
+
             #endregion
 
             unitOfWork.UserRepository.Items.Returns(users.AsQueryable());
@@ -984,6 +967,8 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             };
 
             users[0].Roles = new List<Role>();
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(users[0]);
 
             #endregion
 
@@ -1122,37 +1107,8 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
         }
 
         #endregion 
-
-        #region Helper Methods
-
-        private void SetUpThreadCurrent()
-        {
-            FormsAuthenticationProvider provider = Substitute.For<FormsAuthenticationProvider>();
-            OperationContextProvider context = Substitute.For<OperationContextProvider>();
-            TestService testService;
-
-            var channel = Substitute.For<IContextChannel>();
-            var requestMessage = new HttpRequestMessageProperty();
-            var authCookie = "test";
-            var user = new User { EmailAddress = "tester@agile.local", Roles = new List<Role>() };
-            requestMessage.Headers.Set("Set-Cookie", "AuthCookie=" + authCookie + ";other=other");
-
-            var properties = new MessageProperties();
-            properties.Add(HttpRequestMessageProperty.Name, requestMessage);
-            context.IncomingMessageProperties.Returns(properties);
-
-            var decryptedTicket = new FormsAuthenticationTicket("tester@agile.local", false, 100);
-            provider.Decrypt(authCookie).Returns(decryptedTicket);
-
-            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
-
-            testService = new TestService(unitOfWork, provider, context);
-
-            provider.Received().Decrypt(authCookie);
-        }
-       
-        #endregion
-
         
     }
+
+    #endregion
 }

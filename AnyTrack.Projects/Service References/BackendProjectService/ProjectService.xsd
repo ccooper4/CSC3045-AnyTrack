@@ -107,17 +107,17 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetProjectServiceStorySummary">
+  <xs:element name="GetProjectStoryDetails">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="projectId" type="q12:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetProjectServiceStorySummaryResponse">
+  <xs:element name="GetProjectStoryDetailsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetProjectServiceStorySummaryResult" nillable="true" type="q13:ArrayOfServiceStorySummary" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetProjectStoryDetailsResult" nillable="true" type="q13:ArrayOfServiceStorySummary" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

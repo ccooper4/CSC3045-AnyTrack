@@ -160,14 +160,16 @@
     <Compile Include="AnyTrack\Views\MainAppAreaViewModelTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Data\EntityUnitOfWorkTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Data\EntityRepositoryTests.cs" />
+    <Compile Include="Backend\AnyTrack.Backend\Providers\BuildPrincipalUnityStrategyTests.cs" />
+    <Compile Include="Backend\AnyTrack.Backend\Providers\ConnectedClientsProviderTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Providers\RoleProviderTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Service\AccountServiceTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\CookieMessageInspectorTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Service\ProjectServiceTests.cs" />
-    <Compile Include="Backend\AnyTrack.Backend\Service\PrincipalBuilderServiceTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\Extensions\IPrincipalExtensionsTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\Security\ServiceUserIdentityTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\Security\ServiceUserPrincipalTests.cs" />
+    <Compile Include="Common\AnyTrack.Infrastructure\Service\FlyoutServiceTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\Service\MenuServiceTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\ValidatedBindableBaseTests.cs" />
     <Compile Include="Common\AnyTrack.SharedUtilities\Extensions\StringExtensionTests.cs" />
@@ -180,10 +182,13 @@
     <Compile Include="Modules\AnyTrack.Accounting\Views\RegistrationViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Converters\DateConverterTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Converters\BooleanToVisibilityConverterTests.cs" />
+    <Compile Include="Modules\AnyTrack.Projects\ProjectModuleTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\ServiceGateways\ProjectServiceGatewayTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Views\CreateProjectViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Views\MyProjectsViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Views\ProductBacklogViewModelTests.cs" />
+    <Compile Include="Modules\AnyTrack.Projects\Views\ProjectOptionsViewModelTests.cs" />
+    <Compile Include="Modules\AnyTrack.Projects\Views\StoryViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -171,12 +171,9 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
         [Test]
         public void SaveProjectWithErrors()
         {
-            var windowProvider = Substitute.For<WindowProvider>();
-
             var currentPrincipal = new ServiceUserPrincipal(new LoginResult { EmailAddress = "testmanager@agile.local" }, "");
 
             UserDetailsStore.LoggedInUserPrincipal = currentPrincipal;
-            vm.MainWindow = windowProvider;
 
             vm.ProjectName = "Mi";
             vm.Description = "This is a description";
@@ -231,7 +228,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
 
             vm.ScrumMasterSearchEmailAddress = "test@agile.local";
 
-            vm.Call("SearchScrumMastters");
+            vm.Call("SearchScrumMasters");
 
             filter.Should().NotBeNull();
             filter.ScrumMaster.Should().BeTrue();

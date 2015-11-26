@@ -105,6 +105,10 @@
       <DependentUpon>MyProjects.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MyProjectsViewModel.cs" />
+    <Compile Include="Views\ProjectOptions.xaml.cs">
+      <DependentUpon>ProjectOptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProjectOptionsViewModel.cs" />
     <Compile Include="Views\Story.xaml.cs">
       <DependentUpon>Story.xaml</DependentUpon>
     </Compile>
@@ -158,7 +162,17 @@
       <Name>AnyTrack.SharedUtilities</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\add_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\delete_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\edit_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
@@ -197,6 +211,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ProductBacklog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProjectOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

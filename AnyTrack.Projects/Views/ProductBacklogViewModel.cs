@@ -152,7 +152,7 @@ namespace AnyTrack.Projects.Views
         {
             if (navigationContext.Parameters.ContainsKey("projectId"))
             {
-                projectId = (Guid)navigationContext.Parameters["projectId"];
+                ProjectId = (Guid)navigationContext.Parameters["projectId"];
             }
         }
 
@@ -184,7 +184,7 @@ namespace AnyTrack.Projects.Views
         {
             var navParams = new NavigationParameters();
             navParams.Add("projectId", projectId);
-            NavigateToItem("Story", navParams);
+            this.ShowMetroFlyout("Story", navParams);
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace AnyTrack.Projects.Views
             var navParams = new NavigationParameters();
             navParams.Add("projectId", projectId);
             navParams.Add("storyId", story.StoryId);
-            NavigateToItem("Story", navParams);
+            this.ShowMetroFlyout("Story", navParams);
         }
 
         #endregion

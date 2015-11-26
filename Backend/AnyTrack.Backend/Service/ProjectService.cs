@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using System.Web.Security;
 using AnyTrack.Backend.Data;
 using AnyTrack.Backend.Data.Model;
 using AnyTrack.Backend.Providers;
+using AnyTrack.Backend.Security;
 using AnyTrack.Backend.Service.Model;
 using AnyTrack.SharedUtilities.Extensions;
 
@@ -17,7 +19,8 @@ namespace AnyTrack.Backend.Service
     /// <summary>
     /// Provides the methods of the ProjectService
     /// </summary>
-    public class ProjectService : PrincipalBuilderService, IProjectService
+    [CreatePrincipal]
+    public class ProjectService : IProjectService
     {
         #region Fields
         /// <summary>
@@ -32,9 +35,7 @@ namespace AnyTrack.Backend.Service
         /// Creates a new ProjectService.
         /// </summary>
         /// <param name="unitOfWork">The unit of work</param>
-        /// <param name="formsProvider">The forms provider.</param>
-        /// <param name="contextProvider">The context provider.</param>
-        public ProjectService(IUnitOfWork unitOfWork, FormsAuthenticationProvider formsProvider, OperationContextProvider contextProvider) : base(unitOfWork, formsProvider, contextProvider)
+        public ProjectService(IUnitOfWork unitOfWork)
         {
             if (unitOfWork == null)
             {
@@ -312,7 +313,7 @@ namespace AnyTrack.Backend.Service
                 ConditionsOfSatisfaction = dataStory.ConditionsOfSatisfaction,
                 AsA = dataStory.AsA,
                 IWant = dataStory.IWant,
-                SoThat = dataStory.IWant
+                SoThat = dataStory.SoThat
             };           
 
             return story;
@@ -479,6 +480,7 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         /// <param name="currentUserEmailAddress">The email of the currently logged in user</param>
         /// <returns>A list containing Project role summaries</returns>
+        [PrincipalPermission(SecurityAction.Demand, Authenticated = true)]
         public List<ServiceProjectRoleSummary> GetUserProjectRoleSummaries(string currentUserEmailAddress)
         {          
             User loggedInUser = unitOfWork.UserRepository.Items.Single(u => u.EmailAddress == currentUserEmailAddress);

@@ -812,11 +812,11 @@ namespace AnyTrack.Projects.BackendProjectService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetProjectNames", ReplyAction="http://tempuri.org/IProjectService/GetProjectNamesResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ServiceProjectSummary>> GetProjectNamesAsync(bool scrumMaster, bool productOwner, bool developer);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetProjectServiceStorySummary", ReplyAction="http://tempuri.org/IProjectService/GetProjectServiceStorySummaryResponse")]
-        System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ServiceStorySummary> GetProjectServiceStorySummary(System.Guid projectId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetProjectStoryDetails", ReplyAction="http://tempuri.org/IProjectService/GetProjectStoryDetailsResponse")]
+        System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ServiceStorySummary> GetProjectStoryDetails(System.Guid projectId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetProjectServiceStorySummary", ReplyAction="http://tempuri.org/IProjectService/GetProjectServiceStorySummaryResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ServiceStorySummary>> GetProjectServiceStorySummaryAsync(System.Guid projectId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/GetProjectStoryDetails", ReplyAction="http://tempuri.org/IProjectService/GetProjectStoryDetailsResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ServiceStorySummary>> GetProjectStoryDetailsAsync(System.Guid projectId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProjectService/AddStoryToProject", ReplyAction="http://tempuri.org/IProjectService/AddStoryToProjectResponse")]
         void AddStoryToProject(System.Guid projectGuid, AnyTrack.Projects.BackendProjectService.ServiceStory story);
@@ -940,12 +940,12 @@ namespace AnyTrack.Projects.BackendProjectService {
             return base.Channel.GetProjectNamesAsync(scrumMaster, productOwner, developer);
         }
         
-        public System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ServiceStorySummary> GetProjectServiceStorySummary(System.Guid projectId) {
-            return base.Channel.GetProjectServiceStorySummary(projectId);
+        public System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ServiceStorySummary> GetProjectStoryDetails(System.Guid projectId) {
+            return base.Channel.GetProjectStoryDetails(projectId);
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ServiceStorySummary>> GetProjectServiceStorySummaryAsync(System.Guid projectId) {
-            return base.Channel.GetProjectServiceStorySummaryAsync(projectId);
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Projects.BackendProjectService.ServiceStorySummary>> GetProjectStoryDetailsAsync(System.Guid projectId) {
+            return base.Channel.GetProjectStoryDetailsAsync(projectId);
         }
         
         public void AddStoryToProject(System.Guid projectGuid, AnyTrack.Projects.BackendProjectService.ServiceStory story) {

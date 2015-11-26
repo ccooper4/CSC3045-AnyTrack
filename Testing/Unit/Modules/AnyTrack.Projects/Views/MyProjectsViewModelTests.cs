@@ -14,6 +14,7 @@ using NUnit.Framework;
 using Prism.Regions;
 using AnyTrack.Infrastructure.Security;
 using AnyTrack.Infrastructure.BackendAccountService;
+using AnyTrack.Infrastructure.Service;
 
 namespace Unit.Modules.AnyTrack.Projects.Views
 {
@@ -49,6 +50,8 @@ namespace Unit.Modules.AnyTrack.Projects.Views
 
     public class MyProjectsViewModelTests : Context
     {
+        #region Constructor Tests 
+
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ConstructNoGateway()
@@ -61,16 +64,42 @@ namespace Unit.Modules.AnyTrack.Projects.Views
         {
             vm = new MyProjectsViewModel(gateway);
             vm.CreateProjectCommand.Should().NotBeNull();
-            vm.ManageBacklogCommand.Should().NotBeNull();
+            vm.ViewProjectOptions.Should().NotBeNull();
         }
+
+        #endregion 
+
+        #region AddProjectView Tests 
 
         [Test]
         public void AddProject()
         {
-            var windowProvider = Substitute.For<WindowProvider>();
             vm.Call("AddProjectView");
-            regionManager.Received().RequestNavigate(RegionNames.MainRegion, "Project");      
+            regionManager.Received().RequestNavigate(RegionNames.MainRegion, "Project");
         }
+
+        #endregion 
+
+        #region ShowProjectOptions(ServiceProjectRoleSummary summary) Tests 
+
+        [Test]
+        public void TestShowProjectOptions()
+        {
+            var projectOptions = new ServiceProjectRoleSummary();
+            NavigationParameters sentParams = null;
+
+            var flyoutService = Substitute.For<IFlyoutService>();
+            flyoutService.ShowMetroFlyout(Arg.Any<string>(), Arg.Do<NavigationParameters>(np => sentParams = np));
+            vm.FlyoutService = flyoutService;
+
+            vm.Call("ShowProjectOptions", projectOptions);
+
+            sentParams.Should().NotBeNull();
+            sentParams.ContainsKey("projectInfo").Should().BeTrue();
+            flyoutService.Received().ShowMetroFlyout("ProjectOptions", sentParams);
+        }
+
+        #endregion 
     }
 
     #endregion 
