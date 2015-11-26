@@ -50,6 +50,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Scripted|AnyCPU'">
     <OutputPath>bin\Scripted\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'vm-devwinbuild-shared-backend|AnyCPU'">
+    <OutputPath>bin\vm-devwinbuild-shared-backend\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MahApps.Metro, Version=1.1.2.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MahApps.Metro.1.1.2.0\lib\net45\MahApps.Metro.dll</HintPath>
