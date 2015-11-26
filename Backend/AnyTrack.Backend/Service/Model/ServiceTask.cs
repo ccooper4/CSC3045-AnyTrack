@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AnyTrack.Backend.Data.Model;
 
 namespace AnyTrack.Backend.Service.Model
 {
@@ -32,7 +33,7 @@ namespace AnyTrack.Backend.Service.Model
         /// <summary>
         /// Gets or sets the story this task is part of.
         /// </summary>
-        public ServiceSprintStory SprintStory { get; set; }
+        public SprintStory SprintStory { get; set; }
 
         /// <summary>
         /// Gets or sets the Conditions Of Satisfaction

@@ -152,6 +152,48 @@ namespace AnyTrack.Backend.Service
 
             unitOfWork.Commit();
         }
+
+        /// <summary>
+        /// Gets all tasks for a sprint
+        /// </summary>
+        /// <param name="sprintId">the sprint id</param>
+        /// <param name="assignee">the assignee</param>
+        /// <returns>A list of tasks</returns>
+        public List<ServiceTask> GetAllTasksForSprint(Guid sprintId, User assignee)
+        {
+            var tasks = unitOfWork.TaskRepository.Items.Where(s => s.SprintStory.Sprint.Id == sprintId).Where(u => u.Assignee == assignee).ToList();
+
+            List<ServiceTask> serviceTasks = new List<ServiceTask>();
+            foreach (var t in tasks)
+            {
+                ServiceTask task = new ServiceTask
+                {
+                    /////Assignee = t.Assignee,
+                    Blocked = t.Blocked,
+                    ConditionsOfSatisfaction = t.ConditionsOfSatisfaction,
+                    Description = t.Description,
+                    HoursRemaining = t.HoursRemaining,
+                    SprintStory = t.SprintStory,
+                    Summary = t.Summary,
+                    TaskId = t.Id
+                };
+
+                foreach (var u in t.UpdatedHours)
+                {
+                    ServiceUpdatedHours updatedHours = new ServiceUpdatedHours
+                    {
+                        LogEstimate = u.LogEstimate,
+                        UpdatedHoursId = u.Id,
+                        NewEstimate = u.NewEstimate
+                    };
+                    task.UpdatedHours.Add(updatedHours);
+                }
+
+                serviceTasks.Add(task);
+            }
+
+            return serviceTasks;
+        }
     
     #region Helper Methods
 
