@@ -164,6 +164,7 @@
     <Compile Include="Backend\AnyTrack.Backend\Providers\ConnectedClientsProviderTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Providers\RoleProviderTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Service\AccountServiceTests.cs" />
+    <Compile Include="Backend\AnyTrack.Backend\Service\SprintServiceTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\CookieMessageInspectorTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Service\ProjectServiceTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\Extensions\IPrincipalExtensionsTests.cs" />
@@ -219,6 +220,10 @@
     <ProjectReference Include="..\..\Modules\AnyTrack.Accounting\AnyTrack.Accounting.csproj">
       <Project>{9f38c80a-2e8c-486f-8054-e235886e1a17}</Project>
       <Name>AnyTrack.Accounting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\AnyTrack.Sprints\AnyTrack.Sprints.csproj">
+      <Project>{fbb89d79-d4a7-44c7-86a8-3693db4a56f9}</Project>
+      <Name>AnyTrack.Sprints</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

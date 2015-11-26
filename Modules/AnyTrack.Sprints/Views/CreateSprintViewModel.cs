@@ -12,6 +12,5 @@ namespace AnyTrack.Sprints.Views
     /// </summary>
     public class CreateSprintViewModel : ValidatedBindableBase
     {
-
     }
 }
