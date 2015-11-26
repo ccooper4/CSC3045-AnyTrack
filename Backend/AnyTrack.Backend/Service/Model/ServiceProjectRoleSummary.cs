@@ -11,6 +11,17 @@ namespace AnyTrack.Backend.Service.Model
     /// </summary>
     public class ServiceProjectRoleSummary
     {
+        #region Constructor
+
+        /// <summary>
+        /// Creates a new ServiceProjectRoleSummary instance.
+        /// </summary>
+        public ServiceProjectRoleSummary()
+        {
+            Sprints = new List<ServiceSprintSummary>();
+        }
+
+        #endregion
         /// <summary>
         /// Gets or sets the ProjectId.
         /// </summary>
@@ -45,5 +56,10 @@ namespace AnyTrack.Backend.Service.Model
         /// Gets or sets a value indicating whether the user is a Developer of the Project.
         /// </summary>
         public bool Developer { get; set; }
+
+        /// <summary>
+        /// Gets or sets a summary of sprints the user is part of.
+        /// </summary>
+        public List<ServiceSprintSummary> Sprints { get; set; } 
     }
 }

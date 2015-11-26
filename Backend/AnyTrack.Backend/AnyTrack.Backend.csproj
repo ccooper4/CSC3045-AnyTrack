@@ -192,9 +192,12 @@
     <Compile Include="Service\IPlanningPokerClientService.cs" />
     <Compile Include="Service\IPlanningPokerManagerService.cs" />
     <Compile Include="Service\IProjectService.cs" />
+    <Compile Include="Service\ISprintService.cs" />
     <Compile Include="Service\Model\ServiceProjectSummary.cs" />
     <Compile Include="Service\Model\ServiceProjectRoleSummary.cs" />
     <Compile Include="Service\Model\ServiceProject.cs" />
+    <Compile Include="Service\Model\ServiceSprint.cs" />
+    <Compile Include="Service\Model\ServiceSprintStory.cs" />
     <Compile Include="Service\Model\ServiceStory.cs" />
     <Compile Include="Service\Model\ServiceStorySummary.cs" />
     <Compile Include="Service\Model\ServiceUserSearchFilter.cs" />
@@ -206,6 +209,8 @@
     <Compile Include="Service\Model\ServiceUser.cs" />
     <Compile Include="Service\Model\ServiceRoleInfo.cs" />
     <Compile Include="Service\Model\ServiceUserCredential.cs" />
+    <Compile Include="Service\Model\ServiceSprintSummary.cs" />
+    <Compile Include="Service\SprintService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
