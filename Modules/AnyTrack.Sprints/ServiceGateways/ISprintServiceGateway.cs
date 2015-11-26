@@ -25,5 +25,13 @@ namespace AnyTrack.Sprints.ServiceGateways
         /// <param name="sprintId">Id of the sprint to be edited</param>
         /// <param name="updatedSprint">ServiceSprint entity containing changes</param>
         void EditSprint(Guid sprintId, ServiceSprint updatedSprint);
+
+        /// <summary>
+        /// Gets all tasks for sprint
+        /// </summary>
+        /// <param name="sprintId">the sprint id</param>
+        /// <param name="assignee">the assignee</param>
+        /// <returns>a list of tasks</returns>
+        List<ServiceTask> GetAllTasksForSprint(Guid sprintId, User assignee);
     }
 }

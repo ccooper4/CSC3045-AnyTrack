@@ -2,6 +2,7 @@
 <xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Data.Model" />
   <xs:complexType name="ServiceSprint">
     <xs:sequence>
       <xs:element minOccurs="0" name="Backlog" nillable="true" type="tns:ArrayOfServiceSprintStory" />
@@ -23,6 +24,7 @@
   <xs:element name="ArrayOfServiceSprintStory" nillable="true" type="tns:ArrayOfServiceSprintStory" />
   <xs:complexType name="ServiceSprintStory">
     <xs:sequence>
+      <xs:element minOccurs="0" name="SprintId" type="ser:guid" />
       <xs:element minOccurs="0" name="SprintStoryId" type="ser:guid" />
       <xs:element minOccurs="0" name="Story" nillable="true" type="tns:ServiceStory" />
     </xs:sequence>
@@ -40,4 +42,54 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ServiceStory" nillable="true" type="tns:ServiceStory" />
+  <xs:complexType name="ArrayOfServiceTask">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ServiceTask" nillable="true" type="tns:ServiceTask" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfServiceTask" nillable="true" type="tns:ArrayOfServiceTask" />
+  <xs:complexType name="ServiceTask">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Assignee" nillable="true" type="tns:ServiceUser" />
+      <xs:element minOccurs="0" name="Blocked" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ConditionsOfSatisfaction" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HoursRemaining" type="xs:double" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Data.Model" minOccurs="0" name="SprintStory" nillable="true" type="q2:SprintStory" />
+      <xs:element minOccurs="0" name="Summary" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TaskId" type="ser:guid" />
+      <xs:element minOccurs="0" name="Tester" nillable="true" type="tns:ServiceUser" />
+      <xs:element minOccurs="0" name="UpdatedHours" nillable="true" type="tns:ArrayOfServiceUpdatedHours" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServiceTask" nillable="true" type="tns:ServiceTask" />
+  <xs:complexType name="ServiceUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Developer" type="xs:boolean" />
+      <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductOwner" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ScrumMaster" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SecretAnswer" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SecretQuestion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Skills" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServiceUser" nillable="true" type="tns:ServiceUser" />
+  <xs:complexType name="ArrayOfServiceUpdatedHours">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ServiceUpdatedHours" nillable="true" type="tns:ServiceUpdatedHours" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfServiceUpdatedHours" nillable="true" type="tns:ArrayOfServiceUpdatedHours" />
+  <xs:complexType name="ServiceUpdatedHours">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LogEstimate" type="xs:double" />
+      <xs:element minOccurs="0" name="NewEstimate" type="xs:double" />
+      <xs:element minOccurs="0" name="UpdatedHoursId" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServiceUpdatedHours" nillable="true" type="tns:ServiceUpdatedHours" />
 </xs:schema>

@@ -97,6 +97,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Service References\BackendSprintService\AnyTrack.Sprints.BackendSprintService.ServiceTask.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\BackendSprintService\SprintService.wsdl" />
     <None Include="Service References\BackendSprintService\SprintService.xsd">
       <SubType>Designer</SubType>
@@ -108,6 +111,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\BackendSprintService\SprintService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BackendSprintService\SprintService4.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

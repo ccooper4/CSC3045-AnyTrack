@@ -22,6 +22,7 @@
     <MetadataSource Address="http://localhost:5789/SprintService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
+    <MetadataFile FileName="SprintService4.xsd" MetadataType="Schema" ID="9c5a7757-4454-440d-9cb8-c3e9dfa161ea" SourceId="1" SourceUrl="http://localhost:5789/SprintService.svc?xsd=xsd4" />
     <MetadataFile FileName="SprintService.xsd" MetadataType="Schema" ID="b9dc0b6e-7ab0-48ba-acd6-5aeb71a089f0" SourceId="1" SourceUrl="http://localhost:5789/SprintService.svc?xsd=xsd0" />
     <MetadataFile FileName="SprintService.wsdl" MetadataType="Wsdl" ID="a7a00303-fb0c-4e46-b026-f48261279339" SourceId="1" SourceUrl="http://localhost:5789/SprintService.svc?wsdl" />
     <MetadataFile FileName="SprintService.disco" MetadataType="Disco" ID="48f79f14-bfca-4ef2-920d-9a09d415c084" SourceId="1" SourceUrl="http://localhost:5789/SprintService.svc?disco" />

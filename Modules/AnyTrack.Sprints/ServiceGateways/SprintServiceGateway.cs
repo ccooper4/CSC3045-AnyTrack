@@ -60,6 +60,17 @@ namespace AnyTrack.Sprints.ServiceGateways
             client.EditSprint(sprintId, updatedSprint);
         }
 
+        /// <summary>
+        /// Get all tasks for sprint
+        /// </summary>
+        /// <param name="sprintId">the sprint id</param>
+        /// <param name="assignee">the asignee</param>
+        /// <returns>returns a list of tasks</returns>
+        public List<ServiceTask> GetAllTasksForSprint(Guid sprintId, User assignee)
+        {
+            return new List<ServiceTask>(client.GetAllTasksForSprint(sprintId, assignee));
+        }
+
         #endregion
     }
 }

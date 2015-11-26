@@ -168,7 +168,6 @@ namespace AnyTrack.Backend.Service
             {
                 ServiceTask task = new ServiceTask
                 {
-                    /////Assignee = t.Assignee,
                     Blocked = t.Blocked,
                     ConditionsOfSatisfaction = t.ConditionsOfSatisfaction,
                     Description = t.Description,
