@@ -114,7 +114,25 @@
   <ItemGroup>
     <Content Include="Properties\SlowCheetah\SlowCheetah.Transforms.targets" />
     <Content Include="packages.config" />
-    <Content Include="Configuration\Connection.config" />
+    <Content Include="Configuration\Connection.config">
+      <TransformOnBuild>true</TransformOnBuild>
+    </Content>
+    <None Include="Configuration\Connection.Debug.config">
+      <DependentUpon>Connection.config</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+    </None>
+    <None Include="Configuration\Connection.Release.config">
+      <DependentUpon>Connection.config</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+    </None>
+    <None Include="Configuration\Connection.Scripted.config">
+      <DependentUpon>Connection.config</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+    </None>
+    <None Include="Configuration\Connection.vm-devwinbuild-shared-backend.config">
+      <DependentUpon>Connection.config</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+    </None>
     <None Include="Properties\PublishProfiles\Scripted.pubxml" />
     <None Include="Properties\PublishProfiles\vm-devwinbuild-shared-backend.pubxml" />
     <None Include="Web.Debug.config">
