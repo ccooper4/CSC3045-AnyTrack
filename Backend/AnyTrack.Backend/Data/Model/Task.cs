@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,5 +52,10 @@ namespace AnyTrack.Backend.Data.Model
         /// Gets or sets a value indicating whether task is blocked or not
         /// </summary>
         public virtual bool Blocked { get; set; }
+
+        /// <summary>
+        /// Gets or sets the task's updated hours
+        /// </summary>
+        public virtual ICollection<UpdatedHours> UpdatedHours { get; set; }
     }
 }
