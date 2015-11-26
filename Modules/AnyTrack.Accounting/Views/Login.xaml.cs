@@ -21,7 +21,7 @@ namespace AnyTrack.Accounting.Views
     public partial class Login : UserControl
     {
         /// <summary>
-        /// Creates a new instance of the login view.
+        /// The Constructor.
         /// </summary>
         public Login()
         {
