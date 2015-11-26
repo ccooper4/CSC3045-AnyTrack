@@ -62,7 +62,15 @@ namespace AnyTrack.Backend.Providers
                 return null; 
             }
 
-            var methodName = OperationContext.Current.IncomingMessageProperties["HttpOperationName"].ToString();
+            var methodName = string.Empty;
+
+            try
+            {
+                methodName = OperationContext.Current.IncomingMessageProperties["HttpOperationName"].ToString();
+            }
+            catch
+            {
+            }
 
             if (methodName.IsEmpty())
             {
