@@ -23,7 +23,7 @@ namespace AnyTrack.Sprints.BackendSprintService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private AnyTrack.Sprints.BackendSprintService.ServiceSprintStory[] BacklogField;
+        private System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.ServiceSprintStory> BacklogField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DescriptionField;
@@ -44,7 +44,7 @@ namespace AnyTrack.Sprints.BackendSprintService {
         private System.DateTime StartDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string[] TeamEmailAddressesField;
+        private System.Collections.Generic.List<string> TeamEmailAddressesField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -57,7 +57,7 @@ namespace AnyTrack.Sprints.BackendSprintService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public AnyTrack.Sprints.BackendSprintService.ServiceSprintStory[] Backlog {
+        public System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.ServiceSprintStory> Backlog {
             get {
                 return this.BacklogField;
             }
@@ -148,7 +148,7 @@ namespace AnyTrack.Sprints.BackendSprintService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] TeamEmailAddresses {
+        public System.Collections.Generic.List<string> TeamEmailAddresses {
             get {
                 return this.TeamEmailAddressesField;
             }

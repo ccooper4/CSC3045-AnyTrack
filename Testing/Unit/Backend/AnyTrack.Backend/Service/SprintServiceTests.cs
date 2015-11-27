@@ -288,7 +288,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service
                     Name = "Sprint 1",
                     StartDate = new DateTime(2015, 11, 26),
                     EndDate = new DateTime(2015, 12, 3),
-                    Description = "Sprint",
+                    Description = "Sprint"
                 }
             };
 
