@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using AnyTrack.Infrastructure;
 using AnyTrack.Sprints.ServiceGateways;
 using Prism.Commands;
@@ -39,7 +38,7 @@ namespace AnyTrack.Sprints.Views
             }
 
             this.serviceGateway = serviceGateway;
-            ////var results = serviceGateway.GetAllTasksForSprint(new Guid("1));
+            var results = serviceGateway.GetAllTasksForSprint(new Guid("35892e17-80f6-415f-9c65-7395632f0223"));
         }
 
         #endregion
