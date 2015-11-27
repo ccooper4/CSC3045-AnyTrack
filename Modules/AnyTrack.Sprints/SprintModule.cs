@@ -5,9 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using AnyTrack.Infrastructure.Service;
+using AnyTrack.Sprints.BackendSprintService;
+using AnyTrack.Sprints.ServiceGateways;
+using AnyTrack.Sprints.Views;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Regions;
+using MenuItem = AnyTrack.Infrastructure.Service.Model.MenuItem;
 
 namespace AnyTrack.Sprints
 {
@@ -74,6 +78,12 @@ namespace AnyTrack.Sprints
         /// </summary>
         public void Initialize()
         {
+            container.RegisterType<ISprintService, SprintServiceClient>(new InjectionConstructor());
+            container.RegisterType<ISprintServiceGateway, SprintServiceGateway>();
+
+            container.RegisterType<object, CreateSprint>("CreateSprint");
+
+            menuService.AddMenuItem(new MenuItem { Color = "Gray", Title = "Sprints", NavigationViewName = "CraeteSprint" });
         }
 
         #endregion 

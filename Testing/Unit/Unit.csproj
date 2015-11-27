@@ -190,6 +190,8 @@
     <Compile Include="Modules\AnyTrack.Projects\Views\ProductBacklogViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Views\ProjectOptionsViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Views\StoryViewModelTests.cs" />
+    <Compile Include="Modules\AnyTrack.Sprints\ServiceGateways\SprintServiceGatewayService.cs" />
+    <Compile Include="Modules\AnyTrack.Sprints\SprintModuleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -226,7 +228,9 @@
       <Name>AnyTrack.Sprints</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Modules\AnyTrack.Sprints\Views\" />
+  </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>

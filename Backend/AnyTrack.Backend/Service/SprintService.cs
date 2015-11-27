@@ -126,21 +126,21 @@ namespace AnyTrack.Backend.Service
             dataSprint.StartDate = updatedSprint.StartDate;
             dataSprint.EndDate = updatedSprint.EndDate;
 
-            foreach (var teamMember in dataSprint.Team)
-            {
-                if (!updatedSprint.TeamEmailAddresses.Contains(teamMember.EmailAddress))
-                {
-                    dataSprint.Team.Remove(teamMember);
-                    UnassignDeveloper(dataSprint.Id, teamMember.EmailAddress);
-                }
-            }
-
-            var dataProject = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Sprints.Any(s => s.Id == sprintId));
+            var dataProject = unitOfWork.ProjectRepository.Items.Where(p => p.Sprints.Any(s => s.Id == sprintId)).SingleOrDefault();
 
             if (dataProject == null)
             {
                 throw new Exception("Project doesn't exist with this sprint");
             }
+
+            List<User> teamMembersToRemove = new List<User>();
+            foreach (var teamMember in dataSprint.Team)
+            {
+                if (!updatedSprint.TeamEmailAddresses.Contains(teamMember.EmailAddress))
+                {
+                    teamMembersToRemove.Add(UnassignDeveloper(dataProject, dataSprint.Id, teamMember.EmailAddress));
+                }
+            }            
 
             foreach (var teamMemberEmailAddress in updatedSprint.TeamEmailAddresses)
             {
@@ -150,6 +150,11 @@ namespace AnyTrack.Backend.Service
                 }
             }
 
+            foreach (var user in teamMembersToRemove)
+            {
+                dataProject.Sprints.SingleOrDefault(s => s.Id == sprintId).Team.Remove(user);
+            }
+           
             unitOfWork.Commit();
         }
 
@@ -242,10 +247,11 @@ namespace AnyTrack.Backend.Service
         /// <summary>
         /// Retrieves user from database with email address and unassigns them as a developer on the sprint.
         /// </summary>
+        /// <param name="project">Project containing the sprint</param>
         /// <param name="sprintId">Id of the sprint</param>
         /// <param name="emailAddress">Email address of the user</param>
         /// <returns>The unassigned user</returns>
-        private User UnassignDeveloper(Guid sprintId, string emailAddress)
+        private User UnassignDeveloper(Project project, Guid sprintId, string emailAddress)
         {
             User user =
                 unitOfWork.UserRepository.Items.SingleOrDefault(
@@ -263,7 +269,7 @@ namespace AnyTrack.Backend.Service
                 throw new Exception("Role does not exist");
             }
 
-            user.Roles.Remove(role);
+            user.Roles.Remove(role);         
 
             return user;
         }
