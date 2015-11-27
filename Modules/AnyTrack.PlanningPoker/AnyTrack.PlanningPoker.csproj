@@ -97,6 +97,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="ServiceGateways\PlanningPokerManagerServiceGateway.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\AnyTrack.Infrastructure\AnyTrack.Infrastructure.csproj">
@@ -129,7 +130,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ServiceGateways\" />
     <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
