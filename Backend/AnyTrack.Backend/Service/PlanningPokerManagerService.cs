@@ -18,6 +18,7 @@ namespace AnyTrack.Backend.Service
     /// The implementation of the planning poker manager service. 
     /// </summary>
     [CreatePrincipal]
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Single)]
     public class PlanningPokerManagerService : IPlanningPokerManagerService
     {
         #region Fields 
@@ -185,10 +186,16 @@ namespace AnyTrack.Backend.Service
             var availableClientsList = availableClients.GetListOfClients();
             if (availableClientsList.ContainsKey(sprintId))
             {
-                var clientList = availableClientsList[sprintId]; 
+                var clientList = availableClientsList[sprintId];
+                var sessionInfo = new ServiceSessionChangeInfo
+                {
+                    SprintId = sprintId,
+                    SessionAvailable = true,
+                    SessionId = newSession.SessionID
+                };
                 foreach (var client in clientList)
                 {
-                    client.ClientChannel.NotifyClientOfSession(sprintId, true, newSession.SessionID);
+                    client.ClientChannel.NotifyClientOfSession(sessionInfo);
                 }
             }
 
@@ -221,9 +228,17 @@ namespace AnyTrack.Backend.Service
             if (availableClientsList.ContainsKey(sprintId))
             {
                 var clientList = availableClientsList[sprintId];
+
+                var sessionInfo = new ServiceSessionChangeInfo
+                {
+                    SprintId = sprintId,
+                    SessionAvailable = false,
+                    SessionId = null
+                };
+
                 foreach (var client in clientList)
                 {
-                    client.ClientChannel.NotifyClientOfSession(sprintId, false, null);
+                    client.ClientChannel.NotifyClientOfSession(sessionInfo);
                 }
             }
 

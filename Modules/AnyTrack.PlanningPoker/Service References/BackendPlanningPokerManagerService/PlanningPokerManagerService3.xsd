@@ -57,9 +57,7 @@
   <xs:element name="NotifyClientOfSession">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sprintId" type="q7:guid" />
-        <xs:element minOccurs="0" name="sessionAvailable" type="xs:boolean" />
-        <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionId" nillable="true" type="q8:guid" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="sessionInfo" nillable="true" type="q7:ServiceSessionChangeInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

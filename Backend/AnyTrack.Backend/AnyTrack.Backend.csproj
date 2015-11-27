@@ -200,6 +200,7 @@
     <Compile Include="Service\Model\ServiceProjectSummary.cs" />
     <Compile Include="Service\Model\ServiceProjectRoleSummary.cs" />
     <Compile Include="Service\Model\ServiceProject.cs" />
+    <Compile Include="Service\Model\ServiceSessionChangeInfo.cs" />
     <Compile Include="Service\Model\ServiceStory.cs" />
     <Compile Include="Service\Model\ServiceStorySummary.cs" />
     <Compile Include="Service\Model\ServiceUserSearchFilter.cs" />

@@ -187,6 +187,8 @@
     <Compile Include="Modules\AnyTrack.Accounting\ServiceGateways\Model\AvailableSecretQuestionsTests.cs" />
     <Compile Include="Modules\AnyTrack.Accounting\Views\LoginViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Accounting\Views\RegistrationViewModelTests.cs" />
+    <Compile Include="Modules\AnyTrack.PlanningPoker\PlanningPokerModuleTests.cs" />
+    <Compile Include="Modules\AnyTrack.PlanningPoker\ServiceGateways\PlanningPokerManagerServiceGatewayTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Converters\DateConverterTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Converters\BooleanToVisibilityConverterTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\ProjectModuleTests.cs" />
@@ -226,6 +228,10 @@
     <ProjectReference Include="..\..\Modules\AnyTrack.Accounting\AnyTrack.Accounting.csproj">
       <Project>{9f38c80a-2e8c-486f-8054-e235886e1a17}</Project>
       <Name>AnyTrack.Accounting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\AnyTrack.PlanningPoker\AnyTrack.PlanningPoker.csproj">
+      <Project>{593b421b-39f0-4b6b-8b6c-0c0cfde0a758}</Project>
+      <Name>AnyTrack.PlanningPoker</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -35,4 +35,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ServicePlanningPokerUser" nillable="true" type="tns:ServicePlanningPokerUser" />
+  <xs:complexType name="ServiceSessionChangeInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SessionAvailable" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SessionId" nillable="true" type="ser:guid" />
+      <xs:element minOccurs="0" name="SprintId" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServiceSessionChangeInfo" nillable="true" type="tns:ServiceSessionChangeInfo" />
 </xs:schema>

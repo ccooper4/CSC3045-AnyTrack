@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AnyTrack.Infrastructure.Service;
+using AnyTrack.PlanningPoker.BackendPlanningPokerManagerService;
+using AnyTrack.PlanningPoker.ServiceGateways;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Regions;
-using AnyTrack.PlanningPoker.BackendPlanningPokerManagerService;
 
 namespace AnyTrack.PlanningPoker
 {
@@ -74,7 +75,11 @@ namespace AnyTrack.PlanningPoker
         /// </summary>
         public void Initialize()
         {
+            // Service client. 
             container.RegisterType<IPlanningPokerManagerService, PlanningPokerManagerServiceClient>(new InjectionConstructor());
+
+            // Service gateways.
+            container.RegisterType<IPlanningPokerManagerServiceGateway, PlanningPokerManagerServiceGateway>();
         }
 
         #endregion 

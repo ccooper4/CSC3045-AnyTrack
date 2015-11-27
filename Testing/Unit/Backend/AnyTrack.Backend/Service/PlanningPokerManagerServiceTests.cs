@@ -315,9 +315,13 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
             var sessionList = new Dictionary<Guid, ServicePlanningPokerSession>();
             activeSessionProvider.GetListOfSessions().Returns(sessionList);
 
+            ServiceSessionChangeInfo sentSessionInfo = null;
+
             var clientList = new Dictionary<Guid, List<ServicePlanningPokerPendingUser>>();
             var currentPendingClients = new List<ServicePlanningPokerPendingUser>();
             var pendingUserSocket = Substitute.For<IPlanningPokerClientService>();
+
+            pendingUserSocket.NotifyClientOfSession(Arg.Do<ServiceSessionChangeInfo>(a => sentSessionInfo = a));
 
             currentPendingClients.Add(new ServicePlanningPokerPendingUser
             {
@@ -343,12 +347,13 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
             singleUser.UserID.Should().Be(thisUser.Id);
             singleUser.UserRoles.Single().Should().Be("Scrum Master");
             newSession.State.Should().Be(ServicePlanningPokerSessionState.Pending);
-
-            pendingUserSocket.Received().NotifyClientOfSession(sprintId, true, newSession.SessionID);
+            sentSessionInfo.Should().NotBeNull();
+            sentSessionInfo.SprintId.Should().Be(sprintId);
+            sentSessionInfo.SessionAvailable.Should().BeTrue();
+            sentSessionInfo.SessionId.Should().Be(newSession.SessionID);
+            pendingUserSocket.Received().NotifyClientOfSession(sentSessionInfo);
 
             result.Should().Be(newSession.SessionID);
-
-
         }
 
         #endregion 
@@ -436,6 +441,9 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
 
             var pendingUserChannel = Substitute.For<IPlanningPokerClientService>();
 
+            ServiceSessionChangeInfo sentSessionInfo = null; 
+            pendingUserChannel.NotifyClientOfSession(Arg.Do<ServiceSessionChangeInfo>(s => sentSessionInfo = s));
+
             var pendingClients = new Dictionary<Guid, List<ServicePlanningPokerPendingUser>>();
             var pendingClientList = new List<ServicePlanningPokerPendingUser>();
             pendingClientList.Add(new ServicePlanningPokerPendingUser
@@ -450,7 +458,11 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
 
             activeSessionProvider.Received().GetListOfSessions();
             pendingClientsProvider.Received().GetListOfClients();
-            pendingUserChannel.Received().NotifyClientOfSession(sprintId, false, null);
+            sentSessionInfo.Should().NotBeNull();
+            pendingUserChannel.Received().NotifyClientOfSession(sentSessionInfo);
+            sentSessionInfo.SprintId.Should().Be(sprintId);
+            sentSessionInfo.SessionAvailable.Should().BeFalse();
+            sentSessionInfo.SessionId.HasValue.Should().BeFalse();
 
             thisUserChannel.DidNotReceive().NotifyClientOfTerminatedSession();
             otherUserChannel.Received().NotifyClientOfTerminatedSession();
