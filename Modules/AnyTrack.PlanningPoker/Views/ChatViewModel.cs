@@ -25,6 +25,11 @@ namespace AnyTrack.PlanningPoker.Views
         /// </summary>
         private string messageTimeStamp;
 
+        /// <summary>
+        /// The specified sessionID for this chat.
+        /// </summary>
+        private Guid sessionID;
+
         #endregion
 
         #region Constructor 
@@ -37,16 +42,21 @@ namespace AnyTrack.PlanningPoker.Views
         }
 
         #endregion
-
+        
         /// <summary>
-        /// Gets message property.
+        /// Gets or sets message property.
         /// </summary>
         public string MessageToSend
         {
             get
             {
                 return messageToSend;
-            }            
+            }  
+
+            set
+            {
+                messageToSend = value;
+            }                         
         }
 
         /// <summary>
@@ -67,7 +77,9 @@ namespace AnyTrack.PlanningPoker.Views
         private void SendMessage()
         {
             this.messageTimeStamp = DateTime.Now.ToString();
-            this.messageToSend = "USERNAME" + this.messageTimeStamp + ":" + this.messageToSend;
+            this.messageToSend = this.sessionID + ":USERNAME" + this.messageTimeStamp + ":" + this.messageToSend;
+
+            MessageToSend = string.Empty;
         }
 
         #endregion
