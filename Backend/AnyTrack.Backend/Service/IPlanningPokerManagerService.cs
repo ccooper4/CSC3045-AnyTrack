@@ -18,7 +18,7 @@ namespace AnyTrack.Backend.Service
         /// Allows the client to subscribe to messages about new sessions for the given project and sprint ids. 
         /// </summary>
         /// <param name="sprintId">The sprint id.</param>
-        [OperationContract(IsOneWay = true)]
+        [OperationContract]
         void SubscribeToNewSessionMessages(Guid sprintId);
 
         /// <summary>
@@ -26,12 +26,14 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         /// <param name="sprintId">The sprint id.</param>
         /// <returns>The session id for the new poker session.</returns>
+        [OperationContract]
         Guid StartNewPokerSession(Guid sprintId);
 
         /// <summary>
         /// Allows the scrum master to cancel a pending planning poker session.
         /// </summary>
         /// <param name="sessionId">The session.</param>
+        [OperationContract]
         void CancelPendingPokerSession(Guid sessionId);
 
         /// <summary>
@@ -39,6 +41,7 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         /// <param name="sessionId">The session id.</param>
         /// <returns>The details of the server side planning poker session.</returns>
+        [OperationContract]
         ServicePlanningPokerSession JoinSession(Guid sessionId);
     }
 }

@@ -47,6 +47,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyTrack.Sprints", "Modules\AnyTrack.Sprints\AnyTrack.Sprints.csproj", "{FBB89D79-D4A7-44C7-86A8-3693DB4A56F9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyTrack.PlanningPoker", "Modules\AnyTrack.PlanningPoker\AnyTrack.PlanningPoker.csproj", "{593B421B-39F0-4B6B-8B6C-0C0CFDE0A758}"
+	ProjectSection(ProjectDependencies) = postProject
+		{022C9F29-2FCD-4023-BB22-346F2D3845C5} = {022C9F29-2FCD-4023-BB22-346F2D3845C5}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,6 +7,7 @@ using AnyTrack.Infrastructure.Service;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Regions;
+using AnyTrack.PlanningPoker.BackendPlanningPokerManagerService;
 
 namespace AnyTrack.PlanningPoker
 {
@@ -73,6 +74,7 @@ namespace AnyTrack.PlanningPoker
         /// </summary>
         public void Initialize()
         {
+            container.RegisterType<IPlanningPokerManagerService, PlanningPokerManagerServiceClient>(new InjectionConstructor());
         }
 
         #endregion 
