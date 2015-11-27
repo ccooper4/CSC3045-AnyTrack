@@ -72,10 +72,10 @@
   <ItemGroup>
     <Compile Include="PlanningPokerModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\Chat.xaml.cs">
-      <DependentUpon>Chat.xaml</DependentUpon>
+    <Compile Include="Views\PlanningPoker.xaml.cs">
+      <DependentUpon>PlanningPoker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ChatViewModel.cs" />
+    <Compile Include="Views\PlanningPokerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\AnyTrack.Infrastructure\AnyTrack.Infrastructure.csproj">
@@ -94,7 +94,7 @@
     <Folder Include="ServiceGateways\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\Chat.xaml">
+    <Page Include="Views\PlanningPoker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

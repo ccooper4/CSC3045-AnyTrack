@@ -27,28 +27,7 @@ namespace AnyTrack.Backend.Service
         /// <param name="sprintId">The sprint id.</param>
         /// <returns>The session id for the new poker session.</returns>
         Guid StartNewPokerSession(Guid sprintId);
-    }    
 
-    /// <summary>
-    /// Interface for Chat
-    /// </summary>
-    [ServiceContract]
-    public interface IChat
-    {
-        /// <summary>
-        /// Method for sending a message
-        /// </summary>
-        /// <param name="msg">the message object to be sent</param>
-        [OperationContract(IsOneWay = true)]
-        void SendMessage(ChatMessage msg);
-    }
-
-    /// <summary>
-    /// interface for chat manager
-    /// </summary>
-    [ServiceContract(CallbackContract = typeof(IChat))]
-    public interface IChatManager
-    {
         /// <summary>
         /// Method to register a user to chat
         /// </summary>
@@ -63,7 +42,14 @@ namespace AnyTrack.Backend.Service
         /// <param name="msg">The chatmessage object which is to be sent</param>
         [OperationContract(IsOneWay = true)]
         void SubmitMessage(ChatMessage msg);
-    }
+
+        /// <summary>
+        /// Method for sending a message
+        /// </summary>
+        /// <param name="msg">the message object to be sent</param>
+        [OperationContract(IsOneWay = true)]
+        void SendMessage(ChatMessage msg);
+    }    
 
     /// <summary>
     /// Chat message class
@@ -105,12 +91,12 @@ namespace AnyTrack.Backend.Service
     /// </summary>
     ////[ServiceBehaviour(InstanceContextMode = InstanceContextMode.Single)]
     [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Makes sense to have multiple in here")]
-    public class ChatManagerService : IChatManager
+    public class ChatManagerService
     {
         /// <summary>
         /// A list containing all clients in chat
         /// </summary>
-        private Dictionary<string, IChat> clients = new Dictionary<string, IChat>();
+        private Dictionary<string, IPlanningPokerManagerService> clients = new Dictionary<string, IPlanningPokerManagerService>();
 
         /// <summary>
         /// Used to register a user to a chat channel
@@ -119,7 +105,7 @@ namespace AnyTrack.Backend.Service
         /// <param name="name">The clients name</param>
         public void RegisterChatUser(Guid sessionID, string name)
         {
-            IChat client = OperationContext.Current.GetCallbackChannel<IChat>();
+            IPlanningPokerManagerService client = OperationContext.Current.GetCallbackChannel<IPlanningPokerManagerService>();
             if (client != null)
             {
                 clients.Add(name, client);

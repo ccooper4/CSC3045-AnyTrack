@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AnyTrack.PlanningPoker;
 using Prism.Commands;
 
 namespace AnyTrack.PlanningPoker.Views
@@ -11,7 +12,7 @@ namespace AnyTrack.PlanningPoker.Views
     /// <summary>
     /// ChatViewModel class
     /// </summary>
-    public class ChatViewModel
+    public class PlanningPokerViewModel
     {
         #region Fields 
 
@@ -36,7 +37,7 @@ namespace AnyTrack.PlanningPoker.Views
         /// <summary>
         /// ChatViewModel constructor.
         /// </summary>
-        public ChatViewModel()
+        public PlanningPokerViewModel()
         {
             SendMessageCommand = new DelegateCommand(this.SendMessage);
         }
@@ -59,6 +60,11 @@ namespace AnyTrack.PlanningPoker.Views
             }                         
         }
 
+        ////private static ChatMessage localService = new ChatMessage();
+        ////private static DuplexChannelFactory<> dcf = new DuplexChannelFactory<IChatManager>(localService, "mgr");
+        ////IPl mgr = dcf.CreateChannel();
+        ////mgr.("tester");
+
         /// <summary>
         /// Gets or sets the history of messages.
         /// </summary>
@@ -78,6 +84,8 @@ namespace AnyTrack.PlanningPoker.Views
         {
             this.messageTimeStamp = DateTime.Now.ToString();
             this.messageToSend = this.sessionID + ":USERNAME" + this.messageTimeStamp + ":" + this.messageToSend;
+
+            ////mgr.SubmitMessage(new ChatMessage("Test", this.messageTimeStamp, this.messageToSend));
 
             MessageToSend = string.Empty;
         }

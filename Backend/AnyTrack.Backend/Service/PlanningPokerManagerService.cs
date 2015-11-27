@@ -14,7 +14,7 @@ namespace AnyTrack.Backend.Service
     /// The implementation of the planning poker manager service. 
     /// </summary>
     [CreatePrincipal]
-    public class PlanningPokerManagerService : IPlanningPokerManagerService
+    public class PlanningPokerManagerService
     {
         #region Fields 
 

@@ -18,12 +18,12 @@ namespace AnyTrack.PlanningPoker.Views
     /// <summary>
     /// Interaction logic for Chat.xaml
     /// </summary>
-    public partial class Chat : UserControl
+    public partial class ChatMessage : UserControl
     {
         /// <summary>
         /// Constructor for chat
         /// </summary>
-        public Chat()
+        public ChatMessage()
         {
             InitializeComponent();
         }
