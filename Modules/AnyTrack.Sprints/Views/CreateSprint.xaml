@@ -38,18 +38,18 @@
                     <RowDefinition Height="1*"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <views:LabelledTextBox Label="Sprint Name" Text="{Binding ProjectName}" Grid.Row="0" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <views:LabelledTextBox Label="Sprint Name" Text="{Binding SprintName}" Grid.Row="0" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                 <Label Grid.Row="1" FontWeight="Bold">Start Date</Label>
-                <DatePicker Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="121" SelectedDate="{x:Static sys:DateTime.Now}" Text="{Binding StartedOn}"/>
+                <DatePicker Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="121" Text="{Binding StartDate}"/>
 
                 <Label Grid.Row="3" FontWeight="Bold" Margin="0,0,0,10">End Date</Label>
-                <DatePicker Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="121" SelectedDate="{x:Static sys:DateTime.Now}" Text="{Binding StartedOn}"/>
+                <DatePicker Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="121" Text="{Binding EndDate}"/>
 
                 <views:LabelledTextBox Label="Description" Text="{Binding Description}" Grid.Row="5" Grid.RowSpan="2"/>
 
-                <Button Grid.Row="7" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Center" Width="90" Height="27" VerticalAlignment="Bottom" Margin="152,0,246,0" Command="{Binding SaveProjectCommand}">Create Sprint</Button>
-                <Button Grid.Row="7" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Center" Width="70" Height="27" VerticalAlignment="Bottom" Margin="252,0,166,0" Command="{Binding CancelProjectCommand}">Cancel</Button>
+                <Button Grid.Row="7" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Center" Width="90" Height="27" VerticalAlignment="Bottom" Margin="152,0,246,0" Command="{Binding SaveSprintCommand}">Create Sprint</Button>
+                <Button Grid.Row="7" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Center" Width="70" Height="27" VerticalAlignment="Bottom" Margin="252,0,166,0" Command="{Binding CancelSprintCommand}">Cancel</Button>
             </Grid>
         </GroupBox>
 
