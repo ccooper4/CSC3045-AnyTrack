@@ -20,5 +20,10 @@ namespace AnyTrack.Backend.Service
         /// <param name="sessionAvailable">A flag indicating if a session is available for this sprint.</param>
         /// <param name="sessionId">The session id for the available session.</param>
         void NotifyClientOfSession(Guid sprintId, bool sessionAvailable, Guid? sessionId); 
+
+        /// <summary>
+        /// Notifies the cient that the session they are in has been terminated. 
+        /// </summary>
+        void NotifyClientOfTerminatedSession();
     }
 }

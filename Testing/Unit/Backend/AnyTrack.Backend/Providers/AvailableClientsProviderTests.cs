@@ -7,17 +7,17 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 
-namespace Unit.Backend.AnyTrack.Backend.Providers.ConnectedClientsProviderTests
+namespace Unit.Backend.AnyTrack.Backend.Providers.AvailableClientsProviderTests
 {
     #region Setup
     public class Context
     {
-        public static ConnectedClientsProvider provider; 
+        public static AvailableClientsProvider provider; 
 
         [SetUp]
         public void Setup()
         {
-            provider = new ConnectedClientsProvider();
+            provider = new AvailableClientsProvider();
         }
     }
 

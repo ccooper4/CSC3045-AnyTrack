@@ -179,7 +179,8 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Model\BaseEntity.cs" />
-    <Compile Include="Providers\ConnectedClientsProvider.cs" />
+    <Compile Include="Providers\ActivePokerSessionsProvider.cs" />
+    <Compile Include="Providers\AvailableClientsProvider.cs" />
     <Compile Include="Providers\FormsAuthenticationProvider.cs" />
     <Compile Include="Providers\OperationContextProvider.cs" />
     <Compile Include="Providers\RoleProvider.cs" />
@@ -192,6 +193,10 @@
     <Compile Include="Service\IPlanningPokerClientService.cs" />
     <Compile Include="Service\IPlanningPokerManagerService.cs" />
     <Compile Include="Service\IProjectService.cs" />
+    <Compile Include="Service\Model\ServicePlanningPokerPendingUser.cs" />
+    <Compile Include="Service\Model\ServicePlanningPokerSession.cs" />
+    <Compile Include="Service\Model\ServicePlanningPokerSessionState.cs" />
+    <Compile Include="Service\Model\ServicePlanningPokerUser.cs" />
     <Compile Include="Service\Model\ServiceProjectSummary.cs" />
     <Compile Include="Service\Model\ServiceProjectRoleSummary.cs" />
     <Compile Include="Service\Model\ServiceProject.cs" />

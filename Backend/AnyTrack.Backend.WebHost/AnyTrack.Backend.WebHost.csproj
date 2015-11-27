@@ -132,6 +132,7 @@
     <None Include="Configuration\Connection.vm-devwinbuild-shared-backend.config">
       <DependentUpon>Connection.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Properties\PublishProfiles\Scripted.pubxml" />
     <None Include="Properties\PublishProfiles\vm-devwinbuild-shared-backend.pubxml" />

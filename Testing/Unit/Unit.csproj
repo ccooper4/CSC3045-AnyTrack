@@ -165,10 +165,12 @@
     <Compile Include="AnyTrack\Views\MainAppAreaViewModelTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Data\EntityUnitOfWorkTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Data\EntityRepositoryTests.cs" />
+    <Compile Include="Backend\AnyTrack.Backend\Providers\ActivePokerSessionsProviderTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Providers\BuildPrincipalUnityStrategyTests.cs" />
-    <Compile Include="Backend\AnyTrack.Backend\Providers\ConnectedClientsProviderTests.cs" />
+    <Compile Include="Backend\AnyTrack.Backend\Providers\AvailableClientsProviderTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Providers\RoleProviderTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Service\AccountServiceTests.cs" />
+    <Compile Include="Backend\AnyTrack.Backend\Service\PlanningPokerManagerServiceTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\CookieMessageInspectorTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Service\ProjectServiceTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\Extensions\IPrincipalExtensionsTests.cs" />

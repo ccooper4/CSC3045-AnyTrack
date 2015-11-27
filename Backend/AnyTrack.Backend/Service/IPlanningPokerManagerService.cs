@@ -4,6 +4,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using AnyTrack.Backend.Service.Model;
 
 namespace AnyTrack.Backend.Service
 {
@@ -26,5 +27,18 @@ namespace AnyTrack.Backend.Service
         /// <param name="sprintId">The sprint id.</param>
         /// <returns>The session id for the new poker session.</returns>
         Guid StartNewPokerSession(Guid sprintId);
+
+        /// <summary>
+        /// Allows the scrum master to cancel a pending planning poker session.
+        /// </summary>
+        /// <param name="sessionId">The session.</param>
+        void CancelPendingPokerSession(Guid sessionId);
+
+        /// <summary>
+        /// Allows a client to join an active session.
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        /// <returns>The details of the server side planning poker session.</returns>
+        ServicePlanningPokerSession JoinSession(Guid sessionId);
     }
 }
