@@ -18,6 +18,9 @@ namespace AnyTrack.Sprints.Views
     {
         #region Fields
 
+        /// <summary>
+        /// The srpint service gateway
+        /// </summary>
         private readonly ISprintServiceGateway serviceGateway;
 
         #endregion
