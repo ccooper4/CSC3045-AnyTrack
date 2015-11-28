@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 using AnyTrack.Accounting.ServiceGateways;
 using AnyTrack.Backend.Data.Model;
 using AnyTrack.Infrastructure.BackendAccountService;
-using AnyTrack.Projects.BackendProjectService;
-using AnyTrack.Projects.ServiceGateways;
+using AnyTrack.Infrastructure.BackendProjectService;
+using AnyTrack.Infrastructure.ServiceGateways;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace Unit.Modules.AnyTrack.Projects.ServiceGateways
+namespace Unit.Modules.AnyTrack.Infrastructure.ServiceGateways
 {
     
         #region Context

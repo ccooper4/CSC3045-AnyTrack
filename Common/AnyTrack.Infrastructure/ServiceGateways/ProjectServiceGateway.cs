@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AnyTrack.Projects.BackendProjectService;
+using AnyTrack.Infrastructure.BackendProjectService;
 
-namespace AnyTrack.Projects.ServiceGateways
+namespace AnyTrack.Infrastructure.ServiceGateways
 {
     /// <summary>
     /// Provides a gateway to the Project Service

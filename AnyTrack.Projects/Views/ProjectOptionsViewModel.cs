@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AnyTrack.Infrastructure;
-using AnyTrack.Projects.BackendProjectService;
+using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.SharedUtilities.Extensions;
 using MahApps.Metro.Controls;
 using Prism.Commands;

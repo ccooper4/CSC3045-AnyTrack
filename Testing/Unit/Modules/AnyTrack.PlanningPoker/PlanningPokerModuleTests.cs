@@ -5,7 +5,7 @@ using AnyTrack.PlanningPoker;
 using AnyTrack.PlanningPoker.BackendPlanningPokerManagerService;
 using AnyTrack.PlanningPoker.ServiceGateways;
 using AnyTrack.Projects;
-using AnyTrack.Projects.BackendProjectService;
+using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Projects.Views;
 using Microsoft.Practices.Unity;
 using NSubstitute;
@@ -76,7 +76,7 @@ namespace Unit.Modules.AnyTrack.Projects.PlanningPokerModuleTests
         public void CallInitalize()
         {
             module.Initialize();
-            container.Received().RegisterType<IPlanningPokerManagerService, PlanningPokerManagerServiceClient>(Arg.Any<InjectionMember[]>());
+            container.Received().RegisterType<IPlanningPokerManagerService, PlanningPokerManagerServiceClient>();
 
             container.Received().RegisterType<IPlanningPokerManagerServiceGateway, PlanningPokerManagerServiceGateway>();
         }

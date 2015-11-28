@@ -76,7 +76,7 @@ namespace AnyTrack.PlanningPoker
         public void Initialize()
         {
             // Service client. 
-            container.RegisterType<IPlanningPokerManagerService, PlanningPokerManagerServiceClient>(new InjectionConstructor());
+            container.RegisterType<IPlanningPokerManagerService, PlanningPokerManagerServiceClient>();
 
             // Service gateways.
             container.RegisterType<IPlanningPokerManagerServiceGateway, PlanningPokerManagerServiceGateway>();

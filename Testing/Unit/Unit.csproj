@@ -194,7 +194,7 @@
     <Compile Include="Modules\AnyTrack.Projects\Converters\DateConverterTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Converters\BooleanToVisibilityConverterTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\ProjectModuleTests.cs" />
-    <Compile Include="Modules\AnyTrack.Projects\ServiceGateways\ProjectServiceGatewayTests.cs" />
+    <Compile Include="Common\AnyTrack.Infrastructure\ServiceGateways\ProjectServiceGatewayTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Views\CreateProjectViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Views\MyProjectsViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Views\ProductBacklogViewModelTests.cs" />
@@ -243,6 +243,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Modules\AnyTrack.Projects\ServiceGateways\" />
     <Folder Include="Modules\AnyTrack.Sprints\Views\" />
   </ItemGroup>
   <ItemGroup>
