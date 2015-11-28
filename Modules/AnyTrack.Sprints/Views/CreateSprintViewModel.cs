@@ -65,8 +65,8 @@ namespace AnyTrack.Sprints.Views
 
             this.serviceGateway = serviceGateway;
 
-            StartDate = DateTime.Today;
-            EndDate = DateTime.Today.AddDays(14);
+            startDate = DateTime.Today;
+            endDate = DateTime.Today.AddDays(14);
 
             SaveSprintCommand = new DelegateCommand(SaveSprint);
             CancelSprintCommand = new DelegateCommand(CancelSprintCreation);
@@ -96,18 +96,26 @@ namespace AnyTrack.Sprints.Views
         /// Gets or sets the start date of the sprint.
         /// </summary> 
         [Required(ErrorMessage = "Start Date is Required")]
-        [DateTimeCompare("<=", "endDate", "Start Date must be before the End Date")]
         public DateTime StartDate
         {
-            get { return startDate; }
-            set { SetProperty(ref startDate, value); }
+            get
+            {
+                return startDate;
+            }
+
+            set
+            {
+                SetProperty(ref startDate, value);
+                EndDate = endDate.AddDays(1);
+                EndDate = endDate.Subtract(new TimeSpan(1, 0, 0, 0));
+            }
         }
 
         /// <summary>
         /// Gets or sets the end date of the sprint.
         /// </summary>
         [Required(ErrorMessage = "End Date is Required")]
-        [DateTimeCompare(">=", "startDate", "End Date must be after the Start Date")]
+        [DateTimeCompare(">=", "StartDate", "End Date must be after the Start Date")]
         public DateTime EndDate
         {
             get { return endDate; }
@@ -175,11 +183,11 @@ namespace AnyTrack.Sprints.Views
             {
                 if (mdr == MessageDialogResult.Affirmative)
                 {
-                    NavigateToItem("MyProjects");
+                    NavigateToItem("MySprints");
                 }
             });
 
-            ShowMetroDialog("Sprint Creation Cancellation", "Are you sure that you want to cancel?", MessageDialogStyle.AffirmativeAndNegative, callbackAction); 
+            ShowMetroDialog("Sprint Creation Cancellation", "Are you sure you want to cancel?", MessageDialogStyle.AffirmativeAndNegative, callbackAction); 
         }
 
         #endregion

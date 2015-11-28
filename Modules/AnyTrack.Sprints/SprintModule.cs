@@ -83,7 +83,7 @@ namespace AnyTrack.Sprints
 
             container.RegisterType<object, CreateSprint>("CreateSprint");
 
-            menuService.AddMenuItem(new MenuItem { Color = "Gray", Title = "Sprints", NavigationViewName = "CraeteSprint" });
+            menuService.AddMenuItem(new MenuItem { Color = "Gray", Title = "Sprints", NavigationViewName = "CreateSprint" });
         }
 
         #endregion 
