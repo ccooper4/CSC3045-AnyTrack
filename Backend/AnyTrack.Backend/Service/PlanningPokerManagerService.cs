@@ -300,6 +300,34 @@ namespace AnyTrack.Backend.Service
             return thisSession;
         }
 
+        /// <summary>
+        /// Method to register a user to chat
+        /// </summary>
+        /// <param name="sessionID">the session that they want to chat in</param>
+        /// <param name="name">the name of the user registering</param>
+        public void RegisterChatUser(Guid sessionID, string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Method to submit message to chat channel
+        /// </summary>
+        /// <param name="msg">The chatmessage object which is to be sent</param>
+        public void SubmitMessage(ServiceChatMessage msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Method for sending a message
+        /// </summary>
+        /// <param name="msg">the message object to be sent</param>
+        public void SendMessage(ServiceChatMessage msg)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion 
     }
 }
