@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using AnyTrack.Infrastructure;
+using AnyTrack.Sprints.BackendSprintService;
 using AnyTrack.Sprints.ServiceGateways;
-using Prism.Commands;
-using Prism.Regions;
 
 namespace AnyTrack.Sprints.Views
 {
@@ -21,6 +17,11 @@ namespace AnyTrack.Sprints.Views
         /// The srpint service gateway
         /// </summary>
         private readonly ISprintServiceGateway serviceGateway;
+
+        /// <summary>
+        /// The sprint Id
+        /// </summary>
+        private Guid sprintId;
 
         #endregion
 
@@ -38,7 +39,31 @@ namespace AnyTrack.Sprints.Views
             }
 
             this.serviceGateway = serviceGateway;
-            var results = serviceGateway.GetAllTasksForSprint(new Guid("35892e17-80f6-415f-9c65-7395632f0223"), null);
+            this.Tasks = new ObservableCollection<ServiceTask>();
+            Tasks = GetTasksForUser(this.sprintId);
+        }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the Tasks
+        /// </summary>
+        public ObservableCollection<ServiceTask> Tasks { get; set; }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Gets all the tasks for the current user
+        /// </summary>
+        /// <param name="sprintId">The id of the sprint</param>
+        /// <returns>A list of taks</returns>
+        private ObservableCollection<ServiceTask> GetTasksForUser(Guid sprintId)
+        {
+            return new ObservableCollection<ServiceTask>(serviceGateway.GetAllTasksForSprint(sprintId));
         }
 
         #endregion

@@ -34,10 +34,9 @@ namespace AnyTrack.Backend.Service
          /// <summary>
          /// Gets all task for a sprint
          /// </summary>
-         /// <param name="sprintId">the sprint id</param>
-         /// <param name="assignee">the assignee</param>
-         /// <returns>returns a list of tasks</returns>
+         /// <param name="sprintId">The sprint id</param>
+         /// <returns>Returns a list of tasks</returns>
         [OperationContract]
-        List<ServiceTask> GetAllTasksForSprint(Guid sprintId, User assignee);
+        List<ServiceTask> GetAllTasksForSprint(Guid sprintId);
     }
 }

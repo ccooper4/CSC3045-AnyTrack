@@ -29,9 +29,8 @@ namespace AnyTrack.Sprints.ServiceGateways
         /// <summary>
         /// Gets all tasks for sprint
         /// </summary>
-        /// <param name="sprintId">the sprint id</param>
-        /// <param name="assignee">the assignee</param>
-        /// <returns>a list of tasks</returns>
-        List<ServiceTask> GetAllTasksForSprint(Guid sprintId, User assignee);
+        /// <param name="sprintId">The sprint id</param>
+        /// <returns>A list of tasks</returns>
+        List<ServiceTask> GetAllTasksForSprint(Guid sprintId);
     }
 }

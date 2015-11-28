@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using AnyTrack.Backend.Data;
 using AnyTrack.Backend.Data.Model;
@@ -160,12 +161,13 @@ namespace AnyTrack.Backend.Service
         /// <summary>
         /// Gets all tasks for a sprint
         /// </summary>
-        /// <param name="sprintId">the sprint id</param>
-        /// <param name="assignee">the assignee</param>
+        /// <param name="sprintId">The sprint id</param>
         /// <returns>A list of tasks</returns>
-        public List<ServiceTask> GetAllTasksForSprint(Guid sprintId, User assignee)
+        public List<ServiceTask> GetAllTasksForSprint(Guid sprintId)
         {
-            var tasks = unitOfWork.TaskRepository.Items.Where(s => s.SprintStory.Sprint.Id == sprintId).Where(u => u.Assignee == assignee).ToList();
+            var userEmail = Thread.CurrentPrincipal.Identity.Name;
+            var user = MapEmailAddressToUser(userEmail);
+            var tasks = unitOfWork.TaskRepository.Items.Where(s => s.SprintStory.Sprint.Id == sprintId).Where(u => u.Assignee == user).ToList();
 
             List<ServiceTask> serviceTasks = new List<ServiceTask>();
             foreach (var t in tasks)
