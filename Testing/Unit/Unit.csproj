@@ -257,7 +257,6 @@
       <Name>AnyTrack.PlanningPoker</Name>
     </ProjectReference>
   </ItemGroup>
-    <Folder Include="Modules\AnyTrack.Projects\ServiceGateways\" />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
