@@ -63,6 +63,18 @@
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
       <HintPath>..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
     </Reference>
+    <Reference Include="OxyPlot, Version=1.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OxyPlot.Core.1.0.0-unstable1882\lib\net45\OxyPlot.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OxyPlot.Wpf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=75e952ba404cdbb0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OxyPlot.Wpf.1.0.0-unstable1882\lib\net45\OxyPlot.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OxyPlot.Xps, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OxyPlot.Wpf.1.0.0-unstable1882\lib\net45\OxyPlot.Xps.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Prism">
@@ -104,7 +116,11 @@
     <Compile Include="Views\CreateSprint.xaml.cs">
       <DependentUpon>CreateSprint.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\BurnDown.xaml.cs">
+      <DependentUpon>BurnDown.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CreateSprintViewModel.cs" />
+    <Compile Include="Views\BurnDownViewModel.cs" />
     <Compile Include="Views\CustomControls\LabelledTextBox.xaml.cs">
       <DependentUpon>LabelledTextBox.xaml</DependentUpon>
     </Compile>
@@ -116,6 +132,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Service References\BackendSprintService\AnyTrack.Sprints.BackendSprintService.ServiceTask.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\BackendSprintService\SprintService.wsdl" />
     <None Include="Service References\BackendSprintService\SprintService.xsd">
       <SubType>Designer</SubType>
@@ -129,6 +148,9 @@
     <None Include="Service References\BackendSprintService\SprintService3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\BackendSprintService\SprintService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\AnyTrack.Infrastructure\AnyTrack.Infrastructure.csproj">
@@ -140,7 +162,12 @@
       <Name>AnyTrack.SharedUtilities</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="Views\BurnDown.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Views\CreateSprint.xaml">
       <Generator>MSBuild:Compile</Generator>

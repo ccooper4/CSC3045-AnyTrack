@@ -88,7 +88,7 @@ namespace Unit.AnyTrack.Views.MainAppAreaViewModelTests
         [Test]
         public void GetFullName()
         {
-            var loginResult = new LoginResult
+            var loginResult = new ServiceLoginResult
             {
                 FirstName = "David",
                 LastName = "Tester"

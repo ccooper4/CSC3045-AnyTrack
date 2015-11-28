@@ -4,6 +4,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using AnyTrack.Backend.Data.Model;
 using AnyTrack.Backend.Service.Model;
 
 namespace AnyTrack.Backend.Service
@@ -29,5 +30,13 @@ namespace AnyTrack.Backend.Service
         /// <param name="updatedSprint">ServiceSprint entity containing changes</param>
         [OperationContract]
         void EditSprint(Guid sprintId, ServiceSprint updatedSprint);
+
+         /// <summary>
+         /// Gets all task for a sprint
+         /// </summary>
+         /// <param name="sprintId">The sprint id</param>
+         /// <returns>Returns a list of tasks</returns>
+        [OperationContract]
+        List<ServiceTask> GetAllTasksForSprint(Guid sprintId);
     }
 }

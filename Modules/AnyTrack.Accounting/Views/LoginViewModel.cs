@@ -117,7 +117,7 @@ namespace AnyTrack.Accounting.Views
             this.ValidateViewModelNow();
             if (!this.HasErrors)
             {
-                var user = new UserCredential
+                var user = new ServiceUserCredential
                 {
                     EmailAddress = email,
                     Password = password

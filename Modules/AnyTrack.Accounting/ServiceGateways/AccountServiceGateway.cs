@@ -65,7 +65,7 @@ namespace AnyTrack.Accounting.ServiceGateways
         /// Registers an account given the user details.
         /// </summary>
         /// <param name="registration">The registration details.</param>
-        public void RegisterAccount(NewUser registration)
+        public void RegisterAccount(ServiceUser registration)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace AnyTrack.Accounting.ServiceGateways
         /// </summary>
         /// <param name="login">The login details.</param>
         /// <returns>The result of the login operation.</returns>
-        public LoginResult LoginAccount(UserCredential login)
+        public ServiceLoginResult LoginAccount(ServiceUserCredential login)
         {
             // We need to unit test this method, however, OperationContext doesn't lend it's self well to being mocked. 
             // As a result, for this one occurance, we are best working around the issue. 

@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using AnyTrack.Backend.Data;
 using AnyTrack.Backend.Data.Model;
 using AnyTrack.Backend.Service.Model;
+using Task = AnyTrack.Backend.Data.Model.Task;
 
 namespace AnyTrack.Backend.Service
 {
@@ -154,6 +156,95 @@ namespace AnyTrack.Backend.Service
             }
            
             unitOfWork.Commit();
+        }
+
+        /// <summary>
+        /// Gets all tasks for a sprint
+        /// </summary>
+        /// <param name="sprintId">The sprint id</param>
+        /// <returns>A list of tasks</returns>
+        public List<ServiceTask> GetAllTasksForSprint(Guid sprintId)
+        {
+            var userEmail = Thread.CurrentPrincipal.Identity.Name;
+            var user = MapEmailAddressToUser(userEmail);
+            var tasks = unitOfWork.TaskRepository.Items.Where(s => s.SprintStory.Sprint.Id == sprintId).Where(u => u.Assignee == user).ToList();
+
+            List<ServiceTask> serviceTasks = new List<ServiceTask>();
+            foreach (var t in tasks)
+            {
+                ServiceTask task = new ServiceTask
+                {
+                    Blocked = t.Blocked,
+                    ConditionsOfSatisfaction = t.ConditionsOfSatisfaction,
+                    Description = t.Description,
+                    HoursRemaining = t.HoursRemaining,
+                    SprintStory = t.SprintStory,
+                    Summary = t.Summary,
+                    TaskId = t.Id
+                };
+
+                foreach (var u in t.UpdatedHours)
+                {
+                    ServiceUpdatedHours updatedHours = new ServiceUpdatedHours
+                    {
+                        LogEstimate = u.LogEstimate,
+                        UpdatedHoursId = u.Id,
+                        NewEstimate = u.NewEstimate
+                    };
+                    task.UpdatedHours.Add(updatedHours);
+                }
+
+                serviceTasks.Add(task);
+            }
+
+            return serviceTasks;
+        }
+
+        /// <summary>
+        /// Add a new task to a spptint story.
+        /// </summary>
+        /// <param name="sprintStoryId">The story to add the task to.</param>
+        /// <param name="serviceTask">The task to add.</param>
+        public void AddTaskToSprintStory(Guid sprintStoryId, ServiceTask serviceTask)
+        {
+            if (sprintStoryId == null)
+            {
+                throw new ArgumentNullException("sprintStoryId");
+            }
+
+            if (sprintStoryId == null)
+            {
+                throw new ArgumentNullException("serviceTask");
+            }
+
+            User assignee = unitOfWork.UserRepository.Items.SingleOrDefault(
+                u => u.EmailAddress == serviceTask.Assignee.EmailAddress);
+
+            User tester = unitOfWork.UserRepository.Items.SingleOrDefault(
+                u => u.EmailAddress == serviceTask.Tester.EmailAddress);
+
+            DateTime now = DateTime.Now;
+
+            UpdatedHours newHour = new UpdatedHours()
+            {
+                NewEstimate = serviceTask.HoursRemaining
+            };
+
+            ICollection<UpdatedHours> updatedHours = new List<UpdatedHours>();
+            updatedHours.Add(newHour);
+
+            Task task = new Task()
+            {
+                Assignee = assignee,
+                Tester = tester,
+                Blocked = serviceTask.Blocked,
+                ConditionsOfSatisfaction = serviceTask.ConditionsOfSatisfaction,
+                Description = serviceTask.Description,
+                HoursRemaining = serviceTask.HoursRemaining,
+                Summary = serviceTask.Summary,
+                Updated = now,
+                UpdatedHours = updatedHours
+            };
         }
 
         #endregion

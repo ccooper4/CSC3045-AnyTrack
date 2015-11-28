@@ -6,9 +6,10 @@
              xmlns:local="clr-namespace:AnyTrack.Accounting.Views"
              xmlns:prism="http://www.codeplex.com/prism"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:controls="clr-namespace:AnyTrack.Accounting.Controls"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" >
-    <!--             d:DesignHeight="350" d:DesignWidth="600">-->
+
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
@@ -36,8 +37,9 @@
 
 
             <StackPanel  Grid.Column="0" Grid.Row="0" MaxWidth="600px" MinWidth="500px" Margin="0,60px,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Vertical">
-                <TextBox Margin="10" HorizontalAlignment="Stretch" Controls:TextBoxHelper.Watermark="Username" Controls:TextBoxHelper.UseFloatingWatermark="True" Controls:TextBoxHelper.IsWaitingForData="True" ToolTip="Enter Email address here" Text="{Binding Email}" />
-                <TextBox Margin="10" Controls:TextBoxHelper.Watermark="Password" Controls:TextBoxHelper.UseFloatingWatermark="True" Controls:TextBoxHelper.IsWaitingForData="True" ToolTip="Enter Password Here" Text="{Binding Password}"/>
+                <TextBox Margin="10" HorizontalAlignment="Stretch" Controls:TextBoxHelper.Watermark="Username" ToolTip="Default alignment" Text="{Binding Email}" />
+                <PasswordBox Margin="10" HorizontalAlignment="Stretch" Controls:TextBoxHelper.Watermark="Password" Controls:TextBoxHelper.IsWaitingForData="True" ToolTip="Default alignment" controls:PasswordBoxBindingHelper.EnablePasswordBoxBinding="true"  controls:PasswordBoxBindingHelper.Binding="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
                 <!-- Forgot Password -->
                 <Button HorizontalAlignment="Right" FontSize="9" Foreground="DarkBlue" Background="Transparent" Command="{Binding SignUpCommand}" BorderThickness="0" >
                     <Button.Content>

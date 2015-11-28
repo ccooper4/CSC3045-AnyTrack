@@ -133,7 +133,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
         {
             var windowProvider = Substitute.For<WindowProvider>();
 
-            var currentPrincipal = new ServiceUserPrincipal(new LoginResult { EmailAddress = "testmanager@agile.local" }, "");
+            var currentPrincipal = new ServiceUserPrincipal(new ServiceLoginResult { EmailAddress = "testmanager@agile.local" }, "");
 
             UserDetailsStore.LoggedInUserPrincipal = currentPrincipal;
             vm.MainWindow = windowProvider;
@@ -171,7 +171,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
         [Test]
         public void SaveProjectWithErrors()
         {
-            var currentPrincipal = new ServiceUserPrincipal(new LoginResult { EmailAddress = "testmanager@agile.local" }, "");
+            var currentPrincipal = new ServiceUserPrincipal(new ServiceLoginResult { EmailAddress = "testmanager@agile.local" }, "");
 
             UserDetailsStore.LoggedInUserPrincipal = currentPrincipal;
 
@@ -192,7 +192,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
         {
             var windowProvider = Substitute.For<WindowProvider>();
 
-            var currentPrincipal = new ServiceUserPrincipal(new LoginResult { EmailAddress = "testmanager@agile.local" }, "");
+            var currentPrincipal = new ServiceUserPrincipal(new ServiceLoginResult { EmailAddress = "testmanager@agile.local" }, "");
 
             UserDetailsStore.LoggedInUserPrincipal = currentPrincipal;
             vm.MainWindow = windowProvider;

@@ -73,9 +73,9 @@ namespace Unit.Modules.AnyTrack.Accounting.Views
         [Test]
         public void CallLoginUser()
         {
-            UserCredential cred = null;
-            var loginResponse = new LoginResult { Success = true };
-            gateway.LoginAccount(Arg.Do<UserCredential>(c => cred = c)).Returns(loginResponse);
+            ServiceUserCredential cred = null;
+            var loginResponse = new ServiceLoginResult { Success = true };
+            gateway.LoginAccount(Arg.Do<ServiceUserCredential>(c => cred = c)).Returns(loginResponse);
 
             loginViewModel.Email = "test@agile.local";
             loginViewModel.Password = "test";
@@ -98,15 +98,15 @@ namespace Unit.Modules.AnyTrack.Accounting.Views
 
             loginViewModel.Call("LoginUser");
 
-            gateway.DidNotReceive().LoginAccount(Arg.Any<UserCredential>());
+            gateway.DidNotReceive().LoginAccount(Arg.Any<ServiceUserCredential>());
         }
 
         [Test]
         public void CallLoginUserWithFailedLogin()
         {
-            UserCredential cred = null;
-            var loginResponse = new LoginResult { Success = false };
-            gateway.LoginAccount(Arg.Do<UserCredential>(c => cred = c)).Returns(loginResponse);
+            ServiceUserCredential cred = null;
+            var loginResponse = new ServiceLoginResult { Success = false };
+            gateway.LoginAccount(Arg.Do<ServiceUserCredential>(c => cred = c)).Returns(loginResponse);
 
             var windowProvider = Substitute.For<WindowProvider>();
             loginViewModel.MainWindow = windowProvider;

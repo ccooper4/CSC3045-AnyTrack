@@ -9,6 +9,8 @@ using NSubstitute;
 using AnyTrack.PlanningPoker.Views;
 using AnyTrack.PlanningPoker.ServiceGateways;
 using Prism.Regions;
+using AnyTrack.Infrastructure.ServiceGateways;
+using AnyTrack.Infrastructure.BackendProjectService;
 
 namespace Unit.Modules.AnyTrack.PlanningPoker.Views.StartPlanningPokerSessionViewModelTests
 {
@@ -16,14 +18,26 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.StartPlanningPokerSessionVie
 
     public class Context
     {
+        public static Guid projectId = Guid.NewGuid();
+        public static string projectName = "Test";
         public static IPlanningPokerManagerServiceGateway serviceGateway;
+        public static IProjectServiceGateway projectServiceGateway; 
         public static StartPlanningPokerSessionViewModel vm;
 
         [SetUp]
         public void SetUp()
         {
+            var projectNames = new List<ServiceProjectSummary>()
+            {
+                new ServiceProjectSummary { ProjectId = projectId, ProjectName = projectName}
+            }; 
+            
             serviceGateway = Substitute.For<IPlanningPokerManagerServiceGateway>();
-            vm = new StartPlanningPokerSessionViewModel(serviceGateway);
+            projectServiceGateway = Substitute.For<IProjectServiceGateway>();
+
+            projectServiceGateway.GetProjectNames(true, false, false).Returns(projectNames);
+
+            vm = new StartPlanningPokerSessionViewModel(serviceGateway, projectServiceGateway);
         }
     }
 
@@ -39,7 +53,24 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.StartPlanningPokerSessionVie
         [ExpectedException(typeof(ArgumentNullException))]
         public void ConstructWithNoService()
         {
-            vm = new StartPlanningPokerSessionViewModel(null);
+            vm = new StartPlanningPokerSessionViewModel(null, projectServiceGateway);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ConstructWithNoProjectService()
+        {
+            vm = new StartPlanningPokerSessionViewModel(serviceGateway, null);
+        }
+
+        [Test]
+        public void ConstructViewModel()
+        {
+            vm = new StartPlanningPokerSessionViewModel(serviceGateway, projectServiceGateway);
+            projectServiceGateway.Received().GetProjectNames(true, false, false);
+
+            vm.Projects.Single().ProjectId.Should().Be(projectId);
+            vm.Projects.Single().ProjectName.Should().Be(projectName);
         }
 
         #endregion 

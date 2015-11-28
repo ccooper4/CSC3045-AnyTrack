@@ -510,6 +510,9 @@ namespace AnyTrack.Infrastructure.BackendProjectService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid SprintIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid SprintStoryIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -522,6 +525,19 @@ namespace AnyTrack.Infrastructure.BackendProjectService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid SprintId {
+            get {
+                return this.SprintIdField;
+            }
+            set {
+                if ((this.SprintIdField.Equals(value) != true)) {
+                    this.SprintIdField = value;
+                    this.RaisePropertyChanged("SprintId");
+                }
             }
         }
         

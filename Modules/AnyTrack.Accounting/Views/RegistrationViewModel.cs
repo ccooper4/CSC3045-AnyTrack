@@ -333,7 +333,7 @@ namespace AnyTrack.Accounting.Views
 
             if (!this.HasErrors)
             {
-                var newUser = new NewUser
+                var newUser = new ServiceUser
                 {
                     EmailAddress = email,
                     FirstName = firstName,

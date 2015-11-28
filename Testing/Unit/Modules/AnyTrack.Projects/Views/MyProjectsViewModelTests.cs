@@ -36,7 +36,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views
                 new ServiceProjectRoleSummary()
             };
 
-            UserDetailsStore.LoggedInUserPrincipal = new ServiceUserPrincipal(new LoginResult { EmailAddress = "test@agile.local" }, "");
+            UserDetailsStore.LoggedInUserPrincipal = new ServiceUserPrincipal(new ServiceLoginResult { EmailAddress = "test@agile.local" }, "");
             gateway.GetLoggedInUserProjectRoleSummaries("test@agile.local").Returns(listOfProjects);
 
             vm = new MyProjectsViewModel(gateway);

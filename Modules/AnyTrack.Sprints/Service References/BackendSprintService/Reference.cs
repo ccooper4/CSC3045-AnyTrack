@@ -23,7 +23,7 @@ namespace AnyTrack.Sprints.BackendSprintService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.ServiceSprintStory> BacklogField;
+        private AnyTrack.Sprints.BackendSprintService.ServiceSprintStory[] BacklogField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DescriptionField;
@@ -44,7 +44,7 @@ namespace AnyTrack.Sprints.BackendSprintService {
         private System.DateTime StartDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Collections.Generic.List<string> TeamEmailAddressesField;
+        private string[] TeamEmailAddressesField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -57,7 +57,7 @@ namespace AnyTrack.Sprints.BackendSprintService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.ServiceSprintStory> Backlog {
+        public AnyTrack.Sprints.BackendSprintService.ServiceSprintStory[] Backlog {
             get {
                 return this.BacklogField;
             }
@@ -148,7 +148,7 @@ namespace AnyTrack.Sprints.BackendSprintService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<string> TeamEmailAddresses {
+        public string[] TeamEmailAddresses {
             get {
                 return this.TeamEmailAddressesField;
             }
@@ -180,6 +180,9 @@ namespace AnyTrack.Sprints.BackendSprintService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid SprintIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid SprintStoryIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -192,6 +195,19 @@ namespace AnyTrack.Sprints.BackendSprintService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid SprintId {
+            get {
+                return this.SprintIdField;
+            }
+            set {
+                if ((this.SprintIdField.Equals(value) != true)) {
+                    this.SprintIdField = value;
+                    this.RaisePropertyChanged("SprintId");
+                }
             }
         }
         
@@ -372,6 +388,1210 @@ namespace AnyTrack.Sprints.BackendSprintService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceTask", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
+    [System.SerializableAttribute()]
+    public partial class ServiceTask : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Sprints.BackendSprintService.ServiceUser AssigneeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool BlockedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ConditionsOfSatisfactionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double HoursRemainingField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Sprints.BackendSprintService.SprintStory SprintStoryField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SummaryField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid TaskIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Sprints.BackendSprintService.ServiceUser TesterField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Sprints.BackendSprintService.ServiceUpdatedHours[] UpdatedHoursField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Sprints.BackendSprintService.ServiceUser Assignee {
+            get {
+                return this.AssigneeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AssigneeField, value) != true)) {
+                    this.AssigneeField = value;
+                    this.RaisePropertyChanged("Assignee");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Blocked {
+            get {
+                return this.BlockedField;
+            }
+            set {
+                if ((this.BlockedField.Equals(value) != true)) {
+                    this.BlockedField = value;
+                    this.RaisePropertyChanged("Blocked");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ConditionsOfSatisfaction {
+            get {
+                return this.ConditionsOfSatisfactionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ConditionsOfSatisfactionField, value) != true)) {
+                    this.ConditionsOfSatisfactionField = value;
+                    this.RaisePropertyChanged("ConditionsOfSatisfaction");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double HoursRemaining {
+            get {
+                return this.HoursRemainingField;
+            }
+            set {
+                if ((this.HoursRemainingField.Equals(value) != true)) {
+                    this.HoursRemainingField = value;
+                    this.RaisePropertyChanged("HoursRemaining");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Sprints.BackendSprintService.SprintStory SprintStory {
+            get {
+                return this.SprintStoryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SprintStoryField, value) != true)) {
+                    this.SprintStoryField = value;
+                    this.RaisePropertyChanged("SprintStory");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Summary {
+            get {
+                return this.SummaryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SummaryField, value) != true)) {
+                    this.SummaryField = value;
+                    this.RaisePropertyChanged("Summary");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid TaskId {
+            get {
+                return this.TaskIdField;
+            }
+            set {
+                if ((this.TaskIdField.Equals(value) != true)) {
+                    this.TaskIdField = value;
+                    this.RaisePropertyChanged("TaskId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Sprints.BackendSprintService.ServiceUser Tester {
+            get {
+                return this.TesterField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TesterField, value) != true)) {
+                    this.TesterField = value;
+                    this.RaisePropertyChanged("Tester");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Sprints.BackendSprintService.ServiceUpdatedHours[] UpdatedHours {
+            get {
+                return this.UpdatedHoursField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UpdatedHoursField, value) != true)) {
+                    this.UpdatedHoursField = value;
+                    this.RaisePropertyChanged("UpdatedHours");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceUser", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
+    [System.SerializableAttribute()]
+    public partial class ServiceUser : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool DeveloperField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailAddressField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FirstNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LastNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PasswordField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ProductOwnerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ScrumMasterField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SecretAnswerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SecretQuestionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SkillsField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Developer {
+            get {
+                return this.DeveloperField;
+            }
+            set {
+                if ((this.DeveloperField.Equals(value) != true)) {
+                    this.DeveloperField = value;
+                    this.RaisePropertyChanged("Developer");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string EmailAddress {
+            get {
+                return this.EmailAddressField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmailAddressField, value) != true)) {
+                    this.EmailAddressField = value;
+                    this.RaisePropertyChanged("EmailAddress");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FirstName {
+            get {
+                return this.FirstNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FirstNameField, value) != true)) {
+                    this.FirstNameField = value;
+                    this.RaisePropertyChanged("FirstName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LastName {
+            get {
+                return this.LastNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastNameField, value) != true)) {
+                    this.LastNameField = value;
+                    this.RaisePropertyChanged("LastName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Password {
+            get {
+                return this.PasswordField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
+                    this.PasswordField = value;
+                    this.RaisePropertyChanged("Password");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ProductOwner {
+            get {
+                return this.ProductOwnerField;
+            }
+            set {
+                if ((this.ProductOwnerField.Equals(value) != true)) {
+                    this.ProductOwnerField = value;
+                    this.RaisePropertyChanged("ProductOwner");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ScrumMaster {
+            get {
+                return this.ScrumMasterField;
+            }
+            set {
+                if ((this.ScrumMasterField.Equals(value) != true)) {
+                    this.ScrumMasterField = value;
+                    this.RaisePropertyChanged("ScrumMaster");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SecretAnswer {
+            get {
+                return this.SecretAnswerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecretAnswerField, value) != true)) {
+                    this.SecretAnswerField = value;
+                    this.RaisePropertyChanged("SecretAnswer");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SecretQuestion {
+            get {
+                return this.SecretQuestionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecretQuestionField, value) != true)) {
+                    this.SecretQuestionField = value;
+                    this.RaisePropertyChanged("SecretQuestion");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Skills {
+            get {
+                return this.SkillsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SkillsField, value) != true)) {
+                    this.SkillsField = value;
+                    this.RaisePropertyChanged("Skills");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SprintStory", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Data.Model")]
+    [System.SerializableAttribute()]
+    public partial class SprintStory : AnyTrack.Sprints.BackendSprintService.BaseEntity {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Sprints.BackendSprintService.Sprint SprintField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Sprints.BackendSprintService.Story StoryField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Sprints.BackendSprintService.Sprint Sprint {
+            get {
+                return this.SprintField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SprintField, value) != true)) {
+                    this.SprintField = value;
+                    this.RaisePropertyChanged("Sprint");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Sprints.BackendSprintService.Story Story {
+            get {
+                return this.StoryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StoryField, value) != true)) {
+                    this.StoryField = value;
+                    this.RaisePropertyChanged("Story");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceUpdatedHours", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
+    [System.SerializableAttribute()]
+    public partial class ServiceUpdatedHours : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double LogEstimateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double NewEstimateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid UpdatedHoursIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double LogEstimate {
+            get {
+                return this.LogEstimateField;
+            }
+            set {
+                if ((this.LogEstimateField.Equals(value) != true)) {
+                    this.LogEstimateField = value;
+                    this.RaisePropertyChanged("LogEstimate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double NewEstimate {
+            get {
+                return this.NewEstimateField;
+            }
+            set {
+                if ((this.NewEstimateField.Equals(value) != true)) {
+                    this.NewEstimateField = value;
+                    this.RaisePropertyChanged("NewEstimate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid UpdatedHoursId {
+            get {
+                return this.UpdatedHoursIdField;
+            }
+            set {
+                if ((this.UpdatedHoursIdField.Equals(value) != true)) {
+                    this.UpdatedHoursIdField = value;
+                    this.RaisePropertyChanged("UpdatedHoursId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BaseEntity", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Data.Model")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(AnyTrack.Sprints.BackendSprintService.Sprint))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(AnyTrack.Sprints.BackendSprintService.Project))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(AnyTrack.Sprints.BackendSprintService.User))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(AnyTrack.Sprints.BackendSprintService.Role))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(AnyTrack.Sprints.BackendSprintService.Story))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(AnyTrack.Sprints.BackendSprintService.SprintStory))]
+    public partial class BaseEntity : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> CreatedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> UpdatedField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> Created {
+            get {
+                return this.CreatedField;
+            }
+            set {
+                if ((this.CreatedField.Equals(value) != true)) {
+                    this.CreatedField = value;
+                    this.RaisePropertyChanged("Created");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> Updated {
+            get {
+                return this.UpdatedField;
+            }
+            set {
+                if ((this.UpdatedField.Equals(value) != true)) {
+                    this.UpdatedField = value;
+                    this.RaisePropertyChanged("Updated");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Sprint", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Data.Model")]
+    [System.SerializableAttribute()]
+    public partial class Sprint : AnyTrack.Sprints.BackendSprintService.BaseEntity {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Sprints.BackendSprintService.SprintStory[] BacklogField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime EndDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Sprints.BackendSprintService.Project ProjectField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime StartDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Sprints.BackendSprintService.User[] TeamField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Sprints.BackendSprintService.SprintStory[] Backlog {
+            get {
+                return this.BacklogField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BacklogField, value) != true)) {
+                    this.BacklogField = value;
+                    this.RaisePropertyChanged("Backlog");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime EndDate {
+            get {
+                return this.EndDateField;
+            }
+            set {
+                if ((this.EndDateField.Equals(value) != true)) {
+                    this.EndDateField = value;
+                    this.RaisePropertyChanged("EndDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Sprints.BackendSprintService.Project Project {
+            get {
+                return this.ProjectField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProjectField, value) != true)) {
+                    this.ProjectField = value;
+                    this.RaisePropertyChanged("Project");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime StartDate {
+            get {
+                return this.StartDateField;
+            }
+            set {
+                if ((this.StartDateField.Equals(value) != true)) {
+                    this.StartDateField = value;
+                    this.RaisePropertyChanged("StartDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Sprints.BackendSprintService.User[] Team {
+            get {
+                return this.TeamField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TeamField, value) != true)) {
+                    this.TeamField = value;
+                    this.RaisePropertyChanged("Team");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Project", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Data.Model")]
+    [System.SerializableAttribute()]
+    public partial class Project : AnyTrack.Sprints.BackendSprintService.BaseEntity {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Sprints.BackendSprintService.User ProductOwnerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Sprints.BackendSprintService.User ProjectManagerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Sprints.BackendSprintService.User[] ScrumMastersField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Sprints.BackendSprintService.Sprint[] SprintsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime StartedOnField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Sprints.BackendSprintService.Story[] StoriesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VersionControlField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Sprints.BackendSprintService.User ProductOwner {
+            get {
+                return this.ProductOwnerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProductOwnerField, value) != true)) {
+                    this.ProductOwnerField = value;
+                    this.RaisePropertyChanged("ProductOwner");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Sprints.BackendSprintService.User ProjectManager {
+            get {
+                return this.ProjectManagerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProjectManagerField, value) != true)) {
+                    this.ProjectManagerField = value;
+                    this.RaisePropertyChanged("ProjectManager");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Sprints.BackendSprintService.User[] ScrumMasters {
+            get {
+                return this.ScrumMastersField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ScrumMastersField, value) != true)) {
+                    this.ScrumMastersField = value;
+                    this.RaisePropertyChanged("ScrumMasters");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Sprints.BackendSprintService.Sprint[] Sprints {
+            get {
+                return this.SprintsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SprintsField, value) != true)) {
+                    this.SprintsField = value;
+                    this.RaisePropertyChanged("Sprints");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime StartedOn {
+            get {
+                return this.StartedOnField;
+            }
+            set {
+                if ((this.StartedOnField.Equals(value) != true)) {
+                    this.StartedOnField = value;
+                    this.RaisePropertyChanged("StartedOn");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Sprints.BackendSprintService.Story[] Stories {
+            get {
+                return this.StoriesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StoriesField, value) != true)) {
+                    this.StoriesField = value;
+                    this.RaisePropertyChanged("Stories");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string VersionControl {
+            get {
+                return this.VersionControlField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VersionControlField, value) != true)) {
+                    this.VersionControlField = value;
+                    this.RaisePropertyChanged("VersionControl");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Data.Model")]
+    [System.SerializableAttribute()]
+    public partial class User : AnyTrack.Sprints.BackendSprintService.BaseEntity {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool DeveloperField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailAddressField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FirstNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LastNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PasswordField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ProductOwnerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Sprints.BackendSprintService.Role[] RolesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ScrumMasterField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SecretAnswerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SecretQuestionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SkillsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Developer {
+            get {
+                return this.DeveloperField;
+            }
+            set {
+                if ((this.DeveloperField.Equals(value) != true)) {
+                    this.DeveloperField = value;
+                    this.RaisePropertyChanged("Developer");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string EmailAddress {
+            get {
+                return this.EmailAddressField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmailAddressField, value) != true)) {
+                    this.EmailAddressField = value;
+                    this.RaisePropertyChanged("EmailAddress");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FirstName {
+            get {
+                return this.FirstNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FirstNameField, value) != true)) {
+                    this.FirstNameField = value;
+                    this.RaisePropertyChanged("FirstName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LastName {
+            get {
+                return this.LastNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastNameField, value) != true)) {
+                    this.LastNameField = value;
+                    this.RaisePropertyChanged("LastName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Password {
+            get {
+                return this.PasswordField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
+                    this.PasswordField = value;
+                    this.RaisePropertyChanged("Password");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ProductOwner {
+            get {
+                return this.ProductOwnerField;
+            }
+            set {
+                if ((this.ProductOwnerField.Equals(value) != true)) {
+                    this.ProductOwnerField = value;
+                    this.RaisePropertyChanged("ProductOwner");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Sprints.BackendSprintService.Role[] Roles {
+            get {
+                return this.RolesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RolesField, value) != true)) {
+                    this.RolesField = value;
+                    this.RaisePropertyChanged("Roles");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ScrumMaster {
+            get {
+                return this.ScrumMasterField;
+            }
+            set {
+                if ((this.ScrumMasterField.Equals(value) != true)) {
+                    this.ScrumMasterField = value;
+                    this.RaisePropertyChanged("ScrumMaster");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SecretAnswer {
+            get {
+                return this.SecretAnswerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecretAnswerField, value) != true)) {
+                    this.SecretAnswerField = value;
+                    this.RaisePropertyChanged("SecretAnswer");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SecretQuestion {
+            get {
+                return this.SecretQuestionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecretQuestionField, value) != true)) {
+                    this.SecretQuestionField = value;
+                    this.RaisePropertyChanged("SecretQuestion");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Skills {
+            get {
+                return this.SkillsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SkillsField, value) != true)) {
+                    this.SkillsField = value;
+                    this.RaisePropertyChanged("Skills");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Role", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Data.Model")]
+    [System.SerializableAttribute()]
+    public partial class Role : AnyTrack.Sprints.BackendSprintService.BaseEntity {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid ProjectIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RoleNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.Guid> SprintIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Sprints.BackendSprintService.User UserField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid ProjectId {
+            get {
+                return this.ProjectIdField;
+            }
+            set {
+                if ((this.ProjectIdField.Equals(value) != true)) {
+                    this.ProjectIdField = value;
+                    this.RaisePropertyChanged("ProjectId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RoleName {
+            get {
+                return this.RoleNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RoleNameField, value) != true)) {
+                    this.RoleNameField = value;
+                    this.RaisePropertyChanged("RoleName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.Guid> SprintId {
+            get {
+                return this.SprintIdField;
+            }
+            set {
+                if ((this.SprintIdField.Equals(value) != true)) {
+                    this.SprintIdField = value;
+                    this.RaisePropertyChanged("SprintId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Sprints.BackendSprintService.User User {
+            get {
+                return this.UserField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserField, value) != true)) {
+                    this.UserField = value;
+                    this.RaisePropertyChanged("User");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Story", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Data.Model")]
+    [System.SerializableAttribute()]
+    public partial class Story : AnyTrack.Sprints.BackendSprintService.BaseEntity {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AsAField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ConditionsOfSatisfactionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IWantField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Sprints.BackendSprintService.Project ProjectField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SoThatField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SummaryField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string AsA {
+            get {
+                return this.AsAField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AsAField, value) != true)) {
+                    this.AsAField = value;
+                    this.RaisePropertyChanged("AsA");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ConditionsOfSatisfaction {
+            get {
+                return this.ConditionsOfSatisfactionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ConditionsOfSatisfactionField, value) != true)) {
+                    this.ConditionsOfSatisfactionField = value;
+                    this.RaisePropertyChanged("ConditionsOfSatisfaction");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IWant {
+            get {
+                return this.IWantField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IWantField, value) != true)) {
+                    this.IWantField = value;
+                    this.RaisePropertyChanged("IWant");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Sprints.BackendSprintService.Project Project {
+            get {
+                return this.ProjectField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProjectField, value) != true)) {
+                    this.ProjectField = value;
+                    this.RaisePropertyChanged("Project");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SoThat {
+            get {
+                return this.SoThatField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SoThatField, value) != true)) {
+                    this.SoThatField = value;
+                    this.RaisePropertyChanged("SoThat");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Summary {
+            get {
+                return this.SummaryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SummaryField, value) != true)) {
+                    this.SummaryField = value;
+                    this.RaisePropertyChanged("Summary");
+                }
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="BackendSprintService.ISprintService")]
     public interface ISprintService {
@@ -387,6 +1607,12 @@ namespace AnyTrack.Sprints.BackendSprintService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/EditSprint", ReplyAction="http://tempuri.org/ISprintService/EditSprintResponse")]
         System.Threading.Tasks.Task EditSprintAsync(System.Guid sprintId, AnyTrack.Sprints.BackendSprintService.ServiceSprint updatedSprint);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetAllTasksForSprint", ReplyAction="http://tempuri.org/ISprintService/GetAllTasksForSprintResponse")]
+        AnyTrack.Sprints.BackendSprintService.ServiceTask[] GetAllTasksForSprint(System.Guid sprintId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetAllTasksForSprint", ReplyAction="http://tempuri.org/ISprintService/GetAllTasksForSprintResponse")]
+        System.Threading.Tasks.Task<AnyTrack.Sprints.BackendSprintService.ServiceTask[]> GetAllTasksForSprintAsync(System.Guid sprintId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -430,6 +1656,14 @@ namespace AnyTrack.Sprints.BackendSprintService {
         
         public System.Threading.Tasks.Task EditSprintAsync(System.Guid sprintId, AnyTrack.Sprints.BackendSprintService.ServiceSprint updatedSprint) {
             return base.Channel.EditSprintAsync(sprintId, updatedSprint);
+        }
+        
+        public AnyTrack.Sprints.BackendSprintService.ServiceTask[] GetAllTasksForSprint(System.Guid sprintId) {
+            return base.Channel.GetAllTasksForSprint(sprintId);
+        }
+        
+        public System.Threading.Tasks.Task<AnyTrack.Sprints.BackendSprintService.ServiceTask[]> GetAllTasksForSprintAsync(System.Guid sprintId) {
+            return base.Channel.GetAllTasksForSprintAsync(sprintId);
         }
     }
 }

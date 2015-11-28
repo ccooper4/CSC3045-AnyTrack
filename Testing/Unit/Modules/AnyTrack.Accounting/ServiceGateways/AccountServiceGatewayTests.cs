@@ -66,10 +66,10 @@ namespace Unit.Modules.AnyTrack.Accounting.ServiceGateways.AccountServiceGateway
         [Test]
         public void RegisterAnAccount()
         {
-            NewUser sentModel = null;
-            accountService.CreateAccount(Arg.Do<NewUser>(n => sentModel = n));
+            ServiceUser sentModel = null;
+            accountService.CreateAccount(Arg.Do<ServiceUser>(n => sentModel = n));
 
-            var registration = new NewUser
+            var registration = new ServiceUser
             {
                 EmailAddress = "test@agile.local",
                 FirstName = "Test",
@@ -97,13 +97,13 @@ namespace Unit.Modules.AnyTrack.Accounting.ServiceGateways.AccountServiceGateway
         [ExpectedException(typeof( FaultException<UserAlreadyExistsFault>))]
         public void RegisterAnAccountWithADuplicateEmailAddress()
         {
-            NewUser sentModel = null;
+            ServiceUser sentModel = null;
             var exception = new FaultException<UserAlreadyExistsFault>(new UserAlreadyExistsFault());
-            accountService.CreateAccount(Arg.Do<NewUser>(n => sentModel = n));
+            accountService.CreateAccount(Arg.Do<ServiceUser>(n => sentModel = n));
 
-            accountService.When(a => a.CreateAccount(Arg.Any<NewUser>())).Do(a => { throw exception;} );
+            accountService.When(a => a.CreateAccount(Arg.Any<ServiceUser>())).Do(a => { throw exception; });
 
-            var registration = new NewUser
+            var registration = new ServiceUser
             {
                 EmailAddress = "test@agile.local",
                 FirstName = "Test",
@@ -120,13 +120,13 @@ namespace Unit.Modules.AnyTrack.Accounting.ServiceGateways.AccountServiceGateway
 
         #endregion 
 
-        #region LoginAccount(UserCredential login) Tests 
+        #region LoginAccount(ServiceUserCredential login) Tests 
 
         [Test]
         public void CallLoginForAValidLogin()
         {
-            var creds = new UserCredential { EmailAddress = "test@agile.local", Password = "Letmein" }; 
-            var result = new LoginResult { Success = true};
+            var creds = new ServiceUserCredential { EmailAddress = "test@agile.local", Password = "Letmein" }; 
+            var result = new ServiceLoginResult { Success = true};
 
             accountService.LogIn(creds).Returns(result);
 
@@ -141,8 +141,8 @@ namespace Unit.Modules.AnyTrack.Accounting.ServiceGateways.AccountServiceGateway
 
         public void CallLoginForInvalidLogin()
         {
-            var creds = new UserCredential { EmailAddress = "test@agile.local", Password = "Letmein" };
-            var result = new LoginResult { Success = false };
+            var creds = new ServiceUserCredential { EmailAddress = "test@agile.local", Password = "Letmein" };
+            var result = new ServiceLoginResult { Success = false };
 
             accountService.LogIn(creds).Returns(result);
 

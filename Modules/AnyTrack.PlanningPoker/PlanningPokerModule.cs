@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using AnyTrack.Infrastructure.Service;
+using AnyTrack.Infrastructure.Service.Model;
 using AnyTrack.PlanningPoker.BackendPlanningPokerManagerService;
 using AnyTrack.PlanningPoker.ServiceGateways;
+using AnyTrack.PlanningPoker.Views;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Regions;
@@ -76,10 +79,15 @@ namespace AnyTrack.PlanningPoker
         public void Initialize()
         {
             // Service client. 
-            container.RegisterType<IPlanningPokerManagerService, PlanningPokerManagerServiceClient>();
+            container.RegisterType<IPlanningPokerManagerService, PlanningPokerManagerServiceClient>(new InjectionConstructor(typeof(InstanceContext)));
 
             // Service gateways.
             container.RegisterType<IPlanningPokerManagerServiceGateway, PlanningPokerManagerServiceGateway>();
+
+            // Views.
+            container.RegisterType<object, StartPlanningPokerSession>("StartPlanningPokerSession");
+
+            menuService.AddMenuItem(new MenuItem { Color = "Green", NavigationViewName = "StartPlanningPokerSession", Title = "SM Planning Poker" });
         }
 
         #endregion 

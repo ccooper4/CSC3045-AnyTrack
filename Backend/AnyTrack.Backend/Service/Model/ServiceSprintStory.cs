@@ -17,6 +17,11 @@ namespace AnyTrack.Backend.Service.Model
         public Guid SprintStoryId { get; set; }
 
         /// <summary>
+        /// Gets or sets the sprint id of the sprint this story belongs to
+        /// </summary>
+        public Guid SprintId { get; set; }
+
+        /// <summary>
         /// Gets or sets the story that the sprint references to.
         /// </summary>
         public ServiceStory Story { get; set; }

@@ -76,7 +76,7 @@ namespace Unit.Modules.AnyTrack.Projects.PlanningPokerModuleTests
         public void CallInitalize()
         {
             module.Initialize();
-            container.Received().RegisterType<IPlanningPokerManagerService, PlanningPokerManagerServiceClient>();
+            container.Received().RegisterType<IPlanningPokerManagerService, PlanningPokerManagerServiceClient>(Arg.Any<InjectionMember[]>());
 
             container.Received().RegisterType<IPlanningPokerManagerServiceGateway, PlanningPokerManagerServiceGateway>();
         }
