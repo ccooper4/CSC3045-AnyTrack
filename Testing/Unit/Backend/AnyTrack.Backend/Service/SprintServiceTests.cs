@@ -452,6 +452,60 @@ namespace Unit.Backend.AnyTrack.Backend.Service
             result.Count.Should().Be(1);
         }
 
+        [Test]
+        public void GetAllTasksReturnsZero()
+        {
+            #region Test Data
+
+            List<Sprint> sprintList = new List<Sprint>()
+            {
+                new Sprint
+                {
+                    Id = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
+                    Name = "Sprint 1",
+                    StartDate = new DateTime(2015, 11, 26),
+                    EndDate = new DateTime(2015, 12, 3),
+                    Description = "Sprint"
+                }
+            };
+
+            List<Task> tasksList = new List<Task>();
+
+            List<Role> rolesList = new List<Role>()
+            {
+                new Role()
+                {
+                    Id = new Guid("00000000-5566-7788-99AA-BBCCDDEEFF00"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    RoleName = "Developer",
+                    SprintId = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
+                    User = userList[0]
+                },
+                new Role()
+                {
+                    Id = new Guid("00000000-5566-7788-99AA-BBCCDDEEFF00"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    RoleName = "Developer",
+                    SprintId = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
+                    User = userList[1]
+                }
+            };
+
+            userList.FirstOrDefault().Roles = rolesList;
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(userList.FirstOrDefault());
+
+            #endregion
+            unitOfWork.UserRepository.Items.Returns(userList.AsQueryable());
+            unitOfWork.SprintRepository.Items.Returns(sprintList.AsQueryable());
+            unitOfWork.RoleRepository.Items.Returns(rolesList.AsQueryable());
+            unitOfWork.TaskRepository.Items.Returns(tasksList.AsQueryable());
+
+            var result = service.GetAllTasksForSprint(sprintList.LastOrDefault().Id);
+
+            result.Count.Should().Be(0);
+        }
+
         #endregion
     }
 }
