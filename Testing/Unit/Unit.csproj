@@ -252,7 +252,12 @@
       <Project>{64c40775-ed61-4c4d-ac07-e4acf9526ee6}</Project>
       <Name>Acceptance</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\AnyTrack.PlanningPoker\AnyTrack.PlanningPoker.csproj">
+      <Project>{593b421b-39f0-4b6b-8b6c-0c0cfde0a758}</Project>
+      <Name>AnyTrack.PlanningPoker</Name>
+    </ProjectReference>
   </ItemGroup>
+    <Folder Include="Modules\AnyTrack.Projects\ServiceGateways\" />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

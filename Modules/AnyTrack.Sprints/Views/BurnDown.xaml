@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="AnyTrack.Sprints.Views.BurnDown"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:prism="http://www.codeplex.com/prism"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:oxy="http://oxyplot.org/wpf"
+        mc:Ignorable="d" Width="1000" Height="500">
+    <Grid>
+        <oxy:Plot Title="{Binding Title}">
+                <oxy:Plot.Series>
+                    <oxy:LineSeries ItemsSource="{Binding Points}"/>
+                    <oxy:LineSeries ItemsSource="{Binding Trend}"/>
+            </oxy:Plot.Series>
+            </oxy:Plot>
+        </Grid>
+</UserControl>
