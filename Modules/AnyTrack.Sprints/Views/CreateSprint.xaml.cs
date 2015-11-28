@@ -13,17 +13,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AnyTrack.Accounting.Views
+namespace AnyTrack.Sprints.Views
 {
     /// <summary>
-    /// Interaction logic for Login.xaml
+    /// Interaction logic for CreateSprint.xaml
     /// </summary>
-    public partial class Login : UserControl
+    public partial class CreateSprint : UserControl
     {
         /// <summary>
-        /// The Constructor.
+        /// Create Sprint View Constructor.
         /// </summary>
-        public Login()
+        public CreateSprint()
         {
             InitializeComponent();
         }

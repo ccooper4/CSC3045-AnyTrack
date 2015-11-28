@@ -92,6 +92,10 @@
   <ItemGroup>
     <Compile Include="PlanningPokerModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\PlanningPoker.xaml.cs">
+      <DependentUpon>PlanningPoker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlanningPokerViewModel.cs" />
     <Compile Include="Service References\BackendPlanningPokerManagerService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -135,7 +139,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ServiceGateways\" />
     <Page Include="Views\StartPlanningPokerSession.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\PlanningPoker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

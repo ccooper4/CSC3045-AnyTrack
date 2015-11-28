@@ -97,6 +97,7 @@
     <Content Include="PlanningPokerManagerService.svc" />
     <Content Include="ProjectService.svc" />
     <Content Include="AccountService.svc" />
+    <Content Include="SprintService.svc" />
     <Content Include="Unity.Wcf.README.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

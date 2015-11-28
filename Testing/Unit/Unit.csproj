@@ -170,6 +170,7 @@
     <Compile Include="Backend\AnyTrack.Backend\Providers\AvailableClientsProviderTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Providers\RoleProviderTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Service\AccountServiceTests.cs" />
+    <Compile Include="Backend\AnyTrack.Backend\Service\SprintServiceTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Service\PlanningPokerManagerServiceTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\CookieMessageInspectorTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Service\ProjectServiceTests.cs" />
@@ -199,6 +200,8 @@
     <Compile Include="Modules\AnyTrack.Projects\Views\ProductBacklogViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Views\ProjectOptionsViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Views\StoryViewModelTests.cs" />
+    <Compile Include="Modules\AnyTrack.Sprints\ServiceGateways\SprintServiceGatewayService.cs" />
+    <Compile Include="Modules\AnyTrack.Sprints\SprintModuleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -230,12 +233,18 @@
       <Project>{9f38c80a-2e8c-486f-8054-e235886e1a17}</Project>
       <Name>AnyTrack.Accounting</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\AnyTrack.Sprints\AnyTrack.Sprints.csproj">
+      <Project>{fbb89d79-d4a7-44c7-86a8-3693db4a56f9}</Project>
+      <Name>AnyTrack.Sprints</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\AnyTrack.PlanningPoker\AnyTrack.PlanningPoker.csproj">
       <Project>{593b421b-39f0-4b6b-8b6c-0c0cfde0a758}</Project>
       <Name>AnyTrack.PlanningPoker</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Modules\AnyTrack.Sprints\Views\" />
+  </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>

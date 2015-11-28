@@ -236,6 +236,51 @@ namespace AnyTrack.Backend.Service
                 }
             }
 
+            if (dataProject.Sprints != null)
+            {
+                foreach (var sprint in dataProject.Sprints)
+                {
+                    var serviceSprint = new ServiceSprint
+                    {
+                        SprintId = sprint.Id,
+                        Name = sprint.Name,
+                        Description = sprint.Description,
+                        StartDate = sprint.StartDate,
+                        EndDate = sprint.EndDate
+                    };
+
+                    if (sprint.Backlog != null)
+                    {
+                        foreach (var sprintStory in sprint.Backlog)
+                        {
+                            serviceSprint.Backlog.Add(new ServiceSprintStory
+                            {
+                                SprintStoryId = sprintStory.Id,
+                                Story = new ServiceStory()
+                                {
+                                    StoryId = sprintStory.Story.Id,
+                                    Summary = sprintStory.Story.Summary,
+                                    ConditionsOfSatisfaction = sprintStory.Story.ConditionsOfSatisfaction,
+                                    AsA = sprintStory.Story.AsA,
+                                    IWant = sprintStory.Story.IWant,
+                                    SoThat = sprintStory.Story.IWant
+                                }                              
+                            });
+                        }
+                    }
+
+                    if (sprint.Team != null)
+                    {
+                        foreach (var teamMember in sprint.Team)
+                        {
+                            serviceSprint.TeamEmailAddresses.Add(teamMember.EmailAddress);
+                        }
+                    }
+
+                    project.Sprints.Add(serviceSprint);
+                }    
+            }
+
             return project;
         }
 
@@ -380,6 +425,51 @@ namespace AnyTrack.Backend.Service
                         });
                     }
                 }
+
+                if (dataProject.Sprints != null)
+                {
+                    foreach (var sprint in dataProject.Sprints)
+                    {
+                        var serviceSprint = new ServiceSprint
+                        {
+                            SprintId = sprint.Id,
+                            Name = sprint.Name,
+                            Description = sprint.Description,
+                            StartDate = sprint.StartDate,
+                            EndDate = sprint.EndDate
+                        };
+
+                        if (sprint.Backlog != null)
+                        {
+                            foreach (var sprintStory in sprint.Backlog)
+                            {
+                                serviceSprint.Backlog.Add(new ServiceSprintStory
+                                {
+                                    SprintStoryId = sprintStory.Id,
+                                    Story = new ServiceStory()
+                                    {
+                                        StoryId = sprintStory.Story.Id,
+                                        Summary = sprintStory.Story.Summary,
+                                        ConditionsOfSatisfaction = sprintStory.Story.ConditionsOfSatisfaction,
+                                        AsA = sprintStory.Story.AsA,
+                                        IWant = sprintStory.Story.IWant,
+                                        SoThat = sprintStory.Story.IWant
+                                    }
+                                });
+                            }
+                        }
+
+                        if (sprint.Team != null)
+                        {
+                            foreach (var teamMember in sprint.Team)
+                            {
+                                serviceSprint.TeamEmailAddresses.Add(teamMember.EmailAddress);
+                            }
+                        }
+
+                        project.Sprints.Add(serviceSprint);
+                    }
+                }
             }
 
             return projects;
@@ -411,7 +501,7 @@ namespace AnyTrack.Backend.Service
 
                 var tempRoles = loggedInUser.Roles.Where(r => r.ProjectId == projectId).Select(r => r.RoleName).ToList();
 
-                projectRoleDetails.Add(new ServiceProjectRoleSummary
+                ServiceProjectRoleSummary summary = new ServiceProjectRoleSummary
                 {
                     ProjectId = projectId,
                     Name = project.Name,
@@ -420,7 +510,29 @@ namespace AnyTrack.Backend.Service
                     ProductOwner = tempRoles.Contains("Product Owner"),
                     ScrumMaster = tempRoles.Contains("Scrum Master"),
                     Developer = tempRoles.Contains("Developer")
-                });
+                };
+
+                if (summary.Developer)
+                {
+                    var sprintIds =
+                        loggedInUser.Roles.Where(r => r.ProjectId == projectId && r.RoleName == "Developer")
+                            .Select(r => r.SprintId)
+                            .ToList();
+
+                    foreach (var sprintId in sprintIds)
+                    {
+                        var sprint = unitOfWork.SprintRepository.Items.Single(s => s.Id == sprintId);
+
+                        summary.Sprints.Add(new ServiceSprintSummary()
+                        {
+                            SprintId = (Guid)sprintId,
+                            Name = sprint.Name,
+                            Description = sprint.Description
+                        });
+                    }
+                }
+
+                projectRoleDetails.Add(summary);
             }
 
             return projectRoleDetails;

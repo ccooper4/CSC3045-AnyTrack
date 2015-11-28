@@ -5,107 +5,63 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AnyTrack.Accounting.Views"
              xmlns:prism="http://www.codeplex.com/prism"
-             xmlns:atph="clr-namespace:AnyTrack.Accounting.Controls"
-             xmlns:Views="clr-namespace:AnyTrack.Client.CustomControls"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             mc:Ignorable="d">
-    <!--                 d:DesignHeight="350" d:DesignWidth="600">-->
-
-<!--    Main Area-->
-    <Grid Background="LightGray">
-        
+             mc:Ignorable="d" >
+    <!--             d:DesignHeight="350" d:DesignWidth="600">-->
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition MaxWidth="500px" />
-            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="6*"></ColumnDefinition>
+            <ColumnDefinition Width="0.5*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        <Rectangle Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Fill="{DynamicResource AccentColorBrush}"></Rectangle>
+
+        <StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal">
+            <Border BorderThickness="0,0,1,0" Padding="0,70,5,70" BorderBrush="{DynamicResource BlackBrush}">
+                <Image Source="../Images/Logo_Text.png" Width="150px" ></Image>
+            </Border>
+
+            <Image Width="Auto" Height="100px" RenderOptions.BitmapScalingMode="HighQuality" Source="../Images/Logo_Icon.png" Margin="10px,0,20px,0" ></Image>
+
+        </StackPanel>
+
+        <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch">
 
 
-        <!-- Logo-->
-        <Image Grid.Column="1" Grid.Row="0" Source="../Images/AnyTrack_logo_full.png" Width="350px" Margin="0,80px,0,20px"></Image>
-
-
-        <!-- Log In section-->
-        <Border Grid.Column="1" Grid.Row="1" CornerRadius="9" BorderBrush="Gray" Background="Gray" BorderThickness="3">
-            <Grid Background="#fcfcfc">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"> </ColumnDefinition>
-                    <ColumnDefinition Width="7*"> </ColumnDefinition>
-                    <ColumnDefinition Width="1*"> </ColumnDefinition>
-                </Grid.ColumnDefinitions>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                </Grid.RowDefinitions>
-
-               <!-- Grid for email and password fields--> 
-                <Grid Background="White" Grid.Column="1" Grid.Row="1">
-                    
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="4*"></ColumnDefinition>
-                        <ColumnDefinition Width="6*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    
-                    <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
-
-                    <!-- Email Label and box-->
-                    <Label Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="0,20px,5px,10px" HorizontalAlignment="Right" >Email Address</Label>
-                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Email}" Margin="0,20px,0,10px"></TextBox>
-
-                    <!-- Password label and box-->
-                    <Label Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="0,0,5px,10px" HorizontalAlignment="Right" >Password:</Label>
-                    <PasswordBox Name="PasswordTextbox" Grid.Column="1" Grid.Row="1" Margin="0,0,0,10px" HorizontalAlignment="Stretch" atph:PasswordBoxBindingHelper.EnablePasswordBoxBinding="true"  atph:PasswordBoxBindingHelper.Binding="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </Grid>
-
+            <StackPanel  Grid.Column="0" Grid.Row="0" MaxWidth="600px" MinWidth="500px" Margin="0,60px,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Vertical">
+                <TextBox Margin="10" HorizontalAlignment="Stretch" Controls:TextBoxHelper.Watermark="Username" Controls:TextBoxHelper.UseFloatingWatermark="True" Controls:TextBoxHelper.IsWaitingForData="True" ToolTip="Enter Email address here" Text="{Binding Email}" />
+                <TextBox Margin="10" Controls:TextBoxHelper.Watermark="Password" Controls:TextBoxHelper.UseFloatingWatermark="True" Controls:TextBoxHelper.IsWaitingForData="True" ToolTip="Enter Password Here" Text="{Binding Password}"/>
                 <!-- Forgot Password -->
-                <Button HorizontalAlignment="Right" Grid.Column="1" Foreground="DarkBlue" Grid.Row="2" Command="{Binding SignUpCommand}" BorderThickness="0" >
+                <Button HorizontalAlignment="Right" FontSize="9" Foreground="DarkBlue" Background="Transparent" Command="{Binding SignUpCommand}" BorderThickness="0" >
                     <Button.Content>
                         <TextBlock>
                             <Underline>Forgot Password?</Underline>
                         </TextBlock>
                     </Button.Content>
                 </Button>
-                
+
                 <!-- Log in-->
-                <Button Grid.Row="3" Grid.Column="1" Margin="0,0,0,10px" HorizontalAlignment="Center" Command="{Binding LoginUserCommand}">
+                <Button Margin="0,0,0,10px" HorizontalAlignment="Center" Command="{Binding LoginUserCommand}">
                     <Button.Content>
                         <TextBlock FontSize="11">
                             Log in
                         </TextBlock>
                     </Button.Content>
                 </Button>
-            </Grid>
-        </Border>
-      
+            </StackPanel>
+        </Grid>
 
-        <!-- Offline Mode-->
-        <Button Margin="20px,0,0,0" HorizontalAlignment="Left" Grid.Column="1" Foreground="DarkBlue" Grid.Row="2" Command="{Binding OfflineModeCommand}" BorderThickness="0" Background="Transparent">
-            <Button.Content>
-                <TextBlock>
-                    <Underline>Offline Mode</Underline>
-                </TextBlock>
-            </Button.Content>
-        </Button>
-
-        <!-- Sign Up-->
-        <Button Margin="0,0,20px,0" HorizontalAlignment="Right" Grid.Column="1" Foreground="DarkBlue" Grid.Row="2" Command="{Binding SignUpCommand}" BorderThickness="0" Background="Transparent">
-            <Button.Content>
-                <TextBlock>
-                    <Underline>Sign Up</Underline>
-                </TextBlock>
-            </Button.Content>
-        </Button>
+        <DockPanel HorizontalAlignment="Stretch" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Background="{DynamicResource AccentColorBrush2}">
+            <Button HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Width="100" Command="{Binding SignUpCommand}" Content="Register now" />
+            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10" Width="100" Content="Offline mode" />
+        </DockPanel>
     </Grid>
+
 </UserControl>
