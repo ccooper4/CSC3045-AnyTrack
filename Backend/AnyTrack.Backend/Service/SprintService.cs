@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using AnyTrack.Backend.Data;
 using AnyTrack.Backend.Data.Model;
 using AnyTrack.Backend.Service.Model;
+using Task = AnyTrack.Backend.Data.Model.Task;
 
 namespace AnyTrack.Backend.Service
 {
@@ -195,6 +196,53 @@ namespace AnyTrack.Backend.Service
             }
 
             return serviceTasks;
+        }
+
+        /// <summary>
+        /// Add a new task to a spptint story.
+        /// </summary>
+        /// <param name="sprintStoryId">The story to add the task to.</param>
+        /// <param name="serviceTask">The task to add.</param>
+        public void AddTaskToSprintStory(Guid sprintStoryId, ServiceTask serviceTask)
+        {
+            if (sprintStoryId == null)
+            {
+                throw new ArgumentNullException("sprintStoryId");
+            }
+
+            if (sprintStoryId == null)
+            {
+                throw new ArgumentNullException("serviceTask");
+            }
+
+            User assignee = unitOfWork.UserRepository.Items.SingleOrDefault(
+                u => u.EmailAddress == serviceTask.Assignee.EmailAddress);
+
+            User tester = unitOfWork.UserRepository.Items.SingleOrDefault(
+                u => u.EmailAddress == serviceTask.Tester.EmailAddress);
+
+            DateTime now = DateTime.Now;
+
+            UpdatedHours newHour = new UpdatedHours()
+            {
+                NewEstimate = serviceTask.HoursRemaining
+            };
+
+            ICollection<UpdatedHours> updatedHours = new List<UpdatedHours>();
+            updatedHours.Add(newHour);
+
+            Task task = new Task()
+            {
+                Assignee = assignee,
+                Tester = tester,
+                Blocked = serviceTask.Blocked,
+                ConditionsOfSatisfaction = serviceTask.ConditionsOfSatisfaction,
+                Description = serviceTask.Description,
+                HoursRemaining = serviceTask.HoursRemaining,
+                Summary = serviceTask.Summary,
+                Updated = now,
+                UpdatedHours = updatedHours
+            };
         }
 
         #endregion
