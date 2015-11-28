@@ -16,6 +16,21 @@ module.exports = function(grunt) {
                     },
                     verbosity: 'normal'
                 }
+            },
+            sharedtest: {
+                src: ['AnyTrack.sln'],
+                options: {
+                    projectConfiguration: 'vm-devwinbuild-shared-backend',
+					targets: ['Clean', 'Rebuild'],
+                    version: 14.0,
+                    maxCpuCount: 4,
+                    buildParameters: {
+                        WarningLevel: 2,
+                        DeployOnBuild: true,
+                        PublishProfile: "vm-devwinbuild-shared-backend"
+                    },
+                    verbosity: 'normal'
+                }
             }
         },
         nunit: {
@@ -83,6 +98,7 @@ module.exports = function(grunt) {
     grunt.registerTask('start', ['stop', 'iisexpress:backend']);
     grunt.registerTask('unit-test', ['nunit:unit']);
     grunt.registerTask('acceptance-test', ['nunit:acceptance']);
+    grunt.registerTask('sharedtestdeploy', ['nuget-restore', 'msbuild:sharedtest'])
 
     //Default task 
 

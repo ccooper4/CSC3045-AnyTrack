@@ -36,7 +36,10 @@ namespace AnyTrack.Backend.WebHost
             container.RegisterType<FormsAuthenticationProvider, FormsAuthenticationProvider>();
             container.RegisterType<Providers.RoleProvider, Providers.RoleProvider>();
             container.RegisterType<OperationContextProvider, OperationContextProvider>();
-            container.RegisterType<ConnectedClientsProvider, ConnectedClientsProvider>(new ContainerControlledLifetimeManager());
+
+            // Register the planning poker session lists singleton as we share one list. 
+            container.RegisterType<AvailableClientsProvider, AvailableClientsProvider>(new ContainerControlledLifetimeManager());
+            container.RegisterType<ActivePokerSessionsProvider, ActivePokerSessionsProvider>(new ContainerControlledLifetimeManager());
 
             container.AddExtension(new BuildPrincipalUnityExtension());
 

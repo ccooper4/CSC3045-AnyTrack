@@ -45,6 +45,11 @@
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'vm-devwinbuild-shared-backend|AnyCPU'">
+    <OutputPath>bin\vm-devwinbuild-shared-backend\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework">
       <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -179,7 +184,8 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Model\BaseEntity.cs" />
-    <Compile Include="Providers\ConnectedClientsProvider.cs" />
+    <Compile Include="Providers\ActivePokerSessionsProvider.cs" />
+    <Compile Include="Providers\AvailableClientsProvider.cs" />
     <Compile Include="Providers\FormsAuthenticationProvider.cs" />
     <Compile Include="Providers\OperationContextProvider.cs" />
     <Compile Include="Providers\RoleProvider.cs" />
@@ -193,11 +199,17 @@
     <Compile Include="Service\IPlanningPokerManagerService.cs" />
     <Compile Include="Service\IProjectService.cs" />
     <Compile Include="Service\ISprintService.cs" />
+    <Compile Include="Service\Model\ServiceChatMessage.cs" />
+    <Compile Include="Service\Model\ServicePlanningPokerPendingUser.cs" />
+    <Compile Include="Service\Model\ServicePlanningPokerSession.cs" />
+    <Compile Include="Service\Model\ServicePlanningPokerSessionState.cs" />
+    <Compile Include="Service\Model\ServicePlanningPokerUser.cs" />
     <Compile Include="Service\Model\ServiceProjectSummary.cs" />
     <Compile Include="Service\Model\ServiceProjectRoleSummary.cs" />
     <Compile Include="Service\Model\ServiceProject.cs" />
     <Compile Include="Service\Model\ServiceSprint.cs" />
     <Compile Include="Service\Model\ServiceSprintStory.cs" />
+    <Compile Include="Service\Model\ServiceSessionChangeInfo.cs" />
     <Compile Include="Service\Model\ServiceStory.cs" />
     <Compile Include="Service\Model\ServiceStorySummary.cs" />
     <Compile Include="Service\Model\ServiceTask.cs" />

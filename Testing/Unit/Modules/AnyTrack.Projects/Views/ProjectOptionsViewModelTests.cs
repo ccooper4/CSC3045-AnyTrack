@@ -9,7 +9,7 @@ using FluentAssertions;
 using MahApps.Metro.Controls;
 using Prism.Regions;
 using NSubstitute;
-using AnyTrack.Projects.BackendProjectService;
+using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure;
 
 namespace Unit.Modules.AnyTrack.Projects.Views.ProjectOptionsViewModelTests

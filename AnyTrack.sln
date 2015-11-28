@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{A6E23AE3-08B8-4744-9351-B2D7B2652671}"
 EndProject
@@ -50,12 +50,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyTrack.Sprints", "Modules
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyTrack.PlanningPoker", "Modules\AnyTrack.PlanningPoker\AnyTrack.PlanningPoker.csproj", "{593B421B-39F0-4B6B-8B6C-0C0CFDE0A758}"
+	ProjectSection(ProjectDependencies) = postProject
+		{022C9F29-2FCD-4023-BB22-346F2D3845C5} = {022C9F29-2FCD-4023-BB22-346F2D3845C5}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 		Scripted|Any CPU = Scripted|Any CPU
+		vm-devwinbuild-shared-backend|Any CPU = vm-devwinbuild-shared-backend|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{8E06F61A-3FD1-419E-A45F-66BABB282D60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -64,6 +68,8 @@ Global
 		{8E06F61A-3FD1-419E-A45F-66BABB282D60}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8E06F61A-3FD1-419E-A45F-66BABB282D60}.Scripted|Any CPU.ActiveCfg = Scripted|Any CPU
 		{8E06F61A-3FD1-419E-A45F-66BABB282D60}.Scripted|Any CPU.Build.0 = Scripted|Any CPU
+		{8E06F61A-3FD1-419E-A45F-66BABB282D60}.vm-devwinbuild-shared-backend|Any CPU.ActiveCfg = vm-devwinbuild-shared-backend|Any CPU
+		{8E06F61A-3FD1-419E-A45F-66BABB282D60}.vm-devwinbuild-shared-backend|Any CPU.Build.0 = vm-devwinbuild-shared-backend|Any CPU
 		{022C9F29-2FCD-4023-BB22-346F2D3845C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{022C9F29-2FCD-4023-BB22-346F2D3845C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{022C9F29-2FCD-4023-BB22-346F2D3845C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -71,12 +77,16 @@ Global
 		{022C9F29-2FCD-4023-BB22-346F2D3845C5}.Scripted|Any CPU.ActiveCfg = Scripted|Any CPU
 		{022C9F29-2FCD-4023-BB22-346F2D3845C5}.Scripted|Any CPU.Build.0 = Scripted|Any CPU
 		{022C9F29-2FCD-4023-BB22-346F2D3845C5}.Scripted|Any CPU.Deploy.0 = Scripted|Any CPU
+		{022C9F29-2FCD-4023-BB22-346F2D3845C5}.vm-devwinbuild-shared-backend|Any CPU.ActiveCfg = vm-devwinbuild-shared-backend|Any CPU
+		{022C9F29-2FCD-4023-BB22-346F2D3845C5}.vm-devwinbuild-shared-backend|Any CPU.Build.0 = vm-devwinbuild-shared-backend|Any CPU
 		{E053C9E8-CC60-4693-A78E-77E70CDCBB6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E053C9E8-CC60-4693-A78E-77E70CDCBB6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E053C9E8-CC60-4693-A78E-77E70CDCBB6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E053C9E8-CC60-4693-A78E-77E70CDCBB6C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E053C9E8-CC60-4693-A78E-77E70CDCBB6C}.Scripted|Any CPU.ActiveCfg = Scripted|Any CPU
 		{E053C9E8-CC60-4693-A78E-77E70CDCBB6C}.Scripted|Any CPU.Build.0 = Scripted|Any CPU
+		{E053C9E8-CC60-4693-A78E-77E70CDCBB6C}.vm-devwinbuild-shared-backend|Any CPU.ActiveCfg = vm-devwinbuild-shared-backend|Any CPU
+		{E053C9E8-CC60-4693-A78E-77E70CDCBB6C}.vm-devwinbuild-shared-backend|Any CPU.Build.0 = vm-devwinbuild-shared-backend|Any CPU
 		{64C40775-ED61-4C4D-AC07-E4ACF9526EE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{64C40775-ED61-4C4D-AC07-E4ACF9526EE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64C40775-ED61-4C4D-AC07-E4ACF9526EE6}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
@@ -84,48 +94,65 @@ Global
 		{64C40775-ED61-4C4D-AC07-E4ACF9526EE6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{64C40775-ED61-4C4D-AC07-E4ACF9526EE6}.Scripted|Any CPU.ActiveCfg = Scripted|Any CPU
 		{64C40775-ED61-4C4D-AC07-E4ACF9526EE6}.Scripted|Any CPU.Build.0 = Scripted|Any CPU
+		{64C40775-ED61-4C4D-AC07-E4ACF9526EE6}.Scripted|Any CPU.Deploy.0 = Scripted|Any CPU
+		{64C40775-ED61-4C4D-AC07-E4ACF9526EE6}.vm-devwinbuild-shared-backend|Any CPU.ActiveCfg = vm-devwinbuild-shared-backend|Any CPU
+		{64C40775-ED61-4C4D-AC07-E4ACF9526EE6}.vm-devwinbuild-shared-backend|Any CPU.Build.0 = vm-devwinbuild-shared-backend|Any CPU
 		{2B4FCAAF-1AE0-42FA-A20A-86AC0D0130C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2B4FCAAF-1AE0-42FA-A20A-86AC0D0130C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B4FCAAF-1AE0-42FA-A20A-86AC0D0130C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B4FCAAF-1AE0-42FA-A20A-86AC0D0130C1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2B4FCAAF-1AE0-42FA-A20A-86AC0D0130C1}.Scripted|Any CPU.ActiveCfg = Scripted|Any CPU
 		{2B4FCAAF-1AE0-42FA-A20A-86AC0D0130C1}.Scripted|Any CPU.Build.0 = Scripted|Any CPU
+		{2B4FCAAF-1AE0-42FA-A20A-86AC0D0130C1}.vm-devwinbuild-shared-backend|Any CPU.ActiveCfg = vm-devwinbuild-shared-backend|Any CPU
+		{2B4FCAAF-1AE0-42FA-A20A-86AC0D0130C1}.vm-devwinbuild-shared-backend|Any CPU.Build.0 = vm-devwinbuild-shared-backend|Any CPU
 		{A5A20403-C6E3-4475-88AA-762BD691F812}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A5A20403-C6E3-4475-88AA-762BD691F812}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5A20403-C6E3-4475-88AA-762BD691F812}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5A20403-C6E3-4475-88AA-762BD691F812}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A5A20403-C6E3-4475-88AA-762BD691F812}.Scripted|Any CPU.ActiveCfg = Release|Any CPU
-		{A5A20403-C6E3-4475-88AA-762BD691F812}.Scripted|Any CPU.Build.0 = Release|Any CPU
+		{A5A20403-C6E3-4475-88AA-762BD691F812}.Scripted|Any CPU.ActiveCfg = Scripted|Any CPU
+		{A5A20403-C6E3-4475-88AA-762BD691F812}.Scripted|Any CPU.Build.0 = Scripted|Any CPU
+		{A5A20403-C6E3-4475-88AA-762BD691F812}.vm-devwinbuild-shared-backend|Any CPU.ActiveCfg = vm-devwinbuild-shared-backend|Any CPU
+		{A5A20403-C6E3-4475-88AA-762BD691F812}.vm-devwinbuild-shared-backend|Any CPU.Build.0 = vm-devwinbuild-shared-backend|Any CPU
 		{9F38C80A-2E8C-486F-8054-E235886E1A17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9F38C80A-2E8C-486F-8054-E235886E1A17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F38C80A-2E8C-486F-8054-E235886E1A17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F38C80A-2E8C-486F-8054-E235886E1A17}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9F38C80A-2E8C-486F-8054-E235886E1A17}.Scripted|Any CPU.ActiveCfg = Release|Any CPU
-		{9F38C80A-2E8C-486F-8054-E235886E1A17}.Scripted|Any CPU.Build.0 = Release|Any CPU
+		{9F38C80A-2E8C-486F-8054-E235886E1A17}.Scripted|Any CPU.ActiveCfg = Scripted|Any CPU
+		{9F38C80A-2E8C-486F-8054-E235886E1A17}.Scripted|Any CPU.Build.0 = Scripted|Any CPU
+		{9F38C80A-2E8C-486F-8054-E235886E1A17}.vm-devwinbuild-shared-backend|Any CPU.ActiveCfg = vm-devwinbuild-shared-backend|Any CPU
+		{9F38C80A-2E8C-486F-8054-E235886E1A17}.vm-devwinbuild-shared-backend|Any CPU.Build.0 = vm-devwinbuild-shared-backend|Any CPU
 		{8FE42E8F-8E02-4D9C-971B-38E2B07DC83E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8FE42E8F-8E02-4D9C-971B-38E2B07DC83E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FE42E8F-8E02-4D9C-971B-38E2B07DC83E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FE42E8F-8E02-4D9C-971B-38E2B07DC83E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8FE42E8F-8E02-4D9C-971B-38E2B07DC83E}.Scripted|Any CPU.ActiveCfg = Release|Any CPU
-		{8FE42E8F-8E02-4D9C-971B-38E2B07DC83E}.Scripted|Any CPU.Build.0 = Release|Any CPU
+		{8FE42E8F-8E02-4D9C-971B-38E2B07DC83E}.Scripted|Any CPU.ActiveCfg = Scripted|Any CPU
+		{8FE42E8F-8E02-4D9C-971B-38E2B07DC83E}.Scripted|Any CPU.Build.0 = Scripted|Any CPU
+		{8FE42E8F-8E02-4D9C-971B-38E2B07DC83E}.vm-devwinbuild-shared-backend|Any CPU.ActiveCfg = vm-devwinbuild-shared-backend|Any CPU
+		{8FE42E8F-8E02-4D9C-971B-38E2B07DC83E}.vm-devwinbuild-shared-backend|Any CPU.Build.0 = vm-devwinbuild-shared-backend|Any CPU
 		{4D4353AE-46FA-4B2E-B41A-A430FE6A8640}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D4353AE-46FA-4B2E-B41A-A430FE6A8640}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D4353AE-46FA-4B2E-B41A-A430FE6A8640}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D4353AE-46FA-4B2E-B41A-A430FE6A8640}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4D4353AE-46FA-4B2E-B41A-A430FE6A8640}.Scripted|Any CPU.ActiveCfg = Release|Any CPU
-		{4D4353AE-46FA-4B2E-B41A-A430FE6A8640}.Scripted|Any CPU.Build.0 = Release|Any CPU
+		{4D4353AE-46FA-4B2E-B41A-A430FE6A8640}.Scripted|Any CPU.ActiveCfg = Scripted|Any CPU
+		{4D4353AE-46FA-4B2E-B41A-A430FE6A8640}.Scripted|Any CPU.Build.0 = Scripted|Any CPU
+		{4D4353AE-46FA-4B2E-B41A-A430FE6A8640}.vm-devwinbuild-shared-backend|Any CPU.ActiveCfg = vm-devwinbuild-shared-backend|Any CPU
+		{4D4353AE-46FA-4B2E-B41A-A430FE6A8640}.vm-devwinbuild-shared-backend|Any CPU.Build.0 = vm-devwinbuild-shared-backend|Any CPU
 		{FBB89D79-D4A7-44C7-86A8-3693DB4A56F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FBB89D79-D4A7-44C7-86A8-3693DB4A56F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBB89D79-D4A7-44C7-86A8-3693DB4A56F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBB89D79-D4A7-44C7-86A8-3693DB4A56F9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FBB89D79-D4A7-44C7-86A8-3693DB4A56F9}.Scripted|Any CPU.ActiveCfg = Release|Any CPU
-		{FBB89D79-D4A7-44C7-86A8-3693DB4A56F9}.Scripted|Any CPU.Build.0 = Release|Any CPU
+		{FBB89D79-D4A7-44C7-86A8-3693DB4A56F9}.Scripted|Any CPU.ActiveCfg = Scripted|Any CPU
+		{FBB89D79-D4A7-44C7-86A8-3693DB4A56F9}.Scripted|Any CPU.Build.0 = Scripted|Any CPU
+		{FBB89D79-D4A7-44C7-86A8-3693DB4A56F9}.vm-devwinbuild-shared-backend|Any CPU.ActiveCfg = vm-devwinbuild-shared-backend|Any CPU
+		{FBB89D79-D4A7-44C7-86A8-3693DB4A56F9}.vm-devwinbuild-shared-backend|Any CPU.Build.0 = vm-devwinbuild-shared-backend|Any CPU
 		{593B421B-39F0-4B6B-8B6C-0C0CFDE0A758}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{593B421B-39F0-4B6B-8B6C-0C0CFDE0A758}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{593B421B-39F0-4B6B-8B6C-0C0CFDE0A758}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{593B421B-39F0-4B6B-8B6C-0C0CFDE0A758}.Release|Any CPU.Build.0 = Release|Any CPU
-		{593B421B-39F0-4B6B-8B6C-0C0CFDE0A758}.Scripted|Any CPU.ActiveCfg = Release|Any CPU
-		{593B421B-39F0-4B6B-8B6C-0C0CFDE0A758}.Scripted|Any CPU.Build.0 = Release|Any CPU
+		{593B421B-39F0-4B6B-8B6C-0C0CFDE0A758}.Scripted|Any CPU.ActiveCfg = Scripted|Any CPU
+		{593B421B-39F0-4B6B-8B6C-0C0CFDE0A758}.Scripted|Any CPU.Build.0 = Scripted|Any CPU
+		{593B421B-39F0-4B6B-8B6C-0C0CFDE0A758}.vm-devwinbuild-shared-backend|Any CPU.ActiveCfg = vm-devwinbuild-shared-backend|Any CPU
+		{593B421B-39F0-4B6B-8B6C-0C0CFDE0A758}.vm-devwinbuild-shared-backend|Any CPU.Build.0 = vm-devwinbuild-shared-backend|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -133,12 +160,12 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{8E06F61A-3FD1-419E-A45F-66BABB282D60} = {A6E23AE3-08B8-4744-9351-B2D7B2652671}
 		{022C9F29-2FCD-4023-BB22-346F2D3845C5} = {A6E23AE3-08B8-4744-9351-B2D7B2652671}
-		{A5A20403-C6E3-4475-88AA-762BD691F812} = {5D75F811-868B-4449-864B-3E0EDEA5D169}
-		{4D4353AE-46FA-4B2E-B41A-A430FE6A8640} = {5D75F811-868B-4449-864B-3E0EDEA5D169}
 		{E053C9E8-CC60-4693-A78E-77E70CDCBB6C} = {7DA6E772-93FC-41C4-9D42-4A263512A5B9}
 		{64C40775-ED61-4C4D-AC07-E4ACF9526EE6} = {7DA6E772-93FC-41C4-9D42-4A263512A5B9}
+		{A5A20403-C6E3-4475-88AA-762BD691F812} = {5D75F811-868B-4449-864B-3E0EDEA5D169}
 		{9F38C80A-2E8C-486F-8054-E235886E1A17} = {633745E8-928B-4C8D-9F63-E020CAFEEBAC}
 		{8FE42E8F-8E02-4D9C-971B-38E2B07DC83E} = {633745E8-928B-4C8D-9F63-E020CAFEEBAC}
+		{4D4353AE-46FA-4B2E-B41A-A430FE6A8640} = {5D75F811-868B-4449-864B-3E0EDEA5D169}
 		{FBB89D79-D4A7-44C7-86A8-3693DB4A56F9} = {633745E8-928B-4C8D-9F63-E020CAFEEBAC}
 		{593B421B-39F0-4B6B-8B6C-0C0CFDE0A758} = {633745E8-928B-4C8D-9F63-E020CAFEEBAC}
 	EndGlobalSection

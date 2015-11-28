@@ -33,6 +33,11 @@ namespace AnyTrack.Backend.Data.Model
         public virtual string Description { get; set; }
 
         /// <summary>
+        /// Gets or sets the project this sprint belongs to.
+        /// </summary>
+        public virtual Project Project { get; set; }
+
+        /// <summary>
         /// Gets or sets a collection of the sprint's team members.
         /// </summary>
         public virtual ICollection<User> Team { get; set; }

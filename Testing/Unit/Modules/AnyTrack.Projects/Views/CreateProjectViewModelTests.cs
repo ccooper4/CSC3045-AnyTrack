@@ -1,4 +1,4 @@
-﻿using AnyTrack.Projects.ServiceGateways;
+﻿using AnyTrack.Infrastructure.ServiceGateways;
 using AnyTrack.Projects.Views;
 using NSubstitute;
 using NUnit.Framework;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
-using AnyTrack.Projects.BackendProjectService;
+using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.Providers;
 using System.Collections.ObjectModel;
 using AnyTrack.Infrastructure.Security;
