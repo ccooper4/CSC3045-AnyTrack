@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
+using AnyTrack.SharedUtilities.Extensions;
 
 namespace AnyTrack.Backend.Providers
 {
@@ -31,6 +33,54 @@ namespace AnyTrack.Backend.Providers
                     return null;
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns the channel that can be used to call functions on the client.
+        /// </summary>
+        /// <typeparam name="T">The channel type.</typeparam>
+        /// <returns>The client channel.</returns>
+        public virtual T GetClientChannel<T>()
+        {
+            if (OperationContext.Current == null)
+            {
+                return default(T);
+            }
+
+            return OperationContext.Current.GetCallbackChannel<T>();
+        }
+
+        /// <summary>
+        /// Retrieves the name of the method being called by a service operation.
+        /// </summary>
+        /// <returns>The reflected method info.</returns>
+        public virtual MethodInfo GetMethodInfoForServiceCall()
+        {
+            //// Operation Context current may be null, if so, there is no method. Return null.
+            if (OperationContext.Current == null)
+            {
+                return null; 
+            }
+
+            var methodName = string.Empty;
+
+            try
+            {
+                methodName = OperationContext.Current.IncomingMessageProperties["HttpOperationName"].ToString();
+            }
+            catch
+            {
+            }
+
+            if (methodName.IsEmpty())
+            {
+                string action = OperationContext.Current.IncomingMessageHeaders.Action;
+                methodName = OperationContext.Current.EndpointDispatcher.DispatchRuntime.Operations.FirstOrDefault(o => o.Action == action).Name;
+            }
+
+            var serviceType = OperationContext.Current.Host.Description.ServiceType;
+            var method = serviceType.GetMethod(methodName);
+            return method;
         }
 
         #endregion 

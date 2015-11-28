@@ -1,4 +1,4 @@
-﻿using AnyTrack.Projects.ServiceGateways;
+﻿using AnyTrack.Infrastructure.ServiceGateways;
 using AnyTrack.Projects.Views;
 using NSubstitute;
 using NUnit.Framework;
@@ -9,12 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
-using AnyTrack.Projects.BackendProjectService;
+using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.Providers;
 using System.Collections.ObjectModel;
 using MahApps.Metro.Controls.Dialogs;
 using System.Threading;
 using AnyTrack.Infrastructure;
+using Microsoft.Practices.Unity;
+using AnyTrack.Infrastructure.Service;
 
 namespace Unit.Modules.AnyTrack.Projects.Views.ProductBacklogViewModelTests
 {
@@ -102,7 +104,10 @@ namespace Unit.Modules.AnyTrack.Projects.Views.ProductBacklogViewModelTests
         public void OpenStoryViewTests()
         {
             NavigationParameters navParams = null;
-            regionManager.RequestNavigate(Arg.Any<string>(), Arg.Any<string>(), Arg.Do<NavigationParameters>(np => navParams = np));
+            var flyoutService = Substitute.For<IFlyoutService>();
+            flyoutService.ShowMetroFlyout(Arg.Any<string>(), Arg.Do<NavigationParameters>(np => navParams = np));
+
+            vm.FlyoutService = flyoutService;
 
             gateway.GetProjectStories(Arg.Any<Guid>()).Returns(new List<ServiceStorySummary>());
 
@@ -110,10 +115,38 @@ namespace Unit.Modules.AnyTrack.Projects.Views.ProductBacklogViewModelTests
             vm.Call("OpenStoryView");
             navParams.Should().NotBeNull();
             navParams.ContainsKey("projectId").Should().BeTrue();
-            regionManager.Received().RequestNavigate(RegionNames.MainRegion, "Story", navParams);
+            flyoutService.Received().ShowMetroFlyout("Story", navParams);
         }
 
         #endregion OpenStoryView() Tests
+
+        #region EditStory() Tests
+
+        [Test]
+        public void EditStoryTests()
+        {
+            NavigationParameters navParams = null;
+
+            var windowProvider = Substitute.For<WindowProvider>();
+            var flyoutService = Substitute.For<IFlyoutService>();
+            flyoutService.ShowMetroFlyout(Arg.Any<string>(), Arg.Do<NavigationParameters>(np => navParams = np));
+
+            vm.FlyoutService = flyoutService;
+
+            gateway.GetProjectStories(Arg.Any<Guid>()).Returns(new List<ServiceStorySummary>());
+
+            var story = new ServiceStorySummary { StoryId = Guid.NewGuid() };
+
+            vm.ProjectId = Guid.NewGuid();
+
+            vm.Call("EditStory", story);
+            navParams.Should().NotBeNull();
+            navParams.ContainsKey("projectId").Should().BeTrue();
+            navParams.ContainsKey("storyId").Should().BeTrue();
+            flyoutService.Received().ShowMetroFlyout("Story", navParams);
+        }
+
+        #endregion EditStory() Tests
     }
 
     #endregion Tests

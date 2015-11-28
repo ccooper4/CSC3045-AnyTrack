@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
+using AnyTrack.SharedUtilities.Extensions;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Microsoft.Practices.Unity;
+using Prism.Regions;
 
 namespace AnyTrack.Infrastructure.Providers
 {
@@ -20,7 +24,7 @@ namespace AnyTrack.Infrastructure.Providers
         /// <summary>
         /// The application's main window.
         /// </summary>
-        private MetroWindow window; 
+        private MetroWindow window;
 
         #endregion 
 
@@ -61,6 +65,45 @@ namespace AnyTrack.Infrastructure.Providers
         public virtual void InvokeAction(Action action)
         {
             window.Dispatcher.Invoke(action);
+        }
+
+        /// <summary>
+        /// Returns a list of flyouts currently registered with the shell.
+        /// </summary>
+        /// <param name="flyoutName">The flyout name.</param>
+        /// <returns>A list of flyouts.</returns>
+        public virtual List<UserControl> GetCurrentFlyouts(string flyoutName)
+        {
+            var currentFlyouts = window.Flyouts.Items.Cast<UserControl>();
+
+            if (flyoutName.IsNotEmpty())
+            {
+                currentFlyouts = currentFlyouts.Where(f => f.GetType().Name == flyoutName);
+            }
+
+            return currentFlyouts.ToList();
+        }
+
+        /// <summary>
+        /// Removes the given flyout from the shell's flyout list.
+        /// </summary>
+        /// <param name="flyoutName">The flyout name.</param>
+        public virtual void DestroyExistingFlyout(string flyoutName)
+        {
+            var flyout = window.Flyouts.Items.Cast<UserControl>().SingleOrDefault(f => f.GetType().Name == flyoutName);
+            if (flyout != null)
+            {
+                window.Flyouts.Items.Remove(flyout);
+            }
+        }
+
+        /// <summary>
+        /// Adds the given flyout to the shell.
+        /// </summary>
+        /// <param name="flyout">The flyout to add to the shell.</param>
+        public virtual void AddFlyout(UserControl flyout)
+        {
+            window.Flyouts.Items.Add(flyout);
         }
 
         #endregion 

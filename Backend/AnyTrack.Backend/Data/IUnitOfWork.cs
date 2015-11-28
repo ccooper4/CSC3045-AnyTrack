@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AnyTrack.Backend.Data.Model;
+using Task = AnyTrack.Backend.Data.Model.Task;
 
 namespace AnyTrack.Backend.Data
 {
@@ -36,7 +37,12 @@ namespace AnyTrack.Backend.Data
         /// <summary>
         /// Gets the sprint repository controlled by this unit of work.
         /// </summary>
-        IRepository<Sprint> SprintRepository { get; } 
+        IRepository<Sprint> SprintRepository { get; }
+
+        /// <summary>
+        /// Gets the sprint repository controlled by this unit of work.
+        /// </summary>
+        IRepository<Task> TaskRepository { get; } 
 
         #endregion 
 

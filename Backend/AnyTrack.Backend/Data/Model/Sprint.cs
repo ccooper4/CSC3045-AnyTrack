@@ -18,12 +18,12 @@ namespace AnyTrack.Backend.Data.Model
         public virtual string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the sprint'a start date.
+        /// Gets or sets the sprint's start date.
         /// </summary>
         public virtual DateTime StartDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the sprint'a end date. 
+        /// Gets or sets the sprint's end date. 
         /// </summary>
         public virtual DateTime EndDate { get; set; }
 
@@ -31,6 +31,11 @@ namespace AnyTrack.Backend.Data.Model
         /// Gets or sets the sprint's descriptions.
         /// </summary>
         public virtual string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the project this sprint belongs to.
+        /// </summary>
+        public virtual Project Project { get; set; }
 
         /// <summary>
         /// Gets or sets a collection of the sprint's team members.

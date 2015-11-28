@@ -8,8 +8,8 @@ using System.Linq;
 using System.Windows;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.BackendAccountService;
-using AnyTrack.Projects.BackendProjectService;
-using AnyTrack.Projects.ServiceGateways;
+using AnyTrack.Infrastructure.BackendProjectService;
+using AnyTrack.Infrastructure.ServiceGateways;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Prism.Commands;
@@ -152,7 +152,7 @@ namespace AnyTrack.Projects.Views
         {
             if (navigationContext.Parameters.ContainsKey("projectId"))
             {
-                projectId = (Guid)navigationContext.Parameters["projectId"];
+                ProjectId = (Guid)navigationContext.Parameters["projectId"];
             }
         }
 
@@ -184,7 +184,7 @@ namespace AnyTrack.Projects.Views
         {
             var navParams = new NavigationParameters();
             navParams.Add("projectId", projectId);
-            NavigateToItem("Story", navParams);
+            this.ShowMetroFlyout("Story", navParams);
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace AnyTrack.Projects.Views
             var navParams = new NavigationParameters();
             navParams.Add("projectId", projectId);
             navParams.Add("storyId", story.StoryId);
-            NavigateToItem("Story", navParams);
+            this.ShowMetroFlyout("Story", navParams);
         }
 
         #endregion

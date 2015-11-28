@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="4a5e6ffb-2dcf-4af4-aae4-cc7c0a61c0aa" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:5789/PlanningPokerManagerService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="PlanningPokerManagerService.xsd" MetadataType="Schema" ID="1a7cbb79-bc94-4bfc-bad4-555a9e5757da" SourceId="1" SourceUrl="http://localhost:5789/PlanningPokerManagerService.svc?xsd=xsd3" />
+    <MetadataFile FileName="PlanningPokerManagerService.disco" MetadataType="Disco" ID="c8b555f0-3721-417f-aeac-745ba0f20030" SourceId="1" SourceUrl="http://localhost:5789/PlanningPokerManagerService.svc?disco" />
+    <MetadataFile FileName="PlanningPokerManagerService.wsdl" MetadataType="Wsdl" ID="ebbde52e-7a60-4098-9fb8-42a91808d07c" SourceId="1" SourceUrl="http://localhost:5789/PlanningPokerManagerService.svc?wsdl" />
+    <MetadataFile FileName="PlanningPokerManagerService1.xsd" MetadataType="Schema" ID="c2cc5798-dfd2-4756-ab74-97e12d6dddf5" SourceId="1" SourceUrl="http://localhost:5789/PlanningPokerManagerService.svc?xsd=xsd2" />
+    <MetadataFile FileName="PlanningPokerManagerService2.xsd" MetadataType="Schema" ID="08b4ce78-367b-4492-ba7c-5c64a41c2e82" SourceId="1" SourceUrl="http://localhost:5789/PlanningPokerManagerService.svc?xsd=xsd1" />
+    <MetadataFile FileName="PlanningPokerManagerService3.xsd" MetadataType="Schema" ID="36f1084f-bdf3-4e39-b416-e61277eac0c7" SourceId="1" SourceUrl="http://localhost:5789/PlanningPokerManagerService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

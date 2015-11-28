@@ -2,8 +2,6 @@
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.Service;
 using AnyTrack.Infrastructure.Service.Model;
-using AnyTrack.Projects.BackendProjectService;
-using AnyTrack.Projects.ServiceGateways;
 using AnyTrack.Projects.Views;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
@@ -74,16 +72,13 @@ namespace AnyTrack.Projects
         /// </summary>
         public void Initialize()
         {
-            container.RegisterType<IProjectService, ProjectServiceClient>(new InjectionConstructor());
-
-            container.RegisterType<IProjectServiceGateway, ProjectServiceGateway>();
-
             container.RegisterType<object, ProductBacklog>("ProductBacklog");
             container.RegisterType<object, Story>("Story");
             container.RegisterType<object, CreateProject>("Project");
             container.RegisterType<object, MyProjects>("MyProjects");
+            container.RegisterType<object, ProjectOptions>("ProjectOptions");
 
-            menuService.AddMenuItem(new MenuItem { Color = "Goldenrod", Title = "Projects", NavigationViewName = "MyProjects" });
+            menuService.AddMenuItem(new MenuItem { Color = "Gray", Title = "Projects", NavigationViewName = "MyProjects" });
             regionManager.RequestNavigate(RegionNames.MainRegion, "ProductBacklog");
         }
 

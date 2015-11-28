@@ -5,85 +5,63 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AnyTrack.Accounting.Views"
              xmlns:prism="http://www.codeplex.com/prism"
-             xmlns:atph="clr-namespace:AnyTrack.Accounting.Controls"
-             xmlns:Views="clr-namespace:AnyTrack.Client.CustomControls"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             mc:Ignorable="d" 
-             d:DesignHeight="350" d:DesignWidth="600">
-
-    <Grid Background="LightGray" Margin="0,0,0,-135">
-        
+             mc:Ignorable="d" >
+    <!--             d:DesignHeight="350" d:DesignWidth="600">-->
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1.75*" />
-            <ColumnDefinition Width="5*" MaxWidth="600px" MinWidth="600px"/>
-            <ColumnDefinition Width="1.75*"/>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="6*"></ColumnDefinition>
+            <ColumnDefinition Width="0.5*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="300"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        <Rectangle Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Fill="{DynamicResource AccentColorBrush}"></Rectangle>
 
-        <GroupBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" Margin="0, 30px, 0, 10px" >
-            <GroupBox.Header>
-                <TextBlock Foreground="White" Text="Login"/>
-            </GroupBox.Header>
-            <Grid Background="White" Margin="0,0,0,-5" HorizontalAlignment="Right" Width="588">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                    <ColumnDefinition Width="4*"></ColumnDefinition>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal">
+            <Border BorderThickness="0,0,1,0" Padding="0,70,5,70" BorderBrush="{DynamicResource BlackBrush}">
+                <Image Source="../Images/Logo_Text.png" Width="150px" ></Image>
+            </Border>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                </Grid.RowDefinitions>
+            <Image Width="Auto" Height="100px" RenderOptions.BitmapScalingMode="HighQuality" Source="../Images/Logo_Icon.png" Margin="10px,0,20px,0" ></Image>
 
-                <Views:LabelledTextBox Label="Email Address:" Text="{Binding Email}" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"/>
+        </StackPanel>
 
-                <Grid Background="White" Grid.Column="1" Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="4*"></ColumnDefinition>
-                        <ColumnDefinition Width="6*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Label Name="PasswordLabel" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" >Password:</Label>
-                    <PasswordBox Name="PasswordTextbox" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" atph:PasswordBoxBindingHelper.EnablePasswordBoxBinding="true"  atph:PasswordBoxBindingHelper.Binding="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </Grid>
-                
-                <Label Grid.Column="1" Grid.Row="2" Name="ForgotPasswordLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Forgot Password?</Label>
+        <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch">
 
-                
 
-                <Button x:Name="LoginButton" 
-                        Grid.Column="1" 
-                        Grid.Row="3" 
-                        Command="{Binding LoginUserCommand}" 
-                        Content="Login"
-                        Template="{StaticResource customButton}"/>
+            <StackPanel  Grid.Column="0" Grid.Row="0" MaxWidth="600px" MinWidth="500px" Margin="0,60px,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Vertical">
+                <TextBox Margin="10" HorizontalAlignment="Stretch" Controls:TextBoxHelper.Watermark="Username" Controls:TextBoxHelper.UseFloatingWatermark="True" Controls:TextBoxHelper.IsWaitingForData="True" ToolTip="Enter Email address here" Text="{Binding Email}" />
+                <TextBox Margin="10" Controls:TextBoxHelper.Watermark="Password" Controls:TextBoxHelper.UseFloatingWatermark="True" Controls:TextBoxHelper.IsWaitingForData="True" ToolTip="Enter Password Here" Text="{Binding Password}"/>
+                <!-- Forgot Password -->
+                <Button HorizontalAlignment="Right" FontSize="9" Foreground="DarkBlue" Background="Transparent" Command="{Binding SignUpCommand}" BorderThickness="0" >
+                    <Button.Content>
+                        <TextBlock>
+                            <Underline>Forgot Password?</Underline>
+                        </TextBlock>
+                    </Button.Content>
+                </Button>
 
-            </Grid>
-        </GroupBox>
-        <WrapPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" Width="200" Margin="10,0,0,0">
-            <Button x:Name="OfflineButton"
-                    Background="LightGray" 
-                    Command="{Binding OfflineModeCommand}"
-                    Content="Offline Mode"
-                    Template="{StaticResource customButton}" />
-        </WrapPanel>
+                <!-- Log in-->
+                <Button Margin="0,0,0,10px" HorizontalAlignment="Center" Command="{Binding LoginUserCommand}">
+                    <Button.Content>
+                        <TextBlock FontSize="11">
+                            Log in
+                        </TextBlock>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+        </Grid>
 
-        <WrapPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Width="91" Grid.Row="1">
-            <Button x:Name="RegistrationButton"
-                    Background="LightGray"
-                    Command="{Binding SignUpCommand}"
-                    Content="Sign Up"
-                    Template="{StaticResource customButton}" />
-        </WrapPanel>
-
+        <DockPanel HorizontalAlignment="Stretch" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Background="{DynamicResource AccentColorBrush2}">
+            <Button HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Width="100" Command="{Binding SignUpCommand}" Content="Register now" />
+            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10" Width="100" Content="Offline mode" />
+        </DockPanel>
     </Grid>
+
 </UserControl>

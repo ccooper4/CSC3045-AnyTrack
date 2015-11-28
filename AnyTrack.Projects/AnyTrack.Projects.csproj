@@ -30,6 +30,24 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Scripted|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Scripted\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'vm-devwinbuild-shared-backend|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\vm-devwinbuild-shared-backend\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MahApps.Metro, Version=1.1.2.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net45\MahApps.Metro.dll</HintPath>
@@ -102,13 +120,6 @@
     <Compile Include="Converters\DateConverter.cs" />
     <Compile Include="ProjectModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\BackendProjectService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="ServiceGateways\IProjectServiceGateway.cs" />
-    <Compile Include="ServiceGateways\ProjectServiceGateway.cs" />
     <Compile Include="Views\BaseViewModel.cs" />
     <Compile Include="Views\CustomControls\LabelledTextBox.xaml.cs">
       <DependentUpon>LabelledTextBox.xaml</DependentUpon>
@@ -117,6 +128,10 @@
       <DependentUpon>MyProjects.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MyProjectsViewModel.cs" />
+    <Compile Include="Views\ProjectOptions.xaml.cs">
+      <DependentUpon>ProjectOptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProjectOptionsViewModel.cs" />
     <Compile Include="Views\Story.xaml.cs">
       <DependentUpon>Story.xaml</DependentUpon>
     </Compile>
@@ -133,32 +148,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Service References\BackendProjectService\AnyTrack.Projects.BackendProjectService.ProjectDetails.datasource" />
-    <None Include="Service References\BackendProjectService\AnyTrack.Projects.BackendProjectService.ServiceProject.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BackendProjectService\AnyTrack.Projects.BackendProjectService.ServiceProject.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BackendProjectService\AnyTrack.Projects.BackendProjectService.UserSearchInfo.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BackendProjectService\AnyTrack.Projects.BackendProjectService.Story1.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BackendProjectService\AnyTrack.Projects.BackendProjectService.StoryDetails.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BackendProjectService\ProjectService.wsdl" />
-    <None Include="Service References\BackendProjectService\ProjectService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BackendProjectService\ProjectService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BackendProjectService\ProjectService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\AnyTrack.Infrastructure\AnyTrack.Infrastructure.csproj">
@@ -170,30 +159,16 @@
       <Name>AnyTrack.SharedUtilities</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\BackendProjectService\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\BackendProjectService\ProjectService.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\BackendProjectService\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\BackendProjectService\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\BackendProjectService\ProjectService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BackendProjectService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
+    <Resource Include="Images\add_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\delete_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\edit_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\CreateProject.xaml">
@@ -209,6 +184,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ProductBacklog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProjectOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

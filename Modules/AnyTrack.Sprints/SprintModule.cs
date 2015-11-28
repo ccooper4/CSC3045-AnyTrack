@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.Service;
-using AnyTrack.Sprints.Views;
+using AnyTrack.Sprints.BackendSprintService;
+using AnyTrack.Sprints.ServiceGateways;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Regions;
+using MenuItem = AnyTrack.Infrastructure.Service.Model.MenuItem;
 
 namespace AnyTrack.Sprints
 {
@@ -76,8 +77,10 @@ namespace AnyTrack.Sprints
         /// </summary>
         public void Initialize()
         {
-            container.RegisterType<object, BurnDown>("BurnDown");
-            regionManager.RequestNavigate(RegionNames.AppContainer, "BurnDown");
+            container.RegisterType<ISprintService, SprintServiceClient>(new InjectionConstructor());
+            container.RegisterType<ISprintServiceGateway, SprintServiceGateway>();
+
+            menuService.AddMenuItem(new MenuItem { Color = "Gray", Title = "Sprints", NavigationViewName = "MySprints" });
         }
 
         #endregion 

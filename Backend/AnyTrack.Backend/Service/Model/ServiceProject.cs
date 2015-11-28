@@ -61,14 +61,12 @@ namespace AnyTrack.Backend.Service.Model
         /// Gets or sets the list of the scrumMasters' email addresses.
         /// </summary>
         public List<string> ScrumMasterEmailAddresses { get; set; }
-
-        /*
+     
         /// <summary>
         /// Gets or sets Sprints
         /// </summary>
-       public ICollection<Sprint> Sprints { get; set; }
-        */
-
+       public List<ServiceSprint> Sprints { get; set; }
+       
         /// <summary>
         /// Gets or sets Stories
         /// </summary>

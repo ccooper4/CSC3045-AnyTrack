@@ -10,8 +10,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.BackendAccountService;
-using AnyTrack.Projects.BackendProjectService;
-using AnyTrack.Projects.ServiceGateways;
+using AnyTrack.Infrastructure.BackendProjectService;
+using AnyTrack.Infrastructure.ServiceGateways;
 using AnyTrack.SharedUtilities.Extensions;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
@@ -41,6 +41,7 @@ namespace AnyTrack.Projects.Views
         #endregion
 
         #region Constructor
+
         /// <summary>
         /// Creates a new Create Project View Model
         /// </summary>
@@ -53,7 +54,7 @@ namespace AnyTrack.Projects.Views
             emptyProject = this.Tiles.Count == 0;
 
             CreateProjectCommand = new DelegateCommand(AddProjectView);
-            ManageBacklogCommand = new DelegateCommand<ServiceProjectRoleSummary>(ManageBacklogView);
+            ViewProjectOptions = new DelegateCommand<ServiceProjectRoleSummary>(ShowProjectOptions);
         }
         #endregion
 
@@ -89,7 +90,7 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Gets or sets manage backlog command
         /// </summary>
-        public DelegateCommand<ServiceProjectRoleSummary> ManageBacklogCommand { get; set; }
+        public DelegateCommand<ServiceProjectRoleSummary> ViewProjectOptions { get; set; }
 
         #endregion
 
@@ -130,14 +131,14 @@ namespace AnyTrack.Projects.Views
         }
 
         /// <summary>
-        /// Manage Backlog View
+        /// Shows the project options.
         /// </summary>
         /// <param name="summary">The project summary.</param>
-        private void ManageBacklogView(ServiceProjectRoleSummary summary)
+        private void ShowProjectOptions(ServiceProjectRoleSummary summary)
         {
             var navParams = new NavigationParameters();
-            navParams.Add("projectId", summary.ProjectId);
-            NavigateToItem("ProductBacklog", navParams);
+            navParams.Add("projectInfo", summary);
+            this.ShowMetroFlyout("ProjectOptions", navParams);
         }
 
         #endregion

@@ -5,7 +5,11 @@ using System.Threading;
 using System.Windows;
 using AnyTrack.Accounting;
 using AnyTrack.Client.Views;
+using AnyTrack.Infrastructure.BackendProjectService;
+using AnyTrack.Infrastructure.Providers;
 using AnyTrack.Infrastructure.Service;
+using AnyTrack.Infrastructure.ServiceGateways;
+using AnyTrack.PlanningPoker;
 using AnyTrack.Projects;
 using AnyTrack.Sprints;
 using Microsoft.Practices.Unity;
@@ -53,6 +57,7 @@ namespace AnyTrack.Client
             moduleCatalog.AddModule(typeof(AccountingModule));
             moduleCatalog.AddModule(typeof(ProjectModule));
             moduleCatalog.AddModule(typeof(SprintModule));
+            moduleCatalog.AddModule(typeof(PlanningPokerModule));
         }
 
         /// <summary>
@@ -81,8 +86,15 @@ namespace AnyTrack.Client
         {
             base.ConfigureContainer();
 
+            // AnyTrack.Infrastrucutre Service References 
+            this.Container.RegisterType<IProjectService, ProjectServiceClient>(new InjectionConstructor());
+
             // AnyTrack.Infrastructure.Services 
             this.Container.RegisterType<IMenuService, MenuService>(new ContainerControlledLifetimeManager());
+            this.Container.RegisterType<IFlyoutService, FlyoutService>();
+
+            // AnyTrack.Infrastructure.ServiceGateways
+            this.Container.RegisterType<IProjectServiceGateway, ProjectServiceGateway>();
 
             // AnyTrack.Views
             this.Container.RegisterType<object, MainAppArea>("MainAppArea");
