@@ -28,28 +28,30 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="0.73*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="0.73*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="0.73*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
                     <RowDefinition Height="2*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <views:LabelledTextBox Label="Sprint Name" Text="{Binding SprintName}" Grid.Row="0" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Label Grid.Row="0" FontWeight="Bold">Sprint Name*</Label>
+                <TextBox Grid.Row="1" Text="{Binding SprintName}" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-                <Label Grid.Row="1" FontWeight="Bold">Start Date</Label>
-                <DatePicker Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="121" Text="{Binding StartDate}" SelectedDate="{Binding StartDate}"/>
+                <Label Grid.Row="2" FontWeight="Bold">Start Date*</Label>
+                <DatePicker Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="121" Text="{Binding StartDate}" SelectedDate="{Binding StartDate}"/>
 
-                <Label Grid.Row="3" FontWeight="Bold" Margin="0,0,0,10">End Date</Label>
-                <DatePicker Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="121" Text="{Binding EndDate}" SelectedDate="{Binding EndDate}"/>
+                <Label Grid.Row="4" FontWeight="Bold">End Date*</Label>
+                <DatePicker Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="121" Text="{Binding EndDate}" SelectedDate="{Binding EndDate}"/>
 
-                <views:LabelledTextBox Label="Description" Text="{Binding Description}" Grid.Row="5" Grid.RowSpan="2"/>
+                <views:LabelledTextBox Label="Description" Text="{Binding Description}" Grid.Row="6" Grid.RowSpan="2"/>
 
-                <Button Grid.Row="7" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Center" Width="90" Height="27" VerticalAlignment="Bottom" Margin="152,0,246,0" Command="{Binding SaveSprintCommand}">Create Sprint</Button>
-                <Button Grid.Row="7" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Center" Width="70" Height="27" VerticalAlignment="Bottom" Margin="252,0,166,0" Command="{Binding CancelSprintCommand}">Cancel</Button>
+                <Button Grid.Row="8" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Center" Width="90" Height="27" VerticalAlignment="Center" Margin="152,0,246,0" Command="{Binding SaveSprintCommand}">Create Sprint</Button>
+                <Button Grid.Row="8" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Center" Width="70" Height="27" VerticalAlignment="Center" Margin="252,0,166,0" Command="{Binding CancelSprintCommand}">Cancel</Button>
             </Grid>
         </GroupBox>
 

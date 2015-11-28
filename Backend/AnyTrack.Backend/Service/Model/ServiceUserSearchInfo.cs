@@ -25,5 +25,10 @@ namespace AnyTrack.Backend.Service.Model
         /// Gets or sets the email address.
         /// </summary>
         public string EmailAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets the availability the user has on the sprint.
+        /// </summary>
+        public int? Availability { get; set; }
     }
 }
