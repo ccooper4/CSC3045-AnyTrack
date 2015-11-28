@@ -112,11 +112,11 @@ namespace Unit.Modules.AnyTrack.Accounting.Views.RegistrationViewModelTests
         [Test]
         public void TestRegisterUserWithAllFields()
         {
-            NewUser registration = null;
+            ServiceUser registration = null;
 
             var waitObject = new ManualResetEvent(false);
 
-            gateway.RegisterAccount(Arg.Do<NewUser>(r => registration = r));
+            gateway.RegisterAccount(Arg.Do<ServiceUser>(r => registration = r));
             registrationViewModel.MainWindow = Substitute.For<WindowProvider>();
             registrationViewModel.MainWindow.ShowMessageAsync(Arg.Any<string>(), Arg.Any<string>()).Returns(MessageDialogResult.Affirmative);
             registrationViewModel.MainWindow.InvokeAction(Arg.Do<Action>(a => { a(); waitObject.Set(); }));
@@ -178,7 +178,7 @@ namespace Unit.Modules.AnyTrack.Accounting.Views.RegistrationViewModelTests
 
             registrationViewModel.Call("RegisterUser");
 
-            gateway.DidNotReceive().RegisterAccount(Arg.Any<NewUser>());
+            gateway.DidNotReceive().RegisterAccount(Arg.Any<ServiceUser>());
             registrationViewModel.HasErrors.Should().BeTrue();
         }
 

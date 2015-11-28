@@ -19,7 +19,7 @@ namespace Unit.Common.AnyTrack.Infrastructure.Security.ServiceUserPrincipalTests
         [SetUp]
         public void SetUp()
         {
-            principal = new ServiceUserPrincipal(new global::AnyTrack.Infrastructure.BackendAccountService.LoginResult(), "");
+            principal = new ServiceUserPrincipal(new global::AnyTrack.Infrastructure.BackendAccountService.ServiceLoginResult(), "");
         }
     }
 
@@ -34,7 +34,7 @@ namespace Unit.Common.AnyTrack.Infrastructure.Security.ServiceUserPrincipalTests
         [Test]
         public void GetIdentity()
         {
-            var loginResult = new LoginResult { EmailAddress = "test" };
+            var loginResult = new ServiceLoginResult { EmailAddress = "test" };
             var cookie = "test";
 
             principal = new ServiceUserPrincipal(loginResult, cookie);
@@ -53,7 +53,7 @@ namespace Unit.Common.AnyTrack.Infrastructure.Security.ServiceUserPrincipalTests
         [Test]
         public void GetAuthCookie()
         {
-            var loginResult = new LoginResult { EmailAddress = "test" };
+            var loginResult = new ServiceLoginResult { EmailAddress = "test" };
             var cookie = "test";
 
             principal = new ServiceUserPrincipal(loginResult, cookie);
@@ -68,7 +68,7 @@ namespace Unit.Common.AnyTrack.Infrastructure.Security.ServiceUserPrincipalTests
         [Test]
         public void GetFullName()
         {
-            var loginResult = new LoginResult { FirstName = "David", LastName = "Tester" };
+            var loginResult = new ServiceLoginResult { FirstName = "David", LastName = "Tester" };
             var cookie = "test";
 
             principal = new ServiceUserPrincipal(loginResult, cookie);
@@ -84,11 +84,11 @@ namespace Unit.Common.AnyTrack.Infrastructure.Security.ServiceUserPrincipalTests
         public void IsInRoleWhenUserIsInRole()
         {
             var role = "Tester";
-            var loginResult = new LoginResult
+            var loginResult = new ServiceLoginResult
             {
-                AssignedRoles = new List<RoleInfo>()
+                AssignedRoles = new List<ServiceRoleInfo>()
                 {
-                    new RoleInfo { Role = role}
+                    new ServiceRoleInfo { Role = role}
                 }.ToArray()
             };
             var cookie = "test";
@@ -102,11 +102,11 @@ namespace Unit.Common.AnyTrack.Infrastructure.Security.ServiceUserPrincipalTests
         public void IsInRoleWhenUserIsNotInRole()
         {
             var role = "Tester2";
-            var loginResult = new LoginResult
+            var loginResult = new ServiceLoginResult
             {
-                AssignedRoles = new List<RoleInfo>()
+                AssignedRoles = new List<ServiceRoleInfo>()
                 {
-                    new RoleInfo { Role = role}
+                    new ServiceRoleInfo { Role = role}
                 }.ToArray()
             };
             var cookie = "test";

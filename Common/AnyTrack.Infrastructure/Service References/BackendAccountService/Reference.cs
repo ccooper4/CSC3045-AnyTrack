@@ -15,9 +15,9 @@ namespace AnyTrack.Infrastructure.BackendAccountService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="NewUser", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceUser", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
     [System.SerializableAttribute()]
-    public partial class NewUser : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class ServiceUser : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -233,9 +233,9 @@ namespace AnyTrack.Infrastructure.BackendAccountService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UserCredential", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceUserCredential", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
     [System.SerializableAttribute()]
-    public partial class UserCredential : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class ServiceUserCredential : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -294,15 +294,15 @@ namespace AnyTrack.Infrastructure.BackendAccountService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="LoginResult", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceLoginResult", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
     [System.SerializableAttribute()]
-    public partial class LoginResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class ServiceLoginResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private AnyTrack.Infrastructure.BackendAccountService.RoleInfo[] AssignedRolesField;
+        private AnyTrack.Infrastructure.BackendAccountService.ServiceRoleInfo[] AssignedRolesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool DeveloperField;
@@ -336,7 +336,7 @@ namespace AnyTrack.Infrastructure.BackendAccountService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public AnyTrack.Infrastructure.BackendAccountService.RoleInfo[] AssignedRoles {
+        public AnyTrack.Infrastructure.BackendAccountService.ServiceRoleInfo[] AssignedRoles {
             get {
                 return this.AssignedRolesField;
             }
@@ -451,21 +451,21 @@ namespace AnyTrack.Infrastructure.BackendAccountService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="RoleInfo", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceRoleInfo", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
     [System.SerializableAttribute()]
-    public partial class RoleInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class ServiceRoleInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.Guid> ProjectIDField;
+        private System.Nullable<System.Guid> ProjectIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string RoleField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.Guid> SprintIDField;
+        private System.Nullable<System.Guid> SprintIdField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -478,14 +478,14 @@ namespace AnyTrack.Infrastructure.BackendAccountService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.Guid> ProjectID {
+        public System.Nullable<System.Guid> ProjectId {
             get {
-                return this.ProjectIDField;
+                return this.ProjectIdField;
             }
             set {
-                if ((this.ProjectIDField.Equals(value) != true)) {
-                    this.ProjectIDField = value;
-                    this.RaisePropertyChanged("ProjectID");
+                if ((this.ProjectIdField.Equals(value) != true)) {
+                    this.ProjectIdField = value;
+                    this.RaisePropertyChanged("ProjectId");
                 }
             }
         }
@@ -504,14 +504,14 @@ namespace AnyTrack.Infrastructure.BackendAccountService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.Guid> SprintID {
+        public System.Nullable<System.Guid> SprintId {
             get {
-                return this.SprintIDField;
+                return this.SprintIdField;
             }
             set {
-                if ((this.SprintIDField.Equals(value) != true)) {
-                    this.SprintIDField = value;
-                    this.RaisePropertyChanged("SprintID");
+                if ((this.SprintIdField.Equals(value) != true)) {
+                    this.SprintIdField = value;
+                    this.RaisePropertyChanged("SprintId");
                 }
             }
         }
@@ -532,16 +532,16 @@ namespace AnyTrack.Infrastructure.BackendAccountService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccountService/CreateAccount", ReplyAction="http://tempuri.org/IAccountService/CreateAccountResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(AnyTrack.Infrastructure.BackendAccountService.UserAlreadyExistsFault), Action="http://tempuri.org/IAccountService/CreateAccountUserAlreadyExistsFaultFault", Name="UserAlreadyExistsFault", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Faults")]
-        void CreateAccount(AnyTrack.Infrastructure.BackendAccountService.NewUser user);
+        void CreateAccount(AnyTrack.Infrastructure.BackendAccountService.ServiceUser user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccountService/CreateAccount", ReplyAction="http://tempuri.org/IAccountService/CreateAccountResponse")]
-        System.Threading.Tasks.Task CreateAccountAsync(AnyTrack.Infrastructure.BackendAccountService.NewUser user);
+        System.Threading.Tasks.Task CreateAccountAsync(AnyTrack.Infrastructure.BackendAccountService.ServiceUser user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccountService/LogIn", ReplyAction="http://tempuri.org/IAccountService/LogInResponse")]
-        AnyTrack.Infrastructure.BackendAccountService.LoginResult LogIn(AnyTrack.Infrastructure.BackendAccountService.UserCredential credential);
+        AnyTrack.Infrastructure.BackendAccountService.ServiceLoginResult LogIn(AnyTrack.Infrastructure.BackendAccountService.ServiceUserCredential credential);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccountService/LogIn", ReplyAction="http://tempuri.org/IAccountService/LogInResponse")]
-        System.Threading.Tasks.Task<AnyTrack.Infrastructure.BackendAccountService.LoginResult> LogInAsync(AnyTrack.Infrastructure.BackendAccountService.UserCredential credential);
+        System.Threading.Tasks.Task<AnyTrack.Infrastructure.BackendAccountService.ServiceLoginResult> LogInAsync(AnyTrack.Infrastructure.BackendAccountService.ServiceUserCredential credential);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -571,19 +571,19 @@ namespace AnyTrack.Infrastructure.BackendAccountService {
                 base(binding, remoteAddress) {
         }
         
-        public void CreateAccount(AnyTrack.Infrastructure.BackendAccountService.NewUser user) {
+        public void CreateAccount(AnyTrack.Infrastructure.BackendAccountService.ServiceUser user) {
             base.Channel.CreateAccount(user);
         }
         
-        public System.Threading.Tasks.Task CreateAccountAsync(AnyTrack.Infrastructure.BackendAccountService.NewUser user) {
+        public System.Threading.Tasks.Task CreateAccountAsync(AnyTrack.Infrastructure.BackendAccountService.ServiceUser user) {
             return base.Channel.CreateAccountAsync(user);
         }
         
-        public AnyTrack.Infrastructure.BackendAccountService.LoginResult LogIn(AnyTrack.Infrastructure.BackendAccountService.UserCredential credential) {
+        public AnyTrack.Infrastructure.BackendAccountService.ServiceLoginResult LogIn(AnyTrack.Infrastructure.BackendAccountService.ServiceUserCredential credential) {
             return base.Channel.LogIn(credential);
         }
         
-        public System.Threading.Tasks.Task<AnyTrack.Infrastructure.BackendAccountService.LoginResult> LogInAsync(AnyTrack.Infrastructure.BackendAccountService.UserCredential credential) {
+        public System.Threading.Tasks.Task<AnyTrack.Infrastructure.BackendAccountService.ServiceLoginResult> LogInAsync(AnyTrack.Infrastructure.BackendAccountService.ServiceUserCredential credential) {
             return base.Channel.LogInAsync(credential);
         }
     }

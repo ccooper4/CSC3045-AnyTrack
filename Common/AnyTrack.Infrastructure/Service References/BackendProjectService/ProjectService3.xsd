@@ -44,11 +44,11 @@
   <xs:element name="ArrayOfServiceSprintStory" nillable="true" type="tns:ArrayOfServiceSprintStory" />
   <xs:complexType name="ServiceSprintStory">
     <xs:sequence>
+      <xs:element minOccurs="0" name="SprintId" type="ser:guid" />
       <xs:element minOccurs="0" name="SprintStoryId" type="ser:guid" />
       <xs:element minOccurs="0" name="Story" nillable="true" type="tns:ServiceStory" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ServiceSprintStory" nillable="true" type="tns:ServiceSprintStory" />
   <xs:element name="ServiceSprintStory" nillable="true" type="tns:ServiceSprintStory" />
   <xs:complexType name="ServiceStory">
     <xs:sequence>

@@ -20,7 +20,7 @@ namespace Unit.Common.AnyTrack.Infrastructure.Extensions.IPrincipalExtensionsTes
         [SetUp]
         public void SetUp()
         {
-            principal = new ServiceUserPrincipal(new global::AnyTrack.Infrastructure.BackendAccountService.LoginResult(), "test");
+            principal = new ServiceUserPrincipal(new global::AnyTrack.Infrastructure.BackendAccountService.ServiceLoginResult(), "test");
         }
     }
 
@@ -35,7 +35,7 @@ namespace Unit.Common.AnyTrack.Infrastructure.Extensions.IPrincipalExtensionsTes
         public void CallGetAuthCookie()
         {
             var authCookie = "test";
-            principal = new ServiceUserPrincipal(new global::AnyTrack.Infrastructure.BackendAccountService.LoginResult(), authCookie);
+            principal = new ServiceUserPrincipal(new global::AnyTrack.Infrastructure.BackendAccountService.ServiceLoginResult(), authCookie);
 
             principal.GetAuthCookie().Should().Be(authCookie);
         }
@@ -47,7 +47,7 @@ namespace Unit.Common.AnyTrack.Infrastructure.Extensions.IPrincipalExtensionsTes
         [Test]
         public void CallGetFullName()
         {
-            var loginResult = new LoginResult
+            var loginResult = new ServiceLoginResult
             {
                 FirstName = "David",
                 LastName = "Tester"

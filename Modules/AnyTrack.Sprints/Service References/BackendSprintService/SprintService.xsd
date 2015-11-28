@@ -1,47 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Data.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Data.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" />
-  <xs:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Data.Model" />
-  <xs:element name="AddSprint">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="projectId" type="q1:guid" />
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="sprint" nillable="true" type="q2:ServiceSprint" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="AddSprintResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="EditSprint">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sprintId" type="q3:guid" />
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="updatedSprint" nillable="true" type="q4:ServiceSprint" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="EditSprintResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetAllTasksForSprint">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sprintId" type="q5:guid" />
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Data.Model" minOccurs="0" name="assignee" nillable="true" type="q6:User" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetAllTasksForSprintResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetAllTasksForSprintResult" nillable="true" type="q7:ArrayOfServiceTask" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+  <xs:complexType name="User">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Developer" type="xs:boolean" />
+          <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ProductOwner" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Roles" nillable="true" type="tns:ArrayOfRole" />
+          <xs:element minOccurs="0" name="ScrumMaster" type="xs:boolean" />
+          <xs:element minOccurs="0" name="SecretAnswer" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SecretQuestion" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Skills" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="User" nillable="true" type="tns:User" />
+  <xs:complexType name="BaseEntity">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Created" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="Updated" nillable="true" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BaseEntity" nillable="true" type="tns:BaseEntity" />
+  <xs:complexType name="ArrayOfRole">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Role" nillable="true" type="tns:Role" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRole" nillable="true" type="tns:ArrayOfRole" />
+  <xs:complexType name="Role">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ProjectId" type="ser:guid" />
+          <xs:element minOccurs="0" name="RoleName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SprintId" nillable="true" type="ser:guid" />
+          <xs:element minOccurs="0" name="User" nillable="true" type="tns:User" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Role" nillable="true" type="tns:Role" />
+  <xs:complexType name="SprintStory">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Sprint" nillable="true" type="tns:Sprint" />
+          <xs:element minOccurs="0" name="Story" nillable="true" type="tns:Story" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SprintStory" nillable="true" type="tns:SprintStory" />
+  <xs:complexType name="Sprint">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Backlog" nillable="true" type="tns:ArrayOfSprintStory" />
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Project" nillable="true" type="tns:Project" />
+          <xs:element minOccurs="0" name="StartDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Team" nillable="true" type="tns:ArrayOfUser" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Sprint" nillable="true" type="tns:Sprint" />
+  <xs:complexType name="ArrayOfSprintStory">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SprintStory" nillable="true" type="tns:SprintStory" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSprintStory" nillable="true" type="tns:ArrayOfSprintStory" />
+  <xs:complexType name="Project">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ProductOwner" nillable="true" type="tns:User" />
+          <xs:element minOccurs="0" name="ProjectManager" nillable="true" type="tns:User" />
+          <xs:element minOccurs="0" name="ScrumMasters" nillable="true" type="tns:ArrayOfUser" />
+          <xs:element minOccurs="0" name="Sprints" nillable="true" type="tns:ArrayOfSprint" />
+          <xs:element minOccurs="0" name="StartedOn" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Stories" nillable="true" type="tns:ArrayOfStory" />
+          <xs:element minOccurs="0" name="VersionControl" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Project" nillable="true" type="tns:Project" />
+  <xs:complexType name="ArrayOfUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="User" nillable="true" type="tns:User" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUser" nillable="true" type="tns:ArrayOfUser" />
+  <xs:complexType name="ArrayOfSprint">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Sprint" nillable="true" type="tns:Sprint" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSprint" nillable="true" type="tns:ArrayOfSprint" />
+  <xs:complexType name="ArrayOfStory">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Story" nillable="true" type="tns:Story" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfStory" nillable="true" type="tns:ArrayOfStory" />
+  <xs:complexType name="Story">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AsA" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ConditionsOfSatisfaction" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="IWant" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Project" nillable="true" type="tns:Project" />
+          <xs:element minOccurs="0" name="SoThat" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Summary" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Story" nillable="true" type="tns:Story" />
 </xs:schema>

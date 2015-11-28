@@ -18,7 +18,7 @@ namespace AnyTrack.Infrastructure.Security
         /// <summary>
         /// The result of the login operation.
         /// </summary>
-        private readonly LoginResult loginResult;
+        private readonly ServiceLoginResult loginResult;
 
         /// <summary>
         /// The auth cookie. 
@@ -34,7 +34,7 @@ namespace AnyTrack.Infrastructure.Security
         /// </summary>
         /// <param name="result">The login result.</param>
         /// <param name="authCookie">The auth cookie.</param>
-        public ServiceUserPrincipal(LoginResult result, string authCookie)
+        public ServiceUserPrincipal(ServiceLoginResult result, string authCookie)
         {
             this.loginResult = result;
             this.authCookie = authCookie;

@@ -150,7 +150,7 @@
     <None Include="Service References\BackendAccountService\AccountService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\BackendAccountService\AnyTrack.Infrastructure.BackendAccountService.LoginResult.datasource">
+    <None Include="Service References\BackendAccountService\AnyTrack.Infrastructure.BackendAccountService.ServiceLoginResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BackendProjectService\AnyTrack.Infrastructure.BackendProjectService.ServiceProject.datasource">

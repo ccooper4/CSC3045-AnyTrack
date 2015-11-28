@@ -17,13 +17,13 @@ namespace AnyTrack.Accounting.ServiceGateways
         /// Registers an account given the user details.
         /// </summary>
         /// <param name="registration">The registration details.</param>
-        void RegisterAccount(NewUser registration);
+        void RegisterAccount(ServiceUser registration);
 
         /// <summary>
         /// Logins in a user with their provided details
         /// </summary>
         /// <param name="login">The login details.</param>
         /// <returns>The result from the login operation.</returns>
-        LoginResult LoginAccount(UserCredential login);
+        ServiceLoginResult LoginAccount(ServiceUserCredential login);
     }
 }
