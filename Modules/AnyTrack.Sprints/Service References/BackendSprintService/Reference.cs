@@ -1613,6 +1613,12 @@ namespace AnyTrack.Sprints.BackendSprintService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetAllTasksForSprint", ReplyAction="http://tempuri.org/ISprintService/GetAllTasksForSprintResponse")]
         System.Threading.Tasks.Task<AnyTrack.Sprints.BackendSprintService.ServiceTask[]> GetAllTasksForSprintAsync(System.Guid sprintId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/SaveUpdatedTaskHours", ReplyAction="http://tempuri.org/ISprintService/SaveUpdatedTaskHoursResponse")]
+        void SaveUpdatedTaskHours(AnyTrack.Sprints.BackendSprintService.ServiceTask[] tasks);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/SaveUpdatedTaskHours", ReplyAction="http://tempuri.org/ISprintService/SaveUpdatedTaskHoursResponse")]
+        System.Threading.Tasks.Task SaveUpdatedTaskHoursAsync(AnyTrack.Sprints.BackendSprintService.ServiceTask[] tasks);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1664,6 +1670,14 @@ namespace AnyTrack.Sprints.BackendSprintService {
         
         public System.Threading.Tasks.Task<AnyTrack.Sprints.BackendSprintService.ServiceTask[]> GetAllTasksForSprintAsync(System.Guid sprintId) {
             return base.Channel.GetAllTasksForSprintAsync(sprintId);
+        }
+        
+        public void SaveUpdatedTaskHours(AnyTrack.Sprints.BackendSprintService.ServiceTask[] tasks) {
+            base.Channel.SaveUpdatedTaskHours(tasks);
+        }
+        
+        public System.Threading.Tasks.Task SaveUpdatedTaskHoursAsync(AnyTrack.Sprints.BackendSprintService.ServiceTask[] tasks) {
+            return base.Channel.SaveUpdatedTaskHoursAsync(tasks);
         }
     }
 }

@@ -42,4 +42,16 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="SaveUpdatedTaskHours">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="tasks" nillable="true" type="q7:ArrayOfServiceTask" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveUpdatedTaskHoursResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
 </xs:schema>
