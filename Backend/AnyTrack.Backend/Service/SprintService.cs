@@ -201,6 +201,29 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
+        /// Method to save the update hours for tasks
+        /// </summary>
+        /// <param name="tasks">List of tasks to save</param>
+        public void SaveUpdatedTaskHours(List<ServiceTask> tasks)
+        {
+            foreach (var t in tasks)
+            {
+                var task = unitOfWork.TaskRepository.Items.Single(x => x.Id == t.TaskId);
+                var serviceUpdatedHours = t.UpdatedHours.LastOrDefault();
+
+                if (serviceUpdatedHours != null)
+                {
+                    task.UpdatedHours.Add(new UpdatedHours
+                    {
+                        NewEstimate = serviceUpdatedHours.NewEstimate
+                    });
+                }
+            }
+
+            unitOfWork.Commit();
+        }
+
+        /// <summary>
         /// Add a new task to a spptint story.
         /// </summary>
         /// <param name="sprintStoryId">The story to add the task to.</param>

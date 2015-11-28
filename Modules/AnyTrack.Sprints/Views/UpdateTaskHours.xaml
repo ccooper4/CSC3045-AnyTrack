@@ -31,6 +31,8 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            <Button Content="Update Tasks" HorizontalAlignment="Left" Margin="329,291,0,0" VerticalAlignment="Top" Width="81" Command="{Binding SaveTaskHours}"/>
+            <Button Content="Cancel" HorizontalAlignment="Left" Margin="430,291,0,0" VerticalAlignment="Top" Width="75"/>
         </Grid>
     </GroupBox>
 </UserControl>

@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using AnyTrack.Infrastructure;
 using AnyTrack.Sprints.BackendSprintService;
 using AnyTrack.Sprints.ServiceGateways;
+using Prism.Commands;
 
 namespace AnyTrack.Sprints.Views
 {
@@ -41,6 +42,7 @@ namespace AnyTrack.Sprints.Views
             this.serviceGateway = serviceGateway;
             this.Tasks = new ObservableCollection<ServiceTask>();
             Tasks = GetTasksForUser(this.sprintId);
+            UpdateTaskHoursCommand = new DelegateCommand(SaveTaskHours);
         }
 
         #endregion
@@ -54,6 +56,15 @@ namespace AnyTrack.Sprints.Views
 
         #endregion
 
+        #region Commands
+
+        /// <summary>
+        /// Gets or sets a given story to delete from the backlog
+        /// </summary>
+        public DelegateCommand UpdateTaskHoursCommand { get; set; }
+
+        #endregion
+
         #region Methods
 
         /// <summary>
@@ -64,6 +75,13 @@ namespace AnyTrack.Sprints.Views
         private ObservableCollection<ServiceTask> GetTasksForUser(Guid sprintId)
         {
             return new ObservableCollection<ServiceTask>(serviceGateway.GetAllTasksForSprint(sprintId));
+        }
+
+        /// <summary>
+        /// This is the method to save a task hours
+        /// </summary>
+        private void SaveTaskHours()
+        {
         }
 
         #endregion
