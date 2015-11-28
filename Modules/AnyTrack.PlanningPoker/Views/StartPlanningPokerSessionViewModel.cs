@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AnyTrack.Infrastructure;
+using AnyTrack.Infrastructure.BackendProjectService;
+using AnyTrack.Infrastructure.ServiceGateways;
 using AnyTrack.PlanningPoker.ServiceGateways;
 using Prism.Regions;
 
@@ -19,7 +22,17 @@ namespace AnyTrack.PlanningPoker.Views
         /// <summary>
         /// The planning poker service gateway.
         /// </summary>
-        private IPlanningPokerManagerServiceGateway serviceGateway; 
+        private readonly IPlanningPokerManagerServiceGateway serviceGateway;
+
+        /// <summary>
+        /// The project service gateway.
+        /// </summary>
+        private readonly IProjectServiceGateway projectServiceGateway;
+
+        /// <summary>
+        /// The selected project id.
+        /// </summary>
+        private Guid projectId; 
 
         #endregion 
 
@@ -29,19 +42,51 @@ namespace AnyTrack.PlanningPoker.Views
         /// Constructs a new instance of the start planning poker view model with the specified dependencies.
         /// </summary>
         /// <param name="gateway">The service gateway.</param>
-        public StartPlanningPokerSessionViewModel(IPlanningPokerManagerServiceGateway gateway)
+        /// <param name="projectServiceGateway">The project service gateway.</param>
+        public StartPlanningPokerSessionViewModel(IPlanningPokerManagerServiceGateway gateway, IProjectServiceGateway projectServiceGateway)
         {
             if (gateway == null)
             {
                 throw new ArgumentNullException("gateway");
             }
 
+            if (projectServiceGateway == null)
+            {
+                throw new ArgumentNullException("projectServiceGateway"); 
+            }
+
             this.serviceGateway = gateway;
+            this.projectServiceGateway = projectServiceGateway;
+
+            this.Projects = new ObservableCollection<ServiceProjectSummary>();
+            var results = projectServiceGateway.GetProjectNames(true, false, false);
+            this.Projects.AddRange(results);
         }
 
         #endregion 
 
         #region Properties 
+
+        /// <summary>
+        /// Gets or sets the list of projects.
+        /// </summary>
+        public ObservableCollection<ServiceProjectSummary> Projects { get; set; }
+
+        /// <summary>
+        /// Gets or sets the project id.
+        /// </summary>
+        public Guid ProjectId
+        {
+            get
+            {
+                return projectId; 
+            }
+
+            set
+            {
+                SetProperty(ref projectId, value);
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating whether or not this view/view model should be reused.
@@ -74,7 +119,6 @@ namespace AnyTrack.PlanningPoker.Views
         /// <param name="navigationContext">The current navigation context.</param>
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -83,7 +127,6 @@ namespace AnyTrack.PlanningPoker.Views
         /// <param name="navigationContext">The current navigation context.</param>
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            throw new NotImplementedException();
         }
 
         #endregion 
