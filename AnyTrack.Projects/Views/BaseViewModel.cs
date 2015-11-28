@@ -1,6 +1,6 @@
 ﻿using System;
 using AnyTrack.Infrastructure;
-using AnyTrack.Projects.ServiceGateways;
+using AnyTrack.Infrastructure.ServiceGateways;
 
 namespace AnyTrack.Projects.Views
 {

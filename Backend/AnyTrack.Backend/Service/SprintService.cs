@@ -94,8 +94,6 @@ namespace AnyTrack.Backend.Service
             unitOfWork.Commit();
         }
 
-        #endregion
-
         /// <summary>
         /// Edits an exiting sprint.
         /// </summary>
@@ -198,8 +196,10 @@ namespace AnyTrack.Backend.Service
 
             return serviceTasks;
         }
-    
-    #region Helper Methods
+
+        #endregion
+
+        #region Helper Methods
 
         /// <summary>
         /// Retrieves user from database with email address and assigns them as a developer on the sprint.

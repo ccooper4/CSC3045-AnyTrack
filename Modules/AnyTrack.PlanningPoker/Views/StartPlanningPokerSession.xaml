@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="AnyTrack.PlanningPoker.Views.StartPlanningPokerSession"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://www.codeplex.com/prism"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xml:lang="en-GB">
+
+    <Grid Background="LightGray" Margin="0,0,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.75*" />
+            <ColumnDefinition Width="6.75*" MaxWidth="600px"/>
+            <ColumnDefinition Width="1.75*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+
+        <GroupBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" Margin="0, 30px, 0, 10px" >
+            <GroupBox.Header>
+                <TextBlock Foreground="White" Text="Start planning poker session" />
+            </GroupBox.Header>
+            <Grid Background="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    <ColumnDefinition Width="2.5*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                
+                <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical">
+                    <Label>Project:</Label>
+                    <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Projects}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical">
+                    <Label>Sprint:</Label>
+                    <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Sprints}" DisplayMemberPath="SprintName" SelectedValuePath="SprintId" SelectedValue="{Binding SprintId}"/>
+                </StackPanel>
+
+                <StackPanel Margin="0,10,0,10" Grid.Column="1" Grid.Row="2" Orientation="Vertical">
+                    <Button HorizontalAlignment="Center">Begin Poker</Button>
+                </StackPanel>
+
+            </Grid>
+        </GroupBox>
+    </Grid>
+
+</UserControl>

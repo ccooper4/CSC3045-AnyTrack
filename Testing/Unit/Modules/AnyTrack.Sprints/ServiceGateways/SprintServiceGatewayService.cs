@@ -9,6 +9,9 @@ using AnyTrack.Sprints.BackendSprintService;
 using AnyTrack.Sprints.ServiceGateways;
 using NSubstitute;
 using NUnit.Framework;
+using Project = AnyTrack.Sprints.BackendSprintService.Project;
+using Sprint = AnyTrack.Sprints.BackendSprintService.Sprint;
+using User = AnyTrack.Sprints.BackendSprintService.User;
 
 namespace Unit.Modules.AnyTrack.Sprints.ServiceGateways
 {

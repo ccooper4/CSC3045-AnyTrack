@@ -2,7 +2,7 @@
 using AnyTrack.Infrastructure.Service;
 using AnyTrack.Infrastructure.Service.Model;
 using AnyTrack.Projects;
-using AnyTrack.Projects.BackendProjectService;
+using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Projects.Views;
 using Microsoft.Practices.Unity;
 using NSubstitute;
@@ -73,7 +73,6 @@ namespace Unit.Modules.AnyTrack.Projects.ProjectModuleTests
         public void CallInitalize()
         {
             module.Initialize();
-            container.Received().RegisterType<IProjectService, ProjectServiceClient>(Arg.Any<InjectionMember[]>());
             container.Received().RegisterType<object, ProductBacklog>("ProductBacklog");
             container.Received().RegisterType<object, Story>("Story");
             container.Received().RegisterType<object, CreateProject>("Project");
