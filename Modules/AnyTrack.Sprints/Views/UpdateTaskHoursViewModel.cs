@@ -38,7 +38,7 @@ namespace AnyTrack.Sprints.Views
             }
 
             this.serviceGateway = serviceGateway;
-            var results = serviceGateway.GetAllTasksForSprint(new Guid("35892e17-80f6-415f-9c65-7395632f0223"));
+            var results = serviceGateway.GetAllTasksForSprint(new Guid("35892e17-80f6-415f-9c65-7395632f0223"), null);
         }
 
         #endregion

@@ -209,6 +209,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Modules\AnyTrack.Projects\ServiceGateways\" />
+    <Folder Include="Modules\AnyTrack.Sprints\Views\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\AnyTrack.Projects\AnyTrack.Projects.csproj">
       <Project>{8fe42e8f-8e02-4d9c-971b-38e2b07dc83e}</Project>
       <Name>AnyTrack.Projects</Name>
@@ -233,21 +240,18 @@
       <Project>{9f38c80a-2e8c-486f-8054-e235886e1a17}</Project>
       <Name>AnyTrack.Accounting</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Modules\AnyTrack.Sprints\AnyTrack.Sprints.csproj">
-      <Project>{fbb89d79-d4a7-44c7-86a8-3693db4a56f9}</Project>
-      <Name>AnyTrack.Sprints</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Modules\AnyTrack.PlanningPoker\AnyTrack.PlanningPoker.csproj">
       <Project>{593b421b-39f0-4b6b-8b6c-0c0cfde0a758}</Project>
       <Name>AnyTrack.PlanningPoker</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Modules\AnyTrack.Projects\ServiceGateways\" />
-    <Folder Include="Modules\AnyTrack.Sprints\Views\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
+    <ProjectReference Include="..\..\Modules\AnyTrack.Sprints\AnyTrack.Sprints.csproj">
+      <Project>{fbb89d79-d4a7-44c7-86a8-3693db4a56f9}</Project>
+      <Name>AnyTrack.Sprints</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Acceptance\Acceptance.csproj">
+      <Project>{64c40775-ed61-4c4d-ac07-e4acf9526ee6}</Project>
+      <Name>Acceptance</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
