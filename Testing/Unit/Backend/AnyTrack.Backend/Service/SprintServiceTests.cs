@@ -400,7 +400,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service
                 Assignee = userList.FirstOrDefault(),
                 ConditionsOfSatisfaction = "asdsad",
                 Description = "asd",
-                UpdatedHours = new List<UpdatedHours>(),
+                TaskHourEstimates = new List<TaskHourEstimate>(),
                 SprintStory = new SprintStory
                 {
                     Sprint = sprintList.FirstOrDefault(),

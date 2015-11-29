@@ -119,12 +119,13 @@ namespace AnyTrack.Backend.Service
 
             project.Name = updatedProject.Name;
             project.Description = updatedProject.Description;
-            project.StartedOn = project.StartedOn;
+            project.StartedOn = updatedProject.StartedOn;
             project.VersionControl = updatedProject.VersionControl;
 
             // Assign Scrum Master
             if (project.ScrumMasters != null)
             {
+                // Remove no longer present scrum masters
                 foreach (var scrumMaster in project.ScrumMasters)
                 {
                     if (!updatedProject.ScrumMasterEmailAddresses.Contains(scrumMaster.EmailAddress))
@@ -133,6 +134,7 @@ namespace AnyTrack.Backend.Service
                     }
                 }
 
+                // Add new scrum masters
                 foreach (var updatedScrumMasterEmailAddress in updatedProject.ScrumMasterEmailAddresses)
                 {
                     if (!project.ScrumMasters.Contains(MapEmailAddressToUser(updatedScrumMasterEmailAddress)))
@@ -264,7 +266,7 @@ namespace AnyTrack.Backend.Service
                                     AsA = sprintStory.Story.AsA,
                                     IWant = sprintStory.Story.IWant,
                                     SoThat = sprintStory.Story.IWant
-                                }                              
+                                }                             
                             });
                         }
                     }

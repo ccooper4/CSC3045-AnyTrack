@@ -19,7 +19,7 @@ namespace AnyTrack.Backend.Service.Model
         /// </summary>
         public ServiceTask()
         {
-            UpdatedHours = new List<ServiceUpdatedHours>();
+            TaskHourEstimates = new List<ServiceTaskHourEstimate>();
             TaskId = new Guid();
         }
 
@@ -33,7 +33,7 @@ namespace AnyTrack.Backend.Service.Model
         /// <summary>
         /// Gets or sets the story this task is part of.
         /// </summary>
-        public SprintStory SprintStory { get; set; }
+        public ServiceSprintStory SprintStory { get; set; }
 
         /// <summary>
         /// Gets or sets the Conditions Of Satisfaction
@@ -61,11 +61,6 @@ namespace AnyTrack.Backend.Service.Model
         public ServiceUser Tester { get; set; }
 
         /// <summary>
-        /// Gets or sets the Hours Remaining
-        /// </summary>
-        public double HoursRemaining { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether task is blocked or not
         /// </summary>
         public bool Blocked { get; set; }
@@ -73,6 +68,6 @@ namespace AnyTrack.Backend.Service.Model
         /// <summary>
         /// Gets or sets the task's updated hours
         /// </summary>
-        public ICollection<ServiceUpdatedHours> UpdatedHours { get; set; }
+        public ICollection<ServiceTaskHourEstimate> TaskHourEstimates { get; set; }
     }
 }

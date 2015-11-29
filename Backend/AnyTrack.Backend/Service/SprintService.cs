@@ -167,32 +167,53 @@ namespace AnyTrack.Backend.Service
         {
             var userEmail = Thread.CurrentPrincipal.Identity.Name;
             var user = MapEmailAddressToUser(userEmail);
-            var tasks = unitOfWork.TaskRepository.Items.Where(s => s.SprintStory.Sprint.Id == sprintId).Where(u => u.Assignee == user).ToList();
+            var tasks = unitOfWork.TaskRepository.Items.Where(t => t.SprintStory.Sprint.Id == sprintId).Where(u => u.Assignee == user).ToList();
 
             List<ServiceTask> serviceTasks = new List<ServiceTask>();
-            foreach (var t in tasks)
+            foreach (var dataTask in tasks)
             {
-                ServiceTask task = new ServiceTask
+                ServiceStory serviceStory = new ServiceStory()
                 {
-                    Blocked = t.Blocked,
-                    ConditionsOfSatisfaction = t.ConditionsOfSatisfaction,
-                    Description = t.Description,
-                    HoursRemaining = t.HoursRemaining,
-                    SprintStory = t.SprintStory,
-                    Summary = t.Summary,
-                    TaskId = t.Id
+                    Summary = dataTask.SprintStory.Story.Summary,
+                    ConditionsOfSatisfaction = dataTask.SprintStory.Story.ConditionsOfSatisfaction,
+                    SoThat = dataTask.SprintStory.Story.SoThat,
+                    AsA = dataTask.SprintStory.Story.AsA,
+                    IWant = dataTask.SprintStory.Story.IWant,
+                    ProjectId = dataTask.SprintStory.Story.Project.Id,
+                    StoryId = dataTask.SprintStory.Story.Id,
                 };
 
-                foreach (var u in t.UpdatedHours)
+                ServiceSprintStory serviceSprintStory = new ServiceSprintStory()
                 {
-                    ServiceUpdatedHours updatedHours = new ServiceUpdatedHours
+                    Story = serviceStory,
+                    SprintId = sprintId
+                };
+
+                var remainingTaskHours =
+                    unitOfWork.TaskHourEstimateRepository.Items.Where(t => t.Id == dataTask.Id).ToList();
+
+                List<ServiceTaskHourEstimate> serviceRemainingTaskHours = new List<ServiceTaskHourEstimate>();
+                foreach (var dataRemainingTaskHours in remainingTaskHours)
+                {
+                    ServiceTaskHourEstimate serviceTaskHourEstimate = new ServiceTaskHourEstimate()
                     {
-                        LogEstimate = u.LogEstimate,
-                        UpdatedHoursId = u.Id,
-                        NewEstimate = u.NewEstimate
+                        Estimate = dataRemainingTaskHours.Estimate,
+                        TaskId = dataTask.Id
                     };
-                    task.UpdatedHours.Add(updatedHours);
+
+                    serviceRemainingTaskHours.Add(serviceTaskHourEstimate);
                 }
+                
+                ServiceTask task = new ServiceTask
+                {
+                    Blocked = dataTask.Blocked,
+                    ConditionsOfSatisfaction = dataTask.ConditionsOfSatisfaction,
+                    Description = dataTask.Description,
+                    TaskHourEstimates = serviceRemainingTaskHours,
+                    SprintStory = serviceSprintStory,
+                    Summary = dataTask.Summary,
+                    TaskId = dataTask.Id
+                };
 
                 serviceTasks.Add(task);
             }
@@ -209,13 +230,13 @@ namespace AnyTrack.Backend.Service
             foreach (var t in tasks)
             {
                 var task = unitOfWork.TaskRepository.Items.Single(x => x.Id == t.TaskId);
-                var serviceUpdatedHours = t.UpdatedHours.LastOrDefault();
+                var serviceUpdatedHours = t.TaskHourEstimates.LastOrDefault();
 
                 if (serviceUpdatedHours != null)
                 {
-                    task.UpdatedHours.Add(new UpdatedHours
+                    task.TaskHourEstimates.Add(new TaskHourEstimate
                     {
-                        NewEstimate = serviceUpdatedHours.NewEstimate
+                        Estimate = serviceUpdatedHours.Estimate
                     });
                 }
             }
@@ -224,7 +245,7 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
-        /// Add a new task to a spptint story.
+        /// Add a new task to a sprint story.
         /// </summary>
         /// <param name="sprintStoryId">The story to add the task to.</param>
         /// <param name="serviceTask">The task to add.</param>
@@ -248,14 +269,6 @@ namespace AnyTrack.Backend.Service
 
             DateTime now = DateTime.Now;
 
-            UpdatedHours newHour = new UpdatedHours()
-            {
-                NewEstimate = serviceTask.HoursRemaining
-            };
-
-            ICollection<UpdatedHours> updatedHours = new List<UpdatedHours>();
-            updatedHours.Add(newHour);
-
             Task task = new Task()
             {
                 Assignee = assignee,
@@ -263,10 +276,8 @@ namespace AnyTrack.Backend.Service
                 Blocked = serviceTask.Blocked,
                 ConditionsOfSatisfaction = serviceTask.ConditionsOfSatisfaction,
                 Description = serviceTask.Description,
-                HoursRemaining = serviceTask.HoursRemaining,
                 Summary = serviceTask.Summary,
                 Updated = now,
-                UpdatedHours = updatedHours
             };
         }
 

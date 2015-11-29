@@ -9,7 +9,7 @@ namespace AnyTrack.Backend.Migrations
         public override void Up()
         {
             CreateTable(
-                "dbo.UpdatedHours",
+                "dbo.TaskHourEstimate",
                 c => new
                     {
                         Id = c.Guid(nullable: false),
@@ -27,9 +27,9 @@ namespace AnyTrack.Backend.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.UpdatedHours", "Task_Id", "dbo.Tasks");
-            DropIndex("dbo.UpdatedHours", new[] { "Task_Id" });
-            DropTable("dbo.UpdatedHours");
+            DropForeignKey("dbo.TaskHourEstimate", "Task_Id", "dbo.Tasks");
+            DropIndex("dbo.TaskHourEstimate", new[] { "Task_Id" });
+            DropTable("dbo.TaskHourEstimate");
         }
     }
 }
