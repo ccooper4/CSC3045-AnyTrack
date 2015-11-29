@@ -18,7 +18,6 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using AnyTrack.Backend.Faults;
 using AnyTrack.Backend.Security;
-using AnyTrack.Infrastructure.BackendAccountService;
 using AnyTrack.Infrastructure.Security;
 using Project = AnyTrack.Backend.Data.Model.Project;
 

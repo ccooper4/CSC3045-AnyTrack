@@ -7,7 +7,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Windows;
 using AnyTrack.Infrastructure;
-using AnyTrack.Infrastructure.BackendAccountService;
 using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.ServiceGateways;
 using MahApps.Metro.Controls;

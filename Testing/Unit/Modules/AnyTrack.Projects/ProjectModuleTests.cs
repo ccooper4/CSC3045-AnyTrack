@@ -2,7 +2,6 @@
 using AnyTrack.Infrastructure.Service;
 using AnyTrack.Infrastructure.Service.Model;
 using AnyTrack.Projects;
-using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Projects.Views;
 using Microsoft.Practices.Unity;
 using NSubstitute;

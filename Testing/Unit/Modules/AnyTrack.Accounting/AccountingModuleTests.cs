@@ -2,7 +2,6 @@
 using AnyTrack.Accounting.ServiceGateways;
 using AnyTrack.Accounting.Views;
 using AnyTrack.Infrastructure;
-using AnyTrack.Infrastructure.BackendAccountService;
 using AnyTrack.Infrastructure.Service;
 using AnyTrack.Infrastructure.Service.Model;
 using Microsoft.Practices.Unity;
@@ -14,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AnyTrack.Infrastructure.BackendAccountService;
 
 namespace Unit.Modules.AnyTrack.Accounting.AccountingModuleTests
 {

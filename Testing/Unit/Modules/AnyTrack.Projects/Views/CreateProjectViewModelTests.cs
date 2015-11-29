@@ -9,15 +9,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
-using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.Providers;
 using System.Collections.ObjectModel;
 using AnyTrack.Infrastructure.Security;
-using AnyTrack.Infrastructure.BackendAccountService;
 using MahApps.Metro.Controls.Dialogs;
 using AnyTrack.SharedUtilities.Extensions;
 using System.Security.Principal;
 using AnyTrack.Infrastructure;
+using AnyTrack.Infrastructure.BackendAccountService;
+using AnyTrack.Infrastructure.BackendProjectService;
 
 namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
 {

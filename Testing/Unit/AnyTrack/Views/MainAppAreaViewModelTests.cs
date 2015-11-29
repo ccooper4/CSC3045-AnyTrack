@@ -12,9 +12,9 @@ using FluentAssertions;
 using AnyTrack.Infrastructure.Service.Model;
 using System.Collections.ObjectModel;
 using System.Threading;
-using AnyTrack.Infrastructure.BackendAccountService;
 using AnyTrack.Infrastructure.Security;
 using AnyTrack.Infrastructure;
+using AnyTrack.Infrastructure.BackendAccountService;
 
 namespace Unit.AnyTrack.Views.MainAppAreaViewModelTests
 {

@@ -6,6 +6,7 @@ using System.Windows;
 using AnyTrack.Accounting;
 using AnyTrack.Client.Views;
 using AnyTrack.Infrastructure.BackendProjectService;
+using AnyTrack.Infrastructure.BackendSprintService;
 using AnyTrack.Infrastructure.Providers;
 using AnyTrack.Infrastructure.Service;
 using AnyTrack.Infrastructure.ServiceGateways;
@@ -88,6 +89,7 @@ namespace AnyTrack.Client
 
             // AnyTrack.Infrastrucutre Service References 
             this.Container.RegisterType<IProjectService, ProjectServiceClient>(new InjectionConstructor());
+            this.Container.RegisterType<ISprintService, SprintServiceClient>(new InjectionConstructor());
 
             // AnyTrack.Infrastructure.Services 
             this.Container.RegisterType<IMenuService, MenuService>(new ContainerControlledLifetimeManager());
@@ -95,6 +97,7 @@ namespace AnyTrack.Client
 
             // AnyTrack.Infrastructure.ServiceGateways
             this.Container.RegisterType<IProjectServiceGateway, ProjectServiceGateway>();
+            this.Container.RegisterType<ISprintServiceGateway, SprintServiceGateway>();
 
             // AnyTrack.Views
             this.Container.RegisterType<object, MainAppArea>("MainAppArea");

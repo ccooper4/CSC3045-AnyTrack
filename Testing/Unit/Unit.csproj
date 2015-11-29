@@ -200,7 +200,7 @@
     <Compile Include="Modules\AnyTrack.Projects\Views\ProductBacklogViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Views\ProjectOptionsViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Views\StoryViewModelTests.cs" />
-    <Compile Include="Modules\AnyTrack.Sprints\ServiceGateways\SprintServiceGatewayService.cs" />
+    <Compile Include="Common\AnyTrack.Infrastructure\ServiceGateways\SprintServiceGatewayService.cs" />
     <Compile Include="Modules\AnyTrack.Sprints\SprintModuleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

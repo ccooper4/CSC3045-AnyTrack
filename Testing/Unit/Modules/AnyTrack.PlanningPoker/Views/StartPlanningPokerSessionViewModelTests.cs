@@ -9,8 +9,8 @@ using NSubstitute;
 using AnyTrack.PlanningPoker.Views;
 using AnyTrack.PlanningPoker.ServiceGateways;
 using Prism.Regions;
-using AnyTrack.Infrastructure.ServiceGateways;
 using AnyTrack.Infrastructure.BackendProjectService;
+using AnyTrack.Infrastructure.ServiceGateways;
 
 namespace Unit.Modules.AnyTrack.PlanningPoker.Views.StartPlanningPokerSessionViewModelTests
 {

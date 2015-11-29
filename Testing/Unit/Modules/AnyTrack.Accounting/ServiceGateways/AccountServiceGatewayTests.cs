@@ -1,7 +1,6 @@
 ﻿using AnyTrack.Accounting.ServiceGateways;
 using AnyTrack.Accounting.ServiceGateways.Models;
 using AnyTrack.Infrastructure;
-using AnyTrack.Infrastructure.BackendAccountService;
 using AnyTrack.Infrastructure.Security;
 using FluentAssertions;
 using Microsoft.Practices.Unity;
@@ -15,6 +14,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using AnyTrack.Infrastructure.BackendAccountService;
 
 namespace Unit.Modules.AnyTrack.Accounting.ServiceGateways.AccountServiceGatewayTests
 {

@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.CustomValidationAttributes;
+using AnyTrack.Infrastructure.ServiceGateways;
 using AnyTrack.SharedUtilities.Extensions;
-using AnyTrack.Sprints.ServiceGateways;
 using MahApps.Metro.Controls.Dialogs;
 using Prism.Commands;
 using Prism.Regions;
-using ServiceSprint = AnyTrack.Sprints.BackendSprintService.ServiceSprint;
+using ServiceSprint = AnyTrack.Infrastructure.BackendSprintService.ServiceSprint;
 
 namespace AnyTrack.Sprints.Views
 {

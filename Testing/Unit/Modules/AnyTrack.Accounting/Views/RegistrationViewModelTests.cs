@@ -20,8 +20,8 @@ using System.Windows.Threading;
 using MahApps.Metro.Controls.Dialogs;
 using System.ServiceModel;
 using AnyTrack.Backend.Faults;
-using AnyTrack.Infrastructure.BackendAccountService;
 using System.Collections.ObjectModel;
+using AnyTrack.Infrastructure.BackendAccountService;
 
 namespace Unit.Modules.AnyTrack.Accounting.Views.RegistrationViewModelTests
 {

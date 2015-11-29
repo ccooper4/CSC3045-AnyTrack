@@ -5,7 +5,6 @@ using AnyTrack.PlanningPoker;
 using AnyTrack.PlanningPoker.BackendPlanningPokerManagerService;
 using AnyTrack.PlanningPoker.ServiceGateways;
 using AnyTrack.Projects;
-using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Projects.Views;
 using Microsoft.Practices.Unity;
 using NSubstitute;

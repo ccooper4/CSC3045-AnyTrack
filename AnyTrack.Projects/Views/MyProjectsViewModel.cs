@@ -9,7 +9,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using AnyTrack.Infrastructure;
-using AnyTrack.Infrastructure.BackendAccountService;
 using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.ServiceGateways;
 using AnyTrack.SharedUtilities.Extensions;

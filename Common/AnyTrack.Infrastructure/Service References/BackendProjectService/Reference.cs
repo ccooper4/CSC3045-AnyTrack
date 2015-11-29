@@ -227,6 +227,9 @@ namespace AnyTrack.Infrastructure.BackendProjectService {
         private string NameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid ProjectIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid SprintIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -306,6 +309,19 @@ namespace AnyTrack.Infrastructure.BackendProjectService {
                 if ((object.ReferenceEquals(this.NameField, value) != true)) {
                     this.NameField = value;
                     this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid ProjectId {
+            get {
+                return this.ProjectIdField;
+            }
+            set {
+                if ((this.ProjectIdField.Equals(value) != true)) {
+                    this.ProjectIdField = value;
+                    this.RaisePropertyChanged("ProjectId");
                 }
             }
         }
@@ -587,6 +603,9 @@ namespace AnyTrack.Infrastructure.BackendProjectService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> DeveloperField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string EmailAddressField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -595,6 +614,15 @@ namespace AnyTrack.Infrastructure.BackendProjectService {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<bool> ScrumMasterField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<string> SkillsetField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> SprintEndingDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> SprintStartingDateField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -602,6 +630,19 @@ namespace AnyTrack.Infrastructure.BackendProjectService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<bool> Developer {
+            get {
+                return this.DeveloperField;
+            }
+            set {
+                if ((this.DeveloperField.Equals(value) != true)) {
+                    this.DeveloperField = value;
+                    this.RaisePropertyChanged("Developer");
+                }
             }
         }
         
@@ -644,6 +685,45 @@ namespace AnyTrack.Infrastructure.BackendProjectService {
             }
         }
         
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<string> Skillset {
+            get {
+                return this.SkillsetField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SkillsetField, value) != true)) {
+                    this.SkillsetField = value;
+                    this.RaisePropertyChanged("Skillset");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> SprintEndingDate {
+            get {
+                return this.SprintEndingDateField;
+            }
+            set {
+                if ((this.SprintEndingDateField.Equals(value) != true)) {
+                    this.SprintEndingDateField = value;
+                    this.RaisePropertyChanged("SprintEndingDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> SprintStartingDate {
+            get {
+                return this.SprintStartingDateField;
+            }
+            set {
+                if ((this.SprintStartingDateField.Equals(value) != true)) {
+                    this.SprintStartingDateField = value;
+                    this.RaisePropertyChanged("SprintStartingDate");
+                }
+            }
+        }
+        
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
@@ -664,6 +744,9 @@ namespace AnyTrack.Infrastructure.BackendProjectService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> AvailabilityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string EmailAddressField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -679,6 +762,19 @@ namespace AnyTrack.Infrastructure.BackendProjectService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> Availability {
+            get {
+                return this.AvailabilityField;
+            }
+            set {
+                if ((this.AvailabilityField.Equals(value) != true)) {
+                    this.AvailabilityField = value;
+                    this.RaisePropertyChanged("Availability");
+                }
             }
         }
         
