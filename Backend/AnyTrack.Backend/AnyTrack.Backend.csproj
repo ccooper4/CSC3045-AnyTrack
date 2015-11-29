@@ -193,6 +193,10 @@
     <Compile Include="Migrations\201511261131578_Adding Updated Hours.Designer.cs">
       <DependentUpon>201511261131578_Adding Updated Hours.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511292151312_Change to task.cs" />
+    <Compile Include="Migrations\201511292151312_Change to task.Designer.cs">
+      <DependentUpon>201511292151312_Change to task.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Model\BaseEntity.cs" />
@@ -281,6 +285,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511261131578_Adding Updated Hours.resx">
       <DependentUpon>201511261131578_Adding Updated Hours.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511292151312_Change to task.resx">
+      <DependentUpon>201511292151312_Change to task.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
