@@ -82,8 +82,9 @@ namespace AnyTrack.Sprints
             container.RegisterType<ISprintServiceGateway, SprintServiceGateway>();
 
             container.RegisterType<object, CreateSprint>("CreateSprint");
+            container.RegisterType<object, SprintManager>("SprintManager");
 
-            menuService.AddMenuItem(new MenuItem { Color = "Gray", Title = "Sprints", NavigationViewName = "CreateSprint" });
+            menuService.AddMenuItem(new MenuItem { Color = "Gray", Title = "Sprints", NavigationViewName = "SprintManager" });
         }
 
         #endregion 

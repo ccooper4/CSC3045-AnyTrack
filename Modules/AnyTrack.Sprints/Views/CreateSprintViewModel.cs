@@ -13,6 +13,7 @@ using AnyTrack.SharedUtilities.Extensions;
 using AnyTrack.Sprints.ServiceGateways;
 using MahApps.Metro.Controls.Dialogs;
 using Prism.Commands;
+using Prism.Regions;
 using ServiceSprint = AnyTrack.Sprints.BackendSprintService.ServiceSprint;
 
 namespace AnyTrack.Sprints.Views
@@ -20,7 +21,7 @@ namespace AnyTrack.Sprints.Views
     /// <summary>
     ///  The view model for the Create Sprint View.
     /// </summary>
-    public class CreateSprintViewModel : ValidatedBindableBase
+    public class CreateSprintViewModel : ValidatedBindableBase, INavigationAware
     {
         #region Fields
 
@@ -54,6 +55,11 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         private List<string> teamMemberEmailAddresses;
 
+        /// <summary>
+        /// The id of the project the sprint will be added to.
+        /// </summary>
+        private Guid projectId;
+
         #endregion
 
         #region Constructor
@@ -76,18 +82,11 @@ namespace AnyTrack.Sprints.Views
 
             SaveSprintCommand = new DelegateCommand(SaveSprint);
             CancelSprintCommand = new DelegateCommand(CancelSprintCreation);
-
-            ProjectId = new Guid("3fecb5d2-cb26-4efe-bb67-5eeb6bff38cd");
         }
 
         #endregion
 
         #region Properties
-
-        /// <summary>
-        /// Gets or sets the project id the sprint will be added to.
-        /// </summary>
-        public Guid ProjectId { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the sprint.
@@ -168,6 +167,36 @@ namespace AnyTrack.Sprints.Views
         #region Methods
 
         /// <summary>
+        /// Handles the Is Navigation target event. 
+        /// </summary>
+        /// <param name="navigationContext">The navigation context.</param>
+        /// <returns>A true or false value indicating if this viewmodel can handle the navigation request.</returns>
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Handles the on navigated from event. 
+        /// </summary>
+        /// <param name="navigationContext">The navigation context.</param>
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+        }
+
+        /// <summary>
+        /// Handles the navigated to.
+        /// </summary>
+        /// <param name="navigationContext">The navigation context.</param>
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            if (navigationContext.Parameters.ContainsKey("projectId"))
+            {
+                projectId = (Guid)navigationContext.Parameters["projectId"];
+            }
+        }
+
+        /// <summary>
         /// Saves a sprint to the database.
         /// </summary>
         private void SaveSprint()
@@ -192,7 +221,6 @@ namespace AnyTrack.Sprints.Views
                 TeamEmailAddresses = new List<string>()
             };
             
-            //// |TAKE THIS OUT LATER! ///////
             if (SelectedDevelopers == null)
             {
                 SelectedDevelopers = new ObservableCollection<ServiceUserSearchInfo>();
@@ -203,9 +231,9 @@ namespace AnyTrack.Sprints.Views
                 sprint.TeamEmailAddresses.AddRange(SelectedDevelopers.Select(d => d.EmailAddress).ToList());
             }
 
-            serviceGateway.AddSprint(ProjectId, sprint);
+            serviceGateway.AddSprint(projectId, sprint);
             ShowMetroDialog("Save Successful", "Your sprint {0} has been saved successfully.".Substitute(sprintName));
-            NavigateToItem("MySprints");
+            NavigateToItem("SprintManager");
         }
 
         /// <summary>
@@ -217,7 +245,7 @@ namespace AnyTrack.Sprints.Views
             {
                 if (mdr == MessageDialogResult.Affirmative)
                 {
-                    NavigateToItem("MySprints");
+                    NavigateToItem("SprintManager");
                 }
             });
 

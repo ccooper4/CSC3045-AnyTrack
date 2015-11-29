@@ -512,7 +512,7 @@ namespace AnyTrack.Backend.Service
                     Developer = tempRoles.Contains("Developer")
                 };
 
-                if (summary.Developer)
+                if (summary.Developer && !summary.ProjectManager && !summary.ProductOwner && !summary.ScrumMaster)
                 {
                     var sprintIds =
                         loggedInUser.Roles.Where(r => r.ProjectId == projectId && r.RoleName == "Developer")
@@ -526,6 +526,18 @@ namespace AnyTrack.Backend.Service
                         summary.Sprints.Add(new ServiceSprintSummary()
                         {
                             SprintId = (Guid)sprintId,
+                            Name = sprint.Name,
+                            Description = sprint.Description
+                        });
+                    }
+                }
+                else
+                {
+                    foreach (var sprint in project.Sprints)
+                    {
+                        summary.Sprints.Add(new ServiceSprintSummary()
+                        {
+                            SprintId = sprint.Id,
                             Name = sprint.Name,
                             Description = sprint.Description
                         });
