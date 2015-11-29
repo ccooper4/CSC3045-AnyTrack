@@ -11,6 +11,7 @@ using AnyTrack.Projects;
 using AnyTrack.Projects.Views;
 using AnyTrack.Sprints;
 using AnyTrack.Infrastructure.BackendSprintService;
+using AnyTrack.Sprints.Views;
 using Microsoft.Practices.Unity;
 using NSubstitute;
 using NUnit.Framework;
@@ -73,8 +74,8 @@ namespace Unit.Modules.AnyTrack.Sprints
         public void CallInitalize()
         {
             module.Initialize();
-            container.Received().RegisterType<ISprintService, SprintServiceClient>(Arg.Any<InjectionMember[]>());
-            container.Received().RegisterType<ISprintServiceGateway, SprintServiceGateway>();
+            container.Received().RegisterType<object, CreateSprint>("CreateSprint");
+            container.Received().RegisterType<object, SprintManager>("SprintManager");
 
             menuService.Received().AddMenuItem(Arg.Any<MenuItem>());
 

@@ -773,7 +773,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
 
         #endregion
 
-        #region List<ProjectRoleSummary> GetUserProjectRoleSummaries(string currentUserEmailAddress)
+        #region List<ProjectRoleSummary> GetUserProjectRoleSummariesPoAndDev(string currentUserEmailAddress)
 
         [Test]
         public void GetUserProjectRoleSummary()
@@ -956,11 +956,192 @@ namespace Unit.Backend.AnyTrack.Backend.Service.ProjectServiceTests
             result[0].ProductOwner.Should().BeFalse();
             result[0].ProjectManager.Should().BeTrue();
             result[0].ScrumMaster.Should().BeTrue();
-            result[0].Sprints.Count.Should().Be(2);
+            result[0].Sprints.Count.Should().Be(3);
             result[1].Name.Should().Be("Project2");
             result[1].Description.Should().Be("This is a new project2");
             result[1].Developer.Should().BeTrue();
             result[1].ProductOwner.Should().BeTrue();
+            result[1].ProjectManager.Should().BeFalse();
+            result[1].ScrumMaster.Should().BeFalse();
+            result[1].Sprints.Count.Should().Be(1);
+        }
+
+        [Test]
+        public void GetUserProjectRoleSummaryJustDeveloperInTwoSprints()
+        {
+            #region Test Data
+
+            List<User> users = new List<User>()
+            {
+                #region User Data
+                new User()
+                {
+                    EmailAddress = "tester@agile.local",
+                    FirstName = "John",
+                    LastName = "Test",
+                    Password = "Password",
+                    Developer = true,
+                    ProductOwner = true,
+                    ScrumMaster = true,
+                    Skills = "C#, Java",
+                    SecretQuestion = "Where do you live?",
+                    SecretAnswer = "At Home"
+                }
+                #endregion
+            };
+
+            List<Role> roles = new List<Role>();
+
+            users[0].Roles = roles;
+
+            List<Project> projects = new List<Project>()
+            {
+                #region Project Data
+                new Project
+                {
+                    Id = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    Name = "Project",
+                    Description = "This is a new project",
+                    VersionControl = "queens.git",
+                    ProjectManager = new User
+                    {
+                        EmailAddress = "p@hotmail.com",
+                        FirstName = "John",
+                        LastName = "Test",
+                        Password = "Password",
+                        Developer = false,
+                        ProductOwner = false,
+                        ScrumMaster = false,
+                        Skills = "C#, Java",
+                        SecretQuestion = "Where do you live?",
+                        SecretAnswer = "At Home"
+                    },
+                    StartedOn = DateTime.Today
+                },
+                new Project
+                {
+                    Id = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
+                    Name = "Project2",
+                    Description = "This is a new project2",
+                    VersionControl = "queens.git",
+                    ProjectManager = new User
+                    {
+                        EmailAddress = "p@hotmail.com",
+                        FirstName = "John",
+                        LastName = "Test",
+                        Password = "Password",
+                        Developer = false,
+                        ProductOwner = false,
+                        ScrumMaster = false,
+                        Skills = "C#, Java",
+                        SecretQuestion = "Where do you live?",
+                        SecretAnswer = "At Home"
+                    },
+                    ProductOwner = users[0],
+                    StartedOn = DateTime.Today
+                }
+                #endregion
+            };
+
+            List<Sprint> sprints = new List<Sprint>()
+            {
+                #region Sprint Data
+                new Sprint()
+                {
+                    Id = new Guid("00000000-5566-7788-99AA-BBCCDDEEFFFF"),
+                    Name = "Sprint 1",
+                    StartDate = new DateTime(2015, 11, 26),
+                    EndDate = new DateTime(2015, 12, 3),
+                    Description = "Sprint Time",
+                    Team = new List<User>(){users[0]},
+                },
+                new Sprint()
+                {
+                    Id = new Guid("00000001-5566-7788-99AA-BBCCDDEEFFFF"),
+                    Name = "Sprint 2",
+                    StartDate = new DateTime(2015, 12, 20),
+                    EndDate = new DateTime(2015, 12, 30),
+                    Description = "Sprint 2 time",
+                    Team = new List<User>(){users[0]}
+                },
+                 new Sprint()
+                {
+                    Id = new Guid("00000002-5566-7788-99AA-BBCCDDEEFFFF"),
+                    Name = "Sprint 3",
+                    StartDate = new DateTime(2016, 1, 1),
+                    EndDate = new DateTime(2016, 1, 10),
+                    Description = "Sprint 3 time",
+                    Team = new List<User>()
+                },
+                new Sprint()
+                {
+                    Id = new Guid("00000003-5566-7788-99AA-BBCCDDEEFFFF"),
+                    Name = "Sprint 1",
+                    StartDate = new DateTime(2016, 1, 1),
+                    EndDate = new DateTime(2016, 1, 10),
+                    Description = "Sprint 1 time",
+                    Team = new List<User>()
+                }
+                #endregion
+            };
+
+            #region Adding entities
+            users[0].Roles.Add(new Role()
+            {
+                ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                RoleName = "Developer",
+                User = users[0],
+                SprintId = new Guid("00000000-5566-7788-99AA-BBCCDDEEFFFF")
+            });
+
+            users[0].Roles.Add(new Role()
+            {
+                ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                RoleName = "Developer",
+                User = users[0],
+                SprintId = new Guid("00000001-5566-7788-99AA-BBCCDDEEFFFF")
+            });
+
+            users[0].Roles.Add(new Role()
+            {
+                ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFFFF"),
+                RoleName = "Developer",
+                User = users[0],
+                SprintId = new Guid("00000003-5566-7788-99AA-BBCCDDEEFFFF")
+            });
+
+            projects[0].Sprints = new List<Sprint>() { sprints[0], sprints[1], sprints[2] };
+            projects[1].Sprints = new List<Sprint>() { sprints[3] };
+
+            projects[0].ScrumMasters = new List<User>() { users[0] };
+
+            #endregion
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(users[0]);
+
+            #endregion
+
+            unitOfWork.UserRepository.Items.Returns(users.AsQueryable());
+            unitOfWork.RoleRepository.Items.Returns(roles.AsQueryable());
+            unitOfWork.ProjectRepository.Items.Returns(projects.AsQueryable());
+            unitOfWork.SprintRepository.Items.Returns(sprints.AsQueryable());
+
+            var result = service.GetUserProjectRoleSummaries("tester@agile.local");
+
+            result.Should().NotBeNull();
+            result.Count.Should().Be(2);
+            result[0].ProjectId.Should().Be("11223344-5566-7788-99AA-BBCCDDEEFF00");
+            result[0].Name.Should().Be("Project");
+            result[0].Description.Should().Be("This is a new project");
+            result[0].Developer.Should().BeTrue();
+            result[0].ProductOwner.Should().BeFalse();
+            result[0].ProjectManager.Should().BeFalse();
+            result[0].ScrumMaster.Should().BeFalse();
+            result[0].Sprints.Count.Should().Be(2);
+            result[1].Name.Should().Be("Project2");
+            result[1].Description.Should().Be("This is a new project2");
+            result[1].Developer.Should().BeTrue();
+            result[1].ProductOwner.Should().BeFalse();
             result[1].ProjectManager.Should().BeFalse();
             result[1].ScrumMaster.Should().BeFalse();
             result[1].Sprints.Count.Should().Be(1);

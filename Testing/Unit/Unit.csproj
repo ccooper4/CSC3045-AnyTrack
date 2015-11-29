@@ -209,7 +209,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Modules\AnyTrack.Projects\ServiceGateways\" />
     <Folder Include="Modules\AnyTrack.Sprints\Views\" />
   </ItemGroup>
   <ItemGroup>
