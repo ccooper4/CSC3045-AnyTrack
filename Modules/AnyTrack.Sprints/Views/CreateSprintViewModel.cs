@@ -189,6 +189,7 @@ namespace AnyTrack.Sprints.Views
                 Description = this.Description,
                 StartDate = this.StartDate,
                 EndDate = this.EndDate,
+                TeamEmailAddresses = new List<string>()
             };
             
             //// |TAKE THIS OUT LATER! ///////

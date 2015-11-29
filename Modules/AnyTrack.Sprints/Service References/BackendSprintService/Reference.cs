@@ -23,7 +23,7 @@ namespace AnyTrack.Sprints.BackendSprintService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private AnyTrack.Sprints.BackendSprintService.ServiceSprintStory[] BacklogField;
+        private System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.ServiceSprintStory> BacklogField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DescriptionField;
@@ -44,7 +44,7 @@ namespace AnyTrack.Sprints.BackendSprintService {
         private System.DateTime StartDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string[] TeamEmailAddressesField;
+        private System.Collections.Generic.List<string> TeamEmailAddressesField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -57,7 +57,7 @@ namespace AnyTrack.Sprints.BackendSprintService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public AnyTrack.Sprints.BackendSprintService.ServiceSprintStory[] Backlog {
+        public System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.ServiceSprintStory> Backlog {
             get {
                 return this.BacklogField;
             }
@@ -148,7 +148,7 @@ namespace AnyTrack.Sprints.BackendSprintService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] TeamEmailAddresses {
+        public System.Collections.Generic.List<string> TeamEmailAddresses {
             get {
                 return this.TeamEmailAddressesField;
             }
@@ -425,7 +425,7 @@ namespace AnyTrack.Sprints.BackendSprintService {
         private AnyTrack.Sprints.BackendSprintService.ServiceUser TesterField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private AnyTrack.Sprints.BackendSprintService.ServiceUpdatedHours[] UpdatedHoursField;
+        private System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.ServiceUpdatedHours> UpdatedHoursField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -555,7 +555,7 @@ namespace AnyTrack.Sprints.BackendSprintService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public AnyTrack.Sprints.BackendSprintService.ServiceUpdatedHours[] UpdatedHours {
+        public System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.ServiceUpdatedHours> UpdatedHours {
             get {
                 return this.UpdatedHoursField;
             }
@@ -972,7 +972,7 @@ namespace AnyTrack.Sprints.BackendSprintService {
     public partial class Sprint : AnyTrack.Sprints.BackendSprintService.BaseEntity {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private AnyTrack.Sprints.BackendSprintService.SprintStory[] BacklogField;
+        private System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.SprintStory> BacklogField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DescriptionField;
@@ -990,10 +990,10 @@ namespace AnyTrack.Sprints.BackendSprintService {
         private System.DateTime StartDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private AnyTrack.Sprints.BackendSprintService.User[] TeamField;
+        private System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.User> TeamField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public AnyTrack.Sprints.BackendSprintService.SprintStory[] Backlog {
+        public System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.SprintStory> Backlog {
             get {
                 return this.BacklogField;
             }
@@ -1071,7 +1071,7 @@ namespace AnyTrack.Sprints.BackendSprintService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public AnyTrack.Sprints.BackendSprintService.User[] Team {
+        public System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.User> Team {
             get {
                 return this.TeamField;
             }
@@ -1103,16 +1103,16 @@ namespace AnyTrack.Sprints.BackendSprintService {
         private AnyTrack.Sprints.BackendSprintService.User ProjectManagerField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private AnyTrack.Sprints.BackendSprintService.User[] ScrumMastersField;
+        private System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.User> ScrumMastersField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private AnyTrack.Sprints.BackendSprintService.Sprint[] SprintsField;
+        private System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.Sprint> SprintsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime StartedOnField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private AnyTrack.Sprints.BackendSprintService.Story[] StoriesField;
+        private System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.Story> StoriesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string VersionControlField;
@@ -1170,7 +1170,7 @@ namespace AnyTrack.Sprints.BackendSprintService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public AnyTrack.Sprints.BackendSprintService.User[] ScrumMasters {
+        public System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.User> ScrumMasters {
             get {
                 return this.ScrumMastersField;
             }
@@ -1183,7 +1183,7 @@ namespace AnyTrack.Sprints.BackendSprintService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public AnyTrack.Sprints.BackendSprintService.Sprint[] Sprints {
+        public System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.Sprint> Sprints {
             get {
                 return this.SprintsField;
             }
@@ -1209,7 +1209,7 @@ namespace AnyTrack.Sprints.BackendSprintService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public AnyTrack.Sprints.BackendSprintService.Story[] Stories {
+        public System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.Story> Stories {
             get {
                 return this.StoriesField;
             }
@@ -1260,7 +1260,7 @@ namespace AnyTrack.Sprints.BackendSprintService {
         private bool ProductOwnerField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private AnyTrack.Sprints.BackendSprintService.Role[] RolesField;
+        private System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.Role> RolesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool ScrumMasterField;
@@ -1353,7 +1353,7 @@ namespace AnyTrack.Sprints.BackendSprintService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public AnyTrack.Sprints.BackendSprintService.Role[] Roles {
+        public System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.Role> Roles {
             get {
                 return this.RolesField;
             }
@@ -1609,10 +1609,10 @@ namespace AnyTrack.Sprints.BackendSprintService {
         System.Threading.Tasks.Task EditSprintAsync(System.Guid sprintId, AnyTrack.Sprints.BackendSprintService.ServiceSprint updatedSprint);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetAllTasksForSprint", ReplyAction="http://tempuri.org/ISprintService/GetAllTasksForSprintResponse")]
-        AnyTrack.Sprints.BackendSprintService.ServiceTask[] GetAllTasksForSprint(System.Guid sprintId);
+        System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.ServiceTask> GetAllTasksForSprint(System.Guid sprintId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetAllTasksForSprint", ReplyAction="http://tempuri.org/ISprintService/GetAllTasksForSprintResponse")]
-        System.Threading.Tasks.Task<AnyTrack.Sprints.BackendSprintService.ServiceTask[]> GetAllTasksForSprintAsync(System.Guid sprintId);
+        System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.ServiceTask>> GetAllTasksForSprintAsync(System.Guid sprintId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1658,11 +1658,11 @@ namespace AnyTrack.Sprints.BackendSprintService {
             return base.Channel.EditSprintAsync(sprintId, updatedSprint);
         }
         
-        public AnyTrack.Sprints.BackendSprintService.ServiceTask[] GetAllTasksForSprint(System.Guid sprintId) {
+        public System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.ServiceTask> GetAllTasksForSprint(System.Guid sprintId) {
             return base.Channel.GetAllTasksForSprint(sprintId);
         }
         
-        public System.Threading.Tasks.Task<AnyTrack.Sprints.BackendSprintService.ServiceTask[]> GetAllTasksForSprintAsync(System.Guid sprintId) {
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Sprints.BackendSprintService.ServiceTask>> GetAllTasksForSprintAsync(System.Guid sprintId) {
             return base.Channel.GetAllTasksForSprintAsync(sprintId);
         }
     }

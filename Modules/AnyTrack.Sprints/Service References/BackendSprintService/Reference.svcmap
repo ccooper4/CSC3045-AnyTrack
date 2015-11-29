@@ -9,7 +9,9 @@
     <GenerateInternalTypes>false</GenerateInternalTypes>
     <GenerateMessageContracts>false</GenerateMessageContracts>
     <NamespaceMappings />
-    <CollectionMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
     <GenerateSerializableTypes>true</GenerateSerializableTypes>
     <Serializer>Auto</Serializer>
     <UseSerializerForFaults>true</UseSerializerForFaults>
@@ -22,7 +24,7 @@
     <MetadataSource Address="http://localhost:5789/SprintService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="SprintService.xsd" MetadataType="Schema" ID="82f41732-189b-4599-927f-de78184fe453" SourceId="1" SourceUrl="http://localhost:5789/SprintService.svc?xsd=xsd4" />
+    <MetadataFile FileName="SprintService.xsd" MetadataType="Schema" ID="cb4bad28-648b-4429-8b37-3090e08f1bfa" SourceId="1" SourceUrl="http://localhost:5789/SprintService.svc?xsd=xsd4" />
     <MetadataFile FileName="SprintService1.xsd" MetadataType="Schema" ID="6ac4c26f-1524-431a-8a5e-ed6eddd7267d" SourceId="1" SourceUrl="http://localhost:5789/SprintService.svc?xsd=xsd0" />
     <MetadataFile FileName="SprintService.wsdl" MetadataType="Wsdl" ID="3629c223-8f23-493e-964a-e626a60b2ef1" SourceId="1" SourceUrl="http://localhost:5789/SprintService.svc?wsdl" />
     <MetadataFile FileName="SprintService.disco" MetadataType="Disco" ID="41f1c692-4e98-4993-932c-fff9d3743647" SourceId="1" SourceUrl="http://localhost:5789/SprintService.svc?disco" />

@@ -126,7 +126,7 @@ namespace AnyTrack.Backend.Service
             dataSprint.StartDate = updatedSprint.StartDate;
             dataSprint.EndDate = updatedSprint.EndDate;
 
-            var dataProject = unitOfWork.ProjectRepository.Items.Where(p => p.Sprints.Any(s => s.Id == sprintId)).SingleOrDefault();
+            var dataProject = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Sprints.Any(s => s.Id == sprintId));
 
             if (dataProject == null)
             {
@@ -134,6 +134,7 @@ namespace AnyTrack.Backend.Service
             }
 
             List<User> teamMembersToRemove = new List<User>();
+
             foreach (var teamMember in dataSprint.Team)
             {
                 if (!updatedSprint.TeamEmailAddresses.Contains(teamMember.EmailAddress))
