@@ -54,6 +54,22 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         public ObservableCollection<ServiceTask> Tasks { get; set; }
 
+        /// <summary>
+        /// Gets or sets the sprint id
+        /// </summary>
+        public Guid SprintId
+        {
+            get
+            {
+                return sprintId;
+            }
+
+            set
+            {
+                sprintId = value;
+            }
+        }
+
         #endregion
 
         #region Commands
