@@ -8,12 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
-using AnyTrack.Infrastructure.BackendProjectService;
 using System.Collections.ObjectModel;
 using Prism.Regions;
 using AnyTrack.Infrastructure.Providers;
 using MahApps.Metro.Controls.Dialogs;
 using AnyTrack.Infrastructure;
+using AnyTrack.Infrastructure.BackendProjectService;
 
 namespace Unit.Modules.AnyTrack.Projects.Views.StoryViewModelTests
 {

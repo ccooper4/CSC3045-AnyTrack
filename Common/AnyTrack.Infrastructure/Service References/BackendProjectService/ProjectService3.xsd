@@ -30,6 +30,7 @@
       <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Length" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProjectId" type="ser:guid" />
       <xs:element minOccurs="0" name="SprintId" type="ser:guid" />
       <xs:element minOccurs="0" name="StartDate" type="xs:dateTime" />
       <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="TeamEmailAddresses" nillable="true" type="q2:ArrayOfstring" />
@@ -76,9 +77,13 @@
   <xs:element name="ArrayOfServiceProject" nillable="true" type="tns:ArrayOfServiceProject" />
   <xs:complexType name="ServiceUserSearchFilter">
     <xs:sequence>
+      <xs:element minOccurs="0" name="Developer" nillable="true" type="xs:boolean" />
       <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ProductOwner" nillable="true" type="xs:boolean" />
       <xs:element minOccurs="0" name="ScrumMaster" nillable="true" type="xs:boolean" />
+      <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Skillset" nillable="true" type="q3:ArrayOfstring" />
+      <xs:element minOccurs="0" name="SprintEndingDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SprintStartingDate" nillable="true" type="xs:dateTime" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ServiceUserSearchFilter" nillable="true" type="tns:ServiceUserSearchFilter" />
@@ -90,6 +95,7 @@
   <xs:element name="ArrayOfServiceUserSearchInfo" nillable="true" type="tns:ArrayOfServiceUserSearchInfo" />
   <xs:complexType name="ServiceUserSearchInfo">
     <xs:sequence>
+      <xs:element minOccurs="0" name="Availability" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UserId" type="ser:guid" />

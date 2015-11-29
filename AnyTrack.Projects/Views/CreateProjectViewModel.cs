@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using AnyTrack.Infrastructure;
-using AnyTrack.Infrastructure.BackendAccountService;
 using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.ServiceGateways;
 using AnyTrack.SharedUtilities.Extensions;

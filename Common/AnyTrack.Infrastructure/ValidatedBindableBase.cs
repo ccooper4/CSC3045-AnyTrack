@@ -130,6 +130,13 @@ namespace AnyTrack.Infrastructure
                     ErrorsChanged(this, new DataErrorsChangedEventArgs(propertyName));
                 }
             }
+            else
+            {
+                if (ErrorsChanged != null)
+                {
+                    ErrorsChanged(this, new DataErrorsChangedEventArgs(propertyName));
+                }
+            }
 
             return true;
         }

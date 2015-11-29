@@ -1,11 +1,11 @@
-﻿using AnyTrack.Infrastructure.BackendAccountService;
-using AnyTrack.Infrastructure.Security;
+﻿using AnyTrack.Infrastructure.Security;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AnyTrack.Infrastructure.BackendAccountService;
 using FluentAssertions;
 
 namespace Unit.Common.AnyTrack.Infrastructure.Security.ServiceUserPrincipalTests
@@ -19,7 +19,7 @@ namespace Unit.Common.AnyTrack.Infrastructure.Security.ServiceUserPrincipalTests
         [SetUp]
         public void SetUp()
         {
-            principal = new ServiceUserPrincipal(new global::AnyTrack.Infrastructure.BackendAccountService.ServiceLoginResult(), "");
+            principal = new ServiceUserPrincipal(new ServiceLoginResult(), "");
         }
     }
 

@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AnyTrack.Sprints.BackendSprintService;
+using AnyTrack.Infrastructure.BackendSprintService;
 
-namespace AnyTrack.Sprints.ServiceGateways
+namespace AnyTrack.Infrastructure.ServiceGateways
 {
     /// <summary>
     /// Outlines the Sprint Gateway.

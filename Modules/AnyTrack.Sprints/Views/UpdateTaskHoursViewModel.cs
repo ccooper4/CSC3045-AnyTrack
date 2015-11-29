@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using AnyTrack.Infrastructure;
-using AnyTrack.Sprints.BackendSprintService;
-using AnyTrack.Sprints.ServiceGateways;
+using AnyTrack.Infrastructure.BackendSprintService;
+using AnyTrack.Infrastructure.ServiceGateways;
 using Prism.Commands;
 
 namespace AnyTrack.Sprints.Views

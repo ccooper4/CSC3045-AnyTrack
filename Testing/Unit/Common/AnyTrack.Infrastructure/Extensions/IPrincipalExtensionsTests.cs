@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FluentAssertions;
 using AnyTrack.Infrastructure.BackendAccountService;
+using FluentAssertions;
 
 namespace Unit.Common.AnyTrack.Infrastructure.Extensions.IPrincipalExtensionsTests
 {
@@ -20,7 +20,7 @@ namespace Unit.Common.AnyTrack.Infrastructure.Extensions.IPrincipalExtensionsTes
         [SetUp]
         public void SetUp()
         {
-            principal = new ServiceUserPrincipal(new global::AnyTrack.Infrastructure.BackendAccountService.ServiceLoginResult(), "test");
+            principal = new ServiceUserPrincipal(new ServiceLoginResult(), "test");
         }
     }
 
@@ -35,7 +35,7 @@ namespace Unit.Common.AnyTrack.Infrastructure.Extensions.IPrincipalExtensionsTes
         public void CallGetAuthCookie()
         {
             var authCookie = "test";
-            principal = new ServiceUserPrincipal(new global::AnyTrack.Infrastructure.BackendAccountService.ServiceLoginResult(), authCookie);
+            principal = new ServiceUserPrincipal(new ServiceLoginResult(), authCookie);
 
             principal.GetAuthCookie().Should().Be(authCookie);
         }

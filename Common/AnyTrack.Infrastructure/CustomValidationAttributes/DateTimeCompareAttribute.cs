@@ -11,6 +11,7 @@ namespace AnyTrack.Infrastructure.CustomValidationAttributes
     /// <summary>
     /// A custom validation Attribute that compares a DateTime object to another DateTime object.
     /// </summary>
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public class DateTimeCompareAttribute : ValidationAttribute
     {
         #region Constructor

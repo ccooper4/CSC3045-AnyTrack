@@ -7,19 +7,21 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using AnyTrack.Infrastructure;
+using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.CustomValidationAttributes;
+using AnyTrack.Infrastructure.ServiceGateways;
 using AnyTrack.SharedUtilities.Extensions;
-using AnyTrack.Sprints.BackendSprintService;
-using AnyTrack.Sprints.ServiceGateways;
 using MahApps.Metro.Controls.Dialogs;
 using Prism.Commands;
+using Prism.Regions;
+using ServiceSprint = AnyTrack.Infrastructure.BackendSprintService.ServiceSprint;
 
 namespace AnyTrack.Sprints.Views
 {
     /// <summary>
     ///  The view model for the Create Sprint View.
     /// </summary>
-    public class CreateSprintViewModel : ValidatedBindableBase
+    public class CreateSprintViewModel : ValidatedBindableBase, INavigationAware
     {
         #region Fields
 
@@ -48,6 +50,16 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         private string description;
 
+        /// <summary>
+        /// List of email addresses of each member of the team (developers)
+        /// </summary>
+        private List<string> teamMemberEmailAddresses;
+
+        /// <summary>
+        /// The id of the project the sprint will be added to.
+        /// </summary>
+        private Guid projectId;
+
         #endregion
 
         #region Constructor
@@ -65,8 +77,8 @@ namespace AnyTrack.Sprints.Views
 
             this.serviceGateway = serviceGateway;
 
-            StartDate = DateTime.Today;
-            EndDate = DateTime.Today.AddDays(14);
+            startDate = DateTime.Today;
+            endDate = DateTime.Today.AddDays(14);
 
             SaveSprintCommand = new DelegateCommand(SaveSprint);
             CancelSprintCommand = new DelegateCommand(CancelSprintCreation);
@@ -77,14 +89,9 @@ namespace AnyTrack.Sprints.Views
         #region Properties
 
         /// <summary>
-        /// Gets or sets the project id the sprint will be added to.
-        /// </summary>
-        public Guid ProjectId { get; set; }
-
-        /// <summary>
         /// Gets or sets the name of the sprint.
         /// </summary>
-        [Required(AllowEmptyStrings = false, ErrorMessage = "A Project Name is Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "A Sprint Name is Required")]
         [MinLength(3, ErrorMessage = "Sprint name must be atleast 3 characters")]
         public string SprintName
         {
@@ -96,18 +103,26 @@ namespace AnyTrack.Sprints.Views
         /// Gets or sets the start date of the sprint.
         /// </summary> 
         [Required(ErrorMessage = "Start Date is Required")]
-        [DateTimeCompare("<=", "endDate", "Start Date must be before the End Date")]
         public DateTime StartDate
         {
-            get { return startDate; }
-            set { SetProperty(ref startDate, value); }
+            get
+            {
+                return startDate;
+            }
+
+            set
+            {
+                SetProperty(ref startDate, value);
+                EndDate = endDate.AddDays(1);
+                EndDate = endDate.Subtract(new TimeSpan(1, 0, 0, 0));
+            }
         }
 
         /// <summary>
         /// Gets or sets the end date of the sprint.
         /// </summary>
         [Required(ErrorMessage = "End Date is Required")]
-        [DateTimeCompare(">=", "startDate", "End Date must be after the Start Date")]
+        [DateTimeCompare(">=", "StartDate", "End Date must be after the Start Date")]
         public DateTime EndDate
         {
             get { return endDate; }
@@ -122,7 +137,17 @@ namespace AnyTrack.Sprints.Views
             get { return description; }
             set { SetProperty(ref description, value); }
         }
-        
+
+        /// <summary>
+        /// Gets or sets the collection containing developer search results.
+        /// </summary>
+        public ObservableCollection<ServiceUserSearchInfo> DevelopersSearchUserResults { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection of selected developers.
+        /// </summary>
+        public ObservableCollection<ServiceUserSearchInfo> SelectedDevelopers { get; set; }
+
         #endregion
 
         #region Commands
@@ -142,28 +167,73 @@ namespace AnyTrack.Sprints.Views
         #region Methods
 
         /// <summary>
+        /// Handles the Is Navigation target event. 
+        /// </summary>
+        /// <param name="navigationContext">The navigation context.</param>
+        /// <returns>A true or false value indicating if this viewmodel can handle the navigation request.</returns>
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Handles the on navigated from event. 
+        /// </summary>
+        /// <param name="navigationContext">The navigation context.</param>
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+        }
+
+        /// <summary>
+        /// Handles the navigated to.
+        /// </summary>
+        /// <param name="navigationContext">The navigation context.</param>
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            if (navigationContext.Parameters.ContainsKey("projectId"))
+            {
+                projectId = (Guid)navigationContext.Parameters["projectId"];
+            }
+        }
+
+        /// <summary>
         /// Saves a sprint to the database.
         /// </summary>
         private void SaveSprint()
         {
+            if (SprintName == null)
+            {
+                SprintName = string.Empty;
+            }
+
             if (HasErrors)
             {
                 ShowMetroDialog("Sprint was not Saved", "There are errors in the form. Please correct them and try again.");
                 return;
             }
 
-            ServiceSprint sprint = new ServiceSprint
+            ServiceSprint sprint = new ServiceSprint()
             {
                 Name = SprintName,
                 Description = this.Description,
                 StartDate = this.StartDate,
-                EndDate = this.EndDate
+                EndDate = this.EndDate,
+                TeamEmailAddresses = new List<string>()
             };
+            
+            if (SelectedDevelopers == null)
+            {
+                SelectedDevelopers = new ObservableCollection<ServiceUserSearchInfo>();
+            }
 
-            //// add team members here
-            serviceGateway.AddSprint(ProjectId, sprint);
+            if (SelectedDevelopers.Count > 0)
+            {
+                sprint.TeamEmailAddresses.AddRange(SelectedDevelopers.Select(d => d.EmailAddress).ToList());
+            }
+
+            serviceGateway.AddSprint(projectId, sprint);
             ShowMetroDialog("Save Successful", "Your sprint {0} has been saved successfully.".Substitute(sprintName));
-            NavigateToItem("MySprints");
+            NavigateToItem("SprintManager");
         }
 
         /// <summary>
@@ -175,11 +245,11 @@ namespace AnyTrack.Sprints.Views
             {
                 if (mdr == MessageDialogResult.Affirmative)
                 {
-                    NavigateToItem("MyProjects");
+                    NavigateToItem("SprintManager");
                 }
             });
 
-            ShowMetroDialog("Sprint Creation Cancellation", "Are you sure that you want to cancel?", MessageDialogStyle.AffirmativeAndNegative, callbackAction); 
+            ShowMetroDialog("Sprint Creation Cancellation", "Are you sure you want to cancel?", MessageDialogStyle.AffirmativeAndNegative, callbackAction); 
         }
 
         #endregion

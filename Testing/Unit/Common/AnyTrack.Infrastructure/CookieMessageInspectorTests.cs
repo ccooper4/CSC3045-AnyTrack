@@ -12,7 +12,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using AnyTrack.Infrastructure;
-using AnyTrack.Infrastructure.BackendAccountService;
 using AnyTrack.Infrastructure.Interceptors;
 using NSubstitute;
 using NUnit.Framework;

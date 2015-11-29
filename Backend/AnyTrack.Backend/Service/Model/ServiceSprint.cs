@@ -48,6 +48,11 @@ namespace AnyTrack.Backend.Service.Model
         public Guid SprintId { get; set; }
 
         /// <summary>
+        /// Gets or sets the project id the sprint is in.
+        /// </summary>
+        public Guid ProjectId { get; set; }
+
+        /// <summary>
         /// Gets or sets the sprint's name.
         /// </summary>
         public string Name { get; set; }

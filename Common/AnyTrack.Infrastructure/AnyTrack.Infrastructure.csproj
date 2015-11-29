@@ -124,8 +124,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\BackendSprintService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="ServiceGateways\IProjectServiceGateway.cs" />
+    <Compile Include="ServiceGateways\ISprintServiceGateway.cs" />
     <Compile Include="ServiceGateways\ProjectServiceGateway.cs" />
+    <Compile Include="ServiceGateways\SprintServiceGateway.cs" />
     <Compile Include="Service\FlyoutService.cs" />
     <Compile Include="Service\IFlyoutService.cs" />
     <Compile Include="Service\IMenuService.cs" />
@@ -184,6 +191,25 @@
     <None Include="Service References\BackendProjectService\ProjectService3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\BackendSprintService\AnyTrack.Infrastructure.BackendSprintService.ServiceTask.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BackendSprintService\SprintService.wsdl" />
+    <None Include="Service References\BackendSprintService\SprintService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BackendSprintService\SprintService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BackendSprintService\SprintService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BackendSprintService\SprintService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BackendSprintService\SprintService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -191,6 +217,7 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\BackendAccountService\" />
     <WCFMetadataStorage Include="Service References\BackendProjectService\" />
+    <WCFMetadataStorage Include="Service References\BackendSprintService\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\BackendAccountService\AccountService.disco" />
@@ -224,6 +251,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\BackendProjectService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\BackendSprintService\SprintService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\BackendSprintService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\BackendSprintService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\BackendSprintService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

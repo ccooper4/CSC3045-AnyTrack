@@ -9,13 +9,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
-using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.Providers;
 using System.Collections.ObjectModel;
 using MahApps.Metro.Controls.Dialogs;
 using System.Threading;
 using AnyTrack.Infrastructure;
 using Microsoft.Practices.Unity;
+using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.Service;
 
 namespace Unit.Modules.AnyTrack.Projects.Views.ProductBacklogViewModelTests

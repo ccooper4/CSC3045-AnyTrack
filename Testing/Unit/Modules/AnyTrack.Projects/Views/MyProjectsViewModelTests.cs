@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.Providers;
-using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.ServiceGateways;
 using AnyTrack.Projects.Views;
 using FluentAssertions;
@@ -13,8 +12,9 @@ using NSubstitute;
 using NUnit.Framework;
 using Prism.Regions;
 using AnyTrack.Infrastructure.Security;
-using AnyTrack.Infrastructure.BackendAccountService;
 using AnyTrack.Infrastructure.Service;
+using AnyTrack.Infrastructure.BackendAccountService;
+using AnyTrack.Infrastructure.BackendProjectService;
 
 namespace Unit.Modules.AnyTrack.Projects.Views
 {

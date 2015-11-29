@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="4b6def34-907d-48c1-949f-e860a9b3e95a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:5789/SprintService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="SprintService.xsd" MetadataType="Schema" ID="a1de2b70-ca9b-4831-9b5a-330bcac3b029" SourceId="1" SourceUrl="http://localhost:5789/SprintService.svc?xsd=xsd4" />
+    <MetadataFile FileName="SprintService1.xsd" MetadataType="Schema" ID="c5e9457d-baac-411a-b25e-d57d509feae7" SourceId="1" SourceUrl="http://localhost:5789/SprintService.svc?xsd=xsd0" />
+    <MetadataFile FileName="SprintService.wsdl" MetadataType="Wsdl" ID="16367fb1-841a-4662-9755-58ae3ffc5b0d" SourceId="1" SourceUrl="http://localhost:5789/SprintService.svc?wsdl" />
+    <MetadataFile FileName="SprintService.disco" MetadataType="Disco" ID="698cebd5-32cf-4a29-9e73-75406af58f8b" SourceId="1" SourceUrl="http://localhost:5789/SprintService.svc?disco" />
+    <MetadataFile FileName="SprintService2.xsd" MetadataType="Schema" ID="bb9da56d-2757-4424-95e4-91db08aaf3f0" SourceId="1" SourceUrl="http://localhost:5789/SprintService.svc?xsd=xsd1" />
+    <MetadataFile FileName="SprintService3.xsd" MetadataType="Schema" ID="e63d7799-08b0-4ef0-92a9-e435a354e20f" SourceId="1" SourceUrl="http://localhost:5789/SprintService.svc?xsd=xsd3" />
+    <MetadataFile FileName="SprintService4.xsd" MetadataType="Schema" ID="044e3375-d81f-4868-ab45-f0f5511a4eb7" SourceId="1" SourceUrl="http://localhost:5789/SprintService.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

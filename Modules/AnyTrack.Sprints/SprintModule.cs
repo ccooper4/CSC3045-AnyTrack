@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using AnyTrack.Infrastructure.BackendSprintService;
 using AnyTrack.Infrastructure.Service;
-using AnyTrack.Sprints.BackendSprintService;
-using AnyTrack.Sprints.ServiceGateways;
 using AnyTrack.Sprints.Views;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
@@ -77,13 +76,11 @@ namespace AnyTrack.Sprints
         /// Performs any neccessary logic to initalize the module. 
         /// </summary>
         public void Initialize()
-        {
-            container.RegisterType<ISprintService, SprintServiceClient>(new InjectionConstructor());
-            container.RegisterType<ISprintServiceGateway, SprintServiceGateway>();
-
+        {          
             container.RegisterType<object, CreateSprint>("CreateSprint");
+            container.RegisterType<object, SprintManager>("SprintManager");
 
-            menuService.AddMenuItem(new MenuItem { Color = "Gray", Title = "Sprints", NavigationViewName = "CraeteSprint" });
+            menuService.AddMenuItem(new MenuItem { Color = "Gray", Title = "Sprints", NavigationViewName = "SprintManager" });
         }
 
         #endregion 
