@@ -27,6 +27,12 @@
   <wsdl:message name="ISprintService_GetAllTasksForSprint_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAllTasksForSprintResponse" />
   </wsdl:message>
+  <wsdl:message name="ISprintService_GetSprintNames_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSprintNames" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_GetSprintNames_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSprintNamesResponse" />
+  </wsdl:message>
   <wsdl:portType name="ISprintService">
     <wsdl:operation name="AddSprint">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/AddSprint" message="tns:ISprintService_AddSprint_InputMessage" />
@@ -39,6 +45,10 @@
     <wsdl:operation name="GetAllTasksForSprint">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetAllTasksForSprint" message="tns:ISprintService_GetAllTasksForSprint_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetAllTasksForSprintResponse" message="tns:ISprintService_GetAllTasksForSprint_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSprintNames">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetSprintNames" message="tns:ISprintService_GetSprintNames_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetSprintNamesResponse" message="tns:ISprintService_GetSprintNames_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ISprintService" type="tns:ISprintService">
@@ -63,6 +73,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetAllTasksForSprint">
       <soap:operation soapAction="http://tempuri.org/ISprintService/GetAllTasksForSprint" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSprintNames">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/GetSprintNames" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

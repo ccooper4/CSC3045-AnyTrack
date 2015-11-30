@@ -93,4 +93,18 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ServiceUpdatedHours" nillable="true" type="tns:ServiceUpdatedHours" />
+  <xs:complexType name="ArrayOfServiceSprintSummary">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ServiceSprintSummary" nillable="true" type="tns:ServiceSprintSummary" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfServiceSprintSummary" nillable="true" type="tns:ArrayOfServiceSprintSummary" />
+  <xs:complexType name="ServiceSprintSummary">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SprintId" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServiceSprintSummary" nillable="true" type="tns:ServiceSprintSummary" />
 </xs:schema>
