@@ -41,9 +41,15 @@ namespace AnyTrack.Infrastructure.Interceptors
         {
             if (!string.IsNullOrEmpty(cookie))
             {
-                HttpRequestMessageProperty requestMessageProperty = new HttpRequestMessageProperty();
-                requestMessageProperty.Headers[HttpResponseHeader.SetCookie] = cookie;
-                request.Properties[HttpRequestMessageProperty.Name] = requestMessageProperty;
+                // Add the auth cookie to both the SOAP Header and the HTTP Header.
+                var httpRequestProperty = new HttpRequestMessageProperty();
+                httpRequestProperty.Headers.Add(HttpRequestHeader.Cookie, cookie);
+
+                var header = MessageHeader.CreateHeader("authCookie", "http://anytrack", cookie);
+
+                request.Headers.Add(header);
+
+                request.Properties[HttpRequestMessageProperty.Name] = httpRequestProperty;
             }
 
             return null;

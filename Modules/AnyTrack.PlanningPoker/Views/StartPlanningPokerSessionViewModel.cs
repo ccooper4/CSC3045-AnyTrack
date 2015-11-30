@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,7 +40,7 @@ namespace AnyTrack.PlanningPoker.Views
         /// <summary>
         /// The selected project id.
         /// </summary>
-        private Guid projectId;
+        private Guid? projectId;
 
         /// <summary>
         /// The selected sprint id.
@@ -80,7 +81,7 @@ namespace AnyTrack.PlanningPoker.Views
             this.Projects = new ObservableCollection<ServiceProjectSummary>();
             this.Sprints = new ObservableCollection<SprintModels.ServiceSprintSummary>();
 
-            this.StartPokerSession = new DelegateCommand(EstablishPokerSession, CanStartSession);
+            this.StartPokerSession = new DelegateCommand(EstablishPokerSession);
         }
 
         #endregion 
@@ -105,7 +106,8 @@ namespace AnyTrack.PlanningPoker.Views
         /// <summary>
         /// Gets or sets the project id.
         /// </summary>
-        public Guid ProjectId
+        [Required]
+        public Guid? ProjectId
         {
             get
             {
@@ -124,6 +126,7 @@ namespace AnyTrack.PlanningPoker.Views
         /// <summary>
         /// Gets or sets the sprint id.
         /// </summary>
+        [Required]
         public Guid? SprintId
         {
             get
@@ -182,21 +185,17 @@ namespace AnyTrack.PlanningPoker.Views
         }
 
         /// <summary>
-        /// Returns a value indicating if the planning poker session can be started.
-        /// </summary>
-        /// <returns>A true or false value indicating if this session can be started.</returns>
-        private bool CanStartSession()
-        {
-            return SprintId != null;
-        }
-
-        /// <summary>
         /// Starts the planning poker session for the current sprint and project id 
         /// </summary>
         private void EstablishPokerSession()
         {
-            var sessonId = serviceGateway.StartNewPokerSession(sprintId.Value);
-            this.ShowMetroDialog("Sesion started", "The planning poker session has been started");
+            ValidateViewModelNow();
+
+            if (!this.HasErrors)
+            {
+                var sessonId = serviceGateway.StartNewPokerSession(sprintId.Value);
+                this.ShowMetroDialog("Sesion started", "The planning poker session has been started");
+            }
         }
 
         #endregion 
