@@ -22,16 +22,16 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width ="Auto"></ColumnDefinition>
                                 <ColumnDefinition Width ="Auto"></ColumnDefinition>
-                                <ColumnDefinition Width ="Auto" ></ColumnDefinition>
+                                <ColumnDefinition Width ="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="{Binding Summary}" HorizontalAlignment="Left"></Label>
-                            <TextBox Grid.Column="1" Text="{Binding LogHours}" controls:TextBoxHelper.ClearTextButton="True"/>
-                            <TextBox Grid.Column="2" Text="{Binding UpdateEstimate}" controls:TextBoxHelper.ClearTextButton="True"/>
+                            <Label Grid.Column="0" Content="{Binding Description}" HorizontalAlignment="Left"></Label>
+                            <Label Grid.Column="1" Content="{Binding TaskHourEstimates[0].Estimate}" controls:TextBoxHelper.ClearTextButton="True"/>
+                            <TextBox Grid.Column="2" Text="{Binding TaskHourEstimates[0].NewEstimate}" controls:TextBoxHelper.ClearTextButton="True"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Content="Update Tasks" HorizontalAlignment="Left" Margin="329,291,0,0" VerticalAlignment="Top" Width="81" Command="{Binding SaveTaskHours}"/>
+            <Button Content="Update Tasks" HorizontalAlignment="Left" Margin="329,291,0,0" VerticalAlignment="Top" Width="81" Command="{Binding UpdateTaskHoursCommand}"/>
             <Button Content="Cancel" HorizontalAlignment="Left" Margin="430,291,0,0" VerticalAlignment="Top" Width="75"/>
         </Grid>
     </GroupBox>

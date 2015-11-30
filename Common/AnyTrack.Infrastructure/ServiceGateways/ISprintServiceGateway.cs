@@ -29,5 +29,11 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         /// <param name="sprintId">The sprint id</param>
         /// <returns>A list of tasks</returns>
         List<ServiceTask> GetAllTasksForSprint(Guid sprintId);
+
+        /// <summary>
+        /// Saves the updated task hours
+        /// </summary>
+        /// <param name="tasks">The list of tasks</param>
+        void SaveUpdatedTaskHours(List<ServiceTask> tasks);
     }
 }

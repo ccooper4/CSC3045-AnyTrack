@@ -79,6 +79,7 @@ namespace AnyTrack.Sprints
         {          
             container.RegisterType<object, CreateSprint>("CreateSprint");
             container.RegisterType<object, SprintManager>("SprintManager");
+            container.RegisterType<object, UpdateTaskHours>("UpdateTaskHours");
 
             menuService.AddMenuItem(new MenuItem { Color = "Gray", Title = "Sprints", NavigationViewName = "SprintManager" });
         }

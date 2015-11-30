@@ -86,6 +86,7 @@
   <xs:complexType name="ServiceTaskHourEstimate">
     <xs:sequence>
       <xs:element minOccurs="0" name="Estimate" type="xs:double" />
+      <xs:element minOccurs="0" name="NewEstimate" type="xs:double" />
       <xs:element minOccurs="0" name="ServiceTaskHourEstimateId" type="ser:guid" />
       <xs:element minOccurs="0" name="TaskId" type="ser:guid" />
     </xs:sequence>
