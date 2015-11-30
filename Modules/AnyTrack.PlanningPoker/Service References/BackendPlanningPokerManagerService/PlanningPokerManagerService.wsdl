@@ -287,6 +287,29 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="wsDualHttpBindingEndpoint_SubmitMessageToServer_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsp:Policy wsu:Id="wsDualHttpBindingEndpoint_NotifyClientOfSession_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -379,6 +402,52 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="wsDualHttpBindingEndpoint_SendMessageToClient_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="wsDualHttpBindingEndpoint_SendMessageToClient_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:5789/PlanningPokerManagerService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
@@ -411,6 +480,9 @@
   <wsdl:message name="IPlanningPokerManagerService_JoinSession_OutputMessage">
     <wsdl:part name="parameters" element="tns:JoinSessionResponse" />
   </wsdl:message>
+  <wsdl:message name="IPlanningPokerManagerService_SubmitMessageToServer_InputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitMessageToServer" />
+  </wsdl:message>
   <wsdl:message name="IPlanningPokerManagerService_NotifyClientOfSession_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotifyClientOfSession" />
   </wsdl:message>
@@ -422,6 +494,12 @@
   </wsdl:message>
   <wsdl:message name="IPlanningPokerManagerService_NotifyClientOfTerminatedSession_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotifyClientOfTerminatedSessionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanningPokerManagerService_SendMessageToClient_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:SendMessageToClient" />
+  </wsdl:message>
+  <wsdl:message name="IPlanningPokerManagerService_SendMessageToClient_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:SendMessageToClientResponse" />
   </wsdl:message>
   <wsdl:portType name="IPlanningPokerManagerService">
     <wsdl:operation name="SubscribeToNewSessionMessages">
@@ -440,6 +518,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/JoinSession" message="tns:IPlanningPokerManagerService_JoinSession_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/JoinSessionResponse" message="tns:IPlanningPokerManagerService_JoinSession_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="SubmitMessageToServer">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/SubmitMessageToServer" message="tns:IPlanningPokerManagerService_SubmitMessageToServer_InputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="NotifyClientOfSession">
       <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/NotifyClientOfSession" message="tns:IPlanningPokerManagerService_NotifyClientOfSession_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/NotifyClientOfSessionResponse" message="tns:IPlanningPokerManagerService_NotifyClientOfSession_InputCallbackMessage" />
@@ -447,6 +528,10 @@
     <wsdl:operation name="NotifyClientOfTerminatedSession">
       <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/NotifyClientOfTerminatedSession" message="tns:IPlanningPokerManagerService_NotifyClientOfTerminatedSession_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/NotifyClientOfTerminatedSessionResponse" message="tns:IPlanningPokerManagerService_NotifyClientOfTerminatedSession_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendMessageToClient">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/SendMessageToClient" message="tns:IPlanningPokerManagerService_SendMessageToClient_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/SendMessageToClientResponse" message="tns:IPlanningPokerManagerService_SendMessageToClient_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="wsDualHttpBindingEndpoint" type="tns:IPlanningPokerManagerService">
@@ -496,6 +581,13 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SubmitMessageToServer">
+      <soap12:operation soapAction="http://tempuri.org/IPlanningPokerManagerService/SubmitMessageToServer" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#wsDualHttpBindingEndpoint_SubmitMessageToServer_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
     <wsdl:operation name="NotifyClientOfSession">
       <soap12:operation soapAction="http://tempuri.org/IPlanningPokerManagerService/NotifyClientOfSession" style="document" />
       <wsdl:input>
@@ -518,6 +610,17 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SendMessageToClient">
+      <soap12:operation soapAction="http://tempuri.org/IPlanningPokerManagerService/SendMessageToClient" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#wsDualHttpBindingEndpoint_SendMessageToClient_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#wsDualHttpBindingEndpoint_SendMessageToClient_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="PlanningPokerManagerService">
     <wsdl:port name="wsDualHttpBindingEndpoint" binding="tns:wsDualHttpBindingEndpoint">
@@ -525,7 +628,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>http://localhost:5789/PlanningPokerManagerService.svc</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>ADMINISTRATOR7\Andrew</Upn>
+          <Upn>dave-PC\dave</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>

@@ -32,6 +32,6 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         /// <param name="msg">The message being sent to the clients</param>
         [OperationContract]
-        void SendMessageToClients(ServiceChatMessage msg);
+        void SendMessageToClient(ServiceChatMessage msg);
     }    
 }

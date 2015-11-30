@@ -315,17 +315,7 @@ namespace AnyTrack.Backend.Service
                 throw new ArgumentException("No session could be found", "sessionId");
             }
 
-            var thisSession = sessions[sessionId];
-
-            var currentUser = unitOfWork.UserRepository.Items.Single(u => u.EmailAddress == Thread.CurrentPrincipal.Identity.Name);              
-
-            var connectedClientsList = availableClients.GetListOfClients();
-            var clientList = connectedClientsList[sessionId];
-
-            foreach (var client in clientList)
-            {
-                client.ClientChannel.SendMessageToClients(msg);
-            }             
+            SendMessageToClients(msg);                      
         }
 
         /// <summary>
@@ -334,7 +324,19 @@ namespace AnyTrack.Backend.Service
         /// <param name="msg">the message object to be sent</param>
         public void SendMessageToClients(ServiceChatMessage msg)
         {
-            throw new NotImplementedException();
+            var thisSession = msg.SessionID;
+
+            var currentUser = unitOfWork.UserRepository.Items.Single(u => u.EmailAddress == Thread.CurrentPrincipal.Identity.Name);
+
+            var connectedClientsList = availableClients.GetListOfClients();
+            var clientList = connectedClientsList[msg.SessionID];
+
+            msg.Name = "{0} {1}".Substitute(currentUser.FirstName, currentUser.LastName);
+
+            foreach (var client in clientList)
+            {
+                client.ClientChannel.SendMessageToClient(msg);
+            }
         }
 
         #endregion 
