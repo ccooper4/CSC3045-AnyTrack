@@ -7,13 +7,13 @@ namespace AnyTrack.Backend.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class SpecifyingManytoManyrelationshipbetweenUsersandSprints : IMigrationMetadata
+    public sealed partial class Createdamanytomanyrelationshipbetweenuserandsprint : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(SpecifyingManytoManyrelationshipbetweenUsersandSprints));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Createdamanytomanyrelationshipbetweenuserandsprint));
         
         string IMigrationMetadata.Id
         {
-            get { return "201511300143289_Specifying Many to Many relationship between Users and Sprints"; }
+            get { return "201511302109142_Created a many to many relationship between user and sprint"; }
         }
         
         string IMigrationMetadata.Source

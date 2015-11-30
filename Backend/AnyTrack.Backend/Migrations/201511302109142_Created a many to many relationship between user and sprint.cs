@@ -4,7 +4,7 @@ namespace AnyTrack.Backend.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class SpecifyingManytoManyrelationshipbetweenUsersandSprints : DbMigration
+    public partial class Createdamanytomanyrelationshipbetweenuserandsprint : DbMigration
     {
         public override void Up()
         {

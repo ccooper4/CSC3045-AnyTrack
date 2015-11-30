@@ -185,9 +185,9 @@
     <Compile Include="Migrations\201511301309017_Adding tasks and task hours.Designer.cs">
       <DependentUpon>201511301309017_Adding tasks and task hours.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201511300143289_Specifying Many to Many relationship between Users and Sprints.cs" />
-    <Compile Include="Migrations\201511300143289_Specifying Many to Many relationship between Users and Sprints.Designer.cs">
-      <DependentUpon>201511300143289_Specifying Many to Many relationship between Users and Sprints.cs</DependentUpon>
+    <Compile Include="Migrations\201511302109142_Created a many to many relationship between user and sprint.cs" />
+    <Compile Include="Migrations\201511302109142_Created a many to many relationship between user and sprint.Designer.cs">
+      <DependentUpon>201511302109142_Created a many to many relationship between user and sprint.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -272,8 +272,8 @@
     <EmbeddedResource Include="Migrations\201511301309017_Adding tasks and task hours.resx">
       <DependentUpon>201511301309017_Adding tasks and task hours.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511300143289_Specifying Many to Many relationship between Users and Sprints.resx">
-      <DependentUpon>201511300143289_Specifying Many to Many relationship between Users and Sprints.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201511302109142_Created a many to many relationship between user and sprint.resx">
+      <DependentUpon>201511302109142_Created a many to many relationship between user and sprint.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

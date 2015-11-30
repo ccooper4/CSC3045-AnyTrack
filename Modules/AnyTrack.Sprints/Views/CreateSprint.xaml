@@ -9,7 +9,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xml:lang="en-GB"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             mc:Ignorable="d" Width="1000" Height="364.328">
+             mc:Ignorable="d" Width="1000" Height="auto" MinHeight="450px">
 
     <Grid HorizontalAlignment="Stretch">
         <Grid.ColumnDefinitions>
