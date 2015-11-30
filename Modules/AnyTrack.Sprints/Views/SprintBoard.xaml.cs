@@ -20,6 +20,9 @@ namespace AnyTrack.Sprints.Views
     /// </summary>
     public partial class SprintBoard : UserControl
     {
+        /// <summary>
+        /// Constructor for sprint board.
+        /// </summary>
         public SprintBoard()
         {
             InitializeComponent();

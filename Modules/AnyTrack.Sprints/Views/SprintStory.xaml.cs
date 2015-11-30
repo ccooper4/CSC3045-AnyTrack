@@ -20,6 +20,9 @@ namespace AnyTrack.Sprints.Views
     /// </summary>
     public partial class SprintStory : UserControl
     {
+        /// <summary>
+        /// Constructor for sprint story
+        /// </summary>
         public SprintStory()
         {
             InitializeComponent();

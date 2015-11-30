@@ -20,6 +20,9 @@ namespace AnyTrack.Sprints.Views
     /// </summary>
     public partial class Task : UserControl
     {
+        /// <summary>
+        /// Constructor for task
+        /// </summary>
         public Task()
         {
             InitializeComponent();

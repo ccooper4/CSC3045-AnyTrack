@@ -9,9 +9,9 @@ using Prism.Regions;
 namespace AnyTrack.Sprints.Views
 {
     /// <summary>
-    /// The sprint story view model.
+    /// The task view model.
     /// </summary>
-    public class SprintStoryViewModel : ValidatedBindableBase, INavigationAware
+    public class TaskViewModel : ValidatedBindableBase, INavigationAware
     {
         /// <summary>
         /// On navigated to.
