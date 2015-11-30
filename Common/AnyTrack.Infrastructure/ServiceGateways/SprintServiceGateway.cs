@@ -64,7 +64,28 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         /// <returns>Returns a list of tasks</returns>
         public List<ServiceTask> GetAllTasksForSprint(Guid sprintId)
         {
-            return new List<ServiceTask>(client.GetAllTasksForSprint(sprintId));
+            return new List<ServiceTask>(client.GetAllTasksForSprintCurrentUser(sprintId));
+        }
+
+        /// <summary>
+        /// Saves the updated task hours
+        /// </summary>
+        /// <param name="tasks">The list of tasks</param>
+        public void SaveUpdatedTaskHours(List<ServiceTask> tasks)
+        {
+            client.SaveUpdatedTaskHours(tasks);
+        }
+
+        /// <summary>
+        /// Gets a summary of this user's sprints. 
+        /// </summary>
+        /// <param name="projectId">The project id to scope the query to.</param>
+        /// <param name="scrumMaster">A flag indicating if sprints where this user is a scrum master should be returned.</param>
+        /// <param name="developer">A flag indicating if sprints where this user is a developer should be returned.</param>
+        /// <returns>A list of sprints for this user.</returns>
+        public List<ServiceSprintSummary> GetSprintNames(Guid? projectId, bool scrumMaster, bool developer)
+        {
+            return client.GetSprintNames(projectId, scrumMaster, developer);
         }
 
         #endregion

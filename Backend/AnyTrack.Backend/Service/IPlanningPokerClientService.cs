@@ -26,5 +26,12 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         [OperationContract]
         void NotifyClientOfTerminatedSession();
-    }
+
+        /// <summary>
+        /// Notifies any conected clients with a new message that has been sent
+        /// </summary>
+        /// <param name="msg">The message being sent to the clients</param>
+        [OperationContract]
+        void SendMessageToClient(ServiceChatMessage msg);
+    }    
 }

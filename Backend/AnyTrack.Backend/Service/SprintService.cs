@@ -164,36 +164,40 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         /// <param name="sprintId">The sprint id</param>
         /// <returns>A list of tasks</returns>
-        public List<ServiceTask> GetAllTasksForSprint(Guid sprintId)
+        public List<ServiceTask> GetAllTasksForSprintCurrentUser(Guid sprintId)
         {
             var userEmail = Thread.CurrentPrincipal.Identity.Name;
             var user = MapEmailAddressToUser(userEmail);
-            var tasks = unitOfWork.TaskRepository.Items.Where(s => s.SprintStory.Sprint.Id == sprintId).Where(u => u.Assignee == user).ToList();
+            var tasks = unitOfWork.TaskRepository.Items.Where(t => t.SprintStory.Sprint.Id == sprintId).Where(u => u.Assignee == user).ToList();
 
             List<ServiceTask> serviceTasks = new List<ServiceTask>();
-            foreach (var t in tasks)
+            foreach (var dataTask in tasks)
             {
+                var remainingTaskHours =
+                    unitOfWork.TaskHourEstimateRepository.Items.Where(t => t.Id == dataTask.Id).ToList();
+
+                List<ServiceTaskHourEstimate> serviceRemainingTaskHours = new List<ServiceTaskHourEstimate>();
+                foreach (var dataRemainingTaskHours in remainingTaskHours)
+                {
+                    ServiceTaskHourEstimate serviceTaskHourEstimate = new ServiceTaskHourEstimate()
+                    {
+                        Estimate = dataRemainingTaskHours.Estimate,
+                        TaskId = dataTask.Id
+                    };
+
+                    serviceRemainingTaskHours.Add(serviceTaskHourEstimate);
+                }
+                
                 ServiceTask task = new ServiceTask
                 {
-                    Blocked = t.Blocked,
-                    ConditionsOfSatisfaction = t.ConditionsOfSatisfaction,
-                    Description = t.Description,
-                    HoursRemaining = t.HoursRemaining,
-                    SprintStory = t.SprintStory,
-                    Summary = t.Summary,
-                    TaskId = t.Id
+                    Blocked = dataTask.Blocked,
+                    ConditionsOfSatisfaction = dataTask.ConditionsOfSatisfaction,
+                    Description = dataTask.Description,
+                    TaskHourEstimates = serviceRemainingTaskHours,
+                    SprintStoryId = dataTask.SprintStory.Id,
+                    Summary = dataTask.Summary,
+                    TaskId = dataTask.Id
                 };
-
-                foreach (var u in t.UpdatedHours)
-                {
-                    ServiceUpdatedHours updatedHours = new ServiceUpdatedHours
-                    {
-                        LogEstimate = u.LogEstimate,
-                        UpdatedHoursId = u.Id,
-                        NewEstimate = u.NewEstimate
-                    };
-                    task.UpdatedHours.Add(updatedHours);
-                }
 
                 serviceTasks.Add(task);
             }
@@ -202,7 +206,30 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
-        /// Add a new task to a spptint story.
+        /// Method to save the update hours for tasks
+        /// </summary>
+        /// <param name="tasks">List of tasks to save</param>
+        public void SaveUpdatedTaskHours(List<ServiceTask> tasks)
+        {
+            foreach (var t in tasks)
+            {
+                var task = unitOfWork.TaskRepository.Items.Single(x => x.Id == t.TaskId);
+                var serviceUpdatedHours = t.TaskHourEstimates.LastOrDefault();
+
+                if (serviceUpdatedHours != null)
+                {
+                    task.TaskHourEstimate.Add(new TaskHourEstimate
+                    {
+                        Estimate = serviceUpdatedHours.Estimate
+                    });
+                }
+            }
+
+            unitOfWork.Commit();
+        }
+
+        /// <summary>
+        /// Add a new task to a sprint story.
         /// </summary>
         /// <param name="sprintStoryId">The story to add the task to.</param>
         /// <param name="serviceTask">The task to add.</param>
@@ -226,14 +253,6 @@ namespace AnyTrack.Backend.Service
 
             DateTime now = DateTime.Now;
 
-            UpdatedHours newHour = new UpdatedHours()
-            {
-                NewEstimate = serviceTask.HoursRemaining
-            };
-
-            ICollection<UpdatedHours> updatedHours = new List<UpdatedHours>();
-            updatedHours.Add(newHour);
-
             Task task = new Task()
             {
                 Assignee = assignee,
@@ -241,11 +260,57 @@ namespace AnyTrack.Backend.Service
                 Blocked = serviceTask.Blocked,
                 ConditionsOfSatisfaction = serviceTask.ConditionsOfSatisfaction,
                 Description = serviceTask.Description,
-                HoursRemaining = serviceTask.HoursRemaining,
                 Summary = serviceTask.Summary,
                 Updated = now,
-                UpdatedHours = updatedHours
             };
+        }
+
+        /// <summary>
+        /// Gets all sprints for the current user
+        /// </summary>
+        /// <param name="projectId">The project id.</param>         
+        /// <param name="scrumMaster">A flag indicating if sprints where the user is the SM should be included.</param>
+        /// <param name="developer">A flag indicating if sprints where the user is a Deveoper should be included.</param>
+        /// <returns>A summary list of this user's sprints.</returns>
+        public List<ServiceSprintSummary> GetSprintNames(Guid? projectId, bool scrumMaster, bool developer)
+        {
+            var userEmail = Thread.CurrentPrincipal.Identity.Name;
+            var user = unitOfWork.UserRepository.Items.SingleOrDefault(u => u.EmailAddress == userEmail);
+
+            if (user == null)
+            {
+                throw new ArgumentException("User does not exist");
+            }
+
+            var sprintIds = new List<Guid>();
+
+            var userRoles = user.Roles;
+
+            if (projectId != null)
+            {
+                userRoles = userRoles.Where(r => r.ProjectId == projectId).ToList();
+            }
+
+            if (scrumMaster)
+            {
+                var smSprintIds = userRoles.Where(r => r.RoleName == "Scrum Master" && r.SprintId.HasValue).Select(r => r.SprintId.Value).ToList();
+                sprintIds = sprintIds.Union(smSprintIds).ToList();
+            }
+
+            if (developer)
+            {
+                var devSprintIds = userRoles.Where(r => r.RoleName == "Developer" && r.SprintId.HasValue).Select(r => r.SprintId.Value).ToList();
+                sprintIds = sprintIds.Union(devSprintIds).ToList();
+            }
+
+            var sprintSummary = unitOfWork.SprintRepository.Items.Where(s => sprintIds.Contains(s.Id)).Select(s => new ServiceSprintSummary
+            {
+                Description = s.Description,
+                Name = s.Name,
+                SprintId = s.Id
+            }).ToList();
+
+            return sprintSummary;
         }
 
         #endregion

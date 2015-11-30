@@ -44,18 +44,13 @@ namespace AnyTrack.Backend.Data.Model
         public virtual User Tester { get; set; }
 
         /// <summary>
-        /// Gets or sets the Hours Remaining
-        /// </summary>
-        public virtual double HoursRemaining { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether task is blocked or not
         /// </summary>
         public virtual bool Blocked { get; set; }
 
         /// <summary>
-        /// Gets or sets the task's updated hours
+        /// Gets or sets the task's remaining hours
         /// </summary>
-        public virtual ICollection<UpdatedHours> UpdatedHours { get; set; }
+        public virtual ICollection<TaskHourEstimate> TaskHourEstimate { get; set; }
     }
 }

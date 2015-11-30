@@ -47,7 +47,7 @@
 
                 <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical">
                     <Label>Sprint:</Label>
-                    <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Sprints}" DisplayMemberPath="SprintName" SelectedValuePath="SprintId" SelectedValue="{Binding SprintId}"/>
+                    <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Sprints}" DisplayMemberPath="Name" SelectedValuePath="SprintId" SelectedValue="{Binding SprintId}"/>
                 </StackPanel>
 
                 <StackPanel Margin="0,10,0,10" Grid.Column="1" Grid.Row="2" Orientation="Vertical">

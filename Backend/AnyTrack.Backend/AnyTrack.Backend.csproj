@@ -137,7 +137,7 @@
     <Compile Include="Data\Model\SprintStory.cs" />
     <Compile Include="Data\Model\Story.cs" />
     <Compile Include="Data\Model\Task.cs" />
-    <Compile Include="Data\Model\UpdatedHours.cs" />
+    <Compile Include="Data\Model\TaskHourEstimate.cs" />
     <Compile Include="Data\Model\User.cs" />
     <Compile Include="Faults\UserAlreadyExistsFault.cs" />
     <Compile Include="Data\Model\Project.cs" />
@@ -181,17 +181,9 @@
     <Compile Include="Migrations\201511231434077_Adding Sprint Data Layer Entities.Designer.cs">
       <DependentUpon>201511231434077_Adding Sprint Data Layer Entities.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201511242323120_Adding Task.cs" />
-    <Compile Include="Migrations\201511242323120_Adding Task.Designer.cs">
-      <DependentUpon>201511242323120_Adding Task.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511251631386_Update to Adding Task.cs" />
-    <Compile Include="Migrations\201511251631386_Update to Adding Task.Designer.cs">
-      <DependentUpon>201511251631386_Update to Adding Task.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511261131578_Adding Updated Hours.cs" />
-    <Compile Include="Migrations\201511261131578_Adding Updated Hours.Designer.cs">
-      <DependentUpon>201511261131578_Adding Updated Hours.cs</DependentUpon>
+    <Compile Include="Migrations\201511301309017_Adding tasks and task hours.cs" />
+    <Compile Include="Migrations\201511301309017_Adding tasks and task hours.Designer.cs">
+      <DependentUpon>201511301309017_Adding tasks and task hours.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201511300143289_Specifying Many to Many relationship between Users and Sprints.cs" />
     <Compile Include="Migrations\201511300143289_Specifying Many to Many relationship between Users and Sprints.Designer.cs">
@@ -229,7 +221,7 @@
     <Compile Include="Service\Model\ServiceStory.cs" />
     <Compile Include="Service\Model\ServiceStorySummary.cs" />
     <Compile Include="Service\Model\ServiceTask.cs" />
-    <Compile Include="Service\Model\ServiceUpdatedHours.cs" />
+    <Compile Include="Service\Model\ServiceTaskHourEstimate.cs" />
     <Compile Include="Service\Model\ServiceUserSearchFilter.cs" />
     <Compile Include="Service\Model\ServiceUserSearchInfo.cs" />
     <Compile Include="Service\PlanningPokerManagerService.cs" />
@@ -277,14 +269,8 @@
     <EmbeddedResource Include="Migrations\201511231434077_Adding Sprint Data Layer Entities.resx">
       <DependentUpon>201511231434077_Adding Sprint Data Layer Entities.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511242323120_Adding Task.resx">
-      <DependentUpon>201511242323120_Adding Task.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511251631386_Update to Adding Task.resx">
-      <DependentUpon>201511251631386_Update to Adding Task.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511261131578_Adding Updated Hours.resx">
-      <DependentUpon>201511261131578_Adding Updated Hours.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201511301309017_Adding tasks and task hours.resx">
+      <DependentUpon>201511301309017_Adding tasks and task hours.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511300143289_Specifying Many to Many relationship between Users and Sprints.resx">
       <DependentUpon>201511300143289_Specifying Many to Many relationship between Users and Sprints.cs</DependentUpon>

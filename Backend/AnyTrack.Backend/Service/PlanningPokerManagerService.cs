@@ -298,34 +298,45 @@ namespace AnyTrack.Backend.Service
             pendingUsers[thisSession.SprintID].Remove(pendingUserEntry);
 
             return thisSession;
-        }
-
-        /// <summary>
-        /// Method to register a user to chat
-        /// </summary>
-        /// <param name="sessionID">the session that they want to chat in</param>
-        /// <param name="name">the name of the user registering</param>
-        public void RegisterChatUser(Guid sessionID, string name)
-        {
-            throw new NotImplementedException();
-        }
+        }              
 
         /// <summary>
         /// Method to submit message to chat channel
         /// </summary>
         /// <param name="msg">The chatmessage object which is to be sent</param>
-        public void SubmitMessage(ServiceChatMessage msg)
+        public void SubmitMessageToServer(ServiceChatMessage msg)
         {
-            throw new NotImplementedException();
+            Guid sessionId = msg.SessionID;
+
+            var sessions = activeSessions.GetListOfSessions();
+
+            if (!sessions.ContainsKey(sessionId))
+            {
+                throw new ArgumentException("No session could be found", "sessionId");
+            }
+
+            SendMessageToClients(msg);                      
         }
 
         /// <summary>
         /// Method for sending a message
         /// </summary>
         /// <param name="msg">the message object to be sent</param>
-        public void SendMessage(ServiceChatMessage msg)
+        public void SendMessageToClients(ServiceChatMessage msg)
         {
-            throw new NotImplementedException();
+            var thisSession = msg.SessionID;
+
+            var currentUser = unitOfWork.UserRepository.Items.Single(u => u.EmailAddress == Thread.CurrentPrincipal.Identity.Name);
+
+            var connectedClientsList = availableClients.GetListOfClients();
+            var clientList = connectedClientsList[msg.SessionID];
+
+            msg.Name = "{0} {1}".Substitute(currentUser.FirstName, currentUser.LastName);
+
+            foreach (var client in clientList)
+            {
+                client.ClientChannel.SendMessageToClient(msg);
+            }
         }
 
         #endregion 

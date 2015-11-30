@@ -9,6 +9,7 @@ using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.ServiceGateways;
 using AnyTrack.PlanningPoker.ServiceGateways;
 using Prism.Regions;
+using SprintModels = AnyTrack.Infrastructure.BackendSprintService;
 
 namespace AnyTrack.PlanningPoker.Views
 {
@@ -30,9 +31,19 @@ namespace AnyTrack.PlanningPoker.Views
         private readonly IProjectServiceGateway projectServiceGateway;
 
         /// <summary>
+        /// The sprint service gateway.
+        /// </summary>
+        private readonly ISprintServiceGateway sprintServiceGateway;
+
+        /// <summary>
         /// The selected project id.
         /// </summary>
-        private Guid projectId; 
+        private Guid projectId;
+
+        /// <summary>
+        /// The selected sprint id.
+        /// </summary>
+        private Guid sprintId; 
 
         #endregion 
 
@@ -43,7 +54,8 @@ namespace AnyTrack.PlanningPoker.Views
         /// </summary>
         /// <param name="gateway">The service gateway.</param>
         /// <param name="projectServiceGateway">The project service gateway.</param>
-        public StartPlanningPokerSessionViewModel(IPlanningPokerManagerServiceGateway gateway, IProjectServiceGateway projectServiceGateway)
+        /// <param name="sprintServiceGateway">The sprint service gateway.</param>
+        public StartPlanningPokerSessionViewModel(IPlanningPokerManagerServiceGateway gateway, IProjectServiceGateway projectServiceGateway, ISprintServiceGateway sprintServiceGateway)
         {
             if (gateway == null)
             {
@@ -55,12 +67,17 @@ namespace AnyTrack.PlanningPoker.Views
                 throw new ArgumentNullException("projectServiceGateway"); 
             }
 
+            if (sprintServiceGateway == null)
+            {
+                throw new ArgumentNullException("sprintServiceGateway");
+            }
+
             this.serviceGateway = gateway;
             this.projectServiceGateway = projectServiceGateway;
+            this.sprintServiceGateway = sprintServiceGateway;
 
             this.Projects = new ObservableCollection<ServiceProjectSummary>();
-            var results = projectServiceGateway.GetProjectNames(true, false, false);
-            this.Projects.AddRange(results);
+            this.Sprints = new ObservableCollection<SprintModels.ServiceSprintSummary>();
         }
 
         #endregion 
@@ -71,6 +88,11 @@ namespace AnyTrack.PlanningPoker.Views
         /// Gets or sets the list of projects.
         /// </summary>
         public ObservableCollection<ServiceProjectSummary> Projects { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of sprints.
+        /// </summary>
+        public ObservableCollection<SprintModels.ServiceSprintSummary> Sprints { get; set; }
 
         /// <summary>
         /// Gets or sets the project id.
@@ -85,6 +107,25 @@ namespace AnyTrack.PlanningPoker.Views
             set
             {
                 SetProperty(ref projectId, value);
+                this.Sprints.Clear();
+                var sprints = sprintServiceGateway.GetSprintNames(value, true, false);
+                Sprints.AddRange(sprints);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the sprint id.
+        /// </summary>
+        public Guid SprintId
+        {
+            get
+            {
+                return sprintId;
+            }
+
+            set
+            {
+                SetProperty(ref sprintId, value);
             }
         }
 
@@ -127,6 +168,9 @@ namespace AnyTrack.PlanningPoker.Views
         /// <param name="navigationContext">The current navigation context.</param>
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            this.Projects.Clear();
+            var results = projectServiceGateway.GetProjectNames(true, false, false);
+            this.Projects.AddRange(results);
         }
 
         #endregion 

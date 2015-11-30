@@ -4,32 +4,38 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AnyTrack.Infrastructure;
+using AnyTrack.Infrastructure.BackendProjectService;
+using AnyTrack.Infrastructure.ServiceGateways;
 using AnyTrack.PlanningPoker;
+using AnyTrack.PlanningPoker.BackendPlanningPokerManagerService;
+using AnyTrack.PlanningPoker.ServiceGateways;
 using Prism.Commands;
+using Prism.Regions;
 
 namespace AnyTrack.PlanningPoker.Views
 {
     /// <summary>
     /// ChatViewModel class
     /// </summary>
-    public class PlanningPokerViewModel
+    public class PlanningPokerViewModel : ValidatedBindableBase
     {
         #region Fields 
 
         /// <summary>
+        /// The planning poker service gateway.
+        /// </summary>
+        private readonly IPlanningPokerManagerServiceGateway serviceGateway;
+        
+        /// <summary>
         /// The specified message to send.
         /// </summary>
         private string messageToSend;
-
-        /// <summary>
-        /// The specified messages timestamp.
-        /// </summary>
-        private string messageTimeStamp;
-
+        
         /// <summary>
         /// The specified sessionID for this chat.
         /// </summary>
-        private Guid sessionID;
+        private Guid sessionId;
 
         #endregion
 
@@ -39,31 +45,11 @@ namespace AnyTrack.PlanningPoker.Views
         /// </summary>
         public PlanningPokerViewModel()
         {
-            SendMessageCommand = new DelegateCommand(this.SendMessage);
+            serviceGateway.NotifyClientOfNewMessageFromServerEvent += ServiceGateway_NotifyClientOfNewMessageFromServerEvent;
+            SendMessageCommand = new DelegateCommand(this.SubmitMessageToServer);
         }
 
         #endregion
-        
-        /// <summary>
-        /// Gets or sets message property.
-        /// </summary>
-        public string MessageToSend
-        {
-            get
-            {
-                return messageToSend;
-            }  
-
-            set
-            {
-                messageToSend = value;
-            }                         
-        }
-
-        ////private static ChatMessage localService = new ChatMessage();
-        ////private static DuplexChannelFactory<> dcf = new DuplexChannelFactory<IChatManager>(localService, "mgr");
-        ////IPl mgr = dcf.CreateChannel();
-        ////mgr.("tester");
 
         /// <summary>
         /// Gets or sets the history of messages.
@@ -73,22 +59,51 @@ namespace AnyTrack.PlanningPoker.Views
         /// <summary>
         /// Gets the command used to send a message from a user. 
         /// </summary>
-        public DelegateCommand SendMessageCommand { get; private set; }
+        public DelegateCommand SendMessageCommand { get; private set; }              
 
-        #region Methods 
+        #region Methods         
 
         /// <summary>
-        /// Perform a send message.
+        /// Gets or sets message property.
         /// </summary>
-        private void SendMessage()
+        public string MessageToSend
         {
-            this.messageTimeStamp = DateTime.Now.ToString();
-            this.messageToSend = this.sessionID + ":USERNAME" + this.messageTimeStamp + ":" + this.messageToSend;
+            get
+            {
+                return messageToSend;
+            }
 
-            ////mgr.SubmitMessage(new ChatMessage("Test", this.messageTimeStamp, this.messageToSend));
-
-            MessageToSend = string.Empty;
+            set
+            {
+                messageToSend = value;
+            }
         }
+
+        /// <summary>
+        /// Duplex binding fro recieving messages from server
+        /// </summary>
+        /// <param name="sender">The sender object</param>
+        /// <param name="msg">the message that has been sent</param>
+        private void ServiceGateway_NotifyClientOfNewMessageFromServerEvent(object sender, ServiceChatMessage msg)
+        {
+            this.MessageHistories.Add(msg.Message);
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Submit a message to the server to be relayed to other session members.
+        /// </summary>
+        private void SubmitMessageToServer()
+        {
+            ServiceChatMessage msg = new ServiceChatMessage();
+
+            ////Needs to be changed to the sessionID of planning poker session
+            msg.SessionID = Guid.NewGuid();
+
+            msg.Message = messageToSend;
+            
+            serviceGateway.SubmitMessageToServer(msg);
+        }               
 
         #endregion
     }

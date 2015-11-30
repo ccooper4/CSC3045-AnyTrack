@@ -10,7 +10,7 @@
              mc:Ignorable="d" 
              prism:ViewModelLocator.AutoWireViewModel="True"
              xml:lang="en-GB">
-    
+
     <UserControl.Resources>
         <converter:BooleanToVisibilityConverter x:Key="booleanToVisibility"/>
         <Style TargetType="ListBox">
@@ -23,27 +23,30 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    
+
     <Grid Background="LightGray" >
-        
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
 
         <Button Grid.Row="0" Margin="0,30px,30px,0" HorizontalAlignment="Right" Background="Transparent" BorderThickness="0" VerticalAlignment="Center" Height="Auto" Width="Auto" Command="{Binding CreateProjectCommand}">
             <Image Source="../Images/add_icon.png" Width="25px" Height="25px"></Image>
         </Button>
 
         <DockPanel Grid.Row="1">
-            <ListBox DockPanel.Dock="Top" Background="WhiteSmoke" HorizontalAlignment="Stretch" BorderThickness="2" BorderBrush="Black" ItemsSource="{Binding Tiles}" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox DockPanel.Dock="Top" Background="LightGray" HorizontalAlignment="Left" BorderThickness="0" ItemsSource="{Binding Tiles}" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Width="Auto" Margin="30px,30px,30px,30px" >
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="1*"></RowDefinition>
+                                <RowDefinition Height="9*"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <controls:Tile Grid.Row="0" Title="{Binding Name}" Width="200" Height="120" HorizontalAlignment="Left" CommandParameter="{Binding Path=.}" Command="{Binding Path=DataContext.ViewProjectOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"></controls:Tile>
+
+                            <Label HorizontalAlignment="Left" Grid.Row="0" Content="{Binding Name}" ></Label>
+                            <controls:Tile Grid.Row="1" Width="200" Height="120" CommandParameter="{Binding Path=.}" Command="{Binding Path=DataContext.ViewProjectOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"></controls:Tile>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

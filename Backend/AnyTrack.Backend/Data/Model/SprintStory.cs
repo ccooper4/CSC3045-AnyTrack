@@ -20,5 +20,10 @@ namespace AnyTrack.Backend.Data.Model
         /// Gets or sets the sprint id
         /// </summary>
         public virtual Sprint Sprint { get; set; }
+
+        /// <summary>
+        /// Gets or sets the task list.
+        /// </summary>
+        public virtual ICollection<Task> Tasks { get; set; }
     }
 }

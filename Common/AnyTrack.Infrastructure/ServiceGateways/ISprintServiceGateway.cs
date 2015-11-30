@@ -29,5 +29,20 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         /// <param name="sprintId">The sprint id</param>
         /// <returns>A list of tasks</returns>
         List<ServiceTask> GetAllTasksForSprint(Guid sprintId);
+
+        /// <summary>
+        /// Saves the updated task hours
+        /// </summary>
+        /// <param name="tasks">The list of tasks</param>
+        void SaveUpdatedTaskHours(List<ServiceTask> tasks);
+
+        /// <summary>
+        /// Gets a summary of this user's sprints. 
+        /// </summary>
+        /// <param name="projectId">The id of the project.</param>
+        /// <param name="scrumMaster">A flag indicating if sprints where this user is a scrummaster should be returned.</param>
+        /// <param name="developer">A flag indicating if sprints where this user is a developer should be returned.</param>
+        /// <returns>A list of sprints for this user.</returns>
+        List<ServiceSprintSummary> GetSprintNames(Guid? projectId, bool scrumMaster, bool developer);
     }
 }

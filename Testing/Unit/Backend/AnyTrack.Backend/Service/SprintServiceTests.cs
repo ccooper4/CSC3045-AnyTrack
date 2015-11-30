@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using AnyTrack.Backend.Data;
 using AnyTrack.Backend.Data.Model;
 using AnyTrack.Backend.Providers;
+using AnyTrack.Backend.Security;
 using AnyTrack.Backend.Service;
 using AnyTrack.Backend.Service.Model;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
+using Task = AnyTrack.Backend.Data.Model.Task;
+using System.Threading;
 
 namespace Unit.Backend.AnyTrack.Backend.Service
 {
@@ -371,5 +375,346 @@ namespace Unit.Backend.AnyTrack.Backend.Service
         }
 
         #endregion
+
+        #region void GetAllTasksForSprintCurrentUser(Guid sprintId)
+
+        [Test]
+        public void GetAllTasksReturnsOneTask()
+        {
+            #region Test Data
+
+            List<Sprint> sprintList = new List<Sprint>()
+            {
+                new Sprint
+                {
+                    Id = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
+                    Name = "Sprint 1",
+                    StartDate = new DateTime(2015, 11, 26),
+                    EndDate = new DateTime(2015, 12, 3),
+                    Description = "Sprint"
+                }
+            };
+
+            List<Task> tasksList = new List<Task>();
+            Task t = new Task()
+            {
+                Assignee = userList.FirstOrDefault(),
+                ConditionsOfSatisfaction = "asdsad",
+                Description = "asd",
+                SprintStory = new SprintStory
+                {
+                    Sprint = sprintList.FirstOrDefault(),
+                    Story = new Story
+                    {
+                        ConditionsOfSatisfaction = "asddas",
+                        IWant = "adsasd",
+                        Project = projectList.FirstOrDefault(),
+                        SoThat = "asd",
+                        Summary = "asdd"
+                    }
+                }
+                
+            };
+
+            List<TaskHourEstimate> taskHourEstimateList = new List<TaskHourEstimate>
+            {
+               new TaskHourEstimate
+               {
+                   Task = t,
+                   Estimate = 3
+               }
+            };
+
+            t.TaskHourEstimate = taskHourEstimateList;
+            tasksList.Add(t);
+
+            List<Role> rolesList = new List<Role>()
+            {
+                new Role()
+                {
+                    Id = new Guid("00000000-5566-7788-99AA-BBCCDDEEFF00"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    RoleName = "Developer",
+                    SprintId = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
+                    User = userList[0]
+                },
+                new Role()
+                {
+                    Id = new Guid("00000000-5566-7788-99AA-BBCCDDEEFF00"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    RoleName = "Developer",
+                    SprintId = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
+                    User = userList[1]
+                }
+            };
+
+            userList.FirstOrDefault().Roles = rolesList;
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(userList.FirstOrDefault());
+
+            #endregion
+            unitOfWork.UserRepository.Items.Returns(userList.AsQueryable());
+            unitOfWork.SprintRepository.Items.Returns(sprintList.AsQueryable());
+            unitOfWork.RoleRepository.Items.Returns(rolesList.AsQueryable());
+            unitOfWork.TaskRepository.Items.Returns(tasksList.AsQueryable());
+            unitOfWork.TaskHourEstimateRepository.Items.Returns(taskHourEstimateList.AsQueryable());
+
+            var result = service.GetAllTasksForSprintCurrentUser(sprintList.LastOrDefault().Id);
+
+            result.Count.Should().Be(1);
+        }
+
+        [Test]
+        public void GetAllTasksReturnsZero()
+        {
+            #region Test Data
+
+            List<Sprint> sprintList = new List<Sprint>()
+            {
+                new Sprint
+                {
+                    Id = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
+                    Name = "Sprint 1",
+                    StartDate = new DateTime(2015, 11, 26),
+                    EndDate = new DateTime(2015, 12, 3),
+                    Description = "Sprint"
+                }
+            };
+
+            List<Task> tasksList = new List<Task>();
+            List<TaskHourEstimate> taskHourEstimateList = new List<TaskHourEstimate>();
+
+            List<Role> rolesList = new List<Role>()
+            {
+                new Role()
+                {
+                    Id = new Guid("00000000-5566-7788-99AA-BBCCDDEEFF00"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    RoleName = "Developer",
+                    SprintId = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
+                    User = userList[0]
+                },
+                new Role()
+                {
+                    Id = new Guid("00000000-5566-7788-99AA-BBCCDDEEFF00"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    RoleName = "Developer",
+                    SprintId = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
+                    User = userList[1]
+                }
+            };
+
+            userList.FirstOrDefault().Roles = rolesList;
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(userList.FirstOrDefault());
+
+            #endregion
+            unitOfWork.UserRepository.Items.Returns(userList.AsQueryable());
+            unitOfWork.SprintRepository.Items.Returns(sprintList.AsQueryable());
+            unitOfWork.RoleRepository.Items.Returns(rolesList.AsQueryable());
+            unitOfWork.TaskRepository.Items.Returns(tasksList.AsQueryable());
+            unitOfWork.TaskHourEstimateRepository.Items.Returns(taskHourEstimateList.AsQueryable());
+
+            var result = service.GetAllTasksForSprintCurrentUser(sprintList.LastOrDefault().Id);
+
+            result.Count.Should().Be(0);
+        }
+
+        #endregion
+
+        #region GetSprintNames(Guid? projectId, bool scrumMaster, bool developer) Tests 
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void GetSprintNamesAndCannotFindUser()
+        {
+            unitOfWork.UserRepository.Items.Returns(new List<User>().AsQueryable());
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+                {
+                    new Role { RoleName = "Developer", SprintId = Guid.NewGuid() },
+                    new Role { RoleName = "Scrum Master", SprintId = Guid.NewGuid() }
+                }
+            };
+
+            var serviceUserPrincipal = new GeneratedServiceUserPrincipal(user);
+            Thread.CurrentPrincipal = serviceUserPrincipal;
+
+            service.GetSprintNames(null, true, true);
+        }
+
+        [Test]
+        public void GetSprintsNamesForUserForScrumMaster()
+        {
+            var sprint1Id = Guid.NewGuid();
+            var sprint2Id = Guid.NewGuid();
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+                {
+                    new Role { RoleName = "Developer", SprintId = sprint1Id },
+                    new Role { RoleName = "Scrum Master", SprintId = sprint2Id }
+                }
+            };
+
+            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
+
+            var serviceUserPrincipal = new GeneratedServiceUserPrincipal(user);
+            Thread.CurrentPrincipal = serviceUserPrincipal;
+
+            var sprints = new List<Sprint>()
+            {
+                new Sprint { Id = sprint1Id, Name = "Sprint 1", Description = "UI"},
+                new Sprint { Id = sprint2Id, Name = "Sprint 2", Description = "Backend"}
+            };
+
+            unitOfWork.SprintRepository.Items.Returns(sprints.AsQueryable());
+
+            var results = service.GetSprintNames(null, true, false);
+
+            results.Should().NotBeNull();
+            results.Count.Should().Be(1);
+            var singleResult = results.Single();
+            singleResult.SprintId.Should().Be(sprint2Id);
+            singleResult.Name.Should().Be(sprints.Last().Name);
+            singleResult.Description.Should().Be(sprints.Last().Description);
+        }
+
+        [Test]
+        public void GetSprintsNamesForUserForDeveloper()
+        {
+            var sprint1Id = Guid.NewGuid();
+            var sprint2Id = Guid.NewGuid();
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+                {
+                    new Role { RoleName = "Developer", SprintId = sprint1Id },
+                    new Role { RoleName = "Scrum Master", SprintId = sprint2Id }
+                }
+            };
+
+            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
+
+            var serviceUserPrincipal = new GeneratedServiceUserPrincipal(user);
+            Thread.CurrentPrincipal = serviceUserPrincipal;
+
+            var sprints = new List<Sprint>()
+            {
+                new Sprint { Id = sprint1Id, Name = "Sprint 1", Description = "UI"},
+                new Sprint { Id = sprint2Id, Name = "Sprint 2", Description = "Backend"}
+            };
+
+            unitOfWork.SprintRepository.Items.Returns(sprints.AsQueryable());
+
+            var results = service.GetSprintNames(null, false, true);
+
+            results.Should().NotBeNull();
+            results.Count.Should().Be(1);
+            var singleResult = results.Single();
+            singleResult.SprintId.Should().Be(sprint1Id);
+            singleResult.Name.Should().Be(sprints.First().Name);
+            singleResult.Description.Should().Be(sprints.First().Description);
+        }
+
+        [Test]
+        public void GetSprintsNamesForUserForBothRoles()
+        {
+            var sprint1Id = Guid.NewGuid();
+            var sprint2Id = Guid.NewGuid();
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+                {
+                    new Role { RoleName = "Developer", SprintId = sprint1Id },
+                    new Role { RoleName = "Scrum Master", SprintId = sprint2Id }
+                }
+            };
+
+            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
+
+            var serviceUserPrincipal = new GeneratedServiceUserPrincipal(user);
+            Thread.CurrentPrincipal = serviceUserPrincipal;
+
+            var sprints = new List<Sprint>()
+            {
+                new Sprint { Id = sprint1Id, Name = "Sprint 1", Description = "UI"},
+                new Sprint { Id = sprint2Id, Name = "Sprint 2", Description = "Backend"},
+                new Sprint { Id = Guid.NewGuid(), Name = "Other sprint", Description = "Backend"}
+            };
+
+            unitOfWork.SprintRepository.Items.Returns(sprints.AsQueryable());
+
+            var results = service.GetSprintNames(null, true, true);
+
+            results.Should().NotBeNull();
+            results.Count.Should().Be(2);
+            var firstResult = results.First();
+            firstResult.SprintId.Should().Be(sprint1Id);
+            firstResult.Name.Should().Be(sprints.First().Name);
+            firstResult.Description.Should().Be(sprints.First().Description);
+
+            var secondResult = results.Last();
+            secondResult.SprintId.Should().Be(sprint2Id);
+            secondResult.Name.Should().Be(sprints[1].Name);
+            secondResult.Description.Should().Be(sprints[1].Description);
+
+            results.Select(s => s.Name).Should().NotContain("Other sprint");
+        }
+
+        [Test]
+        public void GetSprintsNamesForUserAndBoundByProjectId()
+        {
+            var sprint1Id = Guid.NewGuid();
+            var sprint2Id = Guid.NewGuid();
+            var projectId = Guid.NewGuid();
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+                {
+                    new Role { RoleName = "Developer", ProjectId = projectId, SprintId = sprint1Id },
+                    new Role { RoleName = "Scrum Master", ProjectId = Guid.NewGuid(), SprintId = sprint2Id }
+                }
+            };
+
+            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
+
+            var serviceUserPrincipal = new GeneratedServiceUserPrincipal(user);
+            Thread.CurrentPrincipal = serviceUserPrincipal;
+
+            var sprints = new List<Sprint>()
+            {
+                new Sprint { Id = sprint1Id, Name = "Sprint 1", Description = "UI"},
+                new Sprint { Id = sprint2Id, Name = "Sprint 2", Description = "Backend"},
+                new Sprint { Id = Guid.NewGuid(), Name = "Other sprint", Description = "Backend"}
+            };
+
+            unitOfWork.SprintRepository.Items.Returns(sprints.AsQueryable());
+
+            var results = service.GetSprintNames(projectId, true, true);
+
+            results.Should().NotBeNull();
+            results.Count.Should().Be(1);
+            var firstResult = results.First();
+            firstResult.SprintId.Should().Be(sprint1Id);
+            firstResult.Name.Should().Be(sprints.First().Name);
+            firstResult.Description.Should().Be(sprints.First().Description);
+
+            results.Select(s => s.Name).Should().NotContain("Other sprint");
+            results.Select(s => s.Name).Should().NotContain("Sprint 2");
+        }
+
+        #endregion 
     }
 }

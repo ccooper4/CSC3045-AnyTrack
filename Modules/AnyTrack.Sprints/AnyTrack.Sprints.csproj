@@ -122,10 +122,22 @@
     <Compile Include="Views\CustomControls\LabelledTextBox.xaml.cs">
       <DependentUpon>LabelledTextBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SprintBoard.xaml.cs">
+      <DependentUpon>SprintBoard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SprintBoardViewModel.cs" />
     <Compile Include="Views\SprintManager.xaml.cs">
       <DependentUpon>SprintManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SprintManagerViewModel.cs" />
+    <Compile Include="Views\SprintStory.xaml.cs">
+      <DependentUpon>SprintStory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SprintStoryViewModel.cs" />
+    <Compile Include="Views\Task.xaml.cs">
+      <DependentUpon>Task.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TaskViewModel.cs" />
     <Compile Include="Views\UpdateTaskHours.xaml.cs">
       <DependentUpon>UpdateTaskHours.xaml</DependentUpon>
     </Compile>
@@ -160,7 +172,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\SprintBoard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SprintManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SprintStory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Task.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

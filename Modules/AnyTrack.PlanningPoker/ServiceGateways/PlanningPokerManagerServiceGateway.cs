@@ -63,6 +63,11 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         /// </summary>
         public event EventHandler NotifyClientOfTerminatedSessionEvent;
 
+        /// <summary>
+        /// Notifies the client that they have been sent a message from the server.
+        /// </summary>
+        public event EventHandler<ServiceChatMessage> NotifyClientOfNewMessageFromServerEvent;
+
         #endregion 
 
         #region Methods 
@@ -96,7 +101,7 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         {
             client.CancelPendingPokerSession(sessionId);
         }
-
+        
         /// <summary>
         /// Allows a client to join an active session.
         /// </summary>
@@ -128,7 +133,25 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
             NotifyClientOfTerminatedSessionEvent(this, null);
         }
 
-        #endregion 
+        /// <summary>
+        /// A callback to be raised when the client's current session is terminated. 
+        /// </summary>
+        /// <param name="msg">The message to submit.</param>        
+        public void SubmitMessageToServer(ServiceChatMessage msg)
+        {
+            client.SubmitMessageToServer(msg);            
+        }
+
+        /// <summary>
+        /// Method for sending messages out to the client
+        /// </summary>
+        /// <param name="msg">The message to be sent</param>
+        public void SendMessageToClient(ServiceChatMessage msg)
+        {
+            NotifyClientOfNewMessageFromServerEvent(this, msg);
+        }
+
+        #endregion
 
         #endregion
     }
