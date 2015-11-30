@@ -10,6 +10,7 @@ using AnyTrack.PlanningPoker.Views;
 using AnyTrack.PlanningPoker.ServiceGateways;
 using Prism.Regions;
 using AnyTrack.Infrastructure.BackendProjectService;
+using SprintModels = AnyTrack.Infrastructure.BackendSprintService;
 using AnyTrack.Infrastructure.ServiceGateways;
 
 namespace Unit.Modules.AnyTrack.PlanningPoker.Views.StartPlanningPokerSessionViewModelTests
@@ -117,6 +118,37 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.StartPlanningPokerSessionVie
             vm.Projects.Single().ProjectId.Should().Be(projectId);
             vm.Projects.Single().ProjectName.Should().Be(projectName);
             vm.Projects.Select(p => p.ProjectId).Should().NotContain(oldProjectId);
+        }
+
+        #endregion 
+
+        #region SetProjectId Tests 
+
+        [Test]
+        public void SetProjectId()
+        {
+            var sprints = new List<SprintModels.ServiceSprintSummary>()
+            {
+                new SprintModels.ServiceSprintSummary { Description = "Test", Name = "Test", SprintId = Guid.NewGuid()}
+            };
+
+            var projectId = Guid.NewGuid();
+            var oldSprintId = Guid.NewGuid();
+
+            sprintServiceGateway.GetSprintNames(projectId, Arg.Any<bool>(), Arg.Any<bool>()).Returns(sprints);
+
+            vm.Sprints = new System.Collections.ObjectModel.ObservableCollection<SprintModels.ServiceSprintSummary>()
+            {
+                new SprintModels.ServiceSprintSummary() { SprintId = oldSprintId}
+            }; 
+
+            vm.ProjectId = projectId;
+            sprintServiceGateway.Received().GetSprintNames(projectId, true, false);
+            vm.Sprints.Count.Should().Be(1);
+            vm.Sprints.Select(s => s.SprintId).Should().NotContain(oldSprintId);
+            vm.Sprints.Single().SprintId.Should().Be(sprints.Single().SprintId);
+            vm.Sprints.Single().Name.Should().Be(sprints.Single().Name);
+            vm.Sprints.Single().Description.Should().Be(sprints.Single().Description);
         }
 
         #endregion 

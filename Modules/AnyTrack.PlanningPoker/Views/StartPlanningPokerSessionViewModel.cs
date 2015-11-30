@@ -9,6 +9,7 @@ using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.ServiceGateways;
 using AnyTrack.PlanningPoker.ServiceGateways;
 using Prism.Regions;
+using SprintModels = AnyTrack.Infrastructure.BackendSprintService;
 
 namespace AnyTrack.PlanningPoker.Views
 {
@@ -37,7 +38,12 @@ namespace AnyTrack.PlanningPoker.Views
         /// <summary>
         /// The selected project id.
         /// </summary>
-        private Guid projectId; 
+        private Guid projectId;
+
+        /// <summary>
+        /// The selected sprint id.
+        /// </summary>
+        private Guid sprintId; 
 
         #endregion 
 
@@ -71,7 +77,7 @@ namespace AnyTrack.PlanningPoker.Views
             this.sprintServiceGateway = sprintServiceGateway;
 
             this.Projects = new ObservableCollection<ServiceProjectSummary>();
-            this.Sprints = new ObservableCollection<ServiceSprintSummary>();
+            this.Sprints = new ObservableCollection<SprintModels.ServiceSprintSummary>();
         }
 
         #endregion 
@@ -86,7 +92,7 @@ namespace AnyTrack.PlanningPoker.Views
         /// <summary>
         /// Gets or sets the list of sprints.
         /// </summary>
-        public ObservableCollection<ServiceSprintSummary> Sprints { get; set; }
+        public ObservableCollection<SprintModels.ServiceSprintSummary> Sprints { get; set; }
 
         /// <summary>
         /// Gets or sets the project id.
@@ -101,6 +107,25 @@ namespace AnyTrack.PlanningPoker.Views
             set
             {
                 SetProperty(ref projectId, value);
+                this.Sprints.Clear();
+                var sprints = sprintServiceGateway.GetSprintNames(value, true, false);
+                Sprints.AddRange(sprints);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the sprint id.
+        /// </summary>
+        public Guid SprintId
+        {
+            get
+            {
+                return sprintId;
+            }
+
+            set
+            {
+                SetProperty(ref sprintId, value);
             }
         }
 
