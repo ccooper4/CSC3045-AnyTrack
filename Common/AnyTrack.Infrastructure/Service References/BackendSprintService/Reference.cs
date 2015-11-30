@@ -859,6 +859,83 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceSprintSummary", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
+    [System.SerializableAttribute()]
+    public partial class ServiceSprintSummary : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid SprintIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid SprintId {
+            get {
+                return this.SprintIdField;
+            }
+            set {
+                if ((this.SprintIdField.Equals(value) != true)) {
+                    this.SprintIdField = value;
+                    this.RaisePropertyChanged("SprintId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="BackendSprintService.ISprintService")]
     public interface ISprintService {
@@ -881,9 +958,15 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetAllTasksForSprintCurrentUser", ReplyAction="http://tempuri.org/ISprintService/GetAllTasksForSprintCurrentUserResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask>> GetAllTasksForSprintCurrentUserAsync(System.Guid sprintId);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetSprintNames", ReplyAction="http://tempuri.org/ISprintService/GetSprintNamesResponse")]
+        System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintSummary> GetSprintNames(System.Nullable<System.Guid> projectId, bool scrumMaster, bool developer);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/SaveUpdatedTaskHours", ReplyAction="http://tempuri.org/ISprintService/SaveUpdatedTaskHoursResponse")]
         void SaveUpdatedTaskHours(System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask> tasks);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetSprintNames", ReplyAction="http://tempuri.org/ISprintService/GetSprintNamesResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintSummary>> GetSprintNamesAsync(System.Nullable<System.Guid> projectId, bool scrumMaster, bool developer);
+    
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/SaveUpdatedTaskHours", ReplyAction="http://tempuri.org/ISprintService/SaveUpdatedTaskHoursResponse")]
         System.Threading.Tasks.Task SaveUpdatedTaskHoursAsync(System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask> tasks);
     }
@@ -939,8 +1022,16 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
             return base.Channel.GetAllTasksForSprintCurrentUserAsync(sprintId);
         }
         
+        public System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintSummary> GetSprintNames(System.Nullable<System.Guid> projectId, bool scrumMaster, bool developer) {
+            return base.Channel.GetSprintNames(projectId, scrumMaster, developer);
+        }
+        
         public void SaveUpdatedTaskHours(System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask> tasks) {
             base.Channel.SaveUpdatedTaskHours(tasks);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintSummary>> GetSprintNamesAsync(System.Nullable<System.Guid> projectId, bool scrumMaster, bool developer) {
+            return base.Channel.GetSprintNamesAsync(projectId, scrumMaster, developer);
         }
         
         public System.Threading.Tasks.Task SaveUpdatedTaskHoursAsync(System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask> tasks) {

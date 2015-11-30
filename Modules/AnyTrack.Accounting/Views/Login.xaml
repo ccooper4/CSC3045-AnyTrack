@@ -37,8 +37,8 @@
 
 
             <StackPanel  Grid.Column="0" Grid.Row="0" MaxWidth="600px" MinWidth="500px" Margin="0,60px,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Vertical">
-                <TextBox Margin="10" HorizontalAlignment="Stretch" Controls:TextBoxHelper.Watermark="Username" ToolTip="Default alignment" Text="{Binding Email}" />
-                <PasswordBox Margin="10" HorizontalAlignment="Stretch" Controls:TextBoxHelper.Watermark="Password" Controls:TextBoxHelper.IsWaitingForData="True" ToolTip="Default alignment" controls:PasswordBoxBindingHelper.EnablePasswordBoxBinding="true"  controls:PasswordBoxBindingHelper.Binding="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="10" HorizontalAlignment="Stretch" Controls:TextBoxHelper.Watermark="Username" ToolTip="Enter Username Here" Text="{Binding Email}" />
+                <PasswordBox Margin="10" HorizontalAlignment="Stretch" Controls:TextBoxHelper.Watermark="Password" Controls:TextBoxHelper.IsWaitingForData="True" ToolTip="Enter Password Here" controls:PasswordBoxBindingHelper.EnablePasswordBoxBinding="true"  controls:PasswordBoxBindingHelper.Binding="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <!-- Forgot Password -->
                 <Button HorizontalAlignment="Right" FontSize="9" Foreground="DarkBlue" Background="Transparent" Command="{Binding SignUpCommand}" BorderThickness="0" >

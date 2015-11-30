@@ -265,6 +265,54 @@ namespace AnyTrack.Backend.Service
             };
         }
 
+        /// <summary>
+        /// Gets all sprints for the current user
+        /// </summary>
+        /// <param name="projectId">The project id.</param>         
+        /// <param name="scrumMaster">A flag indicating if sprints where the user is the SM should be included.</param>
+        /// <param name="developer">A flag indicating if sprints where the user is a Deveoper should be included.</param>
+        /// <returns>A summary list of this user's sprints.</returns>
+        public List<ServiceSprintSummary> GetSprintNames(Guid? projectId, bool scrumMaster, bool developer)
+        {
+            var userEmail = Thread.CurrentPrincipal.Identity.Name;
+            var user = unitOfWork.UserRepository.Items.SingleOrDefault(u => u.EmailAddress == userEmail);
+
+            if (user == null)
+            {
+                throw new ArgumentException("User does not exist");
+            }
+
+            var sprintIds = new List<Guid>();
+
+            var userRoles = user.Roles;
+
+            if (projectId != null)
+            {
+                userRoles = userRoles.Where(r => r.ProjectId == projectId).ToList();
+            }
+
+            if (scrumMaster)
+            {
+                var smSprintIds = userRoles.Where(r => r.RoleName == "Scrum Master" && r.SprintId.HasValue).Select(r => r.SprintId.Value).ToList();
+                sprintIds = sprintIds.Union(smSprintIds).ToList();
+            }
+
+            if (developer)
+            {
+                var devSprintIds = userRoles.Where(r => r.RoleName == "Developer" && r.SprintId.HasValue).Select(r => r.SprintId.Value).ToList();
+                sprintIds = sprintIds.Union(devSprintIds).ToList();
+            }
+
+            var sprintSummary = unitOfWork.SprintRepository.Items.Where(s => sprintIds.Contains(s.Id)).Select(s => new ServiceSprintSummary
+            {
+                Description = s.Description,
+                Name = s.Name,
+                SprintId = s.Id
+            }).ToList();
+
+            return sprintSummary;
+        }
+
         #endregion
 
         #region Helper Methods

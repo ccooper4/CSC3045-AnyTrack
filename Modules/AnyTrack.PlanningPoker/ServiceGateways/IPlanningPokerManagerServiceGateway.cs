@@ -24,6 +24,11 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         /// </summary>
         event EventHandler NotifyClientOfTerminatedSessionEvent;
 
+        /// <summary>
+        /// Notifies the client that they have been sent a message from the server.
+        /// </summary>
+        event EventHandler<ServiceChatMessage> NotifyClientOfNewMessageFromServerEvent;
+
         #endregion
 
         #region Methods 
@@ -53,6 +58,12 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         /// <param name="sessionId">The session id.</param>
         /// <returns>The details of the server side planning poker session.</returns>
         ServicePlanningPokerSession JoinSession(Guid sessionId);
+
+        /// <summary>
+        /// Allows a client to submit message to a session on the server
+        /// </summary>
+        /// <param name="msg">The message to send.</param>
+        void SubmitMessageToServer(ServiceChatMessage msg);
 
         #endregion 
     }

@@ -54,10 +54,17 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="SubmitMessageToServer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="msg" nillable="true" type="q7:ServiceChatMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="NotifyClientOfSession">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="sessionInfo" nillable="true" type="q7:ServiceSessionChangeInfo" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="sessionInfo" nillable="true" type="q8:ServiceSessionChangeInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -72,6 +79,18 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="NotifyClientOfTerminatedSessionResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendMessageToClient">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="msg" nillable="true" type="q9:ServiceChatMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendMessageToClientResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AnyTrack.PlanningPoker.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="600">
+
     <Grid Background="White">
 
         <Grid.ColumnDefinitions>
@@ -16,13 +17,14 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
 
         <GroupBox Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <GroupBox.Header>
                 <TextBlock Foreground="White" Text="Stories" />
             </GroupBox.Header>
+            <TabControl ItemsSource="{Binding Stories}"/>
         </GroupBox>
 
         <GroupBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -59,25 +61,53 @@
             </Grid>
         </GroupBox>
 
-        <GroupBox Grid.Column="2" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <GroupBox.Header>
-                <TextBlock Foreground="White" Text="Recieved" />
-            </GroupBox.Header>
-        </GroupBox>
+        <Grid Background="White" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
-        <DockPanel Grid.Row="1" Grid.ColumnSpan="3">
-            <ListBox ItemsSource="{Binding RecievedMessages}" Padding="0,0,0,0" Margin="0,10px,0,0" BorderThickness="0" VerticalAlignment="Stretch">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Label Content="{Binding Path=.}" />
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-            <DockPanel VerticalAlignment="Bottom">
-                <Label DockPanel.Dock="Left" Name="ChatInputLabel" HorizontalAlignment="Right">Chat Input</Label>
-                <Button Content="Send" DockPanel.Dock="Right" Command="{Binding SendMessageCommand}" Background="LightGray" Margin="10px,0,0,0"/>
-                <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Text="{Binding CurrentMessage}"/>
-            </DockPanel>            
-        </DockPanel>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <GroupBox Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <GroupBox.Header>
+                    <TextBlock Foreground="White" Text="Recieved" />
+                </GroupBox.Header>
+            </GroupBox>
+
+            <GroupBox Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <GroupBox.Header>
+                    <TextBlock Foreground="White" Text="Final Value" />
+                </GroupBox.Header>
+                <DockPanel>
+                    <Button Content="Submit" DockPanel.Dock="Right" Command="{Binding SubmitFinalEstimateCommand}" Background="LightGray" Margin="10px,0,0,0"/>
+                    <ComboBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" ItemsSource="{Binding EstimateValues}"/>
+                </DockPanel>
+            </GroupBox>
+
+        </Grid>       
+
+        <GroupBox Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <GroupBox.Header>
+                <TextBlock Foreground="White" Text="Chat" />
+            </GroupBox.Header>
+            <DockPanel>
+                <ListBox ItemsSource="{Binding RecievedMessages}" Padding="0,0,0,0" Margin="0,10px,0,0" BorderThickness="0" VerticalAlignment="Stretch">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Path=.}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <DockPanel VerticalAlignment="Bottom">
+                    <Label DockPanel.Dock="Left" Name="ChatInputLabel" HorizontalAlignment="Right">Chat Input</Label>
+                    <Button Content="Send" DockPanel.Dock="Right" Command="{Binding SendMessageCommand}" Background="LightGray" Margin="10px,0,0,0"/>
+                    <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Text="{Binding CurrentMessage}"/>
+                </DockPanel>
+            </DockPanel>
+        </GroupBox>
+        
     </Grid>
 </UserControl>
