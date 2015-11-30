@@ -28,18 +28,30 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetAllTasksForSprint">
+  <xs:element name="GetAllTasksForSprintCurrentUser">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sprintId" type="q5:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetAllTasksForSprintResponse">
+  <xs:element name="GetAllTasksForSprintCurrentUserResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetAllTasksForSprintResult" nillable="true" type="q6:ArrayOfServiceTask" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetAllTasksForSprintCurrentUserResult" nillable="true" type="q6:ArrayOfServiceTask" />
       </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveUpdatedTaskHours">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="tasks" nillable="true" type="q7:ArrayOfServiceTask" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveUpdatedTaskHoursResponse">
+    <xs:complexType>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="GetSprintNames">

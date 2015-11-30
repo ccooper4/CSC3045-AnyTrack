@@ -119,12 +119,13 @@ namespace AnyTrack.Backend.Service
 
             project.Name = updatedProject.Name;
             project.Description = updatedProject.Description;
-            project.StartedOn = project.StartedOn;
+            project.StartedOn = updatedProject.StartedOn;
             project.VersionControl = updatedProject.VersionControl;
 
             // Assign Scrum Master
             if (project.ScrumMasters != null)
             {
+                // Remove no longer present scrum masters
                 foreach (var scrumMaster in project.ScrumMasters)
                 {
                     if (!updatedProject.ScrumMasterEmailAddresses.Contains(scrumMaster.EmailAddress))
@@ -133,6 +134,7 @@ namespace AnyTrack.Backend.Service
                     }
                 }
 
+                // Add new scrum masters
                 foreach (var updatedScrumMasterEmailAddress in updatedProject.ScrumMasterEmailAddresses)
                 {
                     if (!project.ScrumMasters.Contains(MapEmailAddressToUser(updatedScrumMasterEmailAddress)))
@@ -264,7 +266,7 @@ namespace AnyTrack.Backend.Service
                                     AsA = sprintStory.Story.AsA,
                                     IWant = sprintStory.Story.IWant,
                                     SoThat = sprintStory.Story.IWant
-                                }                              
+                                }                             
                             });
                         }
                     }
@@ -558,6 +560,7 @@ namespace AnyTrack.Backend.Service
         public List<ServiceUserSearchInfo> SearchUsers(ServiceUserSearchFilter filter)
         {
             var users = unitOfWork.UserRepository.Items;
+            Dictionary<User, int> availabilityDictionary = new Dictionary<User, int>();
 
             if (filter.EmailAddress.IsNotEmpty())
             {
@@ -574,14 +577,53 @@ namespace AnyTrack.Backend.Service
                 users = users.Where(u => u.ScrumMaster == filter.ScrumMaster);
             }
 
-            var userInfos = users.Select(u => new ServiceUserSearchInfo
+            if (filter.Developer.HasValue)
+            {
+                users = users.Where(u => u.Developer == filter.Developer);
+            }
+
+            if (filter.Skillset != null && (filter.Skillset != null || filter.Skillset.Count > 0))
+            {
+                users = users.Where(u => filter.Skillset.All(s => u.Skills.Contains(s.ToLower())));
+            }
+
+            if (!filter.SprintStartingDate.HasValue)
+            {
+                var userInfos = users.Select(u => new ServiceUserSearchInfo
+                {
+                    EmailAddress = u.EmailAddress,
+                    FullName = u.FirstName + " " + u.LastName,
+                    UserId = u.Id
+                }).OrderBy(u => u.FullName);
+
+                return userInfos.ToList();
+            }
+
+            var filteredUsers = users.ToList();
+
+            foreach (var user in filteredUsers)
+            {
+                availabilityDictionary.Add(user, CalculateAvailability(user, (DateTime)filter.SprintStartingDate, (DateTime)filter.SprintEndingDate));
+            }
+
+            foreach (var userAvailability in availabilityDictionary)
+            {
+                if (userAvailability.Value == 0)
+                {
+                    filteredUsers.Remove(userAvailability.Key);
+                }
+            }
+
+            var sprintUserInfo = filteredUsers.Select(u => new ServiceUserSearchInfo
             {
                 EmailAddress = u.EmailAddress,
                 FullName = u.FirstName + " " + u.LastName,
-                UserId = u.Id
-            }).OrderBy(u => u.FullName);
+                UserId = u.Id,
+                Availability = availabilityDictionary[u],
+                Skills = u.Skills
+            }).OrderByDescending(u => u.Availability).ThenBy(u => u.FullName);
 
-            return userInfos.ToList();
+            return sprintUserInfo.ToList();
         }
 
         /// <summary>
@@ -790,6 +832,71 @@ namespace AnyTrack.Backend.Service
             }
 
             return user;
+        }
+
+        /// <summary>
+        /// Calculates the availabilty a user has for a sprint.
+        /// </summary>
+        /// <param name="user">The user </param>
+        /// <param name="sprintStartDate">The sprint start date</param>
+        /// <param name="sprintEndDate">The sprint end date</param>
+        /// <returns>Number of days available on the sprint</returns>
+        private int CalculateAvailability(User user, DateTime sprintStartDate, DateTime sprintEndDate)
+        {
+            Dictionary<DateTime, bool> availableOnDate = new Dictionary<DateTime, bool>();
+
+            int sprintLength = (sprintEndDate - sprintStartDate).Days + 1;
+
+            var date = sprintStartDate;
+            for (int i = sprintLength; i > 0; i--)
+            {
+                availableOnDate.Add(date, true);
+                date = date.AddDays(1);
+            }
+
+            var userProjects = GetUserProjectRoleSummaries(user.EmailAddress);
+
+            if (userProjects.Count == 0)
+            {
+                return sprintLength;
+            }
+
+            foreach (var project in userProjects)
+            {
+                if (project.Sprints.Count == 0)
+                {
+                    break;
+                }
+
+                foreach (var sprintSummary in project.Sprints)
+                {
+                    var sprint = unitOfWork.SprintRepository.Items.Single(s => s.Id == sprintSummary.SprintId);
+                    date = sprint.StartDate;
+                    sprintLength = (sprint.EndDate - sprintStartDate).Days + 1;
+
+                    for (int i = sprintLength; i > 0; i--)
+                    {
+                        if (availableOnDate.ContainsKey(date))
+                        {
+                            availableOnDate[date] = false;
+                        }
+
+                        date = date.AddDays(1);
+                    }
+                }
+            }
+
+            int availableDays = 0;
+
+            foreach (var day in availableOnDate)
+            {
+                if (day.Value)
+                {
+                    availableDays++;
+                }
+            }
+
+            return availableDays;
         }
 
         #endregion

@@ -7,13 +7,13 @@ namespace AnyTrack.Backend.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class UpdatetoAddingTask : IMigrationMetadata
+    public sealed partial class Addingtasksandtaskhours : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdatetoAddingTask));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Addingtasksandtaskhours));
         
         string IMigrationMetadata.Id
         {
-            get { return "201511251631386_Update to Adding Task"; }
+            get { return "201511301309017_Adding tasks and task hours"; }
         }
         
         string IMigrationMetadata.Source

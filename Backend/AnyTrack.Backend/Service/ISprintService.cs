@@ -32,19 +32,26 @@ namespace AnyTrack.Backend.Service
         void EditSprint(Guid sprintId, ServiceSprint updatedSprint);
 
         /// <summary>
-        /// Gets all task for a sprint
+        /// Gets all task for a sprint for the current user
         /// </summary>
         /// <param name="sprintId">The sprint id</param>
         /// <returns>Returns a list of tasks</returns>
         [OperationContract]
-        List<ServiceTask> GetAllTasksForSprint(Guid sprintId);
+        List<ServiceTask> GetAllTasksForSprintCurrentUser(Guid sprintId);
+
+        /// <summary>
+        /// Method to save the update hours for tasks
+        /// </summary>
+        /// <param name="tasks">List of tasks to save</param>
+        [OperationContract]
+        void SaveUpdatedTaskHours(List<ServiceTask> tasks);
 
         /// <summary>
         /// Gets all sprints for the current user
         /// </summary>
-        /// <param name="projectId">The project id.</param>         
-        /// <param name="scrumMaster">A flag indicating if sprints where the user is the SM should be included.</param>
-        /// <param name="developer">A flag indicating if sprints where the user is a Deveoper should be included.</param>
+        /// <param name="projectId">The id of the project.</param>
+        /// <param name="scrumMaster">A flag indicating if sprints where this user is a scrummaster should be returned.</param>
+        /// <param name="developer">A flag indicating if sprints where this user is a developer should be returned.</param>
         /// <returns>A summary list of this user's sprints.</returns>
         [OperationContract]
         List<ServiceSprintSummary> GetSprintNames(Guid? projectId, bool scrumMaster, bool developer);

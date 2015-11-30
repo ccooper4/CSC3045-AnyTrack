@@ -9,7 +9,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xml:lang="en-GB"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             mc:Ignorable="d" Width="1000" Height="364.328">
+             mc:Ignorable="d" Width="1000" Height="auto" MinHeight="450px">
 
     <Grid HorizontalAlignment="Stretch">
         <Grid.ColumnDefinitions>
@@ -28,65 +28,79 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="0.73*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="0.73*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="0.73*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
                     <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="0.73*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="0.73*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="0.73"></RowDefinition>
+                    <RowDefinition Height="3*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" FontWeight="Bold">Sprint Name*</Label>
-                <TextBox Grid.Row="1" Text="{Binding SprintName}" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <views:LabelledTextBox Grid.Row="0" Label="Sprint Name*" Text="{Binding SprintName}" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top"></views:LabelledTextBox>
+ 
+                <Label Grid.Row="1" FontWeight="Bold">Start Date*</Label>
+                <DatePicker Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="121" Text="{Binding StartDate}" SelectedDate="{Binding StartDate}"/>
 
-                <Label Grid.Row="2" FontWeight="Bold">Start Date*</Label>
-                <DatePicker Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="121" Text="{Binding StartDate}" SelectedDate="{Binding StartDate}"/>
+                <Label Grid.Row="3" FontWeight="Bold">End Date*</Label>
+                <DatePicker Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="121" Text="{Binding EndDate}" SelectedDate="{Binding EndDate}"/>
 
-                <Label Grid.Row="4" FontWeight="Bold">End Date*</Label>
-                <DatePicker Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="121" Text="{Binding EndDate}" SelectedDate="{Binding EndDate}"/>
+                <views:LabelledTextBox Label="Description" Text="{Binding Description}" Grid.Row="5" Grid.RowSpan="2"/>
 
-                <views:LabelledTextBox Label="Description" Text="{Binding Description}" Grid.Row="6" Grid.RowSpan="2"/>
-
-                <Button Grid.Row="8" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Center" Width="90" Height="27" VerticalAlignment="Center" Margin="152,0,246,0" Command="{Binding SaveSprintCommand}">Create Sprint</Button>
-                <Button Grid.Row="8" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Center" Width="70" Height="27" VerticalAlignment="Center" Margin="252,0,166,0" Command="{Binding CancelSprintCommand}">Cancel</Button>
+                <Button Grid.Row="7" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Center" Width="90" Height="27" VerticalAlignment="Center" Margin="152,0,246,0" Command="{Binding SaveSprintCommand}">Create Sprint</Button>
+                <Button Grid.Row="7" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Center" Width="70" Height="27" VerticalAlignment="Center" Margin="252,0,166,0" Command="{Binding CancelSprintCommand}">Cancel</Button>
             </Grid>
         </GroupBox>
 
         <GroupBox HorizontalAlignment="Stretch"  Margin="0, 0, 0, 0" Grid.Column="1" >
             <GroupBox.Header>
-                <TextBlock Foreground="White" Text="Select Team Members" />
+                <TextBlock Foreground="White" Text="Select Developers" />
             </GroupBox.Header>
             <StackPanel Background="White">
                 <Label Grid.Row="0" FontWeight="Bold" Margin="10px, 2px, 10px, 2px">Skill Set</Label>
                 <DockPanel Grid.Row="1" Margin="10px, 2px, 10px, 2px">
-                    <Button Content="Search" DockPanel.Dock="Right" BorderThickness="0" Background="LightGray" Height="4"/>
-                    <TextBox Grid.Row="1" Text=""  controls:TextBoxHelper.ClearTextButton="True" />
+                    <Button Content="Search" DockPanel.Dock="Right" BorderThickness="0" Background="LightGray" Height="4" Command="{Binding SearchDeveloperCommand}"/>
+                    <TextBox Grid.Row="1" Text="{Binding SkillSetSearch, TargetNullValue='Enter Required skills seperated by ,'}"  controls:TextBoxHelper.ClearTextButton="True" />
                 </DockPanel>
-                <DataGrid Margin="10px, 20px, 10px, 2px" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding ScrumMasterSearchUserResults}">
+                <DataGrid Margin="10px, 20px, 10px, 2px" AutoGenerateColumns="False" IsReadOnly="True" IsEnabled="{Binding EnableDeveloperSearchGrid}" ItemsSource="{Binding DeveloperSearchUserResults}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name"  Width="2*"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Email address" Width="4*"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Availability"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Name" Binding="{Binding FullName}" Width="2*"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Skills" Binding="{Binding Skills}" Width="4*"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Availability">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{0}/{1} Days">
+                                    <Binding Path="Availability"/>
+                                    <Binding Path="DataContext.SprintLength"
+                                             RelativeSource= "{RelativeSource FindAncestor, AncestorType={x:Type UserControl}}"/>
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
                         <DataGridTemplateColumn Width="2*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="Select"></Button>
+                                    <Button Content="Select" Command="{Binding Path=DataContext.SelectDeveloperCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding Path=.}"></Button>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
 
-                <Label FontWeight="Bold" Margin="10px, 15px, 1px, 2px">Selected Team Members:</Label>
+                <Label FontWeight="Bold" Margin="10px, 15px, 1px, 2px">Selected Developers:</Label>
 
-                <DataGrid Margin="10px, 10px, 10px, 2px" AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid Margin="10px, 10px, 10px, 2px" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding SelectedDevelopers}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name" Width="2*"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Email address" Width="4*"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Availability" Width="2*"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Name" Binding="{Binding FullName}" Width="2*"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Skills" Binding="{Binding Skills}" Width="4*" ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Availability" Width="2*">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{0}/{1} Days">
+                                    <Binding Path="Availability"/>
+                                    <Binding Path="DataContext.SprintLength"
+                                             RelativeSource= "{RelativeSource FindAncestor, AncestorType={x:Type UserControl}}"/>
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

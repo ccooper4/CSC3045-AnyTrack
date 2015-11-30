@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using AnyTrack.Backend.Data.Model;
 using AnyTrack.Backend.Migrations;
 
@@ -37,11 +36,11 @@ namespace AnyTrack.Backend.Data
             SprintEntitySet = base.Set<Sprint>();
             SprintRepository = new EntityRepository<Sprint>(SprintEntitySet);
 
-            TaskEntitySet = base.Set<AnyTrack.Backend.Data.Model.Task>();
-            TaskRepository = new EntityRepository<AnyTrack.Backend.Data.Model.Task>(TaskEntitySet);
+            TaskEntitySet = base.Set<Task>();
+            TaskRepository = new EntityRepository<Task>(TaskEntitySet);
 
-            UpdatedHoursEntitySet = base.Set<UpdatedHours>();
-            UpdatedHoursRepository = new EntityRepository<UpdatedHours>(UpdatedHoursEntitySet);
+            TaskHourEstimateEntitySet = base.Set<TaskHourEstimate>();
+            TaskHourEstimateRepository = new EntityRepository<TaskHourEstimate>(TaskHourEstimateEntitySet);
 
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<EntityUnitOfWork, Configuration>());
         }
@@ -73,12 +72,12 @@ namespace AnyTrack.Backend.Data
         /// <summary>
         /// Gets the task repository controlled by this unit of work.
         /// </summary>
-        public IRepository<AnyTrack.Backend.Data.Model.Task> TaskRepository { get; private set; }
+        public IRepository<Model.Task> TaskRepository { get; private set; }
 
         /// <summary>
-        /// Gets the updated hours repository controlled by this unit of work.
+        /// Gets the task hours estimate repository controlled by this unit of work.
         /// </summary>
-        public IRepository<UpdatedHours> UpdatedHoursRepository { get; private set; }
+        public IRepository<TaskHourEstimate> TaskHourEstimateRepository { get; private set; }
 
         /// <summary>
         /// Gets the sprint repository controlled by this unit of work.
@@ -112,12 +111,12 @@ namespace AnyTrack.Backend.Data
         /// <summary>
         /// Gets or sets the Task Entity Set, as provided by Entity Framework.
         /// </summary>
-        private DbSet<AnyTrack.Backend.Data.Model.Task> TaskEntitySet { get; set; }
+        private DbSet<Task> TaskEntitySet { get; set; }
 
         /// <summary>
-        /// Gets or sets the updated hours Entity Set, as provided by Entity Framework.
+        /// Gets or sets the Task Hours Estimate Entity Set, as provided by Entity Framework.
         /// </summary>
-        private DbSet<UpdatedHours> UpdatedHoursEntitySet { get; set; }
+        private DbSet<TaskHourEstimate> TaskHourEstimateEntitySet { get; set; }
 
         /// <summary>
         /// Gets or sets the Sprint Entity Set, as provided by Entity Framework.
@@ -153,10 +152,8 @@ namespace AnyTrack.Backend.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Project>().HasMany(p => p.ScrumMasters).WithMany();
-
-            modelBuilder.Entity<Sprint>().HasMany(p => p.Team).WithMany();
-
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Sprint>().HasMany(d => d.Team).WithMany();
+            base.OnModelCreating(modelBuilder);        
         }
 
         #endregion   
