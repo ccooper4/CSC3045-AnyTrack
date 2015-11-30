@@ -402,7 +402,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="wsDualHttpBindingEndpoint_SendMessageToClients_output_policy">
+  <wsp:Policy wsu:Id="wsDualHttpBindingEndpoint_SendMessageToClient_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -425,7 +425,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="wsDualHttpBindingEndpoint_SendMessageToClients_Input_policy">
+  <wsp:Policy wsu:Id="wsDualHttpBindingEndpoint_SendMessageToClient_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -495,11 +495,11 @@
   <wsdl:message name="IPlanningPokerManagerService_NotifyClientOfTerminatedSession_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotifyClientOfTerminatedSessionResponse" />
   </wsdl:message>
-  <wsdl:message name="IPlanningPokerManagerService_SendMessageToClients_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:SendMessageToClients" />
+  <wsdl:message name="IPlanningPokerManagerService_SendMessageToClient_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:SendMessageToClient" />
   </wsdl:message>
-  <wsdl:message name="IPlanningPokerManagerService_SendMessageToClients_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:SendMessageToClientsResponse" />
+  <wsdl:message name="IPlanningPokerManagerService_SendMessageToClient_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:SendMessageToClientResponse" />
   </wsdl:message>
   <wsdl:portType name="IPlanningPokerManagerService">
     <wsdl:operation name="SubscribeToNewSessionMessages">
@@ -529,9 +529,9 @@
       <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/NotifyClientOfTerminatedSession" message="tns:IPlanningPokerManagerService_NotifyClientOfTerminatedSession_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/NotifyClientOfTerminatedSessionResponse" message="tns:IPlanningPokerManagerService_NotifyClientOfTerminatedSession_InputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation name="SendMessageToClients">
-      <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/SendMessageToClients" message="tns:IPlanningPokerManagerService_SendMessageToClients_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/SendMessageToClientsResponse" message="tns:IPlanningPokerManagerService_SendMessageToClients_InputCallbackMessage" />
+    <wsdl:operation name="SendMessageToClient">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/SendMessageToClient" message="tns:IPlanningPokerManagerService_SendMessageToClient_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/SendMessageToClientResponse" message="tns:IPlanningPokerManagerService_SendMessageToClient_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="wsDualHttpBindingEndpoint" type="tns:IPlanningPokerManagerService">
@@ -610,14 +610,14 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="SendMessageToClients">
-      <soap12:operation soapAction="http://tempuri.org/IPlanningPokerManagerService/SendMessageToClients" style="document" />
+    <wsdl:operation name="SendMessageToClient">
+      <soap12:operation soapAction="http://tempuri.org/IPlanningPokerManagerService/SendMessageToClient" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#wsDualHttpBindingEndpoint_SendMessageToClients_Input_policy" />
+        <wsp:PolicyReference URI="#wsDualHttpBindingEndpoint_SendMessageToClient_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <wsp:PolicyReference URI="#wsDualHttpBindingEndpoint_SendMessageToClients_output_policy" />
+        <wsp:PolicyReference URI="#wsDualHttpBindingEndpoint_SendMessageToClient_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>

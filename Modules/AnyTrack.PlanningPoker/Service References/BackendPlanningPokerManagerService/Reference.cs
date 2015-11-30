@@ -451,8 +451,8 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
             "sponse")]
         void NotifyClientOfTerminatedSession();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/SendMessageToClients", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/SendMessageToClientsResponse")]
-        void SendMessageToClients(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServiceChatMessage msg);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/SendMessageToClient", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/SendMessageToClientResponse")]
+        void SendMessageToClient(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServiceChatMessage msg);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

@@ -83,14 +83,14 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="SendMessageToClients">
+  <xs:element name="SendMessageToClient">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="msg" nillable="true" type="q9:ServiceChatMessage" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="SendMessageToClientsResponse">
+  <xs:element name="SendMessageToClientResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
