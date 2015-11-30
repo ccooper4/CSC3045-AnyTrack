@@ -30,6 +30,11 @@ namespace AnyTrack.PlanningPoker.Views
         private readonly IProjectServiceGateway projectServiceGateway;
 
         /// <summary>
+        /// The sprint service gateway.
+        /// </summary>
+        private readonly ISprintServiceGateway sprintServiceGateway;
+
+        /// <summary>
         /// The selected project id.
         /// </summary>
         private Guid projectId; 
@@ -43,7 +48,8 @@ namespace AnyTrack.PlanningPoker.Views
         /// </summary>
         /// <param name="gateway">The service gateway.</param>
         /// <param name="projectServiceGateway">The project service gateway.</param>
-        public StartPlanningPokerSessionViewModel(IPlanningPokerManagerServiceGateway gateway, IProjectServiceGateway projectServiceGateway)
+        /// <param name="sprintServiceGateway">The sprint service gateway.</param>
+        public StartPlanningPokerSessionViewModel(IPlanningPokerManagerServiceGateway gateway, IProjectServiceGateway projectServiceGateway, ISprintServiceGateway sprintServiceGateway)
         {
             if (gateway == null)
             {
@@ -55,10 +61,17 @@ namespace AnyTrack.PlanningPoker.Views
                 throw new ArgumentNullException("projectServiceGateway"); 
             }
 
+            if (sprintServiceGateway == null)
+            {
+                throw new ArgumentNullException("sprintServiceGateway");
+            }
+
             this.serviceGateway = gateway;
             this.projectServiceGateway = projectServiceGateway;
+            this.sprintServiceGateway = sprintServiceGateway;
 
             this.Projects = new ObservableCollection<ServiceProjectSummary>();
+            this.Sprints = new ObservableCollection<ServiceSprintSummary>();
         }
 
         #endregion 
@@ -69,6 +82,11 @@ namespace AnyTrack.PlanningPoker.Views
         /// Gets or sets the list of projects.
         /// </summary>
         public ObservableCollection<ServiceProjectSummary> Projects { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of sprints.
+        /// </summary>
+        public ObservableCollection<ServiceSprintSummary> Sprints { get; set; }
 
         /// <summary>
         /// Gets or sets the project id.
