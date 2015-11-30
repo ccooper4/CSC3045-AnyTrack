@@ -45,10 +45,13 @@ namespace AnyTrack.Backend.Service
         /// <param name="tasks">List of tasks to save</param>
         [OperationContract]
         void SaveUpdatedTaskHours(List<ServiceTask> tasks);
-        
+
         /// <summary>
         /// Gets all sprints for the current user
         /// </summary>
+        /// <param name="projectId">The id of the project.</param>
+        /// <param name="scrumMaster">A flag indicating if sprints where this user is a scrummaster should be returned.</param>
+        /// <param name="developer">A flag indicating if sprints where this user is a developer should be returned.</param>
         /// <returns>A summary list of this user's sprints.</returns>
         [OperationContract]
         List<ServiceSprintSummary> GetSprintNames(Guid? projectId, bool scrumMaster, bool developer);
