@@ -67,6 +67,15 @@ namespace AnyTrack.Infrastructure.ServiceGateways
             return new List<ServiceTask>(client.GetAllTasksForSprintCurrentUser(sprintId));
         }
 
+        /// <summary>
+        /// Saves the updated task hours
+        /// </summary>
+        /// <param name="tasks">The list of tasks</param>
+        public void SaveUpdatedTaskHours(List<ServiceTask> tasks)
+        {
+            client.SaveUpdatedTaskHours(tasks);
+        }
+
         #endregion
     }
 }

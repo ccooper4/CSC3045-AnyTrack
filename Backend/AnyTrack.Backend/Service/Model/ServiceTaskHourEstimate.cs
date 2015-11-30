@@ -29,9 +29,14 @@ namespace AnyTrack.Backend.Service.Model
         public Guid ServiceTaskHourEstimateId { get; set; }
 
         /// <summary>
-        /// Gets or sets the new estimate
+        /// Gets or sets the estimate
         /// </summary>
         public double Estimate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the new estimate
+        /// </summary>
+        public double NewEstimate { get; set; }
 
         /// <summary>
         /// Gets or sets the taskId

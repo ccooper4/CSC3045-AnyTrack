@@ -779,6 +779,9 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         private double EstimateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double NewEstimateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid ServiceTaskHourEstimateIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -803,6 +806,19 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
                 if ((this.EstimateField.Equals(value) != true)) {
                     this.EstimateField = value;
                     this.RaisePropertyChanged("Estimate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double NewEstimate {
+            get {
+                return this.NewEstimateField;
+            }
+            set {
+                if ((this.NewEstimateField.Equals(value) != true)) {
+                    this.NewEstimateField = value;
+                    this.RaisePropertyChanged("NewEstimate");
                 }
             }
         }
