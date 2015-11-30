@@ -67,10 +67,6 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.StartPlanningPokerSessionVie
         public void ConstructViewModel()
         {
             vm = new StartPlanningPokerSessionViewModel(serviceGateway, projectServiceGateway);
-            projectServiceGateway.Received().GetProjectNames(true, false, false);
-
-            vm.Projects.Single().ProjectId.Should().Be(projectId);
-            vm.Projects.Single().ProjectName.Should().Be(projectName);
         }
 
         #endregion 
@@ -86,6 +82,32 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.StartPlanningPokerSessionVie
             var res = vm.IsNavigationTarget(navContext);
 
             res.Should().BeFalse();
+        }
+
+        #endregion 
+
+        #region OnNavigatedTo(NavigationContext navigationContext) Tests 
+
+        [Test]
+        public void CallOnNavigateTo()
+        {
+            var oldProjectId = Guid.NewGuid();
+
+            vm.Projects = new System.Collections.ObjectModel.ObservableCollection<ServiceProjectSummary>()
+            {
+                new ServiceProjectSummary { ProjectId = oldProjectId }
+            };
+
+            var navigationService = Substitute.For<IRegionNavigationService>();
+            var navContext = new NavigationContext(navigationService, new Uri("StartPlanningPoker", UriKind.Relative));
+
+            vm.OnNavigatedTo(navContext);
+
+            projectServiceGateway.Received().GetProjectNames(true, false, false);
+
+            vm.Projects.Single().ProjectId.Should().Be(projectId);
+            vm.Projects.Single().ProjectName.Should().Be(projectName);
+            vm.Projects.Select(p => p.ProjectId).Should().NotContain(oldProjectId);
         }
 
         #endregion 

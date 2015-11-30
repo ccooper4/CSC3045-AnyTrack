@@ -59,8 +59,6 @@ namespace AnyTrack.PlanningPoker.Views
             this.projectServiceGateway = projectServiceGateway;
 
             this.Projects = new ObservableCollection<ServiceProjectSummary>();
-            var results = projectServiceGateway.GetProjectNames(true, false, false);
-            this.Projects.AddRange(results);
         }
 
         #endregion 
@@ -127,6 +125,9 @@ namespace AnyTrack.PlanningPoker.Views
         /// <param name="navigationContext">The current navigation context.</param>
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            this.Projects.Clear();
+            var results = projectServiceGateway.GetProjectNames(true, false, false);
+            this.Projects.AddRange(results);
         }
 
         #endregion 
