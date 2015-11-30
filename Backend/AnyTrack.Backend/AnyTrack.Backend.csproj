@@ -186,13 +186,9 @@
     <Compile Include="Migrations\201511301309017_Adding tasks and task hours.Designer.cs">
       <DependentUpon>201511301309017_Adding tasks and task hours.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201511302109142_Created a many to many relationship between user and sprint.cs" />
-    <Compile Include="Migrations\201511302109142_Created a many to many relationship between user and sprint.Designer.cs">
-      <DependentUpon>201511302109142_Created a many to many relationship between user and sprint.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511301844289_Correcting sprint team relationship and adding scrum master to sprint.cs" />
-    <Compile Include="Migrations\201511301844289_Correcting sprint team relationship and adding scrum master to sprint.Designer.cs">
-      <DependentUpon>201511301844289_Correcting sprint team relationship and adding scrum master to sprint.cs</DependentUpon>
+    <Compile Include="Migrations\201511302342232_Adding combined migration for sprint team relationship and scrum master.cs" />
+    <Compile Include="Migrations\201511302342232_Adding combined migration for sprint team relationship and scrum master.Designer.cs">
+      <DependentUpon>201511302342232_Adding combined migration for sprint team relationship and scrum master.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -277,11 +273,8 @@
     <EmbeddedResource Include="Migrations\201511301309017_Adding tasks and task hours.resx">
       <DependentUpon>201511301309017_Adding tasks and task hours.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511302109142_Created a many to many relationship between user and sprint.resx">
-      <DependentUpon>201511302109142_Created a many to many relationship between user and sprint.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511301844289_Correcting sprint team relationship and adding scrum master to sprint.resx">
-      <DependentUpon>201511301844289_Correcting sprint team relationship and adding scrum master to sprint.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201511302342232_Adding combined migration for sprint team relationship and scrum master.resx">
+      <DependentUpon>201511302342232_Adding combined migration for sprint team relationship and scrum master.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
