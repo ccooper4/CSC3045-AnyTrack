@@ -21,7 +21,8 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.StartPlanningPokerSessionVie
         public static Guid projectId = Guid.NewGuid();
         public static string projectName = "Test";
         public static IPlanningPokerManagerServiceGateway serviceGateway;
-        public static IProjectServiceGateway projectServiceGateway; 
+        public static IProjectServiceGateway projectServiceGateway;
+        public static ISprintServiceGateway sprintServiceGateway;
         public static StartPlanningPokerSessionViewModel vm;
 
         [SetUp]
@@ -34,10 +35,11 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.StartPlanningPokerSessionVie
             
             serviceGateway = Substitute.For<IPlanningPokerManagerServiceGateway>();
             projectServiceGateway = Substitute.For<IProjectServiceGateway>();
+            sprintServiceGateway = Substitute.For<ISprintServiceGateway>();
 
             projectServiceGateway.GetProjectNames(true, false, false).Returns(projectNames);
 
-            vm = new StartPlanningPokerSessionViewModel(serviceGateway, projectServiceGateway);
+            vm = new StartPlanningPokerSessionViewModel(serviceGateway, projectServiceGateway, sprintServiceGateway);
         }
     }
 
@@ -53,20 +55,27 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.StartPlanningPokerSessionVie
         [ExpectedException(typeof(ArgumentNullException))]
         public void ConstructWithNoService()
         {
-            vm = new StartPlanningPokerSessionViewModel(null, projectServiceGateway);
+            vm = new StartPlanningPokerSessionViewModel(null, projectServiceGateway, sprintServiceGateway);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ConstructWithNoProjectService()
         {
-            vm = new StartPlanningPokerSessionViewModel(serviceGateway, null);
+            vm = new StartPlanningPokerSessionViewModel(serviceGateway, null, sprintServiceGateway);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ConstructWithNoSprintService()
+        {
+            vm = new StartPlanningPokerSessionViewModel(serviceGateway, projectServiceGateway, null);
         }
 
         [Test]
         public void ConstructViewModel()
         {
-            vm = new StartPlanningPokerSessionViewModel(serviceGateway, projectServiceGateway);
+            vm = new StartPlanningPokerSessionViewModel(serviceGateway, projectServiceGateway, sprintServiceGateway);
         }
 
         #endregion 

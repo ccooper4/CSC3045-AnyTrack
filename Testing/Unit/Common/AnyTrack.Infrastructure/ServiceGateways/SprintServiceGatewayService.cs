@@ -12,6 +12,7 @@ using Sprint = AnyTrack.Infrastructure.BackendSprintService.Sprint;
 using User = AnyTrack.Infrastructure.BackendSprintService.User;
 using AnyTrack.Infrastructure.BackendSprintService;
 using AnyTrack.Infrastructure.ServiceGateways;
+using FluentAssertions;
 
 namespace Unit.Modules.AnyTrack.Sprints.ServiceGateways
 {
@@ -303,5 +304,24 @@ namespace Unit.Modules.AnyTrack.Sprints.ServiceGateways
         }
 
         #endregion
+
+        #region GetSprintNames(Guid? projectId, bool scrumMaster, bool developer) Tests 
+
+        [Test]
+        public void CallGetSprintNames()
+        {
+            var projectId = Guid.NewGuid();
+            var dev = true; 
+            var sm = true; 
+
+            var innerResult = new List<ServiceSprintSummary>();
+            client.GetSprintNames(projectId, sm, dev).Returns(innerResult);
+
+            var res = gateway.GetSprintNames(projectId, sm, dev);
+
+            res.Equals(innerResult).Should().BeTrue();
+        }
+
+        #endregion 
     }
 }
