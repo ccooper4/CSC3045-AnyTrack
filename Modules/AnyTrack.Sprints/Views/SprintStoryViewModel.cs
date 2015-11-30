@@ -53,7 +53,7 @@ namespace AnyTrack.Sprints.Views
         /// <param name="iSprintServiceGateway">The sprint Service Gateway</param>
         public SprintStoryViewModel(ISprintServiceGateway iSprintServiceGateway)
         {
-            this.Header = "Sprint Story";
+            this.Header = null;
             this.Theme = FlyoutTheme.Accent;
             this.Position = Position.Right;
             this.IsModal = true;
