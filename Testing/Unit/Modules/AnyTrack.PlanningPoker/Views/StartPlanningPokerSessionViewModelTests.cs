@@ -12,6 +12,7 @@ using Prism.Regions;
 using AnyTrack.Infrastructure.BackendProjectService;
 using SprintModels = AnyTrack.Infrastructure.BackendSprintService;
 using AnyTrack.Infrastructure.ServiceGateways;
+using AnyTrack.Infrastructure.Providers;
 
 namespace Unit.Modules.AnyTrack.PlanningPoker.Views.StartPlanningPokerSessionViewModelTests
 {
@@ -77,6 +78,10 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.StartPlanningPokerSessionVie
         public void ConstructViewModel()
         {
             vm = new StartPlanningPokerSessionViewModel(serviceGateway, projectServiceGateway, sprintServiceGateway);
+
+            vm.StartPokerSession.Should().NotBeNull();
+            vm.Sprints.Should().NotBeNull();
+            vm.Projects.Should().NotBeNull();
         }
 
         #endregion 
@@ -149,6 +154,44 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.StartPlanningPokerSessionVie
             vm.Sprints.Single().SprintId.Should().Be(sprints.Single().SprintId);
             vm.Sprints.Single().Name.Should().Be(sprints.Single().Name);
             vm.Sprints.Single().Description.Should().Be(sprints.Single().Description);
+        }
+
+        #endregion 
+
+        #region CanStartSession() Tests 
+
+        [Test]
+        public void CallCanStartSessionWithSprintIdSet()
+        {
+            vm.SprintId = Guid.NewGuid();
+            var res = vm.Call<bool>("CanStartSession");
+
+            res.Should().BeTrue();
+        }
+
+        [Test]
+        public void CallCanStartSessionWithNoSprintIdSet()
+        {
+            vm.SprintId = null;
+            var res = vm.Call<bool>("CanStartSession");
+
+            res.Should().BeFalse();
+        }
+
+        #endregion 
+
+        #region EstablishPokerSession() Tests
+
+        [Test]
+        public void CallEstablishPokerSession()
+        {
+            vm.MainWindow = Substitute.For<WindowProvider>();
+            vm.SprintId = Guid.NewGuid();
+
+            vm.Call("EstablishPokerSession");
+
+            serviceGateway.Received().StartNewPokerSession(vm.SprintId.Value);
+            vm.MainWindow.Received().ShowMessageAsync("Sesion started", "The planning poker session has been started");
         }
 
         #endregion 

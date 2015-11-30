@@ -153,6 +153,9 @@ namespace AnyTrack.Backend.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Project>().HasMany(p => p.ScrumMasters).WithMany();
+
+            modelBuilder.Entity<Sprint>().HasMany(p => p.Team).WithMany();
+
             base.OnModelCreating(modelBuilder);
         }
 

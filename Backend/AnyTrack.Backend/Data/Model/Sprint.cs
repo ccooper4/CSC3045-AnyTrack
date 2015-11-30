@@ -38,6 +38,11 @@ namespace AnyTrack.Backend.Data.Model
         public virtual Project Project { get; set; }
 
         /// <summary>
+        /// Gets or sets this sprint's scrum master.
+        /// </summary>
+        public virtual User ScrumMaster { get; set; }
+
+        /// <summary>
         /// Gets or sets a collection of the sprint's team members.
         /// </summary>
         public virtual ICollection<User> Team { get; set; }
