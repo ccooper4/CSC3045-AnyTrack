@@ -89,8 +89,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetSprintNames">
-      <soap:operation soapAction="http://tempuri.org/ISprintService/GetSprintNames" style="document" />
+    <wsdl:operation name="SaveUpdatedTaskHours">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/SaveUpdatedTaskHours" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -98,8 +98,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="SaveUpdatedTaskHours">
-      <soap:operation soapAction="http://tempuri.org/ISprintService/SaveUpdatedTaskHours" style="document" />
+    <wsdl:operation name="GetSprintNames">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/GetSprintNames" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

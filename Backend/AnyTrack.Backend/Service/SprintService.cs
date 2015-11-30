@@ -216,11 +216,11 @@ namespace AnyTrack.Backend.Service
                 var task = unitOfWork.TaskRepository.Items.Single(x => x.Id == t.TaskId);
                 var serviceUpdatedHours = t.TaskHourEstimates.LastOrDefault();
 
-                if (serviceUpdatedHours != null)
+                if (serviceUpdatedHours.NewEstimate != null)
                 {
                     task.TaskHourEstimate.Add(new TaskHourEstimate
                     {
-                        Estimate = serviceUpdatedHours.Estimate
+                        Estimate = serviceUpdatedHours.NewEstimate
                     });
                 }
             }
