@@ -98,6 +98,7 @@
       <xs:element minOccurs="0" name="Availability" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Skills" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UserId" type="ser:guid" />
     </xs:sequence>
   </xs:complexType>

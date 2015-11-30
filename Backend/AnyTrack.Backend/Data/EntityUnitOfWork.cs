@@ -153,7 +153,8 @@ namespace AnyTrack.Backend.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Project>().HasMany(p => p.ScrumMasters).WithMany();
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Sprint>().HasMany(d => d.Team).WithMany();
+            base.OnModelCreating(modelBuilder);        
         }
 
         #endregion   

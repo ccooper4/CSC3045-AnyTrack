@@ -27,7 +27,7 @@ namespace AnyTrack.Backend.Service.Model
         public bool? ProductOwner { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether Developers shoulde be included in the results.
+        /// Gets or sets a value indicating whether Developers should be included in the results.
         /// </summary>
         public bool? Developer { get; set; }
 

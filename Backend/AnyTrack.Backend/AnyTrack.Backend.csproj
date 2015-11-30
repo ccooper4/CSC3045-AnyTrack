@@ -193,6 +193,10 @@
     <Compile Include="Migrations\201511261131578_Adding Updated Hours.Designer.cs">
       <DependentUpon>201511261131578_Adding Updated Hours.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511300143289_Specifying Many to Many relationship between Users and Sprints.cs" />
+    <Compile Include="Migrations\201511300143289_Specifying Many to Many relationship between Users and Sprints.Designer.cs">
+      <DependentUpon>201511300143289_Specifying Many to Many relationship between Users and Sprints.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Model\BaseEntity.cs" />
@@ -281,6 +285,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511261131578_Adding Updated Hours.resx">
       <DependentUpon>201511261131578_Adding Updated Hours.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511300143289_Specifying Many to Many relationship between Users and Sprints.resx">
+      <DependentUpon>201511300143289_Specifying Many to Many relationship between Users and Sprints.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
