@@ -34,7 +34,7 @@
                 <ComboBox Margin="5px"  IsEditable="True" BorderBrush="Gray" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200px" Height="26" ItemsSource="{Binding Sprints}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}" />
             </StackPanel>
 
-            <Button Grid.Column="1" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Center" Height="Auto" Width="Auto" Command="{Binding ChrisPutYourBindingHereOrElseIWillFindYouAndIWillMakeYouPutItHere}">
+            <Button Grid.Column="1" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Center" Height="Auto" Width="Auto" Command="{Binding EditTaskHoursCommand}">
                 <Image Source="../Images/update_hours.png" Width="25px" Height="25px"></Image>
             </Button>
         </Grid>
