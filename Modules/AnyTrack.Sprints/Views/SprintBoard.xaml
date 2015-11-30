@@ -4,9 +4,55 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AnyTrack.Sprints.Views"
+             xmlns:converters="clr-namespace:AnyTrack.Sprints.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
+             d:DesignHeight="768" d:DesignWidth="1366">
+
+    <UserControl.Resources>
+        <converters:GuidToStringConverter x:Key="guidToStringConverter"></converters:GuidToStringConverter>
+    </UserControl.Resources>
+    <Grid Background="LightGray">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!-- Header Grid -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Margin="10px" Orientation="Horizontal">
+                <ComboBox Margin="5px" IsEditable="True" BorderBrush="Gray" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200px" Height="26" ItemsSource="{Binding Projects}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}" />
+                <ComboBox Margin="5px"  IsEditable="True" BorderBrush="Gray" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200px" Height="26" ItemsSource="{Binding Sprints}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}" />
+            </StackPanel>
+
+            <Button Grid.Column="1" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Center" Height="Auto" Width="Auto" Command="{Binding ChrisPutYourBindingHereOrElseIWillFindYouAndIWillMakeYouPutItHere}">
+                <Image Source="../Images/update_hours.png" Width="25px" Height="25px"></Image>
+            </Button>
+        </Grid>
+
+        <!-- Content Grid -->
+        <Grid Grid.Row="1"></Grid>
+
+        <Border Grid.Column="1" Grid.Row="1" CornerRadius="9" BorderBrush="Gray" Background="Gray" BorderThickness="2">
+            <DockPanel Background="White" >
+
+                <ListBox DockPanel.Dock="Top" ItemsSource="{Binding Stories}" Margin="20px,10px,20px,0" BorderThickness="0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+            </DockPanel>
+        </Border>
     </Grid>
 </UserControl>
