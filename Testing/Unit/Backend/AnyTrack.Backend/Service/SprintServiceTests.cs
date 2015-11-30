@@ -400,7 +400,6 @@ namespace Unit.Backend.AnyTrack.Backend.Service
                 Assignee = userList.FirstOrDefault(),
                 ConditionsOfSatisfaction = "asdsad",
                 Description = "asd",
-                TaskHourEstimate = new List<TaskHourEstimate>(),
                 SprintStory = new SprintStory
                 {
                     Sprint = sprintList.FirstOrDefault(),
@@ -415,6 +414,17 @@ namespace Unit.Backend.AnyTrack.Backend.Service
                 }
                 
             };
+
+            List<TaskHourEstimate> taskHourEstimateList = new List<TaskHourEstimate>
+            {
+               new TaskHourEstimate
+               {
+                   Task = t,
+                   Estimate = 3
+               }
+            };
+
+            t.TaskHourEstimate = taskHourEstimateList;
             tasksList.Add(t);
 
             List<Role> rolesList = new List<Role>()
@@ -446,6 +456,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service
             unitOfWork.SprintRepository.Items.Returns(sprintList.AsQueryable());
             unitOfWork.RoleRepository.Items.Returns(rolesList.AsQueryable());
             unitOfWork.TaskRepository.Items.Returns(tasksList.AsQueryable());
+            unitOfWork.TaskHourEstimateRepository.Items.Returns(taskHourEstimateList.AsQueryable());
 
             var result = service.GetAllTasksForSprintCurrentUser(sprintList.LastOrDefault().Id);
 
@@ -470,6 +481,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service
             };
 
             List<Task> tasksList = new List<Task>();
+            List<TaskHourEstimate> taskHourEstimateList = new List<TaskHourEstimate>();
 
             List<Role> rolesList = new List<Role>()
             {
@@ -500,6 +512,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service
             unitOfWork.SprintRepository.Items.Returns(sprintList.AsQueryable());
             unitOfWork.RoleRepository.Items.Returns(rolesList.AsQueryable());
             unitOfWork.TaskRepository.Items.Returns(tasksList.AsQueryable());
+            unitOfWork.TaskHourEstimateRepository.Items.Returns(taskHourEstimateList.AsQueryable());
 
             var result = service.GetAllTasksForSprintCurrentUser(sprintList.LastOrDefault().Id);
 
