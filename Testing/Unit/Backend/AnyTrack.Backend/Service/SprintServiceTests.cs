@@ -375,7 +375,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service
 
         #endregion
 
-        #region void GetAllTasksForSprint(Guid sprintId)
+        #region void GetAllTasksForSprintCurrentUser(Guid sprintId)
 
         [Test]
         public void GetAllTasksReturnsOneTask()
@@ -400,7 +400,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service
                 Assignee = userList.FirstOrDefault(),
                 ConditionsOfSatisfaction = "asdsad",
                 Description = "asd",
-                TaskHourEstimates = new List<TaskHourEstimate>(),
+                TaskHourEstimate = new List<TaskHourEstimate>(),
                 SprintStory = new SprintStory
                 {
                     Sprint = sprintList.FirstOrDefault(),
@@ -447,7 +447,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service
             unitOfWork.RoleRepository.Items.Returns(rolesList.AsQueryable());
             unitOfWork.TaskRepository.Items.Returns(tasksList.AsQueryable());
 
-            var result = service.GetAllTasksForSprint(sprintList.LastOrDefault().Id);
+            var result = service.GetAllTasksForSprintCurrentUser(sprintList.LastOrDefault().Id);
 
             result.Count.Should().Be(1);
         }
@@ -501,7 +501,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service
             unitOfWork.RoleRepository.Items.Returns(rolesList.AsQueryable());
             unitOfWork.TaskRepository.Items.Returns(tasksList.AsQueryable());
 
-            var result = service.GetAllTasksForSprint(sprintList.LastOrDefault().Id);
+            var result = service.GetAllTasksForSprintCurrentUser(sprintList.LastOrDefault().Id);
 
             result.Count.Should().Be(0);
         }

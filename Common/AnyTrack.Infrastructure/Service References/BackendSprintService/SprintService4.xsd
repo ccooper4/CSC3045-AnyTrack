@@ -54,7 +54,7 @@
       <xs:element minOccurs="0" name="Blocked" type="xs:boolean" />
       <xs:element minOccurs="0" name="ConditionsOfSatisfaction" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SprintStory" nillable="true" type="tns:ServiceSprintStory" />
+      <xs:element minOccurs="0" name="SprintStoryId" type="ser:guid" />
       <xs:element minOccurs="0" name="Summary" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="TaskHourEstimates" nillable="true" type="tns:ArrayOfServiceTaskHourEstimate" />
       <xs:element minOccurs="0" name="TaskId" type="ser:guid" />

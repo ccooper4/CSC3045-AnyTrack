@@ -51,6 +51,6 @@ namespace AnyTrack.Backend.Data.Model
         /// <summary>
         /// Gets or sets the task's remaining hours
         /// </summary>
-        public virtual ICollection<TaskHourEstimate> TaskHourEstimates { get; set; }
+        public virtual ICollection<TaskHourEstimate> TaskHourEstimate { get; set; }
     }
 }

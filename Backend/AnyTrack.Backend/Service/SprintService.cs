@@ -164,7 +164,7 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         /// <param name="sprintId">The sprint id</param>
         /// <returns>A list of tasks</returns>
-        public List<ServiceTask> GetAllTasksForSprint(Guid sprintId)
+        public List<ServiceTask> GetAllTasksForSprintCurrentUser(Guid sprintId)
         {
             var userEmail = Thread.CurrentPrincipal.Identity.Name;
             var user = MapEmailAddressToUser(userEmail);
@@ -173,23 +173,6 @@ namespace AnyTrack.Backend.Service
             List<ServiceTask> serviceTasks = new List<ServiceTask>();
             foreach (var dataTask in tasks)
             {
-                ServiceStory serviceStory = new ServiceStory()
-                {
-                    Summary = dataTask.SprintStory.Story.Summary,
-                    ConditionsOfSatisfaction = dataTask.SprintStory.Story.ConditionsOfSatisfaction,
-                    SoThat = dataTask.SprintStory.Story.SoThat,
-                    AsA = dataTask.SprintStory.Story.AsA,
-                    IWant = dataTask.SprintStory.Story.IWant,
-                    ProjectId = dataTask.SprintStory.Story.Project.Id,
-                    StoryId = dataTask.SprintStory.Story.Id,
-                };
-
-                ServiceSprintStory serviceSprintStory = new ServiceSprintStory()
-                {
-                    Story = serviceStory,
-                    SprintId = sprintId
-                };
-
                 var remainingTaskHours =
                     unitOfWork.TaskHourEstimateRepository.Items.Where(t => t.Id == dataTask.Id).ToList();
 
@@ -211,7 +194,7 @@ namespace AnyTrack.Backend.Service
                     ConditionsOfSatisfaction = dataTask.ConditionsOfSatisfaction,
                     Description = dataTask.Description,
                     TaskHourEstimates = serviceRemainingTaskHours,
-                    SprintStory = serviceSprintStory,
+                    SprintStoryId = dataTask.SprintStory.Id,
                     Summary = dataTask.Summary,
                     TaskId = dataTask.Id
                 };
@@ -235,7 +218,7 @@ namespace AnyTrack.Backend.Service
 
                 if (serviceUpdatedHours != null)
                 {
-                    task.TaskHourEstimates.Add(new TaskHourEstimate
+                    task.TaskHourEstimate.Add(new TaskHourEstimate
                     {
                         Estimate = serviceUpdatedHours.Estimate
                     });

@@ -181,21 +181,9 @@
     <Compile Include="Migrations\201511231434077_Adding Sprint Data Layer Entities.Designer.cs">
       <DependentUpon>201511231434077_Adding Sprint Data Layer Entities.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201511242323120_Adding Task.cs" />
-    <Compile Include="Migrations\201511242323120_Adding Task.Designer.cs">
-      <DependentUpon>201511242323120_Adding Task.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511251631386_Update to Adding Task.cs" />
-    <Compile Include="Migrations\201511251631386_Update to Adding Task.Designer.cs">
-      <DependentUpon>201511251631386_Update to Adding Task.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511261131578_Adding Updated Hours.cs" />
-    <Compile Include="Migrations\201511261131578_Adding Updated Hours.Designer.cs">
-      <DependentUpon>201511261131578_Adding Updated Hours.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511292151312_Change to task.cs" />
-    <Compile Include="Migrations\201511292151312_Change to task.Designer.cs">
-      <DependentUpon>201511292151312_Change to task.cs</DependentUpon>
+    <Compile Include="Migrations\201511301309017_Adding tasks and task hours.cs" />
+    <Compile Include="Migrations\201511301309017_Adding tasks and task hours.Designer.cs">
+      <DependentUpon>201511301309017_Adding tasks and task hours.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -277,17 +265,8 @@
     <EmbeddedResource Include="Migrations\201511231434077_Adding Sprint Data Layer Entities.resx">
       <DependentUpon>201511231434077_Adding Sprint Data Layer Entities.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511242323120_Adding Task.resx">
-      <DependentUpon>201511242323120_Adding Task.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511251631386_Update to Adding Task.resx">
-      <DependentUpon>201511251631386_Update to Adding Task.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511261131578_Adding Updated Hours.resx">
-      <DependentUpon>201511261131578_Adding Updated Hours.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511292151312_Change to task.resx">
-      <DependentUpon>201511292151312_Change to task.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201511301309017_Adding tasks and task hours.resx">
+      <DependentUpon>201511301309017_Adding tasks and task hours.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -64,7 +64,7 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         /// <returns>Returns a list of tasks</returns>
         public List<ServiceTask> GetAllTasksForSprint(Guid sprintId)
         {
-            return new List<ServiceTask>(client.GetAllTasksForSprint(sprintId));
+            return new List<ServiceTask>(client.GetAllTasksForSprintCurrentUser(sprintId));
         }
 
         #endregion

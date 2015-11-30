@@ -33,7 +33,7 @@ namespace AnyTrack.Backend.Service.Model
         /// <summary>
         /// Gets or sets the story this task is part of.
         /// </summary>
-        public ServiceSprintStory SprintStory { get; set; }
+        public Guid SprintStoryId { get; set; }
 
         /// <summary>
         /// Gets or sets the Conditions Of Satisfaction
