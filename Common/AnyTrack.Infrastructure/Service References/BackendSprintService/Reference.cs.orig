@@ -974,12 +974,15 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetAllTasksForSprintCurrentUser", ReplyAction="http://tempuri.org/ISprintService/GetAllTasksForSprintCurrentUserResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask>> GetAllTasksForSprintCurrentUserAsync(System.Guid sprintId);
         
+<<<<<<< HEAD
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetAllTasksForSprintBurnDown", ReplyAction="http://tempuri.org/ISprintService/GetAllTasksForSprintBurnDownResponse")]
         System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask> GetAllTasksForSprintBurnDown(System.Guid sprintId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetAllTasksForSprintBurnDown", ReplyAction="http://tempuri.org/ISprintService/GetAllTasksForSprintBurnDownResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask>> GetAllTasksForSprintBurnDownAsync(System.Guid sprintId);
         
+=======
+>>>>>>> 665238e7f5f2f36b22e4126c4dec21c1ee8803ad
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/SaveUpdatedTaskHours", ReplyAction="http://tempuri.org/ISprintService/SaveUpdatedTaskHoursResponse")]
         void SaveUpdatedTaskHours(System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask> tasks);
         
@@ -1044,25 +1047,31 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
             return base.Channel.GetAllTasksForSprintCurrentUserAsync(sprintId);
         }
         
-        public void SaveUpdatedTaskHours(System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask> tasks) {
-            base.Channel.SaveUpdatedTaskHours(tasks);
-        }
-        
-        public System.Threading.Tasks.Task SaveUpdatedTaskHoursAsync(System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask> tasks) {
-            return base.Channel.SaveUpdatedTaskHoursAsync(tasks);
-        }
-
-        public System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintSummary> GetSprintNames(System.Nullable<System.Guid> projectId, bool scrumMaster, bool developer)
-        {
-            return base.Channel.GetSprintNames(projectId, scrumMaster, developer);
-        }
-
+<<<<<<< HEAD
         public System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask> GetAllTasksForSprintBurnDown(System.Guid sprintId) {
             return base.Channel.GetAllTasksForSprintBurnDown(sprintId);
         }
         
         public System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask>> GetAllTasksForSprintBurnDownAsync(System.Guid sprintId) {
             return base.Channel.GetAllTasksForSprintBurnDownAsync(sprintId);
+        }
+        
+        public void SaveUpdatedTaskHours(System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask> tasks) {
+            base.Channel.SaveUpdatedTaskHours(tasks);
+        }
+        
+=======
+        public void SaveUpdatedTaskHours(System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask> tasks) {
+            base.Channel.SaveUpdatedTaskHours(tasks);
+        }
+        
+>>>>>>> 665238e7f5f2f36b22e4126c4dec21c1ee8803ad
+        public System.Threading.Tasks.Task SaveUpdatedTaskHoursAsync(System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask> tasks) {
+            return base.Channel.SaveUpdatedTaskHoursAsync(tasks);
+        }
+        
+        public System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintSummary> GetSprintNames(System.Nullable<System.Guid> projectId, bool scrumMaster, bool developer) {
+            return base.Channel.GetSprintNames(projectId, scrumMaster, developer);
         }
         
         public System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintSummary>> GetSprintNamesAsync(System.Nullable<System.Guid> projectId, bool scrumMaster, bool developer) {

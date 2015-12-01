@@ -85,7 +85,10 @@
   <xs:element name="ArrayOfServiceTaskHourEstimate" nillable="true" type="tns:ArrayOfServiceTaskHourEstimate" />
   <xs:complexType name="ServiceTaskHourEstimate">
     <xs:sequence>
+<<<<<<< HEAD
       <xs:element minOccurs="0" name="Created" nillable="true" type="xs:dateTime" />
+=======
+>>>>>>> 665238e7f5f2f36b22e4126c4dec21c1ee8803ad
       <xs:element minOccurs="0" name="Estimate" type="xs:double" />
       <xs:element minOccurs="0" name="NewEstimate" type="xs:double" />
       <xs:element minOccurs="0" name="ServiceTaskHourEstimateId" type="ser:guid" />

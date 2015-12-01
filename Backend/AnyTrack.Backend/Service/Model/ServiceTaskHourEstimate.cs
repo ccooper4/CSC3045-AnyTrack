@@ -42,5 +42,10 @@ namespace AnyTrack.Backend.Service.Model
         /// Gets or sets the taskId
         /// </summary>
         public Guid TaskId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the created date
+        /// </summary>
+        public DateTime? Created { get; set; }
     }
 }
