@@ -119,6 +119,18 @@ namespace AnyTrack.Projects.Views
         /// <param name="navigationContext">The navigation context.</param>
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            if (navigationContext.Parameters.ContainsKey("openProjectOptions"))
+            {
+                bool openProjectOptions;
+                bool.TryParse(navigationContext.Parameters["openProjectOptions"].ToString(), out openProjectOptions);
+                if (openProjectOptions)
+                {
+                    if (navigationContext.Parameters.ContainsKey("projectInfo"))
+                    {
+                        ShowProjectOptions(navigationContext.Parameters["projectInfo"] as ServiceProjectRoleSummary);
+                    }
+                }
+            }
         }
 
         /// <summary>

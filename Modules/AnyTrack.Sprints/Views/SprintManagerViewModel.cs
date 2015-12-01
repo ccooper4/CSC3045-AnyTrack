@@ -210,6 +210,15 @@ namespace AnyTrack.Sprints.Views
         /// <param name="navigationContext">The navigation context.</param>
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            if (navigationContext.Parameters.ContainsKey("ProjectId"))
+            {
+                Guid projectId = (Guid)navigationContext.Parameters["ProjectId"];
+                ServiceProjectRoleSummary project = Projects.SingleOrDefault(p => p.ProjectId == projectId);
+                SelectedProject = project;
+                CurrentlyShowingProject = project;
+                this.projectId = projectId;
+                UpdateProjectDisplayed();
+            }
         }
 
         /// <summary>
@@ -218,7 +227,7 @@ namespace AnyTrack.Sprints.Views
         private void GoToCreateSprint()
         {
             var navParams = new NavigationParameters();
-            navParams.Add("projectId", ProjectId);
+            navParams.Add("ProjectId", ProjectId);
             NavigateToItem("CreateSprint", navParams);
         }
 
