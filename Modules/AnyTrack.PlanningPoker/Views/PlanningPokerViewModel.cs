@@ -68,6 +68,8 @@ namespace AnyTrack.PlanningPoker.Views
 
         #endregion
 
+        #region Properties 
+
         /// <summary>
         /// Gets or sets the stories
         /// </summary>
@@ -103,7 +105,16 @@ namespace AnyTrack.PlanningPoker.Views
         /// </summary>
         public DelegateCommand<double> SendFinalEstimateCommand { get; private set; }
 
-        #region Methods         
+        /// <summary>
+        /// Gets a value indicating whether or not this view can be re-used.
+        /// </summary>
+        public bool KeepAlive
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         /// <summary>
         /// Gets or sets message property.
@@ -121,12 +132,36 @@ namespace AnyTrack.PlanningPoker.Views
             }
         }
 
-        public bool KeepAlive
+        #endregion 
+
+        #region Methods
+
+        /// <summary>
+        /// Allows the view model to handle the on navigated to event.
+        /// </summary>
+        /// <param name="navigationContext">The navigation context</param>
+        public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Allows the model to verify if it can be re-used.
+        /// </summary>
+        /// <param name="navigationContext">The navigation context.</param>
+        /// <returns>Returns a boolean flag.</returns>
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Allows the view model to handle the on navigated from event.
+        /// </summary>
+        /// <param name="navigationContext">The navigation context</param>
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -206,21 +241,6 @@ namespace AnyTrack.PlanningPoker.Views
             msg.Message = finalEstimate.ToString();
 
             serviceGateway.SubmitMessageToServer(msg);
-        }
-
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

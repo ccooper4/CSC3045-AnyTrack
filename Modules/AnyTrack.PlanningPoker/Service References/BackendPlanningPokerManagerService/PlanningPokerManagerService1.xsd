@@ -45,9 +45,11 @@
   <xs:element name="ServiceChatMessage" nillable="true" type="tns:ServiceChatMessage" />
   <xs:complexType name="ServiceSessionChangeInfo">
     <xs:sequence>
+      <xs:element minOccurs="0" name="ProjectName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SessionAvailable" type="xs:boolean" />
       <xs:element minOccurs="0" name="SessionId" nillable="true" type="ser:guid" />
       <xs:element minOccurs="0" name="SprintId" type="ser:guid" />
+      <xs:element minOccurs="0" name="SprintName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ServiceSessionChangeInfo" nillable="true" type="tns:ServiceSessionChangeInfo" />

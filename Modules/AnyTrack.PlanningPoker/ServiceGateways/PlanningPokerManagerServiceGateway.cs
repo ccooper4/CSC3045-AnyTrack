@@ -156,6 +156,14 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
             NotifyClientOfNewMessageFromServerEvent(this, msg);
         }
 
+        /// <summary>
+        /// Notifies the client to clear their current story point estimate. 
+        /// </summary>
+        public void NotifyClientToClearStoryPointEstimateFromServer()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #endregion
