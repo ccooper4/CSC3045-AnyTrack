@@ -3,10 +3,91 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://www.codeplex.com/prism"
+             prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:local="clr-namespace:AnyTrack.Sprints.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
+             xmlns:converters="clr-namespace:AnyTrack.Sprints.Converters"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="1000">
+
+    <UserControl.Resources>
+        <converters:GuidToStringConverter x:Key="guidToStringConverter"></converters:GuidToStringConverter>
+    </UserControl.Resources>
+    <Grid Background="LightGray">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!-- Header Grid -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Margin="10px" Orientation="Horizontal">
+                <ComboBox Margin="5px" IsEditable="True" BorderBrush="Gray" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200px" Height="26" ItemsSource="{Binding Projects}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}" />
+                <ComboBox Margin="5px"  IsEditable="True" BorderBrush="Gray" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200px" Height="26" ItemsSource="{Binding Sprints}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}" />
+            </StackPanel>
+
+            <Button Margin="0,0,20px,0" Grid.Column="1" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Center" Height="Auto" Width="Auto" Command="{Binding EditTaskHoursCommand}">
+                <Image Source="../Images/update_hours.png" Width="25px" Height="25px"></Image>
+            </Button>
+        </Grid>
+
+        <!-- Content Grid -->
+        <Grid Grid.Row="1" Margin="10px">
+            <Border CornerRadius="9" BorderBrush="Gray" Background="Gray" BorderThickness="2">
+            <DockPanel Background="White" >
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40px"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" Grid.Row="0" Content="Not Started" HorizontalAlignment="Center"/>
+                        <Label Grid.Column="1" Grid.Row="0" Content="In Progress" HorizontalAlignment="Center"/>
+                        <Label Grid.Column="2" Grid.Row="0" Content="Awaiting Test" HorizontalAlignment="Center"/>
+                        <Label Grid.Column="3" Grid.Row="0" Content="In Test" HorizontalAlignment="Center"/>
+                        <Label Grid.Column="4" Grid.Row="0" Content="Done" HorizontalAlignment="Center"/>
+
+<!--                        ~1~ The Not started stories @1@-->
+<!--                        <ListBox Grid.Column="0" Grid.Row="1">-->
+<!--                            <ListBox.ItemTemplate >-->
+<!--                                <DataTemplate>-->
+<!--                                </DataTemplate>-->
+<!--                            </ListBox.ItemTemplate>-->
+<!--                        </ListBox>-->
+
+                        <Grid Grid.Row="1" Grid.Column="0">
+                            <Grid Margin="10">
+                                <Button Command="{Binding OpenSprintStoryViewCommand}" BorderThickness="0" Background="Transparent">
+                                    <Border CornerRadius="2" BorderBrush="Gray" Background="Gray" BorderThickness="2">
+                                       <TextBox IsEnabled="False" Height="Auto" MinHeight="50px" Width="Auto" Background="LightGray" TextWrapping="Wrap" Text="This is a test story for UI testing purposes"/>  
+                                    </Border>
+                                </Button>
+                            </Grid>
+                        </Grid>
+
+                    </Grid>
+                </DockPanel>
+        </Border>
+        </Grid>
+      
     </Grid>
 </UserControl>

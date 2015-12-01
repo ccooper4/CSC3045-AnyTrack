@@ -174,6 +174,12 @@ namespace AnyTrack.Backend.Service
         {
             var userEmail = Thread.CurrentPrincipal.Identity.Name;
             var user = MapEmailAddressToUser(userEmail);
+
+            if (user == null)
+            {
+                throw new ArgumentException("User does not exist");
+            }
+
             var tasks = unitOfWork.TaskRepository.Items.Where(t => t.SprintStory.Sprint.Id == sprintId).Where(u => u.Assignee == user).ToList();
 
             List<ServiceTask> serviceTasks = new List<ServiceTask>();
@@ -222,11 +228,11 @@ namespace AnyTrack.Backend.Service
                 var task = unitOfWork.TaskRepository.Items.Single(x => x.Id == t.TaskId);
                 var serviceUpdatedHours = t.TaskHourEstimates.LastOrDefault();
 
-                if (serviceUpdatedHours != null)
+                if (serviceUpdatedHours.NewEstimate != null)
                 {
                     task.TaskHourEstimate.Add(new TaskHourEstimate
                     {
-                        Estimate = serviceUpdatedHours.Estimate
+                        Estimate = serviceUpdatedHours.NewEstimate
                     });
                 }
             }

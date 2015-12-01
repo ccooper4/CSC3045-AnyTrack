@@ -47,6 +47,7 @@ namespace AnyTrack.Sprints.Views
             this.Tasks = new ObservableCollection<ServiceTask>();
             ////Tasks = GetTasksForUser(this.sprintId);
             UpdateTaskHoursCommand = new DelegateCommand(SaveTaskHours);
+            CancelCommand = new DelegateCommand(GoToSprintBoard);
 
             #region mockdata
             List<ServiceTask> tasksList = new List<ServiceTask>();
@@ -100,9 +101,14 @@ namespace AnyTrack.Sprints.Views
         #region Commands
 
         /// <summary>
-        /// Gets or sets a given story to delete from the backlog
+        /// Gets or sets the update hours command
         /// </summary>
         public DelegateCommand UpdateTaskHoursCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the cancel hours command
+        /// </summary>
+        public DelegateCommand CancelCommand { get; set; }
 
         #endregion
 
@@ -136,6 +142,16 @@ namespace AnyTrack.Sprints.Views
         private void SaveTaskHours()
         {
             serviceGateway.SaveUpdatedTaskHours(this.Tasks.ToList());
+        }
+
+        /// <summary>
+        /// Navigates to sprint board
+        /// </summary>
+        private void GoToSprintBoard()
+        {
+            var navParams = new NavigationParameters();
+            navParams.Add("sprintId", sprintId);
+            NavigateToItem("SprintBoard", navParams);
         }
 
         #endregion

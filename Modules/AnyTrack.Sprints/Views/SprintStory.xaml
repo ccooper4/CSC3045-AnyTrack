@@ -3,10 +3,127 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://www.codeplex.com/prism"
+             prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:local="clr-namespace:AnyTrack.Sprints.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
+             d:DesignHeight="400" d:DesignWidth="500">
+
+    <!-- Outer Grid -->
+    <Grid VerticalAlignment="Top" MinWidth="500px" Background="WhiteSmoke">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!-- Flyout title -->
+        <Label Grid.Row="0" Background="CornflowerBlue" FontWeight="Bold" Foreground="White" Content="This is the story title" Height="Auto"></Label>
+
+        <!-- Content Grid -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="20*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <!-- Main Grid -->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <!-- Upper section -->
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="8*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.2*"></ColumnDefinition>
+                        <ColumnDefinition Width="4*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- User story -->
+                    <Grid Grid.Row="0" Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Label Margin="5px" HorizontalAlignment="Left" Content="Story" Grid.Row="0" FontSize="14"></Label>
+
+                        <!-- As a I want So that -->
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+
+
+                            <Label Grid.Column="0" Grid.Row="0" Content="As a" FontWeight="Bold" HorizontalAlignment="Right"/>
+                            <TextBox Margin="5px" Grid.Column="1"  Grid.Row="0" TextWrapping="Wrap" Text="developer" Height="Auto"></TextBox>
+
+                            <Label Grid.Column="0" Grid.Row="1" Content="I want" FontWeight="Bold" HorizontalAlignment="Right"/>
+                            <TextBox Margin="5px" Grid.Column="1"  Grid.Row="1" TextWrapping="Wrap" Text="to build some UI" Height="Auto"></TextBox>
+
+                            <Label Grid.Column="0" Grid.Row="2" Content="So that" FontWeight="Bold" HorizontalAlignment="Right"/>
+                            <TextBox Margin="5px" Grid.Column="1"  Grid.Row="2" TextWrapping="Wrap" Text="I can test all of the functionality of the intended system" Height="Auto"></TextBox>
+                        </Grid>
+
+                        <!-- Conditions of satisfaction -->
+                        <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,10,0,10px">
+                            <Label Margin="5px" HorizontalAlignment="Left" Content="Conditions of Satisfaction" FontSize="14"></Label>
+                            <TextBox TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Height="70px" Text="Lorem ipsum dolor sit amet, ius id corpora pertinacia, ei facer periculis cum, prima dolores voluptua an mea. Altera regione sapientem no nec, mea ad justo fuisset ullamcorper. Mea scripta dissentiunt cu. Albucius partiendo vituperatoribus ut usu. Ne sale dicta discere mei, semper inciderint vis ne, eum quis recusabo periculis et."></TextBox>
+                        </StackPanel>
+
+                    </Grid>
+
+                    
+                    <Grid Grid.Column="1" Grid.Row="0">
+                        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="20" Margin="3,10,2, 0" />
+                    </Grid>
+                    
+                    <!-- Status, points, created, updated -->
+                    <Grid Grid.Row="0" Grid.Column="2">
+                        
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        
+                    </Grid>
+                    
+                    
+                </Grid>
+
+                <!-- Divider section -->
+                <Grid Grid.Row="1">
+
+                </Grid>
+
+                <!-- Task Section -->
+                <Grid Grid.Row="2">
+
+                </Grid>
+            </Grid>
+
+        </Grid>
     </Grid>
+
 </UserControl>
