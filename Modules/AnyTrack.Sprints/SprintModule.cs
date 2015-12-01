@@ -83,8 +83,7 @@ namespace AnyTrack.Sprints
 
             menuService.AddMenuItem(new MenuItem { Color = "Gray", Title = "Sprints", NavigationViewName = "SprintManager" });
             menuService.AddMenuItem(new MenuItem { Color = "Gray", Title = "Sprint Board", NavigationViewName = "SprintBoard" });
-            menuService.AddMenuItem(new MenuItem { Color = "Gray", Title = "BurnDown", NavigationViewName = "BurnDown" });
-            regionManager.RequestNavigate(RegionNames.AppContainer, "BurnDown");
+            menuService.AddMenuItem(new MenuItem { Color = "Gray", Title = "Charts", NavigationViewName = "BurnDown" });
         }
 
         #endregion 
