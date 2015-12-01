@@ -19,7 +19,7 @@ namespace AnyTrack.PlanningPoker.Views
     /// <summary>
     /// ChatViewModel class
     /// </summary>
-    public class PlanningPokerViewModel : ValidatedBindableBase
+    public class PlanningPokerViewModel : ValidatedBindableBase, INavigationAware, IRegionMemberLifetime
     {
         #region Fields 
 
@@ -56,13 +56,15 @@ namespace AnyTrack.PlanningPoker.Views
             this.SprintStories.Clear();
             this.SprintStories.AddRange<ServiceStorySummary>(projectServiceGateway.GetProjectStories(Guid.NewGuid()));
 
+            serviceGateway.NotifyClientToClearStoryPointEstimateFromServerEvent += ServiceGateway_NotifyClientToClearStoryPointEstimateFromServerEvent;
             serviceGateway.NotifyClientOfNewMessageFromServerEvent += ServiceGateway_NotifyClientOfNewMessageFromServerEvent;
+
             SendMessageCommand = new DelegateCommand(this.SubmitMessageToServer);
 
             SendEstimateCommand = new DelegateCommand<string>(SubmitEstimateToServer);
 
             SendFinalEstimateCommand = new DelegateCommand<double>(SubmitFinalEstimateToServer);
-        }
+        }               
 
         #endregion
 
@@ -119,6 +121,14 @@ namespace AnyTrack.PlanningPoker.Views
             }
         }
 
+        public bool KeepAlive
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         /// <summary>
         /// Duplex binding for recieving messages from server
         /// </summary>
@@ -130,6 +140,16 @@ namespace AnyTrack.PlanningPoker.Views
         }
 
         /// <summary>
+        /// Duplex binding for clearing estimates when server asks
+        /// </summary>
+        /// <param name="sender">The sender object</param>
+        /// <param name="e">the event</param>
+        private void ServiceGateway_NotifyClientToClearStoryPointEstimateFromServerEvent(object sender, EventArgs e)
+        {
+            this.RecievedEstimates.Clear();
+        }
+
+        /// <summary>
         /// Duplex binding for recieving story point estimates from server
         /// </summary>
         /// <param name="sender">The sender object</param>
@@ -137,16 +157,7 @@ namespace AnyTrack.PlanningPoker.Views
         private void ServiceGateway_NotifyClientOfNewStoryPointEstimateFromServerEvent(object sender, ServiceChatMessage msg)
         {
             this.RecievedEstimates.Add(msg.Name + " estimates " + msg.Message);
-        }
-
-        /// <summary>
-        /// Duplex binding for clearing story point estimates
-        /// </summary>
-        /// <param name="sender">The sender object</param>
-        private void ServiceGateway_NotifyClientToClearStoryPointEstimateFromServerEvent(object sender)
-        {
-            this.RecievedEstimates.Clear();
-        }
+        }              
 
         /// <summary>
         /// Submit a message to the server to be relayed to other session members.
@@ -195,6 +206,21 @@ namespace AnyTrack.PlanningPoker.Views
             msg.Message = finalEstimate.ToString();
 
             serviceGateway.SubmitMessageToServer(msg);
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
