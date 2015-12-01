@@ -17,6 +17,7 @@ using System.ServiceModel.Channels;
 using AnyTrack.Backend.Data.Model;
 using System.Web.Security;
 using System.Threading;
+using System.Security.Principal;
 
 namespace Unit.Backend.AnyTrack.Backend.Providers.BuildPrincipalUnityStrategyTests
 {
@@ -119,6 +120,29 @@ namespace Unit.Backend.AnyTrack.Backend.Providers.BuildPrincipalUnityStrategyTes
         }
 
         [Test]
+        public void CallWithHttpContextPrincipalAvailable()
+        {
+            var obj = new TestServiceWithAttribute();
+            var methodInfo = obj.GetType().GetMethod("DoStuff");
+
+            context.GetMethodInfoForServiceCall().Returns(methodInfo);
+
+            var unityContext = Substitute.For<IBuilderContext>();
+            unityContext.Existing.Returns(obj);
+
+            var user = new User { EmailAddress = "tester@agile.local", Roles = new List<Role>() };
+            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
+
+            var contextPrincipal = new GeneratedServiceUserPrincipal(user);
+            context.GetHttpContextUser().Returns(contextPrincipal);
+
+            strategy.PostBuildUp(unityContext);
+
+            context.Received().GetHttpContextUser();
+            Thread.CurrentPrincipal.Equals(contextPrincipal).Should().BeTrue();
+        }
+
+        [Test]
         public void CallWithAttributeForNonExpiredToken()
         {
             var obj = new TestServiceWithAttribute();
@@ -129,15 +153,18 @@ namespace Unit.Backend.AnyTrack.Backend.Providers.BuildPrincipalUnityStrategyTes
             var unityContext = Substitute.For<IBuilderContext>();
             unityContext.Existing.Returns(obj);
 
-            var channel = Substitute.For<IContextChannel>();
-            var requestMessage = new HttpRequestMessageProperty();
             var authCookie = "test";
             var user = new User { EmailAddress = "tester@agile.local", Roles = new List<Role>() };
-            requestMessage.Headers.Set("Set-Cookie", "AuthCookie=" + authCookie + ";other=other");
-            
-            var properties = new MessageProperties();
-            properties.Add(HttpRequestMessageProperty.Name, requestMessage);
-            context.IncomingMessageProperties.Returns(properties);
+
+            context.GetHttpContextUser().Returns(c => { return null; });
+
+            var headers = new MessageHeaders(MessageVersion.Soap11);
+
+            var header = MessageHeader.CreateHeader("authCookie", "http://anytrack", authCookie);
+
+            headers.Add(header);
+
+            context.IncomingMessageHeaders.Returns(headers);
 
             var decryptedTicket = new FormsAuthenticationTicket("tester@agile.local", false, 100);
             provider.Decrypt(authCookie).Returns(decryptedTicket);
@@ -166,15 +193,18 @@ namespace Unit.Backend.AnyTrack.Backend.Providers.BuildPrincipalUnityStrategyTes
             var unityContext = Substitute.For<IBuilderContext>();
             unityContext.Existing.Returns(obj);
 
-            var channel = Substitute.For<IContextChannel>();
-            var requestMessage = new HttpRequestMessageProperty();
             var authCookie = "test";
             var user = new User { EmailAddress = "tester@agile.local", Roles = new List<Role>() };
-            requestMessage.Headers.Set("Set-Cookie", "AuthCookie=" + authCookie + ";other=other");
 
-            var properties = new MessageProperties();
-            properties.Add(HttpRequestMessageProperty.Name, requestMessage);
-            context.IncomingMessageProperties.Returns(properties);
+            context.GetHttpContextUser().Returns(c => { return null; });
+
+            var headers = new MessageHeaders(MessageVersion.Soap11);
+
+            var header = MessageHeader.CreateHeader("authCookie", "http://anytrack", authCookie);
+
+            headers.Add(header);
+
+            context.IncomingMessageHeaders.Returns(headers);
 
             var decryptedTicket = new FormsAuthenticationTicket("tester@agile.local", false, 100);
             provider.Decrypt(authCookie).Returns(decryptedTicket);
@@ -203,17 +233,20 @@ namespace Unit.Backend.AnyTrack.Backend.Providers.BuildPrincipalUnityStrategyTes
             var unityContext = Substitute.For<IBuilderContext>();
             unityContext.Existing.Returns(obj);
 
-            var channel = Substitute.For<IContextChannel>();
-            var requestMessage = new HttpRequestMessageProperty();
             var authCookie = "test";
             var user = new User { EmailAddress = "tester@agile.local", Roles = new List<Role>() };
-            requestMessage.Headers.Set("Set-Cookie", "AuthCookie=" + authCookie + ";other=other");
 
-            var properties = new MessageProperties();
-            properties.Add(HttpRequestMessageProperty.Name, requestMessage);
-            context.IncomingMessageProperties.Returns(properties);
+            context.GetHttpContextUser().Returns(c => { return null; });
 
-            var decryptedTicket = new FormsAuthenticationTicket("tester@agile.local", false, 100);
+            var headers = new MessageHeaders(MessageVersion.Soap11);
+
+            var header = MessageHeader.CreateHeader("authCookie", "http://anytrack", authCookie);
+
+            headers.Add(header);
+
+            context.IncomingMessageHeaders.Returns(headers);
+
+            var decryptedTicket = new FormsAuthenticationTicket("tester@agile.local", false, -100);
             provider.Decrypt(authCookie).Returns(decryptedTicket);
 
             unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
@@ -221,12 +254,7 @@ namespace Unit.Backend.AnyTrack.Backend.Providers.BuildPrincipalUnityStrategyTes
             strategy.PostBuildUp(unityContext);
 
             provider.Received().Decrypt(authCookie);
-            Thread.CurrentPrincipal.Should().NotBeNull();
-            Thread.CurrentPrincipal.Should().BeOfType<GeneratedServiceUserPrincipal>();
-            Thread.CurrentPrincipal.Identity.Should().NotBeNull();
-            Thread.CurrentPrincipal.Identity.Name.Should().Be(user.EmailAddress);
-            Thread.CurrentPrincipal.Identity.IsAuthenticated.Should().BeTrue();
-            Thread.CurrentPrincipal.Identity.AuthenticationType.Should().Be("FormsAuthentication");
+            Thread.CurrentPrincipal.GetType().ToString().Should().NotContain("GeneratedServiceUserPrincipal");
         }
 
         [Test]
@@ -240,17 +268,20 @@ namespace Unit.Backend.AnyTrack.Backend.Providers.BuildPrincipalUnityStrategyTes
             var unityContext = Substitute.For<IBuilderContext>();
             unityContext.Existing.Returns(obj);
 
-            var channel = Substitute.For<IContextChannel>();
-            var requestMessage = new HttpRequestMessageProperty();
             var authCookie = "test";
             var user = new User { EmailAddress = "tester@agile.local", Roles = new List<Role>() };
-            requestMessage.Headers.Set("Set-Cookie", "AuthCookie=" + authCookie + ";other=other");
 
-            var properties = new MessageProperties();
-            properties.Add(HttpRequestMessageProperty.Name, requestMessage);
-            context.IncomingMessageProperties.Returns(properties);
+            context.GetHttpContextUser().Returns(c => { return null; });
 
-            var decryptedTicket = new FormsAuthenticationTicket("tester@agile.local", false, 100);
+            var headers = new MessageHeaders(MessageVersion.Soap11);
+
+            var header = MessageHeader.CreateHeader("authCookie", "http://anytrack", authCookie);
+
+            headers.Add(header);
+
+            context.IncomingMessageHeaders.Returns(headers);
+
+            var decryptedTicket = new FormsAuthenticationTicket("tester@agile.local", false, -100);
             provider.Decrypt(authCookie).Returns(decryptedTicket);
 
             unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
@@ -258,12 +289,7 @@ namespace Unit.Backend.AnyTrack.Backend.Providers.BuildPrincipalUnityStrategyTes
             strategy.PostBuildUp(unityContext);
 
             provider.Received().Decrypt(authCookie);
-            Thread.CurrentPrincipal.Should().NotBeNull();
-            Thread.CurrentPrincipal.Should().BeOfType<GeneratedServiceUserPrincipal>();
-            Thread.CurrentPrincipal.Identity.Should().NotBeNull();
-            Thread.CurrentPrincipal.Identity.Name.Should().Be(user.EmailAddress);
-            Thread.CurrentPrincipal.Identity.IsAuthenticated.Should().BeTrue();
-            Thread.CurrentPrincipal.Identity.AuthenticationType.Should().Be("FormsAuthentication");
+            Thread.CurrentPrincipal.GetType().ToString().Should().NotContain("GeneratedServiceUserPrincipal");
         }
 
         #endregion 

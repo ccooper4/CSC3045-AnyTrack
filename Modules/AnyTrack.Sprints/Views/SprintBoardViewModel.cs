@@ -40,7 +40,8 @@ namespace AnyTrack.Sprints.Views
 
             this.serviceGateway = serviceGateway;
 
-            EditTaskHoursCommand = new DelegateCommand(GoToUpdateTaskHours);
+            OpenSprintStoryViewCommand = new DelegateCommand(this.OpenSprintStoryView);
+            EditTaskHoursCommand = new DelegateCommand(this.GoToUpdateTaskHours);
         }
 
         #endregion
@@ -66,6 +67,11 @@ namespace AnyTrack.Sprints.Views
         #endregion
 
         #region Commands
+
+        /// <summary>
+        /// Gets the command used to open a sprint story view. 
+        /// </summary>
+        public DelegateCommand OpenSprintStoryViewCommand { get; private set; }
 
         /// <summary>
         /// Gets or sets the command that can be used to add a sprint.
@@ -112,7 +118,18 @@ namespace AnyTrack.Sprints.Views
             navParams.Add("sprintId", sprintId);
             NavigateToItem("UpdateTaskHours", navParams);
         }
-        
+
+        /// <summary>
+        /// Open story view.
+        /// </summary>
+        private void OpenSprintStoryView()
+        {
+            var navParams = new NavigationParameters();
+
+            ////navParams.Add("projectId", projectId);
+            this.ShowMetroFlyout("SprintStory", navParams);
+        }
+
         #endregion
     }
 }

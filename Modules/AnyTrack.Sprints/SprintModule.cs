@@ -74,6 +74,7 @@ namespace AnyTrack.Sprints
         {          
             container.RegisterType<object, CreateSprint>("CreateSprint");
             container.RegisterType<object, SprintManager>("SprintManager");
+            container.RegisterType<object, SprintOptions>("SprintOptions");
             container.RegisterType<object, UpdateTaskHours>("UpdateTaskHours");
             container.RegisterType<object, SprintBoard>("SprintBoard");
             container.RegisterType<object, SprintStory>("SprintStory");

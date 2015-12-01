@@ -11,7 +11,7 @@
              xml:lang="en-GB"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" Width="1000" Height="364.328">
-    
+
     <UserControl.Resources>
         <converter:BooleanToVisibilityConverter x:Key="booleanToVisibility"/>
         <converter:DateConverter x:Key="dateConverter"/>
@@ -33,30 +33,33 @@
             </GroupBox.Header>
             <Grid Background="White" Margin="2,0,-2,-5">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"></ColumnDefinition>
+                    <ColumnDefinition Width="10*"></ColumnDefinition>
+                    <ColumnDefinition Width="311*"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="2*"></RowDefinition>
-                    <RowDefinition Height="4*"></RowDefinition>
                     <RowDefinition Height="2*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="0.2*"></RowDefinition>
+
                 </Grid.RowDefinitions>
 
-                <Views:LabelledTextBox Label="Project Name" Text="{Binding ProjectName}" Grid.Row="0" VerticalAlignment="Center" Height="85" Margin="0,0,0,95" Grid.RowSpan="2" />
+                <Views:LabelledTextBox Label="Project Name" Text="{Binding ProjectName}" Grid.Row="0" VerticalAlignment="Center" Margin="0,-1,0,36" Grid.ColumnSpan="2"/>
 
-                <Views:LabelledTextBox Label="Description" Text="{Binding Description}" Grid.Row="1" VerticalAlignment="Center"/>
+                <Views:LabelledTextBox Label="Description" Text="{Binding Description}" Height="125" VerticalAlignment="Center" Grid.RowSpan="3" Grid.ColumnSpan="2" Margin="0,52,0,0"/>
 
-                <Views:LabelledTextBox Label="Version Control" Text="{Binding VersionControl}" Grid.Row="2" VerticalAlignment="Center"/>
+                <Views:LabelledTextBox Label="Version Control" Text="{Binding VersionControl}" Grid.Row="3" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
 
-                <Label Grid.Row="3" FontWeight="Bold">Started On</Label>
-                <DatePicker Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="121" SelectedDate="{x:Static sys:DateTime.Now}" Text="{Binding StartedOn}"/>
+                <Label Grid.Row="4" FontWeight="Bold" Grid.ColumnSpan="4">Started On</Label>
+                <DatePicker Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="121" SelectedDate="{x:Static sys:DateTime.Now}" Text="{Binding StartedOn}" Grid.ColumnSpan="2"/>
 
-                <Button Grid.Row="5" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Width="90" Height="27" VerticalAlignment="Bottom" Margin="95,0,0,0" Command="{Binding SaveProjectCommand}">Save Project</Button>
-                <Button Grid.Row="5" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Width="70" Height="27" VerticalAlignment="Bottom" Margin="190,0,0,0" Command="{Binding CancelProjectCommand}">Cancel</Button>
+                <Button Grid.Row="6" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Width="90" Height="27" VerticalAlignment="Bottom" Margin="85,10,0,0" Command="{Binding SaveProjectCommand}" Grid.Column="1">Save Project</Button>
+                <Button Grid.Row="6" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Width="70" Height="27" VerticalAlignment="Bottom" Margin="180,0,0,0" Command="{Binding CancelProjectCommand}" Grid.Column="1">Cancel</Button>
             </Grid>
         </GroupBox>
 
@@ -65,7 +68,7 @@
                 <TextBlock Foreground="White" Text="Select a Project Owner" />
             </GroupBox.Header>
             <StackPanel Background="White">
-                
+
                 <Label Grid.Row="0" FontWeight="Bold" Margin="10px, 2px, 10px, 2px">Email address</Label>
                 <DockPanel Grid.Row="1" Margin="10px, 2px, 10px, 2px">
                     <Button Content="Search" DockPanel.Dock="Right" Command="{Binding SearchProductOwnerUserCommand}" BorderThickness="0" Background="LightGray" Height="4"/>

@@ -30,5 +30,10 @@ namespace AnyTrack.Backend.Service.Model
         /// Gets or sets the availability the user has on the sprint.
         /// </summary>
         public int? Availability { get; set; }
+
+        /// <summary>
+        /// Gets or sets the skills the user has as a string.
+        /// </summary>
+        public string Skills { get; set; }
     }
 }

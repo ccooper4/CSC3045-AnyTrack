@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AnyTrack.Backend.Data;
 using AnyTrack.Backend.Data.Model;
+using AnyTrack.Backend.Security;
 using AnyTrack.Backend.Service.Model;
 using Task = AnyTrack.Backend.Data.Model.Task;
 
@@ -16,6 +17,7 @@ namespace AnyTrack.Backend.Service
     /// <summary>
     /// Provides the methods of the SprintService
     /// </summary>
+    [CreatePrincipal]
     public class SprintService : ISprintService
     {
         #region Fields
@@ -71,13 +73,17 @@ namespace AnyTrack.Backend.Service
                 throw new NullReferenceException(string.Format("A project with the Guid {0} does not exist", projectId));
             }
 
+            var currentUserEmail = Thread.CurrentPrincipal.Identity.Name;
+
             Sprint dataSprint = new Sprint()
             {
                 Name = sprint.Name,
                 StartDate = sprint.StartDate,
                 EndDate = sprint.EndDate,
-                Description = sprint.Description
+                Description = sprint.Description,
             };
+
+            dataSprint.ScrumMaster = AssignScrumMaster(projectId, dataSprint.Id, currentUserEmail);
 
             dataSprint.Team = new List<User>();
 
@@ -168,6 +174,12 @@ namespace AnyTrack.Backend.Service
         {
             var userEmail = Thread.CurrentPrincipal.Identity.Name;
             var user = MapEmailAddressToUser(userEmail);
+
+            if (user == null)
+            {
+                throw new ArgumentException("User does not exist");
+            }
+
             var tasks = unitOfWork.TaskRepository.Items.Where(t => t.SprintStory.Sprint.Id == sprintId).Where(u => u.Assignee == user).ToList();
 
             List<ServiceTask> serviceTasks = new List<ServiceTask>();
@@ -260,11 +272,11 @@ namespace AnyTrack.Backend.Service
                 var task = unitOfWork.TaskRepository.Items.Single(x => x.Id == t.TaskId);
                 var serviceUpdatedHours = t.TaskHourEstimates.LastOrDefault();
 
-                if (serviceUpdatedHours != null)
+                if (serviceUpdatedHours.NewEstimate != null)
                 {
                     task.TaskHourEstimate.Add(new TaskHourEstimate
                     {
-                        Estimate = serviceUpdatedHours.Estimate
+                        Estimate = serviceUpdatedHours.NewEstimate
                     });
                 }
             }
@@ -381,6 +393,49 @@ namespace AnyTrack.Backend.Service
                 {
                     ProjectId = projectId,
                     RoleName = "Developer",
+                    SprintId = sprintId,
+                    User = user
+                };
+
+                // Add role to user
+                if (user.Roles == null)
+                {
+                    user.Roles = new List<Role>();
+                }
+
+                if (!user.Roles.Contains(role))
+                {
+                    user.Roles.Add(role);
+                }
+
+                return user;
+            }
+            else
+            {
+                throw new Exception("User does not exist");
+            }
+        }
+
+        /// <summary>
+        /// Retrieves user from database with email address and assigns them as the scrum on the sprint.
+        /// </summary>
+        /// <param name="projectId">Id of project that has the sprint</param>
+        /// <param name="sprintId">Id of the sprint</param>
+        /// <param name="emailAddress">Email address of the user</param>
+        /// <returns>The assigned user</returns>
+        private User AssignScrumMaster(Guid projectId, Guid sprintId, string emailAddress)
+        {
+            User user =
+                        unitOfWork.UserRepository.Items.SingleOrDefault(
+                            u => u.EmailAddress == emailAddress);
+
+            if (user != null)
+            {
+                // Create role
+                Role role = new Role
+                {
+                    ProjectId = projectId,
+                    RoleName = "Scrum Master",
                     SprintId = sprintId,
                     User = user
                 };
