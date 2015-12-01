@@ -49,6 +49,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service
                     Skills = "C#, Java",
                     SecretQuestion = "Where do you live?",
                     SecretAnswer = "At Home",
+                    Roles = new List<Role>()
                 },
                 new User
                 {
@@ -61,7 +62,22 @@ namespace Unit.Backend.AnyTrack.Backend.Service
                     ScrumMaster = false,
                     Skills = "C#",
                     SecretQuestion = "Where do you live?",
-                    SecretAnswer = "A car"
+                    SecretAnswer = "A car",
+                    Roles = new List<Role>()
+                },
+                new User
+                {
+                    EmailAddress = "sm@test.com",
+                    FirstName = "Peter",
+                    LastName = "Test",
+                    Password = "Password",
+                    Developer = false,
+                    ProductOwner = true,
+                    ScrumMaster = false,
+                    Skills = "C#",
+                    SecretQuestion = "Where do you live?",
+                    SecretAnswer = "A car",
+                    Roles = new List<Role>()
                 }
                 #endregion
             };
@@ -184,6 +200,9 @@ namespace Unit.Backend.AnyTrack.Backend.Service
                 TeamEmailAddresses = new List<string>() {userList[0].EmailAddress, userList[1].EmailAddress}
             };
 
+            var principal = new GeneratedServiceUserPrincipal(userList[2]);
+            Thread.CurrentPrincipal = principal;
+
             #endregion
 
             unitOfWork.UserRepository.Items.Returns(userList.AsQueryable());
@@ -209,6 +228,11 @@ namespace Unit.Backend.AnyTrack.Backend.Service
             userList[1].Roles.Last().SprintId.Should().Be(projectList[0].Sprints.First().Id);
             userList[1].Roles.Last().RoleName.Should().Be("Developer");
             userList[1].Roles.Last().User.Should().Be(userList[1]);
+
+            userList[2].Roles.Last().ProjectId.Should().Be(projectList[0].Id);
+            userList[2].Roles.Last().SprintId.Should().Be(projectList[0].Sprints.First().Id);
+            userList[2].Roles.Last().RoleName.Should().Be("Scrum Master");
+            userList[2].Roles.Last().User.Should().Be(userList[2]);
         }
         
         #endregion
