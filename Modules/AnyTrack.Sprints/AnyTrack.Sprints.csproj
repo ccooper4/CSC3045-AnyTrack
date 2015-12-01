@@ -130,6 +130,10 @@
       <DependentUpon>SprintManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SprintManagerViewModel.cs" />
+    <Compile Include="Views\SprintOptions.xaml.cs">
+      <DependentUpon>SprintOptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SprintOptionsViewModel.cs" />
     <Compile Include="Views\SprintStory.xaml.cs">
       <DependentUpon>SprintStory.xaml</DependentUpon>
     </Compile>
@@ -177,6 +181,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SprintManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SprintOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

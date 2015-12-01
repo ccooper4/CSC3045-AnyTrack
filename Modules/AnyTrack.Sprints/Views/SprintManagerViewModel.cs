@@ -81,6 +81,7 @@ namespace AnyTrack.Sprints.Views
 
             AddSprintCommand = new DelegateCommand(GoToCreateSprint);
             UpdateProjectDisplayedCommand = new DelegateCommand(UpdateProjectDisplayed, CanUpdateProject);
+            OpenSprintOptions = new DelegateCommand<ServiceSprintSummary>(ShowSprintOptions);
         }
 
         #endregion
@@ -176,6 +177,11 @@ namespace AnyTrack.Sprints.Views
         /// Gets or sets the command that can be used to update the displayed project.
         /// </summary>
         public DelegateCommand UpdateProjectDisplayedCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the command that can be used to display the Sprint Options panel.
+        /// </summary>
+        public DelegateCommand<ServiceSprintSummary> OpenSprintOptions { get; set; }
         #endregion
 
         #region Methods
@@ -234,6 +240,18 @@ namespace AnyTrack.Sprints.Views
             ProjectId = currentlyShowingProject.ProjectId;
             ShowAddButton = currentlyShowingProject.ScrumMaster;
             Sprints = new ObservableCollection<ServiceSprintSummary>(currentlyShowingProject.Sprints);
+        }
+
+          /// <summary>
+          /// Shows the Sprint Options Flyout.
+          /// </summary>
+          /// <param name="sprintSummary">Summary of the selected sprint</param>
+        private void ShowSprintOptions(ServiceSprintSummary sprintSummary)
+        {
+            var navParams = new NavigationParameters();
+            navParams.Add("projectRoleInfo", currentlyShowingProject);
+            navParams.Add("sprintSummary", sprintSummary);
+            this.ShowMetroFlyout("SprintOptions", navParams);
         }
 
         #endregion
