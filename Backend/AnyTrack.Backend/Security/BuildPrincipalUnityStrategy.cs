@@ -6,6 +6,7 @@ using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using AnyTrack.Backend.Data;
 using AnyTrack.Backend.Providers;
 using Microsoft.Practices.ObjectBuilder2;
@@ -82,25 +83,36 @@ namespace AnyTrack.Backend.Security
 
             if (objHasAttribute || callMethodHasAttribute)
             {
-                var formsAuthProvider = container.Resolve<FormsAuthenticationProvider>();
                 var unitOfWork = container.Resolve<IUnitOfWork>();
+                var contextUser = operationContext.GetHttpContextUser();
+                var userExistsForContextPrincipal = contextUser != null && unitOfWork.UserRepository.Items.SingleOrDefault(u => u.EmailAddress == contextUser.Identity.Name) != null;
 
-                if (operationContext.IncomingMessageProperties != null)
+                if (userExistsForContextPrincipal)
                 {
-                    var messageProperty = (HttpRequestMessageProperty)operationContext.IncomingMessageProperties[HttpRequestMessageProperty.Name];
-                    string cookie = messageProperty.Headers.Get("Set-Cookie");
-                    if (!string.IsNullOrWhiteSpace(cookie))
+                    Thread.CurrentPrincipal = contextUser; 
+                }
+                else
+                {
+                    var formsAuthProvider = container.Resolve<FormsAuthenticationProvider>();
+
+                    if (operationContext.IncomingMessageHeaders != null)
                     {
-                        var cookieParts = cookie.Split(';');
-                        var encryptedAuthCookie = cookieParts[0].Replace("AuthCookie=", string.Empty);
-                        var formsTicket = formsAuthProvider.Decrypt(encryptedAuthCookie);
+                        var headers = operationContext.IncomingMessageHeaders;
+                        var tokenHeader = headers.GetHeader<string>("authCookie", "http://anytrack");
 
-                        if (!formsTicket.Expired)
+                        if (!string.IsNullOrWhiteSpace(tokenHeader))
                         {
-                            var user = unitOfWork.UserRepository.Items.Single(u => u.EmailAddress == formsTicket.Name);
-                            var principal = new GeneratedServiceUserPrincipal(user);
+                            var cookieParts = tokenHeader.Split(';');
+                            var encryptedAuthCookie = cookieParts[0].Replace("AuthCookie=", string.Empty);
+                            var formsTicket = formsAuthProvider.Decrypt(encryptedAuthCookie);
 
-                            Thread.CurrentPrincipal = principal;
+                            if (!formsTicket.Expired)
+                            {
+                                var user = unitOfWork.UserRepository.Items.Single(u => u.EmailAddress == formsTicket.Name);
+                                var principal = new GeneratedServiceUserPrincipal(user);
+
+                                Thread.CurrentPrincipal = principal;
+                            }
                         }
                     }
                 }

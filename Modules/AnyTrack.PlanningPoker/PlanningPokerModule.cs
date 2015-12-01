@@ -79,10 +79,10 @@ namespace AnyTrack.PlanningPoker
         public void Initialize()
         {
             // Service client. 
-            container.RegisterType<IPlanningPokerManagerService, PlanningPokerManagerServiceClient>(new InjectionConstructor(typeof(InstanceContext)));
+            container.RegisterType<IPlanningPokerManagerService, PlanningPokerManagerServiceClient>(new ContainerControlledLifetimeManager(), new InjectionConstructor(typeof(InstanceContext)));
 
             // Service gateways.
-            container.RegisterType<IPlanningPokerManagerServiceGateway, PlanningPokerManagerServiceGateway>();
+            container.RegisterType<IPlanningPokerManagerServiceGateway, PlanningPokerManagerServiceGateway>(new ContainerControlledLifetimeManager());
 
             // Views.
             container.RegisterType<object, StartPlanningPokerSession>("StartPlanningPokerSession");

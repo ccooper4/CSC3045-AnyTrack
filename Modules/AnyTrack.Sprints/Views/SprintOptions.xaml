@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="AnyTrack.Sprints.Views.SprintOptions"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converter="clr-namespace:AnyTrack.Sprints.Converters"
+             xmlns:prism="http://www.codeplex.com/prism"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="325" d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <converter:BooleanToVisibilityConverter x:Key="booleanToVisibility"/>
+    </UserControl.Resources>
+
+    <Grid Margin="0,0,0,-18">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Label Foreground="{StaticResource WhiteBrush}" FontSize="{StaticResource MenuFontSize}" FontFamily="{StaticResource HeaderFontFamily}" Grid.Row="0" Content="{Binding ProjectName}" ContentStringFormat="Project Name: {0}"/>
+        <Label Foreground="{StaticResource WhiteBrush}" FontSize="{StaticResource MenuFontSize}" FontFamily="{StaticResource HeaderFontFamily}" Grid.Row="1" Content="{Binding SprintName}" ContentStringFormat="Sprint Name: {0}"/>
+        <Label Foreground="{StaticResource WhiteBrush}" FontSize="{StaticResource MenuFontSize}" FontFamily="{StaticResource HeaderFontFamily}" Grid.Row="2" Content="{Binding SprintDescription}" ContentStringFormat="Sprint Description: {0}"/>
+
+        <Button Style="{StaticResource MetroFlatButton}" Command="{Binding ViewBacklog}" Content="Project Manager" Width="Auto" Height="Auto" Margin="5,10,5,5" Grid.Row="3"/>
+        <Button Style="{StaticResource MetroFlatButton}" Command="{Binding ViewBacklog}" Content="Edit Sprint" Width="Auto" Height="Auto" Margin="5" Grid.Row="4" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibility}}"/>
+        <Button Style="{StaticResource MetroFlatButton}" Command="{Binding ViewBacklog}" Content="Add Stories To Sprint Backlog" Width="Auto" Height="Auto" Margin="5" Grid.Row="5" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibility}}"/>
+        <Button Style="{StaticResource MetroFlatButton}" Command="{Binding ViewBacklog}" Content="View Burndown Chart" Width="Auto" Height="Auto" Margin="5" Grid.Row="6"/>
+        <Button Style="{StaticResource MetroFlatButton}" Command="{Binding ViewBacklog}" Content="Planning Poker" Width="Auto" Height="Auto" Margin="5" Grid.Row="7"/>
+    </Grid>
+
+</UserControl>

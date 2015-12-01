@@ -18,7 +18,7 @@ namespace AnyTrack.Backend.Service
     /// The implementation of the planning poker manager service. 
     /// </summary>
     [CreatePrincipal]
-    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Single)]
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Single, InstanceContextMode = InstanceContextMode.PerCall)]
     public class PlanningPokerManagerService : IPlanningPokerManagerService
     {
         #region Fields 

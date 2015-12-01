@@ -12,6 +12,7 @@ using Prism.Regions;
 using AnyTrack.Infrastructure.BackendProjectService;
 using SprintModels = AnyTrack.Infrastructure.BackendSprintService;
 using AnyTrack.Infrastructure.ServiceGateways;
+using AnyTrack.Infrastructure.Providers;
 
 namespace Unit.Modules.AnyTrack.PlanningPoker.Views.StartPlanningPokerSessionViewModelTests
 {
@@ -77,6 +78,10 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.StartPlanningPokerSessionVie
         public void ConstructViewModel()
         {
             vm = new StartPlanningPokerSessionViewModel(serviceGateway, projectServiceGateway, sprintServiceGateway);
+
+            vm.StartPokerSession.Should().NotBeNull();
+            vm.Sprints.Should().NotBeNull();
+            vm.Projects.Should().NotBeNull();
         }
 
         #endregion 
@@ -149,6 +154,40 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.StartPlanningPokerSessionVie
             vm.Sprints.Single().SprintId.Should().Be(sprints.Single().SprintId);
             vm.Sprints.Single().Name.Should().Be(sprints.Single().Name);
             vm.Sprints.Single().Description.Should().Be(sprints.Single().Description);
+        }
+
+        #endregion 
+
+        #region EstablishPokerSession() Tests
+
+        [Test]
+        public void CallEstablishPokerSessionWithValidationErrors()
+        {
+            vm.MainWindow = Substitute.For<WindowProvider>();
+            vm.SprintId = Guid.NewGuid();
+
+            vm.Call("EstablishPokerSession");
+
+            serviceGateway.DidNotReceive().StartNewPokerSession(vm.SprintId.Value);
+            vm.MainWindow.DidNotReceive().ShowMessageAsync("Sesion started", "The planning poker session has been started");
+        }
+
+        [Test]
+        public void CallEstablishPokerSession()
+        {
+            var projectId = Guid.NewGuid();
+
+            sprintServiceGateway.GetSprintNames(projectId, true, false).Returns(new List<SprintModels.ServiceSprintSummary>());
+
+            vm.MainWindow = Substitute.For<WindowProvider>();
+            vm.SprintId = Guid.NewGuid();
+            vm.ProjectId = projectId; 
+
+            vm.Call("EstablishPokerSession");
+
+            sprintServiceGateway.Received().GetSprintNames(projectId, true, false);
+            serviceGateway.Received().StartNewPokerSession(vm.SprintId.Value);
+            vm.MainWindow.Received().ShowMessageAsync("Sesion started", "The planning poker session has been started");
         }
 
         #endregion 
