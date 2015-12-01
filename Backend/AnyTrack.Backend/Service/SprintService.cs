@@ -194,12 +194,56 @@ namespace AnyTrack.Backend.Service
                     ServiceTaskHourEstimate serviceTaskHourEstimate = new ServiceTaskHourEstimate()
                     {
                         Estimate = dataRemainingTaskHours.Estimate,
-                        TaskId = dataTask.Id
+                        TaskId = dataTask.Id,
+                        Created = dataRemainingTaskHours.Created
                     };
 
                     serviceRemainingTaskHours.Add(serviceTaskHourEstimate);
                 }
                 
+                ServiceTask task = new ServiceTask
+                {
+                    Blocked = dataTask.Blocked,
+                    ConditionsOfSatisfaction = dataTask.ConditionsOfSatisfaction,
+                    Description = dataTask.Description,
+                    TaskHourEstimates = serviceRemainingTaskHours,
+                    SprintStoryId = dataTask.SprintStory.Id,
+                    Summary = dataTask.Summary,
+                    TaskId = dataTask.Id
+                };
+
+                serviceTasks.Add(task);
+            }
+
+            return serviceTasks;
+        }
+
+        /// <summary>
+        /// Gets all tasks for a sprint for a burndown
+        /// </summary>
+        /// <param name="sprintId">The sprint id</param>
+        /// <returns>A list of tasks</returns>
+        public List<ServiceTask> GetAllTasksForSprint(Guid sprintId)
+        {
+            var tasks = unitOfWork.TaskRepository.Items.Where(t => t.SprintStory.Sprint.Id == sprintId).ToList();
+
+            List<ServiceTask> serviceTasks = new List<ServiceTask>();
+            foreach (var dataTask in tasks)
+            {
+                var remainingTaskHours =
+                    unitOfWork.TaskHourEstimateRepository.Items.Where(t => t.Id == dataTask.Id).ToList();
+
+                List<ServiceTaskHourEstimate> serviceRemainingTaskHours = new List<ServiceTaskHourEstimate>();
+                foreach (var dataRemainingTaskHours in remainingTaskHours)
+                {
+                    ServiceTaskHourEstimate serviceTaskHourEstimate = new ServiceTaskHourEstimate()
+                    {
+                        Estimate = dataRemainingTaskHours.Estimate,
+                        TaskId = dataTask.Id    
+                    };
+                    serviceRemainingTaskHours.Add(serviceTaskHourEstimate);
+                }
+
                 ServiceTask task = new ServiceTask
                 {
                     Blocked = dataTask.Blocked,

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.ServiceGateways;
@@ -45,6 +46,16 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         private FlyoutTheme theme;
 
+        /// <summary>
+        /// The close button visibility field.
+        /// </summary>
+        private Visibility closeButtonVisibility;
+
+        /// <summary>
+        /// The close button visibility field.
+        /// </summary>
+        private Visibility titleVisibility;
+
         #endregion
 
         /// <summary>
@@ -57,9 +68,48 @@ namespace AnyTrack.Sprints.Views
             this.Theme = FlyoutTheme.Accent;
             this.Position = Position.Right;
             this.IsModal = true;
+
+            OpenTaskViewCommand = new DelegateCommand(this.OpenTaskView);
         }
 
+        /// <summary>
+        /// Gets the command used to open a sprint story view. 
+        /// </summary>
+        public DelegateCommand OpenTaskViewCommand { get; private set; }
+
         #region Flyouts
+
+        /// <summary>
+        /// Gets or sets the close button visibility
+        /// </summary>
+        public Visibility CloseButtonVisibility
+        {
+            get
+            {
+                return closeButtonVisibility;
+            }
+
+            set
+            {
+                SetProperty(ref closeButtonVisibility, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the title visibility
+        /// </summary>
+        public Visibility TitleVisibility
+        {
+            get
+            {
+                return titleVisibility;
+            }
+
+            set
+            {
+                SetProperty(ref titleVisibility, value);
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating whether it should refresh everytime
@@ -175,6 +225,17 @@ namespace AnyTrack.Sprints.Views
         /// <param name="navigationContext"> The navigation context onNavigatedFrom</param>
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+        }
+
+        /// <summary>
+        /// Open story view.
+        /// </summary>
+        private void OpenTaskView()
+        {
+            var navParams = new NavigationParameters();
+
+            ////navParams.Add("projectId", projectId);
+            this.ShowMetroFlyout("Task", navParams);
         }
     }
 }

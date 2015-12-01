@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.SharedUtilities.Extensions;
@@ -45,6 +46,16 @@ namespace AnyTrack.Projects.Views
         private bool isModal;
 
         /// <summary>
+        /// The close button visibility field.
+        /// </summary>
+        private Visibility closeButtonVisibility;
+
+        /// <summary>
+        /// The close button visibility field.
+        /// </summary>
+        private Visibility titleVisibility;
+
+        /// <summary>
         /// The project name field.
         /// </summary>
         private string projectName;
@@ -79,6 +90,38 @@ namespace AnyTrack.Projects.Views
         #endregion 
 
         #region Properties
+
+        /// <summary>
+        /// Gets or sets close button visibility
+        /// </summary>
+        public Visibility CloseButtonVisibility
+        {
+            get
+            {
+                return closeButtonVisibility;
+            }
+
+            set
+            {
+                SetProperty(ref closeButtonVisibility, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the title visibility
+        /// </summary>
+        public Visibility TitleVisibility
+        {
+            get
+            {
+                return titleVisibility;
+            }
+
+            set
+            {
+                SetProperty(ref titleVisibility, value);
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether or not this flyout is open.

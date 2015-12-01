@@ -26,6 +26,12 @@
   <wsdl:message name="ISprintService_GetAllTasksForSprintCurrentUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAllTasksForSprintCurrentUserResponse" />
   </wsdl:message>
+  <wsdl:message name="ISprintService_GetAllTasksForSprint_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllTasksForSprint" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_GetAllTasksForSprint_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllTasksForSprintResponse" />
+  </wsdl:message>
   <wsdl:message name="ISprintService_SaveUpdatedTaskHours_InputMessage">
     <wsdl:part name="parameters" element="tns:SaveUpdatedTaskHours" />
   </wsdl:message>
@@ -50,6 +56,10 @@
     <wsdl:operation name="GetAllTasksForSprintCurrentUser">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetAllTasksForSprintCurrentUser" message="tns:ISprintService_GetAllTasksForSprintCurrentUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetAllTasksForSprintCurrentUserResponse" message="tns:ISprintService_GetAllTasksForSprintCurrentUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllTasksForSprint">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetAllTasksForSprint" message="tns:ISprintService_GetAllTasksForSprint_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetAllTasksForSprintResponse" message="tns:ISprintService_GetAllTasksForSprint_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="SaveUpdatedTaskHours">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/SaveUpdatedTaskHours" message="tns:ISprintService_SaveUpdatedTaskHours_InputMessage" />
@@ -82,6 +92,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetAllTasksForSprintCurrentUser">
       <soap:operation soapAction="http://tempuri.org/ISprintService/GetAllTasksForSprintCurrentUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllTasksForSprint">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/GetAllTasksForSprint" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

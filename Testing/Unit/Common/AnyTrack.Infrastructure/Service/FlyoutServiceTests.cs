@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using FluentAssertions;
 using MahApps.Metro.Controls;
@@ -26,6 +27,8 @@ namespace Unit.Common.AnyTrack.Infrastructure.Service.FlyoutServiceTests
         private Position position;
         private FlyoutTheme theme;
         private string header;
+        private Visibility closeButtonVisibility;
+        private Visibility titleVisibility;
 
         public NavigationParameters SentParams; 
 
@@ -111,6 +114,35 @@ namespace Unit.Common.AnyTrack.Infrastructure.Service.FlyoutServiceTests
             set
             {
                 SetProperty(ref isModal, value);
+            }
+        }
+
+        /// <summary>
+        /// The close button visibility
+        /// </summary>
+        public Visibility CloseButtonVisibility
+        {
+            get
+            {
+                return closeButtonVisibility;
+            }
+
+            set
+            {
+                SetProperty(ref closeButtonVisibility, value);
+            }
+        }
+
+        public Visibility TitleVisibility
+        {
+            get
+            {
+                return titleVisibility;
+            }
+
+            set
+            {
+                SetProperty(ref titleVisibility, value);
             }
         }
     }

@@ -25,5 +25,15 @@ namespace AnyTrack.Backend.Service.Model
         /// Gets or sets the session id if one is available.
         /// </summary>
         public Guid? SessionId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sprint name.
+        /// </summary>
+        public string SprintName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the project name.
+        /// </summary>
+        public string ProjectName { get; set; }
     }
 }
