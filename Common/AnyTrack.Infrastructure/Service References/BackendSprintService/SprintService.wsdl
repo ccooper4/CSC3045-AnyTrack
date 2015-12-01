@@ -26,6 +26,12 @@
   <wsdl:message name="ISprintService_GetAllTasksForSprintCurrentUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAllTasksForSprintCurrentUserResponse" />
   </wsdl:message>
+  <wsdl:message name="ISprintService_GetAllTasksForSprintBurnDown_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllTasksForSprintBurnDown" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_GetAllTasksForSprintBurnDown_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllTasksForSprintBurnDownResponse" />
+  </wsdl:message>
   <wsdl:message name="ISprintService_SaveUpdatedTaskHours_InputMessage">
     <wsdl:part name="parameters" element="tns:SaveUpdatedTaskHours" />
   </wsdl:message>
@@ -50,6 +56,10 @@
     <wsdl:operation name="GetAllTasksForSprintCurrentUser">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetAllTasksForSprintCurrentUser" message="tns:ISprintService_GetAllTasksForSprintCurrentUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetAllTasksForSprintCurrentUserResponse" message="tns:ISprintService_GetAllTasksForSprintCurrentUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllTasksForSprintBurnDown">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetAllTasksForSprintBurnDown" message="tns:ISprintService_GetAllTasksForSprintBurnDown_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetAllTasksForSprintBurnDownResponse" message="tns:ISprintService_GetAllTasksForSprintBurnDown_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="SaveUpdatedTaskHours">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/SaveUpdatedTaskHours" message="tns:ISprintService_SaveUpdatedTaskHours_InputMessage" />
@@ -89,8 +99,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetSprintNames">
-      <soap:operation soapAction="http://tempuri.org/ISprintService/GetSprintNames" style="document" />
+    <wsdl:operation name="GetAllTasksForSprintBurnDown">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/GetAllTasksForSprintBurnDown" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -100,6 +110,15 @@
     </wsdl:operation>
     <wsdl:operation name="SaveUpdatedTaskHours">
       <soap:operation soapAction="http://tempuri.org/ISprintService/SaveUpdatedTaskHours" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSprintNames">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/GetSprintNames" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

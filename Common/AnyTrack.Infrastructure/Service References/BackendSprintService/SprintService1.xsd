@@ -42,10 +42,24 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetAllTasksForSprintBurnDown">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sprintId" type="q7:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllTasksForSprintBurnDownResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetAllTasksForSprintBurnDownResult" nillable="true" type="q8:ArrayOfServiceTask" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="SaveUpdatedTaskHours">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="tasks" nillable="true" type="q7:ArrayOfServiceTask" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="tasks" nillable="true" type="q9:ArrayOfServiceTask" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -57,7 +71,7 @@
   <xs:element name="GetSprintNames">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="projectId" nillable="true" type="q7:guid" />
+        <xs:element xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="projectId" nillable="true" type="q10:guid" />
         <xs:element minOccurs="0" name="scrumMaster" type="xs:boolean" />
         <xs:element minOccurs="0" name="developer" type="xs:boolean" />
       </xs:sequence>
@@ -66,7 +80,7 @@
   <xs:element name="GetSprintNamesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetSprintNamesResult" nillable="true" type="q8:ArrayOfServiceSprintSummary" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetSprintNamesResult" nillable="true" type="q11:ArrayOfServiceSprintSummary" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

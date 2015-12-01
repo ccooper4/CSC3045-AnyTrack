@@ -1,6 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using AnyTrack.Infrastructure;
+using AnyTrack.Infrastructure.BackendSprintService;
+using AnyTrack.Infrastructure.ServiceGateways;
 using OxyPlot;
+using OxyPlot.Axes;
 
 namespace AnyTrack.Sprints.Views
 {
@@ -10,6 +15,16 @@ namespace AnyTrack.Sprints.Views
     public class BurnDownViewModel : ValidatedBindableBase
     {
         #region Fields 
+
+        /// <summary>
+        /// The sprint service gateway
+        /// </summary>
+        private readonly ISprintServiceGateway serviceGateway;
+
+        /// <summary>
+        /// The sprintID.
+        /// </summary>
+        private Guid sprintID;
 
         /// <summary>
         /// The title.
@@ -35,28 +50,23 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         public BurnDownViewModel()
         {
+            List<ServiceTask> list = new List<ServiceTask>();
             this.Title = "Sprint Burndown Chart";
-            this.Points = new ObservableCollection<DataPoint>
-                            {
-                                new DataPoint(0, 16),
-                                new DataPoint(10, 20),
-                                new DataPoint(20, 34),
-                                new DataPoint(30, 10),
-                                new DataPoint(40, 12),
-                                new DataPoint(50, 0),
-            };
-            this.Trend = new ObservableCollection<DataPoint>
-                            {
-                ////replace this with the trend points suitable to the sitch.
-                                new DataPoint(0, 16),
-                                new DataPoint(10, 14),
-                                new DataPoint(20, 12),
-                                new DataPoint(30, 8),
-                                new DataPoint(40, 6),
-                                new DataPoint(50, 0),
-            };
+            if (serviceGateway != null)
+            {
+                list = serviceGateway.GetAllTasksForSprint(sprintID);
+                foreach (var item in list)
+                {
+                    foreach (var taskHour in item.TaskHourEstimates)
+                    {
+                        this.Points = new ObservableCollection<DataPoint>
+                    {
+                        new DataPoint(DateTimeAxis.ToDouble(taskHour.Created), taskHour.Estimate)
+                    };
+                    }
+                }
+            }
         }
-
         #endregion
 
         #region Properties 
@@ -109,6 +119,21 @@ namespace AnyTrack.Sprints.Views
             }
         }
 
+        /// <summary>
+        /// Gets or sets the sprintID
+        /// </summary>
+        public Guid SprintID
+        {
+            get
+            {
+                return sprintID;
+            }
+
+            set
+            {
+                SetProperty(ref sprintID, value);
+            }
+        }
         #endregion
     }
 }
