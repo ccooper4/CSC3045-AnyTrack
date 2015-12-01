@@ -8,31 +8,50 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xml:lang="en-GB"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="1000">
+    <Grid Background="LightGray">
+        <Grid Grid.IsSharedSizeScope="True" Margin="0,0,0,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-    <GroupBox HorizontalAlignment="Stretch"  Margin="0, 0, 0, 0" >
-        <GroupBox.Header>
-            <TextBlock Foreground="White" Text="Update Task Hours" />
-        </GroupBox.Header>
-        <Grid Background="White" Margin="2,0,-2,-5">
-            <ListBox HorizontalAlignment="Left" Height="194" ItemsSource="{Binding Tasks}" Margin="78,51,0,0" VerticalAlignment="Top" Width="400">
+            <Grid Grid.Row="0"  Margin="20,28,0,435">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width ="6*" SharedSizeGroup="FirstColumn"></ColumnDefinition>
+                    <ColumnDefinition Width ="2*" SharedSizeGroup="SecondColumn"></ColumnDefinition>
+                    <ColumnDefinition Width ="2*" SharedSizeGroup="ThirdColumn"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+
+                <Label Grid.Column="0" Content="Description" Margin="0,-5,0,5"></Label>
+                <Label Grid.Column="1" Content="Hours Remaining"/>
+                <Label Grid.Column="2" Content="New Estimate"/>
+
+
+            </Grid>
+
+            <ListBox HorizontalAlignment="Left" Height="291" ItemsSource="{Binding Tasks}" Margin="20,73,0,0" VerticalAlignment="Top" Width="980">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width ="8*"></ColumnDefinition>
-                                <ColumnDefinition Width ="1*"></ColumnDefinition>
-                                <ColumnDefinition Width ="1*"></ColumnDefinition>
+                                <ColumnDefinition SharedSizeGroup="FirstColumn" />
+                                <ColumnDefinition SharedSizeGroup="SecondColumn" />
+                                <ColumnDefinition SharedSizeGroup="ThirdColumn" />
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="{Binding Description}" HorizontalAlignment="Left"></Label>
-                            <Label Grid.Column="1" Content="{Binding TaskHourEstimates[0].Estimate}" controls:TextBoxHelper.ClearTextButton="True"/>
-                            <TextBox Grid.Column="2" Text="{Binding TaskHourEstimates[0].NewEstimate}" controls:TextBoxHelper.ClearTextButton="True"/>
+                            <Label Grid.Column="0" Content="{Binding Description}"></Label>
+                            <Label Grid.Column="1" Content="{Binding TaskHourEstimates[0].Estimate}"/>
+                            <TextBox Grid.Column="2" Text="{Binding TaskHourEstimates[0].NewEstimate}"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Content="Update Tasks" HorizontalAlignment="Left" Margin="329,291,0,0" VerticalAlignment="Top" Width="81" Command="{Binding UpdateTaskHoursCommand}"/>
-            <Button Content="Cancel" HorizontalAlignment="Left" Margin="430,291,0,0" VerticalAlignment="Top" Width="75" Command="{Binding CancelCommand}" />
+            <StackPanel HorizontalAlignment="Left" Height="60" Margin="676,398,0,0" VerticalAlignment="Top" Width="238">
+                <Button Content="Update Tasks" HorizontalAlignment="Left" VerticalAlignment="Top" Width="81" Command="{Binding UpdateTaskHoursCommand}"/>
+                <Button Content="Cancel" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Command="{Binding CancelCommand}" />
+            </StackPanel>
         </Grid>
-    </GroupBox>
+    </Grid>
 </UserControl>
