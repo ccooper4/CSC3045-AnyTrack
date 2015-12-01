@@ -11,13 +11,20 @@
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="1000">
     <Grid Background="LightGray">
-        <Grid Grid.IsSharedSizeScope="True" Margin="0,0,0,20">
+        <Grid Margin="0, 30, 0, 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="14*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1" Grid.IsSharedSizeScope="True">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0"  Margin="20,28,0,435">
+            <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width ="6*" SharedSizeGroup="FirstColumn"></ColumnDefinition>
                     <ColumnDefinition Width ="2*" SharedSizeGroup="SecondColumn"></ColumnDefinition>
@@ -32,7 +39,7 @@
 
             </Grid>
 
-            <ListBox HorizontalAlignment="Left" Height="291" ItemsSource="{Binding Tasks}" Margin="20,73,0,0" VerticalAlignment="Top" Width="980">
+            <ListBox Grid.Row="1" HorizontalAlignment="Left" Height="291" ItemsSource="{Binding Tasks}" VerticalAlignment="Top" Width="980">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -48,10 +55,11 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <StackPanel HorizontalAlignment="Left" Height="60" Margin="676,398,0,0" VerticalAlignment="Top" Width="238">
-                <Button Content="Update Tasks" HorizontalAlignment="Left" VerticalAlignment="Top" Width="81" Command="{Binding UpdateTaskHoursCommand}"/>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Height="60" VerticalAlignment="Top">
+                <Button Content="Update Tasks" HorizontalAlignment="Left" Margin="0, 0, 10, 0" VerticalAlignment="Top" Width="81" Command="{Binding UpdateTaskHoursCommand}"/>
                 <Button Content="Cancel" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Command="{Binding CancelCommand}" />
             </StackPanel>
+        </Grid>
         </Grid>
     </Grid>
 </UserControl>
