@@ -39,7 +39,7 @@
         </Button>
 
         <DockPanel Grid.Row="1">
-            <ListBox DockPanel.Dock="Top" Background="WhiteSmoke" HorizontalAlignment="Stretch" BorderThickness="2" BorderBrush="Black" ItemsSource="{Binding Sprints}" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox DockPanel.Dock="Top" Background="LightGray" HorizontalAlignment="Stretch" ItemsSource="{Binding Sprints}" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Width="auto" Margin="30px,30px,30px,30px" >
