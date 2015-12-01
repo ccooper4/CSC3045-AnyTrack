@@ -57,7 +57,14 @@ namespace AnyTrack.Sprints.Views
             this.Theme = FlyoutTheme.Accent;
             this.Position = Position.Right;
             this.IsModal = true;
+
+            OpenTaskViewCommand = new DelegateCommand(this.OpenTaskView);
         }
+
+        /// <summary>
+        /// Gets the command used to open a sprint story view. 
+        /// </summary>
+        public DelegateCommand OpenTaskViewCommand { get; private set; }
 
         #region Flyouts
 
@@ -175,6 +182,17 @@ namespace AnyTrack.Sprints.Views
         /// <param name="navigationContext"> The navigation context onNavigatedFrom</param>
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+        }
+
+        /// <summary>
+        /// Open story view.
+        /// </summary>
+        private void OpenTaskView()
+        {
+            var navParams = new NavigationParameters();
+
+            ////navParams.Add("projectId", projectId);
+            this.ShowMetroFlyout("Task", navParams);
         }
     }
 }

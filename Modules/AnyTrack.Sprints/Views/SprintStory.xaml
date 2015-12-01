@@ -14,7 +14,7 @@
     </UserControl.Resources>
 
     <!-- Outer Grid -->
-    <Grid VerticalAlignment="Top" Width="500px"  Background="WhiteSmoke">
+    <Grid VerticalAlignment="Stretch" Width="600px" Background="WhiteSmoke" >
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -122,7 +122,7 @@
                             <TextBox Margin="15,0,0,0" VerticalAlignment="Center" Height="Auto" Width="30" Text="5"></TextBox>
                         </StackPanel>
 
-                        <StackPanel Margin="-5,5,15,5" Grid.Row="2">
+                        <StackPanel Margin="5" Grid.Row="2">
                             <Label HorizontalAlignment="Left" Content="Created" FontSize="14"></Label>
                             <TextBox IsEnabled="False"></TextBox>
                         </StackPanel>
@@ -143,17 +143,17 @@
                         <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <Border Grid.Row="0" BorderBrush="Black" BorderThickness="1" CornerRadius="20" Margin="3,0,2, 0" />
+                    <Border Grid.Row="0" BorderBrush="Black" BorderThickness="2" CornerRadius="20"  Height="2"  />
 
                     <DockPanel Grid.Row="1">
                         <Label Content="Tasks"  Margin="10,0,0,0" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-                        <Button Margin="0,0,10,0" Background="Transparent" BorderThickness="0" Command="{Binding OpenStoryViewCommand}" HorizontalAlignment="Right">
+                        <Button Margin="0,0,10,0" Background="Transparent" BorderThickness="0" Command="{Binding OpenTaskViewCommand}" HorizontalAlignment="Right">
                             <Image Source="../Images/add_icon.png" Width="25px" Height="25px"></Image>
                         </Button>
                     </DockPanel>
 
-                    <Border Grid.Row="2" BorderBrush="Black" BorderThickness="1" CornerRadius="20" Margin="3,0,2, 0" />
+                    <Border Grid.Row="2" BorderBrush="Black" BorderThickness="2" CornerRadius="20" Height="2"  />
                 </Grid>
 
                 <!-- Task Section -->
@@ -213,7 +213,7 @@
                     </Border>
 
 
-                    <StackPanel Margin="0,30,0,20" Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" >
+                    <StackPanel Margin="0,50,0,20" Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" >
                         <Button Margin="0,0,10,0" Command="{Binding SaveUpdateStoryCommand}" BorderThickness="0" Background="LightGray" Width="60px">Cancel</Button>
                         <Button  Command="{Binding SaveUpdateStoryCommand}" BorderThickness="0" Background="LightGray" Width="60px">Save</Button>
                     </StackPanel>
