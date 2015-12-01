@@ -1,0 +1,105 @@
+﻿<UserControl x:Class="AnyTrack.Sprints.Views.ManageSprintBacklog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://www.codeplex.com/prism"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300"
+             prism:ViewModelLocator.AutoWireViewModel="True" Padding="40,40,40,40"
+             xmlns:views="clr-namespace:AnyTrack.Sprints.Views">
+    <GroupBox>
+        <GroupBox.Header>
+            <TextBlock Foreground="White" Text="Manage Backlog"/>
+        </GroupBox.Header>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Row="0" Background="White" Margin="15,15,15,30">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20*"></ColumnDefinition>
+                    <ColumnDefinition Width="8*"></ColumnDefinition>
+                    <ColumnDefinition Width="20*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Background="IndianRed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Foreground="White" Grid.Column="0" Grid.Row="0" Text="Product Backlog" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+
+                    <ListBox DockPanel.Dock="Top" SelectedItem="{Binding SelectedProductStory}" SelectedIndex="{Binding SelectedProductStoryIndex}" Grid.Column="0" Grid.Row="1" ItemsSource="{Binding ProductBacklog}" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="Gray" BorderThickness="2" CornerRadius="0" Margin="0,0,0,-1">
+                                    <Grid>
+                                        <Label Content="{Binding Summary}" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Border BorderBrush="Black" BorderThickness="1"/>
+                </Grid>
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Button Command="{Binding Path=AddToSprintCommand}" Grid.Row="0" Width="100" Height="20" Content="Add >>"></Button>
+                    <Button Command="{Binding Path=AddAllToSprintCommand}" Grid.Row="1" Width="100" Height="20" Content="Add All >>"></Button>
+                    <Button Command="{Binding Path=RemoveFromSprintCommand}" Grid.Row="2" Width="100" Height="20" Content="&lt;&lt; Remove"></Button>
+                    <Button Command="{Binding Path=RemoveAllFromSprintCommand}" Grid.Row="3" Width="100" Height="20" Content="&lt;&lt; Remove All"></Button>
+                </Grid>
+                <Grid Grid.Column="2" Background="IndianRed">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0*"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Foreground="White" Text="Sprint Backlog" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <ListBox DockPanel.Dock="Top"  Grid.Row="1" SelectedItem="{Binding SelectedSprint}" SelectedIndex="{Binding SelectedSprintIndex}" ItemsSource="{Binding SprintBacklog}" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.ColumnSpan="2">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="Gray" BorderThickness="2" CornerRadius="0" Margin="0,0,0,-1">
+                                    <Grid>
+                                        <Label Content="{Binding Story.Summary}" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" ></Label>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Border Grid.Column="2" BorderBrush="Black" BorderThickness="1"/>
+
+                </Grid>
+                <Border BorderBrush="Black" BorderThickness="1"/>
+                <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2"/>
+            </Grid>
+            <Grid Row="1" Background="White" VerticalAlignment="Center" Margin="15,0,15,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="32*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="6*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Width="50" Command="{Binding Path=SaveCommand}" Content="Save" Grid.Column="1"></Button>
+                <Button Width="50" Content="Cancel" Grid.Column="2"></Button>
+            </Grid>
+        </Grid>
+    </GroupBox>
+</UserControl>

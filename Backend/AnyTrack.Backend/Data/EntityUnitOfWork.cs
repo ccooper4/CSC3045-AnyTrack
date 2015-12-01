@@ -33,6 +33,9 @@ namespace AnyTrack.Backend.Data
             StoryEntitySet = base.Set<Story>();
             StoryRepository = new EntityRepository<Story>(StoryEntitySet);
 
+            SprintStoryEntitySet = base.Set<SprintStory>();
+            SprintStoryRepository = new EntityRepository<SprintStory>(SprintStoryEntitySet);
+
             SprintEntitySet = base.Set<Sprint>();
             SprintRepository = new EntityRepository<Sprint>(SprintEntitySet);
 
@@ -82,7 +85,12 @@ namespace AnyTrack.Backend.Data
         /// <summary>
         /// Gets the sprint repository controlled by this unit of work.
         /// </summary>
-        public IRepository<Sprint> SprintRepository { get; private set; } 
+        public IRepository<Sprint> SprintRepository { get; private set; }
+
+        /// <summary>
+        /// Gets the sprint repository controlled by this unit of work.
+        /// </summary>
+        public IRepository<SprintStory> SprintStoryRepository { get; private set; } 
 
         #endregion
 
@@ -122,6 +130,11 @@ namespace AnyTrack.Backend.Data
         /// Gets or sets the Sprint Entity Set, as provided by Entity Framework.
         /// </summary>
         private DbSet<Sprint> SprintEntitySet { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Sprint Entity Set, as provided by Entity Framework.
+        /// </summary>
+        private DbSet<SprintStory> SprintStoryEntitySet { get; set; }
 
         #endregion 
 

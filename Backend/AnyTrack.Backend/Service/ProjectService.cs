@@ -377,7 +377,8 @@ namespace AnyTrack.Backend.Service
             var stories = unitOfWork.StoryRepository.Items.Where(s => s.Project.Id == projectId).Select(s => new ServiceStorySummary
             {
                 StoryId = s.Id,
-                Summary = s.Summary
+                Summary = s.Summary,
+                InSprint = s.InSprint
             });
             return stories.ToList();
         }

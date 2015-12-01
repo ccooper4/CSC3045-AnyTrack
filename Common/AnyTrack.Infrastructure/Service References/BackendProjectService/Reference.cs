@@ -394,6 +394,9 @@ namespace AnyTrack.Infrastructure.BackendProjectService {
         private string IWantField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool InSprintField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid ProjectIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -450,6 +453,19 @@ namespace AnyTrack.Infrastructure.BackendProjectService {
                 if ((object.ReferenceEquals(this.IWantField, value) != true)) {
                     this.IWantField = value;
                     this.RaisePropertyChanged("IWant");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool InSprint {
+            get {
+                return this.InSprintField;
+            }
+            set {
+                if ((this.InSprintField.Equals(value) != true)) {
+                    this.InSprintField = value;
+                    this.RaisePropertyChanged("InSprint");
                 }
             }
         }
@@ -898,6 +914,9 @@ namespace AnyTrack.Infrastructure.BackendProjectService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> InSprintField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid ProjectIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -913,6 +932,19 @@ namespace AnyTrack.Infrastructure.BackendProjectService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<bool> InSprint {
+            get {
+                return this.InSprintField;
+            }
+            set {
+                if ((this.InSprintField.Equals(value) != true)) {
+                    this.InSprintField = value;
+                    this.RaisePropertyChanged("InSprint");
+                }
             }
         }
         

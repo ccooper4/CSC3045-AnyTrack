@@ -56,6 +56,7 @@
       <xs:element minOccurs="0" name="AsA" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ConditionsOfSatisfaction" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IWant" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InSprint" type="xs:boolean" />
       <xs:element minOccurs="0" name="ProjectId" type="ser:guid" />
       <xs:element minOccurs="0" name="SoThat" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StoryId" type="ser:guid" />
@@ -123,6 +124,7 @@
   <xs:element name="ArrayOfServiceStorySummary" nillable="true" type="tns:ArrayOfServiceStorySummary" />
   <xs:complexType name="ServiceStorySummary">
     <xs:sequence>
+      <xs:element minOccurs="0" name="InSprint" nillable="true" type="xs:boolean" />
       <xs:element minOccurs="0" name="ProjectId" type="ser:guid" />
       <xs:element minOccurs="0" name="StoryId" type="ser:guid" />
       <xs:element minOccurs="0" name="Summary" nillable="true" type="xs:string" />

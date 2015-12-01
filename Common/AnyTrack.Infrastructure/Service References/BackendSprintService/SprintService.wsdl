@@ -38,6 +38,18 @@
   <wsdl:message name="ISprintService_GetSprintNames_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetSprintNamesResponse" />
   </wsdl:message>
+  <wsdl:message name="ISprintService_GetSprintStories_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSprintStories" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_GetSprintStories_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSprintStoriesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_ManageSprintBacklog_InputMessage">
+    <wsdl:part name="parameters" element="tns:ManageSprintBacklog" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_ManageSprintBacklog_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ManageSprintBacklogResponse" />
+  </wsdl:message>
   <wsdl:portType name="ISprintService">
     <wsdl:operation name="AddSprint">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/AddSprint" message="tns:ISprintService_AddSprint_InputMessage" />
@@ -58,6 +70,14 @@
     <wsdl:operation name="GetSprintNames">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetSprintNames" message="tns:ISprintService_GetSprintNames_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetSprintNamesResponse" message="tns:ISprintService_GetSprintNames_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSprintStories">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetSprintStories" message="tns:ISprintService_GetSprintStories_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetSprintStoriesResponse" message="tns:ISprintService_GetSprintStories_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ManageSprintBacklog">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/ManageSprintBacklog" message="tns:ISprintService_ManageSprintBacklog_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/ManageSprintBacklogResponse" message="tns:ISprintService_ManageSprintBacklog_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ISprintService" type="tns:ISprintService">
@@ -89,6 +109,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SaveUpdatedTaskHours">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/SaveUpdatedTaskHours" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetSprintNames">
       <soap:operation soapAction="http://tempuri.org/ISprintService/GetSprintNames" style="document" />
       <wsdl:input>
@@ -98,8 +127,17 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="SaveUpdatedTaskHours">
-      <soap:operation soapAction="http://tempuri.org/ISprintService/SaveUpdatedTaskHours" style="document" />
+    <wsdl:operation name="GetSprintStories">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/GetSprintStories" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ManageSprintBacklog">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/ManageSprintBacklog" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
