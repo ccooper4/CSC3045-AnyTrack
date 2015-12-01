@@ -68,6 +68,11 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         /// </summary>
         public event EventHandler<ServiceChatMessage> NotifyClientOfNewMessageFromServerEvent;
 
+        /// <summary>
+        /// Notifies the client that they should clear their recieved estimates
+        /// </summary>
+        public event EventHandler NotifyClientToClearStoryPointEstimateFromServerEvent;
+
         #endregion 
 
         #region Methods 

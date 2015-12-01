@@ -39,7 +39,7 @@
         </Button>
 
         <DockPanel Grid.Row="1">
-            <ListBox DockPanel.Dock="Top" Background="WhiteSmoke" HorizontalAlignment="Stretch" BorderThickness="2" BorderBrush="Black" ItemsSource="{Binding Sprints}" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox DockPanel.Dock="Top" Background="LightGray" HorizontalAlignment="Stretch" ItemsSource="{Binding Sprints}" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Width="auto" Margin="30px,30px,30px,30px" >
@@ -48,7 +48,7 @@
                                 <RowDefinition Height="9*"></RowDefinition>
                             </Grid.RowDefinitions>
 
-                            <controls:Tile Grid.Row="0" Title="{Binding Name}" Width="120" Height="120" CommandParameter="{Binding Path=.}" Command="{Binding Path=DataContext.ViewProjectOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"></controls:Tile>
+                            <controls:Tile Grid.Row="0" Title="{Binding Name}" Width="120" Height="120" CommandParameter="{Binding Path=.}" Command="{Binding Path=DataContext.OpenSprintOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"></controls:Tile>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

@@ -330,7 +330,7 @@ namespace AnyTrack.Sprints.Views
                 }
             });
 
-            ShowMetroDialog("Sprint Creation Cancellation", "Are you sure you want to cancel?", MessageDialogStyle.AffirmativeAndNegative, callbackAction); 
+            ShowMetroDialog("Sprint Creation Cancellation", "Are you sure you want to cancel? All entered data will be lost.", MessageDialogStyle.AffirmativeAndNegative, callbackAction); 
         }
 
         /// <summary>
@@ -370,7 +370,7 @@ namespace AnyTrack.Sprints.Views
             }
 
             SelectedDevelopers.Add(selectedDeveloper);
-            ShowMetroDialog("Developer Added", "{0} has been successfully as a developer for the sprint".Substitute(selectedDeveloper.FullName));
+            ShowMetroDialog("Developer Added", "{0} has been successfully added as a developer for the sprint".Substitute(selectedDeveloper.FullName));
             SelectDeveloperCommand.RaiseCanExecuteChanged();
         }
 

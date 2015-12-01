@@ -6,5 +6,9 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="ServiceTask" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+<<<<<<< HEAD
    <TypeInfo>AnyTrack.Infrastructure.BackendSprintService.ServiceTask, Service References.BackendSprintService.Reference.cs.dll, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
+=======
+   <TypeInfo>AnyTrack.Infrastructure.BackendSprintService.ServiceTask, Service References.BackendSprintService.Reference.cs, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
+>>>>>>> 665238e7f5f2f36b22e4126c4dec21c1ee8803ad
 </GenericObjectDataSource>

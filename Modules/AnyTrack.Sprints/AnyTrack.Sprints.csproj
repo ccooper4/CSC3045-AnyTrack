@@ -130,6 +130,10 @@
       <DependentUpon>SprintManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SprintManagerViewModel.cs" />
+    <Compile Include="Views\SprintOptions.xaml.cs">
+      <DependentUpon>SprintOptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SprintOptionsViewModel.cs" />
     <Compile Include="Views\SprintStory.xaml.cs">
       <DependentUpon>SprintStory.xaml</DependentUpon>
     </Compile>
@@ -180,6 +184,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\SprintOptions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SprintStory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -210,6 +218,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\enter_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\update_hours.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets" Condition="Exists('..\..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets')" />

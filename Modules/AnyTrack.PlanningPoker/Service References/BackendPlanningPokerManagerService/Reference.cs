@@ -335,9 +335,6 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ProjectNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool SessionAvailableField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -346,9 +343,6 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid SprintIdField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string SprintNameField;
-        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -356,19 +350,6 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
             }
             set {
                 this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ProjectName {
-            get {
-                return this.ProjectNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ProjectNameField, value) != true)) {
-                    this.ProjectNameField = value;
-                    this.RaisePropertyChanged("ProjectName");
-                }
             }
         }
         
@@ -407,19 +388,6 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
                 if ((this.SprintIdField.Equals(value) != true)) {
                     this.SprintIdField = value;
                     this.RaisePropertyChanged("SprintId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SprintName {
-            get {
-                return this.SprintNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SprintNameField, value) != true)) {
-                    this.SprintNameField = value;
-                    this.RaisePropertyChanged("SprintName");
                 }
             }
         }

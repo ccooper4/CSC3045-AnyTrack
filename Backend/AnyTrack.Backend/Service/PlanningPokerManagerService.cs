@@ -341,6 +341,25 @@ namespace AnyTrack.Backend.Service
             }
         }
 
+        /// <summary>
+        /// Method for telling clients to clear recieved estimates
+        /// </summary>
+        /// <param name="msg">the message object used to find the sessionID</param>
+        public void ClearRecievedEstimatesToClients(ServiceChatMessage msg)
+        {
+            var thisSession = msg.SessionID;
+
+            var currentUser = unitOfWork.UserRepository.Items.Single(u => u.EmailAddress == Thread.CurrentPrincipal.Identity.Name);
+
+            var connectedClientsList = availableClients.GetListOfClients();
+            var clientList = connectedClientsList[msg.SessionID];
+            
+            foreach (var client in clientList)
+            {
+                client.ClientChannel.NotifyClientToClearStoryPointEstimateFromServer();
+            }
+        }
+
         #endregion 
     }
 }
