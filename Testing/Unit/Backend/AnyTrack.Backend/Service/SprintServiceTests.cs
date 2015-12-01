@@ -633,6 +633,92 @@ namespace Unit.Backend.AnyTrack.Backend.Service
             unitOfWork.TaskHourEstimateRepository.Items.Count().Should().Be(2);
         }
 
+        [Test]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void SaveUpdatedHoursForNonExistingTaskReturnsError()
+        {
+            #region Test Data
+
+            List<Sprint> sprintList = new List<Sprint>()
+            {
+                new Sprint
+                {
+                    Id = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
+                    Name = "Sprint 1",
+                    StartDate = new DateTime(2015, 11, 26),
+                    EndDate = new DateTime(2015, 12, 3),
+                    Description = "Sprint"
+                }
+            };
+
+            List<Task> tasksList = new List<Task>();
+            
+
+            List<TaskHourEstimate> taskHourEstimateList = new List<TaskHourEstimate>
+            {
+               new TaskHourEstimate
+               {
+                   Estimate = 3
+               }
+            };
+            
+
+            List<ServiceTask> serviceTasksList = new List<ServiceTask>();
+            ServiceTask serviceTask = new ServiceTask()
+            {
+                TaskId = new Guid("00000011-5566-7788-99AA-BBCCDDEEFF00"),
+                ConditionsOfSatisfaction = "asdsad",
+                Description = "asd",
+                SprintStoryId = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00")
+            };
+
+            List<ServiceTaskHourEstimate> serviceTaskHourEstimateList = new List<ServiceTaskHourEstimate>
+            {
+               new ServiceTaskHourEstimate
+               {
+                   TaskId = serviceTask.TaskId,
+                   Estimate = 3,
+                   NewEstimate = 1
+               }
+            };
+
+            serviceTask.TaskHourEstimates = serviceTaskHourEstimateList;
+            serviceTasksList.Add(serviceTask);
+
+            List<Role> rolesList = new List<Role>()
+            {
+                new Role()
+                {
+                    Id = new Guid("00000000-5566-7788-99AA-BBCCDDEEFF00"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    RoleName = "Developer",
+                    SprintId = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
+                    User = userList[0]
+                },
+                new Role()
+                {
+                    Id = new Guid("00000000-5566-7788-99AA-BBCCDDEEFF00"),
+                    ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                    RoleName = "Developer",
+                    SprintId = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
+                    User = userList[1]
+                }
+            };
+
+            userList.FirstOrDefault().Roles = rolesList;
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(userList.FirstOrDefault());
+
+            #endregion
+            unitOfWork.UserRepository.Items.Returns(userList.AsQueryable());
+            unitOfWork.SprintRepository.Items.Returns(sprintList.AsQueryable());
+            unitOfWork.RoleRepository.Items.Returns(rolesList.AsQueryable());
+            unitOfWork.TaskRepository.Items.Returns(tasksList.AsQueryable());
+            unitOfWork.TaskHourEstimateRepository.Items.Returns(taskHourEstimateList.AsQueryable());
+
+            service.SaveUpdatedTaskHours(serviceTasksList);
+        }
+
         #endregion
 
         #region GetSprintNames(Guid? projectId, bool scrumMaster, bool developer) Tests
