@@ -303,8 +303,10 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                     ScrumMasters = new List<User>()
                     {
                         thisUser
-                    }
-                }
+                    },
+                    Name = "Test",
+                },
+                Name = "Test"
             };
 
             unitOfWork.SprintRepository.Items.Returns(new List<Sprint>() { sprint }.AsQueryable());
@@ -351,6 +353,8 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
             sentSessionInfo.SprintId.Should().Be(sprintId);
             sentSessionInfo.SessionAvailable.Should().BeTrue();
             sentSessionInfo.SessionId.Should().Be(newSession.SessionID);
+            sentSessionInfo.ProjectName.Should().Be(sprint.Project.Name);
+            sentSessionInfo.SprintName.Should().Be(sprint.Name);
             pendingUserSocket.Received().NotifyClientOfSession(sentSessionInfo);
 
             result.Should().Be(newSession.SessionID);

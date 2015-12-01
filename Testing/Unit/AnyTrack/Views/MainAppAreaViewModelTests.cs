@@ -94,7 +94,7 @@ namespace Unit.AnyTrack.Views.MainAppAreaViewModelTests
                 LastName = "Tester"
             };
 
-            Thread.CurrentPrincipal = new ServiceUserPrincipal(loginResult, "");
+            UserDetailsStore.LoggedInUserPrincipal = new ServiceUserPrincipal(loginResult, "");
 
             vm.FullName.Should().NotBeNull();
             vm.FullName.Should().Be(loginResult.FirstName + " " + loginResult.LastName);

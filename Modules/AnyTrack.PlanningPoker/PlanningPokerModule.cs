@@ -86,8 +86,10 @@ namespace AnyTrack.PlanningPoker
 
             // Views.
             container.RegisterType<object, StartPlanningPokerSession>("StartPlanningPokerSession");
+            container.RegisterType<object, SearchForPlanningPokerSession>("SearchForPlanningPokerSession");
 
             menuService.AddMenuItem(new MenuItem { Color = "Green", NavigationViewName = "StartPlanningPokerSession", Title = "SM Planning Poker" });
+            menuService.AddMenuItem(new MenuItem { Color = "Cyan", NavigationViewName = "SearchForPlanningPokerSession", Title = "Join Planning Poker" });
         }
 
         #endregion 

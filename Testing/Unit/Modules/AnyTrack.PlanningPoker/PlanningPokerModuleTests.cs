@@ -4,6 +4,7 @@ using AnyTrack.Infrastructure.Service.Model;
 using AnyTrack.PlanningPoker;
 using AnyTrack.PlanningPoker.BackendPlanningPokerManagerService;
 using AnyTrack.PlanningPoker.ServiceGateways;
+using AnyTrack.PlanningPoker.Views;
 using AnyTrack.Projects;
 using AnyTrack.Projects.Views;
 using Microsoft.Practices.Unity;
@@ -75,9 +76,16 @@ namespace Unit.Modules.AnyTrack.Projects.PlanningPokerModuleTests
         public void CallInitalize()
         {
             module.Initialize();
-            container.Received().RegisterType<IPlanningPokerManagerService, PlanningPokerManagerServiceClient>(Arg.Any<InjectionMember[]>());
 
-            container.Received().RegisterType<IPlanningPokerManagerServiceGateway, PlanningPokerManagerServiceGateway>();
+            container.Received().RegisterType<IPlanningPokerManagerService, PlanningPokerManagerServiceClient>(Arg.Any<LifetimeManager>(), Arg.Any<InjectionMember[]>());
+
+            container.Received().RegisterType<IPlanningPokerManagerServiceGateway, PlanningPokerManagerServiceGateway>(Arg.Any<LifetimeManager>());
+
+            container.Received().RegisterType<object, StartPlanningPokerSession>("StartPlanningPokerSession");
+            container.Received().RegisterType<object, SearchForPlanningPokerSession>("SearchForPlanningPokerSession");
+
+            menuService.Received(2);
+
         }
 
         #endregion 
