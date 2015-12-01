@@ -18,7 +18,7 @@ namespace AnyTrack.Backend.Service
     /// The implementation of the planning poker manager service. 
     /// </summary>
     [CreatePrincipal]
-    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Single)]
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Single, InstanceContextMode = InstanceContextMode.PerCall)]
     public class PlanningPokerManagerService : IPlanningPokerManagerService
     {
         #region Fields 
@@ -191,7 +191,9 @@ namespace AnyTrack.Backend.Service
                 {
                     SprintId = sprintId,
                     SessionAvailable = true,
-                    SessionId = newSession.SessionID
+                    SessionId = newSession.SessionID,
+                    SprintName = sprint.Name,
+                    ProjectName = sprint.Project.Name
                 };
                 foreach (var client in clientList)
                 {
@@ -336,6 +338,25 @@ namespace AnyTrack.Backend.Service
             foreach (var client in clientList)
             {
                 client.ClientChannel.SendMessageToClient(msg);
+            }
+        }
+
+        /// <summary>
+        /// Method for telling clients to clear recieved estimates
+        /// </summary>
+        /// <param name="msg">the message object used to find the sessionID</param>
+        public void ClearRecievedEstimatesToClients(ServiceChatMessage msg)
+        {
+            var thisSession = msg.SessionID;
+
+            var currentUser = unitOfWork.UserRepository.Items.Single(u => u.EmailAddress == Thread.CurrentPrincipal.Identity.Name);
+
+            var connectedClientsList = availableClients.GetListOfClients();
+            var clientList = connectedClientsList[msg.SessionID];
+            
+            foreach (var client in clientList)
+            {
+                client.ClientChannel.NotifyClientToClearStoryPointEstimateFromServer();
             }
         }
 

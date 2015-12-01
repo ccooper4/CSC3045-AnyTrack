@@ -116,6 +116,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Configuration" />
@@ -145,6 +147,7 @@
       <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MahApps.Metro.1.1.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -190,6 +193,7 @@
     <Compile Include="Modules\AnyTrack.Accounting\Views\RegistrationViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.PlanningPoker\PlanningPokerModuleTests.cs" />
     <Compile Include="Modules\AnyTrack.PlanningPoker\ServiceGateways\PlanningPokerManagerServiceGatewayTests.cs" />
+    <Compile Include="Modules\AnyTrack.PlanningPoker\Views\SearchForPlanningPokerSessionViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.PlanningPoker\Views\StartPlanningPokerSessionViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Converters\DateConverterTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Converters\BooleanToVisibilityConverterTests.cs" />

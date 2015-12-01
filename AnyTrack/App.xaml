@@ -9,7 +9,13 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Steel.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
-            </ResourceDictionary.MergedDictionaries>           
+            </ResourceDictionary.MergedDictionaries>
+            
+            <Brush x:Key="SidePanelGrey" >#222222</Brush>
+            <Brush x:Key="TopPanelGrey" >#212a33</Brush>
+            <Brush x:Key="Background">#28333e</Brush>
+            <Brush x:Key="ForegroundMount">#c1ccd7</Brush>
+
             <ControlTemplate x:Key="customButton">
                 <Grid x:Name="customButtonGrid">
                     <Border x:Name="border" BorderBrush="Gainsboro" BorderThickness="0">

@@ -82,7 +82,7 @@ namespace AnyTrack.Client.Views
         {
             get
             {
-                return Thread.CurrentPrincipal.GetFullName();
+                return UserDetailsStore.LoggedInUserPrincipal.GetFullName();
             }
         }
 

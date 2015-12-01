@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.ServiceGateways;
 using AnyTrack.PlanningPoker.ServiceGateways;
+using Prism.Commands;
 using Prism.Regions;
 using SprintModels = AnyTrack.Infrastructure.BackendSprintService;
 
@@ -38,12 +40,22 @@ namespace AnyTrack.PlanningPoker.Views
         /// <summary>
         /// The selected project id.
         /// </summary>
-        private Guid projectId;
+        private Guid? projectId;
 
         /// <summary>
         /// The selected sprint id.
         /// </summary>
-        private Guid sprintId; 
+        private Guid? sprintId;
+
+        /// <summary>
+        /// The selected Project.
+        /// </summary>
+        private ServiceProjectSummary selectedProject;
+
+        /// <summary>
+        /// The selected Sprint.
+        /// </summary>
+        private ServiceSprintSummary selectedSprint;
 
         #endregion 
 
@@ -78,11 +90,18 @@ namespace AnyTrack.PlanningPoker.Views
 
             this.Projects = new ObservableCollection<ServiceProjectSummary>();
             this.Sprints = new ObservableCollection<SprintModels.ServiceSprintSummary>();
+
+            this.StartPokerSession = new DelegateCommand(EstablishPokerSession);
         }
 
         #endregion 
 
         #region Properties 
+
+        /// <summary>
+        /// Gets or sets the command used to start the poker session.
+        /// </summary>
+        public DelegateCommand StartPokerSession { get; set; }
 
         /// <summary>
         /// Gets or sets the list of projects.
@@ -97,7 +116,8 @@ namespace AnyTrack.PlanningPoker.Views
         /// <summary>
         /// Gets or sets the project id.
         /// </summary>
-        public Guid ProjectId
+        [Required]
+        public Guid? ProjectId
         {
             get
             {
@@ -116,7 +136,8 @@ namespace AnyTrack.PlanningPoker.Views
         /// <summary>
         /// Gets or sets the sprint id.
         /// </summary>
-        public Guid SprintId
+        [Required]
+        public Guid? SprintId
         {
             get
             {
@@ -171,6 +192,30 @@ namespace AnyTrack.PlanningPoker.Views
             this.Projects.Clear();
             var results = projectServiceGateway.GetProjectNames(true, false, false);
             this.Projects.AddRange(results);
+
+            if (navigationContext.Parameters.ContainsKey("ProjectId"))
+            {
+                this.ProjectId = new Guid(navigationContext.Parameters["ProjectId"].ToString());
+            }
+
+            if (navigationContext.Parameters.ContainsKey("SprintId"))
+            {
+                this.SprintId = new Guid(navigationContext.Parameters["SprintId"].ToString());
+            }
+        }
+
+        /// <summary>
+        /// Starts the planning poker session for the current sprint and project id 
+        /// </summary>
+        private void EstablishPokerSession()
+        {
+            ValidateViewModelNow();
+
+            if (!this.HasErrors)
+            {
+                var sessonId = serviceGateway.StartNewPokerSession(sprintId.Value);
+                this.ShowMetroDialog("Sesion started", "The planning poker session has been started");
+            }
         }
 
         #endregion 

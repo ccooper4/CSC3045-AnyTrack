@@ -41,7 +41,7 @@
                 <PasswordBox Margin="10" HorizontalAlignment="Stretch" Controls:TextBoxHelper.Watermark="Password" Controls:TextBoxHelper.IsWaitingForData="True" ToolTip="Enter Password Here" controls:PasswordBoxBindingHelper.EnablePasswordBoxBinding="true"  controls:PasswordBoxBindingHelper.Binding="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <!-- Forgot Password -->
-                <Button HorizontalAlignment="Right" FontSize="9" Foreground="DarkBlue" Background="Transparent" Command="{Binding SignUpCommand}" BorderThickness="0" >
+                <Button HorizontalAlignment="Right" FontSize="9" FontWeight="Normal" Foreground="WhiteSmoke" Background="Transparent" Command="{Binding SignUpCommand}" BorderThickness="0" >
                     <Button.Content>
                         <TextBlock>
                             <Underline>Forgot Password?</Underline>

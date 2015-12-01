@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="AnyTrack.PlanningPoker.Views.ChatMessage"
+﻿<UserControl x:Class="AnyTrack.PlanningPoker.Views.ChatMessage" 
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -24,7 +24,7 @@
             <GroupBox.Header>
                 <TextBlock Foreground="White" Text="Stories" />
             </GroupBox.Header>
-            <TabControl ItemsSource="{Binding Stories}"/>
+            <TabControl ItemsSource="{Binding SprintStories}"/>
         </GroupBox>
 
         <GroupBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -45,18 +45,18 @@
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Button Grid.Column="0" Grid.Row="0">0</Button>
-                <Button Grid.Column="1" Grid.Row="0">1/2</Button>
-                <Button Grid.Column="2" Grid.Row="0">1</Button>
-                <Button Grid.Column="0" Grid.Row="1">2</Button>
-                <Button Grid.Column="1" Grid.Row="1">3</Button>
-                <Button Grid.Column="2" Grid.Row="1">5</Button>
-                <Button Grid.Column="0" Grid.Row="2">8</Button>
-                <Button Grid.Column="1" Grid.Row="2">13</Button>
-                <Button Grid.Column="2" Grid.Row="2">20</Button>
-                <Button Grid.Column="0" Grid.Row="3">40</Button>
-                <Button Grid.Column="1" Grid.Row="3">100</Button>
-                <Button Grid.Column="2" Grid.Row="3">?</Button>
+                <Button Grid.Column="0" Grid.Row="0" Command="{Binding SendEstimateCommand}" CommandParameter="0">0</Button>
+                <Button Grid.Column="1" Grid.Row="0" Command="{Binding SendEstimateCommand}" CommandParameter="0.5">1/2</Button>
+                <Button Grid.Column="2" Grid.Row="0" Command="{Binding SendEstimateCommand}" CommandParameter="1">1</Button>
+                <Button Grid.Column="0" Grid.Row="1" Command="{Binding SendEstimateCommand}" CommandParameter="2">2</Button>
+                <Button Grid.Column="1" Grid.Row="1" Command="{Binding SendEstimateCommand}" CommandParameter="3">3</Button>
+                <Button Grid.Column="2" Grid.Row="1" Command="{Binding SendEstimateCommand}" CommandParameter="5">5</Button>
+                <Button Grid.Column="0" Grid.Row="2" Command="{Binding SendEstimateCommand}" CommandParameter="8">8</Button>
+                <Button Grid.Column="1" Grid.Row="2" Command="{Binding SendEstimateCommand}" CommandParameter="13">13</Button>
+                <Button Grid.Column="2" Grid.Row="2" Command="{Binding SendEstimateCommand}" CommandParameter="20">20</Button>
+                <Button Grid.Column="0" Grid.Row="3" Command="{Binding SendEstimateCommand}" CommandParameter="40">40</Button>
+                <Button Grid.Column="1" Grid.Row="3" Command="{Binding SendEstimateCommand}" CommandParameter="100">100</Button>
+                <Button Grid.Column="2" Grid.Row="3" Command="{Binding SendEstimateCommand}" CommandParameter="?">?</Button>
                 
             </Grid>
         </GroupBox>
@@ -75,6 +75,13 @@
                 <GroupBox.Header>
                     <TextBlock Foreground="White" Text="Recieved" />
                 </GroupBox.Header>
+                <ListBox ItemsSource="{Binding RecievedEstimates}" Padding="0,0,0,0" Margin="0,10px,0,0" BorderThickness="0" VerticalAlignment="Stretch">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Path=.}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </GroupBox>
 
             <GroupBox Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">

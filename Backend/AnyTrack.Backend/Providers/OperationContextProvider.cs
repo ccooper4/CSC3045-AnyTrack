@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Security.Principal;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using AnyTrack.SharedUtilities.Extensions;
 
 namespace AnyTrack.Backend.Providers
@@ -27,6 +29,24 @@ namespace AnyTrack.Backend.Providers
                 if (OperationContext.Current != null)
                 {
                     return OperationContext.Current.IncomingMessageProperties;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the message headers from the current operation context.
+        /// </summary>
+        public virtual MessageHeaders IncomingMessageHeaders
+        {
+            get
+            {
+                if (OperationContext.Current != null)
+                {
+                    return OperationContext.Current.IncomingMessageHeaders;
                 }
                 else
                 {
@@ -81,6 +101,21 @@ namespace AnyTrack.Backend.Providers
             var serviceType = OperationContext.Current.Host.Description.ServiceType;
             var method = serviceType.GetMethod(methodName);
             return method;
+        }
+        
+        /// <summary>
+        /// Returns the user in the HTTP Context.
+        /// </summary>
+        /// <returns>An IPrincipal object.</returns>
+        public virtual IPrincipal GetHttpContextUser()
+        {
+            var context = HttpContext.Current;
+            if (context != null && context.User != null)
+            {
+                return context.User;
+            }
+
+            return null;
         }
 
         #endregion 

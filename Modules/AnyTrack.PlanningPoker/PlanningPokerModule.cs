@@ -4,6 +4,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.Service;
 using AnyTrack.Infrastructure.Service.Model;
 using AnyTrack.PlanningPoker.BackendPlanningPokerManagerService;
@@ -79,15 +80,17 @@ namespace AnyTrack.PlanningPoker
         public void Initialize()
         {
             // Service client. 
-            container.RegisterType<IPlanningPokerManagerService, PlanningPokerManagerServiceClient>(new InjectionConstructor(typeof(InstanceContext)));
+            container.RegisterType<IPlanningPokerManagerService, PlanningPokerManagerServiceClient>(new ContainerControlledLifetimeManager(), new InjectionConstructor(typeof(InstanceContext)));
 
             // Service gateways.
-            container.RegisterType<IPlanningPokerManagerServiceGateway, PlanningPokerManagerServiceGateway>();
+            container.RegisterType<IPlanningPokerManagerServiceGateway, PlanningPokerManagerServiceGateway>(new ContainerControlledLifetimeManager());
 
             // Views.
             container.RegisterType<object, StartPlanningPokerSession>("StartPlanningPokerSession");
+            container.RegisterType<object, SearchForPlanningPokerSession>("SearchForPlanningPokerSession");
 
-            menuService.AddMenuItem(new MenuItem { Color = "Green", NavigationViewName = "StartPlanningPokerSession", Title = "SM Planning Poker" });
+            menuService.AddMenuItem(new MenuItem { Color = "Green", NavigationViewName = "StartPlanningPokerSession", Title = "SM Planning Poker", Icon = NavigationIcons.CreatePoker });
+            menuService.AddMenuItem(new MenuItem { Color = "Cyan", NavigationViewName = "SearchForPlanningPokerSession", Title = "Join Planning Poker", Icon = NavigationIcons.JoinPoker });
         }
 
         #endregion 

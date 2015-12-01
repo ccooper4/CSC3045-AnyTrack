@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using MahApps.Metro.Controls;
 
 namespace AnyTrack.Infrastructure
@@ -38,6 +39,16 @@ namespace AnyTrack.Infrastructure
         /// Gets or sets a value indicating whether or not this flyout is a model flyout.
         /// </summary>
         bool IsModal { get; set; }
+
+        /// <summary>
+        /// Gets or sets the visibility of the close button
+        /// </summary>
+        Visibility CloseButtonVisibility { get; set; }
+       
+        /// <summary>
+        /// Gets or sets the visibility of the title
+        /// </summary>
+        Visibility TitleVisibility { get; set; }
 
         #endregion 
     }

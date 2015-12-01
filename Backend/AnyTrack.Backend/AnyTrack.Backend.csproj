@@ -94,6 +94,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -185,6 +186,10 @@
     <Compile Include="Migrations\201511301309017_Adding tasks and task hours.Designer.cs">
       <DependentUpon>201511301309017_Adding tasks and task hours.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511302342232_Adding combined migration for sprint team relationship and scrum master.cs" />
+    <Compile Include="Migrations\201511302342232_Adding combined migration for sprint team relationship and scrum master.Designer.cs">
+      <DependentUpon>201511302342232_Adding combined migration for sprint team relationship and scrum master.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201512010554304_Adding boolean to a story %28InSprint%29.cs" />
     <Compile Include="Migrations\201512010554304_Adding boolean to a story %28InSprint%29.Designer.cs">
       <DependentUpon>201512010554304_Adding boolean to a story %28InSprint%29.cs</DependentUpon>
@@ -272,6 +277,9 @@
     <EmbeddedResource Include="Migrations\201511301309017_Adding tasks and task hours.resx">
       <DependentUpon>201511301309017_Adding tasks and task hours.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511302342232_Adding combined migration for sprint team relationship and scrum master.resx">
+      <DependentUpon>201511302342232_Adding combined migration for sprint team relationship and scrum master.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512010554304_Adding boolean to a story %28InSprint%29.resx">
       <DependentUpon>201512010554304_Adding boolean to a story %28InSprint%29.cs</DependentUpon>
     </EmbeddedResource>
@@ -281,6 +289,9 @@
       <Project>{4d4353ae-46fa-4b2e-b41a-a430fe6a8640}</Project>
       <Name>AnyTrack.SharedUtilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets" Condition="Exists('..\..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets')" />

@@ -31,6 +31,7 @@ namespace AnyTrack.Backend.WebHost
             container.RegisterType<IAccountService, AccountService>();
             container.RegisterType<IProjectService, ProjectService>();
             container.RegisterType<ISprintService, SprintService>();
+            container.RegisterType<IPlanningPokerManagerService, PlanningPokerManagerService>();
 
             // AnyTrack.Backend.Providers
             container.RegisterType<FormsAuthenticationProvider, FormsAuthenticationProvider>();

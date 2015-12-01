@@ -769,6 +769,9 @@ namespace AnyTrack.Infrastructure.BackendProjectService {
         private string FullNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SkillsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid UserIdField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -816,6 +819,19 @@ namespace AnyTrack.Infrastructure.BackendProjectService {
                 if ((object.ReferenceEquals(this.FullNameField, value) != true)) {
                     this.FullNameField = value;
                     this.RaisePropertyChanged("FullName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Skills {
+            get {
+                return this.SkillsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SkillsField, value) != true)) {
+                    this.SkillsField = value;
+                    this.RaisePropertyChanged("Skills");
                 }
             }
         }

@@ -15,21 +15,17 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
 
-            <RowDefinition Height="40px"></RowDefinition>
-            <RowDefinition Height="40px"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Label Foreground="{StaticResource WhiteBrush}" FontSize="{StaticResource MenuFontSize}" FontFamily="{StaticResource HeaderFontFamily}" Grid.Row="0">Project Name:</Label>
-        <Label Foreground="{StaticResource WhiteBrush}" FontSize="{StaticResource MenuFontSize}" FontFamily="{StaticResource ContentFontFamily}" Grid.Row="1" Content="{Binding ProjectName}"></Label>
+        <Label Foreground="{StaticResource WhiteBrush}" FontSize="{StaticResource MenuFontSize}" FontFamily="{StaticResource HeaderFontFamily}" Grid.Row="0" Content="{Binding ProjectName}" ContentStringFormat="Project Name: {0}"/>
 
-        <Label Foreground="{StaticResource WhiteBrush}" FontSize="{StaticResource MenuFontSize}" FontFamily="{StaticResource HeaderFontFamily}" Grid.Row="2">Project Description:</Label>
-        <Label Foreground="{StaticResource WhiteBrush}" FontSize="{StaticResource MenuFontSize}" FontFamily="{StaticResource ContentFontFamily}" Grid.Row="3" Content="{Binding ProjectDescription}" Margin="0,0,0,30"></Label>
+        <Label Foreground="{StaticResource WhiteBrush}" FontSize="{StaticResource MenuFontSize}" FontFamily="{StaticResource HeaderFontFamily}" Grid.Row="1" Content="{Binding ProjectDescription}" ContentStringFormat="Project Description: {0}"/>
 
-        <Button Grid.Row="4" Style="{StaticResource MetroFlatButton}" Command="{Binding ViewBacklog}" CommandParameter="{Binding ProjectID}" Content="Product backlog" Width="Auto" Height="Auto"></Button>
-        <Button Grid.Row="5" Style="{StaticResource MetroFlatButton}" Content="Project settings" Width="Auto" Height="Auto"></Button>
+        <Button Grid.Row="2" Style="{StaticResource MetroFlatButton}" Command="{Binding ViewBacklog}" CommandParameter="{Binding ProjectID}" Content="Product Backlog" Width="Auto" Height="Auto" Margin="5,10,5,5"></Button>
+        <Button Grid.Row="3" Style="{StaticResource MetroFlatButton}" Content="Project Settings" Width="Auto" Height="Auto" Margin="5"></Button>
 
     </Grid>
 </UserControl>

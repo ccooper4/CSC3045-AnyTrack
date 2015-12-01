@@ -3,10 +3,225 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://www.codeplex.com/prism"
+             prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:local="clr-namespace:AnyTrack.Sprints.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
+             xmlns:converters="clr-namespace:AnyTrack.Sprints.Converters"
+             mc:Ignorable="d" >
+
+    <UserControl.Resources>
+        <converters:GuidToStringConverter x:Key="guidToStringConverter"></converters:GuidToStringConverter>
+    </UserControl.Resources>
+
+    <!-- Outer Grid -->
+    <Grid VerticalAlignment="Stretch" Width="600px" Background="WhiteSmoke" >
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!-- Flyout title -->
+        <Label Grid.Row="0" Background="CornflowerBlue" FontWeight="Bold" Foreground="White" Content="This is the story title" Height="Auto"></Label>
+
+        <!-- Content Grid -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                <ColumnDefinition Width="20*"></ColumnDefinition>
+                <ColumnDefinition Width="0.5*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <!-- Main Grid -->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <!-- Upper section -->
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="8*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.2*"></ColumnDefinition>
+                        <ColumnDefinition Width="4*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- User story -->
+                    <Grid Grid.Row="0" Grid.Column="0" Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Label Margin="0,5,5,5" HorizontalAlignment="Left" Content="Story" Grid.Row="0" FontSize="14"></Label>
+
+                        <!-- As a I want So that -->
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+
+
+                            <Label Grid.Column="0" Grid.Row="0" Content="As a" FontWeight="Bold" HorizontalAlignment="Right"/>
+                            <TextBox IsEnabled="False" Margin="5px" Grid.Column="1"  Grid.Row="0" TextWrapping="Wrap" Text="developer" Height="Auto"></TextBox>
+
+                            <Label Grid.Column="0" Grid.Row="1" Content="I want" FontWeight="Bold" HorizontalAlignment="Right"/>
+                            <TextBox IsEnabled="False" Margin="5px" Grid.Column="1"  Grid.Row="1" TextWrapping="Wrap" Text="to build some UI" Height="Auto"></TextBox>
+
+                            <Label Grid.Column="0" Grid.Row="2" Content="So that" FontWeight="Bold" HorizontalAlignment="Right"/>
+                            <TextBox IsEnabled="False" Margin="5px" Grid.Column="1"  Grid.Row="2" TextWrapping="Wrap" Text="I can test all of the functionality of the intended system" Height="Auto"></TextBox>
+                        </Grid>
+
+                        <!-- Conditions of satisfaction -->
+                        <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,10,0,10px">
+                            <Label Margin="0,5,5,5" HorizontalAlignment="Left" Content="Conditions of Satisfaction" FontSize="14"></Label>
+                            <TextBox IsEnabled="False" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Height="70px" Text="Lorem ipsum dolor sit amet, ius id corpora pertinacia, ei facer periculis cum, prima dolores voluptua an mea. Altera regione sapientem no nec, mea ad justo fuisset ullamcorper. Mea scripta dissentiunt cu. Albucius partiendo vituperatoribus ut usu. Ne sale dicta discere mei, semper inciderint vis ne, eum quis recusabo periculis et."></TextBox>
+                        </StackPanel>
+
+                    </Grid>
+
+
+                    <Grid Grid.Column="1" Grid.Row="0">
+                        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="20" Margin="3,10,2, 0" />
+                    </Grid>
+
+                    <!-- Status, points, created, updated -->
+                    <Grid Grid.Row="0" Grid.Column="2" Margin="10">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!-- Status -->
+                        <StackPanel Margin="5" Grid.Row="0">
+                            <Label HorizontalAlignment="Left" Content="Status" FontSize="14"></Label>
+                            <ComboBox ></ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Margin="5" Grid.Row="1" Orientation="Horizontal">
+                            <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Story Points" FontSize="14"></Label>
+                            <TextBox Margin="15,0,0,0" VerticalAlignment="Center" Height="Auto" Width="30" Text="5"></TextBox>
+                        </StackPanel>
+
+                        <StackPanel Margin="5" Grid.Row="2">
+                            <Label HorizontalAlignment="Left" Content="Created" FontSize="14"></Label>
+                            <TextBox IsEnabled="False"></TextBox>
+                        </StackPanel>
+
+                        <StackPanel Margin="5" Grid.Row="3">
+                            <Label HorizontalAlignment="Left" Content="Updated" FontSize="14"></Label>
+                            <TextBox IsEnabled="False"></TextBox>
+                        </StackPanel>
+
+                    </Grid>
+                </Grid>
+
+                <!-- Divider section -->
+                <Grid Grid.Row="1" Margin="0,25,0,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" BorderBrush="Black" BorderThickness="2" CornerRadius="20"  Height="2"  />
+
+                    <DockPanel Grid.Row="1">
+                        <Label Content="Tasks"  Margin="10,0,0,0" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                        <Button Margin="0,0,10,0" Background="Transparent" BorderThickness="0" Command="{Binding OpenTaskViewCommand}" HorizontalAlignment="Right">
+                            <Image Source="../Images/add_icon.png" Width="25px" Height="25px"></Image>
+                        </Button>
+                    </DockPanel>
+
+                    <Border Grid.Row="2" BorderBrush="Black" BorderThickness="2" CornerRadius="20" Height="2"  />
+                </Grid>
+
+                <!-- Task Section -->
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="17*"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <ListBox Grid.Column="1" Grid.Row="0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Border Grid.Column="1" Grid.Row="0" CornerRadius="0" BorderBrush="Gray" Background="Gray" BorderThickness="2" Margin="0,0,0,-5px">
+                        <Grid Background="#fcfcfc">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="10px"></ColumnDefinition>
+                                <ColumnDefinition Width ="1*"></ColumnDefinition>
+                                <ColumnDefinition Width ="50px"></ColumnDefinition>
+                                <ColumnDefinition Width ="50px"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Canvas Background="LightGray" Grid.Column="0"></Canvas>
+                            <Label Content="{Binding Summary}" Grid.Column="1" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="15px,0,0,0"></Label>
+
+                            <Button Grid.Column="2" Command="{Binding DataContext.EditStoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding Path=.}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Border CornerRadius="0" BorderBrush="Gray" BorderThickness="1" Margin="0,-1px,-1px,-1px">
+                                            <Image Margin="0,3px,0,3px" Source="../Images/edit_icon.png" Height="25px"></Image>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+
+                            <Button Grid.Column="3" Command="{Binding DataContext.DeleteStoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding StoryId, Converter={StaticResource guidToStringConverter}}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Border CornerRadius="0" BorderBrush="Gray" BorderThickness="1" Margin="0,-1px,-1px,-1px">
+                                            <Image Margin="0,3px,0,3px" Source="../Images/delete_icon.png" Height="25px"></Image>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+
+                        </Grid>
+                    </Border>
+
+
+                    <StackPanel Margin="0,50,0,20" Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" >
+                        <Button Margin="0,0,10,0" Command="{Binding SaveUpdateStoryCommand}" BorderThickness="0" Background="LightGray" Width="60px">Cancel</Button>
+                        <Button  Command="{Binding SaveUpdateStoryCommand}" BorderThickness="0" Background="LightGray" Width="60px">Save</Button>
+                    </StackPanel>
+
+                </Grid>
+
+            </Grid>
+        </Grid>
+
     </Grid>
 </UserControl>
