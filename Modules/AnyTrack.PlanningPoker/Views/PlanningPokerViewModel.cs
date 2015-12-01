@@ -24,6 +24,11 @@ namespace AnyTrack.PlanningPoker.Views
         #region Fields 
 
         /// <summary>
+        /// The project service gateway
+        /// </summary>
+        private readonly IProjectServiceGateway projectServiceGateway;
+
+        /// <summary>
         /// The planning poker service gateway.
         /// </summary>
         private readonly IPlanningPokerManagerServiceGateway serviceGateway;
@@ -46,6 +51,11 @@ namespace AnyTrack.PlanningPoker.Views
         /// </summary>
         public PlanningPokerViewModel()
         {
+            this.SprintStoriesCollection = new ObservableCollection<ServiceStorySummary>();
+
+            this.SprintStories.Clear();
+            this.SprintStories.AddRange<ServiceStorySummary>(projectServiceGateway.GetProjectStories(Guid.NewGuid()));
+
             serviceGateway.NotifyClientOfNewMessageFromServerEvent += ServiceGateway_NotifyClientOfNewMessageFromServerEvent;
             SendMessageCommand = new DelegateCommand(this.SubmitMessageToServer);
 
@@ -57,9 +67,14 @@ namespace AnyTrack.PlanningPoker.Views
         #endregion
 
         /// <summary>
+        /// Gets or sets the stories
+        /// </summary>
+        public ObservableCollection<ServiceStorySummary> SprintStoriesCollection { get; set; }
+
+        /// <summary>
         /// Gets or sets a list of sprint stories
         /// </summary>
-        public ObservableCollection<ServiceSprintStory> SprintStories { get; set; }
+        public ObservableCollection<ServiceStorySummary> SprintStories { get; set; }
 
         /// <summary>
         /// Gets or sets the history of messages.
