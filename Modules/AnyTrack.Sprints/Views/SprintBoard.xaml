@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://www.codeplex.com/prism"
+             prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:local="clr-namespace:AnyTrack.Sprints.Views"
              xmlns:converters="clr-namespace:AnyTrack.Sprints.Converters"
              mc:Ignorable="d"
@@ -64,13 +66,13 @@
                         <Label Grid.Column="3" Grid.Row="0" Content="In Test" HorizontalAlignment="Center"/>
                         <Label Grid.Column="4" Grid.Row="0" Content="Done" HorizontalAlignment="Center"/>
 
-                        <!-- The Not started stories -->
-                        <ListBox Grid.Column="0" Grid.Row="1">
-                            <ListBox.ItemTemplate >
-                                <DataTemplate>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
+<!--                        ~1~ The Not started stories @1@-->
+<!--                        <ListBox Grid.Column="0" Grid.Row="1">-->
+<!--                            <ListBox.ItemTemplate >-->
+<!--                                <DataTemplate>-->
+<!--                                </DataTemplate>-->
+<!--                            </ListBox.ItemTemplate>-->
+<!--                        </ListBox>-->
 
                         <Grid Grid.Row="1" Grid.Column="0">
                             <Grid Margin="10">
