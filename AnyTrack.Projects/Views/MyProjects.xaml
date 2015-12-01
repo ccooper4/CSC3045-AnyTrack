@@ -24,7 +24,7 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid Background="LightGray" >
+    <Grid Background="Transparent" >
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -36,7 +36,7 @@
         </Button>
 
         <DockPanel Grid.Row="1">
-            <ListBox DockPanel.Dock="Top" Background="LightGray" HorizontalAlignment="Left" BorderThickness="0" ItemsSource="{Binding Tiles}" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox DockPanel.Dock="Top" Background="Transparent" HorizontalAlignment="Left" BorderThickness="0" ItemsSource="{Binding Tiles}" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Width="Auto" Margin="30px,30px,30px,30px" >

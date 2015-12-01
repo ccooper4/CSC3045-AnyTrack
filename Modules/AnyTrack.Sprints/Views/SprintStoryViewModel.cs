@@ -68,8 +68,6 @@ namespace AnyTrack.Sprints.Views
             this.Theme = FlyoutTheme.Accent;
             this.Position = Position.Right;
             this.IsModal = true;
-            this.CloseButtonVisibility = Visibility.Hidden;
-            this.TitleVisibility = Visibility.Hidden;
 
             OpenTaskViewCommand = new DelegateCommand(this.OpenTaskView);
         }

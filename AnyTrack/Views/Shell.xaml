@@ -5,7 +5,7 @@
         xmlns:prism="http://www.codeplex.com/prism"
         xmlns:infrastructure="clr-namespace:AnyTrack.Infrastructure;assembly=AnyTrack.Infrastructure"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="AnyTrack" TitleCaps="False" Height="600" Width="1200" BorderBrush="Gray">
+        Title="AnyTrack" TitleCaps="False" Height="600" Width="1200" Background="{StaticResource Background}" BorderBrush="{StaticResource TopPanelGrey}">
 
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl x:Name="Flyouts">

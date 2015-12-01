@@ -83,7 +83,6 @@ namespace AnyTrack.Projects.Views
             this.IsModal = true;
             this.Position = Position.Right;
             this.Theme = FlyoutTheme.Accent;
-            this.CloseButtonVisibility = Visibility.Hidden;
 
             ViewBacklog = new DelegateCommand<string>(GoToBacklog);
         }

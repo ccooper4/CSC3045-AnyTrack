@@ -4,6 +4,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.Service;
 using AnyTrack.Infrastructure.Service.Model;
 using AnyTrack.PlanningPoker.BackendPlanningPokerManagerService;
@@ -88,8 +89,8 @@ namespace AnyTrack.PlanningPoker
             container.RegisterType<object, StartPlanningPokerSession>("StartPlanningPokerSession");
             container.RegisterType<object, SearchForPlanningPokerSession>("SearchForPlanningPokerSession");
 
-            menuService.AddMenuItem(new MenuItem { Color = "Green", NavigationViewName = "StartPlanningPokerSession", Title = "SM Planning Poker" });
-            menuService.AddMenuItem(new MenuItem { Color = "Cyan", NavigationViewName = "SearchForPlanningPokerSession", Title = "Join Planning Poker" });
+            menuService.AddMenuItem(new MenuItem { Color = "Green", NavigationViewName = "StartPlanningPokerSession", Title = "SM Planning Poker", Icon = NavigationIcons.CreatePoker });
+            menuService.AddMenuItem(new MenuItem { Color = "Cyan", NavigationViewName = "SearchForPlanningPokerSession", Title = "Join Planning Poker", Icon = NavigationIcons.JoinPoker });
         }
 
         #endregion 

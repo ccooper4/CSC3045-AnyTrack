@@ -65,8 +65,6 @@ namespace AnyTrack.Sprints.Views
             this.Theme = FlyoutTheme.Accent;
             this.Position = Position.Left;
             this.IsModal = true;
-            this.CloseButtonVisibility = Visibility.Hidden;
-            this.TitleVisibility = Visibility.Hidden;
         }
 
         #region Flyouts

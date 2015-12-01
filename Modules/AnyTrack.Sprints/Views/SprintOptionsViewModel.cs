@@ -99,7 +99,6 @@ namespace AnyTrack.Sprints.Views
             this.Position = Position.Right;
             this.Theme = FlyoutTheme.Accent;
             this.IsOpen = true;
-            this.CloseButtonVisibility = Visibility.Hidden;
         }
 
         #endregion 

@@ -114,7 +114,6 @@ namespace AnyTrack.Projects.Views
             this.Theme = FlyoutTheme.Accent;
             this.Position = Position.Right;
             this.IsModal = true;
-            this.CloseButtonVisibility = Visibility.Hidden;
 
             SaveUpdateStoryCommand = new DelegateCommand(this.SaveUpdateStory);           
         }
