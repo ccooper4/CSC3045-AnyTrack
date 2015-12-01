@@ -8,7 +8,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xml:lang="en-GB"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             mc:Ignorable="d" Width="auto" Height="auto" d:DesignWidth="570" d:DesignHeight="357">
+             mc:Ignorable="d">
 
     <GroupBox HorizontalAlignment="Stretch"  Margin="0, 0, 0, 0" >
         <GroupBox.Header>
@@ -20,9 +20,9 @@
                     <DataTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width ="Auto"></ColumnDefinition>
-                                <ColumnDefinition Width ="Auto"></ColumnDefinition>
-                                <ColumnDefinition Width ="*"></ColumnDefinition>
+                                <ColumnDefinition Width ="8*"></ColumnDefinition>
+                                <ColumnDefinition Width ="1*"></ColumnDefinition>
+                                <ColumnDefinition Width ="1*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0" Content="{Binding Description}" HorizontalAlignment="Left"></Label>
                             <Label Grid.Column="1" Content="{Binding TaskHourEstimates[0].Estimate}" controls:TextBoxHelper.ClearTextButton="True"/>
@@ -32,7 +32,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
             <Button Content="Update Tasks" HorizontalAlignment="Left" Margin="329,291,0,0" VerticalAlignment="Top" Width="81" Command="{Binding UpdateTaskHoursCommand}"/>
-            <Button Content="Cancel" HorizontalAlignment="Left" Margin="430,291,0,0" VerticalAlignment="Top" Width="75"/>
+            <Button Content="Cancel" HorizontalAlignment="Left" Margin="430,291,0,0" VerticalAlignment="Top" Width="75" Command="{Binding CancelCommand}" />
         </Grid>
     </GroupBox>
 </UserControl>

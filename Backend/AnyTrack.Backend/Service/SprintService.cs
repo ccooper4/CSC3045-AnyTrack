@@ -174,6 +174,12 @@ namespace AnyTrack.Backend.Service
         {
             var userEmail = Thread.CurrentPrincipal.Identity.Name;
             var user = MapEmailAddressToUser(userEmail);
+
+            if (user == null)
+            {
+                throw new ArgumentException("User does not exist");
+            }
+
             var tasks = unitOfWork.TaskRepository.Items.Where(t => t.SprintStory.Sprint.Id == sprintId).Where(u => u.Assignee == user).ToList();
 
             List<ServiceTask> serviceTasks = new List<ServiceTask>();
