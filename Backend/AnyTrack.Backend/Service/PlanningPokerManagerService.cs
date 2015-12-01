@@ -191,7 +191,9 @@ namespace AnyTrack.Backend.Service
                 {
                     SprintId = sprintId,
                     SessionAvailable = true,
-                    SessionId = newSession.SessionID
+                    SessionId = newSession.SessionID,
+                    SprintName = sprint.Name,
+                    ProjectName = sprint.Project.Name
                 };
                 foreach (var client in clientList)
                 {
