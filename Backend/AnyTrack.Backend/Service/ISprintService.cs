@@ -45,7 +45,7 @@ namespace AnyTrack.Backend.Service
         /// <param name="sprintId">The sprint id</param>
         /// <returns>Returns a list of tasks</returns>
         [OperationContract]
-        List<ServiceTask> GetAllTasksForSprintBurnDown(Guid sprintId);
+        List<ServiceTask> GetAllTasksForSprint(Guid sprintId);
 
         /// <summary>
         /// Method to save the update hours for tasks

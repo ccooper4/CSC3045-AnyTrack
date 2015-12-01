@@ -46,24 +46,27 @@ namespace AnyTrack.Sprints.Views
         #region Constructor
 
         /// <summary>
-        /// Constructs the burn down view model.
+        /// Burn down view model
         /// </summary>
-        public BurnDownViewModel()
+        /// <param name="serviceGateway"> the service gateway</param>
+        public BurnDownViewModel(ISprintServiceGateway serviceGateway)
         {
-            List<ServiceTask> list = new List<ServiceTask>();
-            this.Title = "Sprint Burndown Chart";
-            if (serviceGateway != null)
+            if (serviceGateway == null)
             {
-                list = serviceGateway.GetAllTasksForSprint(sprintID);
-                foreach (var item in list)
+                throw new ArgumentNullException("serviceGateway");
+            }
+
+            this.serviceGateway = serviceGateway;
+            this.Title = "Sprint Burndown Chart";
+            this.points = new ObservableCollection<DataPoint>();
+
+            List<ServiceTask> litsOfAllTasks = serviceGateway.GetAllTasksForSprint(sprintID);
+
+            foreach (var item in litsOfAllTasks)
+            {
+                foreach (var taskHour in item.TaskHourEstimates)
                 {
-                    foreach (var taskHour in item.TaskHourEstimates)
-                    {
-                        this.Points = new ObservableCollection<DataPoint>
-                    {
-                        new DataPoint(DateTimeAxis.ToDouble(taskHour.Created), taskHour.Estimate)
-                    };
-                    }
+                    this.Points.Add(new DataPoint(DateTimeAxis.ToDouble(taskHour.Created), taskHour.Estimate));
                 }
             }
         }

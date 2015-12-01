@@ -223,7 +223,7 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         /// <param name="sprintId">The sprint id</param>
         /// <returns>A list of tasks</returns>
-        public List<ServiceTask> GetAllTasksForSprintBurnDown(Guid sprintId)
+        public List<ServiceTask> GetAllTasksForSprint(Guid sprintId)
         {
             var tasks = unitOfWork.TaskRepository.Items.Where(t => t.SprintStory.Sprint.Id == sprintId).ToList();
 

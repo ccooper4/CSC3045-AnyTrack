@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.ServiceGateways;
@@ -85,7 +86,17 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// The flyout theme field.
         /// </summary>
-        private FlyoutTheme theme; 
+        private FlyoutTheme theme;
+
+        /// <summary>
+        /// The close button visibility field.
+        /// </summary>
+        private Visibility closeButtonVisibility;
+
+        /// <summary>
+        /// The close button visibility field.
+        /// </summary>
+        private Visibility titleVisibility;
 
         #endregion
 
@@ -103,7 +114,8 @@ namespace AnyTrack.Projects.Views
             this.Theme = FlyoutTheme.Accent;
             this.Position = Position.Right;
             this.IsModal = true;
-            
+            this.CloseButtonVisibility = Visibility.Hidden;
+
             SaveUpdateStoryCommand = new DelegateCommand(this.SaveUpdateStory);           
         }
 
@@ -272,6 +284,38 @@ namespace AnyTrack.Projects.Views
             set
             {
                 SetProperty(ref isModel, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the close button visibility
+        /// </summary>
+        public Visibility CloseButtonVisibility
+        {
+            get
+            {
+                return closeButtonVisibility;
+            }
+
+            set
+            {
+                SetProperty(ref closeButtonVisibility, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the title visibility
+        /// </summary>
+        public Visibility TitleVisibility
+        {
+            get
+            {
+                return titleVisibility;
+            }
+
+            set
+            {
+                SetProperty(ref titleVisibility, value);
             }
         }
 

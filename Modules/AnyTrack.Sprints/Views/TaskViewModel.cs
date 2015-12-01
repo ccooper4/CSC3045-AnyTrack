@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.ServiceGateways;
 using MahApps.Metro.Controls;
@@ -42,6 +43,16 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         private FlyoutTheme theme;
 
+        /// <summary>
+        /// The close button visibility field.
+        /// </summary>
+        private Visibility closeButtonVisibility;
+
+        /// <summary>
+        /// The close button visibility field.
+        /// </summary>
+        private Visibility titleVisibility;
+
         #endregion
 
         /// <summary>
@@ -54,6 +65,8 @@ namespace AnyTrack.Sprints.Views
             this.Theme = FlyoutTheme.Accent;
             this.Position = Position.Left;
             this.IsModal = true;
+            this.CloseButtonVisibility = Visibility.Hidden;
+            this.TitleVisibility = Visibility.Hidden;
         }
 
         #region Flyouts
@@ -143,6 +156,38 @@ namespace AnyTrack.Sprints.Views
             set
             {
                 SetProperty(ref isModel, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the close button visibility
+        /// </summary>
+        public Visibility CloseButtonVisibility
+        {
+            get
+            {
+                return closeButtonVisibility;
+            }
+
+            set
+            {
+                SetProperty(ref closeButtonVisibility, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the title visibility
+        /// </summary>
+        public Visibility TitleVisibility
+        {
+            get
+            {
+                return titleVisibility;
+            }
+
+            set
+            {
+                SetProperty(ref titleVisibility, value);
             }
         }
 
