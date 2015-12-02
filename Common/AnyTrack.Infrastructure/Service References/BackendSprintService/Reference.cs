@@ -1021,10 +1021,10 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory>> GetSprintStoriesAsync(System.Guid sprintId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/ManageSprintBacklog", ReplyAction="http://tempuri.org/ISprintService/ManageSprintBacklogResponse")]
-        void ManageSprintBacklog(System.Guid sprintId, System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> sprintStories);
+        void ManageSprintBacklog(System.Guid projectId, System.Guid sprintId, System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> sprintStories);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/ManageSprintBacklog", ReplyAction="http://tempuri.org/ISprintService/ManageSprintBacklogResponse")]
-        System.Threading.Tasks.Task ManageSprintBacklogAsync(System.Guid sprintId, System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> sprintStories);
+        System.Threading.Tasks.Task ManageSprintBacklogAsync(System.Guid projectId, System.Guid sprintId, System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> sprintStories);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1118,12 +1118,12 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
             return base.Channel.GetSprintStoriesAsync(sprintId);
         }
         
-        public void ManageSprintBacklog(System.Guid sprintId, System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> sprintStories) {
-            base.Channel.ManageSprintBacklog(sprintId, sprintStories);
+        public void ManageSprintBacklog(System.Guid projectId, System.Guid sprintId, System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> sprintStories) {
+            base.Channel.ManageSprintBacklog(projectId, sprintId, sprintStories);
         }
         
-        public System.Threading.Tasks.Task ManageSprintBacklogAsync(System.Guid sprintId, System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> sprintStories) {
-            return base.Channel.ManageSprintBacklogAsync(sprintId, sprintStories);
+        public System.Threading.Tasks.Task ManageSprintBacklogAsync(System.Guid projectId, System.Guid sprintId, System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> sprintStories) {
+            return base.Channel.ManageSprintBacklogAsync(projectId, sprintId, sprintStories);
         }
     }
 }

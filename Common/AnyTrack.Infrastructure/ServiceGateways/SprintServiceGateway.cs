@@ -111,11 +111,12 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         /// <summary>
         /// Manages the backlog of sprints
         /// </summary>
+        /// <param name="projectId">the id of the project</param>
         /// <param name="sprintId">The id of the sprint</param>
         /// <param name="updatedSprintBacklog">The updated backlog</param>
-        public void ManageSprintBacklog(Guid sprintId, List<ServiceSprintStory> updatedSprintBacklog)
+        public void ManageSprintBacklog(Guid projectId, Guid sprintId, List<ServiceSprintStory> updatedSprintBacklog)
         {
-            client.ManageSprintBacklog(sprintId, updatedSprintBacklog);
+            client.ManageSprintBacklog(projectId, sprintId, updatedSprintBacklog);
         }
 
         #endregion
