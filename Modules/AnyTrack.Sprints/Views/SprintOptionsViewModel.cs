@@ -112,6 +112,7 @@ namespace AnyTrack.Sprints.Views
 
             OpenProjectManager = new DelegateCommand(DisplayProjectManager);
             OpenPlanningPoker = new DelegateCommand(DisplayPlanningPoker);
+            OpenBurndown = new DelegateCommand(DisplayBurnDownCharts);
         }
 
         #endregion 
@@ -333,6 +334,11 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         public DelegateCommand OpenPlanningPoker { get; set; }
 
+        /// <summary>
+        /// Gets or sets a command to open the burndown charts for the sprint.
+        /// </summary>
+        public DelegateCommand OpenBurndown { get; set; }
+
         #endregion
 
         #region Methods
@@ -404,6 +410,17 @@ namespace AnyTrack.Sprints.Views
             navParams.Add("ProjectId", projectId);
             navParams.Add("SprintId", sprintId);
             NavigateToItem("StartPlanningPokerSession", navParams);
+        }
+
+        /// <summary>
+        /// Navigates to the display burndown charts.
+        /// </summary>
+        private void DisplayBurnDownCharts()
+        {
+            IsOpen = false;
+            var navParams = new NavigationParameters();
+            navParams.Add("sprintId", sprintId);
+            NavigateToItem("BurnDown", navParams);
         }
 
         #endregion

@@ -7,11 +7,32 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d" Width="1000" Height="500">
     <Grid>
-        <oxy:Plot Title="{Binding Title}">
-                <oxy:Plot.Series>
-                    <oxy:LineSeries ItemsSource="{Binding Points}"/>
-                    <oxy:LineSeries ItemsSource="{Binding Trend}"/>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <Label Margin="98,-7,702,4" Grid.ColumnSpan="2">Project:</Label>
+        <ComboBox Grid.Column="1" Grid.Row="0" IsEditable="True" BorderBrush="Gray" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200px" Height="26" ItemsSource="{Binding Projects}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}"/>
+        <Label Margin="228,-7,472,4" Grid.Column="1">Sprint:</Label>
+        <ComboBox Grid.Column="1" Grid.Row="0" IsEditable="True" BorderBrush="Gray" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200px" Height="26" ItemsSource="{Binding Sprints}" DisplayMemberPath="Name" SelectedValuePath="SprintId" SelectedValue="{Binding SprintId}" Margin="230,15,0,15"/>
+        <oxy:PlotView Grid.Column="1" Grid.Row="1" Controller="{Binding customController}"/>
+        <oxy:Plot Grid.Column="1" Grid.Row="1" Title="{Binding Title}" Margin="0,0,0,0">
+            <oxy:Plot.Axes>
+                <oxy:DateTimeAxis Name="DateTimeAxis" Position="Bottom" MajorGridlineColor="#40FFFFFF" TicklineColor="Red" StringFormat="dd/MM/yy" IntervalType="Days" IntervalLength="40"/>
+            </oxy:Plot.Axes>
+            <oxy:Plot.Series>
+                <oxy:LineSeries ItemsSource="{Binding Points}"
+                Color="CadetBlue" 
+                MarkerFill="SteelBlue" 
+                MarkerType="Circle"/>
             </oxy:Plot.Series>
-            </oxy:Plot>
-        </Grid>
+        </oxy:Plot>
+    </Grid>
 </UserControl>

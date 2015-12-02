@@ -231,7 +231,7 @@ namespace AnyTrack.Backend.Service
             foreach (var dataTask in tasks)
             {
                 var remainingTaskHours =
-                    unitOfWork.TaskHourEstimateRepository.Items.Where(t => t.Id == dataTask.Id).ToList();
+                    unitOfWork.TaskHourEstimateRepository.Items.Where(t => t.Task.Id == dataTask.Id).ToList();
 
                 List<ServiceTaskHourEstimate> serviceRemainingTaskHours = new List<ServiceTaskHourEstimate>();
                 foreach (var dataRemainingTaskHours in remainingTaskHours)
@@ -239,7 +239,8 @@ namespace AnyTrack.Backend.Service
                     ServiceTaskHourEstimate serviceTaskHourEstimate = new ServiceTaskHourEstimate()
                     {
                         Estimate = dataRemainingTaskHours.Estimate,
-                        TaskId = dataTask.Id    
+                        TaskId = dataTask.Id,
+                        Created = dataRemainingTaskHours.Created
                     };
                     serviceRemainingTaskHours.Add(serviceTaskHourEstimate);
                 }

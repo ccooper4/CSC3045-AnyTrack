@@ -2,29 +2,41 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using AnyTrack.Infrastructure;
-using AnyTrack.Infrastructure.BackendSprintService;
+using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.ServiceGateways;
 using OxyPlot;
 using OxyPlot.Axes;
+using Prism.Regions;
+using SprintModels = AnyTrack.Infrastructure.BackendSprintService;
 
 namespace AnyTrack.Sprints.Views
 {
     /// <summary>
     /// The burn down view model.
     /// </summary>
-    public class BurnDownViewModel : ValidatedBindableBase
+    public class BurnDownViewModel : ValidatedBindableBase, IRegionMemberLifetime, INavigationAware
     {
         #region Fields 
 
         /// <summary>
         /// The sprint service gateway
         /// </summary>
-        private readonly ISprintServiceGateway serviceGateway;
+        private readonly ISprintServiceGateway sprintServiceGateway;
 
         /// <summary>
-        /// The sprintID.
+        /// The project service gateway.
         /// </summary>
-        private Guid sprintID;
+        private readonly IProjectServiceGateway projectServiceGateway;
+
+        /// <summary>
+        /// The selected project id.
+        /// </summary>
+        private Guid? projectId;
+
+        /// <summary>
+        /// The selected sprint id.
+        /// </summary>
+        private Guid? sprintID;
 
         /// <summary>
         /// The title.
@@ -41,38 +53,46 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         private ObservableCollection<DataPoint> trend;
 
-        #endregion 
+        #endregion Fields
 
         #region Constructor
 
         /// <summary>
-        /// Burn down view model
+        /// Gets a value indicating whether or not the service gateway exists
         /// </summary>
-        /// <param name="serviceGateway"> the service gateway</param>
-        public BurnDownViewModel(ISprintServiceGateway serviceGateway)
+        /// <param name="projectServiceGateway"> the service gateway for projects</param>
+        /// <param name="sprintServiceGateway"> the service gateway for sprint</param>
+        public BurnDownViewModel(IProjectServiceGateway projectServiceGateway, ISprintServiceGateway sprintServiceGateway)
         {
-            if (serviceGateway == null)
+            if (projectServiceGateway == null)
             {
-                throw new ArgumentNullException("serviceGateway");
+                throw new ArgumentNullException("projectServiceGateway");
             }
 
-            this.serviceGateway = serviceGateway;
-            this.Title = "Sprint Burndown Chart";
-            this.points = new ObservableCollection<DataPoint>();
-
-            List<ServiceTask> litsOfAllTasks = serviceGateway.GetAllTasksForSprint(sprintID);
-
-            foreach (var item in litsOfAllTasks)
+            if (sprintServiceGateway == null)
             {
-                foreach (var taskHour in item.TaskHourEstimates)
-                {
-                    this.Points.Add(new DataPoint(DateTimeAxis.ToDouble(taskHour.Created), taskHour.Estimate));
-                }
+                throw new ArgumentNullException("sprintServiceGateway");
             }
+
+            this.projectServiceGateway = projectServiceGateway;
+            this.sprintServiceGateway = sprintServiceGateway;
+            this.Sprints = new ObservableCollection<SprintModels.ServiceSprintSummary>();
+            this.Points = new ObservableCollection<DataPoint>();
         }
         #endregion
 
         #region Properties 
+
+        /// <summary>
+        /// Gets a value indicating whether the view can be reused
+        /// </summary>
+        public bool KeepAlive
+        {
+            get
+            {
+                return false;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the title.
@@ -105,6 +125,11 @@ namespace AnyTrack.Sprints.Views
                 SetProperty(ref points, value);
             }
         }
+        
+        /// <summary>
+        /// Gets or sets a list of sprints
+        /// </summary>
+        public ObservableCollection<SprintModels.ServiceSprintSummary> Sprints { get; set; }
 
         /// <summary>
         /// Gets or sets the trend line.
@@ -123,9 +148,33 @@ namespace AnyTrack.Sprints.Views
         }
 
         /// <summary>
+        /// Gets or sets the list of projects.
+        /// </summary>
+        public ObservableCollection<ServiceProjectSummary> Projects { get; set; }
+
+        /// <summary>
+        /// Gets or sets the projectID
+        /// </summary>
+        public Guid? ProjectId
+        {
+            get
+            {
+                return projectId;
+            }
+
+            set
+            {
+                SetProperty(ref projectId, value);
+                this.Sprints.Clear();
+                var sprints = sprintServiceGateway.GetSprintNames(value, true, false);
+                Sprints.AddRange(sprints);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the sprintID
         /// </summary>
-        public Guid SprintID
+        public Guid? SprintID
         {
             get
             {
@@ -137,6 +186,55 @@ namespace AnyTrack.Sprints.Views
                 SetProperty(ref sprintID, value);
             }
         }
-        #endregion
+
+        #endregion Properties
+
+        #region Methods
+        /// <summary>
+        /// Handles the On Navigated To event.
+        /// </summary>
+        /// <param name="navigationContext">The navigation context</param>
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            this.Projects.Clear();
+            var results = projectServiceGateway.GetProjectNames(true, false, false);
+            this.Projects.AddRange(results);
+
+            var customController = new PlotController();
+            customController.UnbindMouseWheel();
+            customController.BindMouseWheel(OxyModifierKeys.Shift, PlotCommands.ZoomWheel);
+
+            if (navigationContext.Parameters.ContainsKey("sprintId"))
+            {
+                sprintID = (Guid)navigationContext.Parameters["sprintId"];
+                List<SprintModels.ServiceTask> listOfAllTasks = sprintServiceGateway.GetAllTasksForSprint(sprintID.Value);
+                foreach (var item in listOfAllTasks)
+                {
+                    foreach (var taskHour in item.TaskHourEstimates)
+                    {
+                        this.Points.Add(new DataPoint(DateTimeAxis.ToDouble(taskHour.Created), taskHour.Estimate));
+                    }
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Handles the Is Navigation Target event
+        /// </summary>
+        /// <param name="navigationContext">The navigation context</param>
+        /// <returns>Returns false as this is not a target</returns>
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Handles the On Navigated From event
+        /// </summary>
+        /// <param name="navigationContext">The navigation context</param>
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+        }
+        #endregion Methods
     }
 }
