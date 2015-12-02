@@ -196,14 +196,6 @@ namespace AnyTrack.Sprints.Views
         /// <param name="navigationContext">The navigation context</param>
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-           //// this.Projects.Clear();
-           //// var results = projectServiceGateway.GetProjectNames(true, false, false);
-           //// this.Projects.AddRange(results);
-
-            var customController = new PlotController();
-            customController.UnbindMouseWheel();
-            customController.BindMouseWheel(OxyModifierKeys.Shift, PlotCommands.ZoomWheel);
-
             if (navigationContext.Parameters.ContainsKey("sprintId"))
             {
                 sprintID = (Guid)navigationContext.Parameters["sprintId"];

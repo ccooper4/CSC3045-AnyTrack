@@ -22,7 +22,6 @@
         <ComboBox Grid.Column="1" Grid.Row="0" IsEditable="True" BorderBrush="Gray" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200px" Height="26" ItemsSource="{Binding Projects}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}"/>
         <Label Margin="228,-7,472,4" Grid.Column="1">Sprint:</Label>
         <ComboBox Grid.Column="1" Grid.Row="0" IsEditable="True" BorderBrush="Gray" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200px" Height="26" ItemsSource="{Binding Sprints}" DisplayMemberPath="Name" SelectedValuePath="SprintId" SelectedValue="{Binding SprintId}" Margin="230,15,0,15"/>
-        <oxy:PlotView Grid.Column="1" Grid.Row="1" Controller="{Binding customController}"/>
         <oxy:Plot Grid.Column="1" Grid.Row="1" Title="{Binding Title}" Margin="0,0,0,0">
             <oxy:Plot.Axes>
                 <oxy:DateTimeAxis Name="DateTimeAxis" Position="Bottom" MajorGridlineColor="#40FFFFFF" TicklineColor="Red" StringFormat="dd/MM/yy" IntervalType="Days" IntervalLength="40"/>
