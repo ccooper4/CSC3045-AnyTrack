@@ -560,14 +560,14 @@ namespace AnyTrack.Backend.Service
                 }
 
                 var dataStory = project.Stories.SingleOrDefault(s => s.Id == story.Story.Id);
-
                 if (dataStory == null)
                 {
                     throw new NullReferenceException("dataStory");
                 }
 
                 dataStory.InSprint = false;
-
+                unitOfWork.Commit();
+                                
                 var sprintStory = unitOfWork.SprintStoryRepository.Items.Single(s => s.Story.Id == story.Story.Id);
                 unitOfWork.SprintStoryRepository.Delete(sprintStory);
             }

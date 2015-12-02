@@ -13,7 +13,7 @@
              mc:Ignorable="d" Width="1000" Height="364.328">
 
     <UserControl.Resources>
-        <converter:BooleanToInvisibilityConverter x:Key="booleanToVisibility"/>
+        <BooleanToVisibilityConverter x:Key="booleanToVisibility"/>
         <converter:DateConverter x:Key="dateConverter"/>
     </UserControl.Resources>
 
