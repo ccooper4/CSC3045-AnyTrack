@@ -4,6 +4,7 @@
   <xs:import schemaLocation="http://localhost:5789/PlanningPokerManagerService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:complexType name="ServicePlanningPokerSession">
     <xs:sequence>
+      <xs:element minOccurs="0" name="ActiveStory" type="ser:guid" />
       <xs:element minOccurs="0" name="HostID" type="ser:guid" />
       <xs:element minOccurs="0" name="SessionID" type="ser:guid" />
       <xs:element minOccurs="0" name="SprintID" type="ser:guid" />
@@ -29,12 +30,20 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="ClientChannel" nillable="true" type="xs:anyType" />
       <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Estimate" nillable="true" type="tns:ServicePlanningPokerEstimate" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UserID" type="ser:guid" />
       <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UserRoles" nillable="true" type="q1:ArrayOfstring" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ServicePlanningPokerUser" nillable="true" type="tns:ServicePlanningPokerUser" />
+  <xs:complexType name="ServicePlanningPokerEstimate">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Estimate" type="xs:double" />
+      <xs:element minOccurs="0" name="SessionID" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServicePlanningPokerEstimate" nillable="true" type="tns:ServicePlanningPokerEstimate" />
   <xs:complexType name="ServiceChatMessage">
     <xs:sequence>
       <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
