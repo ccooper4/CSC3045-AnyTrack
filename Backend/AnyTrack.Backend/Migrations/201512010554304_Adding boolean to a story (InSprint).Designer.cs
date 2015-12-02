@@ -7,13 +7,13 @@ namespace AnyTrack.Backend.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Addingcombinedmigrationforsprintteamrelationshipandscrummaster : IMigrationMetadata
+    public sealed partial class AddingbooleantoastoryInSprint : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Addingcombinedmigrationforsprintteamrelationshipandscrummaster));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddingbooleantoastoryInSprint));
         
         string IMigrationMetadata.Id
         {
-            get { return "201511302342232_Adding combined migration for sprint team relationship and scrum master"; }
+            get { return "201512010554304_Adding boolean to a story (InSprint)"; }
         }
         
         string IMigrationMetadata.Source

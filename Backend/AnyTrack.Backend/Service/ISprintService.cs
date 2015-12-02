@@ -71,5 +71,21 @@ namespace AnyTrack.Backend.Service
         /// <returns>A summary list of this user's sprints.</returns>
         [OperationContract]
         List<ServiceSprintSummary> GetSprintNames(Guid? projectId, bool scrumMaster, bool developer);
+
+        /// <summary>
+        /// Gets all the stories associated with a sprint
+        /// </summary>
+        /// <param name="sprintId">Sprint id to retrieve sprints from</param>
+        /// <returns>List of sprint stories</returns>
+        [OperationContract]
+        List<ServiceSprintStory> GetSprintStories(Guid sprintId);
+
+        /// <summary>
+        /// Manages the sprint backlog
+        /// </summary>
+        /// <param name="sprintId">Sprint id of sprint</param>
+        /// <param name="sprintStories">List of sprint stories</param>
+        [OperationContract]
+        void ManageSprintBacklog(Guid sprintId, List<ServiceSprintStory> sprintStories);
     }
 }

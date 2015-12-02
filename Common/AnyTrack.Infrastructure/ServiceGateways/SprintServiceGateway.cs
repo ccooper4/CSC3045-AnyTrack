@@ -98,6 +98,26 @@ namespace AnyTrack.Infrastructure.ServiceGateways
             return client.GetSprintNames(projectId, scrumMaster, developer);
         }
 
+        /// <summary>
+        /// Method to get the stories for a sprint
+        /// </summary>
+        /// <param name="sprintId">The id of the sprint</param>
+        /// <returns>A list of sprint stories</returns>
+        public List<ServiceSprintStory> GetSprintStories(Guid sprintId)
+        {
+            return new List<ServiceSprintStory>(client.GetSprintStories(sprintId));
+        }
+
+        /// <summary>
+        /// Manages the backlog of sprints
+        /// </summary>
+        /// <param name="sprintId">The id of the sprint</param>
+        /// <param name="updatedSprintBacklog">The updated backlog</param>
+        public void ManageSprintBacklog(Guid sprintId, List<ServiceSprintStory> updatedSprintBacklog)
+        {
+            client.ManageSprintBacklog(sprintId, updatedSprintBacklog);
+        }
+
         #endregion
     }
 }

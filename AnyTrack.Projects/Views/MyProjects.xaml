@@ -31,22 +31,22 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="0" Margin="0,30px,30px,0" HorizontalAlignment="Right" Background="Transparent" BorderThickness="0" VerticalAlignment="Center" Height="Auto" Width="Auto" Command="{Binding CreateProjectCommand}">
-            <Image Source="../Images/add_icon.png" Width="25px" Height="25px"></Image>
+        <Button Grid.Row="0" Margin="0, 20px,30px,0" HorizontalAlignment="Right" Background="Transparent" BorderThickness="0" VerticalAlignment="Center" Height="Auto" Width="Auto" Command="{Binding CreateProjectCommand}">
+            <Image Source="../Images/add_icon_white.png" Width="25px" Height="25px"></Image>
         </Button>
 
         <DockPanel Grid.Row="1">
             <ListBox DockPanel.Dock="Top" Background="Transparent" HorizontalAlignment="Left" BorderThickness="0" ItemsSource="{Binding Tiles}" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid Width="Auto" Margin="30px,30px,30px,30px" >
+                        <Grid Width="Auto" Margin="20" >
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"></RowDefinition>
-                                <RowDefinition Height="9*"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
                             </Grid.RowDefinitions>
 
-                            <Label HorizontalAlignment="Left" Grid.Row="0" Content="{Binding Name}" ></Label>
-                            <controls:Tile Grid.Row="1" Width="200" Height="120" CommandParameter="{Binding Path=.}" Command="{Binding Path=DataContext.ViewProjectOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"></controls:Tile>
+                            <Label Margin="10" HorizontalAlignment="Left" Grid.Row="0" FontSize="16" Foreground="WhiteSmoke" Content="{Binding Name}" ></Label>
+                            <controls:Tile Grid.Row="1" Width="230" Height="150" CommandParameter="{Binding Path=.}" Command="{Binding Path=DataContext.ViewProjectOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"></controls:Tile>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

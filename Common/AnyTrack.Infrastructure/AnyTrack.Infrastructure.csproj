@@ -194,6 +194,9 @@
     </None>
     <None Include="Service References\BackendSprintService\AnyTrack.Infrastructure.BackendSprintService.ServiceSprint.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
+    </None> 
+   <None Include="Service References\BackendSprintService\AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BackendSprintService\AnyTrack.Infrastructure.BackendSprintService.ServiceSprintSummary.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -202,6 +205,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BackendSprintService\SprintService.wsdl" />
+    <None Include="Service References\BackendSprintService\SprintService.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\BackendSprintService\SprintService1.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -209,9 +215,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\BackendSprintService\SprintService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BackendSprintService\SprintService4.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

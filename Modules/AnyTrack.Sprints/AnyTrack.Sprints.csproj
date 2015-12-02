@@ -122,6 +122,10 @@
     <Compile Include="Views\CustomControls\LabelledTextBox.xaml.cs">
       <DependentUpon>LabelledTextBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ManageSprintBacklog.xaml.cs">
+      <DependentUpon>ManageSprintBacklog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManageSprintBacklogViewModel.cs" />
     <Compile Include="Views\SprintBoard.xaml.cs">
       <DependentUpon>SprintBoard.xaml</DependentUpon>
     </Compile>
@@ -173,6 +177,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CustomControls\LabelledTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ManageSprintBacklog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -34,7 +34,7 @@
                 <!-- User button -->
                 <WrapPanel Grid.Column="1" HorizontalAlignment="Right">
                 <Label Content="{Binding FullName}" Foreground="LightGray" VerticalAlignment="Center"></Label>
-                    <Button Background="Transparent" BorderThickness="0" Command="{Binding OpenTaskViewCommand}" HorizontalAlignment="Right">
+                <Button Background="Transparent" BorderThickness="0" Command="{Binding LogoutUserCommand}" HorizontalAlignment="Right">
                         <Image Source="../Images/user.png"  Width="25px" Height="25px"></Image>
                     </Button>
                 </WrapPanel>
