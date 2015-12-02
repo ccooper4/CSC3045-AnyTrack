@@ -39,5 +39,12 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         [OperationContract]
         void NotifyClientToClearStoryPointEstimateFromServer();
+
+        /// <summary>
+        /// Method to show estimates to clients
+        /// </summary>
+        /// <param name="sessionId">The sessionId</param>
+        [OperationContract]
+        void ShowEstimatesToClients(Guid sessionId);
     }    
 }

@@ -164,6 +164,15 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Reveals the estimates to the clients
+        /// </summary>
+        /// <param name="sessionId">The session id</param>
+        public void ShowEstimatesToClients(Guid sessionId)
+        {
+            NotifyClientOfSessionEvent(this, new ServiceSessionChangeInfo());
+        }
+
         #endregion
 
         #endregion

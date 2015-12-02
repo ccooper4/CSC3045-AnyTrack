@@ -362,6 +362,27 @@ namespace AnyTrack.Backend.Service
             }
         }
 
+        /// <summary>
+        /// Method for showing estimates to clients
+        /// </summary>
+        /// <param name="sessionId">The current session</param>
+        public void ShowEstimatesToClients(Guid sessionId)
+        {
+            var thisSession = sessionId;
+
+            var sessions = activeSessions.GetListOfSessions();
+
+            sessions[thisSession].State = ServicePlanningPokerSessionState.ShowingEstimates;
+
+            var connectedClientsList = availableClients.GetListOfClients();
+            var clientList = connectedClientsList[thisSession];
+
+            foreach (var client in clientList)
+            {
+                client.ClientChannel.NotifyClientToClearStoryPointEstimateFromServer();
+            }
+        }
+
         #endregion 
     }
 }

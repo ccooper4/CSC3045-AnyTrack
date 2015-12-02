@@ -17,6 +17,8 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="Pending" />
       <xs:enumeration value="Started" />
+      <xs:enumeration value="GettingEstimates" />
+      <xs:enumeration value="ShowingEstimates" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="ServicePlanningPokerSessionState" nillable="true" type="tns:ServicePlanningPokerSessionState" />

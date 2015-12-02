@@ -147,6 +147,12 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Started = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        GettingEstimates = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ShowingEstimates = 3,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -584,6 +590,9 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
             "mateFromServer", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/NotifyClientToClearStoryPointEsti" +
             "mateFromServerResponse")]
         void NotifyClientToClearStoryPointEstimateFromServer();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/ShowEstimatesToClients", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/ShowEstimatesToClientsResponse")]
+        void ShowEstimatesToClients(System.Guid sessionId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

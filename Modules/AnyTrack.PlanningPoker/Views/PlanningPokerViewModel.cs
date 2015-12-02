@@ -61,9 +61,9 @@ namespace AnyTrack.PlanningPoker.Views
 
             SendMessageCommand = new DelegateCommand(this.SubmitMessageToServer);
 
-            SendEstimateCommand = new DelegateCommand<string>(SubmitEstimateToServer);
+            SendEstimateCommand = new DelegateCommand<ServicePlanningPokerEstimate>(SubmitEstimateToServer);
 
-            SendFinalEstimateCommand = new DelegateCommand<double>(SubmitFinalEstimateToServer);
+            SendFinalEstimateCommand = new DelegateCommand<ServicePlanningPokerEstimate>(SubmitFinalEstimateToServer);
         }               
 
         #endregion
@@ -88,7 +88,7 @@ namespace AnyTrack.PlanningPoker.Views
         /// <summary>
         /// Gets or sets the history of recieved estimates for story points.
         /// </summary>
-        public ObservableCollection<string> RecievedEstimates { get; set; }
+        public ObservableCollection<ServicePlanningPokerEstimate> RecievedEstimates { get; set; }
 
         /// <summary>
         /// Gets the command used to send a message from a user. 
@@ -98,12 +98,12 @@ namespace AnyTrack.PlanningPoker.Views
         /// <summary>
         /// Gets the command used to send a an estimate from client to server. 
         /// </summary>
-        public DelegateCommand<string> SendEstimateCommand { get; private set; }
+        public DelegateCommand<ServicePlanningPokerEstimate> SendEstimateCommand { get; private set; }
 
         /// <summary>
         /// Gets the command used to send and set the final story point estimate. 
         /// </summary>
-        public DelegateCommand<double> SendFinalEstimateCommand { get; private set; }
+        public DelegateCommand<ServicePlanningPokerEstimate> SendFinalEstimateCommand { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether or not this view can be re-used.
@@ -191,7 +191,10 @@ namespace AnyTrack.PlanningPoker.Views
         /// <param name="msg">the message that has been sent, in the case the estimate</param>
         private void ServiceGateway_NotifyClientOfNewStoryPointEstimateFromServerEvent(object sender, ServiceChatMessage msg)
         {
-            this.RecievedEstimates.Add(msg.Name + " estimates " + msg.Message);
+            this.RecievedEstimates.Add(new ServicePlanningPokerEstimate
+            {
+                Estimate = Convert.ToDouble(msg.Message), SessionID = msg.SessionID
+            }); 
         }              
 
         /// <summary>
@@ -213,14 +216,14 @@ namespace AnyTrack.PlanningPoker.Views
         /// Submit a story estimate to the server to be relayed to other session members.
         /// </summary>
         /// <param name="estimate">estimate submited by clients</param>
-        private void SubmitEstimateToServer(string estimate)
+        private void SubmitEstimateToServer(ServicePlanningPokerEstimate estimate)
         {
             ServiceChatMessage msg = new ServiceChatMessage();
 
             ////Needs to be changed to the sessionID of planning poker session
-            msg.SessionID = Guid.NewGuid();
+            estimate.SessionID = Guid.NewGuid();
 
-            msg.Message = estimate;
+            msg.Message = estimate.ToString();
 
             this.ShowMetroDialog("Going to submit estimate", msg.Message, MessageDialogStyle.Affirmative);
 
@@ -231,7 +234,7 @@ namespace AnyTrack.PlanningPoker.Views
         /// Submit a story estimate to the server to be relayed to other session members.
         /// </summary>
         /// <param name="finalEstimate">Final estimate for storys to be stored</param>
-        private void SubmitFinalEstimateToServer(double finalEstimate)
+        private void SubmitFinalEstimateToServer(ServicePlanningPokerEstimate finalEstimate)
         {
             ServiceChatMessage msg = new ServiceChatMessage();
 
