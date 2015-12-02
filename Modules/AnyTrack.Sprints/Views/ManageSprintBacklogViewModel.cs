@@ -33,8 +33,10 @@ namespace AnyTrack.Sprints.Views
         private ObservableCollection<ServiceStorySummary> productBacklog;
         private ObservableCollection<ServiceSprintStory> sprintBacklog;
         private string summary;
-        private Guid projectId = new Guid("ae3084e3-1667-44ba-b217-30fcea37191a");
-        private Guid sprintId = new Guid("be3084e3-1667-44ba-b217-30fcea37191a");
+        private Guid projectId;
+        private Guid sprintId;
+        private DateTime sprintStartDate;
+        private bool sprintActive;
         #endregion
 
         #region Properties
@@ -125,6 +127,7 @@ namespace AnyTrack.Sprints.Views
         #endregion
 
         #region Constructor
+
         public ManageSprintBacklogViewModel(ISprintServiceGateway sprintGateway, IProjectServiceGateway projectGateway)
         {
             projectService = projectGateway;
@@ -139,10 +142,6 @@ namespace AnyTrack.Sprints.Views
                 throw new ArgumentNullException("sprintService");
             }
 
-            SprintBacklog = new ObservableCollection<ServiceSprintStory>(sprintService.GetSprintStories(sprintId));
-            ProductBacklog = new ObservableCollection<ServiceStorySummary>(projectService.GetProjectStories(projectId));
-            UpdateLogs();
-
             AddToSprintCommand = new DelegateCommand(AddToSprint);
             RemoveFromSprintCommand = new DelegateCommand(RemoveFromSprint);
             AddAllToSprintCommand = new DelegateCommand(AddAllToSprint);
@@ -151,24 +150,37 @@ namespace AnyTrack.Sprints.Views
 
             SelectedProductStoryIndex = -1;
             SelectedSprintIndex = -1;
+
+            ////sprintStartDate = sprintGateway.GetSprint(sprintId).StartDate;
+            /// sprintActive = sprintStartDate < DateTime.Today
         }
+
         #endregion
+
 
         #region Methods
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            ///throw new NotImplementedException();
+            if (navigationContext.Parameters.ContainsKey("ProjectId"))
+            {
+                projectId = (Guid)navigationContext.Parameters["ProjectId"];
+                ProductBacklog = new ObservableCollection<ServiceStorySummary>(projectService.GetProjectStories(projectId));
+            }
+            if (navigationContext.Parameters.ContainsKey("SprintId"))
+            {
+                sprintId = (Guid)navigationContext.Parameters["SprintId"];
+                SprintBacklog = new ObservableCollection<ServiceSprintStory>(sprintService.GetSprintStories(sprintId));
+                UpdateLogs();
+            }
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
-            ///throw new NotImplementedException();
             return false;
         }
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            ///throw new NotImplementedException();
         }
 
         private void AddToSprint()
@@ -220,7 +232,7 @@ namespace AnyTrack.Sprints.Views
 
         private void Save()
         {
-            sprintService.ManageSprintBacklog(sprintId, new List<ServiceSprintStory>(sprintBacklog));
+            sprintService.ManageSprintBacklog(projectId, sprintId, new List<ServiceSprintStory>(sprintBacklog));
         }
 
         private ServiceStorySummary MapSprintStoryToProductStory(ServiceSprintStory sprintStory)

@@ -12,7 +12,7 @@ namespace AnyTrack.Projects.Converters
     /// <summary>
     /// Provides a class to convert between the Visibility enum and a boolean flag.
     /// </summary>
-    public class BooleanToVisibilityConverter : IValueConverter
+    public class BooleanToInvisibilityConverter : IValueConverter
     {
         /// <summary>
         /// Converts the object from the view model to the view format.
@@ -27,11 +27,11 @@ namespace AnyTrack.Projects.Converters
             bool val = (bool)value;
             if (!val)
             {
-                return Visibility.Collapsed;
+                return Visibility.Visible;
             }
             else
             {
-                return Visibility.Visible;
+                return Visibility.Collapsed;
             }
         }
 
@@ -49,11 +49,11 @@ namespace AnyTrack.Projects.Converters
 
             if (visibility == Visibility.Visible)
             {
-                return true; 
+                return false; 
             }
             else
             {
-                return false; 
+                return true; 
             }
         }
     }

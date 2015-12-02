@@ -487,9 +487,10 @@ namespace AnyTrack.Backend.Service
         /// <summary>
         /// All stories in the backlog right now
         /// </summary>
+        /// <param name="projectId">The project id</param>
         /// <param name="sprintId">The sprint id</param>
         /// <param name="sprintStories">The Sprint stories</param>
-        public void ManageSprintBacklog(Guid sprintId, List<ServiceSprintStory> sprintStories)
+        public void ManageSprintBacklog(Guid projectId, Guid sprintId, List<ServiceSprintStory> sprintStories)
         {
             if (sprintId == null)
             {
@@ -545,14 +546,28 @@ namespace AnyTrack.Backend.Service
                 ////Then we need to remove this from the repo
                 if (!newSprintIds.Contains(story.Story.Id))
                 {
-                    var productBacklogStory = unitOfWork.StoryRepository.Items.Single(s => s.Id == story.Story.Id);
-                    productBacklogStory.InSprint = false;
                     removeStories.Add(story);
                 }
             }
 
             foreach (var story in removeStories)
             {
+                var project = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Id == projectId);
+
+                if (project == null)
+                {
+                    throw new NullReferenceException("project");
+                }
+
+                var dataStory = project.Stories.SingleOrDefault(s => s.Id == story.Story.Id);
+
+                if (dataStory == null)
+                {
+                    throw new NullReferenceException("dataStory");
+                }
+
+                dataStory.InSprint = false;
+
                 var sprintStory = unitOfWork.SprintStoryRepository.Items.Single(s => s.Story.Id == story.Story.Id);
                 unitOfWork.SprintStoryRepository.Delete(sprintStory);
             }

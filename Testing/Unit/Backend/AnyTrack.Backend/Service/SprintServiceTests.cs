@@ -1228,7 +1228,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service
 
             service.AddSprint(projectList[0].Id, sprint);
             sprintList.First().Backlog.Count().Should().Be(1);
-            service.ManageSprintBacklog(sprint.SprintId, serviceSprintStory);
+            service.ManageSprintBacklog(projectId, sprint.SprintId, serviceSprintStory);
             sprintList.First().Backlog.Count().Should().Be(2);
         }
         #endregion
