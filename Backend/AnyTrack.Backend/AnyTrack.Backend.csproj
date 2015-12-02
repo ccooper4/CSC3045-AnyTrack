@@ -186,13 +186,9 @@
     <Compile Include="Migrations\201511301309017_Adding tasks and task hours.Designer.cs">
       <DependentUpon>201511301309017_Adding tasks and task hours.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201511302342232_Adding combined migration for sprint team relationship and scrum master.cs" />
-    <Compile Include="Migrations\201511302342232_Adding combined migration for sprint team relationship and scrum master.Designer.cs">
-      <DependentUpon>201511302342232_Adding combined migration for sprint team relationship and scrum master.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201512010554304_Adding boolean to a story %28InSprint%29.cs" />
-    <Compile Include="Migrations\201512010554304_Adding boolean to a story %28InSprint%29.Designer.cs">
-      <DependentUpon>201512010554304_Adding boolean to a story %28InSprint%29.cs</DependentUpon>
+    <Compile Include="Migrations\201512020048275_Adding migration to merge the last few after an issue.cs" />
+    <Compile Include="Migrations\201512020048275_Adding migration to merge the last few after an issue.Designer.cs">
+      <DependentUpon>201512020048275_Adding migration to merge the last few after an issue.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -278,11 +274,8 @@
     <EmbeddedResource Include="Migrations\201511301309017_Adding tasks and task hours.resx">
       <DependentUpon>201511301309017_Adding tasks and task hours.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511302342232_Adding combined migration for sprint team relationship and scrum master.resx">
-      <DependentUpon>201511302342232_Adding combined migration for sprint team relationship and scrum master.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512010554304_Adding boolean to a story %28InSprint%29.resx">
-      <DependentUpon>201512010554304_Adding boolean to a story %28InSprint%29.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201512020048275_Adding migration to merge the last few after an issue.resx">
+      <DependentUpon>201512020048275_Adding migration to merge the last few after an issue.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
