@@ -595,7 +595,9 @@ namespace AnyTrack.Backend.Service
                     user.Roles = new List<Role>();
                 }
 
-                if (!user.Roles.Contains(role))
+                var roles = user.Roles.Where(r => r.ProjectId == role.ProjectId && r.RoleName == role.RoleName && r.SprintId == role.SprintId).ToList();
+
+                if (roles.Count == 0)
                 {
                     user.Roles.Add(role);
                 }
@@ -638,13 +640,9 @@ namespace AnyTrack.Backend.Service
                     user.Roles = new List<Role>();
                 }
 
-                var roleCheck =
-                    unitOfWork.RoleRepository.Items.SingleOrDefault(
-                        r =>
-                            r.RoleName == role.RoleName && r.ProjectId == role.ProjectId &&
-                            r.User.EmailAddress == role.User.EmailAddress && r.SprintId == role.SprintId);
+                var roles = user.Roles.Where(r => r.ProjectId == role.ProjectId && r.RoleName == role.RoleName && r.SprintId == role.SprintId).ToList();
 
-                if (roleCheck == null)
+                if (roles.Count == 0)
                 {
                     user.Roles.Add(role);
                 }
