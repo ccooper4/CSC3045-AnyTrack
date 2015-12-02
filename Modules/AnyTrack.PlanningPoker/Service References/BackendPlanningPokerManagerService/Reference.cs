@@ -23,6 +23,9 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid ActiveStoryField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid HostIDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -44,6 +47,19 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid ActiveStory {
+            get {
+                return this.ActiveStoryField;
+            }
+            set {
+                if ((this.ActiveStoryField.Equals(value) != true)) {
+                    this.ActiveStoryField = value;
+                    this.RaisePropertyChanged("ActiveStory");
+                }
             }
         }
         
@@ -141,6 +157,7 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSession))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSessionState))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerUser[]))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerEstimate))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServiceChatMessage))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServiceSessionChangeInfo))]
     public partial class ServicePlanningPokerUser : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -153,6 +170,9 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string EmailAddressField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerEstimate EstimateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NameField;
@@ -200,6 +220,19 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerEstimate Estimate {
+            get {
+                return this.EstimateField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EstimateField, value) != true)) {
+                    this.EstimateField = value;
+                    this.RaisePropertyChanged("Estimate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Name {
             get {
                 return this.NameField;
@@ -234,6 +267,67 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
                 if ((object.ReferenceEquals(this.UserRolesField, value) != true)) {
                     this.UserRolesField = value;
                     this.RaisePropertyChanged("UserRoles");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServicePlanningPokerEstimate", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
+    [System.SerializableAttribute()]
+    public partial class ServicePlanningPokerEstimate : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double EstimateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid SessionIDField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double Estimate {
+            get {
+                return this.EstimateField;
+            }
+            set {
+                if ((this.EstimateField.Equals(value) != true)) {
+                    this.EstimateField = value;
+                    this.RaisePropertyChanged("Estimate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid SessionID {
+            get {
+                return this.SessionIDField;
+            }
+            set {
+                if ((this.SessionIDField.Equals(value) != true)) {
+                    this.SessionIDField = value;
+                    this.RaisePropertyChanged("SessionID");
                 }
             }
         }

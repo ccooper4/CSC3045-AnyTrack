@@ -28,6 +28,11 @@ namespace AnyTrack.Backend.Service.Model
         public string EmailAddress { get; set; }
 
         /// <summary>
+        /// Gets or sets the user's estimate
+        /// </summary>
+        public ServicePlanningPokerEstimate Estimate { get; set; }
+
+        /// <summary>
         /// Gets or sets the list of user roles for this user.
         /// </summary>
         public List<string> UserRoles { get; set; }

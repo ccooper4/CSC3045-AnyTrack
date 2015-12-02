@@ -22,6 +22,11 @@ namespace AnyTrack.Backend.Service.Model
         public Guid SprintID { get; set; }
 
         /// <summary>
+        /// Gets or sets the active story
+        /// </summary>
+        public Guid ActiveStory { get; set; }
+
+        /// <summary>
         /// Gets or sets the users.
         /// </summary>
         public List<ServicePlanningPokerUser> Users { get; set; }

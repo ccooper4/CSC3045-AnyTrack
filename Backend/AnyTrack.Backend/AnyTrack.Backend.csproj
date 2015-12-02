@@ -209,6 +209,7 @@
     <Compile Include="Service\IProjectService.cs" />
     <Compile Include="Service\ISprintService.cs" />
     <Compile Include="Service\Model\ServiceChatMessage.cs" />
+    <Compile Include="Service\Model\ServicePlanningPokerEstimate.cs" />
     <Compile Include="Service\Model\ServicePlanningPokerPendingUser.cs" />
     <Compile Include="Service\Model\ServicePlanningPokerSession.cs" />
     <Compile Include="Service\Model\ServicePlanningPokerSessionState.cs" />
