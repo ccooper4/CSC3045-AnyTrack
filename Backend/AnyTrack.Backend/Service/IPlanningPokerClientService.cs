@@ -41,10 +41,10 @@ namespace AnyTrack.Backend.Service
         void NotifyClientToClearStoryPointEstimateFromServer();
 
         /// <summary>
-        /// Method to show estimates to clients
+        /// Shows the clients the estimates 
         /// </summary>
-        /// <param name="sessionId">The sessionId</param>
+        /// /// <param name="sessionId">The session id</param>
         [OperationContract]
-        void ShowEstimatesToClients(Guid sessionId);
+        void ShowEstimatesToClient(Guid sessionId);
     }    
 }

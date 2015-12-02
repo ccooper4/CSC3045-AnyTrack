@@ -51,5 +51,12 @@ namespace AnyTrack.Backend.Service
         /// <param name="msg">The chatmessage object which is to be sent</param>
         [OperationContract(IsOneWay = true)]
         void SubmitMessageToServer(ServiceChatMessage msg);
+
+        /// <summary>
+        /// Method to submit estimate to server
+        /// </summary>
+        /// <param name="estimate">The estimate object</param>
+        [OperationContract(IsOneWay = true)]
+        void SubmitEstimateToServer(ServicePlanningPokerEstimate estimate);
     }        
 }

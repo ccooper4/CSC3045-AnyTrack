@@ -571,6 +571,12 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlanningPokerManagerService/SubmitMessageToServer")]
         System.Threading.Tasks.Task SubmitMessageToServerAsync(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServiceChatMessage msg);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlanningPokerManagerService/SubmitEstimateToServer")]
+        void SubmitEstimateToServer(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerEstimate estimate);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlanningPokerManagerService/SubmitEstimateToServer")]
+        System.Threading.Tasks.Task SubmitEstimateToServerAsync(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerEstimate estimate);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -591,8 +597,8 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
             "mateFromServerResponse")]
         void NotifyClientToClearStoryPointEstimateFromServer();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/ShowEstimatesToClients", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/ShowEstimatesToClientsResponse")]
-        void ShowEstimatesToClients(System.Guid sessionId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/ShowEstimatesToClient", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/ShowEstimatesToClientResponse")]
+        void ShowEstimatesToClient(System.Guid sessionId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -661,6 +667,14 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         
         public System.Threading.Tasks.Task SubmitMessageToServerAsync(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServiceChatMessage msg) {
             return base.Channel.SubmitMessageToServerAsync(msg);
+        }
+        
+        public void SubmitEstimateToServer(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerEstimate estimate) {
+            base.Channel.SubmitEstimateToServer(estimate);
+        }
+        
+        public System.Threading.Tasks.Task SubmitEstimateToServerAsync(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerEstimate estimate) {
+            return base.Channel.SubmitEstimateToServerAsync(estimate);
         }
     }
 }

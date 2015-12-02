@@ -341,6 +341,30 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
+        /// Method to send estimate to clients
+        /// </summary>
+        /// /// <param name="sessionId">The session id</param>
+        public void SubmitEstimateToClients(Guid sessionId)
+        {
+            var sessions = activeSessions.GetListOfSessions();
+
+            if (!sessions.ContainsKey(sessionId))
+            {
+                throw new ArgumentException("No session could be found", "sessionId");
+            }
+
+            sessions[sessionId].State = ServicePlanningPokerSessionState.ShowingEstimates;
+
+            var connectedClientsList = availableClients.GetListOfClients();
+            var clientList = connectedClientsList[sessionId];
+
+            foreach (var client in clientList)
+            {
+                client.ClientChannel.ShowEstimatesToClient(sessionId);
+            }
+        }
+
+        /// <summary>
         /// Method for sending a message
         /// </summary>
         /// <param name="msg">the message object to be sent</param>
@@ -374,27 +398,6 @@ namespace AnyTrack.Backend.Service
             var connectedClientsList = availableClients.GetListOfClients();
             var clientList = connectedClientsList[msg.SessionID];
             
-            foreach (var client in clientList)
-            {
-                client.ClientChannel.NotifyClientToClearStoryPointEstimateFromServer();
-            }
-        }
-
-        /// <summary>
-        /// Method for showing estimates to clients
-        /// </summary>
-        /// <param name="sessionId">The current session</param>
-        public void ShowEstimatesToClients(Guid sessionId)
-        {
-            var thisSession = sessionId;
-
-            var sessions = activeSessions.GetListOfSessions();
-
-            sessions[thisSession].State = ServicePlanningPokerSessionState.ShowingEstimates;
-
-            var connectedClientsList = availableClients.GetListOfClients();
-            var clientList = connectedClientsList[thisSession];
-
             foreach (var client in clientList)
             {
                 client.ClientChannel.NotifyClientToClearStoryPointEstimateFromServer();

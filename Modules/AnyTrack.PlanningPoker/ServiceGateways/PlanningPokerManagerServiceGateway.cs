@@ -168,7 +168,7 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         /// Reveals the estimates to the clients
         /// </summary>
         /// <param name="sessionId">The session id</param>
-        public void ShowEstimatesToClients(Guid sessionId)
+        public void ShowEstimatesToClient(Guid sessionId)
         {
             NotifyClientOfSessionEvent(this, new ServiceSessionChangeInfo());
         }
