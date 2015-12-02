@@ -7,13 +7,13 @@ namespace AnyTrack.Backend.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddingbooleantoastoryInSprint : IMigrationMetadata
+    public sealed partial class Addingmigrationtomergethelastfewafteranissue : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddingbooleantoastoryInSprint));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Addingmigrationtomergethelastfewafteranissue));
         
         string IMigrationMetadata.Id
         {
-            get { return "201512010554304_Adding boolean to a story (InSprint)"; }
+            get { return "201512020048275_Adding migration to merge the last few after an issue"; }
         }
         
         string IMigrationMetadata.Source
