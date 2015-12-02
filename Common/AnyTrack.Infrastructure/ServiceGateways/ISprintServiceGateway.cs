@@ -24,6 +24,13 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         void EditSprint(Guid sprintId, ServiceSprint updatedSprint);
 
         /// <summary>
+        /// Retrieves a specified sprint.
+        /// </summary>
+        /// <param name="sprintId">Id of the sprint</param>
+        /// <returns>The sprint</returns>
+        ServiceSprint GetSprint(Guid sprintId);
+
+        /// <summary>
         /// Gets all tasks for sprint
         /// </summary>
         /// <param name="sprintId">The sprint id</param>

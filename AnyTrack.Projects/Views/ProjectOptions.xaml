@@ -24,8 +24,8 @@
 
         <Label Foreground="{StaticResource WhiteBrush}" FontSize="{StaticResource MenuFontSize}" FontFamily="{StaticResource HeaderFontFamily}" Grid.Row="1" Content="{Binding ProjectDescription}" ContentStringFormat="Project Description: {0}"/>
 
-        <Button Grid.Row="2" Style="{StaticResource MetroFlatButton}" Command="{Binding ViewBacklog}" CommandParameter="{Binding ProjectID}" Content="Product Backlog" Width="Auto" Height="Auto" Margin="5,10,5,5"></Button>
-        <Button Grid.Row="3" Style="{StaticResource MetroFlatButton}" Content="Project Settings" Width="Auto" Height="Auto" Margin="5"></Button>
+        <Button Grid.Row="2" Style="{StaticResource MetroFlatButton}" Command="{Binding ViewBacklog}" Content="Product Backlog" Width="Auto" Height="Auto" Margin="5,10,5,5"></Button>
+        <Button Grid.Row="3" Style="{StaticResource MetroFlatButton}" Command="{Binding ViewEditProject}" Content="Edit Project" Width="Auto" Height="Auto" Margin="5"></Button>
 
     </Grid>
 </UserControl>

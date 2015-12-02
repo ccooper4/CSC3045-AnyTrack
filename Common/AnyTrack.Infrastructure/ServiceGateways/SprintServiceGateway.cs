@@ -68,6 +68,16 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         }
 
         /// <summary>
+        /// Retrieves a specified sprint.
+        /// </summary>
+        /// <param name="sprintId">Id of the sprint</param>
+        /// <returns>The sprint</returns>
+        public ServiceSprint GetSprint(Guid sprintId)
+         {
+             return client.GetSprint(sprintId);
+         }
+
+        /// <summary>
         /// Saves the updated task hours
         /// </summary>
         /// <param name="tasks">The list of tasks</param>

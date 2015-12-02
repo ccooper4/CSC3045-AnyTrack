@@ -968,6 +968,12 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/EditSprint", ReplyAction="http://tempuri.org/ISprintService/EditSprintResponse")]
         System.Threading.Tasks.Task EditSprintAsync(System.Guid sprintId, AnyTrack.Infrastructure.BackendSprintService.ServiceSprint updatedSprint);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetSprint", ReplyAction="http://tempuri.org/ISprintService/GetSprintResponse")]
+        AnyTrack.Infrastructure.BackendSprintService.ServiceSprint GetSprint(System.Guid sprintId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetSprint", ReplyAction="http://tempuri.org/ISprintService/GetSprintResponse")]
+        System.Threading.Tasks.Task<AnyTrack.Infrastructure.BackendSprintService.ServiceSprint> GetSprintAsync(System.Guid sprintId);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetAllTasksForSprintCurrentUser", ReplyAction="http://tempuri.org/ISprintService/GetAllTasksForSprintCurrentUserResponse")]
         System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask> GetAllTasksForSprintCurrentUser(System.Guid sprintId);
         
@@ -1034,6 +1040,14 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         
         public System.Threading.Tasks.Task EditSprintAsync(System.Guid sprintId, AnyTrack.Infrastructure.BackendSprintService.ServiceSprint updatedSprint) {
             return base.Channel.EditSprintAsync(sprintId, updatedSprint);
+        }
+        
+        public AnyTrack.Infrastructure.BackendSprintService.ServiceSprint GetSprint(System.Guid sprintId) {
+            return base.Channel.GetSprint(sprintId);
+        }
+        
+        public System.Threading.Tasks.Task<AnyTrack.Infrastructure.BackendSprintService.ServiceSprint> GetSprintAsync(System.Guid sprintId) {
+            return base.Channel.GetSprintAsync(sprintId);
         }
         
         public System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask> GetAllTasksForSprintCurrentUser(System.Guid sprintId) {

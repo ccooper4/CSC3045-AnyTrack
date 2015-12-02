@@ -112,6 +112,7 @@ namespace AnyTrack.Sprints.Views
 
             OpenProjectManager = new DelegateCommand(DisplayProjectManager);
             OpenPlanningPoker = new DelegateCommand(DisplayPlanningPoker);
+            OpenEditSprint = new DelegateCommand(DisplayEditSprint);
         }
 
         #endregion 
@@ -333,6 +334,11 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         public DelegateCommand OpenPlanningPoker { get; set; }
 
+        /// <summary>
+        /// Gets or sets a command to open edit sprint for a specified sprint.
+        /// </summary>
+        public DelegateCommand OpenEditSprint { get; set; }
+
         #endregion
 
         #region Methods
@@ -387,7 +393,7 @@ namespace AnyTrack.Sprints.Views
         {
             IsOpen = false;
             var navParams = new NavigationParameters();
-            navParams.Add("projectId", projectSummary);
+            navParams.Add("projectInfo", projectSummary);
             navParams.Add("openProjectOptions", "true");
             NavigateToItem("MyProjects", navParams);          
         }
@@ -404,6 +410,20 @@ namespace AnyTrack.Sprints.Views
             navParams.Add("ProjectId", projectId);
             navParams.Add("SprintId", sprintId);
             NavigateToItem("StartPlanningPokerSession", navParams);
+        }
+
+        /// <summary>
+        /// Navigates to CreateSprint in Edit Mode
+        /// </summary>
+        private void DisplayEditSprint()
+        {
+            IsOpen = false;
+
+            var navParams = new NavigationParameters();
+            navParams.Add("ProjectId", projectId);
+            navParams.Add("SprintId", sprintId);
+            navParams.Add("EditMode", "true");
+            NavigateToItem("CreateSprint", navParams);
         }
 
         #endregion

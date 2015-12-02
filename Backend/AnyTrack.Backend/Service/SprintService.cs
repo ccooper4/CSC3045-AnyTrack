@@ -132,7 +132,8 @@ namespace AnyTrack.Backend.Service
             dataSprint.StartDate = updatedSprint.StartDate;
             dataSprint.EndDate = updatedSprint.EndDate;
 
-            var dataProject = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Sprints.Any(s => s.Id == sprintId));
+            var dataProject =
+                unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Sprints.Any(s => s.Id == sprintId));
 
             if (dataProject == null)
             {
@@ -147,7 +148,7 @@ namespace AnyTrack.Backend.Service
                 {
                     teamMembersToRemove.Add(UnassignDeveloper(dataProject, dataSprint.Id, teamMember.EmailAddress));
                 }
-            }            
+            }
 
             foreach (var teamMemberEmailAddress in updatedSprint.TeamEmailAddresses)
             {
@@ -161,11 +162,68 @@ namespace AnyTrack.Backend.Service
             {
                 dataProject.Sprints.SingleOrDefault(s => s.Id == sprintId).Team.Remove(user);
             }
-           
+
             unitOfWork.Commit();
         }
 
         /// <summary>
+        /// Retrieves a specified sprint.
+        /// </summary>
+        /// <param name="sprintId">Id of the sprint</param>
+        /// <returns>The sprint</returns>
+        public ServiceSprint GetSprint(Guid sprintId)
+        {
+            if (sprintId == Guid.Empty)
+            {
+                throw new ArgumentNullException("sprintId");
+            }
+
+            var dataSprint = unitOfWork.SprintRepository.Items.SingleOrDefault(s => s.Id == sprintId);
+
+            ServiceSprint sprint = new ServiceSprint
+            {
+                SprintId = sprintId,
+                ProjectId = dataSprint.Project.Id,
+                Name = dataSprint.Name,
+                StartDate = dataSprint.StartDate,
+                EndDate = dataSprint.EndDate,
+                Description = dataSprint.Description,
+            };
+
+            if (dataSprint.Team != null)
+            {
+                foreach (var developer in dataSprint.Team)
+                {
+                    sprint.TeamEmailAddresses.Add(developer.EmailAddress);
+                }
+            }
+
+            if (dataSprint.Backlog != null)
+            {
+                foreach (var sprintStory in dataSprint.Backlog)
+                {
+                    sprint.Backlog.Add(new ServiceSprintStory
+                    {
+                        SprintStoryId = sprintStory.Id,
+                        SprintId = dataSprint.Id,
+                        Story = new ServiceStory
+                        {
+                            StoryId = sprintStory.Story.Id,
+                            Summary = sprintStory.Story.Summary,
+                            ProjectId = dataSprint.Project.Id,
+                            ConditionsOfSatisfaction = sprintStory.Story.ConditionsOfSatisfaction,
+                            AsA = sprintStory.Story.AsA,
+                            IWant = sprintStory.Story.IWant,
+                            SoThat = sprintStory.Story.SoThat
+                        }
+                    });
+                }
+            }
+
+            return sprint;
+        }
+    
+    /// <summary>
         /// Gets all tasks for a sprint
         /// </summary>
         /// <param name="sprintId">The sprint id</param>
@@ -446,7 +504,13 @@ namespace AnyTrack.Backend.Service
                     user.Roles = new List<Role>();
                 }
 
-                if (!user.Roles.Contains(role))
+                var roleCheck =
+                    unitOfWork.RoleRepository.Items.SingleOrDefault(
+                        r =>
+                            r.RoleName == role.RoleName && r.ProjectId == role.ProjectId &&
+                            r.User.EmailAddress == role.User.EmailAddress && r.SprintId == role.SprintId);
+
+                if (roleCheck == null)
                 {
                     user.Roles.Add(role);
                 }
@@ -477,7 +541,7 @@ namespace AnyTrack.Backend.Service
                 throw new Exception("User does not exist");
             }
 
-            Role role = unitOfWork.RoleRepository.Items.SingleOrDefault(r => r.User == user && r.SprintId == sprintId);
+            Role role = unitOfWork.RoleRepository.Items.SingleOrDefault(r => r.User.EmailAddress == user.EmailAddress && (r.SprintId == sprintId) && r.RoleName == "Developer");
 
             if (role == null)
             {

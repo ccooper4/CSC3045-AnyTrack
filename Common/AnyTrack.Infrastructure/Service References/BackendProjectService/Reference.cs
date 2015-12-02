@@ -621,6 +621,9 @@ namespace AnyTrack.Infrastructure.BackendProjectService {
         private System.Nullable<System.DateTime> SprintEndingDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.Guid> SprintIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> SprintStartingDateField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -707,6 +710,19 @@ namespace AnyTrack.Infrastructure.BackendProjectService {
                 if ((this.SprintEndingDateField.Equals(value) != true)) {
                     this.SprintEndingDateField = value;
                     this.RaisePropertyChanged("SprintEndingDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.Guid> SprintId {
+            get {
+                return this.SprintIdField;
+            }
+            set {
+                if ((this.SprintIdField.Equals(value) != true)) {
+                    this.SprintIdField = value;
+                    this.RaisePropertyChanged("SprintId");
                 }
             }
         }

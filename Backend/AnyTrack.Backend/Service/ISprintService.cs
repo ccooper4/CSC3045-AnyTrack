@@ -24,12 +24,20 @@ namespace AnyTrack.Backend.Service
         void AddSprint(Guid projectId, ServiceSprint sprint);
 
         /// <summary>
-        /// Edits an exiting sprint.
+        /// Edits an existing sprint.
         /// </summary>
         /// <param name="sprintId">Id of the sprint to be edited</param>
         /// <param name="updatedSprint">ServiceSprint entity containing changes</param>
         [OperationContract]
         void EditSprint(Guid sprintId, ServiceSprint updatedSprint);
+
+        /// <summary>
+        /// Retrieves a specified sprint.
+        /// </summary>
+        /// <param name="sprintId">Id of the sprint</param>
+        /// <returns>The sprint</returns>
+        [OperationContract]
+        ServiceSprint GetSprint(Guid sprintId);
 
         /// <summary>
         /// Gets all task for a sprint for the current user

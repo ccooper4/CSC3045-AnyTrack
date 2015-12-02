@@ -28,38 +28,52 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetAllTasksForSprintCurrentUser">
+  <xs:element name="GetSprint">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sprintId" type="q5:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetAllTasksForSprintCurrentUserResponse">
+  <xs:element name="GetSprintResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetAllTasksForSprintCurrentUserResult" nillable="true" type="q6:ArrayOfServiceTask" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetSprintResult" nillable="true" type="q6:ServiceSprint" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetAllTasksForSprint">
+  <xs:element name="GetAllTasksForSprintCurrentUser">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sprintId" type="q7:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetAllTasksForSprintCurrentUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetAllTasksForSprintCurrentUserResult" nillable="true" type="q8:ArrayOfServiceTask" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllTasksForSprint">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sprintId" type="q9:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetAllTasksForSprintResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetAllTasksForSprintResult" nillable="true" type="q8:ArrayOfServiceTask" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetAllTasksForSprintResult" nillable="true" type="q10:ArrayOfServiceTask" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveUpdatedTaskHours">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="tasks" nillable="true" type="q9:ArrayOfServiceTask" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="tasks" nillable="true" type="q11:ArrayOfServiceTask" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -71,7 +85,7 @@
   <xs:element name="GetSprintNames">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="projectId" nillable="true" type="q10:guid" />
+        <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="projectId" nillable="true" type="q12:guid" />
         <xs:element minOccurs="0" name="scrumMaster" type="xs:boolean" />
         <xs:element minOccurs="0" name="developer" type="xs:boolean" />
       </xs:sequence>
@@ -80,7 +94,7 @@
   <xs:element name="GetSprintNamesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetSprintNamesResult" nillable="true" type="q11:ArrayOfServiceSprintSummary" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetSprintNamesResult" nillable="true" type="q13:ArrayOfServiceSprintSummary" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

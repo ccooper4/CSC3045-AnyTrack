@@ -20,6 +20,12 @@
   <wsdl:message name="ISprintService_EditSprint_OutputMessage">
     <wsdl:part name="parameters" element="tns:EditSprintResponse" />
   </wsdl:message>
+  <wsdl:message name="ISprintService_GetSprint_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSprint" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_GetSprint_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSprintResponse" />
+  </wsdl:message>
   <wsdl:message name="ISprintService_GetAllTasksForSprintCurrentUser_InputMessage">
     <wsdl:part name="parameters" element="tns:GetAllTasksForSprintCurrentUser" />
   </wsdl:message>
@@ -53,6 +59,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/EditSprint" message="tns:ISprintService_EditSprint_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/EditSprintResponse" message="tns:ISprintService_EditSprint_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetSprint">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetSprint" message="tns:ISprintService_GetSprint_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetSprintResponse" message="tns:ISprintService_GetSprint_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetAllTasksForSprintCurrentUser">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetAllTasksForSprintCurrentUser" message="tns:ISprintService_GetAllTasksForSprintCurrentUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetAllTasksForSprintCurrentUserResponse" message="tns:ISprintService_GetAllTasksForSprintCurrentUser_OutputMessage" />
@@ -83,6 +93,15 @@
     </wsdl:operation>
     <wsdl:operation name="EditSprint">
       <soap:operation soapAction="http://tempuri.org/ISprintService/EditSprint" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSprint">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/GetSprint" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
