@@ -323,6 +323,24 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
+        /// Method to submit estimate
+        /// </summary>
+        /// <param name="estimate">The estimate object which is to be sent</param>
+        public void SubmitEstimateToServer(ServicePlanningPokerEstimate estimate)
+        {
+            Guid sessionId = estimate.SessionID;
+            var currentUser = unitOfWork.UserRepository.Items.Single(u => u.EmailAddress == Thread.CurrentPrincipal.Identity.Name);
+            var sessions = activeSessions.GetListOfSessions();
+
+            if (!sessions.ContainsKey(sessionId))
+            {
+                throw new ArgumentException("No session could be found", "sessionId");
+            }
+
+            sessions[sessionId].Users.Find(x => x.UserID == currentUser.Id).Estimate = estimate;
+        }
+
+        /// <summary>
         /// Method for sending a message
         /// </summary>
         /// <param name="msg">the message object to be sent</param>
