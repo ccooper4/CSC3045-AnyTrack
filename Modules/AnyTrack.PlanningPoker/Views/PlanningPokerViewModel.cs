@@ -61,6 +61,8 @@ namespace AnyTrack.PlanningPoker.Views
 
             SendMessageCommand = new DelegateCommand(this.SubmitMessageToServer);
 
+            ShowEstimatesCommand = new DelegateCommand(ShowUserEstimates);
+
             SendEstimateCommand = new DelegateCommand<ServicePlanningPokerEstimate>(SubmitEstimateToServer);
 
             SendFinalEstimateCommand = new DelegateCommand<ServicePlanningPokerEstimate>(SubmitFinalEstimateToServer);
@@ -94,6 +96,11 @@ namespace AnyTrack.PlanningPoker.Views
         /// Gets the command used to send a message from a user. 
         /// </summary>
         public DelegateCommand SendMessageCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command used to send a message from a user. 
+        /// </summary>
+        public DelegateCommand ShowEstimatesCommand { get; private set; }
 
         /// <summary>
         /// Gets the command used to send a an estimate from client to server. 
@@ -210,6 +217,13 @@ namespace AnyTrack.PlanningPoker.Views
             msg.Message = messageToSend;
             
             serviceGateway.SubmitMessageToServer(msg);
+        }
+
+        /// <summary>
+        /// Shows the user estimates
+        /// </summary>
+        private void ShowUserEstimates()
+        {
         }
 
         /// <summary>

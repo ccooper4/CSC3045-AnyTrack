@@ -75,13 +75,7 @@
                 <GroupBox.Header>
                     <TextBlock Foreground="White" Text="Recieved" />
                 </GroupBox.Header>
-                <ListBox ItemsSource="{Binding RecievedEstimates}" Padding="0,0,0,0" Margin="0,10px,0,0" BorderThickness="0" VerticalAlignment="Stretch">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Label Content="{Binding Path=.}" />
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <Button Content="Show Estimates" HorizontalAlignment="Left" Margin="35,179,0,0" VerticalAlignment="Top" Width="108"/>
             </GroupBox>
 
             <GroupBox Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
