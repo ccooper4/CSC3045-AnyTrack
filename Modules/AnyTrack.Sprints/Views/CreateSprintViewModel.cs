@@ -323,6 +323,44 @@ namespace AnyTrack.Sprints.Views
             {
                 projectId = (Guid)navigationContext.Parameters["ProjectId"];
             }
+
+            if (navigationContext.Parameters.ContainsKey("SprintId") && navigationContext.Parameters["SprintId"] != null)
+            {
+                sprintId = (Guid)navigationContext.Parameters["SprintId"];
+
+                if (navigationContext.Parameters.ContainsKey("EditMode"))
+                {
+                    bool edit;
+                    bool.TryParse(navigationContext.Parameters["EditMode"].ToString(), out edit);
+                    EditMode = edit;
+
+                    if (EditMode)
+                    {
+                       var sprint = sprintServiceGateway.GetSprint(sprintId);
+                        SprintName = sprint.Name;
+                        StartDate = sprint.StartDate;
+                        EndDate = sprint.EndDate;
+                        Description = sprint.Description;
+
+                        if (sprint.TeamEmailAddresses != null && sprint.TeamEmailAddresses.Count > 0)
+                        {
+                            foreach (var developerEmail in sprint.TeamEmailAddresses)
+                            {
+                                var filter = new ServiceUserSearchFilter
+                                {
+                                    EmailAddress = developerEmail,
+                                    SprintStartingDate = startDate,
+                                    SprintEndingDate = endDate,
+                                    SprintId = sprintId
+                                };
+                                var result = projectServiceGateway.SearchUsers(filter);
+
+                                SelectedDevelopers.Add(result.First());
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>

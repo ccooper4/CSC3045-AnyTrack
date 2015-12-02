@@ -25,5 +25,10 @@ namespace AnyTrack.Backend.Service.Model
         /// Gets or sets the project id.
         /// </summary>
         public Guid ProjectId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the IsSprint
+        /// </summary>
+        public bool? InSprint { get; set; }
     }
 }

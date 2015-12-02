@@ -24,6 +24,13 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         void EditSprint(Guid sprintId, ServiceSprint updatedSprint);
 
         /// <summary>
+        /// Retrieves a specified sprint.
+        /// </summary>
+        /// <param name="sprintId">Id of the sprint</param>
+        /// <returns>The sprint</returns>
+        ServiceSprint GetSprint(Guid sprintId);
+
+        /// <summary>
         /// Gets all tasks for sprint
         /// </summary>
         /// <param name="sprintId">The sprint id</param>
@@ -44,5 +51,19 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         /// <param name="developer">A flag indicating if sprints where this user is a developer should be returned.</param>
         /// <returns>A list of sprints for this user.</returns>
         List<ServiceSprintSummary> GetSprintNames(Guid? projectId, bool scrumMaster, bool developer);
+
+        /// <summary>
+        /// Returns the list of sprint stories with specified id
+        /// </summary>
+        /// <param name="sprintId">The id of the sprint</param>
+        /// <returns>The list of sprint stories</returns>
+        List<ServiceSprintStory> GetSprintStories(Guid sprintId);
+
+        /// <summary>
+        /// Manages the sprint backlog
+        /// </summary>
+        /// <param name="sprintId">the id of the sprint</param>
+        /// <param name="updatedSprintBacklog">the updated sprint backlog</param>
+        void ManageSprintBacklog(Guid sprintId, List<ServiceSprintStory> updatedSprintBacklog);
     }
 }

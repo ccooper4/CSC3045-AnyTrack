@@ -92,7 +92,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.ProjectOptionsViewModelTests
             vm.Header.Should().Be("Project Options - " + summary.Name);
             vm.ProjectName.Should().Be(summary.Name);
             vm.ProjectDescription.Should().Be(summary.Description);
-            vm.ProjectID.Should().Be(summary.ProjectId.ToString());
+            vm.ProjectId.Should().Be(summary.ProjectId.ToString());
         }
 
         #endregion 

@@ -49,6 +49,11 @@ namespace AnyTrack.Backend.Data
         /// </summary>
         IRepository<TaskHourEstimate> TaskHourEstimateRepository { get; }
 
+        /// <summary>
+        /// Gets the sprint story repository controlled by this unit of work.
+        /// </summary>
+        IRepository<SprintStory> SprintStoryRepository { get; }
+
         #endregion
 
         #region Methods 

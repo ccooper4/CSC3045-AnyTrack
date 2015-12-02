@@ -1,6 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using AnyTrack.Infrastructure;
+using AnyTrack.Infrastructure.BackendSprintService;
 using AnyTrack.Infrastructure.Service;
+using AnyTrack.Infrastructure.Service.Model;
 using AnyTrack.Sprints.Views;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
@@ -79,6 +85,7 @@ namespace AnyTrack.Sprints
             container.RegisterType<object, SprintBoard>("SprintBoard");
             container.RegisterType<object, SprintStory>("SprintStory");
             container.RegisterType<object, Views.Task>("Task");
+            container.RegisterType<object, ManageSprintBacklog>("ManageSprintBacklog");
             container.RegisterType<object, BurnDown>("BurnDown");
 
             menuService.AddMenuItem(new MenuItem { Color = "Gray", Title = "Sprints", NavigationViewName = "SprintManager", Icon = NavigationIcons.Sprints });

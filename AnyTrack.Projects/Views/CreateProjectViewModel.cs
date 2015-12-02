@@ -21,9 +21,14 @@ namespace AnyTrack.Projects.Views
     /// <summary>
     /// The view model for the project
     /// </summary>
-    public class CreateProjectViewModel : BaseViewModel
+    public class CreateProjectViewModel : BaseViewModel, INavigationAware
     {
         #region Fields
+
+        /// <summary>
+        /// Id of project (Edit Mode)
+        /// </summary>
+        private Guid projectId;
 
         /// <summary>
         /// Project Name
@@ -44,6 +49,11 @@ namespace AnyTrack.Projects.Views
         /// Time Project Started
         /// </summary>
         private DateTime startedOn;
+
+        /// <summary>
+        /// Indicates if the project is being edited.
+        /// </summary>
+        private bool editMode;
 
         /// <summary>
         /// The search email address for the product owner.
@@ -92,6 +102,7 @@ namespace AnyTrack.Projects.Views
             SetProductOwnerCommand = new DelegateCommand<string>(SetProductOwner);
             SearchScrumMasterCommand = new DelegateCommand(SearchScrumMasters);
             SelectScrumMasterCommand = new DelegateCommand<ServiceUserSearchInfo>(AddScrumMaster, CanAddScrumMaster);
+            RemoveScrumMasterCommand = new DelegateCommand<ServiceUserSearchInfo>(RemoveScrumMaster);
 
             startedOn = DateTime.Now;
 
@@ -260,16 +271,93 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         public DelegateCommand<ServiceUserSearchInfo> SelectScrumMasterCommand { get; set; }
 
+        /// <summary>
+        /// Gets or sets the command that can be used to remove a scrum master.
+        /// </summary>
+        public DelegateCommand<ServiceUserSearchInfo> RemoveScrumMasterCommand { get; set; }
+
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Handles the Is Navigation target event. 
+        /// </summary>
+        /// <param name="navigationContext">The navigation context.</param>
+        /// <returns>A true or false value indicating if this viewmodel can handle the navigation request.</returns>
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Handles the on navigated from event. 
+        /// </summary>
+        /// <param name="navigationContext">The navigation context.</param>
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+        }
+
+        /// <summary>
+        /// Handles the navigated to.
+        /// </summary>
+        /// <param name="navigationContext">The navigation context.</param>
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            if (navigationContext.Parameters.ContainsKey("ProjectId"))
+            {
+                projectId = (Guid)navigationContext.Parameters["ProjectId"];
+
+                if (navigationContext.Parameters.ContainsKey("EditMode"))
+                {
+                    bool edit;
+                    bool.TryParse(navigationContext.Parameters["EditMode"].ToString(), out edit);
+                    editMode = edit;
+
+                    if (editMode)
+                    {
+                        var project = ServiceGateway.GetProject(projectId);
+                        ProjectName = project.Name;
+                        Description = project.Description;
+                        VersionControl = project.VersionControl;
+                        StartedOn = project.StartedOn;
+                        SelectProductOwnerEmailAddress = project.ProductOwnerEmailAddress;
+
+                        if (project.ScrumMasterEmailAddresses != null && project.ScrumMasterEmailAddresses.Count > 0)
+                        {
+                            foreach (var scrumMasterEmail in project.ScrumMasterEmailAddresses)
+                            {
+                                var filter = new ServiceUserSearchFilter { EmailAddress = scrumMasterEmail, ScrumMaster = true };
+                                var result = ServiceGateway.SearchUsers(filter);
+                                SelectedScrumMasters.Add(result.First());
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// This is a method to cancel the project wizard
         /// </summary>
         public void CancelProject()
         {
-            NavigateToItem("MyProjects");
+            var callbackAction = new Action<MessageDialogResult>(mdr =>
+            {
+                if (mdr == MessageDialogResult.Affirmative)
+                {
+                    NavigateToItem("MyProjects");
+                }
+            });
+
+            if (editMode)
+            {
+                ShowMetroDialog("Project Edit Cancellation", "Are you sure you want to cancel? All changes will be lost.", MessageDialogStyle.AffirmativeAndNegative, callbackAction);
+            }
+            else
+            {
+                ShowMetroDialog("Project Creation Cancellation", "Are you sure you want to cancel? All data will be lost.", MessageDialogStyle.AffirmativeAndNegative, callbackAction);
+            }                
         }
 
         /// <summary>
@@ -280,17 +368,6 @@ namespace AnyTrack.Projects.Views
             this.ValidateViewModelNow();
             if (!this.HasErrors)
             {
-                var hasScrumMasters = this.SelectedScrumMasters.Count > 0;
-                var hasProductOwner = this.ProductOwnerConfirmed;
-
-                var hasBoth = hasScrumMasters && hasProductOwner;
-
-                if (!hasBoth)
-                {
-                    this.ShowMetroDialog("The project cannot be saved!", "This project cannot be saved because both a product owner and at least one scrum master is required.");
-                    return;
-                }
-
                 ServiceProject project = new ServiceProject
                 {
                     Name = this.ProjectName,
@@ -302,10 +379,24 @@ namespace AnyTrack.Projects.Views
                     ScrumMasterEmailAddresses = this.SelectedScrumMasters.Select(sm => sm.EmailAddress).ToList()
                 };
 
-                ServiceGateway.CreateProject(project);
-                ShowMetroDialog("Project created", "The {0} project has successfully been created".Substitute(this.ProjectName), MessageDialogStyle.Affirmative);
+                if (editMode)
+                {
+                   project.ProjectId = projectId;
+                   ServiceGateway.UpdateProject(project);
+                   ShowMetroDialog("Project Updated", "The {0} project has been updated successfully.".Substitute(projectName), MessageDialogStyle.Affirmative);
+                }
+                else
+                {
+                    ServiceGateway.CreateProject(project);
+                    ShowMetroDialog("Project created", "The {0} project has been created sucessfully.".Substitute(projectName), MessageDialogStyle.Affirmative);
+                }
+
                 NavigateToItem("MyProjects");
             }
+            else
+            {
+                ShowMetroDialog("Project was not Saved", "The {0} project could not be saved. There are errors on the page. Please fix them and try again.".Substitute(projectName), MessageDialogStyle.Affirmative);
+            }   
         }
 
         /// <summary>
@@ -318,6 +409,12 @@ namespace AnyTrack.Projects.Views
             
             ProductOwnerSearchUserResults.Clear();
             ProductOwnerSearchUserResults.AddRange(results);
+
+            if (ProductOwnerSearchUserResults.Count == 0)
+            {
+                ShowMetroDialog("No Results Found", "No Product Owners with the email address {0} have been found.".Substitute(productOwnerSearchEmailAddress));
+            }
+
             EnableProductOwnerSearchGrid = true;
         }
 
@@ -331,6 +428,12 @@ namespace AnyTrack.Projects.Views
 
             ScrumMasterSearchUserResults.Clear();
             ScrumMasterSearchUserResults.AddRange(results);
+
+            if (ScrumMasterSearchUserResults.Count == 0)
+            {
+                ShowMetroDialog("No Results Found", "No Scrum masters with the email address {0} have been found.".Substitute(productOwnerSearchEmailAddress));
+            }
+
             EnableScrumMasterSearchGrid = true; 
         }
 
@@ -345,7 +448,7 @@ namespace AnyTrack.Projects.Views
             EnableProductOwnerSearchGrid = false;
             ProductOwnerConfirmed = true;
             ProductOwnerSearchEmailAddress = string.Empty;
-            ShowMetroDialog("Product Owner confirmed", "The product owner has been successfully set to user - {0}".Substitute(emailAddress), MessageDialogStyle.Affirmative);
+            ShowMetroDialog("Product Owner Assigned", "{0} has been assigned the role Product Owner of the project.".Substitute(emailAddress), MessageDialogStyle.Affirmative);
         }
 
         /// <summary>
@@ -377,8 +480,25 @@ namespace AnyTrack.Projects.Views
             SelectedScrumMasters.Add(selectedScrumMaster);
             ScrumMasterSearchUserResults.Clear();
             EnableScrumMasterSearchGrid = false;
+            ShowMetroDialog("Scrum Master Assigned", "{0} has been assigned the role of Scrum Master on the project.".Substitute(selectedScrumMaster.FullName));
         }
 
-        #endregion
+        /// <summary>
+        /// Removes the selected scrumMaster from this project.
+        /// </summary>
+        /// <param name="selectedScrumMaster">The selected scrum master</param>
+        private void RemoveScrumMaster(ServiceUserSearchInfo selectedScrumMaster)
+        {
+            var callbackAction = new Action<MessageDialogResult>(mdr =>
+            {
+                if (mdr == MessageDialogResult.Affirmative)
+                {
+                    SelectedScrumMasters.Remove(selectedScrumMaster);
+                }
+            });
+
+            ShowMetroDialog("Scrum Master Removal", "Are you sure you want to remove {0} as a scrum master on the project?".Substitute(selectedScrumMaster.FullName), MessageDialogStyle.AffirmativeAndNegative, callbackAction);          
+        }
+        #endregion    
     }
 }

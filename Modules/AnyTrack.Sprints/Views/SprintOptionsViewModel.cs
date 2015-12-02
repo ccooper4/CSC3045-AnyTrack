@@ -113,6 +113,7 @@ namespace AnyTrack.Sprints.Views
             OpenProjectManager = new DelegateCommand(DisplayProjectManager);
             OpenPlanningPoker = new DelegateCommand(DisplayPlanningPoker);
             OpenBurndown = new DelegateCommand(DisplayBurnDownCharts);
+            OpenEditSprint = new DelegateCommand(DisplayEditSprint);
         }
 
         #endregion 
@@ -338,6 +339,11 @@ namespace AnyTrack.Sprints.Views
         /// Gets or sets a command to open the burndown charts for the sprint.
         /// </summary>
         public DelegateCommand OpenBurndown { get; set; }
+        
+        /// <summary>
+        /// Gets or sets a command to open edit sprint for a specified sprint.
+        /// </summary>
+        public DelegateCommand OpenEditSprint { get; set; }
 
         #endregion
 
@@ -393,7 +399,7 @@ namespace AnyTrack.Sprints.Views
         {
             IsOpen = false;
             var navParams = new NavigationParameters();
-            navParams.Add("projectId", projectSummary);
+            navParams.Add("projectInfo", projectSummary);
             navParams.Add("openProjectOptions", "true");
             NavigateToItem("MyProjects", navParams);          
         }
@@ -411,8 +417,8 @@ namespace AnyTrack.Sprints.Views
             navParams.Add("SprintId", sprintId);
             NavigateToItem("StartPlanningPokerSession", navParams);
         }
-
-        /// <summary>
+        
+               /// <summary>
         /// Navigates to the display burndown charts.
         /// </summary>
         private void DisplayBurnDownCharts()
@@ -421,6 +427,20 @@ namespace AnyTrack.Sprints.Views
             var navParams = new NavigationParameters();
             navParams.Add("sprintId", sprintId);
             NavigateToItem("BurnDown", navParams);
+        }
+
+        /// <summary>
+        /// Navigates to CreateSprint in Edit Mode
+        /// </summary>
+        private void DisplayEditSprint()
+        {
+            IsOpen = false;
+
+            var navParams = new NavigationParameters();
+            navParams.Add("ProjectId", projectId);
+            navParams.Add("SprintId", sprintId);
+            navParams.Add("EditMode", "true");
+            NavigateToItem("CreateSprint", navParams);
         }
 
         #endregion

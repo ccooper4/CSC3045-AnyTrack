@@ -24,12 +24,20 @@ namespace AnyTrack.Backend.Service
         void AddSprint(Guid projectId, ServiceSprint sprint);
 
         /// <summary>
-        /// Edits an exiting sprint.
+        /// Edits an existing sprint.
         /// </summary>
         /// <param name="sprintId">Id of the sprint to be edited</param>
         /// <param name="updatedSprint">ServiceSprint entity containing changes</param>
         [OperationContract]
         void EditSprint(Guid sprintId, ServiceSprint updatedSprint);
+
+        /// <summary>
+        /// Retrieves a specified sprint.
+        /// </summary>
+        /// <param name="sprintId">Id of the sprint</param>
+        /// <returns>The sprint</returns>
+        [OperationContract]
+        ServiceSprint GetSprint(Guid sprintId);
 
         /// <summary>
         /// Gets all task for a sprint for the current user
@@ -63,5 +71,21 @@ namespace AnyTrack.Backend.Service
         /// <returns>A summary list of this user's sprints.</returns>
         [OperationContract]
         List<ServiceSprintSummary> GetSprintNames(Guid? projectId, bool scrumMaster, bool developer);
+
+        /// <summary>
+        /// Gets all the stories associated with a sprint
+        /// </summary>
+        /// <param name="sprintId">Sprint id to retrieve sprints from</param>
+        /// <returns>List of sprint stories</returns>
+        [OperationContract]
+        List<ServiceSprintStory> GetSprintStories(Guid sprintId);
+
+        /// <summary>
+        /// Manages the sprint backlog
+        /// </summary>
+        /// <param name="sprintId">Sprint id of sprint</param>
+        /// <param name="sprintStories">List of sprint stories</param>
+        [OperationContract]
+        void ManageSprintBacklog(Guid sprintId, List<ServiceSprintStory> sprintStories);
     }
 }
