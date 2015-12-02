@@ -64,7 +64,7 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         /// <returns>Returns a list of tasks</returns>
         public List<ServiceTask> GetAllTasksForSprint(Guid sprintId)
         {
-            return new List<ServiceTask>(client.GetAllTasksForSprintCurrentUser(sprintId));
+            return new List<ServiceTask>(client.GetAllTasksForSprint(sprintId));
         }
 
         /// <summary>
@@ -86,6 +86,26 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         public List<ServiceSprintSummary> GetSprintNames(Guid? projectId, bool scrumMaster, bool developer)
         {
             return client.GetSprintNames(projectId, scrumMaster, developer);
+        }
+
+        /// <summary>
+        /// Method to get the stories for a sprint
+        /// </summary>
+        /// <param name="sprintId">The id of the sprint</param>
+        /// <returns>A list of sprint stories</returns>
+        public List<ServiceSprintStory> GetSprintStories(Guid sprintId)
+        {
+            return new List<ServiceSprintStory>(client.GetSprintStories(sprintId));
+        }
+
+        /// <summary>
+        /// Manages the backlog of sprints
+        /// </summary>
+        /// <param name="sprintId">The id of the sprint</param>
+        /// <param name="updatedSprintBacklog">The updated backlog</param>
+        public void ManageSprintBacklog(Guid sprintId, List<ServiceSprintStory> updatedSprintBacklog)
+        {
+            client.ManageSprintBacklog(sprintId, updatedSprintBacklog);
         }
 
         #endregion

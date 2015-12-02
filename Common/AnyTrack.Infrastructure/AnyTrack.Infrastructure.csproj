@@ -109,6 +109,7 @@
     <Compile Include="IFlyoutCompatibleViewModel.cs" />
     <Compile Include="Interceptors\CookieMessageInspector.cs" />
     <Compile Include="Interceptors\InterceptorBehaviourExtension.cs" />
+    <Compile Include="NavigationIcons.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interceptors\Providers\WindowProvider.cs" />
     <Compile Include="RegionNames.cs" />
@@ -191,6 +192,9 @@
     <None Include="Service References\BackendProjectService\ProjectService3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\BackendSprintService\AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\BackendSprintService\AnyTrack.Infrastructure.BackendSprintService.ServiceSprintSummary.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -198,6 +202,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BackendSprintService\SprintService.wsdl" />
+    <None Include="Service References\BackendSprintService\SprintService.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\BackendSprintService\SprintService1.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -205,9 +212,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\BackendSprintService\SprintService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BackendSprintService\SprintService4.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

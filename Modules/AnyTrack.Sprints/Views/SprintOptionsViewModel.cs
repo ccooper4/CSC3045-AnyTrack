@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.SharedUtilities.Extensions;
@@ -45,6 +46,16 @@ namespace AnyTrack.Sprints.Views
         private bool isModal;
 
         /// <summary>
+        /// The close button visibility field.
+        /// </summary>
+        private Visibility closeButtonVisibility;
+
+        /// <summary>
+        /// The close button visibility field.
+        /// </summary>
+        private Visibility titleVisibility;
+
+        /// <summary>
         /// The Project name field.
         /// </summary>
         private string projectName;
@@ -74,6 +85,16 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         private bool isScrumMaster;
 
+        /// <summary>
+        /// Summary of the project displayed in the options.
+        /// </summary>
+        private ServiceProjectRoleSummary projectSummary;
+
+        /// <summary>
+        /// Summary of the sprint displayed in the options.
+        /// </summary>
+        private ServiceSprintSummary sprintSummary;
+
         #endregion 
 
         #region Constructor 
@@ -88,11 +109,46 @@ namespace AnyTrack.Sprints.Views
             this.Position = Position.Right;
             this.Theme = FlyoutTheme.Accent;
             this.IsOpen = true;
+
+            OpenProjectManager = new DelegateCommand(DisplayProjectManager);
+            OpenPlanningPoker = new DelegateCommand(DisplayPlanningPoker);
         }
 
         #endregion 
 
         #region Properties
+
+        /// <summary>
+        /// Gets or sets close button visibility
+        /// </summary>
+        public Visibility CloseButtonVisibility
+        {
+            get
+            {
+                return closeButtonVisibility;
+            }
+
+            set
+            {
+                SetProperty(ref closeButtonVisibility, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the title visibility
+        /// </summary>
+        public Visibility TitleVisibility
+        {
+            get
+            {
+                return titleVisibility;
+            }
+
+            set
+            {
+                SetProperty(ref titleVisibility, value);
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether or not this flyout is open.
@@ -267,6 +323,16 @@ namespace AnyTrack.Sprints.Views
 
         #region Commands
 
+        /// <summary>
+        /// Gets or sets a command to open the Project Manager for a specified project.
+        /// </summary>
+        public DelegateCommand OpenProjectManager { get; set; }
+
+        /// <summary>
+        /// Gets or sets a command to open a planning poker start session.
+        /// </summary>
+        public DelegateCommand OpenPlanningPoker { get; set; }
+
         #endregion
 
         #region Methods
@@ -298,6 +364,7 @@ namespace AnyTrack.Sprints.Views
             if (navigationContext.Parameters.ContainsKey("projectRoleInfo"))
             {
                 var projectInfo = navigationContext.Parameters["projectRoleInfo"] as ServiceProjectRoleSummary;
+                this.projectSummary = projectInfo;
                 this.ProjectId = projectInfo.ProjectId;
                 this.ProjectName = projectInfo.Name;
                 this.IsScrumMaster = projectInfo.ScrumMaster;
@@ -306,10 +373,37 @@ namespace AnyTrack.Sprints.Views
             if (navigationContext.Parameters.ContainsKey("sprintSummary"))
             {
                 var sprintInfo = navigationContext.Parameters["sprintSummary"] as ServiceSprintSummary;
+                this.sprintSummary = sprintInfo;
                 this.SprintId = sprintInfo.SprintId;
                 this.SprintName = sprintInfo.Name;
                 this.SprintDescription = sprintInfo.Description;
             }
+        }
+
+        /// <summary>
+        /// Navigates to the project Manager for this project.
+        /// </summary>
+        private void DisplayProjectManager()
+        {
+            IsOpen = false;
+            var navParams = new NavigationParameters();
+            navParams.Add("projectId", projectSummary);
+            navParams.Add("openProjectOptions", "true");
+            NavigateToItem("MyProjects", navParams);          
+        }
+
+        /// <summary>
+        /// Navigates to the start planning poker session screen for this project and sprint.
+        /// </summary>
+        private void DisplayPlanningPoker()
+        {
+            IsOpen = false;
+
+            var navParams = new NavigationParameters();
+
+            navParams.Add("ProjectId", projectId);
+            navParams.Add("SprintId", sprintId);
+            NavigateToItem("StartPlanningPokerSession", navParams);
         }
 
         #endregion

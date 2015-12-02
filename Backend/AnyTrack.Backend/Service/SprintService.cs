@@ -223,7 +223,7 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         /// <param name="sprintId">The sprint id</param>
         /// <returns>A list of tasks</returns>
-        public List<ServiceTask> GetAllTasksForSprintBurnDown(Guid sprintId)
+        public List<ServiceTask> GetAllTasksForSprint(Guid sprintId)
         {
             var tasks = unitOfWork.TaskRepository.Items.Where(t => t.SprintStory.Sprint.Id == sprintId).ToList();
 
@@ -367,6 +367,139 @@ namespace AnyTrack.Backend.Service
             }).ToList();
 
             return sprintSummary;
+        }
+
+        /// <summary>
+        /// Method to return all stories in the sprint
+        /// </summary>
+        /// <param name="sprintId">The id of the sprint</param>
+        /// <returns>The list of stories from the sprint</returns>
+        public List<ServiceSprintStory> GetSprintStories(Guid sprintId)
+        {
+            if (sprintId == null)
+            {
+                throw new ArgumentException("SprintId cannot be null");
+            }
+
+            var dataSprint = unitOfWork.SprintRepository.Items.SingleOrDefault(s => s.Id == sprintId);
+
+            if (dataSprint == null)
+            {
+                throw new NullReferenceException(string.Format(
+                    "A sprint with the id {0} does not exist in the database", sprintId));
+            }
+
+            if (dataSprint.Backlog == null)
+            {
+                return new List<ServiceSprintStory>();
+            }
+
+            List<ServiceSprintStory> sprintStories = new List<ServiceSprintStory>();
+
+            foreach (var sprintStory in dataSprint.Backlog)
+            {
+                if (sprintStory != null)
+                {
+                    sprintStories.Add(new ServiceSprintStory
+                    {
+                        SprintStoryId = sprintStory.Id,
+                        Story = new ServiceStory
+                        {
+                            StoryId = sprintStory.Story.Id,
+                            AsA = sprintStory.Story.AsA,
+                            IWant = sprintStory.Story.IWant,
+                            SoThat = sprintStory.Story.SoThat,
+                            Summary = sprintStory.Story.Summary,
+                            InSprint = sprintStory.Story.InSprint,
+                            ConditionsOfSatisfaction = sprintStory.Story.ConditionsOfSatisfaction
+                        }
+                    });
+                }
+                else
+                {
+                    {
+                        return new List<ServiceSprintStory>();
+                    }
+                }
+           }
+
+           return sprintStories;
+        }
+
+        /// <summary>
+        /// All stories in the backlog right now
+        /// </summary>
+        /// <param name="sprintId">The sprint id</param>
+        /// <param name="sprintStories">The Sprint stories</param>
+        public void ManageSprintBacklog(Guid sprintId, List<ServiceSprintStory> sprintStories)
+        {
+            if (sprintId == null)
+            {
+                throw new ArgumentNullException("sprintId");
+            }
+
+            if (sprintStories == null)
+            {
+                throw new ArgumentNullException("sprintStories");
+            }
+
+            var dataSprint = unitOfWork.SprintRepository.Items.SingleOrDefault(s => s.Id == sprintId);
+
+            if (dataSprint == null)
+            {
+                throw new NullReferenceException(string.Format(
+                    "A sprint with the id {0} does not exist in the database", sprintId));
+            }
+
+            List<Guid> currentSprintIds = new List<Guid>();
+            List<Guid> newSprintIds = new List<Guid>();
+
+            foreach (var sprintStory in dataSprint.Backlog)
+            {
+                currentSprintIds.Add(sprintStory.Story.Id);
+            }
+
+            foreach (var sprintStory in sprintStories)
+            {
+                newSprintIds.Add(sprintStory.Story.StoryId);
+            }
+
+            foreach (var story in sprintStories)
+            {
+                ////If the current sprint backlog does not contain the story passed in
+                ////Then we must add this to the repo
+                if (!currentSprintIds.Contains(story.Story.StoryId))
+                {
+                    var productBacklogStory = unitOfWork.StoryRepository.Items.Single(s => s.Id == story.Story.StoryId);
+                    productBacklogStory.InSprint = true;
+                    dataSprint.Backlog.Add(new SprintStory
+                    {
+                        Story = productBacklogStory
+                    });
+                }
+            }
+
+            List<SprintStory> removeStories = new List<SprintStory>();
+
+            foreach (var story in dataSprint.Backlog)
+            {
+                ////If there is a story on the current sprint backlog, which is not passed in
+                ////Then we need to remove this from the repo
+                if (!newSprintIds.Contains(story.Story.Id))
+                {
+                    var productBacklogStory = unitOfWork.StoryRepository.Items.Single(s => s.Id == story.Story.Id);
+                    productBacklogStory.InSprint = false;
+                    removeStories.Add(story);
+                }
+            }
+
+            foreach (var story in removeStories)
+            {
+                var sprintStory = unitOfWork.SprintStoryRepository.Items.Single(s => s.Story.Id == story.Story.Id);
+                unitOfWork.SprintStoryRepository.Delete(sprintStory);
+            }
+
+            unitOfWork.Commit();
         }
 
         #endregion

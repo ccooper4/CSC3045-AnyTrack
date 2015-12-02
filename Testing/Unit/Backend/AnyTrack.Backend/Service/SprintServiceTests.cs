@@ -939,5 +939,298 @@ namespace Unit.Backend.AnyTrack.Backend.Service
         }
 
         #endregion 
+
+        #region void GetSprintStories(Guid sprintId)
+
+        [Test]
+        public void GetSprintStories()
+        {
+            ServiceSprint sprint = new ServiceSprint()
+            {
+                SprintId = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
+                Name = "Sprint 1",
+                StartDate = new DateTime(2015, 11, 26),
+                EndDate = new DateTime(2015, 12, 3),
+                Description = "Sprint",
+                Backlog = new List<ServiceSprintStory>()
+                {
+                    new ServiceSprintStory()
+                    {
+                        SprintId = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
+                        Story = new ServiceStory()
+                        {
+                            StoryId = new Guid("30000001-5566-7788-99AA-BBCCDDEEFF00"),
+                            AsA = "As A 1",
+                            ConditionsOfSatisfaction = "Conditions of Sat",
+                            IWant="I Want 1",
+                            SoThat="So That 1",
+                            Summary="Summary 1",
+                            InSprint=true
+                        }
+                    }
+                }           
+            };
+
+            List<Sprint> sprintList = new List<Sprint>()
+            {
+                new Sprint
+                {
+                    Id = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
+                    Name = "Sprint 1",
+                    StartDate = new DateTime(2015, 11, 26),
+                    EndDate = new DateTime(2015, 12, 3),
+                    Description = "Sprint",
+                    Backlog = new List<SprintStory>()
+                    {
+                        new SprintStory()
+                        {
+                            Id = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
+                            Story = new Story()
+                            {
+                                Id = new Guid("30000001-5566-7788-99AA-BBCCDDEEFF00"),
+                                AsA = "As A 1",
+                                ConditionsOfSatisfaction = "Conditions of Sat",
+                                IWant="I Want 1",
+                                SoThat="So That 1",
+                                Summary="Summary 1",
+                                InSprint=true
+                            }
+                        }
+                    }
+                }
+            };
+
+            unitOfWork.ProjectRepository.Items.Returns(projectList.AsQueryable());
+            unitOfWork.SprintRepository.Items.Returns(sprintList.AsQueryable());
+            
+            service.AddSprint(projectList[0].Id, sprint);
+            
+            List<ServiceSprintStory> serv = service.GetSprintStories(sprint.SprintId);
+
+            serv.First().SprintStoryId.Should().Be(new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"));
+            serv.First().Story.StoryId.Should().Be(new Guid("30000001-5566-7788-99AA-BBCCDDEEFF00"));
+            serv.First().Story.InSprint.Should().Be(true);
+            serv.First().Story.AsA.Should().Be("As A 1");
+            serv.First().Story.ConditionsOfSatisfaction.Should().Be("Conditions of Sat");
+            serv.First().Story.IWant.Should().Be("I Want 1");
+            serv.First().Story.SoThat.Should().Be("So That 1");
+            serv.First().Story.Summary.Should().Be("Summary 1");
+        }
+
+        [Test]
+        [ExpectedException(typeof(NullReferenceException))]
+        public void GetSprintStoriesException()
+        {
+            ServiceSprint sprint = new ServiceSprint()
+            {
+                SprintId = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
+                Name = "Sprint 1",
+                StartDate = new DateTime(2015, 11, 26),
+                EndDate = new DateTime(2015, 12, 3),
+                Description = "Sprint",
+                Backlog = new List<ServiceSprintStory>()
+                {
+                    new ServiceSprintStory()
+                    {
+                        SprintId = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
+                        Story = new ServiceStory()
+                        {
+                            StoryId = new Guid("30000001-5566-7788-99AA-BBCCDDEEFF00"),
+                            AsA = "As A 1",
+                            ConditionsOfSatisfaction = "Conditions of Sat",
+                            IWant="I Want 1",
+                            SoThat="So That 1",
+                            Summary="Summary 1"
+                        }
+                    }
+                }
+            };
+
+            List<Sprint> sprintList = new List<Sprint>()
+            {
+                new Sprint
+                {
+                    Id = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
+                    Name = "Sprint 1",
+                    StartDate = new DateTime(2015, 11, 26),
+                    EndDate = new DateTime(2015, 12, 3),
+                    Description = "Sprint",
+                    Backlog = new List<SprintStory>()
+                    {
+                        new SprintStory()
+                        {
+                            Id = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
+                            Story = new Story()
+                            {
+                                Id = new Guid("30000001-5566-7788-99AA-BBCCDDEEFF00"),
+                                AsA = "As A 1",
+                                ConditionsOfSatisfaction = "Conditions of Sat",
+                                IWant="I Want 1",
+                                SoThat="So That 1",
+                                Summary="Summary 1",
+                            }
+                        }
+                    }
+                }
+            };
+
+            unitOfWork.ProjectRepository.Items.Returns(projectList.AsQueryable());
+            unitOfWork.SprintRepository.Items.Returns(sprintList.AsQueryable());
+
+            service.AddSprint(projectList[0].Id, sprint);
+
+            List<ServiceSprintStory> serv = service.GetSprintStories(Guid.Empty);
+        }
+        #endregion
+
+        #region void ManageSprintBacklog()
+
+        [Test]
+        public void ManageSprintBacklog()
+        {
+            #region Service Layer
+
+            ServiceProject project = new ServiceProject
+            {
+                Name = "Project",
+                Description = "This is a new project",
+                VersionControl = "queens.git",
+                ProjectManagerEmailAddress = "tester@agile.local",
+                StartedOn = DateTime.Today,
+                ProductOwnerEmailAddress = "tester@agile.local",
+                Stories = new List<ServiceStory>()
+                {
+                    new ServiceStory()
+                    {
+                        StoryId = new Guid("80000001-5566-7788-99AA-BBCCDDEEFF00"),
+                        AsA = "As A 1",
+                        ConditionsOfSatisfaction = "Conditions of Sat",
+                        IWant = "I Want 1",
+                        SoThat = "So That 1",
+                        Summary = "Summary 1",
+                        InSprint = false
+                    },
+                    new ServiceStory()
+                    {
+                        StoryId = new Guid("90000001-5566-7788-99AA-BBCCDDEEFF00"),
+                        AsA = "As A 2",
+                        ConditionsOfSatisfaction = "Conditions of Sat",
+                        IWant = "I Want 2",
+                        SoThat = "So That 2",
+                        Summary = "Summary 2",
+                        InSprint = true
+                    }
+                }   
+            };
+
+            ServiceSprint sprint = new ServiceSprint()
+            {
+                SprintId = new Guid("60000001-5566-7788-99AA-BBCCDDEEFF00"),
+                Name = "Sprint 1",
+                StartDate = new DateTime(2015, 11, 26),
+                EndDate = new DateTime(2015, 12, 3),
+                Description = "Sprint",
+                Backlog = new List<ServiceSprintStory>()
+            };
+
+            List<ServiceSprintStory> serviceSprintStory = new List<ServiceSprintStory>()
+            {
+                new ServiceSprintStory()
+                {
+                    SprintId = new Guid("60000001-5566-7788-99AA-BBCCDDEEFF00"),
+                    SprintStoryId = new Guid("50000001-5566-7788-99AA-BBCCDDEEFF00"),
+                    Story = new ServiceStory()
+                    {
+                        StoryId = new Guid("80000001-5566-7788-99AA-BBCCDDEEFF00"),
+                        AsA = "As A 1",
+                        ConditionsOfSatisfaction = "Conditions of Sat",
+                        IWant = "I Want 1",
+                        SoThat = "So That 1",
+                        Summary = "Summary 1",
+                        InSprint = true
+                    }
+                },
+                new ServiceSprintStory()
+                {
+                    SprintId = new Guid("60000001-5566-7788-99AA-BBCCDDEEFF00"),
+                    SprintStoryId = new Guid("20000001-5566-7788-99AA-BBCCDDEEFF00"),
+                    Story = new ServiceStory()
+                    {
+                        StoryId = new Guid("90000001-5566-7788-99AA-BBCCDDEEFF00"),
+                        AsA = "As A 1",
+                        ConditionsOfSatisfaction = "Conditions of Sat",
+                        IWant = "I Want 1",
+                        SoThat = "So That 1",
+                        Summary = "Summary 1",
+                        InSprint = true
+                    }
+                }
+            };
+
+            #endregion
+
+            #region Data Layer
+
+            List<Story> storyList = new List<Story>()
+            {
+                new Story()
+                {
+                    Id = new Guid("80000001-5566-7788-99AA-BBCCDDEEFF00"),
+                    AsA = "As A 1",
+                    ConditionsOfSatisfaction = "Conditions of Sat",
+                    IWant = "I Want 1",
+                    SoThat = "So That 1",
+                    Summary = "Summary 1",
+                    InSprint = true
+                },
+                new Story()
+                {
+                    Id = new Guid("90000001-5566-7788-99AA-BBCCDDEEFF00"),
+                    AsA = "As A 1",
+                    ConditionsOfSatisfaction = "Conditions of Sat",
+                    IWant = "I Want 1",
+                    SoThat = "So That 1",
+                    Summary = "Summary 1",
+                    InSprint = true
+                }
+            };
+
+            List<SprintStory> sprintStoryList = new List<SprintStory>()
+            {
+                new SprintStory()
+                {
+                    Id = new Guid("50000001-5566-7788-99AA-BBCCDDEEFF00"),
+                    Story = storyList[0]
+                }
+            };
+
+            List<Sprint> sprintList = new List<Sprint>()
+            {
+                new Sprint
+                {
+                    Id = new Guid("60000001-5566-7788-99AA-BBCCDDEEFF00"),
+                    Name = "Sprint 1",
+                    StartDate = new DateTime(2015, 11, 26),
+                    EndDate = new DateTime(2015, 12, 3),
+                    Description = "Sprint",
+                    Backlog = sprintStoryList
+                }
+            };
+
+            #endregion
+
+            #region Repositories
+            unitOfWork.ProjectRepository.Items.Returns(projectList.AsQueryable());
+            unitOfWork.SprintRepository.Items.Returns(sprintList.AsQueryable());
+            unitOfWork.StoryRepository.Items.Returns(storyList.AsQueryable());
+            unitOfWork.SprintStoryRepository.Items.Returns(sprintStoryList.AsQueryable());
+            #endregion
+
+            service.AddSprint(projectList[0].Id, sprint);
+            sprintList.First().Backlog.Count().Should().Be(1);
+            service.ManageSprintBacklog(sprint.SprintId, serviceSprintStory);
+            sprintList.First().Backlog.Count().Should().Be(2);
+        }
+        #endregion
     }
 }

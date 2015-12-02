@@ -38,6 +38,11 @@ namespace AnyTrack.Backend.Data.Model
         public string SoThat { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the story is in a sprint
+        /// </summary>
+        public bool InSprint { get; set; }
+
+        /// <summary>
         /// Gets or sets the project the story is part of.
         /// </summary>
         public virtual Project Project { get; set; }

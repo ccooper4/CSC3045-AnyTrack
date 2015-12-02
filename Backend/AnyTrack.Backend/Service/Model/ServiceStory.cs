@@ -55,6 +55,11 @@ namespace AnyTrack.Backend.Service.Model
         public string SoThat { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether story is in the sprint
+        /// </summary>
+        public bool InSprint { get; set; }
+
+        /// <summary>
         /// Sets the story breakdown.
         /// </summary>
         /// <param name="asA">The As A field</param>

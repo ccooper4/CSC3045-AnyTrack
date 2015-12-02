@@ -49,7 +49,7 @@
 
                 <views:LabelledTextBox Label="Description" Text="{Binding Description}" Grid.Row="5" Grid.RowSpan="3"/>
 
-                <Button Grid.Row="8" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Center" Width="90" Height="28" VerticalAlignment="Center" Margin="152,8,246,12" Command="{Binding SaveSprintCommand}">Create Sprint</Button>
+                <Button Grid.Row="8" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Center" Width="90" Height="28" VerticalAlignment="Center" Margin="152,8,246,12" Command="{Binding SaveSprintCommand}">Save Sprint</Button>
                 <Button Grid.Row="8" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Center" Width="70" Height="28" VerticalAlignment="Center" Margin="252,8,166,12" Command="{Binding CancelSprintCommand}">Cancel</Button>
             </Grid>
         </GroupBox>
@@ -92,7 +92,7 @@
                 <DataGrid Margin="10px, 10px, 10px, 2px" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding SelectedDevelopers}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding FullName}" Width="2*"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Skills" Binding="{Binding Skills}" Width="4*" ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Skills" Binding="{Binding Skills}" Width="3*" ></DataGridTextColumn>
                         <DataGridTextColumn Header="Availability" Width="2*">
                             <DataGridTextColumn.Binding>
                                 <MultiBinding StringFormat="{}{0}/{1} Days">
@@ -102,6 +102,13 @@
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
+                        <DataGridTemplateColumn Width="2*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Remove" Command="{Binding Path=DataContext.RemoveDeveloperCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding Path=.}"></Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

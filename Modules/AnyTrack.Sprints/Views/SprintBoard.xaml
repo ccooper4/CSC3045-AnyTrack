@@ -14,7 +14,7 @@
         <converters:GuidToStringConverter x:Key="guidToStringConverter"></converters:GuidToStringConverter>
     </UserControl.Resources>
     
-    <Grid Background="LightGray">
+    <Grid Background="Transparent">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -45,8 +45,8 @@
         <!-- Content Grid -->
         <Grid Grid.Row="1" Margin="10px">
             <Border CornerRadius="9" BorderBrush="Gray" Background="Gray" BorderThickness="2">
-            <DockPanel Background="White" >
-
+                <DockPanel Background="DarkGray" >
+                    
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="40px"></RowDefinition>

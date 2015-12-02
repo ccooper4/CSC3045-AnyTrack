@@ -45,7 +45,17 @@ namespace AnyTrack.PlanningPoker.Views
         /// <summary>
         /// The selected sprint id.
         /// </summary>
-        private Guid? sprintId; 
+        private Guid? sprintId;
+
+        /// <summary>
+        /// The selected Project.
+        /// </summary>
+        private ServiceProjectSummary selectedProject;
+
+        /// <summary>
+        /// The selected Sprint.
+        /// </summary>
+        private ServiceSprintSummary selectedSprint;
 
         #endregion 
 
@@ -182,6 +192,16 @@ namespace AnyTrack.PlanningPoker.Views
             this.Projects.Clear();
             var results = projectServiceGateway.GetProjectNames(true, false, false);
             this.Projects.AddRange(results);
+
+            if (navigationContext.Parameters.ContainsKey("ProjectId"))
+            {
+                this.ProjectId = new Guid(navigationContext.Parameters["ProjectId"].ToString());
+            }
+
+            if (navigationContext.Parameters.ContainsKey("SprintId"))
+            {
+                this.SprintId = new Guid(navigationContext.Parameters["SprintId"].ToString());
+            }
         }
 
         /// <summary>

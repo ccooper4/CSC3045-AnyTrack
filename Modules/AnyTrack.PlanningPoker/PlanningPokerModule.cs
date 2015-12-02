@@ -4,6 +4,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.Service;
 using AnyTrack.Infrastructure.Service.Model;
 using AnyTrack.PlanningPoker.BackendPlanningPokerManagerService;

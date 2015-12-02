@@ -80,6 +80,16 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         private bool enableDeveloperSearchGrid;
 
+        /// <summary>
+        /// Indicates whether is editing a sprint.
+        /// </summary>
+        private bool editMode;
+
+        /// <summary>
+        /// Sprint id of sprint (Edit Mode)
+        /// </summary>
+        private Guid sprintId;
+
         #endregion
 
         #region Constructor
@@ -114,6 +124,7 @@ namespace AnyTrack.Sprints.Views
             CancelSprintCommand = new DelegateCommand(CancelSprintCreation);
             SearchDeveloperCommand = new DelegateCommand(SearchDevelopers);
             SelectDeveloperCommand = new DelegateCommand<ServiceUserSearchInfo>(AddDeveloper, CanAddDeveloper);
+            RemoveDeveloperCommand = new DelegateCommand<ServiceUserSearchInfo>(RemoveDeveloper);
         }
 
         #endregion
@@ -143,11 +154,20 @@ namespace AnyTrack.Sprints.Views
             }
 
             set
-            {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-                SetProperty(ref startDate, value);
-                EndDate = endDate.AddDays(1);
-                EndDate = endDate.Subtract(new TimeSpan(1, 0, 0, 0));
-                SprintLength = CalculateSprintLength();
+            {
+                if ((editMode && value != startDate) || (!editMode))
+                {
+                    SetProperty(ref startDate, value);
+                    EndDate = endDate.AddDays(1);
+                    EndDate = endDate.Subtract(new TimeSpan(1, 0, 0, 0));
+                    SprintLength = CalculateSprintLength();
+                    ReCalculateAvailabilty();
+                }
+
+                if (SkillSetSearch != null && SkillSetSearch.Length >= 2 && EnableDeveloperSearchGrid)
+                {
+                    SearchDevelopers();
+                }
             }
         }
 
@@ -165,8 +185,17 @@ namespace AnyTrack.Sprints.Views
 
             set
             {
-                SetProperty(ref endDate, value);
-                SprintLength = CalculateSprintLength();
+                if ((editMode && value != endDate) || (!editMode))
+                {
+                    SetProperty(ref endDate, value);
+                    SprintLength = CalculateSprintLength();
+                    ReCalculateAvailabilty();
+                }
+
+                if (SkillSetSearch != null && SkillSetSearch.Length >= 2 && EnableDeveloperSearchGrid)
+                {
+                    SearchDevelopers();
+                }
             }
         }
 
@@ -215,6 +244,15 @@ namespace AnyTrack.Sprints.Views
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the user is editing a sprint.
+        /// </summary>
+        public bool EditMode
+        {
+            get { return editMode; }
+            set { SetProperty(ref editMode, value); }
+        }
+
+        /// <summary>
         /// Gets or sets the collection containing developer search results.
         /// </summary>
         public ObservableCollection<ServiceUserSearchInfo> DeveloperSearchUserResults { get; set; }
@@ -248,6 +286,11 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         public DelegateCommand<ServiceUserSearchInfo> SelectDeveloperCommand { get; set; }
 
+        /// <summary>
+        /// Gets or sets the command that can be used to select a developer.
+        /// </summary>
+        public DelegateCommand<ServiceUserSearchInfo> RemoveDeveloperCommand { get; set; }
+
         #endregion
 
         #region Methods
@@ -276,9 +319,9 @@ namespace AnyTrack.Sprints.Views
         /// <param name="navigationContext">The navigation context.</param>
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            if (navigationContext.Parameters.ContainsKey("projectId"))
+            if (navigationContext.Parameters.ContainsKey("ProjectId") && navigationContext.Parameters["ProjectId"] != null)
             {
-                projectId = (Guid)navigationContext.Parameters["projectId"];
+                projectId = (Guid)navigationContext.Parameters["ProjectId"];
             }
         }
 
@@ -312,9 +355,19 @@ namespace AnyTrack.Sprints.Views
                 sprint.TeamEmailAddresses.AddRange(SelectedDevelopers.Select(d => d.EmailAddress).ToList());
             }
 
-            sprintServiceGateway.AddSprint(projectId, sprint);
+            if (EditMode)
+            {
+                sprintServiceGateway.EditSprint(sprintId, sprint);
+            }
+            else
+            {
+                sprintServiceGateway.AddSprint(projectId, sprint);
+            }
+           
             ShowMetroDialog("Save Successful", "Your sprint {0} has been saved successfully.".Substitute(sprintName));
-            NavigateToItem("SprintManager");
+            var navParams = new NavigationParameters();
+            navParams.Add("ProjectId", projectId);
+            NavigateToItem("SprintManager", navParams);
         }
 
         /// <summary>
@@ -326,11 +379,20 @@ namespace AnyTrack.Sprints.Views
             {
                 if (mdr == MessageDialogResult.Affirmative)
                 {
-                    NavigateToItem("SprintManager");
+                    var navParams = new NavigationParameters();
+                    navParams.Add("ProjectId", projectId);
+                    NavigateToItem("SprintManager", navParams);
                 }
             });
 
-            ShowMetroDialog("Sprint Creation Cancellation", "Are you sure you want to cancel? All entered data will be lost.", MessageDialogStyle.AffirmativeAndNegative, callbackAction); 
+            if (EditMode)
+            {
+                ShowMetroDialog("Sprint Edit Cancellation", "Are you sure you want to cancel? All changes will be lost.", MessageDialogStyle.AffirmativeAndNegative, callbackAction); 
+            }
+            else
+            {
+                ShowMetroDialog("Sprint Creation Cancellation", "Are you sure you want to cancel? All data will be lost.", MessageDialogStyle.AffirmativeAndNegative, callbackAction); 
+            }           
         }
 
         /// <summary>
@@ -345,6 +407,11 @@ namespace AnyTrack.Sprints.Views
             DeveloperSearchUserResults.Clear();
             DeveloperSearchUserResults.AddRange(results);
             EnableDeveloperSearchGrid = true;
+
+            if (DeveloperSearchUserResults.Count == 0)
+            {
+                ShowMetroDialog("No Results Found", "There are no developers available that have the required skills. Please try another search.");
+            }
         }
 
         /// <summary>
@@ -363,7 +430,7 @@ namespace AnyTrack.Sprints.Views
         /// <param name="selectedDeveloper">The developer to add</param>
         private void AddDeveloper(ServiceUserSearchInfo selectedDeveloper)
         {
-            if (SelectedDevelopers.Contains(selectedDeveloper))
+            if (SelectedDevelopers.SingleOrDefault(d => d.UserId == selectedDeveloper.UserId) != null)
             {
                 ShowMetroDialog("Developer Already Added", "{0} is already assigned as a developer for the sprint".Substitute(selectedDeveloper.FullName));
                 return;
@@ -375,12 +442,54 @@ namespace AnyTrack.Sprints.Views
         }
 
         /// <summary>
+        /// removes the selected developer from the sprint.
+        /// </summary>
+        /// <param name="selectedDeveloper">the developer to remove</param>
+        private void RemoveDeveloper(ServiceUserSearchInfo selectedDeveloper)
+        {
+            var callbackAction = new Action<MessageDialogResult>(mdr =>
+            {
+                if (mdr == MessageDialogResult.Affirmative)
+                {
+                    string name = selectedDeveloper.FullName;
+                    SelectedDevelopers.Remove(selectedDeveloper);
+                    ShowMetroDialog("Developer Removed", "{0} has been successfully removed from the sprint".Substitute(name));
+                    SelectDeveloperCommand.RaiseCanExecuteChanged();
+                }
+            });
+
+            ShowMetroDialog("Remove Team Member", "Are you sure you want to remove {0} from the sprint?".Substitute(selectedDeveloper.FullName), MessageDialogStyle.AffirmativeAndNegative, callbackAction); 
+        }
+
+        /// <summary>
         /// Calculates the length of the sprint in days.
         /// </summary>
         /// <returns>Sprint length in days</returns>
         private int CalculateSprintLength()
         {
             return (EndDate - StartDate).Days + 1;
+        }
+
+        /// <summary>
+        /// Recalculates the availability for selected users int the team.
+        /// </summary>
+        private void ReCalculateAvailabilty()       
+        {
+            if (SelectedDevelopers != null && SelectedDevelopers.Count > 0)
+            {
+                for (int i = 0; i < SelectedDevelopers.Count; i++)
+                {
+                    var filter = new ServiceUserSearchFilter
+                    {
+                        EmailAddress = SelectedDevelopers[i].EmailAddress,
+                        SprintStartingDate = startDate,
+                        SprintEndingDate = endDate
+                    };
+                    var result = projectServiceGateway.SearchUsers(filter);
+
+                    SelectedDevelopers[i] = result.First();
+                }
+            }
         }
 
         #endregion
