@@ -781,13 +781,8 @@ namespace AnyTrack.Backend.Service
                     user.Roles = new List<Role>();
                 }
 
-                var roleCheck =
-                    unitOfWork.RoleRepository.Items.SingleOrDefault(
-                        r =>
-                            r.RoleName == role.RoleName && r.ProjectId == role.ProjectId &&
-                            r.User.EmailAddress == role.User.EmailAddress && r.SprintId == role.SprintId);
-
-                if (roleCheck == null)
+                var roles = user.Roles.Where(r => r.ProjectId == role.ProjectId && r.RoleName == role.RoleName).ToList();
+                if (roles.Count == 0)
                 {
                     user.Roles.Add(role);
                 }
@@ -827,7 +822,6 @@ namespace AnyTrack.Backend.Service
                 {
                     foreach (var scrumMaster in scrumMasterRolesList)
                     {
-                        unitOfWork.RoleRepository.Delete(scrumMaster);
                         user.Roles.Remove(scrumMaster);     
                     }
                 }
