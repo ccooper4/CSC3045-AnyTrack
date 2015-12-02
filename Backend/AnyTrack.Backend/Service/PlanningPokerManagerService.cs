@@ -174,7 +174,8 @@ namespace AnyTrack.Backend.Service
                         EmailAddress = currentUser.EmailAddress,
                         Name = "{0} {1}".Substitute(currentUser.FirstName, currentUser.LastName),
                         UserID = currentUserId,
-                        UserRoles = currentUser.Roles.Where(r => r.SprintId == sprintId || r.ProjectId == sprint.Project.Id).Select(r => r.RoleName).ToList()
+                        UserRoles = currentUser.Roles.Where(r => r.SprintId == sprintId || r.ProjectId == sprint.Project.Id).Select(r => r.RoleName).ToList(),
+                        Estimate = new ServicePlanningPokerEstimate()
                     }
                 },
                 State = ServicePlanningPokerSessionState.Pending
@@ -294,7 +295,8 @@ namespace AnyTrack.Backend.Service
                 EmailAddress = pendingUserEntry.EmailAddress,
                 Name = pendingUserEntry.Name,
                 UserID = pendingUserEntry.UserID,
-                UserRoles = pendingUserEntry.UserRoles
+                UserRoles = pendingUserEntry.UserRoles,
+                Estimate = new ServicePlanningPokerEstimate()
             });
 
             pendingUsers[thisSession.SprintID].Remove(pendingUserEntry);
