@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.SessionState;
 using AnyTrack.Backend.Data;
 using AnyTrack.Backend.Providers;
 using AnyTrack.Backend.Security;
