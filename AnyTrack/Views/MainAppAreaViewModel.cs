@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Mime;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.Extensions;
+using AnyTrack.Infrastructure.Security;
 using AnyTrack.Infrastructure.Service;
 using AnyTrack.Infrastructure.Service.Model;
 using Prism.Commands;
@@ -18,7 +20,7 @@ namespace AnyTrack.Client.Views
     /// <summary>
     /// The view model for the Main App area..
     /// </summary>
-    public class MainAppAreaViewModel : ValidatedBindableBase
+    public class MainAppAreaViewModel : ValidatedBindableBase, IRegionMemberLifetime
     {
         #region Fields 
 
@@ -87,6 +89,14 @@ namespace AnyTrack.Client.Views
         }
 
         /// <summary>
+        /// Gets a value indicating whether or not this view model can be reused.
+        /// </summary>
+        public bool KeepAlive
+        {
+            get { return false; }
+        }
+
+        /// <summary>
         /// Gets the navigate command.
         /// </summary>
         public DelegateCommand<string> NavigateCommand { get; private set; }
@@ -115,6 +125,9 @@ namespace AnyTrack.Client.Views
         private void Logout()
         {
             Thread.CurrentPrincipal = null;
+            UserDetailsStore.AuthCookie = null;
+            UserDetailsStore.LoggedInUserPrincipal = null;
+            
             RegionManager.RequestNavigate(RegionNames.AppContainer, "Login");
         }
 
