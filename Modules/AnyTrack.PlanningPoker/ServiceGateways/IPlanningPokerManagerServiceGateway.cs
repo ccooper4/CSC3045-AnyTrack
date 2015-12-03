@@ -61,7 +61,7 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         /// Allows the scrum master to cancel a pending planning poker session.
         /// </summary>
         /// <param name="sessionId">The session.</param>
-        void CancelPendingPokerSession(Guid sessionId);
+        void EndPokerSession(Guid sessionId);
 
         /// <summary>
         /// Allows a client to join an active session.

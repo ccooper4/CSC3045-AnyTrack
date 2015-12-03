@@ -30,14 +30,14 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="CancelPendingPokerSession">
+  <xs:element name="EndPokerSession">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionId" type="q5:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="CancelPendingPokerSessionResponse">
+  <xs:element name="EndPokerSessionResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

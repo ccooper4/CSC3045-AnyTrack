@@ -600,13 +600,11 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/StartNewPokerSession", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/StartNewPokerSessionResponse")]
         System.Threading.Tasks.Task<System.Guid> StartNewPokerSessionAsync(System.Guid sprintId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/CancelPendingPokerSession", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/CancelPendingPokerSessionResponse" +
-            "")]
-        void CancelPendingPokerSession(System.Guid sessionId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/EndPokerSession", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/EndPokerSessionResponse")]
+        void EndPokerSession(System.Guid sessionId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/CancelPendingPokerSession", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/CancelPendingPokerSessionResponse" +
-            "")]
-        System.Threading.Tasks.Task CancelPendingPokerSessionAsync(System.Guid sessionId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/EndPokerSession", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/EndPokerSessionResponse")]
+        System.Threading.Tasks.Task EndPokerSessionAsync(System.Guid sessionId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/JoinSession", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/JoinSessionResponse")]
         AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSession JoinSession(System.Guid sessionId);
@@ -703,12 +701,12 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
             return base.Channel.StartNewPokerSessionAsync(sprintId);
         }
         
-        public void CancelPendingPokerSession(System.Guid sessionId) {
-            base.Channel.CancelPendingPokerSession(sessionId);
+        public void EndPokerSession(System.Guid sessionId) {
+            base.Channel.EndPokerSession(sessionId);
         }
         
-        public System.Threading.Tasks.Task CancelPendingPokerSessionAsync(System.Guid sessionId) {
-            return base.Channel.CancelPendingPokerSessionAsync(sessionId);
+        public System.Threading.Tasks.Task EndPokerSessionAsync(System.Guid sessionId) {
+            return base.Channel.EndPokerSessionAsync(sessionId);
         }
         
         public AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSession JoinSession(System.Guid sessionId) {

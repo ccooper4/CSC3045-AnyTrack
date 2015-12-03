@@ -86,16 +86,16 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.ServiceGateways.PlanningPokerManag
 
         #endregion 
 
-        #region CancelPendingPokerSession(Guid sessionId) Tests 
-        
+        #region EndPokerSession(Guid sessionId) Tests
+
         [Test]
-        public void CallCancelPendingPokerSession()
+        public void EndPokerSession()
         {
             var sessionId = Guid.NewGuid();
 
-            serviceGateway.CancelPendingPokerSession(sessionId);
+            serviceGateway.EndPokerSession(sessionId);
 
-            client.Received().CancelPendingPokerSession(sessionId);
+            client.Received().EndPokerSession(sessionId);
         }
 
         #endregion 

@@ -33,11 +33,11 @@
   <wsdl:message name="IPlanningPokerManagerService_StartNewPokerSession_OutputMessage">
     <wsdl:part name="parameters" element="tns:StartNewPokerSessionResponse" />
   </wsdl:message>
-  <wsdl:message name="IPlanningPokerManagerService_CancelPendingPokerSession_InputMessage">
-    <wsdl:part name="parameters" element="tns:CancelPendingPokerSession" />
+  <wsdl:message name="IPlanningPokerManagerService_EndPokerSession_InputMessage">
+    <wsdl:part name="parameters" element="tns:EndPokerSession" />
   </wsdl:message>
-  <wsdl:message name="IPlanningPokerManagerService_CancelPendingPokerSession_OutputMessage">
-    <wsdl:part name="parameters" element="tns:CancelPendingPokerSessionResponse" />
+  <wsdl:message name="IPlanningPokerManagerService_EndPokerSession_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EndPokerSessionResponse" />
   </wsdl:message>
   <wsdl:message name="IPlanningPokerManagerService_JoinSession_InputMessage">
     <wsdl:part name="parameters" element="tns:JoinSession" />
@@ -102,9 +102,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/StartNewPokerSession" message="tns:IPlanningPokerManagerService_StartNewPokerSession_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/StartNewPokerSessionResponse" message="tns:IPlanningPokerManagerService_StartNewPokerSession_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="CancelPendingPokerSession">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/CancelPendingPokerSession" message="tns:IPlanningPokerManagerService_CancelPendingPokerSession_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/CancelPendingPokerSessionResponse" message="tns:IPlanningPokerManagerService_CancelPendingPokerSession_OutputMessage" />
+    <wsdl:operation name="EndPokerSession">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/EndPokerSession" message="tns:IPlanningPokerManagerService_EndPokerSession_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/EndPokerSessionResponse" message="tns:IPlanningPokerManagerService_EndPokerSession_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="JoinSession">
       <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/JoinSession" message="tns:IPlanningPokerManagerService_JoinSession_InputMessage" />
@@ -166,8 +166,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="CancelPendingPokerSession">
-      <soap12:operation soapAction="http://tempuri.org/IPlanningPokerManagerService/CancelPendingPokerSession" style="document" />
+    <wsdl:operation name="EndPokerSession">
+      <soap12:operation soapAction="http://tempuri.org/IPlanningPokerManagerService/EndPokerSession" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

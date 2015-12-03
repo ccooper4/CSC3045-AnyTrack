@@ -32,11 +32,11 @@ namespace AnyTrack.Backend.Service
         Guid StartNewPokerSession(Guid sprintId);
 
         /// <summary>
-        /// Allows the scrum master to cancel a pending planning poker session.
+        /// Allows the scrum master to end a poker session.
         /// </summary>
         /// <param name="sessionId">The session.</param>
         [OperationContract]
-        void CancelPendingPokerSession(Guid sessionId);
+        void EndPokerSession(Guid sessionId);
 
         /// <summary>
         /// Allows a client to join an active session.

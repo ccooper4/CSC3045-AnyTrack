@@ -28,7 +28,12 @@
                 <RowDefinition Height="8*"/>
             </Grid.RowDefinitions>
 
-            <Button Grid.Column="1" Grid.Row="0" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" Height="Auto" Width="Auto" Command="{Binding StartPokerSession}" Content="Start Session"></Button>
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right">
+                <Button Visibility="{Binding ScrumMaster, Converter={StaticResource booleanToVisibilityConverter}}" Grid.Column="1" Grid.Row="0" Background="Transparent" BorderThickness="0" Height="Auto" Width="Auto" Content="Start Session"></Button>
+                <Button Command="{Binding EndPokerSession}" Visibility="{Binding ScrumMaster, Converter={StaticResource booleanToVisibilityConverter}}" Grid.Column="1" Grid.Row="0" Background="Transparent" BorderThickness="0" Height="Auto" Width="Auto" Content="End Session"></Button>
+                <Button Visibility="{Binding Developer, Converter={StaticResource booleanToVisibilityConverter}}" Grid.Column="1" Grid.Row="0" Background="Transparent" BorderThickness="0" Height="Auto" Width="Auto" Content="Exit Session"></Button>
+            </StackPanel>
+            
             <Label Content="{Binding LobbyHeaderText}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"></Label>
 
             <Border Grid.Column="1" Grid.Row="1" CornerRadius="9" BorderBrush="Gray" Background="Gray" BorderThickness="2">

@@ -9,6 +9,7 @@ using AnyTrack.Infrastructure;
 using AnyTrack.PlanningPoker.BackendPlanningPokerManagerService;
 using AnyTrack.PlanningPoker.ServiceGateways;
 using AnyTrack.SharedUtilities.Extensions;
+using Prism.Commands;
 using Prism.Regions;
 
 namespace AnyTrack.PlanningPoker.Views
@@ -38,7 +39,22 @@ namespace AnyTrack.PlanningPoker.Views
         /// <summary>
         /// The lobby header text.
         /// </summary>
-        private string lobbyHeaderText; 
+        private string lobbyHeaderText;
+
+        /// <summary>
+        /// A flag indicating if this user is the scrum master in this lobby. 
+        /// </summary>
+        private bool scrumMaster;
+
+        /// <summary>
+        /// A flag indicating if this user is a developer in this lobby. 
+        /// </summary>
+        private bool developer; 
+
+        /// <summary>
+        /// The session id.
+        /// </summary>
+        private Guid sessionId; 
 
         #endregion 
 
@@ -58,6 +74,7 @@ namespace AnyTrack.PlanningPoker.Views
             this.gateway = gateway;
 
             this.Users = new ObservableCollection<ServicePlanningPokerUser>();
+            this.EndPokerSession = new DelegateCommand(EndCurrentPokerSession); 
         }
 
         #endregion 
@@ -68,6 +85,11 @@ namespace AnyTrack.PlanningPoker.Views
         /// Gets or sets the users in the session.
         /// </summary>
         public ObservableCollection<ServicePlanningPokerUser> Users { get; set; }
+
+        /// <summary>
+        /// Gets or sets the command used to end a poker session.
+        /// </summary>
+        public DelegateCommand EndPokerSession { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether or not the session has been joined.
@@ -117,6 +139,38 @@ namespace AnyTrack.PlanningPoker.Views
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether or not this user is a developer.
+        /// </summary>
+        public bool Developer
+        {
+            get
+            {
+                return developer;
+            }
+
+            set
+            {
+                SetProperty(ref developer, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether or not this user is a scrum master.
+        /// </summary>
+        public bool ScrumMaster
+        {
+            get
+            {
+                return scrumMaster;
+            }
+            
+            set
+            {
+                SetProperty(ref scrumMaster, value);
+            }
+        }
+
         #endregion 
 
         #region Methods
@@ -138,6 +192,7 @@ namespace AnyTrack.PlanningPoker.Views
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
             gateway.NotifyClientOfSessionUpdateEvent -= HandleNotifyClientOfSessionUpdate;
+            gateway.NotifyClientOfTerminatedSessionEvent -= HandleSessionTerminatedEvent;
         }
 
         /// <summary>
@@ -157,11 +212,23 @@ namespace AnyTrack.PlanningPoker.Views
                 var session = needToJoin ? gateway.JoinSession(sessionId) : gateway.RetrieveSessionInfo(sessionId);
 
                 gateway.NotifyClientOfSessionUpdateEvent += HandleNotifyClientOfSessionUpdate;
+                gateway.NotifyClientOfTerminatedSessionEvent += HandleSessionTerminatedEvent;
 
                 UpdateVmGivenSession(session);
                 SessionJoined = true;
                 PendingSessionJoin = false; 
             }
+        }
+
+        /// <summary>
+        /// Handles the session termination event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The event args.</param>
+        private void HandleSessionTerminatedEvent(object sender, EventArgs e)
+        {
+            this.ShowMetroDialog("Planning Poker Session Terminated!", "The planning poker session has been terminated.");
+            this.NavigateToItem("SearchForPlanningPokerSession");
         }
 
         /// <summary>
@@ -172,6 +239,16 @@ namespace AnyTrack.PlanningPoker.Views
         private void HandleNotifyClientOfSessionUpdate(object sender, ServicePlanningPokerSession e)
         {
             UpdateVmGivenSession(e);
+        }
+
+        /// <summary>
+        /// Terminates the current planning poker session.
+        /// </summary>
+        private void EndCurrentPokerSession()
+        {
+            gateway.EndPokerSession(sessionId); 
+            this.ShowMetroDialog("Planning poker session terminated!", "The planning poker session has been terminated!"); 
+            this.NavigateToItem("StartPlanningPokerSession", null);
         }
 
         #endregion 
@@ -187,7 +264,14 @@ namespace AnyTrack.PlanningPoker.Views
             this.Users.Clear();
             this.Users.AddRange(session.Users);
 
+            this.sessionId = session.SessionID;
+
             this.LobbyHeaderText = "{0} - {1}".Substitute(session.SprintName, session.ProjectName);
+
+            var myUserEmail = UserDetailsStore.LoggedInUserPrincipal.Identity.Name;
+
+            ScrumMaster = session.Users.SingleOrDefault(u => u.EmailAddress == myUserEmail && u.UserID == session.HostID) != null;
+            Developer = !ScrumMaster;
         }
 
         #endregion 

@@ -11,6 +11,9 @@ using AnyTrack.PlanningPoker.Views;
 using Prism.Regions;
 using AnyTrack.PlanningPoker.BackendPlanningPokerManagerService;
 using AnyTrack.SharedUtilities.Extensions;
+using AnyTrack.Infrastructure.Providers;
+using AnyTrack.Infrastructure;
+using System.Reflection;
 
 namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PokerLobbyViewModelTests
 {
@@ -49,6 +52,7 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PokerLobbyViewModelTests
         {
             vm = new PokerLobbyViewModel(gateway);
             vm.Users.Should().NotBeNull();
+            vm.EndPokerSession.Should().NotBeNull();
         }
 
         #endregion 
@@ -179,6 +183,41 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PokerLobbyViewModelTests
             vm.Call("HandleNotifyClientOfSessionUpdate", null, session);
             vm.Users.Count.Should().Be(0);
             vm.LobbyHeaderText.Should().Be("{0} - {1}".Substitute(session.SprintName, session.ProjectName));
+        }
+
+        #endregion 
+
+        #region HandleSessionTerminatedEvent(object sender, EventArgs e) Tests 
+
+        [Test]
+        public void CallHandleSessionTerminatedEvent()
+        {
+            vm.MainWindow = Substitute.For<WindowProvider>();
+            vm.RegionManager = Substitute.For<IRegionManager>();
+
+            vm.Call("HandleSessionTerminatedEvent", null, new EventArgs());
+
+            vm.MainWindow.Received().ShowMessageAsync("Planning Poker Session Terminated!", "The planning poker session has been terminated.");
+            vm.RegionManager.Received().RequestNavigate(RegionNames.MainRegion, "SearchForPlanningPokerSession");
+        }
+
+        #endregion 
+
+        #region EndCurrentPokerSession() Tests 
+
+        [Test]
+        public void CallEndCurrentPokerSession()
+        {
+            var sessionId = Guid.NewGuid();
+            vm.MainWindow = Substitute.For<WindowProvider>();
+            vm.RegionManager = Substitute.For<IRegionManager>();
+
+            vm.GetType().GetField("sessionId", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(vm, sessionId);
+
+            vm.Call("EndCurrentPokerSession");
+            gateway.Received().EndPokerSession(sessionId);
+            vm.MainWindow.Received().ShowMessageAsync("Planning poker session terminated!", "The planning poker session has been terminated!");
+            vm.RegionManager.Received().RequestNavigate(RegionNames.MainRegion, "StartPlanningPokerSession");
         }
 
         #endregion 

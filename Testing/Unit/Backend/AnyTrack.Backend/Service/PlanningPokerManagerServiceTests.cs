@@ -451,40 +451,22 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
 
         #endregion 
 
-        #region CancelPendingPokerSession(Guid sessionId) Tests 
+        #region EndPokerSession(Guid sessionId) Tests
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
-        public void CancelASessionWithNoSession()
+        public void EndPokerSessionWithNoSession()
         {
             var sessionId = Guid.NewGuid();
 
             var activeSessions = new Dictionary<Guid, ServicePlanningPokerSession>();
             activeSessionProvider.GetListOfSessions().Returns(activeSessions);
 
-            service.CancelPendingPokerSession(sessionId);
+            service.EndPokerSession(sessionId);
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void CancelASessionWithNoSessionPending()
-        {
-            var sessionId = Guid.NewGuid();
-
-            var activeSessions = new Dictionary<Guid, ServicePlanningPokerSession>();
-            var session = new ServicePlanningPokerSession
-            {
-                SessionID = sessionId,
-                State = ServicePlanningPokerSessionState.Started
-            };
-            activeSessions.Add(sessionId, session);
-            activeSessionProvider.GetListOfSessions().Returns(activeSessions);
-
-            service.CancelPendingPokerSession(sessionId);
-        }
-
-        [Test]
-        public void CancelASession()
+        public void EndPokerSession()
         {
             var sessionId = Guid.NewGuid();
             var sprintId = Guid.NewGuid();
@@ -547,7 +529,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
 
             pendingClientsProvider.GetListOfClients().Returns(pendingClients);
 
-            service.CancelPendingPokerSession(sessionId);
+            service.EndPokerSession(sessionId);
 
             activeSessionProvider.Received().GetListOfSessions();
             pendingClientsProvider.Received().GetListOfClients();

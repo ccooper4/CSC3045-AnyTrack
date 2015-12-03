@@ -231,10 +231,10 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
-        /// Allows the scrum master to cancel a pending planning poker session.
+        /// Allows the scrum master to end a poker session.
         /// </summary>
         /// <param name="sessionId">The session.</param>
-        public void CancelPendingPokerSession(Guid sessionId)
+        public void EndPokerSession(Guid sessionId)
         {
             var sessions = activeSessions.GetListOfSessions();
 
@@ -246,34 +246,32 @@ namespace AnyTrack.Backend.Service
             var thisSession = sessions.Single(s => s.Key == sessionId).Value;
             var sprintId = thisSession.SprintID;
 
-            if (thisSession.State != ServicePlanningPokerSessionState.Pending)
+            if (thisSession.State == ServicePlanningPokerSessionState.Pending)
             {
-                throw new InvalidOperationException("This planning poker session has already been started");
-            }
-
-            // Notify clients in this sprint group. 
-            var availableClientsList = availableClients.GetListOfClients();
-            if (availableClientsList.ContainsKey(sprintId))
-            {
-                var clientList = availableClientsList[sprintId];
-
-                var sessionInfo = new ServiceSessionChangeInfo
+                // Notify clients in this sprint group. 
+                var availableClientsList = availableClients.GetListOfClients();
+                if (availableClientsList.ContainsKey(sprintId))
                 {
-                    SprintId = sprintId,
-                    SessionAvailable = false,
-                    SessionId = null
-                };
+                    var clientList = availableClientsList[sprintId];
 
-                foreach (var client in clientList)
-                {
-                    client.ClientChannel.NotifyClientOfSession(sessionInfo);
+                    var sessionInfo = new ServiceSessionChangeInfo
+                    {
+                        SprintId = sprintId,
+                        SessionAvailable = false,
+                        SessionId = null
+                    };
+
+                    foreach (var client in clientList)
+                    {
+                        client.ClientChannel.NotifyClientOfSession(sessionInfo);
+                    }
                 }
             }
 
             var currentUserEmail = Thread.CurrentPrincipal.Identity.Name;
 
             // Notify and connected clients in the group that a session is no longer available 
-            var connectedUsers = thisSession.Users.Where(u => u.EmailAddress != currentUserEmail); 
+            var connectedUsers = thisSession.Users.Where(u => u.EmailAddress != currentUserEmail);
             foreach (var user in connectedUsers)
             {
                 user.ClientChannel.NotifyClientOfTerminatedSession();
