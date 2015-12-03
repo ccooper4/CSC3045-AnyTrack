@@ -476,12 +476,9 @@ namespace AnyTrack.Backend.Service
 
             user.Estimate = estimate;
 
-            var connectedClientsList = availableClients.GetListOfClients();
-            var clientList = connectedClientsList[sessionId];
-
-            foreach (var client in clientList)
+            foreach (var u in sessions[sessionId].Users.Where(u => u.UserID != currentUser.Id))
             {
-                client.ClientChannel.SendSessionToClient(sessions[sessionId]);
+                u.ClientChannel.NotifyClientOfSessionStart();
             }
         }
 

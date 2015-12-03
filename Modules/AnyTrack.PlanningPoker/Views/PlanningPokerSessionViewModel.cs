@@ -78,7 +78,7 @@ namespace AnyTrack.PlanningPoker.Views
 
             ShowEstimatesCommand = new DelegateCommand(ShowUserEstimates);
 
-            SendEstimateCommand = new DelegateCommand(SubmitEstimateToServer);
+            SendEstimateCommand = new DelegateCommand<string>(SubmitEstimateToServer);
 
             SendFinalEstimateCommand = new DelegateCommand<ServicePlanningPokerEstimate>(SubmitFinalEstimateToServer);
         }               
@@ -120,7 +120,7 @@ namespace AnyTrack.PlanningPoker.Views
         /// <summary>
         /// Gets the command used to send a an estimate from client to server. 
         /// </summary>
-        public DelegateCommand SendEstimateCommand { get; private set; }
+        public DelegateCommand<string> SendEstimateCommand { get; private set; }
 
         /// <summary>
         /// Gets the command used to send and set the final story point estimate. 
@@ -166,7 +166,7 @@ namespace AnyTrack.PlanningPoker.Views
 
             set
             {
-                estimateToSend = value;
+                SetProperty(ref estimateToSend, value);
             }
         }
 
@@ -300,11 +300,12 @@ namespace AnyTrack.PlanningPoker.Views
         /// <summary>
         /// Submit a story estimate to the server to be relayed to other session members.
         /// </summary>
-        private void SubmitEstimateToServer()
+        /// <param name="estimate">The estimate to send</param>
+        private void SubmitEstimateToServer(string estimate)
         {
             ServicePlanningPokerEstimate userEstimate = new ServicePlanningPokerEstimate
             {
-                Estimate = double.Parse(this.EstimateToSend),
+                Estimate = double.Parse(estimate),
                 SessionID = this.sessionId
             };
 
