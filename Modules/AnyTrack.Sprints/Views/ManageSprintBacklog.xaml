@@ -19,14 +19,14 @@
                 <RowDefinition Height="5*"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Grid Row="0" Background="White" Margin="15,15,15,30">
+            <Grid Row="0" Margin="15,15,15,30">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20*"></ColumnDefinition>
                     <ColumnDefinition Width="8*"></ColumnDefinition>
                     <ColumnDefinition Width="20*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Grid Background="IndianRed">
+                <Grid Background="LightSlateGray">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25"></RowDefinition>
                         <RowDefinition></RowDefinition>
@@ -61,7 +61,7 @@
                     <Button Command="{Binding Path=RemoveFromSprintCommand}" Grid.Row="2" Width="100" Height="20" Content="&lt;&lt; Remove"></Button>
                     <Button Command="{Binding Path=RemoveAllFromSprintCommand}" Grid.Row="3" Width="100" Height="20" Content="&lt;&lt; Remove All"></Button>
                 </Grid>
-                <Grid Grid.Column="2" Background="IndianRed">
+                <Grid Grid.Column="2" Background="LightSlateGray">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0*"/>
                         <ColumnDefinition/>
@@ -90,12 +90,12 @@
                 <Border BorderBrush="Black" BorderThickness="1"/>
                 <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2"/>
             </Grid>
-            <Grid Row="1" Background="White" VerticalAlignment="Center" Margin="15,0,15,0">
+            <Grid Row="1" VerticalAlignment="Center" Margin="15,0,15,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="32*"></ColumnDefinition>
-                    <ColumnDefinition Width="3*"></ColumnDefinition>
-                    <ColumnDefinition Width="3*"></ColumnDefinition>
-                    <ColumnDefinition Width="6*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Button Width="50" Command="{Binding Path=SaveCommand}" Content="Save" Grid.Column="1"></Button>
                 <Button Width="50" Content="Cancel" Grid.Column="2"></Button>

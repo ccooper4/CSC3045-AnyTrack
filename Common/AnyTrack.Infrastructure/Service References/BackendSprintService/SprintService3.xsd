@@ -26,6 +26,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="SprintId" type="ser:guid" />
       <xs:element minOccurs="0" name="SprintStoryId" type="ser:guid" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Story" nillable="true" type="tns:ServiceStory" />
     </xs:sequence>
   </xs:complexType>

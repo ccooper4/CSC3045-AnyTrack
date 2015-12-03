@@ -97,7 +97,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.ProjectOptionsViewModelTests
 
         #endregion 
 
-        #region GoToBacklog(string projectId) Tests 
+        #region GoToBacklog() Tests 
 
         [Test]
         public void CallGoToBacklog()
@@ -118,6 +118,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.ProjectOptionsViewModelTests
         }
 
         #endregion 
+
     }
 
     #endregion 

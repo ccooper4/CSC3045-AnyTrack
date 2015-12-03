@@ -12,7 +12,7 @@
              xml:lang="en-GB">
 
     <UserControl.Resources>
-        <converter:BooleanToVisibilityConverter x:Key="booleanToVisibility"/>
+        <BooleanToVisibilityConverter x:Key="booleanToVisibility"/>
         <Style TargetType="ListBox">
             <Setter Property="ItemsPanel">
                 <Setter.Value>

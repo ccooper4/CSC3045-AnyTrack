@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
@@ -73,7 +74,7 @@ namespace AnyTrack.Backend.Service
         List<ServiceSprintSummary> GetSprintNames(Guid? projectId, bool scrumMaster, bool developer);
 
         /// <summary>
-        /// Gets all the stories associated with a sprint
+        /// Gets all the stories associated with a sprintISprintService
         /// </summary>
         /// <param name="sprintId">Sprint id to retrieve sprints from</param>
         /// <returns>List of sprint stories</returns>
@@ -83,9 +84,20 @@ namespace AnyTrack.Backend.Service
         /// <summary>
         /// Manages the sprint backlog
         /// </summary>
+        /// <param name="projectId">Project id of the project</param>
         /// <param name="sprintId">Sprint id of sprint</param>
         /// <param name="sprintStories">List of sprint stories</param>
         [OperationContract]
-        void ManageSprintBacklog(Guid sprintId, List<ServiceSprintStory> sprintStories);
+        void ManageSprintBacklog(Guid projectId, Guid sprintId, List<ServiceSprintStory> sprintStories);
+
+        /// <summary>
+        /// Sending an email request
+        /// </summary>
+        /// <param name="senderEmailAddress">The email adddress to send the email to</param>
+        /// <param name="recipientEmailAddress">The email adddress where the email is sent from</param>
+        /// <param name="emailMessage">The email address of the </param>
+        /// <param name="emailAttachment">Attachment for the email</param>
+        [OperationContract]
+        void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, Attachment emailAttachment);
     }
 }

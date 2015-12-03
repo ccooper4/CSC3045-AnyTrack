@@ -33,8 +33,10 @@ namespace AnyTrack.Sprints.Views
         private ObservableCollection<ServiceStorySummary> productBacklog;
         private ObservableCollection<ServiceSprintStory> sprintBacklog;
         private string summary;
-        private Guid projectId = new Guid("ae3084e3-1667-44ba-b217-30fcea37191a");
-        private Guid sprintId = new Guid("be3084e3-1667-44ba-b217-30fcea37191a");
+        private Guid projectId;
+        private Guid sprintId;
+        private DateTime sprintStartDate;
+        private bool sprintActive;
         #endregion
 
         #region Properties
@@ -122,9 +124,16 @@ namespace AnyTrack.Sprints.Views
             }
         }
 
+        public bool SprintActive
+        {
+            get { return !sprintActive; }
+            set { sprintActive = !value; }
+        }
+
         #endregion
 
         #region Constructor
+
         public ManageSprintBacklogViewModel(ISprintServiceGateway sprintGateway, IProjectServiceGateway projectGateway)
         {
             projectService = projectGateway;
@@ -139,10 +148,6 @@ namespace AnyTrack.Sprints.Views
                 throw new ArgumentNullException("sprintService");
             }
 
-            SprintBacklog = new ObservableCollection<ServiceSprintStory>(sprintService.GetSprintStories(sprintId));
-            ProductBacklog = new ObservableCollection<ServiceStorySummary>(projectService.GetProjectStories(projectId));
-            UpdateLogs();
-
             AddToSprintCommand = new DelegateCommand(AddToSprint);
             RemoveFromSprintCommand = new DelegateCommand(RemoveFromSprint);
             AddAllToSprintCommand = new DelegateCommand(AddAllToSprint);
@@ -152,67 +157,108 @@ namespace AnyTrack.Sprints.Views
             SelectedProductStoryIndex = -1;
             SelectedSprintIndex = -1;
         }
+
         #endregion
+
 
         #region Methods
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            ///throw new NotImplementedException();
+            if (navigationContext.Parameters.ContainsKey("ProjectId"))
+            {
+                projectId = (Guid)navigationContext.Parameters["ProjectId"];
+                ProductBacklog = new ObservableCollection<ServiceStorySummary>(projectService.GetProjectStories(projectId));
+            }
+            if (navigationContext.Parameters.ContainsKey("SprintId"))
+            {
+                sprintId = (Guid)navigationContext.Parameters["SprintId"];
+                SprintBacklog = new ObservableCollection<ServiceSprintStory>(sprintService.GetSprintStories(sprintId));
+                PreventDuplicateStories();
+
+                sprintStartDate = sprintService.GetSprint(sprintId).StartDate;
+                SprintActive = sprintStartDate <= DateTime.Today;
+            }
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
-            ///throw new NotImplementedException();
             return false;
         }
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            ///throw new NotImplementedException();
         }
 
         private void AddToSprint()
         {
-            if (SelectedProductStory != null)
+            if (!SprintActive)
             {
-                SprintBacklog.Add(MapProductStoryToSprintStory(SelectedProductStory));
-                ProductBacklog.Remove(SelectedProductStory);
+                if (SelectedProductStory != null)
+                {
+                    SprintBacklog.Add(MapProductStoryToSprintStory(SelectedProductStory));
+                    ProductBacklog.Remove(SelectedProductStory);
+                }
+            }
+            else
+            {
+                ShowMetroDialog("Sprint is Active", "You cannot move stories during an active sprint");
             }
         }
 
         private void AddAllToSprint()
         {
-            foreach (var story in ProductBacklog)
+            if (!SprintActive)
             {
-                SprintBacklog.Add(MapProductStoryToSprintStory(story));
+                foreach (var story in ProductBacklog)
+                {
+                    SprintBacklog.Add(MapProductStoryToSprintStory(story));
+                }
+                ProductBacklog.Clear();
             }
-            ProductBacklog.Clear();
+            else
+            {
+                ShowMetroDialog("Sprint is Active", "You cannot move stories during an active sprint");
+            }
         }
 
         private void RemoveFromSprint()
         {
-            if (SelectedSprint != null)
+            if (!SprintActive)
             {
-                ProductBacklog.Add(MapSprintStoryToProductStory(SelectedSprint));
-                SprintBacklog.Remove(SelectedSprint);
+                if (SelectedSprint != null)
+                {
+                    ProductBacklog.Add(MapSprintStoryToProductStory(SelectedSprint));
+                    SprintBacklog.Remove(SelectedSprint);
+                }
+            }
+            else
+            {
+                ShowMetroDialog("Sprint is Active", "You cannot move stories during an active sprint");
             }
         }
 
         private void RemoveAllFromSprint()
         {
-            foreach (var story in SprintBacklog)
+            if (!SprintActive)
             {
-                ProductBacklog.Add(MapSprintStoryToProductStory(story));
+                foreach (var story in SprintBacklog)
+                {
+                    ProductBacklog.Add(MapSprintStoryToProductStory(story));
+                }
+                SprintBacklog.Clear();
             }
-            SprintBacklog.Clear();
+            else
+            {
+                ShowMetroDialog("Sprint is Active", "You cannot move stories during an active sprint");
+            }
         }
 
-        private void UpdateLogs()
+        private void PreventDuplicateStories()
         {
             foreach (var story in SprintBacklog)
             {
                 if (story.Story.InSprint)
-                {
+                {                     
                     ProductBacklog.Remove(ProductBacklog.Where(i => i.StoryId == story.Story.StoryId).Single());
                 }
             }
@@ -220,7 +266,7 @@ namespace AnyTrack.Sprints.Views
 
         private void Save()
         {
-            sprintService.ManageSprintBacklog(sprintId, new List<ServiceSprintStory>(sprintBacklog));
+            sprintService.ManageSprintBacklog(projectId, sprintId, new List<ServiceSprintStory>(sprintBacklog));
         }
 
         private ServiceStorySummary MapSprintStoryToProductStory(ServiceSprintStory sprintStory)
@@ -239,6 +285,7 @@ namespace AnyTrack.Sprints.Views
             sprintStory.Story.Summary = productStory.Summary;
             sprintStory.Story.StoryId = productStory.StoryId;
             sprintStory.Story.InSprint = (bool)productStory.InSprint;
+            sprintStory.Status = ServiceSprintStoryStatus.NotStarted;
             return sprintStory;
         }
         #endregion

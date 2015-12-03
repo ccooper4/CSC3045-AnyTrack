@@ -95,9 +95,9 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         private ServiceSprintSummary sprintSummary;
 
-        #endregion 
+        #endregion
 
-        #region Constructor 
+        #region Constructor
 
         /// <summary>
         /// Constructs a new instance of the project options view model.
@@ -112,10 +112,12 @@ namespace AnyTrack.Sprints.Views
 
             OpenProjectManager = new DelegateCommand(DisplayProjectManager);
             OpenPlanningPoker = new DelegateCommand(DisplayPlanningPoker);
+            OpenBurndown = new DelegateCommand(DisplayBurnDownCharts);
             OpenEditSprint = new DelegateCommand(DisplayEditSprint);
+            OpenManageSprintBacklog = new DelegateCommand(DisplaySprintBacklog);
         }
 
-        #endregion 
+        #endregion
 
         #region Properties
 
@@ -320,7 +322,7 @@ namespace AnyTrack.Sprints.Views
             set { SetProperty(ref isScrumMaster, value); }
         }
 
-        #endregion 
+        #endregion
 
         #region Commands
 
@@ -335,9 +337,19 @@ namespace AnyTrack.Sprints.Views
         public DelegateCommand OpenPlanningPoker { get; set; }
 
         /// <summary>
+        /// Gets or sets a command to open the burndown charts for the sprint.
+        /// </summary>
+        public DelegateCommand OpenBurndown { get; set; }
+        
+        /// <summary>
         /// Gets or sets a command to open edit sprint for a specified sprint.
         /// </summary>
         public DelegateCommand OpenEditSprint { get; set; }
+
+        /// <summary>
+        /// Gets or sets a command to open the manage sprint backlog screen.
+        /// </summary>
+        public DelegateCommand OpenManageSprintBacklog { get; set; }
 
         #endregion
 
@@ -350,7 +362,7 @@ namespace AnyTrack.Sprints.Views
         /// <returns>A true or false value indicating if this flyout can be re-used.</returns>
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
-            return false; 
+            return false;
         }
 
         /// <summary>
@@ -395,7 +407,7 @@ namespace AnyTrack.Sprints.Views
             var navParams = new NavigationParameters();
             navParams.Add("projectInfo", projectSummary);
             navParams.Add("openProjectOptions", "true");
-            NavigateToItem("MyProjects", navParams);          
+            NavigateToItem("MyProjects", navParams);
         }
 
         /// <summary>
@@ -411,6 +423,17 @@ namespace AnyTrack.Sprints.Views
             navParams.Add("SprintId", sprintId);
             NavigateToItem("StartPlanningPokerSession", navParams);
         }
+        
+               /// <summary>
+        /// Navigates to the display burndown charts.
+        /// </summary>
+        private void DisplayBurnDownCharts()
+        {
+            IsOpen = false;
+            var navParams = new NavigationParameters();
+            navParams.Add("sprintId", sprintId);
+            NavigateToItem("BurnDown", navParams);
+        }
 
         /// <summary>
         /// Navigates to CreateSprint in Edit Mode
@@ -424,6 +447,20 @@ namespace AnyTrack.Sprints.Views
             navParams.Add("SprintId", sprintId);
             navParams.Add("EditMode", "true");
             NavigateToItem("CreateSprint", navParams);
+        }
+
+        /// <summary>
+        /// Navigates to the start planning poker session screen for this project and sprint.
+        /// </summary>
+        private void DisplaySprintBacklog()
+        {
+            IsOpen = false;
+
+            var navParams = new NavigationParameters();
+
+            navParams.Add("ProjectId", projectId);
+            navParams.Add("SprintId", sprintId);
+            NavigateToItem("ManageSprintBacklog", navParams);
         }
 
         #endregion

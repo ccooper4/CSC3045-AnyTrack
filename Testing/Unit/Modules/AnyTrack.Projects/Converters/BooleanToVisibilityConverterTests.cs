@@ -1,4 +1,5 @@
-﻿using AnyTrack.Projects.Converters;
+﻿using AnyTrack.Sprints.Converters;
+using AnyTrack.Projects.Converters;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using AnyTrack.Sprints.Converters;
 using FluentAssertions;
 
 namespace Unit.Modules.AnyTrack.Projects.Converters.BooleanToVisibilityConverterTests
@@ -13,7 +15,7 @@ namespace Unit.Modules.AnyTrack.Projects.Converters.BooleanToVisibilityConverter
     #region Context 
 
     public class Context
-    {
+    {   
         public static BooleanToVisibilityConverter converter; 
 
         [SetUp]

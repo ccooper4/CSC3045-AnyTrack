@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Mail;
 using AnyTrack.Infrastructure.BackendSprintService;
 
 namespace AnyTrack.Infrastructure.ServiceGateways
@@ -62,8 +63,18 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         /// <summary>
         /// Manages the sprint backlog
         /// </summary>
+        /// <param name="projectId">the id of the project</param>
         /// <param name="sprintId">the id of the sprint</param>
         /// <param name="updatedSprintBacklog">the updated sprint backlog</param>
-        void ManageSprintBacklog(Guid sprintId, List<ServiceSprintStory> updatedSprintBacklog);
+        void ManageSprintBacklog(Guid projectId, Guid sprintId, List<ServiceSprintStory> updatedSprintBacklog);
+
+        /// <summary>
+        /// Sends an email of a burndown chart
+        /// </summary>
+        /// <param name="senderEmailAddress">The email adddress to send the email to</param>
+        /// <param name="recipientEmailAddress">The email adddress where the email is sent from</param>
+        /// <param name="emailMessage">The email address of the </param>
+        /// <param name="emailAttachment">Attachment for the email</param>
+        void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, Attachment emailAttachment);
     }
 }
