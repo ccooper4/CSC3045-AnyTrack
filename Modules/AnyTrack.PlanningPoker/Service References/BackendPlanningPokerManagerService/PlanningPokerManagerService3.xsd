@@ -112,14 +112,14 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ShowEstimatesToClient">
+  <xs:element name="SendSessionToClient">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionId" type="q11:guid" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="session" nillable="true" type="q11:ServicePlanningPokerSession" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ShowEstimatesToClientResponse">
+  <xs:element name="SendSessionToClientResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

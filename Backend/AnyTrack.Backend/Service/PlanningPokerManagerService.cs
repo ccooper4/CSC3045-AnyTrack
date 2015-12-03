@@ -337,30 +337,21 @@ namespace AnyTrack.Backend.Service
                 throw new ArgumentException("No session could be found", "sessionId");
             }
 
-            sessions[sessionId].Users.Find(x => x.UserID == currentUser.Id).Estimate = estimate;
-        }
+            ServicePlanningPokerUser user = sessions[sessionId].Users.FirstOrDefault(x => x.UserID == currentUser.Id);
 
-        /// <summary>
-        /// Method to send estimate to clients
-        /// </summary>
-        /// /// <param name="sessionId">The session id</param>
-        public void SubmitEstimateToClients(Guid sessionId)
-        {
-            var sessions = activeSessions.GetListOfSessions();
-
-            if (!sessions.ContainsKey(sessionId))
+            if (user == null)
             {
-                throw new ArgumentException("No session could be found", "sessionId");
+                throw new ArgumentException("User could not be found", "currentUser");
             }
 
-            sessions[sessionId].State = ServicePlanningPokerSessionState.ShowingEstimates;
+            user.Estimate = estimate;
 
             var connectedClientsList = availableClients.GetListOfClients();
             var clientList = connectedClientsList[sessionId];
 
             foreach (var client in clientList)
             {
-                client.ClientChannel.ShowEstimatesToClient(sessionId);
+                client.ClientChannel.SendSessionToClient(sessions[sessionId]);
             }
         }
 

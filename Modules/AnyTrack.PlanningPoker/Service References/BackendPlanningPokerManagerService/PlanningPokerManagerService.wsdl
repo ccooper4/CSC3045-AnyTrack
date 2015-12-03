@@ -75,11 +75,11 @@
   <wsdl:message name="IPlanningPokerManagerService_NotifyClientToClearStoryPointEstimateFromServer_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotifyClientToClearStoryPointEstimateFromServerResponse" />
   </wsdl:message>
-  <wsdl:message name="IPlanningPokerManagerService_ShowEstimatesToClient_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ShowEstimatesToClient" />
+  <wsdl:message name="IPlanningPokerManagerService_SendSessionToClient_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:SendSessionToClient" />
   </wsdl:message>
-  <wsdl:message name="IPlanningPokerManagerService_ShowEstimatesToClient_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ShowEstimatesToClientResponse" />
+  <wsdl:message name="IPlanningPokerManagerService_SendSessionToClient_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:SendSessionToClientResponse" />
   </wsdl:message>
   <wsdl:portType name="IPlanningPokerManagerService">
     <wsdl:operation name="SubscribeToNewSessionMessages">
@@ -120,9 +120,9 @@
       <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/NotifyClientToClearStoryPointEstimateFromServer" message="tns:IPlanningPokerManagerService_NotifyClientToClearStoryPointEstimateFromServer_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/NotifyClientToClearStoryPointEstimateFromServerResponse" message="tns:IPlanningPokerManagerService_NotifyClientToClearStoryPointEstimateFromServer_InputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation name="ShowEstimatesToClient">
-      <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/ShowEstimatesToClient" message="tns:IPlanningPokerManagerService_ShowEstimatesToClient_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/ShowEstimatesToClientResponse" message="tns:IPlanningPokerManagerService_ShowEstimatesToClient_InputCallbackMessage" />
+    <wsdl:operation name="SendSessionToClient">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/SendSessionToClient" message="tns:IPlanningPokerManagerService_SendSessionToClient_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/SendSessionToClientResponse" message="tns:IPlanningPokerManagerService_SendSessionToClient_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="wsDualHttpBindingEndpoint" type="tns:IPlanningPokerManagerService">
@@ -212,8 +212,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="ShowEstimatesToClient">
-      <soap12:operation soapAction="http://tempuri.org/IPlanningPokerManagerService/ShowEstimatesToClient" style="document" />
+    <wsdl:operation name="SendSessionToClient">
+      <soap12:operation soapAction="http://tempuri.org/IPlanningPokerManagerService/SendSessionToClient" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
