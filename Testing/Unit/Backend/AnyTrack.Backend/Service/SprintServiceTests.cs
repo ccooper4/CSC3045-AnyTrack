@@ -15,6 +15,9 @@ using NSubstitute;
 using NUnit.Framework;
 using Task = AnyTrack.Backend.Data.Model.Task;
 using System.Threading;
+using AnyTrack.Infrastructure;
+using AnyTrack.Infrastructure.Security;
+using ServiceLoginResult = AnyTrack.Infrastructure.BackendAccountService.ServiceLoginResult;
 
 namespace Unit.Backend.AnyTrack.Backend.Service
 {
@@ -945,6 +948,10 @@ namespace Unit.Backend.AnyTrack.Backend.Service
         [Test]
         public void GetSprintStories()
         {
+            var currentPrincipal = new ServiceUserPrincipal(new ServiceLoginResult { EmailAddress = "tester@agile.local" }, "");
+
+            UserDetailsStore.LoggedInUserPrincipal = currentPrincipal;
+
             ServiceSprint sprint = new ServiceSprint()
             {
                 SprintId = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
@@ -1002,6 +1009,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service
 
             unitOfWork.ProjectRepository.Items.Returns(projectList.AsQueryable());
             unitOfWork.SprintRepository.Items.Returns(sprintList.AsQueryable());
+            unitOfWork.UserRepository.Items.Returns(userList.AsQueryable());
             
             service.AddSprint(projectList[0].Id, sprint);
             
