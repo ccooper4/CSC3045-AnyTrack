@@ -22,6 +22,16 @@ namespace AnyTrack.Backend.Service.Model
         public Guid SprintID { get; set; }
 
         /// <summary>
+        /// Gets or sets the sprint name.
+        /// </summary>
+        public string SprintName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the project name.
+        /// </summary>
+        public string ProjectName { get; set; }
+
+        /// <summary>
         /// Gets or sets the active story
         /// </summary>
         public Guid ActiveStory { get; set; }

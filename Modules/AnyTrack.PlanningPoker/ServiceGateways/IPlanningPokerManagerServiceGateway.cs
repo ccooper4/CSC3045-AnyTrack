@@ -34,6 +34,11 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         /// </summary>
         event EventHandler NotifyClientToClearStoryPointEstimateFromServerEvent;
 
+        /// <summary>
+        /// Notifies the client that the session has changed.
+        /// </summary>
+        event EventHandler<ServicePlanningPokerSession> NotifyClientOfSessionUpdateEvent; 
+
         #endregion
 
         #region Methods 
@@ -42,7 +47,8 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         /// Allows the client to subscribe to messages about new sessions for the given project and sprint ids. 
         /// </summary>
         /// <param name="sprintId">The sprint id.</param>
-        void SubscribeToNewSessionMessages(Guid sprintId);
+        /// <returns>Any currently available session.</returns>
+        ServiceSessionChangeInfo SubscribeToNewSessionMessages(Guid sprintId);
 
         /// <summary>
         /// Allows the scrum master to start a new planning poker session.
@@ -63,6 +69,13 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         /// <param name="sessionId">The session id.</param>
         /// <returns>The details of the server side planning poker session.</returns>
         ServicePlanningPokerSession JoinSession(Guid sessionId);
+
+        /// <summary>
+        /// Allows the client to pull an up to date session state. 
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        /// <returns>The current session.</returns>
+        ServicePlanningPokerSession RetrieveSessionInfo(Guid sessionId);
 
         /// <summary>
         /// Allows a client to submit message to a session on the server

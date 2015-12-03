@@ -19,8 +19,9 @@ namespace AnyTrack.Backend.Service
         /// Allows the client to subscribe to messages about new sessions for the given project and sprint ids. 
         /// </summary>
         /// <param name="sprintId">The sprint id.</param>
+        /// <returns>A current session, if there is one.</returns>
         [OperationContract]
-        void SubscribeToNewSessionMessages(Guid sprintId);
+        ServiceSessionChangeInfo SubscribeToNewSessionMessages(Guid sprintId);
 
         /// <summary>
         /// Allows the scrum master to start a new planning poker session.
@@ -44,6 +45,14 @@ namespace AnyTrack.Backend.Service
         /// <returns>The details of the server side planning poker session.</returns>
         [OperationContract]
         ServicePlanningPokerSession JoinSession(Guid sessionId);
+
+        /// <summary>
+        /// Allows the client to pull an up to date session state. 
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        /// <returns>The current session.</returns>
+        [OperationContract]
+        ServicePlanningPokerSession RetrieveSessionInfo(Guid sessionId);
         
         /// <summary>
         /// Method to submit message to chat channel

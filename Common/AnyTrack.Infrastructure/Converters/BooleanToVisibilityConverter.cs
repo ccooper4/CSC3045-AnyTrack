@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace AnyTrack.Projects.Converters
+namespace AnyTrack.Infrastructure.Converters
 {
     /// <summary>
     /// Provides a class to convert between the Visibility enum and a boolean flag.
@@ -45,15 +45,15 @@ namespace AnyTrack.Projects.Converters
         /// <returns>A bool value.</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var visibility = (Visibility)value; 
+            var visibility = (Visibility)value;
 
             if (visibility == Visibility.Visible)
             {
-                return true; 
+                return true;
             }
             else
             {
-                return false; 
+                return false;
             }
         }
     }

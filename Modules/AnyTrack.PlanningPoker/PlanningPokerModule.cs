@@ -88,6 +88,7 @@ namespace AnyTrack.PlanningPoker
             // Views.
             container.RegisterType<object, StartPlanningPokerSession>("StartPlanningPokerSession");
             container.RegisterType<object, SearchForPlanningPokerSession>("SearchForPlanningPokerSession");
+            container.RegisterType<object, PokerLobby>("PokerLobby");
         }
 
         #endregion 

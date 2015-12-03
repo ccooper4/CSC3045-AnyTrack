@@ -104,6 +104,10 @@
     </Compile>
     <Compile Include="ServiceGateways\IPlanningPokerManagerServiceGateway.cs" />
     <Compile Include="ServiceGateways\PlanningPokerManagerServiceGateway.cs" />
+    <Compile Include="Views\PokerLobby.xaml.cs">
+      <DependentUpon>PokerLobby.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PokerLobbyViewModel.cs" />
     <Compile Include="Views\SearchForPlanningPokerSession.xaml.cs">
       <DependentUpon>SearchForPlanningPokerSession.xaml</DependentUpon>
     </Compile>
@@ -129,6 +133,9 @@
     <None Include="Service References\BackendPlanningPokerManagerService\AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSession.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\BackendPlanningPokerManagerService\AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServiceSessionChangeInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\BackendPlanningPokerManagerService\PlanningPokerManagerService.wsdl" />
     <None Include="Service References\BackendPlanningPokerManagerService\PlanningPokerManagerService.xsd">
       <SubType>Designer</SubType>
@@ -144,6 +151,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\PokerLobby.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SearchForPlanningPokerSession.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

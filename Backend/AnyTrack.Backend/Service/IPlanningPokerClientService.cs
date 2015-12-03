@@ -28,6 +28,13 @@ namespace AnyTrack.Backend.Service
         void NotifyClientOfTerminatedSession();
 
         /// <summary>
+        /// Notifies the client of changes to the session.
+        /// </summary>
+        /// <param name="newSession">The new session.</param>
+        [OperationContract]
+        void NotifyClientOfSessionUpdate(ServicePlanningPokerSession newSession); 
+
+        /// <summary>
         /// Notifies any conected clients with a new message that has been sent
         /// </summary>
         /// <param name="msg">The message being sent to the clients</param>

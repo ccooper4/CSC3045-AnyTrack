@@ -13,6 +13,8 @@ using Prism.Regions;
 using AnyTrack.PlanningPoker.BackendPlanningPokerManagerService;
 using System.Windows;
 using AnyTrack.SharedUtilities.Extensions;
+using System.Reflection;
+using AnyTrack.Infrastructure;
 
 namespace Unit.Modules.AnyTrack.PlanningPoker.Views.SearchForPlanningPokerSessionViewModelTests
 {
@@ -85,6 +87,8 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.SearchForPlanningPokerSessio
         {
             var sprintId = Guid.NewGuid();
 
+            gateway.SubscribeToNewSessionMessages(sprintId).Returns(a => { return null; });
+
             var navService = Substitute.For<IRegionNavigationService>();
             var navContext = new NavigationContext(navService, new Uri("Test", UriKind.Relative));
             navContext.Parameters.Add("sprintId", sprintId);
@@ -92,6 +96,35 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.SearchForPlanningPokerSessio
             vm.OnNavigatedTo(navContext);
 
             gateway.Received().SubscribeToNewSessionMessages(sprintId);
+        }
+
+        [Test]
+        public void CallOnNavigatedToAndASessionIsReturned()
+        {
+            var sprintId = Guid.NewGuid();
+
+            var newSessionInfo = new ServiceSessionChangeInfo
+            {
+                SessionAvailable = true,
+                SessionId = Guid.NewGuid(),
+                SprintId = sprintId,
+                SprintName = "Test",
+                ProjectName = "Test"
+            };
+
+            gateway.SubscribeToNewSessionMessages(sprintId).Returns(newSessionInfo);
+
+            var navService = Substitute.For<IRegionNavigationService>();
+            var navContext = new NavigationContext(navService, new Uri("Test", UriKind.Relative));
+            navContext.Parameters.Add("sprintId", sprintId);
+
+            vm.OnNavigatedTo(navContext);
+
+            gateway.Received().SubscribeToNewSessionMessages(sprintId);
+
+            vm.ShowSearchingForSesion.Should().Be(Visibility.Collapsed);
+            vm.ShowSessionFound.Should().Be(Visibility.Visible);
+            vm.SessionAvailableText.Should().Be("There is a poker session available for project {0} and sprint {1} that you can now join.".Substitute(newSessionInfo.ProjectName, newSessionInfo.SprintName));
         }
 
         #endregion 
@@ -131,6 +164,30 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.SearchForPlanningPokerSessio
 
             vm.ShowSearchingForSesion.Should().Be(Visibility.Visible);
             vm.ShowSessionFound.Should().Be(Visibility.Collapsed);
+        }
+
+        #endregion 
+
+        #region JoinAndNavigateToPokerSession() Tests 
+
+        [Test]
+        public void CallJoinAndNavigateToPokerSession()
+        {
+            var sessionId = Guid.NewGuid();
+            vm.GetType().GetField("sessionId", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(vm, sessionId);
+
+            var regionManager = Substitute.For<IRegionManager>();
+            vm.RegionManager = regionManager;
+
+            NavigationParameters sentParams = null;
+            vm.RegionManager.RequestNavigate(Arg.Any<string>(), Arg.Any<string>(), Arg.Do<NavigationParameters>(n => sentParams = n));
+
+            vm.Call("JoinAndNavigateToPokerSession");
+
+            sentParams.Should().NotBeNull();
+            sentParams.ContainsKey("sessionId").Should().BeTrue();
+            sentParams["sessionId"].Should().Be(sessionId);
+            regionManager.Received().RequestNavigate(RegionNames.MainRegion, "PokerLobby", sentParams);
         }
 
         #endregion 

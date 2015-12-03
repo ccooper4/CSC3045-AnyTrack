@@ -73,6 +73,11 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         /// </summary>
         public event EventHandler NotifyClientToClearStoryPointEstimateFromServerEvent;
 
+        /// <summary>
+        /// Notifies the client that the session has changed.
+        /// </summary>
+        public event EventHandler<ServicePlanningPokerSession> NotifyClientOfSessionUpdateEvent; 
+
         #endregion 
 
         #region Methods 
@@ -83,9 +88,10 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         /// Allows the client to subscribe to messages about new sessions for the given project and sprint ids. 
         /// </summary>
         /// <param name="sprintId">The sprint id.</param>
-        public void SubscribeToNewSessionMessages(Guid sprintId)
+        /// <returns>Any currently available session.</returns>
+        public ServiceSessionChangeInfo SubscribeToNewSessionMessages(Guid sprintId)
         {
-            client.SubscribeToNewSessionMessages(sprintId);
+            return client.SubscribeToNewSessionMessages(sprintId);
         }
 
         /// <summary>
@@ -115,6 +121,16 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         public ServicePlanningPokerSession JoinSession(Guid sessionId)
         {
             return client.JoinSession(sessionId);
+        }
+
+        /// <summary>
+        /// Allows the client to pull an up to date session state. 
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        /// <returns>The current session.</returns>
+        public ServicePlanningPokerSession RetrieveSessionInfo(Guid sessionId)
+        {
+            return client.RetrieveSessionInfo(sessionId);
         }
 
         #endregion 
@@ -171,6 +187,15 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         public void ShowEstimatesToClient(Guid sessionId)
         {
             NotifyClientOfSessionEvent(this, new ServiceSessionChangeInfo());
+        }
+
+        /// <summary>
+        /// Notifies the client that the session has changed.
+        /// </summary>
+        /// <param name="newSession">The new session.</param>
+        public void NotifyClientOfSessionUpdate(ServicePlanningPokerSession newSession)
+        {
+            NotifyClientOfSessionUpdateEvent(this, newSession);
         }
 
         #endregion

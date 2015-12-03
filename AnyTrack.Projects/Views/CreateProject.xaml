@@ -6,15 +6,15 @@
              xmlns:prism="http://www.codeplex.com/prism"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             xmlns:converter="clr-namespace:AnyTrack.Projects.Converters"
+             xmlns:infraConverter="clr-namespace:AnyTrack.Infrastructure.Converters;assembly=AnyTrack.Infrastructure"
              xmlns:Views="clr-namespace:AnyTrack.Projects.Views.CustomControls"
              xml:lang="en-GB"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" Width="1000" Height="364.328">
 
     <UserControl.Resources>
-        <converter:BooleanToVisibilityConverter x:Key="booleanToVisibility"/>
-        <converter:DateConverter x:Key="dateConverter"/>
+        <infraConverter:BooleanToVisibilityConverter x:Key="booleanToVisibility"/>
+        <infraConverter:DateConverter x:Key="dateConverter"/>
     </UserControl.Resources>
 
     <Grid HorizontalAlignment="Stretch">

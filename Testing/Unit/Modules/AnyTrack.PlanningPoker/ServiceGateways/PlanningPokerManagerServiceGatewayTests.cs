@@ -55,11 +55,15 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.ServiceGateways.PlanningPokerManag
         [Test]
         public void CallSubscribeToNewSessionMessages()
         {
+            var session = new ServiceSessionChangeInfo();
             var sprintId = Guid.NewGuid();
 
-            serviceGateway.SubscribeToNewSessionMessages(sprintId);
+            client.SubscribeToNewSessionMessages(sprintId).Returns(session);
+
+            var res = serviceGateway.SubscribeToNewSessionMessages(sprintId);
 
             client.Received().SubscribeToNewSessionMessages(sprintId);
+            res.Equals(session).Should().BeTrue();
         }
 
         #endregion 
@@ -155,6 +159,49 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.ServiceGateways.PlanningPokerManag
             serviceGateway.NotifyClientOfTerminatedSession();
 
             waitObject.WaitOne();
+        }
+
+        #endregion 
+
+        #region NotifyClientOfSessionUpdate(ServicePlanningPokerSession newSession) Tests
+
+        [Test]
+        public void NotifyClientOfSessionUpdate()
+        {
+            var waitObject = new ManualResetEvent(false);
+
+            var session = new ServicePlanningPokerSession();
+
+            serviceGateway.NotifyClientOfSessionUpdateEvent += (sender, args) =>
+            {
+                sender.Equals(serviceGateway).Should().BeTrue();
+                args.Equals(session).Should().BeTrue();
+
+                waitObject.Set();
+            };
+
+            serviceGateway.NotifyClientOfSessionUpdate(session);
+
+            waitObject.WaitOne();
+        }
+
+        #endregion 
+
+        #region RetrieveSessionInfo(Guid sessionId) Tests 
+
+        [Test]
+        public void CallRetrieveSessionInfo()
+        {
+            var sessionId = Guid.NewGuid();
+            var session = new ServicePlanningPokerSession();
+
+            client.RetrieveSessionInfo(sessionId).Returns(session);
+
+            var res = serviceGateway.RetrieveSessionInfo(sessionId);
+
+            client.Received().RetrieveSessionInfo(sessionId);
+
+            res.Equals(session).Should().BeTrue();
         }
 
         #endregion 

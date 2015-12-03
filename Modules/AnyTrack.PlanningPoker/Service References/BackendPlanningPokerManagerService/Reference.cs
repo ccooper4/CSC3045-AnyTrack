@@ -15,6 +15,115 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceSessionChangeInfo", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
+    [System.SerializableAttribute()]
+    public partial class ServiceSessionChangeInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ProjectNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool SessionAvailableField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.Guid> SessionIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid SprintIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SprintNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProjectName {
+            get {
+                return this.ProjectNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProjectNameField, value) != true)) {
+                    this.ProjectNameField = value;
+                    this.RaisePropertyChanged("ProjectName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool SessionAvailable {
+            get {
+                return this.SessionAvailableField;
+            }
+            set {
+                if ((this.SessionAvailableField.Equals(value) != true)) {
+                    this.SessionAvailableField = value;
+                    this.RaisePropertyChanged("SessionAvailable");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.Guid> SessionId {
+            get {
+                return this.SessionIdField;
+            }
+            set {
+                if ((this.SessionIdField.Equals(value) != true)) {
+                    this.SessionIdField = value;
+                    this.RaisePropertyChanged("SessionId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid SprintId {
+            get {
+                return this.SprintIdField;
+            }
+            set {
+                if ((this.SprintIdField.Equals(value) != true)) {
+                    this.SprintIdField = value;
+                    this.RaisePropertyChanged("SprintId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SprintName {
+            get {
+                return this.SprintNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SprintNameField, value) != true)) {
+                    this.SprintNameField = value;
+                    this.RaisePropertyChanged("SprintName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ServicePlanningPokerSession", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
     [System.SerializableAttribute()]
     public partial class ServicePlanningPokerSession : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -29,10 +138,16 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         private System.Guid HostIDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ProjectNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid SessionIDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid SprintIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SprintNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSessionState StateField;
@@ -77,6 +192,19 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProjectName {
+            get {
+                return this.ProjectNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProjectNameField, value) != true)) {
+                    this.ProjectNameField = value;
+                    this.RaisePropertyChanged("ProjectName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Guid SessionID {
             get {
                 return this.SessionIDField;
@@ -98,6 +226,19 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
                 if ((this.SprintIDField.Equals(value) != true)) {
                     this.SprintIDField = value;
                     this.RaisePropertyChanged("SprintID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SprintName {
+            get {
+                return this.SprintNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SprintNameField, value) != true)) {
+                    this.SprintNameField = value;
+                    this.RaisePropertyChanged("SprintName");
                 }
             }
         }
@@ -160,12 +301,12 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
     [System.Runtime.Serialization.DataContractAttribute(Name="ServicePlanningPokerUser", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(string[]))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServiceSessionChangeInfo))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSession))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSessionState))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerUser[]))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerEstimate))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServiceChatMessage))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServiceSessionChangeInfo))]
     public partial class ServicePlanningPokerUser : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -182,6 +323,9 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RoleSummaryField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid UserIDField;
@@ -247,6 +391,19 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
                 if ((object.ReferenceEquals(this.NameField, value) != true)) {
                     this.NameField = value;
                     this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RoleSummary {
+            get {
+                return this.RoleSummaryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RoleSummaryField, value) != true)) {
+                    this.RoleSummaryField = value;
+                    this.RaisePropertyChanged("RoleSummary");
                 }
             }
         }
@@ -425,126 +582,17 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceSessionChangeInfo", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
-    [System.SerializableAttribute()]
-    public partial class ServiceSessionChangeInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ProjectNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool SessionAvailableField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.Guid> SessionIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid SprintIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string SprintNameField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ProjectName {
-            get {
-                return this.ProjectNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ProjectNameField, value) != true)) {
-                    this.ProjectNameField = value;
-                    this.RaisePropertyChanged("ProjectName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool SessionAvailable {
-            get {
-                return this.SessionAvailableField;
-            }
-            set {
-                if ((this.SessionAvailableField.Equals(value) != true)) {
-                    this.SessionAvailableField = value;
-                    this.RaisePropertyChanged("SessionAvailable");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.Guid> SessionId {
-            get {
-                return this.SessionIdField;
-            }
-            set {
-                if ((this.SessionIdField.Equals(value) != true)) {
-                    this.SessionIdField = value;
-                    this.RaisePropertyChanged("SessionId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Guid SprintId {
-            get {
-                return this.SprintIdField;
-            }
-            set {
-                if ((this.SprintIdField.Equals(value) != true)) {
-                    this.SprintIdField = value;
-                    this.RaisePropertyChanged("SprintId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SprintName {
-            get {
-                return this.SprintNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SprintNameField, value) != true)) {
-                    this.SprintNameField = value;
-                    this.RaisePropertyChanged("SprintName");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="BackendPlanningPokerManagerService.IPlanningPokerManagerService", CallbackContract=typeof(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.IPlanningPokerManagerServiceCallback))]
     public interface IPlanningPokerManagerService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/SubscribeToNewSessionMessages", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/SubscribeToNewSessionMessagesResp" +
             "onse")]
-        void SubscribeToNewSessionMessages(System.Guid sprintId);
+        AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServiceSessionChangeInfo SubscribeToNewSessionMessages(System.Guid sprintId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/SubscribeToNewSessionMessages", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/SubscribeToNewSessionMessagesResp" +
             "onse")]
-        System.Threading.Tasks.Task SubscribeToNewSessionMessagesAsync(System.Guid sprintId);
+        System.Threading.Tasks.Task<AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServiceSessionChangeInfo> SubscribeToNewSessionMessagesAsync(System.Guid sprintId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/StartNewPokerSession", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/StartNewPokerSessionResponse")]
         System.Guid StartNewPokerSession(System.Guid sprintId);
@@ -565,6 +613,12 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/JoinSession", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/JoinSessionResponse")]
         System.Threading.Tasks.Task<AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSession> JoinSessionAsync(System.Guid sessionId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/RetrieveSessionInfo", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/RetrieveSessionInfoResponse")]
+        AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSession RetrieveSessionInfo(System.Guid sessionId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/RetrieveSessionInfo", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/RetrieveSessionInfoResponse")]
+        System.Threading.Tasks.Task<AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSession> RetrieveSessionInfoAsync(System.Guid sessionId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlanningPokerManagerService/SubmitMessageToServer")]
         void SubmitMessageToServer(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServiceChatMessage msg);
@@ -588,6 +642,10 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/NotifyClientOfTerminatedSession", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/NotifyClientOfTerminatedSessionRe" +
             "sponse")]
         void NotifyClientOfTerminatedSession();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/NotifyClientOfSessionUpdate", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/NotifyClientOfSessionUpdateRespon" +
+            "se")]
+        void NotifyClientOfSessionUpdate(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSession newSession);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/SendMessageToClient", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/SendMessageToClientResponse")]
         void SendMessageToClient(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServiceChatMessage msg);
@@ -629,11 +687,11 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public void SubscribeToNewSessionMessages(System.Guid sprintId) {
-            base.Channel.SubscribeToNewSessionMessages(sprintId);
+        public AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServiceSessionChangeInfo SubscribeToNewSessionMessages(System.Guid sprintId) {
+            return base.Channel.SubscribeToNewSessionMessages(sprintId);
         }
         
-        public System.Threading.Tasks.Task SubscribeToNewSessionMessagesAsync(System.Guid sprintId) {
+        public System.Threading.Tasks.Task<AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServiceSessionChangeInfo> SubscribeToNewSessionMessagesAsync(System.Guid sprintId) {
             return base.Channel.SubscribeToNewSessionMessagesAsync(sprintId);
         }
         
@@ -659,6 +717,14 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         
         public System.Threading.Tasks.Task<AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSession> JoinSessionAsync(System.Guid sessionId) {
             return base.Channel.JoinSessionAsync(sessionId);
+        }
+        
+        public AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSession RetrieveSessionInfo(System.Guid sessionId) {
+            return base.Channel.RetrieveSessionInfo(sessionId);
+        }
+        
+        public System.Threading.Tasks.Task<AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSession> RetrieveSessionInfoAsync(System.Guid sessionId) {
+            return base.Channel.RetrieveSessionInfoAsync(sessionId);
         }
         
         public void SubmitMessageToServer(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServiceChatMessage msg) {

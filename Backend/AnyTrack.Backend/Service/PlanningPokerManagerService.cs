@@ -90,7 +90,8 @@ namespace AnyTrack.Backend.Service
         /// Allows the client to subscribe to messages about new sessions for the given project and sprint ids. 
         /// </summary>
         /// <param name="sprintId">The sprint id.</param>
-        public void SubscribeToNewSessionMessages(Guid sprintId)
+        /// <returns>A current session, if there is one.</returns>
+        public ServiceSessionChangeInfo SubscribeToNewSessionMessages(Guid sprintId)
         {
             var sprint = unitOfWork.SprintRepository.Items.SingleOrDefault(s => s.Id == sprintId);
 
@@ -124,10 +125,32 @@ namespace AnyTrack.Backend.Service
                 EmailAddress = currentUser.EmailAddress,
                 Name = "{0} {1}".Substitute(currentUser.FirstName, currentUser.LastName),
                 UserID = currentUserId,
-                UserRoles = currentUser.Roles.Where(r => r.SprintId == sprintId || r.ProjectId == sprint.Project.Id).Select(r => r.RoleName).ToList()
+                UserRoles = currentUser.Roles.Where(r => r.SprintId == sprintId && r.ProjectId == sprint.Project.Id).Select(r => r.RoleName).ToList()
             };
 
             thisSprintLst.Value.Add(pendingUser);
+
+            // Notify clients in this sprint group. 
+            var sessions = activeSessions.GetListOfSessions();
+
+            var sprintSession = sessions.Where(s => s.Value.SprintID == sprintId && s.Value.State == ServicePlanningPokerSessionState.Pending).Select(s => s.Value).SingleOrDefault();
+
+            if (sprintSession != null)
+            {
+                var sessionInfo = new ServiceSessionChangeInfo
+                {
+                    SprintId = sprintId,
+                    SessionAvailable = true,
+                    SessionId = sprintSession.SessionID,
+                    SprintName = sprint.Name,
+                    ProjectName = sprint.Project.Name
+                };
+                return sessionInfo; 
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -166,6 +189,8 @@ namespace AnyTrack.Backend.Service
                 SessionID = Guid.NewGuid(),
                 HostID = currentUserId,
                 SprintID = sprintId,
+                SprintName = sprint.Name,
+                ProjectName = sprint.Project.Name,
                 Users = new List<ServicePlanningPokerUser>()
                 {
                     new ServicePlanningPokerUser
@@ -174,7 +199,7 @@ namespace AnyTrack.Backend.Service
                         EmailAddress = currentUser.EmailAddress,
                         Name = "{0} {1}".Substitute(currentUser.FirstName, currentUser.LastName),
                         UserID = currentUserId,
-                        UserRoles = currentUser.Roles.Where(r => r.SprintId == sprintId || r.ProjectId == sprint.Project.Id).Select(r => r.RoleName).ToList(),
+                        UserRoles = currentUser.Roles.Where(r => r.SprintId == sprintId && r.ProjectId == sprint.Project.Id).Select(r => r.RoleName).ToList(),
                         Estimate = new ServicePlanningPokerEstimate()
                     }
                 },
@@ -289,7 +314,7 @@ namespace AnyTrack.Backend.Service
                 throw new InvalidOperationException("Current user is not currently in the pending clients list.");
             }
 
-            thisSession.Users.Add(new ServicePlanningPokerUser
+            var newUser = new ServicePlanningPokerUser
             {
                 ClientChannel = pendingUserEntry.ClientChannel,
                 EmailAddress = pendingUserEntry.EmailAddress,
@@ -297,12 +322,45 @@ namespace AnyTrack.Backend.Service
                 UserID = pendingUserEntry.UserID,
                 UserRoles = pendingUserEntry.UserRoles,
                 Estimate = new ServicePlanningPokerEstimate()
-            });
+            }; 
+
+            thisSession.Users.Add(newUser);
 
             pendingUsers[thisSession.SprintID].Remove(pendingUserEntry);
 
+            foreach (var user in thisSession.Users.Where(u => u != newUser))
+            {
+                user.ClientChannel.NotifyClientOfSessionUpdate(thisSession);
+            }
+
             return thisSession;
-        }              
+        }
+
+        /// <summary>
+        /// Allows the client to pull an up to date session state. 
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        /// <returns>The current session.</returns>
+        public ServicePlanningPokerSession RetrieveSessionInfo(Guid sessionId)
+        {
+            var sessions = activeSessions.GetListOfSessions();
+
+            if (!sessions.ContainsKey(sessionId))
+            {
+                throw new ArgumentException("Session could not be found!", "sessionId");
+            }
+
+            var session = sessions[sessionId];
+
+            var currentUserEmail = Thread.CurrentPrincipal.Identity.Name; 
+
+            if (session.Users.SingleOrDefault(u => u.EmailAddress == currentUserEmail) == null)
+            {
+                throw new InvalidOperationException("User is not in the session"); 
+            }
+
+            return session;
+        }
 
         /// <summary>
         /// Method to submit message to chat channel

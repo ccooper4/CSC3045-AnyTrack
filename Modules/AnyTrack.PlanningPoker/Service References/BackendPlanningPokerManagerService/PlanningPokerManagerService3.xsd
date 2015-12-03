@@ -11,27 +11,29 @@
   </xs:element>
   <xs:element name="SubscribeToNewSessionMessagesResponse">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="SubscribeToNewSessionMessagesResult" nillable="true" type="q2:ServiceSessionChangeInfo" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="StartNewPokerSession">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sprintId" type="q2:guid" />
+        <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sprintId" type="q3:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="StartNewPokerSessionResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="StartNewPokerSessionResult" type="q3:guid" />
+        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="StartNewPokerSessionResult" type="q4:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="CancelPendingPokerSession">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionId" type="q4:guid" />
+        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionId" type="q5:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -43,35 +45,49 @@
   <xs:element name="JoinSession">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionId" type="q5:guid" />
+        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionId" type="q6:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="JoinSessionResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="JoinSessionResult" nillable="true" type="q6:ServicePlanningPokerSession" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="JoinSessionResult" nillable="true" type="q7:ServicePlanningPokerSession" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveSessionInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionId" type="q8:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveSessionInfoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="RetrieveSessionInfoResult" nillable="true" type="q9:ServicePlanningPokerSession" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SubmitMessageToServer">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="msg" nillable="true" type="q7:ServiceChatMessage" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="msg" nillable="true" type="q10:ServiceChatMessage" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SubmitEstimateToServer">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="estimate" nillable="true" type="q8:ServicePlanningPokerEstimate" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="estimate" nillable="true" type="q11:ServicePlanningPokerEstimate" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="NotifyClientOfSession">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="sessionInfo" nillable="true" type="q9:ServiceSessionChangeInfo" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="sessionInfo" nillable="true" type="q12:ServiceSessionChangeInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -90,10 +106,22 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="NotifyClientOfSessionUpdate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="newSession" nillable="true" type="q13:ServicePlanningPokerSession" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NotifyClientOfSessionUpdateResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="SendMessageToClient">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="msg" nillable="true" type="q10:ServiceChatMessage" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="msg" nillable="true" type="q14:ServiceChatMessage" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -115,7 +143,7 @@
   <xs:element name="ShowEstimatesToClient">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionId" type="q11:guid" />
+        <xs:element xmlns:q15="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionId" type="q15:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

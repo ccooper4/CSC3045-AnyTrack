@@ -2,12 +2,24 @@
 <xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:5789/PlanningPokerManagerService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:import schemaLocation="http://localhost:5789/PlanningPokerManagerService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="ServiceSessionChangeInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ProjectName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SessionAvailable" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SessionId" nillable="true" type="ser:guid" />
+      <xs:element minOccurs="0" name="SprintId" type="ser:guid" />
+      <xs:element minOccurs="0" name="SprintName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServiceSessionChangeInfo" nillable="true" type="tns:ServiceSessionChangeInfo" />
   <xs:complexType name="ServicePlanningPokerSession">
     <xs:sequence>
       <xs:element minOccurs="0" name="ActiveStory" type="ser:guid" />
       <xs:element minOccurs="0" name="HostID" type="ser:guid" />
+      <xs:element minOccurs="0" name="ProjectName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SessionID" type="ser:guid" />
       <xs:element minOccurs="0" name="SprintID" type="ser:guid" />
+      <xs:element minOccurs="0" name="SprintName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="State" type="tns:ServicePlanningPokerSessionState" />
       <xs:element minOccurs="0" name="Users" nillable="true" type="tns:ArrayOfServicePlanningPokerUser" />
     </xs:sequence>
@@ -34,6 +46,7 @@
       <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Estimate" nillable="true" type="tns:ServicePlanningPokerEstimate" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RoleSummary" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UserID" type="ser:guid" />
       <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UserRoles" nillable="true" type="q1:ArrayOfstring" />
     </xs:sequence>
@@ -54,14 +67,4 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ServiceChatMessage" nillable="true" type="tns:ServiceChatMessage" />
-  <xs:complexType name="ServiceSessionChangeInfo">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="ProjectName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SessionAvailable" type="xs:boolean" />
-      <xs:element minOccurs="0" name="SessionId" nillable="true" type="ser:guid" />
-      <xs:element minOccurs="0" name="SprintId" type="ser:guid" />
-      <xs:element minOccurs="0" name="SprintName" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ServiceSessionChangeInfo" nillable="true" type="tns:ServiceSessionChangeInfo" />
 </xs:schema>

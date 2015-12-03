@@ -6,7 +6,7 @@
              xmlns:prism="http://www.codeplex.com/prism"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             xmlns:converters="clr-namespace:AnyTrack.Projects.Converters"
+             xmlns:converters="clr-namespace:AnyTrack.Infrastructure.Converters;assembly=AnyTrack.Infrastructure"
              xml:lang="en-GB"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d">
