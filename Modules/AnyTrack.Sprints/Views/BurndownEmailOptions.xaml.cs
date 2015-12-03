@@ -18,12 +18,12 @@ namespace AnyTrack.Sprints.Views
     /// <summary>
     /// Interaction logic for BurndownEmailOptions.xaml
     /// </summary>
-    public partial class BurndownEmailOptions : UserControl
+    public partial class BurnDownEmailOptions : UserControl
     {
         /// <summary>
         /// Constructor for view
         /// </summary>
-        public BurndownEmailOptions()
+        public BurnDownEmailOptions()
         {
             InitializeComponent();
         }

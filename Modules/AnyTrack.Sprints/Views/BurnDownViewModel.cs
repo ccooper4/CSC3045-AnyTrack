@@ -5,8 +5,10 @@ using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.ServiceGateways;
 using OxyPlot;
-using OxyPlot.Axes;
+using OxyPlot.Wpf;
+using Prism.Commands;
 using Prism.Regions;
+using DateTimeAxis = OxyPlot.Axes.DateTimeAxis;
 using SprintModels = AnyTrack.Infrastructure.BackendSprintService;
 
 namespace AnyTrack.Sprints.Views
@@ -78,10 +80,22 @@ namespace AnyTrack.Sprints.Views
             this.sprintServiceGateway = sprintServiceGateway;
             this.Sprints = new ObservableCollection<SprintModels.ServiceSprintSummary>();
             this.Points = new ObservableCollection<DataPoint>();
+
+            EmailFlyoutCommand = new DelegateCommand(EmailFlyout);
         }
         #endregion
 
         #region Properties 
+
+        /// <summary>
+        /// Gets or sets PlotGraph
+        /// </summary>
+        public Plot PlotGraph { get; set; }
+
+        /// <summary>
+        /// Gets or sets the command for flyout email
+        /// </summary>
+        public DelegateCommand EmailFlyoutCommand { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether the view can be reused
@@ -226,6 +240,16 @@ namespace AnyTrack.Sprints.Views
         /// <param name="navigationContext">The navigation context</param>
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+        }
+
+        /// <summary>
+        /// Method to open the email flyout
+        /// </summary>
+        private void EmailFlyout()
+        {
+            ////Burndown chart will be added as a nav param!
+            ////var navParams = new NavigationParameters();
+            this.ShowMetroFlyout("BurnDownEmailOptions");
         }
         #endregion Methods
     }
