@@ -150,18 +150,27 @@ namespace AnyTrack.Infrastructure.ServiceGateways
             client.ManageSprintBacklog(projectId, sprintId, updatedSprintBacklog);
         }
 
-        /// <summary>
-        /// Sending an email request via burndown
-        /// </summary>
-        /// <param name="senderEmailAddress">The email adddress to send the email to</param>
-        /// <param name="recipientEmailAddress">The email adddress where the email is sent from</param>
-        /// <param name="emailMessage">The email address of the </param>
-        /// <param name="emailAttachment">Attachment for the email</param>
-        public void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, Attachment emailAttachment)
-        {
-            client.SendEmailRequest(senderEmailAddress, recipientEmailAddress, emailMessage, emailAttachment);
-        }
+        //// <summary>
+        //// Sending an email request via burndown
+        //// </summary>
+        //// <param name="senderEmailAddress">The email adddress to send the email to</param>
+        //// <param name="recipientEmailAddress">The email adddress where the email is sent from</param>
+        ////<param name="emailMessage">The email address of the </param>
+        //// <param name="emailAttachment">Attachment for the email</param>
+        //// public void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, System.Net.Mail.Attachment emailAttachment)
+       //// {
+           //// client.SendEmailRequest(senderEmailAddress, recipientEmailAddress, emailMessage, emailAttachment);
+       //// }
 
+        /// <summary>
+        /// Gets Sprint stories for a given sprint with estimates
+        /// </summary>
+        /// <param name="sprintId">The sprint id</param>
+        /// <returns>sprint stories</returns>
+        public List<ServiceSprintStory> GetSprintStoryEstimates(Guid sprintId)
+        {
+            return client.GetSprintStoryEstimates(sprintId);
+        }
         #endregion
     }
 }

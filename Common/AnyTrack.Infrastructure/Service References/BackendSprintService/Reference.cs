@@ -196,6 +196,9 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> DateCompletedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid SprintIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -207,6 +210,9 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private AnyTrack.Infrastructure.BackendSprintService.ServiceStory StoryField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double StoryEstimateField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -214,6 +220,19 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> DateCompleted {
+            get {
+                return this.DateCompletedField;
+            }
+            set {
+                if ((this.DateCompletedField.Equals(value) != true)) {
+                    this.DateCompletedField = value;
+                    this.RaisePropertyChanged("DateCompleted");
+                }
             }
         }
         
@@ -265,6 +284,19 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
                 if ((object.ReferenceEquals(this.StoryField, value) != true)) {
                     this.StoryField = value;
                     this.RaisePropertyChanged("Story");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double StoryEstimate {
+            get {
+                return this.StoryEstimateField;
+            }
+            set {
+                if ((this.StoryEstimateField.Equals(value) != true)) {
+                    this.StoryEstimateField = value;
+                    this.RaisePropertyChanged("StoryEstimate");
                 }
             }
         }
@@ -1173,6 +1205,12 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetMaxEstimateOfSprint", ReplyAction="http://tempuri.org/ISprintService/GetMaxEstimateOfSprintResponse")]
         System.Threading.Tasks.Task<double> GetMaxEstimateOfSprintAsync(System.Guid sprintId);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetSprintStoryEstimates", ReplyAction="http://tempuri.org/ISprintService/GetSprintStoryEstimatesResponse")]
+        System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> GetSprintStoryEstimates(System.Guid sprintId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetSprintStoryEstimates", ReplyAction="http://tempuri.org/ISprintService/GetSprintStoryEstimatesResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory>> GetSprintStoryEstimatesAsync(System.Guid sprintId);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/ManageSprintBacklog", ReplyAction="http://tempuri.org/ISprintService/ManageSprintBacklogResponse")]
         void ManageSprintBacklog(System.Guid projectId, System.Guid sprintId, System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> sprintStories);
         
@@ -1299,6 +1337,14 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         
         public System.Threading.Tasks.Task<double> GetMaxEstimateOfSprintAsync(System.Guid sprintId) {
             return base.Channel.GetMaxEstimateOfSprintAsync(sprintId);
+        }
+        
+        public System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> GetSprintStoryEstimates(System.Guid sprintId) {
+            return base.Channel.GetSprintStoryEstimates(sprintId);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory>> GetSprintStoryEstimatesAsync(System.Guid sprintId) {
+            return base.Channel.GetSprintStoryEstimatesAsync(sprintId);
         }
         
         public void ManageSprintBacklog(System.Guid projectId, System.Guid sprintId, System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> sprintStories) {

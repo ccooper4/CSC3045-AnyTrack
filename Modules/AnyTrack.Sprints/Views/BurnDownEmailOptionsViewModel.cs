@@ -43,7 +43,7 @@ namespace AnyTrack.Sprints.Views
 
             sprintService = sprintGateway;
             projectService = projectGateway;
-            SendEmailCommand = new DelegateCommand(SendEmail);
+            //// SendEmailCommand = new DelegateCommand(SendEmail);
         }
 
         /// <summary>
@@ -134,12 +134,12 @@ namespace AnyTrack.Sprints.Views
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Method to send an email request
-        /// </summary>
-        private void SendEmail()
-        {
-            sprintService.SendEmailRequest(SenderEmailAddress, RecipientEmailAddress, EmailMessage, EmailAttachment);
-        }
+        ///// <summary>
+        ///// Method to send an email request
+        ///// </summary>
+        //// private void SendEmail()
+        //// {
+        ////    sprintService.SendEmailRequest(SenderEmailAddress, RecipientEmailAddress, EmailMessage, EmailAttachment);
+        ////}
     }
 }

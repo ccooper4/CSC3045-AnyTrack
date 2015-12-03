@@ -49,7 +49,7 @@ namespace AnyTrack.Sprints.Views
         /// The list of sprints.
         /// </summary>
         private ObservableCollection<Infrastructure.BackendSprintService.ServiceSprintSummary> sprints;
-
+       
         /// <summary>
         /// The title.
         /// </summary>
