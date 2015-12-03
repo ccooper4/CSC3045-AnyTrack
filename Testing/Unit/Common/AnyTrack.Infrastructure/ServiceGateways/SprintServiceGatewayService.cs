@@ -323,8 +323,8 @@ namespace Unit.Modules.AnyTrack.Sprints.ServiceGateways
             };
 
             client.AddSprint(project.ProjectId, sprint);
-            client.ManageSprintBacklog(sprint.SprintId, sprint.Backlog);
-            client.Received().ManageSprintBacklog(sprint.SprintId, sprint.Backlog);
+            client.ManageSprintBacklog(sprint.ProjectId, sprint.SprintId, sprint.Backlog);
+            client.Received().ManageSprintBacklog(sprint.ProjectId, sprint.SprintId, sprint.Backlog);
         }
 
         [Test]
@@ -367,10 +367,10 @@ namespace Unit.Modules.AnyTrack.Sprints.ServiceGateways
                 }
             };
 
-            client.When(a => a.ManageSprintBacklog((Arg.Any<Guid>()),(Arg.Any<List<ServiceSprintStory>>()))).Do(a => { throw new ArgumentNullException(); });
+            client.When(a => a.ManageSprintBacklog(sprint.ProjectId, (Arg.Any<Guid>()),(Arg.Any<List<ServiceSprintStory>>()))).Do(a => { throw new ArgumentNullException(); });
             client.AddSprint(project.ProjectId, sprint);
-            client.ManageSprintBacklog(sprint.SprintId, sprint.Backlog);
-            client.Received().ManageSprintBacklog(sprint.SprintId, sprint.Backlog);
+            client.ManageSprintBacklog(sprint.ProjectId, sprint.SprintId, sprint.Backlog);
+            client.Received().ManageSprintBacklog(sprint.ProjectId, sprint.SprintId, sprint.Backlog);
         }
     }
 }
