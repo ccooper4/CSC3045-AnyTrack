@@ -3,6 +3,7 @@ using System.CodeDom;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -573,6 +574,29 @@ namespace AnyTrack.Backend.Service
             }
 
             unitOfWork.Commit();
+        }
+
+        /// <summary>
+        /// Sends an email request
+        /// </summary>
+        /// <param name="senderEmailAddress">The sender email address</param>
+        /// <param name="recipientEmailAddress">The recipient email message</param>
+        /// <param name="emailMessage">The email address</param>
+        /// <param name="emailAttachment">The email attachment</param>
+        public void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, Attachment emailAttachment)
+        {
+            MailMessage mail = new MailMessage();
+
+            mail.From = new MailAddress(senderEmailAddress);
+            mail.To.Add(recipientEmailAddress);
+
+            mail.Subject = "Agile";
+            mail.Body = emailMessage;
+
+            mail.Attachments.Add(emailAttachment);
+
+            SmtpClient smtp = new SmtpClient("127.0.0.1");
+            smtp.Send(mail);
         }
 
         #endregion
