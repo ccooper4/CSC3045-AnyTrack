@@ -39,9 +39,24 @@ namespace AnyTrack.PlanningPoker.Views
         private string messageToSend;
         
         /// <summary>
+        /// Is the user the scrum master
+        /// </summary>
+        private bool isScrumMaster = false;
+
+        /// <summary>
+        /// Should the estimates be shown
+        /// </summary>
+        private bool showEstimates = false;
+        
+        /// <summary>
         /// The specified sessionID for this chat.
         /// </summary>
-        private Guid sessionId;        
+        private Guid sessionId;
+
+        /// <summary>
+        /// The specified estimate to send.
+        /// </summary>
+        private string estimateToSend;
 
         #endregion
 
@@ -63,7 +78,7 @@ namespace AnyTrack.PlanningPoker.Views
 
             ShowEstimatesCommand = new DelegateCommand(ShowUserEstimates);
 
-            SendEstimateCommand = new DelegateCommand<ServicePlanningPokerEstimate>(SubmitEstimateToServer);
+            SendEstimateCommand = new DelegateCommand(SubmitEstimateToServer);
 
             SendFinalEstimateCommand = new DelegateCommand<ServicePlanningPokerEstimate>(SubmitFinalEstimateToServer);
         }               
@@ -105,7 +120,7 @@ namespace AnyTrack.PlanningPoker.Views
         /// <summary>
         /// Gets the command used to send a an estimate from client to server. 
         /// </summary>
-        public DelegateCommand<ServicePlanningPokerEstimate> SendEstimateCommand { get; private set; }
+        public DelegateCommand SendEstimateCommand { get; private set; }
 
         /// <summary>
         /// Gets the command used to send and set the final story point estimate. 
@@ -136,6 +151,54 @@ namespace AnyTrack.PlanningPoker.Views
             set
             {
                 messageToSend = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets message property.
+        /// </summary>
+        public string EstimateToSend
+        {
+            get
+            {
+                return estimateToSend;
+            }
+
+            set
+            {
+                estimateToSend = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the user is scrum master
+        /// </summary>
+        public bool IsScrumMaster
+        {
+            get
+            {
+                return isScrumMaster;
+            }
+
+            set
+            {
+                SetProperty(ref isScrumMaster, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show the estimates
+        /// </summary>
+        public bool ShowEstimates
+        {
+            get
+            {
+                return showEstimates;
+            }
+
+            set
+            {
+                SetProperty(ref showEstimates, value);
             }
         }
 
@@ -224,24 +287,31 @@ namespace AnyTrack.PlanningPoker.Views
         /// </summary>
         private void ShowUserEstimates()
         {
+            var session = serviceGateway.RetrieveSessionInfo(this.sessionId);
+
+            foreach (var user in session.Users)
+            {
+                RecievedEstimates.Add(user.Estimate);
+            }
+
+            ShowEstimates = true;
         }
 
         /// <summary>
         /// Submit a story estimate to the server to be relayed to other session members.
         /// </summary>
-        /// <param name="estimate">estimate submited by clients</param>
-        private void SubmitEstimateToServer(ServicePlanningPokerEstimate estimate)
+        private void SubmitEstimateToServer()
         {
-            ServiceChatMessage msg = new ServiceChatMessage();
+            ServicePlanningPokerEstimate userEstimate = new ServicePlanningPokerEstimate
+            {
+                Estimate = double.Parse(this.EstimateToSend),
+                SessionID = this.sessionId
+            };
 
-            ////Needs to be changed to the sessionID of planning poker session
-            estimate.SessionID = Guid.NewGuid();
+            this.ShowMetroDialog("Going to submit estimate", userEstimate.Estimate.ToString(), MessageDialogStyle.Affirmative);
 
-            msg.Message = estimate.ToString();
-
-            this.ShowMetroDialog("Going to submit estimate", msg.Message, MessageDialogStyle.Affirmative);
-
-            serviceGateway.SubmitMessageToServer(msg);
+            serviceGateway.SubmitEstimateToServer(userEstimate);
+            serviceGateway.RetrieveSessionInfo(sessionId);
         }
 
         /// <summary>
