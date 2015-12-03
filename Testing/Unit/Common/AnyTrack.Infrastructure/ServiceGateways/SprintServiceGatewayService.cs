@@ -286,91 +286,13 @@ namespace Unit.Modules.AnyTrack.Sprints.ServiceGateways
         [Test]
         public void ManageSprintBacklog()
         {
-            ServiceProject project = new ServiceProject
-            {
-                ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
-                Name = "Project",
-                Description = "This is a new project",
-                VersionControl = "queens.git",
-                ProjectManagerEmailAddress = "tester@agile.local",
-                StartedOn = DateTime.Today,
-            };
+            var projectId = Guid.NewGuid();
+            var sprintId = Guid.NewGuid();
+            var stories = new List<ServiceSprintStory>();
 
-            ServiceSprint sprint = new ServiceSprint
-            {
-                ProjectId = new Guid(),
-                SprintId = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
-                Name = "Sprint 1",
-                StartDate = new DateTime(2015, 11, 26),
-                EndDate = new DateTime(2015, 12, 3),
-                Description = "Sprint",
-                Backlog = new List<ServiceSprintStory>()
-                {
-                    new ServiceSprintStory()
-                    {
-                        SprintId = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
-                        Story = new ServiceStory()
-                        {
-                            StoryId = new Guid("30000001-5566-7788-99AA-BBCCDDEEFF00"),
-                            AsA = "As A 1",
-                            ConditionsOfSatisfaction = "Conditions of Sat",
-                            IWant = "I Want 1",
-                            SoThat = "So That 1",
-                            Summary = "Summary 1"
-                        }
-                    }
-                }
-            };
+            gateway.ManageSprintBacklog(projectId, sprintId, stories);
 
-            client.AddSprint(project.ProjectId, sprint);
-            client.ManageSprintBacklog(sprint.ProjectId, sprint.SprintId, sprint.Backlog);
-            client.Received().ManageSprintBacklog(sprint.ProjectId, sprint.SprintId, sprint.Backlog);
-        }
-
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void ManageSprintBacklogNullId()
-        {
-            ServiceProject project = new ServiceProject
-            {
-                ProjectId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
-                Name = "Project",
-                Description = "This is a new project",
-                VersionControl = "queens.git",
-                ProjectManagerEmailAddress = "tester@agile.local",
-                StartedOn = DateTime.Today,
-            };
-
-            ServiceSprint sprint = new ServiceSprint
-            {
-                ProjectId = new Guid(),
-                SprintId = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
-                Name = "Sprint 1",
-                StartDate = new DateTime(2015, 11, 26),
-                EndDate = new DateTime(2015, 12, 3),
-                Description = "Sprint",
-                Backlog = new List<ServiceSprintStory>()
-                {
-                    new ServiceSprintStory()
-                    {
-                        SprintId = new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"),
-                        Story = new ServiceStory()
-                        {
-                            StoryId = new Guid("30000001-5566-7788-99AA-BBCCDDEEFF00"),
-                            AsA = "As A 1",
-                            ConditionsOfSatisfaction = "Conditions of Sat",
-                            IWant = "I Want 1",
-                            SoThat = "So That 1",
-                            Summary = "Summary 1"
-                        }
-                    }
-                }
-            };
-
-            client.When(a => a.ManageSprintBacklog(sprint.ProjectId, (Arg.Any<Guid>()),(Arg.Any<List<ServiceSprintStory>>()))).Do(a => { throw new ArgumentNullException(); });
-            client.AddSprint(project.ProjectId, sprint);
-            client.ManageSprintBacklog(sprint.ProjectId, sprint.SprintId, sprint.Backlog);
-            client.Received().ManageSprintBacklog(sprint.ProjectId, sprint.SprintId, sprint.Backlog);
+            client.Received().ManageSprintBacklog(projectId, sprintId, stories);
         }
     }
 }
