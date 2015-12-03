@@ -655,8 +655,8 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
             "mateFromServerResponse")]
         void NotifyClientToClearStoryPointEstimateFromServer();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/ShowEstimatesToClient", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/ShowEstimatesToClientResponse")]
-        void ShowEstimatesToClient(System.Guid sessionId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/SendSessionToClient", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/SendSessionToClientResponse")]
+        void SendSessionToClient(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSession session);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

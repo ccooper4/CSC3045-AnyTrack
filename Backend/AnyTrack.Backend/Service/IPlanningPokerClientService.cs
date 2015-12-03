@@ -50,8 +50,8 @@ namespace AnyTrack.Backend.Service
         /// <summary>
         /// Shows the clients the estimates 
         /// </summary>
-        /// /// <param name="sessionId">The session id</param>
+        /// /// <param name="session">The session object</param>
         [OperationContract]
-        void ShowEstimatesToClient(Guid sessionId);
+        void SendSessionToClient(ServicePlanningPokerSession session);
     }    
 }
