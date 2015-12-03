@@ -81,7 +81,7 @@ namespace AnyTrack.Sprints.Views
 
             AddSprintCommand = new DelegateCommand(GoToCreateSprint);
             UpdateProjectDisplayedCommand = new DelegateCommand(UpdateProjectDisplayed, CanUpdateProject);
-            OpenSprintOptions = new DelegateCommand<ServiceSprintSummary>(ShowSprintOptions);
+            OpenSprintOptionsCommand = new DelegateCommand<ServiceSprintSummary>(ShowSprintOptions);
         }
 
         #endregion
@@ -181,7 +181,7 @@ namespace AnyTrack.Sprints.Views
         /// <summary>
         /// Gets or sets the command that can be used to display the Sprint Options panel.
         /// </summary>
-        public DelegateCommand<ServiceSprintSummary> OpenSprintOptions { get; set; }
+        public DelegateCommand<ServiceSprintSummary> OpenSprintOptionsCommand { get; set; }
         #endregion
 
         #region Methods

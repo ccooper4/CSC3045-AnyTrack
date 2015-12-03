@@ -48,7 +48,7 @@
                                 <RowDefinition Height="9*"></RowDefinition>
                             </Grid.RowDefinitions>
 
-                            <controls:Tile Grid.Row="0" Title="{Binding Name}" Width="120" Height="120" CommandParameter="{Binding Path=.}" Command="{Binding Path=DataContext.OpenSprintOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"></controls:Tile>
+                            <controls:Tile Grid.Row="0" Title="{Binding Name}" Width="120" Height="120" CommandParameter="{Binding Path=.}" Command="{Binding Path=DataContext.OpenSprintOptionsCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"></controls:Tile>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

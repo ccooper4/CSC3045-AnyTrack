@@ -119,6 +119,30 @@ namespace Unit.Modules.AnyTrack.Projects.Views.ProjectOptionsViewModelTests
 
         #endregion 
 
+        #region GoToEditProject()
+
+        [Test]
+        public void GoToEditProject()
+        {
+            NavigationParameters sentParams = null;
+            vm.ProjectId = new Guid();
+            vm.IsOpen = true;
+
+            var regionManager = Substitute.For<IRegionManager>();
+            regionManager.RequestNavigate(Arg.Any<string>(), Arg.Any<string>(), Arg.Do<NavigationParameters>(np => sentParams = np));
+            vm.RegionManager = regionManager;
+
+            vm.Call("GoToEditProject");
+            sentParams.Should().NotBeNull();
+            sentParams.ContainsKey("ProjectId").Should().BeTrue();
+            sentParams.ContainsKey("EditMode").Should().BeTrue();
+            sentParams["ProjectId"].Should().Be(vm.ProjectId);
+            sentParams["EditMode"].Should().Be("true");
+            regionManager.Received().RequestNavigate(RegionNames.MainRegion, "Project", sentParams);
+            vm.IsOpen.Should().BeFalse();
+        }
+
+        #endregion
     }
 
     #endregion 
