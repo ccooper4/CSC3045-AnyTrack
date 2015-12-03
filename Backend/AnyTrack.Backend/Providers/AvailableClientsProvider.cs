@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace AnyTrack.Backend.Providers
         /// <summary>
         /// The connected clients.
         /// </summary>
-        private static Dictionary<Guid, List<ServicePlanningPokerPendingUser>> connectedClients; 
+        private static ConcurrentDictionary<Guid, List<ServicePlanningPokerPendingUser>> connectedClients; 
 
         #endregion 
 
@@ -28,11 +29,11 @@ namespace AnyTrack.Backend.Providers
         /// Retrieves the singleton connected clients list.
         /// </summary>
         /// <returns>The list of connected clients.</returns>
-        public virtual Dictionary<Guid, List<ServicePlanningPokerPendingUser>> GetListOfClients()
+        public virtual ConcurrentDictionary<Guid, List<ServicePlanningPokerPendingUser>> GetListOfClients()
         {
             if (connectedClients == null)
             {
-                connectedClients = new Dictionary<Guid, List<ServicePlanningPokerPendingUser>>();
+                connectedClients = new ConcurrentDictionary<Guid, List<ServicePlanningPokerPendingUser>>();
             }
 
             return connectedClients;

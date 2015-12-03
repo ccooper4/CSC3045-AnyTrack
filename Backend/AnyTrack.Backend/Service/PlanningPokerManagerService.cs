@@ -18,7 +18,7 @@ namespace AnyTrack.Backend.Service
     /// The implementation of the planning poker manager service. 
     /// </summary>
     [CreatePrincipal]
-    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Single, InstanceContextMode = InstanceContextMode.PerCall)]
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, InstanceContextMode = InstanceContextMode.PerCall)]
     public class PlanningPokerManagerService : IPlanningPokerManagerService
     {
         #region Fields 
@@ -114,7 +114,7 @@ namespace AnyTrack.Backend.Service
 
             if (!connectedClientsList.ContainsKey(sprintId))
             {
-                connectedClientsList.Add(sprintId, new List<ServicePlanningPokerPendingUser>());
+                connectedClientsList.TryAdd(sprintId, new List<ServicePlanningPokerPendingUser>());
             }
 
             var thisSprintLst = connectedClientsList.Single(k => k.Key == sprintId);
@@ -184,6 +184,7 @@ namespace AnyTrack.Backend.Service
 
             var clientSocket = contextProvider.GetClientChannel<IPlanningPokerClientService>();
 
+             // TODO: David - map stories into session from sprint.
             var newSession = new ServicePlanningPokerSession
             {
                 SessionID = Guid.NewGuid(),
@@ -206,7 +207,7 @@ namespace AnyTrack.Backend.Service
                 State = ServicePlanningPokerSessionState.Pending
             };
 
-            sessions.Add(newSession.SessionID, newSession);
+            sessions.TryAdd(newSession.SessionID, newSession);
 
             // Notify clients in this sprint group. 
             var availableClientsList = availableClients.GetListOfClients();
@@ -277,7 +278,9 @@ namespace AnyTrack.Backend.Service
                 user.ClientChannel.NotifyClientOfTerminatedSession();
             }
 
-            sessions.Remove(sessionId);
+            ServicePlanningPokerSession removedItem;
+
+            sessions.TryRemove(sessionId, out removedItem);
         }
 
         /// <summary>
@@ -449,7 +452,9 @@ namespace AnyTrack.Backend.Service
                 throw new ArgumentException("No session could be found", "sessionId");
             }
 
-            SendMessageToClients(msg);                      
+            var session = sessions[sessionId];
+
+            SendMessageToClients(session, msg);                      
         }
 
         /// <summary>
@@ -486,27 +491,6 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
-        /// Method for sending a message
-        /// </summary>
-        /// <param name="msg">the message object to be sent</param>
-        public void SendMessageToClients(ServiceChatMessage msg)
-        {
-            var thisSession = msg.SessionID;
-
-            var currentUser = unitOfWork.UserRepository.Items.Single(u => u.EmailAddress == Thread.CurrentPrincipal.Identity.Name);
-
-            var connectedClientsList = availableClients.GetListOfClients();
-            var clientList = connectedClientsList[msg.SessionID];
-
-            msg.Name = "{0} {1}".Substitute(currentUser.FirstName, currentUser.LastName);
-
-            foreach (var client in clientList)
-            {
-                client.ClientChannel.SendMessageToClient(msg);
-            }
-        }
-
-        /// <summary>
         /// Method for telling clients to clear recieved estimates
         /// </summary>
         /// <param name="msg">the message object used to find the sessionID</param>
@@ -526,5 +510,31 @@ namespace AnyTrack.Backend.Service
         }
 
         #endregion 
+
+        #region Helpers 
+
+        /// <summary>
+        /// Method for sending a message
+        /// </summary>
+        /// <param name="session">The session</param>
+        /// <param name="msg">the message object to be sent</param>
+        private void SendMessageToClients(ServicePlanningPokerSession session, ServiceChatMessage msg)
+        {
+            var currentUser = unitOfWork.UserRepository.Items.Single(u => u.EmailAddress == Thread.CurrentPrincipal.Identity.Name);
+
+            if (session.Users.SingleOrDefault(u => u.EmailAddress == currentUser.EmailAddress) == null)
+            {
+                throw new InvalidOperationException("User not found in session"); 
+            }
+
+            msg.Name = "{0} {1}".Substitute(currentUser.FirstName, currentUser.LastName);
+
+            foreach (var client in session.Users.Where(u => u.EmailAddress != currentUser.EmailAddress))
+            {
+                client.ClientChannel.SendMessageToClient(msg);
+            }
+        }
+
+        #endregion
     }
 }

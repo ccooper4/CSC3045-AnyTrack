@@ -13,6 +13,7 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
     /// <summary>
     /// Provides an implementation for the Planning Poker Manager service gateway.
     /// </summary>
+    [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class PlanningPokerManagerServiceGateway : IPlanningPokerManagerServiceGateway, IPlanningPokerManagerServiceCallback
     {
         #region Fields 

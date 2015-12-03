@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AnyTrack.PlanningPoker.Views"
+             xmlns:prism="http://www.codeplex.com/prism"
+             prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600">
 
@@ -104,7 +106,7 @@
                 <TextBlock Foreground="White" Text="Chat" />
             </GroupBox.Header>
             <DockPanel>
-                <ListBox ItemsSource="{Binding RecievedMessages}" Padding="0,0,0,0" Margin="0,10px,0,0" BorderThickness="0" VerticalAlignment="Stretch">
+                <ListBox ItemsSource="{Binding MessageHistories}" Padding="0,0,0,0" Margin="0,10px,0,0" BorderThickness="0" VerticalAlignment="Stretch">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Label Content="{Binding Path=.}" />
@@ -114,7 +116,7 @@
                 <DockPanel VerticalAlignment="Bottom">
                     <Label DockPanel.Dock="Left" Name="ChatInputLabel" HorizontalAlignment="Right">Chat Input</Label>
                     <Button Content="Send" DockPanel.Dock="Right" Command="{Binding SendMessageCommand}" Background="LightGray" Margin="10px,0,0,0"/>
-                    <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Text="{Binding CurrentMessage}"/>
+                    <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Text="{Binding MessageToSend}"/>
                 </DockPanel>
             </DockPanel>
         </GroupBox>
