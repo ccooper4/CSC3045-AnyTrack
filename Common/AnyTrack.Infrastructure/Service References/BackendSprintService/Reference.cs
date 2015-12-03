@@ -1036,6 +1036,24 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetSprintStories", ReplyAction="http://tempuri.org/ISprintService/GetSprintStoriesResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory>> GetSprintStoriesAsync(System.Guid sprintId);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetStartDateOfSprint", ReplyAction="http://tempuri.org/ISprintService/GetStartDateOfSprintResponse")]
+        System.Nullable<System.DateTime> GetStartDateOfSprint(System.Guid sprintId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetStartDateOfSprint", ReplyAction="http://tempuri.org/ISprintService/GetStartDateOfSprintResponse")]
+        System.Threading.Tasks.Task<System.Nullable<System.DateTime>> GetStartDateOfSprintAsync(System.Guid sprintId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetEndDateOfSprint", ReplyAction="http://tempuri.org/ISprintService/GetEndDateOfSprintResponse")]
+        System.Nullable<System.DateTime> GetEndDateOfSprint(System.Guid sprintId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetEndDateOfSprint", ReplyAction="http://tempuri.org/ISprintService/GetEndDateOfSprintResponse")]
+        System.Threading.Tasks.Task<System.Nullable<System.DateTime>> GetEndDateOfSprintAsync(System.Guid sprintId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetMaxEstimateOfSprint", ReplyAction="http://tempuri.org/ISprintService/GetMaxEstimateOfSprintResponse")]
+        double GetMaxEstimateOfSprint(System.Guid sprintId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetMaxEstimateOfSprint", ReplyAction="http://tempuri.org/ISprintService/GetMaxEstimateOfSprintResponse")]
+        System.Threading.Tasks.Task<double> GetMaxEstimateOfSprintAsync(System.Guid sprintId);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/ManageSprintBacklog", ReplyAction="http://tempuri.org/ISprintService/ManageSprintBacklogResponse")]
         void ManageSprintBacklog(System.Guid projectId, System.Guid sprintId, System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> sprintStories);
         
@@ -1132,6 +1150,30 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         
         public System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory>> GetSprintStoriesAsync(System.Guid sprintId) {
             return base.Channel.GetSprintStoriesAsync(sprintId);
+        }
+        
+        public System.Nullable<System.DateTime> GetStartDateOfSprint(System.Guid sprintId) {
+            return base.Channel.GetStartDateOfSprint(sprintId);
+        }
+        
+        public System.Threading.Tasks.Task<System.Nullable<System.DateTime>> GetStartDateOfSprintAsync(System.Guid sprintId) {
+            return base.Channel.GetStartDateOfSprintAsync(sprintId);
+        }
+        
+        public System.Nullable<System.DateTime> GetEndDateOfSprint(System.Guid sprintId) {
+            return base.Channel.GetEndDateOfSprint(sprintId);
+        }
+        
+        public System.Threading.Tasks.Task<System.Nullable<System.DateTime>> GetEndDateOfSprintAsync(System.Guid sprintId) {
+            return base.Channel.GetEndDateOfSprintAsync(sprintId);
+        }
+        
+        public double GetMaxEstimateOfSprint(System.Guid sprintId) {
+            return base.Channel.GetMaxEstimateOfSprint(sprintId);
+        }
+        
+        public System.Threading.Tasks.Task<double> GetMaxEstimateOfSprintAsync(System.Guid sprintId) {
+            return base.Channel.GetMaxEstimateOfSprintAsync(sprintId);
         }
         
         public void ManageSprintBacklog(System.Guid projectId, System.Guid sprintId, System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> sprintStories) {

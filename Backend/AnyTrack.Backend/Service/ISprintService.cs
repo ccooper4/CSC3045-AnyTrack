@@ -81,8 +81,32 @@ namespace AnyTrack.Backend.Service
         List<ServiceSprintStory> GetSprintStories(Guid sprintId);
 
         /// <summary>
-        /// Manages the sprint backlog
+        /// Gets the start date associated with a sprint.
         /// </summary>
+        /// <param name="sprintId">the sprint id</param>
+        /// <returns>the start date of the sprint</returns>
+        [OperationContract]
+        DateTime? GetStartDateOfSprint(Guid sprintId);
+
+        /// <summary>
+        /// Gets the end date associated with a sprint.
+        /// </summary>
+        /// <param name="sprintId">the sprint id</param>
+        /// <returns>the end date of the sprint</returns>
+        [OperationContract]
+        DateTime? GetEndDateOfSprint(Guid sprintId);
+
+        /// <summary>
+        /// Gets the maximum estimate of the sprint tasks in a given sprint
+        /// </summary>
+        /// <param name="sprintId">the sprint id</param>
+        /// <returns>the maximum value of the estimate in a given sprint</returns>
+        [OperationContract]
+        double GetMaxEstimateOfSprint(Guid sprintId);
+
+        /// <summary>
+        /// Manages the sprint backlog
+        /// </summary>aram>
         /// <param name="projectId">Project id of the project</param>
         /// <param name="sprintId">Sprint id of sprint</param>
         /// <param name="sprintStories">List of sprint stories</param>

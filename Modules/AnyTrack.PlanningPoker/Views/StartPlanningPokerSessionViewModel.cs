@@ -214,7 +214,7 @@ namespace AnyTrack.PlanningPoker.Views
             if (!this.HasErrors)
             {
                 var sessonId = serviceGateway.StartNewPokerSession(sprintId.Value);
-                this.ShowMetroDialog("Sesion started", "The planning poker session has been started");
+                this.ShowMetroDialog("Session started", "The planning poker session has been started");
             }
         }
 

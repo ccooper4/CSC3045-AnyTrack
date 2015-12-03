@@ -38,6 +38,27 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         List<ServiceTask> GetAllTasksForSprint(Guid sprintId);
 
         /// <summary>
+        /// Gets the end date of the sprint
+        /// </summary>
+        /// <param name="sprintId">the sprint id</param>
+        /// <returns>the end date of sprint</returns>
+        DateTime? GetDateSprintEnds(Guid sprintId);
+
+        /// <summary>
+        /// Gets the start date of the sprint
+        /// </summary>
+        /// <param name="sprintId">the sprint id</param>
+        /// <returns>the start date of sprint</returns>
+        DateTime? GetDateSprintStarted(Guid sprintId);
+
+        /// <summary>
+        /// Gets the max estimate of the sprint
+        /// </summary>
+        /// <param name="sprintId">the sprint id</param>
+        /// <returns>the maximum estimate of the sprint</returns>
+        double GetSprintMaxEstimate(Guid sprintId);
+
+        /// <summary>
         /// Saves the updated task hours
         /// </summary>
         /// <param name="tasks">The list of tasks</param>

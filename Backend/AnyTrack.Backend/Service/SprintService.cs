@@ -321,6 +321,39 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
+        /// Gets a startdate for a given sprint
+        /// </summary>
+        /// <param name="sprintId">The sprint id</param>
+        /// <returns>the startDate</returns>
+        public DateTime? GetStartDateOfSprint(Guid sprintId)
+        {
+            var startDate = unitOfWork.SprintRepository.Items.Min(s => s.StartDate);
+            return startDate;
+        }
+
+        /// <summary>
+        /// Gets an enddate for a given sprint.
+        /// </summary>
+        /// <param name="sprintId">the sprintid</param>
+        /// <returns>the enddate of sprint</returns>
+        public DateTime? GetEndDateOfSprint(Guid sprintId)
+        {
+            var endDate = unitOfWork.SprintRepository.Items.Max(s => s.EndDate);
+            return endDate;
+        }
+
+        /// <summary>
+        /// Gets the maximum estimate of a sprint
+        /// </summary>
+        /// <param name="sprintId">the sprintId</param>
+        /// <returns>retrieve the max estimate of the sprint</returns>
+        public double GetMaxEstimateOfSprint(Guid sprintId)
+        {
+            var maxEst = unitOfWork.TaskHourEstimateRepository.Items.Max(t => t.Estimate);
+            return maxEst;
+        }
+
+        /// <summary>
         /// Method to save the update hours for tasks
         /// </summary>
         /// <param name="tasks">List of tasks to save</param>

@@ -68,6 +68,36 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         }
 
         /// <summary>
+        /// Gets the maximum estimate of the sprint
+        /// </summary>
+        /// <param name="sprintId">the sprint id</param>
+        /// <returns>the max value of estimate in the sprint</returns>
+        public double GetSprintMaxEstimate(Guid sprintId)
+        {
+            return client.GetMaxEstimateOfSprint(sprintId);
+        }
+
+        /// <summary>
+        /// Gets the start date of the current sprint
+        /// </summary>
+        /// <param name="sprintId">the sprintId</param>
+        /// <returns>the start date of the current sprint</returns>
+        public DateTime? GetDateSprintStarted(Guid sprintId)
+        {
+            return client.GetStartDateOfSprint(sprintId);
+        }
+
+        /// <summary>
+        /// Gets the end date of the current sprint
+        /// </summary>
+        /// <param name="sprintId">the sprintId</param>
+        /// <returns>the enddate of the sprint</returns>
+        public DateTime? GetDateSprintEnds(Guid sprintId)
+        {
+            return client.GetEndDateOfSprint(sprintId);
+        }
+
+        /// <summary>
         /// Retrieves a specified sprint.
         /// </summary>
         /// <param name="sprintId">Id of the sprint</param>
