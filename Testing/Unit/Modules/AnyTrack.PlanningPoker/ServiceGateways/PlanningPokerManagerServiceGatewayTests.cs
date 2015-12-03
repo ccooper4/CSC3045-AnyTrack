@@ -219,6 +219,43 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.ServiceGateways.PlanningPokerManag
         }
 
         #endregion 
+
+        #region StartSession(Guid sessionId) Tests 
+
+        [Test]
+        public void CallStartSession()
+        {
+            var sessionId = Guid.NewGuid();
+
+            serviceGateway.StartSession(sessionId);
+
+            client.Received().StartSession(sessionId);
+        }
+
+        #endregion 
+
+        #region NotifyClientOfSessionStart() Tests
+
+        [Test]
+        public void NotifyClientOfSessionStart()
+        {
+            var waitObject = new ManualResetEvent(false);
+
+            serviceGateway.NotifyClientOfSessionStartEvent += (sender, args) =>
+            {
+                sender.Equals(serviceGateway).Should().BeTrue();
+
+                waitObject.Set();
+            };
+
+            serviceGateway.NotifyClientOfSessionStart();
+
+            waitObject.WaitOne();
+        }
+
+        #endregion 
+
+
     }
 
     #endregion 

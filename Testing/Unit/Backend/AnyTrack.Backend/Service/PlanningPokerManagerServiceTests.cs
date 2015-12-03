@@ -989,6 +989,133 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
         }
 
         #endregion 
+
+        #region StartSession(Guid sessionId) Tests
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void CallStartSessionWithNoSession()
+        {
+            var sessionId = Guid.NewGuid();
+            activeSessionProvider.GetListOfSessions().Returns(new Dictionary<Guid, ServicePlanningPokerSession>());
+
+            service.StartSession(sessionId);
+        }
+
+        [Test]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void CallStartSessionAndUserNotInSession()
+        {
+            var sessionId = Guid.NewGuid();
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+            };
+
+            var dictionary = new Dictionary<Guid, ServicePlanningPokerSession>();
+            dictionary.Add(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(dictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            service.StartSession(sessionId);
+        }
+
+        [Test]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void CallStartSessionAndUserIsNotScrumMaster()
+        {
+            var sessionId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+                {
+                    new ServicePlanningPokerUser
+                    {
+                        UserID = userId,
+                        EmailAddress = "test@agile.local"
+                    }
+                },
+                HostID = Guid.NewGuid()
+            };
+
+            var dictionary = new Dictionary<Guid, ServicePlanningPokerSession>();
+            dictionary.Add(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(dictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            service.StartSession(sessionId);
+        }
+
+        [Test]
+        public void CallStartSession()
+        {
+            var sessionId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+            var otherClientChannel = Substitute.For<IPlanningPokerClientService>();
+
+            var thisUser = new ServicePlanningPokerUser
+            {
+                UserID = userId,
+                EmailAddress = "test@agile.local"
+            };
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+                {
+                    thisUser,
+                    new ServicePlanningPokerUser
+                    {
+                        ClientChannel = otherClientChannel,
+                        UserID = Guid.NewGuid(),
+                        EmailAddress = "other@agile.local"
+                    }
+                },
+                HostID = userId
+            };
+
+            var dictionary = new Dictionary<Guid, ServicePlanningPokerSession>();
+            dictionary.Add(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(dictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            service.StartSession(sessionId);
+
+            session.State.Should().Be(ServicePlanningPokerSessionState.GettingEstimates);
+            otherClientChannel.Received().NotifyClientOfSessionStart();
+        }
+
+        #endregion 
     }
 
     #endregion 

@@ -76,6 +76,7 @@ namespace AnyTrack.PlanningPoker.Views
             this.Users = new ObservableCollection<ServicePlanningPokerUser>();
             this.EndPokerSession = new DelegateCommand(EndCurrentPokerSession);
             this.ExitSession = new DelegateCommand(ExitCurrentPokerSession);
+            this.StartSession = new DelegateCommand(StartCurrentSession);
         }
 
         #endregion 
@@ -96,6 +97,11 @@ namespace AnyTrack.PlanningPoker.Views
         /// Gets or sets the exit session command.
         /// </summary>
         public DelegateCommand ExitSession { get; set; }
+
+        /// <summary>
+        /// Gets or sets the start session command.
+        /// </summary>
+        public DelegateCommand StartSession { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether or not the session has been joined.
@@ -199,6 +205,7 @@ namespace AnyTrack.PlanningPoker.Views
         {
             gateway.NotifyClientOfSessionUpdateEvent -= HandleNotifyClientOfSessionUpdate;
             gateway.NotifyClientOfTerminatedSessionEvent -= HandleSessionTerminatedEvent;
+            gateway.NotifyClientOfSessionStartEvent -= HandleNotifyClientOfSessionStartEvent;
         }
 
         /// <summary>
@@ -219,11 +226,25 @@ namespace AnyTrack.PlanningPoker.Views
 
                 gateway.NotifyClientOfSessionUpdateEvent += HandleNotifyClientOfSessionUpdate;
                 gateway.NotifyClientOfTerminatedSessionEvent += HandleSessionTerminatedEvent;
+                gateway.NotifyClientOfSessionStartEvent += HandleNotifyClientOfSessionStartEvent;
 
                 UpdateVmGivenSession(session);
                 SessionJoined = true;
                 PendingSessionJoin = false; 
             }
+        }
+
+        /// <summary>
+        /// Handles the session started event. 
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">Any event args.</param>
+        private void HandleNotifyClientOfSessionStartEvent(object sender, EventArgs e)
+        {
+            var navParams = new NavigationParameters();
+            navParams.Add("sessionId", sessionId);
+
+            this.NavigateToItem("PlanningPokerSession", navParams);
         }
 
         /// <summary>
@@ -265,6 +286,18 @@ namespace AnyTrack.PlanningPoker.Views
             gateway.LeaveSession(sessionId);
             this.ShowMetroDialog("Left the Planning poker session!", "You have now left the session.");
             this.NavigateToItem("MyProjects", null);
+        }
+
+        /// <summary>
+        /// Starts the current session.
+        /// </summary>
+        private void StartCurrentSession()
+        {
+            gateway.StartSession(sessionId);
+            var navParams = new NavigationParameters();
+            navParams.Add("sessionId", sessionId);
+
+            this.NavigateToItem("PlanningPokerSession", navParams);
         }
 
         #endregion 

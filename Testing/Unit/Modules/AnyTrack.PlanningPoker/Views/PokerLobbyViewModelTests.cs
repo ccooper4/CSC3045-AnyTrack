@@ -54,6 +54,7 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PokerLobbyViewModelTests
             vm.Users.Should().NotBeNull();
             vm.EndPokerSession.Should().NotBeNull();
             vm.ExitSession.Should().NotBeNull();
+            vm.StartSession.Should().NotBeNull();
         }
 
         #endregion 
@@ -235,6 +236,54 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PokerLobbyViewModelTests
 
             vm.MainWindow.Received().ShowMessageAsync("Left the Planning poker session!", "You have now left the session.");
             vm.RegionManager.Received().RequestNavigate(RegionNames.MainRegion, "MyProjects");
+        }
+
+        #endregion 
+
+        #region StartCurrentSession() Tests 
+
+        [Test]
+        public void CallStartCurrentSession()
+        {
+            var sessionId = Guid.NewGuid();
+            vm.GetType().GetField("sessionId", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(vm, sessionId);
+
+            vm.RegionManager = Substitute.For<IRegionManager>();
+
+            NavigationParameters sentParams = null;
+
+            vm.RegionManager.RequestNavigate(Arg.Any<string>(), Arg.Any<string>(), Arg.Do<NavigationParameters>(n => sentParams = n));
+
+            vm.Call("StartCurrentSession");
+
+            gateway.Received().StartSession(sessionId);
+            sentParams.Should().NotBeNull();
+            sentParams["sessionId"].Should().Be(sessionId);
+            vm.RegionManager.Received().RequestNavigate(RegionNames.MainRegion, "PlanningPokerSession", sentParams);
+
+
+        }
+
+        #endregion 
+
+        #region HandleNotifyClientOfSessionStartEvent(object sender, EventArgs e) Tests 
+
+        [Test]
+        public void CallHandleNotifyClientOfSessionStartEvent()
+        {
+            var sessionId = Guid.NewGuid();
+            vm.GetType().GetField("sessionId", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(vm, sessionId);
+
+            NavigationParameters sentParams = null;
+
+            vm.RegionManager = Substitute.For<IRegionManager>();
+
+            vm.RegionManager.RequestNavigate(Arg.Any<string>(), Arg.Any<string>(), Arg.Do<NavigationParameters>(n => sentParams = n));
+
+            vm.Call("HandleNotifyClientOfSessionStartEvent", null, null);
+
+            sentParams["sessionId"].Should().Be(sessionId);
+            vm.RegionManager.Received().RequestNavigate(RegionNames.MainRegion, "PlanningPokerSession", sentParams);
         }
 
         #endregion 

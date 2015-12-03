@@ -16,14 +16,14 @@ using System.Windows.Shapes;
 namespace AnyTrack.PlanningPoker.Views
 {
     /// <summary>
-    /// Interaction logic for Chat.xaml
+    /// Interaction logic for PlanningPokerView.xaml
     /// </summary>
-    public partial class ChatMessage : UserControl
+    public partial class PlanningPokerSession : UserControl
     {
         /// <summary>
         /// Constructor for chat
         /// </summary>
-        public ChatMessage()
+        public PlanningPokerSession()
         {
             InitializeComponent();
         }

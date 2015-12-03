@@ -39,6 +39,13 @@ namespace AnyTrack.Backend.Service
         void EndPokerSession(Guid sessionId);
 
         /// <summary>
+        /// Allows a scrum master to start the session.
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        [OperationContract]
+        void StartSession(Guid sessionId); 
+
+        /// <summary>
         /// Allows a client to join an active session.
         /// </summary>
         /// <param name="sessionId">The session id.</param>

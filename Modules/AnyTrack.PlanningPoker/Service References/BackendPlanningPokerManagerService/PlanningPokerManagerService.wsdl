@@ -39,6 +39,12 @@
   <wsdl:message name="IPlanningPokerManagerService_EndPokerSession_OutputMessage">
     <wsdl:part name="parameters" element="tns:EndPokerSessionResponse" />
   </wsdl:message>
+  <wsdl:message name="IPlanningPokerManagerService_StartSession_InputMessage">
+    <wsdl:part name="parameters" element="tns:StartSession" />
+  </wsdl:message>
+  <wsdl:message name="IPlanningPokerManagerService_StartSession_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StartSessionResponse" />
+  </wsdl:message>
   <wsdl:message name="IPlanningPokerManagerService_JoinSession_InputMessage">
     <wsdl:part name="parameters" element="tns:JoinSession" />
   </wsdl:message>
@@ -81,6 +87,12 @@
   <wsdl:message name="IPlanningPokerManagerService_NotifyClientOfSessionUpdate_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotifyClientOfSessionUpdateResponse" />
   </wsdl:message>
+  <wsdl:message name="IPlanningPokerManagerService_NotifyClientOfSessionStart_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NotifyClientOfSessionStart" />
+  </wsdl:message>
+  <wsdl:message name="IPlanningPokerManagerService_NotifyClientOfSessionStart_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NotifyClientOfSessionStartResponse" />
+  </wsdl:message>
   <wsdl:message name="IPlanningPokerManagerService_SendMessageToClient_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SendMessageToClient" />
   </wsdl:message>
@@ -112,6 +124,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/EndPokerSession" message="tns:IPlanningPokerManagerService_EndPokerSession_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/EndPokerSessionResponse" message="tns:IPlanningPokerManagerService_EndPokerSession_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="StartSession">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/StartSession" message="tns:IPlanningPokerManagerService_StartSession_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/StartSessionResponse" message="tns:IPlanningPokerManagerService_StartSession_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="JoinSession">
       <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/JoinSession" message="tns:IPlanningPokerManagerService_JoinSession_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/JoinSessionResponse" message="tns:IPlanningPokerManagerService_JoinSession_OutputMessage" />
@@ -141,6 +157,10 @@
     <wsdl:operation name="NotifyClientOfSessionUpdate">
       <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/NotifyClientOfSessionUpdate" message="tns:IPlanningPokerManagerService_NotifyClientOfSessionUpdate_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/NotifyClientOfSessionUpdateResponse" message="tns:IPlanningPokerManagerService_NotifyClientOfSessionUpdate_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NotifyClientOfSessionStart">
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/NotifyClientOfSessionStart" message="tns:IPlanningPokerManagerService_NotifyClientOfSessionStart_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/NotifyClientOfSessionStartResponse" message="tns:IPlanningPokerManagerService_NotifyClientOfSessionStart_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="SendMessageToClient">
       <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/SendMessageToClient" message="tns:IPlanningPokerManagerService_SendMessageToClient_OutputCallbackMessage" />
@@ -178,6 +198,15 @@
     </wsdl:operation>
     <wsdl:operation name="EndPokerSession">
       <soap12:operation soapAction="http://tempuri.org/IPlanningPokerManagerService/EndPokerSession" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartSession">
+      <soap12:operation soapAction="http://tempuri.org/IPlanningPokerManagerService/StartSession" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -244,6 +273,15 @@
     </wsdl:operation>
     <wsdl:operation name="NotifyClientOfSessionUpdate">
       <soap12:operation soapAction="http://tempuri.org/IPlanningPokerManagerService/NotifyClientOfSessionUpdate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyClientOfSessionStart">
+      <soap12:operation soapAction="http://tempuri.org/IPlanningPokerManagerService/NotifyClientOfSessionStart" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

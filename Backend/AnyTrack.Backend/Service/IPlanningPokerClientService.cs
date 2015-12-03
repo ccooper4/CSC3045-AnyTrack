@@ -32,7 +32,13 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         /// <param name="newSession">The new session.</param>
         [OperationContract]
-        void NotifyClientOfSessionUpdate(ServicePlanningPokerSession newSession); 
+        void NotifyClientOfSessionUpdate(ServicePlanningPokerSession newSession);
+
+        /// <summary>
+        /// Notifies the client that the session has started.
+        /// </summary>
+        [OperationContract]
+        void NotifyClientOfSessionStart(); 
 
         /// <summary>
         /// Notifies any conected clients with a new message that has been sent

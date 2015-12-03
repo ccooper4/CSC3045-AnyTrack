@@ -37,7 +37,12 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         /// <summary>
         /// Notifies the client that the session has changed.
         /// </summary>
-        event EventHandler<ServicePlanningPokerSession> NotifyClientOfSessionUpdateEvent; 
+        event EventHandler<ServicePlanningPokerSession> NotifyClientOfSessionUpdateEvent;
+
+        /// <summary>
+        /// Notifies the client that the session has started.
+        /// </summary>
+        event EventHandler NotifyClientOfSessionStartEvent; 
 
         #endregion
 
@@ -75,6 +80,12 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         /// </summary>
         /// <param name="sessionId">The session id.</param>
         void LeaveSession(Guid sessionId);
+
+        /// <summary>
+        /// Allows a scrum master to start the session.
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        void StartSession(Guid sessionId);
 
         /// <summary>
         /// Allows the client to pull an up to date session state. 

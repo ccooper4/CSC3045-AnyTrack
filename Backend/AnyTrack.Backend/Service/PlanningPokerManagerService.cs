@@ -372,6 +372,43 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
+        /// Allows a scrum master to start the session.
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        public void StartSession(Guid sessionId)
+        {
+            var sessions = activeSessions.GetListOfSessions();
+
+            if (!sessions.ContainsKey(sessionId))
+            {
+                throw new ArgumentException("No session found", "sessionId");
+            }
+
+            var session = sessions[sessionId];
+
+            var thisUserEmail = Thread.CurrentPrincipal.Identity.Name;
+
+            var userInSession = session.Users.SingleOrDefault(u => u.EmailAddress == thisUserEmail);
+
+            if (userInSession == null)
+            {
+                throw new InvalidOperationException("User not found in session");
+            }
+
+            if (userInSession.UserID != session.HostID)
+            {
+                throw new InvalidOperationException("User is not the scrum master");
+            }
+
+            session.State = ServicePlanningPokerSessionState.GettingEstimates;
+
+            foreach (var user in session.Users.Where(u => u != userInSession))
+            {
+                user.ClientChannel.NotifyClientOfSessionStart();
+            }
+        }
+
+        /// <summary>
         /// Allows the client to pull an up to date session state. 
         /// </summary>
         /// <param name="sessionId">The session id.</param>

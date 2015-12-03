@@ -606,6 +606,12 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/EndPokerSession", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/EndPokerSessionResponse")]
         System.Threading.Tasks.Task EndPokerSessionAsync(System.Guid sessionId);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/StartSession", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/StartSessionResponse")]
+        void StartSession(System.Guid sessionId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/StartSession", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/StartSessionResponse")]
+        System.Threading.Tasks.Task StartSessionAsync(System.Guid sessionId);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/JoinSession", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/JoinSessionResponse")]
         AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSession JoinSession(System.Guid sessionId);
         
@@ -650,6 +656,10 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/NotifyClientOfSessionUpdate", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/NotifyClientOfSessionUpdateRespon" +
             "se")]
         void NotifyClientOfSessionUpdate(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSession newSession);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/NotifyClientOfSessionStart", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/NotifyClientOfSessionStartRespons" +
+            "e")]
+        void NotifyClientOfSessionStart();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/SendMessageToClient", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/SendMessageToClientResponse")]
         void SendMessageToClient(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServiceChatMessage msg);
@@ -713,6 +723,14 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         
         public System.Threading.Tasks.Task EndPokerSessionAsync(System.Guid sessionId) {
             return base.Channel.EndPokerSessionAsync(sessionId);
+        }
+        
+        public void StartSession(System.Guid sessionId) {
+            base.Channel.StartSession(sessionId);
+        }
+        
+        public System.Threading.Tasks.Task StartSessionAsync(System.Guid sessionId) {
+            return base.Channel.StartSessionAsync(sessionId);
         }
         
         public AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSession JoinSession(System.Guid sessionId) {
