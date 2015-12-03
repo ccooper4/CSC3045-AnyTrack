@@ -6,6 +6,10 @@
       <xsd:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" />
       <xsd:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System.Net.Mail" />
+      <xsd:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System.Net.Mime" />
+      <xsd:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/System.Text" />
+      <xsd:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/System.Globalization" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="ISprintService_AddSprint_InputMessage">
@@ -80,6 +84,12 @@
   <wsdl:message name="ISprintService_ManageSprintBacklog_OutputMessage">
     <wsdl:part name="parameters" element="tns:ManageSprintBacklogResponse" />
   </wsdl:message>
+  <wsdl:message name="ISprintService_SendEmailRequest_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendEmailRequest" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_SendEmailRequest_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendEmailRequestResponse" />
+  </wsdl:message>
   <wsdl:portType name="ISprintService">
     <wsdl:operation name="AddSprint">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/AddSprint" message="tns:ISprintService_AddSprint_InputMessage" />
@@ -128,6 +138,10 @@
     <wsdl:operation name="ManageSprintBacklog">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/ManageSprintBacklog" message="tns:ISprintService_ManageSprintBacklog_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/ManageSprintBacklogResponse" message="tns:ISprintService_ManageSprintBacklog_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendEmailRequest">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/SendEmailRequest" message="tns:ISprintService_SendEmailRequest_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/SendEmailRequestResponse" message="tns:ISprintService_SendEmailRequest_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ISprintService" type="tns:ISprintService">
@@ -233,6 +247,15 @@
     </wsdl:operation>
     <wsdl:operation name="ManageSprintBacklog">
       <soap:operation soapAction="http://tempuri.org/ISprintService/ManageSprintBacklog" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendEmailRequest">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/SendEmailRequest" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

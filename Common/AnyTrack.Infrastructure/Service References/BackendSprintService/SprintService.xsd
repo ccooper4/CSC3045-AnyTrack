@@ -2,6 +2,7 @@
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" />
+  <xs:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System.Net.Mail" />
   <xs:element name="AddSprint">
     <xs:complexType>
       <xs:sequence>
@@ -164,6 +165,21 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="ManageSprintBacklogResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendEmailRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="senderEmailAddress" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="recipientEmailAddress" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="emailMessage" nillable="true" type="xs:string" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/System.Net.Mail" minOccurs="0" name="emailAttachment" nillable="true" type="q19:Attachment" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendEmailRequestResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

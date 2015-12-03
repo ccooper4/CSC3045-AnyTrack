@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
@@ -112,5 +113,15 @@ namespace AnyTrack.Backend.Service
         /// <param name="sprintStories">List of sprint stories</param>
         [OperationContract]
         void ManageSprintBacklog(Guid projectId, Guid sprintId, List<ServiceSprintStory> sprintStories);
+
+        /// <summary>
+        /// Sending an email request
+        /// </summary>
+        /// <param name="senderEmailAddress">The email adddress to send the email to</param>
+        /// <param name="recipientEmailAddress">The email adddress where the email is sent from</param>
+        /// <param name="emailMessage">The email address of the </param>
+        /// <param name="emailAttachment">Attachment for the email</param>
+        [OperationContract]
+        void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, Attachment emailAttachment);
     }
 }

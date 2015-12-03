@@ -97,20 +97,20 @@ namespace Unit.Modules.AnyTrack.Projects.Views.ProjectOptionsViewModelTests
 
         #endregion 
 
-        #region GoToBacklog(string projectId) Tests 
+        #region GoToBacklog() Tests 
 
         [Test]
         public void CallGoToBacklog()
         {
             NavigationParameters sentParams = null;
-            string projectId = Guid.NewGuid().ToString();
+            Guid projectId = Guid.NewGuid();
             vm.IsOpen = true;
 
             var regionManager = Substitute.For<IRegionManager>();
             regionManager.RequestNavigate(Arg.Any<string>(), Arg.Any<string>(), Arg.Do<NavigationParameters>(np => sentParams = np));
             vm.RegionManager = regionManager;
 
-            vm.Call("GoToBacklog", projectId);
+            vm.Call("GoToBacklog");
             sentParams.Should().NotBeNull();
             sentParams.ContainsKey("projectId").Should().BeTrue();
             regionManager.Received().RequestNavigate(RegionNames.MainRegion, "ProductBacklog", sentParams);
@@ -118,6 +118,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.ProjectOptionsViewModelTests
         }
 
         #endregion 
+
     }
 
     #endregion 
