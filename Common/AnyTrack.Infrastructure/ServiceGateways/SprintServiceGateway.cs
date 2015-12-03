@@ -171,6 +171,17 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         {
             return client.GetSprintStoryEstimates(sprintId);
         }
+
+        /// <summary>
+        /// Gets Sprint stories maximum story estimate within sprint
+        /// </summary>
+        /// <param name="sprintId">the sprint id</param>
+        /// <returns>the maximum story estimate in sprint</returns>
+        public double GetSprintMaxStoryEstimate(Guid sprintId)
+        {
+            return client.GetMaxStoryEstimateOfSprint(sprintId);
+        }
+
         #endregion
     }
 }

@@ -78,6 +78,12 @@
   <wsdl:message name="ISprintService_GetMaxEstimateOfSprint_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetMaxEstimateOfSprintResponse" />
   </wsdl:message>
+  <wsdl:message name="ISprintService_GetMaxStoryEstimateOfSprint_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMaxStoryEstimateOfSprint" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_GetMaxStoryEstimateOfSprint_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMaxStoryEstimateOfSprintResponse" />
+  </wsdl:message>
   <wsdl:message name="ISprintService_GetSprintStoryEstimates_InputMessage">
     <wsdl:part name="parameters" element="tns:GetSprintStoryEstimates" />
   </wsdl:message>
@@ -140,6 +146,10 @@
     <wsdl:operation name="GetMaxEstimateOfSprint">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetMaxEstimateOfSprint" message="tns:ISprintService_GetMaxEstimateOfSprint_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetMaxEstimateOfSprintResponse" message="tns:ISprintService_GetMaxEstimateOfSprint_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMaxStoryEstimateOfSprint">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetMaxStoryEstimateOfSprint" message="tns:ISprintService_GetMaxStoryEstimateOfSprint_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetMaxStoryEstimateOfSprintResponse" message="tns:ISprintService_GetMaxStoryEstimateOfSprint_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetSprintStoryEstimates">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetSprintStoryEstimates" message="tns:ISprintService_GetSprintStoryEstimates_InputMessage" />
@@ -248,6 +258,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetMaxEstimateOfSprint">
       <soap:operation soapAction="http://tempuri.org/ISprintService/GetMaxEstimateOfSprint" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMaxStoryEstimateOfSprint">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/GetMaxStoryEstimateOfSprint" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -155,26 +155,40 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetSprintStoryEstimates">
+  <xs:element name="GetMaxStoryEstimateOfSprint">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q19="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sprintId" type="q19:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetMaxStoryEstimateOfSprintResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetMaxStoryEstimateOfSprintResult" type="xs:double" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSprintStoryEstimates">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sprintId" type="q20:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetSprintStoryEstimatesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetSprintStoryEstimatesResult" nillable="true" type="q20:ArrayOfServiceSprintStory" />
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="GetSprintStoryEstimatesResult" nillable="true" type="q21:ArrayOfServiceSprintStory" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ManageSprintBacklog">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q21="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="projectId" type="q21:guid" />
-        <xs:element xmlns:q22="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sprintId" type="q22:guid" />
-        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="sprintStories" nillable="true" type="q23:ArrayOfServiceSprintStory" />
+        <xs:element xmlns:q22="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="projectId" type="q22:guid" />
+        <xs:element xmlns:q23="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sprintId" type="q23:guid" />
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="sprintStories" nillable="true" type="q24:ArrayOfServiceSprintStory" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -189,7 +203,7 @@
         <xs:element minOccurs="0" name="senderEmailAddress" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="recipientEmailAddress" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="emailMessage" nillable="true" type="xs:string" />
-        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/System.Net.Mail" minOccurs="0" name="emailAttachment" nillable="true" type="q24:Attachment" />
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/System.Net.Mail" minOccurs="0" name="emailAttachment" nillable="true" type="q25:Attachment" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

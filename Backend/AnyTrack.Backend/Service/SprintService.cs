@@ -378,6 +378,17 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
+        /// Gets the maximum story estimate of a sprint
+        /// </summary>
+        /// <param name="sprintId">the sprintId</param>
+        /// <returns>retrieve the max story estimate of the sprint</returns>
+        public double GetMaxStoryEstimateOfSprint(Guid sprintId)
+        {
+            var maxEst = unitOfWork.SprintStoryRepository.Items.Max(ss => ss.StoryEstimate);
+            return maxEst;
+        }
+
+        /// <summary>
         /// Method to save the update hours for tasks
         /// </summary>
         /// <param name="tasks">List of tasks to save</param>

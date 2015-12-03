@@ -96,6 +96,20 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         /// <param name="updatedSprintBacklog">the updated sprint backlog</param>
         void ManageSprintBacklog(Guid projectId, Guid sprintId, List<ServiceSprintStory> updatedSprintBacklog);
 
+        /// <summary>
+        /// Acquires the max story estimate for a sprint
+        /// </summary>
+        /// <param name="sprintId">the id of the sprint</param>
+        /// <returns>the maximum story estimate</returns>
+        double GetSprintMaxStoryEstimate(Guid sprintId);
+
+        /// <summary>
+        /// Acquires the maxmium story estimate for a given sprint
+        /// </summary>
+        /// <param name="sprintId">the sprint id</param>
+        /// <returns>the maximum story estimate</returns>
+        //// double GetSprintMaxStoryEstimate(Guid sprintId);
+
         ///// <summary>
         ///// Sends an email of a burndown chart
         ///// </summary>

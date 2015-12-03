@@ -1205,6 +1205,12 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetMaxEstimateOfSprint", ReplyAction="http://tempuri.org/ISprintService/GetMaxEstimateOfSprintResponse")]
         System.Threading.Tasks.Task<double> GetMaxEstimateOfSprintAsync(System.Guid sprintId);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetMaxStoryEstimateOfSprint", ReplyAction="http://tempuri.org/ISprintService/GetMaxStoryEstimateOfSprintResponse")]
+        double GetMaxStoryEstimateOfSprint(System.Guid sprintId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetMaxStoryEstimateOfSprint", ReplyAction="http://tempuri.org/ISprintService/GetMaxStoryEstimateOfSprintResponse")]
+        System.Threading.Tasks.Task<double> GetMaxStoryEstimateOfSprintAsync(System.Guid sprintId);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetSprintStoryEstimates", ReplyAction="http://tempuri.org/ISprintService/GetSprintStoryEstimatesResponse")]
         System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> GetSprintStoryEstimates(System.Guid sprintId);
         
@@ -1337,6 +1343,14 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         
         public System.Threading.Tasks.Task<double> GetMaxEstimateOfSprintAsync(System.Guid sprintId) {
             return base.Channel.GetMaxEstimateOfSprintAsync(sprintId);
+        }
+        
+        public double GetMaxStoryEstimateOfSprint(System.Guid sprintId) {
+            return base.Channel.GetMaxStoryEstimateOfSprint(sprintId);
+        }
+        
+        public System.Threading.Tasks.Task<double> GetMaxStoryEstimateOfSprintAsync(System.Guid sprintId) {
+            return base.Channel.GetMaxStoryEstimateOfSprintAsync(sprintId);
         }
         
         public System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> GetSprintStoryEstimates(System.Guid sprintId) {
