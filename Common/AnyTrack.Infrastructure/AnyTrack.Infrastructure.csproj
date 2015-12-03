@@ -134,6 +134,7 @@
     <Compile Include="ServiceGateways\ISprintServiceGateway.cs" />
     <Compile Include="ServiceGateways\ProjectServiceGateway.cs" />
     <Compile Include="ServiceGateways\SprintServiceGateway.cs" />
+    <Compile Include="ServiceSprintStoryStatus.cs" />
     <Compile Include="Service\FlyoutService.cs" />
     <Compile Include="Service\IFlyoutService.cs" />
     <Compile Include="Service\IMenuService.cs" />
@@ -145,6 +146,10 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\AnyTrack.Backend.Service.Model.ServiceSprint.datasource" />
+    <None Include="Properties\DataSources\AnyTrack.Backend.Service.Model.ServiceSprintStory.datasource" />
+    <None Include="Properties\DataSources\AnyTrack.Backend.Service.Model.ServiceSprintSummary.datasource" />
+    <None Include="Properties\DataSources\AnyTrack.Backend.Service.Model.ServiceTask.datasource" />
     <None Include="Service References\BackendAccountService\AccountService.wsdl" />
     <None Include="Service References\BackendAccountService\AccountService.xsd">
       <SubType>Designer</SubType>

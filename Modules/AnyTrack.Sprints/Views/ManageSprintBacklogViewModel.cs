@@ -285,6 +285,7 @@ namespace AnyTrack.Sprints.Views
             sprintStory.Story.Summary = productStory.Summary;
             sprintStory.Story.StoryId = productStory.StoryId;
             sprintStory.Story.InSprint = (bool)productStory.InSprint;
+            sprintStory.Status = ServiceSprintStoryStatus.NotStarted;
             return sprintStory;
         }
         #endregion

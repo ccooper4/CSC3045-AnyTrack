@@ -202,6 +202,9 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         private System.Guid SprintStoryIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StatusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private AnyTrack.Infrastructure.BackendSprintService.ServiceStory StoryField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -236,6 +239,19 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
                 if ((this.SprintStoryIdField.Equals(value) != true)) {
                     this.SprintStoryIdField = value;
                     this.RaisePropertyChanged("SprintStoryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StatusField, value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
                 }
             }
         }

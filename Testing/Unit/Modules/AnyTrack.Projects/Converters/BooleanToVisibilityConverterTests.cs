@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using AnyTrack.Sprints.Converters;
 using FluentAssertions;
 
 namespace Unit.Modules.AnyTrack.Projects.Converters.BooleanToVisibilityConverterTests

@@ -33,7 +33,7 @@
         <Button Style="{StaticResource MetroFlatButton}" Command="{Binding OpenProjectManager}" Content="Project Manager" Width="Auto" Height="Auto" Margin="5,10,5,5" Grid.Row="3"/>
         <Button Style="{StaticResource MetroFlatButton}" Command="{Binding OpenEditSprint}" Content="Edit Sprint" Width="Auto" Height="Auto" Margin="5" Grid.Row="4" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibility}}"/>
         <Button Style="{StaticResource MetroFlatButton}" Command="{Binding OpenManageSprintBacklog}" Content="Add Stories To Sprint Backlog" Width="Auto" Height="Auto" Margin="5" Grid.Row="5" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibility}}"/>
-        <Button Style="{StaticResource MetroFlatButton}" Command="{Binding ViewBacklog}" Content="View Burndown Chart" Width="Auto" Height="Auto" Margin="5" Grid.Row="6"/>
+        <Button Style="{StaticResource MetroFlatButton}" Command="{Binding OpenBurndown}" Content="View Burndown Chart" Width="Auto" Height="Auto" Margin="5" Grid.Row="6"/>
         <Button Style="{StaticResource MetroFlatButton}" Command="{Binding OpenPlanningPoker}" Content="Planning Poker" Width="Auto" Height="Auto" Margin="5" Grid.Row="7" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibility}}"/>
     </Grid>
 

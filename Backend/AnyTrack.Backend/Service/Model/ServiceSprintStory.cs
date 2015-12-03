@@ -25,5 +25,10 @@ namespace AnyTrack.Backend.Service.Model
         /// Gets or sets the story that the sprint references to.
         /// </summary>
         public ServiceStory Story { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sprint story status.
+        /// </summary>
+        public string Status { get; set; }
     }
 }
