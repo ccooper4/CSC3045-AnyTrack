@@ -194,6 +194,7 @@
     <Compile Include="Modules\AnyTrack.Accounting\Views\RegistrationViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.PlanningPoker\PlanningPokerModuleTests.cs" />
     <Compile Include="Modules\AnyTrack.PlanningPoker\ServiceGateways\PlanningPokerManagerServiceGatewayTests.cs" />
+    <Compile Include="Modules\AnyTrack.PlanningPoker\Views\PlanningPokerSessionViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.PlanningPoker\Views\PokerLobbyViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.PlanningPoker\Views\SearchForPlanningPokerSessionViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.PlanningPoker\Views\StartPlanningPokerSessionViewModelTests.cs" />

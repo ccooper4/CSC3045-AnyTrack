@@ -10,6 +10,7 @@ using AnyTrack.Infrastructure.ServiceGateways;
 using AnyTrack.PlanningPoker;
 using AnyTrack.PlanningPoker.BackendPlanningPokerManagerService;
 using AnyTrack.PlanningPoker.ServiceGateways;
+using AnyTrack.SharedUtilities.Extensions;
 using MahApps.Metro.Controls.Dialogs;
 using Prism.Commands;
 using Prism.Regions;
@@ -22,11 +23,6 @@ namespace AnyTrack.PlanningPoker.Views
     public class PlanningPokerSessionViewModel : ValidatedBindableBase, INavigationAware, IRegionMemberLifetime
     {
         #region Fields 
-
-        /// <summary>
-        /// The project service gateway
-        /// </summary>
-        private readonly IProjectServiceGateway projectServiceGateway;
 
         /// <summary>
         /// The planning poker service gateway.
@@ -61,20 +57,25 @@ namespace AnyTrack.PlanningPoker.Views
         #endregion
 
         #region Constructor 
+
         /// <summary>
         /// ChatViewModel constructor.
         /// </summary>
-        public PlanningPokerSessionViewModel()
+        /// <param name="gateway">The service gateway.</param>
+        public PlanningPokerSessionViewModel(IPlanningPokerManagerServiceGateway gateway)
         {
+            if (gateway == null)
+            {
+                throw new ArgumentNullException("gateway");
+            }
+
+            this.serviceGateway = gateway;
+
             this.SprintStoriesCollection = new ObservableCollection<ServiceStorySummary>();
 
-            this.SprintStories.Clear();
-            this.SprintStories.AddRange<ServiceStorySummary>(projectServiceGateway.GetProjectStories(Guid.NewGuid()));
+            this.MessageHistories = new ObservableCollection<string>();
 
-            serviceGateway.NotifyClientToClearStoryPointEstimateFromServerEvent += ServiceGateway_NotifyClientToClearStoryPointEstimateFromServerEvent;
-            serviceGateway.NotifyClientOfNewMessageFromServerEvent += ServiceGateway_NotifyClientOfNewMessageFromServerEvent;
-
-            SendMessageCommand = new DelegateCommand(this.SubmitMessageToServer);
+            SendMessageCommand = new DelegateCommand(SubmitMessageToServer);
 
             ShowEstimatesCommand = new DelegateCommand(ShowUserEstimates);
 
@@ -134,7 +135,7 @@ namespace AnyTrack.PlanningPoker.Views
         {
             get
             {
-                throw new NotImplementedException();
+                return false;
             }
         }
 
@@ -150,7 +151,7 @@ namespace AnyTrack.PlanningPoker.Views
 
             set
             {
-                messageToSend = value;
+                SetProperty(ref messageToSend, value);
             }
         }
 
@@ -212,7 +213,13 @@ namespace AnyTrack.PlanningPoker.Views
         /// <param name="navigationContext">The navigation context</param>
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            throw new NotImplementedException();
+            if (navigationContext.Parameters.ContainsKey("sessionId"))
+            {
+                sessionId = (Guid)navigationContext.Parameters["sessionId"];
+                var session = serviceGateway.RetrieveSessionInfo(sessionId);
+                serviceGateway.NotifyClientToClearStoryPointEstimateFromServerEvent += ServiceGateway_NotifyClientToClearStoryPointEstimateFromServerEvent;
+                serviceGateway.NotifyClientOfNewMessageFromServerEvent += ServiceGateway_NotifyClientOfNewMessageFromServerEvent;
+            }
         }
 
         /// <summary>
@@ -222,7 +229,7 @@ namespace AnyTrack.PlanningPoker.Views
         /// <returns>Returns a boolean flag.</returns>
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
-            throw new NotImplementedException();
+            return false; 
         }
 
         /// <summary>
@@ -231,7 +238,8 @@ namespace AnyTrack.PlanningPoker.Views
         /// <param name="navigationContext">The navigation context</param>
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            throw new NotImplementedException();
+            serviceGateway.NotifyClientToClearStoryPointEstimateFromServerEvent -= ServiceGateway_NotifyClientToClearStoryPointEstimateFromServerEvent;
+            serviceGateway.NotifyClientOfNewMessageFromServerEvent -= ServiceGateway_NotifyClientOfNewMessageFromServerEvent;
         }
 
         /// <summary>
@@ -241,7 +249,8 @@ namespace AnyTrack.PlanningPoker.Views
         /// <param name="msg">the message that has been sent</param>
         private void ServiceGateway_NotifyClientOfNewMessageFromServerEvent(object sender, ServiceChatMessage msg)
         {
-            this.MessageHistories.Add(msg.Message);
+            var message = "{0} {1} - {2}".Substitute(msg.Name, DateTime.Now.ToString(), msg.Message);
+            this.MessageHistories.Add(message);
         }
 
         /// <summary>
@@ -274,12 +283,13 @@ namespace AnyTrack.PlanningPoker.Views
         {
             ServiceChatMessage msg = new ServiceChatMessage();
 
-            ////Needs to be changed to the sessionID of planning poker session
-            msg.SessionID = Guid.NewGuid();
-
+            msg.SessionID = sessionId;
             msg.Message = messageToSend;
+            msg.Name = "Me";
             
             serviceGateway.SubmitMessageToServer(msg);
+
+            ServiceGateway_NotifyClientOfNewMessageFromServerEvent(this, msg);
         }
 
         /// <summary>

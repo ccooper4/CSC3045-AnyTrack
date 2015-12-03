@@ -255,6 +255,42 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.ServiceGateways.PlanningPokerManag
 
         #endregion 
 
+        #region SubmitMessageToServer(ServiceChatMessage msg) Tests 
+
+        [Test]
+        public void CallSubmitMessageToServer()
+        {
+            var newMessage = new ServiceChatMessage();
+
+            serviceGateway.SubmitMessageToServer(newMessage);
+            client.Received().SubmitMessageToServer(newMessage);
+        }
+
+        #endregion 
+
+        #region SendMessageToClient() Tests
+
+        [Test]
+        public void SendMessageToClientTest()
+        {
+            var message = new ServiceChatMessage();
+
+            var waitObject = new ManualResetEvent(false);
+
+            serviceGateway.NotifyClientOfNewMessageFromServerEvent += (sender, args) =>
+            {
+                sender.Equals(serviceGateway).Should().BeTrue();
+                args.Equals(message).Should().BeTrue();
+
+                waitObject.Set();
+            };
+
+            serviceGateway.SendMessageToClient(message);
+
+            waitObject.WaitOne();
+        }
+
+        #endregion 
 
     }
 

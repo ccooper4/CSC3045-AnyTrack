@@ -14,6 +14,7 @@ using System.Security;
 using AnyTrack.Backend.Security;
 using System.Threading;
 using AnyTrack.Backend.Service.Model;
+using System.Collections.Concurrent;
 
 namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
 {
@@ -166,10 +167,10 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
             var clientChannel = Substitute.For<IPlanningPokerClientService>();
             contextProvider.GetClientChannel<IPlanningPokerClientService>().Returns(clientChannel);
 
-            var pendingClients = new Dictionary<Guid, List<ServicePlanningPokerPendingUser>>();
+            var pendingClients = new ConcurrentDictionary<Guid, List<ServicePlanningPokerPendingUser>>();
             pendingClientsProvider.GetListOfClients().Returns(pendingClients);
 
-            activeSessionProvider.GetListOfSessions().Returns(new Dictionary<Guid, ServicePlanningPokerSession>());
+            activeSessionProvider.GetListOfSessions().Returns(new ConcurrentDictionary<Guid, ServicePlanningPokerSession>());
 
             var res = service.SubscribeToNewSessionMessages(sprintId);
 
@@ -228,7 +229,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
             var clientChannel = Substitute.For<IPlanningPokerClientService>();
             contextProvider.GetClientChannel<IPlanningPokerClientService>().Returns(clientChannel);
 
-            var pendingClients = new Dictionary<Guid, List<ServicePlanningPokerPendingUser>>();
+            var pendingClients = new ConcurrentDictionary<Guid, List<ServicePlanningPokerPendingUser>>();
             pendingClientsProvider.GetListOfClients().Returns(pendingClients);
 
             var session = new ServicePlanningPokerSession
@@ -238,8 +239,8 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 SprintID = sprintId
             };
 
-            var sessionDictionary = new Dictionary<Guid, ServicePlanningPokerSession>();
-            sessionDictionary.Add(session.SessionID, session);
+            var sessionDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            sessionDictionary.TryAdd(session.SessionID, session);
 
             activeSessionProvider.GetListOfSessions().Returns(sessionDictionary);
 
@@ -351,8 +352,8 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 SessionID = currentSessionId
             };
 
-            var sessionList = new Dictionary<Guid, ServicePlanningPokerSession>();
-            sessionList.Add(currentSessionId, currentSession);
+            var sessionList = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            sessionList.TryAdd(currentSessionId, currentSession);
             activeSessionProvider.GetListOfSessions().Returns(sessionList);
 
             service.StartNewPokerSession(sprintId);
@@ -401,12 +402,12 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
             var clientSocket = Substitute.For<IPlanningPokerClientService>();
             contextProvider.GetClientChannel<IPlanningPokerClientService>().Returns(clientSocket);
 
-            var sessionList = new Dictionary<Guid, ServicePlanningPokerSession>();
+            var sessionList = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
             activeSessionProvider.GetListOfSessions().Returns(sessionList);
 
             ServiceSessionChangeInfo sentSessionInfo = null;
 
-            var clientList = new Dictionary<Guid, List<ServicePlanningPokerPendingUser>>();
+            var clientList = new ConcurrentDictionary<Guid, List<ServicePlanningPokerPendingUser>>();
             var currentPendingClients = new List<ServicePlanningPokerPendingUser>();
             var pendingUserSocket = Substitute.For<IPlanningPokerClientService>();
 
@@ -417,7 +418,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 ClientChannel = pendingUserSocket
             });
 
-            clientList.Add(sprintId, currentPendingClients);
+            clientList.TryAdd(sprintId, currentPendingClients);
             pendingClientsProvider.GetListOfClients().Returns(clientList);
 
             var result = service.StartNewPokerSession(sprintId);
@@ -459,7 +460,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
         {
             var sessionId = Guid.NewGuid();
 
-            var activeSessions = new Dictionary<Guid, ServicePlanningPokerSession>();
+            var activeSessions = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
             activeSessionProvider.GetListOfSessions().Returns(activeSessions);
 
             service.EndPokerSession(sessionId);
@@ -491,7 +492,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
             var thisUserChannel = Substitute.For<IPlanningPokerClientService>();
             var otherUserChannel = Substitute.For<IPlanningPokerClientService>();
 
-            var activeSessions = new Dictionary<Guid, ServicePlanningPokerSession>();
+            var activeSessions = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
             var session = new ServicePlanningPokerSession
             {
                 SessionID = sessionId,
@@ -511,7 +512,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                     }
                 }                
             };
-            activeSessions.Add(sessionId, session);
+            activeSessions.TryAdd(sessionId, session);
             activeSessionProvider.GetListOfSessions().Returns(activeSessions);
 
             var pendingUserChannel = Substitute.For<IPlanningPokerClientService>();
@@ -519,13 +520,13 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
             ServiceSessionChangeInfo sentSessionInfo = null; 
             pendingUserChannel.NotifyClientOfSession(Arg.Do<ServiceSessionChangeInfo>(s => sentSessionInfo = s));
 
-            var pendingClients = new Dictionary<Guid, List<ServicePlanningPokerPendingUser>>();
+            var pendingClients = new ConcurrentDictionary<Guid, List<ServicePlanningPokerPendingUser>>();
             var pendingClientList = new List<ServicePlanningPokerPendingUser>();
             pendingClientList.Add(new ServicePlanningPokerPendingUser
             {
                 ClientChannel = pendingUserChannel
             });
-            pendingClients.Add(sprintId, pendingClientList);
+            pendingClients.TryAdd(sprintId, pendingClientList);
 
             pendingClientsProvider.GetListOfClients().Returns(pendingClients);
 
@@ -553,7 +554,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
         {
             var sessionId = Guid.NewGuid();
 
-            var activeSessions = new Dictionary<Guid, ServicePlanningPokerSession>();
+            var activeSessions = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
             activeSessionProvider.GetListOfSessions().Returns(activeSessions);
 
             service.JoinSession(sessionId);
@@ -583,11 +584,11 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 SessionID = sessionId
             };
 
-            var sessions = new Dictionary<Guid, ServicePlanningPokerSession>();
-            sessions.Add(sessionId, session);
+            var sessions = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            sessions.TryAdd(sessionId, session);
             activeSessionProvider.GetListOfSessions().Returns(sessions);
 
-            var pendingUsersDictionary = new Dictionary<Guid, List<ServicePlanningPokerPendingUser>>();
+            var pendingUsersDictionary = new ConcurrentDictionary<Guid, List<ServicePlanningPokerPendingUser>>();
 
             pendingClientsProvider.GetListOfClients().Returns(pendingUsersDictionary);
 
@@ -619,12 +620,12 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 SessionID = sessionId
             };
 
-            var sessions = new Dictionary<Guid, ServicePlanningPokerSession>();
-            sessions.Add(sessionId, session);
+            var sessions = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            sessions.TryAdd(sessionId, session);
             activeSessionProvider.GetListOfSessions().Returns(sessions);
 
-            var pendingUsersDictionary = new Dictionary<Guid, List<ServicePlanningPokerPendingUser>>();
-            pendingUsersDictionary.Add(sprintId, new List<ServicePlanningPokerPendingUser>());
+            var pendingUsersDictionary = new ConcurrentDictionary<Guid, List<ServicePlanningPokerPendingUser>>();
+            pendingUsersDictionary.TryAdd(sprintId, new List<ServicePlanningPokerPendingUser>());
             pendingClientsProvider.GetListOfClients().Returns(pendingUsersDictionary);
 
             service.JoinSession(sessionId);
@@ -663,13 +664,13 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 Users = new List<ServicePlanningPokerUser>()
             };
 
-            var sessions = new Dictionary<Guid, ServicePlanningPokerSession>();
-            sessions.Add(sessionId, session);
+            var sessions = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            sessions.TryAdd(sessionId, session);
             activeSessionProvider.GetListOfSessions().Returns(sessions);
 
             var userChannel = Substitute.For<IPlanningPokerClientService>();
 
-            var pendingUsersDictionary = new Dictionary<Guid, List<ServicePlanningPokerPendingUser>>();
+            var pendingUsersDictionary = new ConcurrentDictionary<Guid, List<ServicePlanningPokerPendingUser>>();
             var pendingUserList = new List<ServicePlanningPokerPendingUser>();
             var pendingUser = new ServicePlanningPokerPendingUser
             {
@@ -680,7 +681,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 UserRoles = thisUser.Roles.Select(u => u.RoleName).ToList()
             };
             pendingUserList.Add(pendingUser);
-            pendingUsersDictionary.Add(sprintId, pendingUserList);
+            pendingUsersDictionary.TryAdd(sprintId, pendingUserList);
 
             pendingClientsProvider.GetListOfClients().Returns(pendingUsersDictionary);
 
@@ -742,13 +743,13 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 }
             };
 
-            var sessions = new Dictionary<Guid, ServicePlanningPokerSession>();
-            sessions.Add(sessionId, session);
+            var sessions = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            sessions.TryAdd(sessionId, session);
             activeSessionProvider.GetListOfSessions().Returns(sessions);
 
             var userChannel = Substitute.For<IPlanningPokerClientService>();
 
-            var pendingUsersDictionary = new Dictionary<Guid, List<ServicePlanningPokerPendingUser>>();
+            var pendingUsersDictionary = new ConcurrentDictionary<Guid, List<ServicePlanningPokerPendingUser>>();
             var pendingUserList = new List<ServicePlanningPokerPendingUser>();
             var pendingUser = new ServicePlanningPokerPendingUser
             {
@@ -759,7 +760,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 UserRoles = thisUser.Roles.Select(u => u.RoleName).ToList()
             };
             pendingUserList.Add(pendingUser);
-            pendingUsersDictionary.Add(sprintId, pendingUserList);
+            pendingUsersDictionary.TryAdd(sprintId, pendingUserList);
 
             pendingClientsProvider.GetListOfClients().Returns(pendingUsersDictionary);
 
@@ -791,7 +792,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
         public void CallForASessionThatDoesntExist()
         {
             var sessionId = Guid.NewGuid();
-            activeSessionProvider.GetListOfSessions().Returns(new Dictionary<Guid, ServicePlanningPokerSession>());
+            activeSessionProvider.GetListOfSessions().Returns(new ConcurrentDictionary<Guid, ServicePlanningPokerSession>());
 
             service.RetrieveSessionInfo(sessionId);
         }
@@ -817,8 +818,8 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 Users = new List<ServicePlanningPokerUser>()
             };
 
-            var sessionDictionary = new Dictionary<Guid, ServicePlanningPokerSession>();
-            sessionDictionary.Add(session.SessionID, session);
+            var sessionDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            sessionDictionary.TryAdd(session.SessionID, session);
 
             activeSessionProvider.GetListOfSessions().Returns(sessionDictionary);
 
@@ -851,8 +852,8 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 }
             };
 
-            var sessionDictionary = new Dictionary<Guid, ServicePlanningPokerSession>();
-            sessionDictionary.Add(session.SessionID, session);
+            var sessionDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            sessionDictionary.TryAdd(session.SessionID, session);
 
             activeSessionProvider.GetListOfSessions().Returns(sessionDictionary);
 
@@ -869,7 +870,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
         public void CallLeaveSessionWithNoSession()
         {
             var sessionId = Guid.NewGuid();
-            activeSessionProvider.GetListOfSessions().Returns(new Dictionary<Guid, ServicePlanningPokerSession>());
+            activeSessionProvider.GetListOfSessions().Returns(new ConcurrentDictionary<Guid, ServicePlanningPokerSession>());
 
             service.LeaveSession(sessionId);
         }
@@ -886,10 +887,10 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 Users = new List<ServicePlanningPokerUser>()
             }; 
 
-            var dictionary = new Dictionary<Guid, ServicePlanningPokerSession>(); 
-            dictionary.Add(sessionId, session);
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>(); 
+            ConcurrentDictionary.TryAdd(sessionId, session);
 
-            activeSessionProvider.GetListOfSessions().Returns(dictionary);
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
 
             var user = new User
             {
@@ -923,10 +924,10 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 HostID = userId
             };
 
-            var dictionary = new Dictionary<Guid, ServicePlanningPokerSession>();
-            dictionary.Add(sessionId, session);
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
 
-            activeSessionProvider.GetListOfSessions().Returns(dictionary);
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
 
             var user = new User
             {
@@ -967,10 +968,10 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 },
             };
 
-            var dictionary = new Dictionary<Guid, ServicePlanningPokerSession>();
-            dictionary.Add(sessionId, session);
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
 
-            activeSessionProvider.GetListOfSessions().Returns(dictionary);
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
 
             var user = new User
             {
@@ -997,7 +998,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
         public void CallStartSessionWithNoSession()
         {
             var sessionId = Guid.NewGuid();
-            activeSessionProvider.GetListOfSessions().Returns(new Dictionary<Guid, ServicePlanningPokerSession>());
+            activeSessionProvider.GetListOfSessions().Returns(new ConcurrentDictionary<Guid, ServicePlanningPokerSession>());
 
             service.StartSession(sessionId);
         }
@@ -1014,10 +1015,10 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 Users = new List<ServicePlanningPokerUser>()
             };
 
-            var dictionary = new Dictionary<Guid, ServicePlanningPokerSession>();
-            dictionary.Add(sessionId, session);
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
 
-            activeSessionProvider.GetListOfSessions().Returns(dictionary);
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
 
             var user = new User
             {
@@ -1051,10 +1052,10 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 HostID = Guid.NewGuid()
             };
 
-            var dictionary = new Dictionary<Guid, ServicePlanningPokerSession>();
-            dictionary.Add(sessionId, session);
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
 
-            activeSessionProvider.GetListOfSessions().Returns(dictionary);
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
 
             var user = new User
             {
@@ -1096,10 +1097,10 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 HostID = userId
             };
 
-            var dictionary = new Dictionary<Guid, ServicePlanningPokerSession>();
-            dictionary.Add(sessionId, session);
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
 
-            activeSessionProvider.GetListOfSessions().Returns(dictionary);
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
 
             var user = new User
             {
@@ -1113,6 +1114,112 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
 
             session.State.Should().Be(ServicePlanningPokerSessionState.GettingEstimates);
             otherClientChannel.Received().NotifyClientOfSessionStart();
+        }
+
+        #endregion 
+
+        #region SubmitMessageToServer(ServiceChatMessage msg) Tests 
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void CallSubmitWithNoSession()
+        {
+            var sessionId = Guid.NewGuid();
+            activeSessionProvider.GetListOfSessions().Returns(new ConcurrentDictionary<Guid, ServicePlanningPokerSession>());
+
+            var message = new ServiceChatMessage { SessionID = sessionId };
+
+            service.SubmitMessageToServer(message);
+        }
+
+        [Test]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void CallSubmitAndUserNotInSession()
+        {
+            var sessionId = Guid.NewGuid();
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+            };
+
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            var newMessage = new ServiceChatMessage
+            {
+                SessionID = sessionId
+            };
+
+            service.SubmitMessageToServer(newMessage);
+        }
+
+        [Test]
+        public void CallSubmit()
+        {
+            var sessionId = Guid.NewGuid();
+
+            var myClientChannel = Substitute.For<IPlanningPokerClientService>();
+            var otherClientChannel = Substitute.For<IPlanningPokerClientService>();
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>
+                {
+                    new ServicePlanningPokerUser()
+                    {
+                        ClientChannel  = myClientChannel,
+                        EmailAddress = "test@agile.local"
+                    },
+                    new ServicePlanningPokerUser()
+                    {
+                        ClientChannel  = otherClientChannel,
+                        EmailAddress = "test2@agile.local"
+                    },
+                }
+            };
+
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>(),
+                FirstName = "David",
+                LastName = "Tester"
+            };
+
+            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            var newMessage = new ServiceChatMessage
+            {
+                SessionID = sessionId
+            };
+
+            service.SubmitMessageToServer(newMessage);
+
+            newMessage.Name.Should().Be("David Tester");
+            myClientChannel.DidNotReceive().SendMessageToClient(newMessage);
+            otherClientChannel.Received().SendMessageToClient(newMessage);
         }
 
         #endregion 
