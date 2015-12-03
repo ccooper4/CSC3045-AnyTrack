@@ -96,6 +96,11 @@ namespace AnyTrack.Projects.Views
         public CreateProjectViewModel(IProjectServiceGateway iProjectServiceGateway)
             : base(iProjectServiceGateway)
         {
+            if (iProjectServiceGateway == null)
+            {
+                throw new ArgumentNullException("iProjectServiceGateway");
+            }
+
             SaveProjectCommand = new DelegateCommand(SaveProject);
             CancelProjectCommand = new DelegateCommand(CancelProject);
             SearchProductOwnerUserCommand = new DelegateCommand(SearchProjectOwners);
@@ -340,7 +345,7 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// This is a method to cancel the project wizard
         /// </summary>
-        public void CancelProject()
+        private void CancelProject()
         {
             var callbackAction = new Action<MessageDialogResult>(mdr =>
             {
@@ -383,19 +388,19 @@ namespace AnyTrack.Projects.Views
                 {
                    project.ProjectId = projectId;
                    ServiceGateway.UpdateProject(project);
-                   ShowMetroDialog("Project Updated", "The {0} project has been updated successfully.".Substitute(projectName), MessageDialogStyle.Affirmative);
+                   ShowMetroDialog("Project Updated", "The {0} project has been updated successfully.".Substitute(ProjectName), MessageDialogStyle.Affirmative);
                 }
                 else
                 {
                     ServiceGateway.CreateProject(project);
-                    ShowMetroDialog("Project created", "The {0} project has been created sucessfully.".Substitute(projectName), MessageDialogStyle.Affirmative);
+                    ShowMetroDialog("Project created", "The {0} project has been created sucessfully.".Substitute(ProjectName), MessageDialogStyle.Affirmative);
                 }
 
                 NavigateToItem("MyProjects");
             }
             else
             {
-                ShowMetroDialog("Project was not Saved", "The {0} project could not be saved. There are errors on the page. Please fix them and try again.".Substitute(projectName), MessageDialogStyle.Affirmative);
+                ShowMetroDialog("Project was not Saved", "The project could not be saved. There are errors on the page. Please fix them and try again.", MessageDialogStyle.Affirmative);
             }   
         }
 
@@ -431,7 +436,7 @@ namespace AnyTrack.Projects.Views
 
             if (ScrumMasterSearchUserResults.Count == 0)
             {
-                ShowMetroDialog("No Results Found", "No Scrum masters with the email address {0} have been found.".Substitute(productOwnerSearchEmailAddress));
+                ShowMetroDialog("No Results Found", "No Scrum masters with the email address {0} have been found.".Substitute(ScrumMasterSearchEmailAddress));
             }
 
             EnableScrumMasterSearchGrid = true; 
