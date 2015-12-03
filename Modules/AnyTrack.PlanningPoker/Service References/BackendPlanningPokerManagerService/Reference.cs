@@ -457,6 +457,9 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         private double EstimateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid SessionIDField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -478,6 +481,19 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
                 if ((this.EstimateField.Equals(value) != true)) {
                     this.EstimateField = value;
                     this.RaisePropertyChanged("Estimate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
                 }
             }
         }
@@ -668,9 +684,6 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
             "mateFromServer", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/NotifyClientToClearStoryPointEsti" +
             "mateFromServerResponse")]
         void NotifyClientToClearStoryPointEstimateFromServer();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/SendSessionToClient", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/SendSessionToClientResponse")]
-        void SendSessionToClient(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSession session);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

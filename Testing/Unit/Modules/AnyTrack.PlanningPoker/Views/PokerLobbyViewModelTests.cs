@@ -139,7 +139,8 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PokerLobbyViewModelTests
             {
                 Users = new List<ServicePlanningPokerUser>().ToArray(),
                 SprintName = "Test",
-                ProjectName = "Test"
+                ProjectName = "Test",
+                SessionID = sessionId
             };
 
             gateway.RetrieveSessionInfo(sessionId).Returns(session);

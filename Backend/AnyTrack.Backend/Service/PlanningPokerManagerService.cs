@@ -201,8 +201,7 @@ namespace AnyTrack.Backend.Service
                         EmailAddress = currentUser.EmailAddress,
                         Name = "{0} {1}".Substitute(currentUser.FirstName, currentUser.LastName),
                         UserID = currentUserId,
-                        UserRoles = currentUser.Roles.Where(r => r.SprintId == sprintId && r.ProjectId == sprint.Project.Id).Select(r => r.RoleName).ToList(),
-                        Estimate = new ServicePlanningPokerEstimate()
+                        UserRoles = currentUser.Roles.Where(r => r.SprintId == sprintId && r.ProjectId == sprint.Project.Id).Select(r => r.RoleName).ToList()
                     }
                 },
                 State = ServicePlanningPokerSessionState.Pending
@@ -322,8 +321,7 @@ namespace AnyTrack.Backend.Service
                 EmailAddress = pendingUserEntry.EmailAddress,
                 Name = pendingUserEntry.Name,
                 UserID = pendingUserEntry.UserID,
-                UserRoles = pendingUserEntry.UserRoles,
-                Estimate = new ServicePlanningPokerEstimate()
+                UserRoles = pendingUserEntry.UserRoles
             }; 
 
             thisSession.Users.Add(newUser);
@@ -465,7 +463,6 @@ namespace AnyTrack.Backend.Service
         public void SubmitEstimateToServer(ServicePlanningPokerEstimate estimate)
         {
             Guid sessionId = estimate.SessionID;
-            var currentUser = unitOfWork.UserRepository.Items.Single(u => u.EmailAddress == Thread.CurrentPrincipal.Identity.Name);
             var sessions = activeSessions.GetListOfSessions();
 
             if (!sessions.ContainsKey(sessionId))
@@ -473,21 +470,21 @@ namespace AnyTrack.Backend.Service
                 throw new ArgumentException("No session could be found", "sessionId");
             }
 
-            ServicePlanningPokerUser user = sessions[sessionId].Users.FirstOrDefault(x => x.UserID == currentUser.Id);
+            var currentUser = unitOfWork.UserRepository.Items.Single(u => u.EmailAddress == Thread.CurrentPrincipal.Identity.Name);
+
+            ServicePlanningPokerUser user = sessions[sessionId].Users.SingleOrDefault(x => x.UserID == currentUser.Id);
 
             if (user == null)
             {
                 throw new ArgumentException("User could not be found", "currentUser");
             }
 
+            estimate.Name = user.Name;
             user.Estimate = estimate;
 
-            var connectedClientsList = availableClients.GetListOfClients();
-            var clientList = connectedClientsList[sessionId];
-
-            foreach (var client in clientList)
+            foreach (var client in sessions[sessionId].Users)
             {
-                client.ClientChannel.SendSessionToClient(sessions[sessionId]);
+                client.ClientChannel.NotifyClientOfSessionUpdate(sessions[sessionId]);
             }
         }
 

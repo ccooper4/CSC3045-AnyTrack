@@ -11,6 +11,8 @@ using AnyTrack.PlanningPoker.Views;
 using Prism.Regions;
 using AnyTrack.PlanningPoker.BackendPlanningPokerManagerService;
 using System.Reflection;
+using AnyTrack.Infrastructure;
+using System.Security.Principal;
 
 namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewModelTests
 {
@@ -61,29 +63,6 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewMode
             vm.SendEstimateCommand.Should().NotBeNull();
 
             vm.SendFinalEstimateCommand.Should().NotBeNull();
-        }
-
-        #endregion 
-
-        #region OnNavigatedTo(NavigationContext navigationContext) Tests 
-
-        [Test]
-        public void CallOnNavigatedToWithSessionId()
-        {
-            var sessionId = Guid.NewGuid();
-            var navParams = new NavigationParameters();
-            navParams.Add("sessionId", sessionId);
-
-            var navService = Substitute.For<IRegionNavigationService>();
-
-            var navContext = new NavigationContext(navService, new Uri("Test", UriKind.Relative), navParams);
-
-            var session = new ServicePlanningPokerSession();
-            gateway.RetrieveSessionInfo(sessionId).Returns(session);
-
-            vm.OnNavigatedTo(navContext);
-
-            gateway.Received().RetrieveSessionInfo(sessionId);
         }
 
         #endregion 
@@ -153,7 +132,132 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewMode
         }
 
         #endregion 
+        
+        #region OnNavigatedTo(NavigationContext navigationContext) Tests
+
+        [Test]
+        public void CallOnNavigatedToNoSprntId()
+        {
+            var navService = Substitute.For<IRegionNavigationService>();
+            var navContext = new NavigationContext(navService, new Uri("Test", UriKind.Relative));
+
+            vm.OnNavigatedTo(navContext);
+
+            gateway.DidNotReceive().JoinSession(Arg.Any<Guid>());
+            gateway.DidNotReceive().RetrieveSessionInfo(Arg.Any<Guid>());
+        }
+
+        [Test]
+        public void CallOnNavigatedToAndUserIsScrumMasterAndStateIsShowEstimates()
+        {
+            vm.RecievedEstimates = new System.Collections.ObjectModel.ObservableCollection<ServicePlanningPokerEstimate>()
+            {
+                new ServicePlanningPokerEstimate
+                {
+                    Name = "Old"
+                }
+            };
+
+            var sessionId = Guid.NewGuid();
+
+            var navParams = new NavigationParameters();
+            navParams.Add("sessionId", sessionId);
+
+            var navService = Substitute.For<IRegionNavigationService>();
+            var navContext = new NavigationContext(navService, new Uri("Test", UriKind.Relative), navParams);            
+
+            var userId = Guid.NewGuid();
+            UserDetailsStore.LoggedInUserPrincipal = new GenericPrincipal(new GenericIdentity("test@agile.local"), null);
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>
+                {
+                    new ServicePlanningPokerUser
+                    {
+                        UserID = userId,
+                        EmailAddress = "test@agile.local",
+                        Estimate = new ServicePlanningPokerEstimate
+                        {
+                            Estimate = 10,
+                            Name = "New"
+                        }
+                    }
+                }.ToArray(),
+                State = ServicePlanningPokerSessionState.GettingEstimates,
+                HostID = userId
+            };
+
+            gateway.RetrieveSessionInfo(sessionId).Returns(session);
+
+            vm.OnNavigatedTo(navContext);
+
+            vm.IsScrumMaster.Should().BeTrue();
+            vm.RecievedEstimates.Count.Should().Be(1);
+            vm.RecievedEstimates.Single().Name.Should().Be("New");
+            vm.ShowEstimates.Should().BeFalse();
+            vm.HideEstimates.Should().BeTrue();
+        }
+
+        [Test]
+        public void CallOnNavigatedToAndUserIsScrumMaster()
+        {
+            vm.RecievedEstimates = new System.Collections.ObjectModel.ObservableCollection<ServicePlanningPokerEstimate>()
+            {
+                new ServicePlanningPokerEstimate
+                {
+                    Name = "Old"
+                }
+            };
+
+            var sessionId = Guid.NewGuid();
+
+            var navParams = new NavigationParameters();
+            navParams.Add("sessionId", sessionId);
+
+            var navService = Substitute.For<IRegionNavigationService>();
+            var navContext = new NavigationContext(navService, new Uri("Test", UriKind.Relative), navParams);
+
+            var userId = Guid.NewGuid();
+            UserDetailsStore.LoggedInUserPrincipal = new GenericPrincipal(new GenericIdentity("test@agile.local"), null);
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>
+                {
+                    new ServicePlanningPokerUser
+                    {
+                        UserID = userId,
+                        EmailAddress = "test@agile.local",
+                        Estimate = new ServicePlanningPokerEstimate
+                        {
+                            Estimate = 10,
+                            Name = "New"
+                        }
+                    }
+                }.ToArray(),
+                State = ServicePlanningPokerSessionState.ShowingEstimates,
+                HostID = userId
+            };
+
+            gateway.RetrieveSessionInfo(sessionId).Returns(session);
+
+            vm.OnNavigatedTo(navContext);
+
+            vm.IsScrumMaster.Should().BeTrue();
+            vm.RecievedEstimates.Count.Should().Be(1);
+            vm.RecievedEstimates.Single().Name.Should().Be("New");
+            vm.ShowEstimates.Should().BeTrue();
+            vm.HideEstimates.Should().BeFalse();
+        }
+
+
+        #endregion
+
     }
+
 
     #endregion 
 }

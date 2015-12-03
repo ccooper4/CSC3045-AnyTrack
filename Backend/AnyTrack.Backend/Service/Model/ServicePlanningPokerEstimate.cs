@@ -20,5 +20,10 @@ namespace AnyTrack.Backend.Service.Model
         /// Gets or sets the user's estimate
         /// </summary>
         public double Estimate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user's name.
+        /// </summary>
+        public string Name { get; set; }
     }
 }

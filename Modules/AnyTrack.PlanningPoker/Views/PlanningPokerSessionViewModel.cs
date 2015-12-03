@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.BackendProjectService;
+using AnyTrack.Infrastructure.Extensions;
 using AnyTrack.Infrastructure.ServiceGateways;
 using AnyTrack.PlanningPoker;
 using AnyTrack.PlanningPoker.BackendPlanningPokerManagerService;
@@ -43,6 +44,11 @@ namespace AnyTrack.PlanningPoker.Views
         /// Should the estimates be shown
         /// </summary>
         private bool showEstimates = false;
+
+        /// <summary>
+        /// Should the estimates be hidden
+        /// </summary>
+        private bool hideEstimates = true;
         
         /// <summary>
         /// The specified sessionID for this chat.
@@ -74,6 +80,8 @@ namespace AnyTrack.PlanningPoker.Views
             this.SprintStoriesCollection = new ObservableCollection<ServiceStorySummary>();
 
             this.MessageHistories = new ObservableCollection<string>();
+
+            this.RecievedEstimates = new ObservableCollection<ServicePlanningPokerEstimate>();
 
             SendMessageCommand = new DelegateCommand(SubmitMessageToServer);
 
@@ -203,9 +211,45 @@ namespace AnyTrack.PlanningPoker.Views
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to hide the estimates
+        /// </summary>
+        public bool HideEstimates
+        {
+            get
+            {
+                return hideEstimates;
+            }
+
+            set
+            {
+                SetProperty(ref hideEstimates, value);
+            }
+        }
+
         #endregion 
 
         #region Methods
+
+        /// <summary>
+        /// Allows the model to verify if it can be re-used.
+        /// </summary>
+        /// <param name="navigationContext">The navigation context.</param>
+        /// <returns>Returns a boolean flag.</returns>
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Allows the view model to handle the on navigated from event.
+        /// </summary>
+        /// <param name="navigationContext">The navigation context</param>
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            serviceGateway.NotifyClientToClearStoryPointEstimateFromServerEvent -= ServiceGateway_NotifyClientToClearStoryPointEstimateFromServerEvent;
+            serviceGateway.NotifyClientOfNewMessageFromServerEvent -= ServiceGateway_NotifyClientOfNewMessageFromServerEvent;
+        }
 
         /// <summary>
         /// Allows the view model to handle the on navigated to event.
@@ -217,29 +261,30 @@ namespace AnyTrack.PlanningPoker.Views
             {
                 sessionId = (Guid)navigationContext.Parameters["sessionId"];
                 var session = serviceGateway.RetrieveSessionInfo(sessionId);
+
+                var userEmail = UserDetailsStore.LoggedInUserPrincipal.Identity.Name;
+                var sessionUser = session.Users.Single(u => u.EmailAddress == userEmail);
+                if (session.HostID == sessionUser.UserID)
+                {
+                    IsScrumMaster = true; 
+                }
+
                 serviceGateway.NotifyClientToClearStoryPointEstimateFromServerEvent += ServiceGateway_NotifyClientToClearStoryPointEstimateFromServerEvent;
                 serviceGateway.NotifyClientOfNewMessageFromServerEvent += ServiceGateway_NotifyClientOfNewMessageFromServerEvent;
+                serviceGateway.NotifyClientOfSessionUpdateEvent += ServiceGateway_NotifyClientOfSessionUpdateEvent;
+
+                UpdateViewGivenSession(session);
             }
         }
 
         /// <summary>
-        /// Allows the model to verify if it can be re-used.
+        /// Handles the session changed event from the server.
         /// </summary>
-        /// <param name="navigationContext">The navigation context.</param>
-        /// <returns>Returns a boolean flag.</returns>
-        public bool IsNavigationTarget(NavigationContext navigationContext)
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The session.</param>
+        private void ServiceGateway_NotifyClientOfSessionUpdateEvent(object sender, ServicePlanningPokerSession e)
         {
-            return false; 
-        }
-
-        /// <summary>
-        /// Allows the view model to handle the on navigated from event.
-        /// </summary>
-        /// <param name="navigationContext">The navigation context</param>
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            serviceGateway.NotifyClientToClearStoryPointEstimateFromServerEvent -= ServiceGateway_NotifyClientToClearStoryPointEstimateFromServerEvent;
-            serviceGateway.NotifyClientOfNewMessageFromServerEvent -= ServiceGateway_NotifyClientOfNewMessageFromServerEvent;
+            UpdateViewGivenSession(e);
         }
 
         /// <summary>
@@ -322,7 +367,6 @@ namespace AnyTrack.PlanningPoker.Views
             this.ShowMetroDialog("Going to submit estimate", userEstimate.Estimate.ToString(), MessageDialogStyle.Affirmative);
 
             serviceGateway.SubmitEstimateToServer(userEstimate);
-            serviceGateway.RetrieveSessionInfo(sessionId);
         }
 
         /// <summary>
@@ -342,5 +386,31 @@ namespace AnyTrack.PlanningPoker.Views
         }
 
         #endregion
+
+        #region Helpers 
+
+        /// <summary>
+        /// Updates the view given the updated session.
+        /// </summary>
+        /// <param name="session">The session.</param>
+        private void UpdateViewGivenSession(ServicePlanningPokerSession session)
+        {
+            this.RecievedEstimates.Clear();
+            this.RecievedEstimates.AddRange(session.Users.Where(u => u.Estimate != null).Select(u => u.Estimate).ToList());
+
+            if (session.State == ServicePlanningPokerSessionState.GettingEstimates)
+            {
+                this.ShowEstimates = false;
+                this.HideEstimates = true;
+            }
+
+            if (session.State == ServicePlanningPokerSessionState.ShowingEstimates)
+            {
+                this.ShowEstimates = true;
+                this.HideEstimates = false;
+            }
+        }
+
+        #endregion 
     }
 }

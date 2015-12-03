@@ -55,6 +55,7 @@
   <xs:complexType name="ServicePlanningPokerEstimate">
     <xs:sequence>
       <xs:element minOccurs="0" name="Estimate" type="xs:double" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SessionID" type="ser:guid" />
     </xs:sequence>
   </xs:complexType>

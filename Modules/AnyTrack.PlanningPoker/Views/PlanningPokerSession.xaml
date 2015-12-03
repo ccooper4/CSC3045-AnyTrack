@@ -5,10 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AnyTrack.PlanningPoker.Views"
              xmlns:prism="http://www.codeplex.com/prism"
+             xmlns:convert="clr-namespace:AnyTrack.Infrastructure.Converters;assembly=AnyTrack.Infrastructure"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600">
 
+    <UserControl.Resources>
+        <convert:BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter"></convert:BooleanToVisibilityConverter>
+    </UserControl.Resources>
+    
     <Grid Background="White">
 
         <Grid.ColumnDefinitions>
@@ -78,16 +83,30 @@
                 <GroupBox.Header>
                     <TextBlock Foreground="White" Text="Recieved" />
                 </GroupBox.Header>
-                <ListBox ItemsSource="{Binding RecievedEstimates}" Padding="0,0,0,0" Margin="0,10px,0,0" BorderThickness="0" VerticalAlignment="Stretch">
+                <ListBox DockPanel.Dock="Top" ItemsSource="{Binding RecievedEstimates}" BorderThickness="0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Label Content="{Binding Path=.}" />
+                            <Border CornerRadius="0" BorderBrush="Gray" Background="Gray" BorderThickness="2" Margin="0,0,0,-5px">
+                                <Grid Background="#fcfcfc">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width ="*"/>
+                                        <ColumnDefinition Width ="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Content="{Binding Name}" Grid.Column="0" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="15px,0,0,0"/>
+
+                                    <Label Content="{Binding Estimate}" Visibility="{Binding DataContext.ShowEstimates, Converter={StaticResource booleanToVisibilityConverter},RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Grid.Column="1" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="15px,0,0,0"/>
+
+                                    <Label Content="--" Visibility="{Binding DataContext.HideEstimates, Converter={StaticResource booleanToVisibilityConverter},RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Grid.Column="1" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="15px,0,0,0"/>
+
+                                </Grid>
+                            </Border>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
             </GroupBox>
 
-            <Button Grid.Row="1" Content="Show Estimates" Command="{Binding ShowEstimates}" Visibility="{Binding IsScrumMaster}" Background="LightGray" />
+            <Button Grid.Row="1" Content="Show Estimates" Command="{Binding ShowEstimates}" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibilityConverter}}" Background="LightGray" />
 
             <GroupBox Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <GroupBox.Header>

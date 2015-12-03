@@ -52,12 +52,5 @@ namespace AnyTrack.Backend.Service
         /// </summary>
         [OperationContract]
         void NotifyClientToClearStoryPointEstimateFromServer();
-
-        /// <summary>
-        /// Shows the clients the estimates 
-        /// </summary>
-        /// /// <param name="session">The session object</param>
-        [OperationContract]
-        void SendSessionToClient(ServicePlanningPokerSession session);
     }    
 }

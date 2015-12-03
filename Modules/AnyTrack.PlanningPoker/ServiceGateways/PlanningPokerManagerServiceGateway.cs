@@ -157,6 +157,33 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
             return client.RetrieveSessionInfo(sessionId);
         }
 
+        /// <summary>
+        /// A callback to be raised when the client's current session is terminated. 
+        /// </summary>
+        /// <param name="msg">The message to submit.</param>        
+        public void SubmitMessageToServer(ServiceChatMessage msg)
+        {
+            client.SubmitMessageToServer(msg);
+        }
+
+        /// <summary>
+        /// Sends the client's estimate to the server
+        /// </summary>
+        /// <param name="estimate">The message to submit.</param>        
+        public void SubmitEstimateToServer(ServicePlanningPokerEstimate estimate)
+        {
+            client.SubmitEstimateToServer(estimate);
+        }
+
+        /// <summary>
+        /// Method for sending messages out to the client
+        /// </summary>
+        /// <param name="msg">The message to be sent</param>
+        public void SendMessageToClient(ServiceChatMessage msg)
+        {
+            NotifyClientOfNewMessageFromServerEvent(this, msg);
+        }
+
         #endregion 
 
         #region Callback Methods
@@ -179,47 +206,11 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         }
 
         /// <summary>
-        /// A callback to be raised when the client's current session is terminated. 
-        /// </summary>
-        /// <param name="msg">The message to submit.</param>        
-        public void SubmitMessageToServer(ServiceChatMessage msg)
-        {
-            client.SubmitMessageToServer(msg);            
-        }
-
-        /// <summary>
-        /// Sends the client's estimate to the server
-        /// </summary>
-        /// <param name="estimate">The message to submit.</param>        
-        public void SubmitEstimateToServer(ServicePlanningPokerEstimate estimate)
-        {
-            client.SubmitEstimateToServer(estimate);
-        }
-
-        /// <summary>
-        /// Method for sending messages out to the client
-        /// </summary>
-        /// <param name="msg">The message to be sent</param>
-        public void SendMessageToClient(ServiceChatMessage msg)
-        {
-            NotifyClientOfNewMessageFromServerEvent(this, msg);
-        }
-
-        /// <summary>
         /// Notifies the client to clear their current story point estimate. 
         /// </summary>
         public void NotifyClientToClearStoryPointEstimateFromServer()
         {
             throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Sends the session to client
-        /// </summary>
-        /// <param name="session">The session object</param>
-        public void SendSessionToClient(ServicePlanningPokerSession session)
-        {
-            NotifyClientOfSessionEvent(this, new ServiceSessionChangeInfo());
         }
 
         /// <summary>

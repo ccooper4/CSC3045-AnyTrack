@@ -174,16 +174,4 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="SendSessionToClient">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="session" nillable="true" type="q17:ServicePlanningPokerSession" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="SendSessionToClientResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
 </xs:schema>

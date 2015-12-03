@@ -1223,6 +1223,115 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
         }
 
         #endregion 
+
+        #region SubmitEstimateToServer(ServicePlanningPokerEstimate estimate) Tests 
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void CallSubmitEstimateWithNoSession()
+        {
+            var sessionId = Guid.NewGuid();
+            activeSessionProvider.GetListOfSessions().Returns(new ConcurrentDictionary<Guid, ServicePlanningPokerSession>());
+
+            var message = new ServicePlanningPokerEstimate { SessionID = sessionId };
+
+            service.SubmitEstimateToServer(message);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void CallSubmitEstimateAndUserNotInSession()
+        {
+            var sessionId = Guid.NewGuid();
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+            };
+
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            var newEstimate = new ServicePlanningPokerEstimate
+            {
+                SessionID = sessionId
+            };
+
+            service.SubmitEstimateToServer(newEstimate);
+        }
+
+        [Test]
+        public void CallSubmitEstimate()
+        {
+            var sessionId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+
+            var myClientChannel = Substitute.For<IPlanningPokerClientService>();
+            var otherUser = Substitute.For<IPlanningPokerClientService>();
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>
+                {
+                    new ServicePlanningPokerUser
+                    {
+                        ClientChannel = myClientChannel,
+                        UserID = userId,
+                        Name = "David Tester"
+                    },
+                    new ServicePlanningPokerUser
+                    {
+                        ClientChannel = otherUser,
+                        UserID = Guid.NewGuid(),
+                        Name = "Bill Tester"
+                    }
+                }
+            };
+
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
+
+            var user = new User
+            {
+                Id = userId,
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            var newEstimate = new ServicePlanningPokerEstimate
+            {
+                SessionID = sessionId
+            };
+
+            service.SubmitEstimateToServer(newEstimate);
+
+            newEstimate.Name.Should().Be("David Tester");
+            session.Users.First().Estimate.Equals(newEstimate).Should().BeTrue();
+            myClientChannel.Received().NotifyClientOfSessionUpdate(session);
+            otherUser.Received().NotifyClientOfSessionUpdate(session);
+        }
+
+        #endregion 
     }
 
     #endregion 
