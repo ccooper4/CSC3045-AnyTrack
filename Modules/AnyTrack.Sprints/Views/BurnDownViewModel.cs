@@ -247,7 +247,7 @@ namespace AnyTrack.Sprints.Views
                 ProjectId = (Guid)navigationContext.Parameters["projectId"];
                 SprintId = (Guid)navigationContext.Parameters["sprintId"];
                 List<ServiceTask> listOfAllTasks = sprintServiceGateway.GetAllTasksForSprint(sprintId.Value);
-                if (listOfAllTasks != null)
+                if (listOfAllTasks.Count != 0)
                 {
                     DateTime? start = sprintServiceGateway.GetDateSprintStarted(sprintId.Value);
                     DateTime? end = sprintServiceGateway.GetDateSprintEnds(sprintId.Value);
@@ -288,6 +288,7 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         private void GetBurndownChartForProjectAndSprint()
         {
+            this.Trend.Clear();
             ValidateViewModelNow();
             if (!this.HasErrors)
             {
