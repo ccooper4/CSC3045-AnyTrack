@@ -39,6 +39,11 @@ namespace AnyTrack.PlanningPoker.Views
         private string messageToSend;
         
         /// <summary>
+        /// Is the user the scrum master
+        /// </summary>
+        private bool isScrumMaster = false; 
+        
+        /// <summary>
         /// The specified sessionID for this chat.
         /// </summary>
         private Guid sessionId;        
@@ -139,6 +144,22 @@ namespace AnyTrack.PlanningPoker.Views
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the user is scrum master
+        /// </summary>
+        public bool IsScrumMaster
+        {
+            get
+            {
+                return isScrumMaster;
+            }
+
+            set
+            {
+                SetProperty(ref isScrumMaster, value);
+            }
+        }
+
         #endregion 
 
         #region Methods
@@ -232,16 +253,11 @@ namespace AnyTrack.PlanningPoker.Views
         /// <param name="estimate">estimate submited by clients</param>
         private void SubmitEstimateToServer(ServicePlanningPokerEstimate estimate)
         {
-            ServiceChatMessage msg = new ServiceChatMessage();
+            estimate.SessionID = sessionId;
+            this.ShowMetroDialog("Going to submit estimate", estimate.Estimate.ToString(), MessageDialogStyle.Affirmative);
 
-            ////Needs to be changed to the sessionID of planning poker session
-            estimate.SessionID = Guid.NewGuid();
-
-            msg.Message = estimate.ToString();
-
-            this.ShowMetroDialog("Going to submit estimate", msg.Message, MessageDialogStyle.Affirmative);
-
-            serviceGateway.SubmitMessageToServer(msg);
+            serviceGateway.SubmitEstimateToServer(estimate);
+            serviceGateway.RetrieveSessionInfo(sessionId);
         }
 
         /// <summary>

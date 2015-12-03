@@ -83,6 +83,12 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         /// <param name="msg">The message to send.</param>
         void SubmitMessageToServer(ServiceChatMessage msg);
 
-        #endregion 
+        /// <summary>
+        /// Sumbits the client's estimate to the server
+        /// </summary>
+        /// <param name="estimate">The estimate to submit</param>
+        void SubmitEstimateToServer(ServicePlanningPokerEstimate estimate);
+
+        #endregion
     }
 }
