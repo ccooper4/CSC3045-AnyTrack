@@ -144,9 +144,9 @@ namespace AnyTrack.Sprints.Views
             ////sprintService.SendEmailRequest(SenderEmailAddress, RecipientEmailAddress, EmailMessage, EmailAttachment);
             ////Attachment attachment = new Attachment("C://Users//User//Desktop//91.png");
             MemoryStream ms = new MemoryStream();
-            Bitmap bmp = new Bitmap("C://Users//User//Desktop//91.pn");
+            ////Bitmap bmp = new Bitmap("C://Users//User//Desktop//91.pn");
             ////sprintService.SendEmailRequest("seanhaughian@live.co.uk", "seanhaughian@live.co.uk", "Hello", attachment);
-            bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+            ////bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
 
             using (var stream = new MemoryStream())
             {
