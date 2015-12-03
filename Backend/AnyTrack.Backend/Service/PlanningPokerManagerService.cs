@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.SessionState;
 using AnyTrack.Backend.Data;
 using AnyTrack.Backend.Providers;
 using AnyTrack.Backend.Security;
@@ -476,9 +477,12 @@ namespace AnyTrack.Backend.Service
 
             user.Estimate = estimate;
 
-            foreach (var u in sessions[sessionId].Users.Where(u => u.UserID != currentUser.Id))
+            var connectedClientsList = availableClients.GetListOfClients();
+            var clientList = connectedClientsList[sessionId];
+
+            foreach (var client in clientList)
             {
-                u.ClientChannel.NotifyClientOfSessionStart();
+                client.ClientChannel.SendSessionToClient(sessions[sessionId]);
             }
         }
 
