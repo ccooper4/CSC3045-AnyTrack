@@ -155,17 +155,17 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetMaxStoryEstimateOfSprint">
+  <xs:element name="GetTotalStoryPointEstimate">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q19="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sprintId" type="q19:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetMaxStoryEstimateOfSprintResponse">
+  <xs:element name="GetTotalStoryPointEstimateResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="GetMaxStoryEstimateOfSprintResult" type="xs:double" />
+        <xs:element minOccurs="0" name="GetTotalStoryPointEstimateResult" type="xs:double" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

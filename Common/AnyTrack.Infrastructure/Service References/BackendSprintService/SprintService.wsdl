@@ -78,11 +78,11 @@
   <wsdl:message name="ISprintService_GetMaxEstimateOfSprint_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetMaxEstimateOfSprintResponse" />
   </wsdl:message>
-  <wsdl:message name="ISprintService_GetMaxStoryEstimateOfSprint_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetMaxStoryEstimateOfSprint" />
+  <wsdl:message name="ISprintService_GetTotalStoryPointEstimate_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTotalStoryPointEstimate" />
   </wsdl:message>
-  <wsdl:message name="ISprintService_GetMaxStoryEstimateOfSprint_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetMaxStoryEstimateOfSprintResponse" />
+  <wsdl:message name="ISprintService_GetTotalStoryPointEstimate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTotalStoryPointEstimateResponse" />
   </wsdl:message>
   <wsdl:message name="ISprintService_GetSprintStoryEstimates_InputMessage">
     <wsdl:part name="parameters" element="tns:GetSprintStoryEstimates" />
@@ -147,9 +147,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetMaxEstimateOfSprint" message="tns:ISprintService_GetMaxEstimateOfSprint_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetMaxEstimateOfSprintResponse" message="tns:ISprintService_GetMaxEstimateOfSprint_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetMaxStoryEstimateOfSprint">
-      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetMaxStoryEstimateOfSprint" message="tns:ISprintService_GetMaxStoryEstimateOfSprint_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetMaxStoryEstimateOfSprintResponse" message="tns:ISprintService_GetMaxStoryEstimateOfSprint_OutputMessage" />
+    <wsdl:operation name="GetTotalStoryPointEstimate">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetTotalStoryPointEstimate" message="tns:ISprintService_GetTotalStoryPointEstimate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetTotalStoryPointEstimateResponse" message="tns:ISprintService_GetTotalStoryPointEstimate_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetSprintStoryEstimates">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetSprintStoryEstimates" message="tns:ISprintService_GetSprintStoryEstimates_InputMessage" />
@@ -265,8 +265,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetMaxStoryEstimateOfSprint">
-      <soap:operation soapAction="http://tempuri.org/ISprintService/GetMaxStoryEstimateOfSprint" style="document" />
+    <wsdl:operation name="GetTotalStoryPointEstimate">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/GetTotalStoryPointEstimate" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

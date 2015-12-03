@@ -173,13 +173,13 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         }
 
         /// <summary>
-        /// Gets Sprint stories maximum story estimate within sprint
+        /// Gets Sprint stories total story point estimate within sprint
         /// </summary>
         /// <param name="sprintId">the sprint id</param>
-        /// <returns>the maximum story estimate in sprint</returns>
-        public double GetSprintMaxStoryEstimate(Guid sprintId)
+        /// <returns>the total story point estimates for a given sprint</returns>
+        public double GetTotalStoryPointEstimate(Guid sprintId)
         {
-            return client.GetMaxStoryEstimateOfSprint(sprintId);
+            return client.GetTotalStoryPointEstimate(sprintId);
         }
 
         #endregion

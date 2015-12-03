@@ -66,6 +66,11 @@ namespace AnyTrack.Sprints.Views
         private ObservableCollection<DataPoint> trend;
 
         /// <summary>
+        /// The plot model for the burndowns
+        /// </summary>
+        private PlotModel plotModel;
+
+        /// <summary>
         /// The story burn down to 0 option.
         /// </summary>
         private bool storyBurnDownOption = false;
@@ -99,6 +104,7 @@ namespace AnyTrack.Sprints.Views
             this.Sprints = new ObservableCollection<Infrastructure.BackendSprintService.ServiceSprintSummary>(sprintServiceGateway.GetSprintNames(projectId, true, true));
             this.Points = new ObservableCollection<DataPoint>();
             this.Trend = new ObservableCollection<DataPoint>();
+            this.PlotModel = new PlotModel();
         }
         #endregion
 
@@ -128,6 +134,22 @@ namespace AnyTrack.Sprints.Views
             set
             {
                 SetProperty(ref title, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the plotmodel
+        /// </summary>
+        public PlotModel PlotModel
+        {
+            get
+            {
+                return plotModel;
+            }
+
+            set
+            {
+                SetProperty(ref plotModel, value);
             }
         }
 
@@ -251,7 +273,7 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         /// <param name="navigationContext">The navigation context</param>
         public void OnNavigatedTo(NavigationContext navigationContext)
-        {
+        {        
             if (navigationContext.Parameters.ContainsKey("sprintId") 
                 && navigationContext.Parameters.ContainsKey("projectId"))
             {
@@ -285,8 +307,8 @@ namespace AnyTrack.Sprints.Views
                     {
                         DateTime? start = sprintServiceGateway.GetDateSprintStarted(sprintId.Value);
                         DateTime? end = sprintServiceGateway.GetDateSprintEnds(sprintId.Value);
-                        double highestStoryEstimate = sprintServiceGateway.GetSprintMaxStoryEstimate(sprintId.Value);
-                        this.Trend.Add(new DataPoint(DateTimeAxis.ToDouble(start), highestStoryEstimate));
+                        double totalStoryPoints = sprintServiceGateway.GetTotalStoryPointEstimate(sprintId.Value);
+                        this.Trend.Add(new DataPoint(DateTimeAxis.ToDouble(start), totalStoryPoints));
                         this.Trend.Add(new DataPoint(DateTimeAxis.ToDouble(end), 0));
                         foreach (var sprintStory in listOfAllEstimates)
                         {

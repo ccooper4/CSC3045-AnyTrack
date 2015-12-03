@@ -1205,11 +1205,11 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetMaxEstimateOfSprint", ReplyAction="http://tempuri.org/ISprintService/GetMaxEstimateOfSprintResponse")]
         System.Threading.Tasks.Task<double> GetMaxEstimateOfSprintAsync(System.Guid sprintId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetMaxStoryEstimateOfSprint", ReplyAction="http://tempuri.org/ISprintService/GetMaxStoryEstimateOfSprintResponse")]
-        double GetMaxStoryEstimateOfSprint(System.Guid sprintId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetTotalStoryPointEstimate", ReplyAction="http://tempuri.org/ISprintService/GetTotalStoryPointEstimateResponse")]
+        double GetTotalStoryPointEstimate(System.Guid sprintId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetMaxStoryEstimateOfSprint", ReplyAction="http://tempuri.org/ISprintService/GetMaxStoryEstimateOfSprintResponse")]
-        System.Threading.Tasks.Task<double> GetMaxStoryEstimateOfSprintAsync(System.Guid sprintId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetTotalStoryPointEstimate", ReplyAction="http://tempuri.org/ISprintService/GetTotalStoryPointEstimateResponse")]
+        System.Threading.Tasks.Task<double> GetTotalStoryPointEstimateAsync(System.Guid sprintId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetSprintStoryEstimates", ReplyAction="http://tempuri.org/ISprintService/GetSprintStoryEstimatesResponse")]
         System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> GetSprintStoryEstimates(System.Guid sprintId);
@@ -1345,12 +1345,12 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
             return base.Channel.GetMaxEstimateOfSprintAsync(sprintId);
         }
         
-        public double GetMaxStoryEstimateOfSprint(System.Guid sprintId) {
-            return base.Channel.GetMaxStoryEstimateOfSprint(sprintId);
+        public double GetTotalStoryPointEstimate(System.Guid sprintId) {
+            return base.Channel.GetTotalStoryPointEstimate(sprintId);
         }
         
-        public System.Threading.Tasks.Task<double> GetMaxStoryEstimateOfSprintAsync(System.Guid sprintId) {
-            return base.Channel.GetMaxStoryEstimateOfSprintAsync(sprintId);
+        public System.Threading.Tasks.Task<double> GetTotalStoryPointEstimateAsync(System.Guid sprintId) {
+            return base.Channel.GetTotalStoryPointEstimateAsync(sprintId);
         }
         
         public System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> GetSprintStoryEstimates(System.Guid sprintId) {
