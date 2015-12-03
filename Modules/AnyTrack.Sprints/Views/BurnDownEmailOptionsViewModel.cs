@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.ServiceGateways;
 using MahApps.Metro.Controls;
+using OxyPlot;
 using OxyPlot.Wpf;
 using Prism.Commands;
 using Prism.Regions;
@@ -142,16 +143,12 @@ namespace AnyTrack.Sprints.Views
         private void SendEmail()
         {
             ////sprintService.SendEmailRequest(SenderEmailAddress, RecipientEmailAddress, EmailMessage, EmailAttachment);
-            ////Attachment attachment = new Attachment("C://Users//User//Desktop//91.png");
             MemoryStream ms = new MemoryStream();
-            ////Bitmap bmp = new Bitmap("C://Users//User//Desktop//91.pn");
-            ////sprintService.SendEmailRequest("seanhaughian@live.co.uk", "seanhaughian@live.co.uk", "Hello", attachment);
-            ////bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
 
             using (var stream = new MemoryStream())
             {
                 var pngExporter = new PngExporter();
-                ////pngExporter.Export(plotModel, stream, 600, 400, Brushes.White);
+                ////pngExporter.Export(null, stream, 600, 400, Brushes.White);
             }
         }
     }

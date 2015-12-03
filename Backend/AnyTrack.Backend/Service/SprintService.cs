@@ -589,11 +589,11 @@ namespace AnyTrack.Backend.Service
         /// <param name="emailAttachment">The email attachment of the </param>
         public void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, MemoryStream emailAttachment)
         {
-            var fromAddress = new MailAddress("seanhaughian50@gmail.com", "From Name");
-            var toAddress = new MailAddress("seanhaughian50@gmail.com", "To Name");
-            const string FromPassword = "thisisapassword123";
-            const string Subjecto = "Subject";
-            const string Bodyo = "Body";
+            var fromAddress = new MailAddress(senderEmailAddress, "From Name");
+            var toAddress = new MailAddress(recipientEmailAddress, "To Name");
+            const string ConstFromPassword = "password";
+            const string ConstSubject = "Subject";
+            const string ConstBody = "Body";
 
             var smtp = new SmtpClient
             {
@@ -602,12 +602,12 @@ namespace AnyTrack.Backend.Service
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(fromAddress.Address, FromPassword)
+                Credentials = new NetworkCredential(fromAddress.Address, ConstFromPassword)
             };
             using (var message = new MailMessage(fromAddress, toAddress)
             {
-                Subject = Subjecto,
-                Body = Bodyo,
+                Subject = ConstSubject,
+                Body = ConstBody,
             })
             {
                 smtp.Send(message);

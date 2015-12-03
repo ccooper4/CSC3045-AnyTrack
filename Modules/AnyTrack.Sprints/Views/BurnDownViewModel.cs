@@ -5,6 +5,7 @@ using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.ServiceGateways;
 using OxyPlot;
+using OxyPlot.Axes;
 using OxyPlot.Wpf;
 using Prism.Commands;
 using Prism.Regions;
@@ -55,6 +56,11 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         private ObservableCollection<DataPoint> trend;
 
+        /// <summary>
+        /// The plot model.
+        /// </summary>
+        private PlotModel model; 
+
         #endregion Fields
 
         #region Constructor
@@ -80,6 +86,7 @@ namespace AnyTrack.Sprints.Views
             this.sprintServiceGateway = sprintServiceGateway;
             this.Sprints = new ObservableCollection<SprintModels.ServiceSprintSummary>();
             this.Points = new ObservableCollection<DataPoint>();
+            this.PlotModel = new PlotModel();
 
             EmailFlyoutCommand = new DelegateCommand(EmailFlyout);
         }
@@ -200,6 +207,15 @@ namespace AnyTrack.Sprints.Views
                 SetProperty(ref sprintID, value);
             }
         }
+        
+        /// <summary>
+        /// Gets or sets the plot model.
+        /// </summary>
+        public PlotModel PlotModel
+        {
+            get { return model; }
+            set { SetProperty(ref model, value); }
+        }
 
         #endregion Properties
 
@@ -221,6 +237,12 @@ namespace AnyTrack.Sprints.Views
                         this.Points.Add(new DataPoint(DateTimeAxis.ToDouble(taskHour.Created), taskHour.Estimate));
                     }
                 }
+
+                var x = new OxyPlot.Series.LineSeries()
+                {
+                    ItemsSource = this.Points
+                }; 
+                PlotModel.Series.Add(x);
             }
         }
         
