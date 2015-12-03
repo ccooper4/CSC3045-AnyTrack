@@ -41,7 +41,12 @@ namespace AnyTrack.PlanningPoker.Views
         /// <summary>
         /// The specified sessionID for this chat.
         /// </summary>
-        private Guid sessionId;        
+        private Guid sessionId;
+
+        /// <summary>
+        /// The specified sprint ID to load stories from.
+        /// </summary>
+        private Guid sprintId;
 
         #endregion
 
@@ -54,7 +59,7 @@ namespace AnyTrack.PlanningPoker.Views
             this.SprintStoriesCollection = new ObservableCollection<ServiceStorySummary>();
 
             this.SprintStories.Clear();
-            this.SprintStories.AddRange<ServiceStorySummary>(projectServiceGateway.GetProjectStories(Guid.NewGuid()));
+            this.SprintStories.AddRange<ServiceStorySummary>(projectServiceGateway.GetProjectStories(sprintId));
 
             serviceGateway.NotifyClientToClearStoryPointEstimateFromServerEvent += ServiceGateway_NotifyClientToClearStoryPointEstimateFromServerEvent;
             serviceGateway.NotifyClientOfNewMessageFromServerEvent += ServiceGateway_NotifyClientOfNewMessageFromServerEvent;
@@ -142,7 +147,10 @@ namespace AnyTrack.PlanningPoker.Views
         /// <param name="navigationContext">The navigation context</param>
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            throw new NotImplementedException();
+            if (navigationContext.Parameters.ContainsKey("sprintId"))
+            {
+                sprintId = (Guid)navigationContext.Parameters["sprintId"];
+            }
         }
 
         /// <summary>
