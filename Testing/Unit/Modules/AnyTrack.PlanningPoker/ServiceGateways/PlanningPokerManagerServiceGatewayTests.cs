@@ -205,6 +205,20 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.ServiceGateways.PlanningPokerManag
         }
 
         #endregion 
+
+        #region LeaveSession(Guid sessionId) Tests 
+
+        [Test]
+        public void LeaveSession()
+        {
+            var sessionId = Guid.NewGuid();
+
+            serviceGateway.LeaveSession(sessionId);
+
+            client.Received().LeaveSession(sessionId);
+        }
+
+        #endregion 
     }
 
     #endregion 

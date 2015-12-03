@@ -56,38 +56,50 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="RetrieveSessionInfo">
+  <xs:element name="LeaveSession">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionId" type="q8:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="LeaveSessionResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveSessionInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionId" type="q9:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="RetrieveSessionInfoResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="RetrieveSessionInfoResult" nillable="true" type="q9:ServicePlanningPokerSession" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="RetrieveSessionInfoResult" nillable="true" type="q10:ServicePlanningPokerSession" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SubmitMessageToServer">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="msg" nillable="true" type="q10:ServiceChatMessage" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="msg" nillable="true" type="q11:ServiceChatMessage" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SubmitEstimateToServer">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="estimate" nillable="true" type="q11:ServicePlanningPokerEstimate" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="estimate" nillable="true" type="q12:ServicePlanningPokerEstimate" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="NotifyClientOfSession">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="sessionInfo" nillable="true" type="q12:ServiceSessionChangeInfo" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="sessionInfo" nillable="true" type="q13:ServiceSessionChangeInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -109,7 +121,7 @@
   <xs:element name="NotifyClientOfSessionUpdate">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="newSession" nillable="true" type="q13:ServicePlanningPokerSession" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="newSession" nillable="true" type="q14:ServicePlanningPokerSession" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -121,7 +133,7 @@
   <xs:element name="SendMessageToClient">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="msg" nillable="true" type="q14:ServiceChatMessage" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="msg" nillable="true" type="q15:ServiceChatMessage" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -143,7 +155,7 @@
   <xs:element name="SendSessionToClient">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="session" nillable="true" type="q15:ServicePlanningPokerSession" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="session" nillable="true" type="q16:ServicePlanningPokerSession" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

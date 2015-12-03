@@ -124,6 +124,15 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         }
 
         /// <summary>
+        /// Allows a user to exit the session.
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        public void LeaveSession(Guid sessionId)
+        {
+            client.LeaveSession(sessionId);
+        }
+
+        /// <summary>
         /// Allows the client to pull an up to date session state. 
         /// </summary>
         /// <param name="sessionId">The session id.</param>

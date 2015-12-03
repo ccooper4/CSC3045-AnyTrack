@@ -612,6 +612,12 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/JoinSession", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/JoinSessionResponse")]
         System.Threading.Tasks.Task<AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSession> JoinSessionAsync(System.Guid sessionId);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/LeaveSession", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/LeaveSessionResponse")]
+        void LeaveSession(System.Guid sessionId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/LeaveSession", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/LeaveSessionResponse")]
+        System.Threading.Tasks.Task LeaveSessionAsync(System.Guid sessionId);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/RetrieveSessionInfo", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/RetrieveSessionInfoResponse")]
         AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSession RetrieveSessionInfo(System.Guid sessionId);
         
@@ -715,6 +721,14 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         
         public System.Threading.Tasks.Task<AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSession> JoinSessionAsync(System.Guid sessionId) {
             return base.Channel.JoinSessionAsync(sessionId);
+        }
+        
+        public void LeaveSession(System.Guid sessionId) {
+            base.Channel.LeaveSession(sessionId);
+        }
+        
+        public System.Threading.Tasks.Task LeaveSessionAsync(System.Guid sessionId) {
+            return base.Channel.LeaveSessionAsync(sessionId);
         }
         
         public AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerSession RetrieveSessionInfo(System.Guid sessionId) {

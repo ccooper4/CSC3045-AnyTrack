@@ -861,6 +861,134 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
         }
 
         #endregion 
+
+        #region LeaveSession(Guid sessionId) Tests 
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void CallLeaveSessionWithNoSession()
+        {
+            var sessionId = Guid.NewGuid();
+            activeSessionProvider.GetListOfSessions().Returns(new Dictionary<Guid, ServicePlanningPokerSession>());
+
+            service.LeaveSession(sessionId);
+        }
+
+        [Test]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void CallLeaveSessionAndUserNotInSession()
+        {
+            var sessionId = Guid.NewGuid();
+            
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+            }; 
+
+            var dictionary = new Dictionary<Guid, ServicePlanningPokerSession>(); 
+            dictionary.Add(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(dictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            service.LeaveSession(sessionId);
+        }
+
+        [Test]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void CallLeaveSessionAndUserIsScrumMaster()
+        {
+            var sessionId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+                {
+                    new ServicePlanningPokerUser
+                    {
+                        UserID = userId,
+                        EmailAddress = "test@agile.local"
+                    }
+                },
+                HostID = userId
+            };
+
+            var dictionary = new Dictionary<Guid, ServicePlanningPokerSession>();
+            dictionary.Add(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(dictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            service.LeaveSession(sessionId);
+        }
+
+        [Test]
+        public void CallLeaveSession()
+        {
+            var sessionId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+            var otherClientChannel = Substitute.For<IPlanningPokerClientService>();
+
+            var thisUser = new ServicePlanningPokerUser
+            {
+                UserID = userId,
+                EmailAddress = "test@agile.local"
+            };
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+                {
+                    thisUser,
+                    new ServicePlanningPokerUser
+                    {
+                        ClientChannel = otherClientChannel,
+                        UserID = Guid.NewGuid(),
+                        EmailAddress = "other@agile.local"
+                    }
+                },
+            };
+
+            var dictionary = new Dictionary<Guid, ServicePlanningPokerSession>();
+            dictionary.Add(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(dictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            service.LeaveSession(sessionId);
+
+            session.Users.Contains(thisUser).Should().BeFalse();
+            otherClientChannel.Received().NotifyClientOfSessionUpdate(session);
+
+            
+        }
+
+        #endregion 
     }
 
     #endregion 

@@ -47,6 +47,13 @@ namespace AnyTrack.Backend.Service
         ServicePlanningPokerSession JoinSession(Guid sessionId);
 
         /// <summary>
+        /// Allows a user to exit the session.
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        [OperationContract]
+        void LeaveSession(Guid sessionId);
+
+        /// <summary>
         /// Allows the client to pull an up to date session state. 
         /// </summary>
         /// <param name="sessionId">The session id.</param>

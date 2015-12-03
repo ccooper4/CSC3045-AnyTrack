@@ -45,6 +45,12 @@
   <wsdl:message name="IPlanningPokerManagerService_JoinSession_OutputMessage">
     <wsdl:part name="parameters" element="tns:JoinSessionResponse" />
   </wsdl:message>
+  <wsdl:message name="IPlanningPokerManagerService_LeaveSession_InputMessage">
+    <wsdl:part name="parameters" element="tns:LeaveSession" />
+  </wsdl:message>
+  <wsdl:message name="IPlanningPokerManagerService_LeaveSession_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LeaveSessionResponse" />
+  </wsdl:message>
   <wsdl:message name="IPlanningPokerManagerService_RetrieveSessionInfo_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveSessionInfo" />
   </wsdl:message>
@@ -109,6 +115,10 @@
     <wsdl:operation name="JoinSession">
       <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/JoinSession" message="tns:IPlanningPokerManagerService_JoinSession_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/JoinSessionResponse" message="tns:IPlanningPokerManagerService_JoinSession_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LeaveSession">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/LeaveSession" message="tns:IPlanningPokerManagerService_LeaveSession_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/LeaveSessionResponse" message="tns:IPlanningPokerManagerService_LeaveSession_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="RetrieveSessionInfo">
       <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/RetrieveSessionInfo" message="tns:IPlanningPokerManagerService_RetrieveSessionInfo_InputMessage" />
@@ -177,6 +187,15 @@
     </wsdl:operation>
     <wsdl:operation name="JoinSession">
       <soap12:operation soapAction="http://tempuri.org/IPlanningPokerManagerService/JoinSession" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LeaveSession">
+      <soap12:operation soapAction="http://tempuri.org/IPlanningPokerManagerService/LeaveSession" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

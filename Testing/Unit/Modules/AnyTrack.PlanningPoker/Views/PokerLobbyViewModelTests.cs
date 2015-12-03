@@ -53,6 +53,7 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PokerLobbyViewModelTests
             vm = new PokerLobbyViewModel(gateway);
             vm.Users.Should().NotBeNull();
             vm.EndPokerSession.Should().NotBeNull();
+            vm.ExitSession.Should().NotBeNull();
         }
 
         #endregion 
@@ -198,7 +199,7 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PokerLobbyViewModelTests
             vm.Call("HandleSessionTerminatedEvent", null, new EventArgs());
 
             vm.MainWindow.Received().ShowMessageAsync("Planning Poker Session Terminated!", "The planning poker session has been terminated.");
-            vm.RegionManager.Received().RequestNavigate(RegionNames.MainRegion, "SearchForPlanningPokerSession");
+            vm.RegionManager.Received().RequestNavigate(RegionNames.MainRegion, "MyProjects");
         }
 
         #endregion 
@@ -218,6 +219,22 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PokerLobbyViewModelTests
             gateway.Received().EndPokerSession(sessionId);
             vm.MainWindow.Received().ShowMessageAsync("Planning poker session terminated!", "The planning poker session has been terminated!");
             vm.RegionManager.Received().RequestNavigate(RegionNames.MainRegion, "StartPlanningPokerSession");
+        }
+
+        #endregion 
+
+        #region ExitCurrentPokerSession() Tests 
+
+        [Test]
+        public void ExitCurrentPokerSession()
+        {
+            vm.MainWindow = Substitute.For<WindowProvider>();
+            vm.RegionManager = Substitute.For<IRegionManager>();
+
+            vm.Call("ExitCurrentPokerSession");
+
+            vm.MainWindow.Received().ShowMessageAsync("Left the Planning poker session!", "You have now left the session.");
+            vm.RegionManager.Received().RequestNavigate(RegionNames.MainRegion, "MyProjects");
         }
 
         #endregion 

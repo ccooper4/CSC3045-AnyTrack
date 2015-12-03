@@ -74,7 +74,8 @@ namespace AnyTrack.PlanningPoker.Views
             this.gateway = gateway;
 
             this.Users = new ObservableCollection<ServicePlanningPokerUser>();
-            this.EndPokerSession = new DelegateCommand(EndCurrentPokerSession); 
+            this.EndPokerSession = new DelegateCommand(EndCurrentPokerSession);
+            this.ExitSession = new DelegateCommand(ExitCurrentPokerSession);
         }
 
         #endregion 
@@ -90,6 +91,11 @@ namespace AnyTrack.PlanningPoker.Views
         /// Gets or sets the command used to end a poker session.
         /// </summary>
         public DelegateCommand EndPokerSession { get; set; }
+
+        /// <summary>
+        /// Gets or sets the exit session command.
+        /// </summary>
+        public DelegateCommand ExitSession { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether or not the session has been joined.
@@ -228,7 +234,7 @@ namespace AnyTrack.PlanningPoker.Views
         private void HandleSessionTerminatedEvent(object sender, EventArgs e)
         {
             this.ShowMetroDialog("Planning Poker Session Terminated!", "The planning poker session has been terminated.");
-            this.NavigateToItem("SearchForPlanningPokerSession");
+            this.NavigateToItem("MyProjects");
         }
 
         /// <summary>
@@ -249,6 +255,16 @@ namespace AnyTrack.PlanningPoker.Views
             gateway.EndPokerSession(sessionId); 
             this.ShowMetroDialog("Planning poker session terminated!", "The planning poker session has been terminated!"); 
             this.NavigateToItem("StartPlanningPokerSession", null);
+        }
+
+        /// <summary>
+        /// Leaves the current session.
+        /// </summary>
+        private void ExitCurrentPokerSession()
+        {
+            gateway.LeaveSession(sessionId);
+            this.ShowMetroDialog("Left the Planning poker session!", "You have now left the session.");
+            this.NavigateToItem("MyProjects", null);
         }
 
         #endregion 
