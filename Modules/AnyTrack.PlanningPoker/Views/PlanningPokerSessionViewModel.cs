@@ -222,13 +222,7 @@ namespace AnyTrack.PlanningPoker.Views
         {
             get
             {
-                sessionId = (Guid)navigationContext.Parameters["sessionId"];
-                var session = serviceGateway.RetrieveSessionInfo(sessionId);
-                SprintStoriesCollection.AddRange(session.Stories);
-                
-                ////this.ShowMetroDialog("Loaded stories collection", ss.Summary + "<-- story summary should be here", MessageDialogStyle.Affirmative);
-                serviceGateway.NotifyClientToClearStoryPointEstimateFromServerEvent += ServiceGateway_NotifyClientToClearStoryPointEstimateFromServerEvent;
-                serviceGateway.NotifyClientOfNewMessageFromServerEvent += ServiceGateway_NotifyClientOfNewMessageFromServerEvent;
+                return hideEstimates;
             }
 
             set
@@ -278,6 +272,8 @@ namespace AnyTrack.PlanningPoker.Views
                 {
                     IsScrumMaster = true; 
                 }
+
+                SprintStoriesCollection.AddRange(session.Stories);
 
                 serviceGateway.NotifyClientToClearStoryPointEstimateFromServerEvent += ServiceGateway_NotifyClientToClearStoryPointEstimateFromServerEvent;
                 serviceGateway.NotifyClientOfNewMessageFromServerEvent += ServiceGateway_NotifyClientOfNewMessageFromServerEvent;
