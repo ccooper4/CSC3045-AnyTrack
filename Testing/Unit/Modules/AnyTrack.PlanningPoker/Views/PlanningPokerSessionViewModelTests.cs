@@ -56,6 +56,10 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewMode
 
             vm.SprintStoriesCollection.Should().NotBeNull();
 
+            vm.RecievedEstimates.Should().NotBeNull();
+
+            vm.Users.Should().NotBeNull();
+
             vm.MessageHistories.Should().NotBeNull();
 
             vm.SendMessageCommand.Should().NotBeNull();
@@ -253,6 +257,7 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewMode
             vm.RecievedEstimates.Single().Name.Should().Be("New");
             vm.ShowEstimates.Should().BeTrue();
             vm.HideEstimates.Should().BeFalse();
+            vm.Users.First().Should().Be(session.Users.First());
         }
 
 

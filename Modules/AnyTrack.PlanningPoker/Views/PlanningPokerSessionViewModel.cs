@@ -83,6 +83,8 @@ namespace AnyTrack.PlanningPoker.Views
 
             this.RecievedEstimates = new ObservableCollection<ServicePlanningPokerEstimate>();
 
+            this.Users = new ObservableCollection<ServicePlanningPokerUser>();
+
             SendMessageCommand = new DelegateCommand(SubmitMessageToServer);
 
             ShowEstimatesCommand = new DelegateCommand(ShowUserEstimates);
@@ -115,6 +117,11 @@ namespace AnyTrack.PlanningPoker.Views
         /// Gets or sets the history of recieved estimates for story points.
         /// </summary>
         public ObservableCollection<ServicePlanningPokerEstimate> RecievedEstimates { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection of users in this session,
+        /// </summary>
+        public ObservableCollection<ServicePlanningPokerUser> Users { get; set; }
 
         /// <summary>
         /// Gets the command used to send a message from a user. 
@@ -392,6 +399,9 @@ namespace AnyTrack.PlanningPoker.Views
         {
             this.RecievedEstimates.Clear();
             this.RecievedEstimates.AddRange(session.Users.Where(u => u.Estimate != null).Select(u => u.Estimate).ToList());
+
+            this.Users.Clear();
+            this.Users.AddRange(session.Users);
 
             if (session.State == ServicePlanningPokerSessionState.GettingEstimates)
             {
