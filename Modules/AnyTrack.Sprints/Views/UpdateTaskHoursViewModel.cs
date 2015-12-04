@@ -128,7 +128,8 @@ namespace AnyTrack.Sprints.Views
 
                 foreach (var task in tasks)
                 {
-                    var tempEstimate = task.TaskHourEstimates.LastOrDefault();
+                    var sortedEstimates = task.TaskHourEstimates.OrderByDescending(x => x.Created);
+                    var tempEstimate = sortedEstimates.FirstOrDefault();
                     task.TaskHourEstimates.Clear();
                     task.TaskHourEstimates.Add(tempEstimate);
                 }

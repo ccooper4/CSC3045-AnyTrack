@@ -474,14 +474,15 @@ namespace AnyTrack.Backend.Service
 
                 if (updatedTaskHour != null)
                 {
-                    task.TaskHourEstimate.Add(new TaskHourEstimate
+                    TaskHourEstimate estimateToAdd = new TaskHourEstimate
                     {
                         Estimate = updatedTaskHour.NewEstimate,
                         Task = task
-                    });
-                }
+                    };
 
-                unitOfWork.Commit();
+                    task.TaskHourEstimate.Add(estimateToAdd);
+                    unitOfWork.Commit();
+                }
             }
         }
 
