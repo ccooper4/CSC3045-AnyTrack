@@ -497,9 +497,6 @@ namespace AnyTrack.Sprints.Views
             //// Save task
             sprintServiceGateway.AddTaskToSprintStory(this.SprintStoryId, serviceTask);
 
-            //// Save update hours
-            //// sprintServiceGateway.AddTaskHourEstimateToTask(this.TaskId, serviceTaskHourEstimate);
-
             NavigationParameters navParams = new NavigationParameters();
             navParams.Add("sprintStory", this.serviceSprintStory);
             this.ShowMetroFlyout("SprintStory", navParams);
