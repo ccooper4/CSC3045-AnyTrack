@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Net.Mail;
 using AnyTrack.Infrastructure.BackendSprintService;
-using Attachment = AnyTrack.Infrastructure.BackendSprintService.Attachment;
 
 namespace AnyTrack.Infrastructure.ServiceGateways
 {
@@ -90,6 +89,13 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         List<ServiceSprintSummary> GetSprintNames(Guid? projectId, bool scrumMaster, bool developer);
 
         /// <summary>
+        /// Rertrieves the sprint stories with their estimates fotr this sprint
+        /// </summary>
+        /// <param name="sprintId">the sprint id</param>
+        /// <returns>List of stories</returns>
+         List<ServiceSprintStory> GetSprintStoryEstimates(Guid sprintId);
+
+        /// <summary>
         /// Returns the list of sprint stories with specified id
         /// </summary>
         /// <param name="sprintId">The id of the sprint</param>
@@ -105,12 +111,26 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         void ManageSprintBacklog(Guid projectId, Guid sprintId, List<ServiceSprintStory> updatedSprintBacklog);
 
         /// <summary>
-        /// Sends an email of a burndown chart
+        /// Acquires the total story point estimate for a sprint
         /// </summary>
-        /// <param name="senderEmailAddress">The email adddress to send the email to</param>
-        /// <param name="recipientEmailAddress">The email adddress where the email is sent from</param>
-        /// <param name="emailMessage">The email address of the </param>
-        /// <param name="emailAttachment">Attachment for the email</param>
-        void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, Attachment emailAttachment);
+        /// <param name="sprintId">the id of the sprint</param>
+        /// <returns>the total story point estimate</returns>
+        double GetTotalStoryPointEstimate(Guid sprintId);
+
+        /// <summary>
+        /// Acquires the maxmium story estimate for a given sprint
+        /// </summary>
+        /// <param name="sprintId">the sprint id</param>
+        /// <returns>the maximum story estimate</returns>
+        //// double GetSprintMaxStoryEstimate(Guid sprintId);
+
+        ///// <summary>
+        ///// Sends an email of a burndown chart
+        ///// </summary>
+        ///// <param name="senderEmailAddress">The email adddress to send the email to</param>
+        ///// <param name="recipientEmailAddress">The email adddress where the email is sent from</param>
+        ///// <param name="emailMessage">The email address of the </param>
+        ///// <param name="emailAttachment">Attachment for the email</param>
+        //// void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, System.Net.Mail.Attachment emailAttachment);
     }
 }

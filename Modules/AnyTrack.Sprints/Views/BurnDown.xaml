@@ -42,6 +42,6 @@
             </Button.Content>
         </Button>
         <Button x:Name="teamBurndown" HorizontalAlignment="Center" Command="{Binding GetChartForProjectAndSprint}"  Content="Team Burndown" Grid.Column="1" Margin="0,380,0,0" VerticalAlignment="Top" Width="154" Grid.Row="1"/>
-        <Button x:Name="storyPointBurndown" HorizontalAlignment="Center" Content="Story Point Burndown" Grid.Column="1" Margin="0,350,0,0" VerticalAlignment="Top" Width="154" Grid.Row="1"/>
+        <Button x:Name="storyPointBurndown" HorizontalAlignment="Center" Command="{Binding GetStoryPointBD}"  Content="Story Point Burndown" Grid.Column="1" Margin="0,350,0,0" VerticalAlignment="Top" Width="154" Grid.Row="1"/>
     </Grid>
 </UserControl>

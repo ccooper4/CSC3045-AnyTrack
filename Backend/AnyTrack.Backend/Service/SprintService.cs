@@ -333,6 +333,29 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
+        /// Gets a story estimates for a given sprintId
+        /// </summary>
+        /// <param name="sprintId">The sprint id</param>
+        /// <returns>the list of estimates</returns>
+        public List<ServiceSprintStory> GetSprintStoryEstimates(Guid sprintId)
+        {
+            List<ServiceSprintStory> sprintStoryList = new List<ServiceSprintStory>();
+            var sprintStoryEstimates = unitOfWork.SprintStoryRepository.Items.Where(ss => ss.Sprint.Id == sprintId).ToList();
+
+            foreach (var sprintEst in sprintStoryEstimates)
+            {
+                ServiceSprintStory sprintStory = new ServiceSprintStory
+                {
+                    SprintId = sprintEst.Id,
+                    StoryEstimate = sprintEst.StoryEstimate,
+                    DateCompleted = sprintEst.DateCompleted
+                };                  
+            }
+
+            return sprintStoryList;
+        }
+
+        /// <summary>
         /// Gets an enddate for a given sprint.
         /// </summary>
         /// <param name="sprintId">the sprintid</param>
@@ -352,6 +375,17 @@ namespace AnyTrack.Backend.Service
         {
             var maxEst = unitOfWork.TaskHourEstimateRepository.Items.Max(t => t.Estimate);
             return maxEst;
+        }
+
+        /// <summary>
+        /// Gets the total story estimate of a sprint
+        /// </summary>
+        /// <param name="sprintId">the sprintId</param>
+        /// <returns>retrieve total story estimate of the sprint</returns>
+        public double GetTotalStoryPointEstimate(Guid sprintId)
+        {
+            var totalEstimateStoryPoints = unitOfWork.SprintStoryRepository.Items.Sum(ss => ss.StoryEstimate);
+            return totalEstimateStoryPoints;
         }
 
         /// <summary>

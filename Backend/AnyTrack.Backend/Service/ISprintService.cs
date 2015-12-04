@@ -122,6 +122,22 @@ namespace AnyTrack.Backend.Service
         double GetMaxEstimateOfSprint(Guid sprintId);
 
         /// <summary>
+        /// Gets the total story point estimate of a sprint
+        /// </summary>
+        /// <param name="sprintId">the sprint id</param>
+        /// <returns>the total value of the story estimates summed together</returns>
+        [OperationContract]
+        double GetTotalStoryPointEstimate(Guid sprintId);
+       
+        /// <summary>
+        /// Retrieves Sprint stories for this sprint with estimates
+        /// </summary>
+        /// <param name="sprintId">Id of the sprint</param>
+        /// <returns>List of Service sprint stories containing</returns>
+        [OperationContract]
+        List<ServiceSprintStory> GetSprintStoryEstimates(Guid sprintId);
+
+        /// <summary>
         /// Manages the sprint backlog
         /// </summary>aram>
         /// <param name="projectId">Project id of the project</param>

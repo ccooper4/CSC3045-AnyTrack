@@ -76,6 +76,7 @@ namespace Unit.Modules.AnyTrack.Sprints
             module.Initialize();
             container.Received().RegisterType<object, CreateSprint>("CreateSprint");
             container.Received().RegisterType<object, SprintManager>("SprintManager");
+            container.Received().RegisterType<object, BurnDown>("BurnDown");
 
             menuService.Received().AddMenuItem(Arg.Any<MenuItem>());
 

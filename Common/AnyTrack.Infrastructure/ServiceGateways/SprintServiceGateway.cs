@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Net.Mail;
 using AnyTrack.Infrastructure.BackendSprintService;
-using Attachment = AnyTrack.Infrastructure.BackendSprintService.Attachment;
 
 namespace AnyTrack.Infrastructure.ServiceGateways
 {
@@ -171,16 +170,36 @@ namespace AnyTrack.Infrastructure.ServiceGateways
             client.ManageSprintBacklog(projectId, sprintId, updatedSprintBacklog);
         }
 
+        //// <summary>
+        //// Sending an email request via burndown
+        //// </summary>
+        //// <param name="senderEmailAddress">The email adddress to send the email to</param>
+        //// <param name="recipientEmailAddress">The email adddress where the email is sent from</param>
+        ////<param name="emailMessage">The email address of the </param>
+        //// <param name="emailAttachment">Attachment for the email</param>
+        //// public void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, System.Net.Mail.Attachment emailAttachment)
+       //// {
+           //// client.SendEmailRequest(senderEmailAddress, recipientEmailAddress, emailMessage, emailAttachment);
+       //// }
+
         /// <summary>
-        /// Sending an email request via burndown
+        /// Gets Sprint stories for a given sprint with estimates
         /// </summary>
-        /// <param name="senderEmailAddress">The email adddress to send the email to</param>
-        /// <param name="recipientEmailAddress">The email adddress where the email is sent from</param>
-        /// <param name="emailMessage">The email address of the </param>
-        /// <param name="emailAttachment">Attachment for the email</param>
-        public void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, Attachment emailAttachment)
+        /// <param name="sprintId">The sprint id</param>
+        /// <returns>sprint stories</returns>
+        public List<ServiceSprintStory> GetSprintStoryEstimates(Guid sprintId)
         {
-            client.SendEmailRequest(senderEmailAddress, recipientEmailAddress, emailMessage, emailAttachment);
+            return client.GetSprintStoryEstimates(sprintId);
+        }
+
+        /// <summary>
+        /// Gets Sprint stories total story point estimate within sprint
+        /// </summary>
+        /// <param name="sprintId">the sprint id</param>
+        /// <returns>the total story point estimates for a given sprint</returns>
+        public double GetTotalStoryPointEstimate(Guid sprintId)
+        {
+            return client.GetTotalStoryPointEstimate(sprintId);
         }
 
         #endregion
