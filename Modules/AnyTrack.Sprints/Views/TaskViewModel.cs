@@ -496,11 +496,15 @@ namespace AnyTrack.Sprints.Views
                     TaskHourEstimates = taskHourEstimates
                 };
 
+            ServiceUser user = new ServiceUser
+            {
+                EmailAddress = assignee
+            };
+
+            serviceTask.Assignee = user;
+
                 //// Save task
                 sprintServiceGateway.AddTaskToSprintStory(this.SprintStoryId, serviceTask);
-
-                //// Save update hours
-                //// sprintServiceGateway.AddTaskHourEstimateToTask(this.TaskId, serviceTaskHourEstimate);
 
                 NavigationParameters navParams = new NavigationParameters();
                 navParams.Add("sprintStory", this.serviceSprintStory);
