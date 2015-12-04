@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Mail;
 using AnyTrack.Infrastructure.BackendSprintService;
+using AnyTrack.Infrastructure.Security;
 using MemoryStream = System.IO.MemoryStream;
 
 namespace AnyTrack.Infrastructure.ServiceGateways
@@ -18,6 +19,11 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         /// </summary>
         private readonly ISprintService client;
 
+        /// <summary>
+        /// The account service gateway.
+        /// </summary>
+        private readonly IAccountServiceGateway accServiceGateway; 
+
         #endregion
 
         #region Constructor
@@ -26,14 +32,21 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         /// Creates a new project service gateway
         /// </summary>
         /// <param name="client">The web client</param>
-        public SprintServiceGateway(ISprintService client)
+        /// <param name="accServiceGateway">The account service gateway.</param>
+        public SprintServiceGateway(ISprintService client, IAccountServiceGateway accServiceGateway)
         {
             if (client == null)
             {
                 throw new ArgumentNullException("client");
             }
 
+            if (accServiceGateway == null)
+            {
+                throw new ArgumentNullException("accServiceGateway");
+            }
+
             this.client = client;
+            this.accServiceGateway = accServiceGateway;
         }
 
         #endregion
@@ -58,6 +71,7 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         public void AddSprint(Guid projectId, ServiceSprint sprint)
         {
             client.AddSprint(projectId, sprint);
+            UserDetailsStore.LoggedInUserPrincipal = new ServiceUserPrincipal(accServiceGateway.RefreshLoginPrincipal(), UserDetailsStore.AuthCookie);
         }
 
         /// <summary>
@@ -68,6 +82,7 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         public void EditSprint(Guid sprintId, ServiceSprint updatedSprint)
         {
             client.EditSprint(sprintId, updatedSprint);
+            UserDetailsStore.LoggedInUserPrincipal = new ServiceUserPrincipal(accServiceGateway.RefreshLoginPrincipal(), UserDetailsStore.AuthCookie);
         }
 
         /// <summary>

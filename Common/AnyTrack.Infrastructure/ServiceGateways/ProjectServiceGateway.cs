@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AnyTrack.Infrastructure.BackendProjectService;
+using AnyTrack.Infrastructure.Security;
 
 namespace AnyTrack.Infrastructure.ServiceGateways
 {
@@ -18,22 +19,34 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         /// </summary>
         private readonly IProjectService client;
 
+        /// <summary>
+        /// The account service gateway
+        /// </summary>
+        private readonly IAccountServiceGateway accServiceGateway;
+
         #endregion
 
         #region Constructor
-
+        
         /// <summary>
         /// Creates a new project service gateway
         /// </summary>
         /// <param name="client">The web client</param>
-        public ProjectServiceGateway(IProjectService client)
+        /// <param name="gateway">The account service gateway</param>
+        public ProjectServiceGateway(IProjectService client, IAccountServiceGateway gateway)
         {
             if (client == null)
             {
                 throw new ArgumentNullException("client");
             }
 
+            if (gateway == null)
+            {
+                throw new ArgumentNullException("gateway");
+            }
+
             this.client = client;
+            this.accServiceGateway = gateway;
         }
 
         #endregion
@@ -46,6 +59,7 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         public void CreateProject(ServiceProject project)
         {
             client.AddProject(project);
+            UserDetailsStore.LoggedInUserPrincipal = new ServiceUserPrincipal(accServiceGateway.RefreshLoginPrincipal(), UserDetailsStore.AuthCookie);
         }
 
         /// <summary>
@@ -55,6 +69,7 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         public void UpdateProject(ServiceProject project)
         {
             client.UpdateProject(project);
+            UserDetailsStore.LoggedInUserPrincipal = new ServiceUserPrincipal(accServiceGateway.RefreshLoginPrincipal(), UserDetailsStore.AuthCookie);
         }
 
         /// <summary>

@@ -19,6 +19,7 @@ namespace Unit.Modules.AnyTrack.Infrastructure.ServiceGateways
         public class Context
         {
             public static IProjectService projectService;
+            public static IAccountServiceGateway accGateway;
 
             public static ProjectServiceGateway gateway;
 
@@ -26,7 +27,8 @@ namespace Unit.Modules.AnyTrack.Infrastructure.ServiceGateways
             public void ContextSetup()
             {
                 projectService = Substitute.For<IProjectService>();
-                gateway = new ProjectServiceGateway(projectService);
+                accGateway = Substitute.For<IAccountServiceGateway>();
+                gateway = new ProjectServiceGateway(projectService, accGateway);
             }
         }
         #endregion
@@ -41,7 +43,14 @@ namespace Unit.Modules.AnyTrack.Infrastructure.ServiceGateways
             [ExpectedException(typeof (ArgumentNullException))]
             public void ConstructWithNoClient()
             {
-                gateway = new ProjectServiceGateway(null);
+                gateway = new ProjectServiceGateway(null, accGateway);
+            }
+
+            [Test]
+            [ExpectedException(typeof(ArgumentNullException))]
+            public void ConstructWithNoGateway()
+            {
+                gateway = new ProjectServiceGateway(projectService, null);
             }
 
             #endregion 
@@ -66,6 +75,7 @@ namespace Unit.Modules.AnyTrack.Infrastructure.ServiceGateways
 
                 gateway.CreateProject(testProject);
                 projectService.Received().AddProject(testProject);
+                accGateway.Received().RefreshLoginPrincipal();
                 Assert.AreEqual(sentModel.Name, "TestProject");
                 Assert.AreEqual(sentModel.Description, "This is a project");
                 Assert.AreEqual(sentModel.VersionControl, "V1");
@@ -104,6 +114,7 @@ namespace Unit.Modules.AnyTrack.Infrastructure.ServiceGateways
                 Assert.AreEqual(updatedModel.VersionControl, "V1");
                 Assert.AreEqual(updatedModel.StartedOn, new DateTime(2015, 9, 30));
                 Assert.AreEqual(updatedModel.ProjectManagerEmailAddress, "test@agile.local");
+                accGateway.Received().RefreshLoginPrincipal();
             }
 
             #endregion

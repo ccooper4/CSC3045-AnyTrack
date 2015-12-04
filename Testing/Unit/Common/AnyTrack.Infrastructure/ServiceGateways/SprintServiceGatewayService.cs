@@ -23,13 +23,17 @@ namespace Unit.Modules.AnyTrack.Sprints.ServiceGateways
     public class Context
     {
         public static ISprintService client;
+        public static IAccountServiceGateway accGateway;
+
         public static SprintServiceGateway gateway;
 
         [SetUp]
         public void ContextSetup()
         {
             client = Substitute.For<ISprintService>();
-            gateway = new SprintServiceGateway(client);
+            accGateway = Substitute.For<IAccountServiceGateway>();
+
+            gateway = new SprintServiceGateway(client, accGateway);
         }
     }
 
@@ -43,7 +47,14 @@ namespace Unit.Modules.AnyTrack.Sprints.ServiceGateways
         [ExpectedException(typeof(ArgumentNullException))]
         public void ConstructWithNoClient()
         {
-            gateway = new SprintServiceGateway(null);
+            gateway = new SprintServiceGateway(null, accGateway);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ConstructWithNoGateway()
+        {
+            gateway = new SprintServiceGateway(client, null);
         }
 
         #endregion
@@ -68,8 +79,9 @@ namespace Unit.Modules.AnyTrack.Sprints.ServiceGateways
 
             #endregion
 
-            client.AddSprint(sprint.ProjectId, sprint);
+            gateway.AddSprint(sprint.ProjectId, sprint);
             client.Received().AddSprint(sprint.ProjectId, sprint);
+            accGateway.Received().RefreshLoginPrincipal();
 
         }
 
@@ -134,8 +146,9 @@ namespace Unit.Modules.AnyTrack.Sprints.ServiceGateways
 
             #endregion
 
-            client.EditSprint(sprint.SprintId, sprint);
+            gateway.EditSprint(sprint.SprintId, sprint);
             client.Received().EditSprint(sprint.SprintId, sprint);
+            accGateway.Received().RefreshLoginPrincipal();
         }
 
         [Test]
