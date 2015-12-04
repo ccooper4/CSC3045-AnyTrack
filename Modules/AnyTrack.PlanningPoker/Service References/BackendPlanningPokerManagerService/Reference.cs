@@ -132,7 +132,7 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid ActiveStoryField;
+        private int ActiveStoryIndexField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid HostIDField;
@@ -169,14 +169,14 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Guid ActiveStory {
+        public int ActiveStoryIndex {
             get {
-                return this.ActiveStoryField;
+                return this.ActiveStoryIndexField;
             }
             set {
-                if ((this.ActiveStoryField.Equals(value) != true)) {
-                    this.ActiveStoryField = value;
-                    this.RaisePropertyChanged("ActiveStory");
+                if ((this.ActiveStoryIndexField.Equals(value) != true)) {
+                    this.ActiveStoryIndexField = value;
+                    this.RaisePropertyChanged("ActiveStoryIndex");
                 }
             }
         }

@@ -1122,6 +1122,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
             service.StartSession(sessionId);
 
             session.State.Should().Be(ServicePlanningPokerSessionState.GettingEstimates);
+            session.ActiveStoryIndex.Should().Be(0);
             otherClientChannel.Received().NotifyClientOfSessionStart();
         }
 

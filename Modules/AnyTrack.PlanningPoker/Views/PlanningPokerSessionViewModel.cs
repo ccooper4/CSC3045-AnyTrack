@@ -75,7 +75,17 @@ namespace AnyTrack.PlanningPoker.Views
         /// <summary>
         /// A value indicating if a final estimate can be provided. 
         /// </summary>
-        private bool canGiveFinalEstimate = false; 
+        private bool canGiveFinalEstimate = false;
+
+        /// <summary>
+        /// The active story.
+        /// </summary>
+        private ServiceSprintStory activeStory;
+
+        /// <summary>
+        /// The progress label. 
+        /// </summary>
+        private string totalStoriesLabel; 
 
         #endregion
 
@@ -308,6 +318,38 @@ namespace AnyTrack.PlanningPoker.Views
             }
         }
 
+        /// <summary>
+        /// Gets or sets the active story.
+        /// </summary>
+        public ServiceSprintStory ActiveStory
+        {
+            get
+            {
+                return activeStory;
+            }
+
+            set
+            {
+                SetProperty(ref activeStory, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the display text for the story progress label.
+        /// </summary>
+        public string TotalStoriesLabel
+        {
+            get
+            {
+                return totalStoriesLabel;
+            }
+
+            set
+            {
+                SetProperty(ref totalStoriesLabel, value);
+            }
+        }
+
         #endregion 
 
         #region Methods
@@ -523,6 +565,14 @@ namespace AnyTrack.PlanningPoker.Views
 
             this.Users.Clear();
             this.Users.AddRange(session.Users);
+
+            if (session.Stories.Count() > 0 && session.ActiveStoryIndex > -1)
+            {
+                var currentActiveStory = session.Stories.ToList()[session.ActiveStoryIndex];
+                ActiveStory = currentActiveStory;
+            }
+
+            TotalStoriesLabel = "Stories - {0}/{1}".Substitute(session.ActiveStoryIndex + 1, session.Stories.Count());
 
             if (session.State == ServicePlanningPokerSessionState.GettingEstimates)
             {

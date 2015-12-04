@@ -14,7 +14,7 @@
   <xs:element name="ServiceSessionChangeInfo" nillable="true" type="tns:ServiceSessionChangeInfo" />
   <xs:complexType name="ServicePlanningPokerSession">
     <xs:sequence>
-      <xs:element minOccurs="0" name="ActiveStory" type="ser:guid" />
+      <xs:element minOccurs="0" name="ActiveStoryIndex" type="xs:int" />
       <xs:element minOccurs="0" name="HostID" type="ser:guid" />
       <xs:element minOccurs="0" name="ProjectName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SessionID" type="ser:guid" />

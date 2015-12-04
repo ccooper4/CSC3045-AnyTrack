@@ -26,6 +26,7 @@ namespace AnyTrack.PlanningPoker.Views
         public PlanningPokerSession()
         {
             InitializeComponent();
+            storyView.HideControlButtons();
         }
     }
 }

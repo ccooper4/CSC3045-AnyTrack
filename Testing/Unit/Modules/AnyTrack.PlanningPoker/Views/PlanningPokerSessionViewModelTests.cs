@@ -183,6 +183,7 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewMode
             var session = new ServicePlanningPokerSession
             {
                 SessionID = sessionId,
+                ActiveStoryIndex = 0,
                 Users = new List<ServicePlanningPokerUser>
                 {
                     new ServicePlanningPokerUser
@@ -216,6 +217,8 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewMode
             vm.CanGiveFinalEstimate.Should().BeFalse();
             vm.CanShowEstimates.Should().BeTrue();
             vm.SprintStoriesCollection.Single().Equals(session.Stories.Single());
+            vm.ActiveStory.Should().Be(vm.SprintStoriesCollection.First());
+            vm.TotalStoriesLabel.Should().Be("Stories - 1/1");
         }
 
         [Test]

@@ -421,6 +421,8 @@ namespace AnyTrack.Backend.Service
 
             session.State = ServicePlanningPokerSessionState.GettingEstimates;
 
+            session.ActiveStoryIndex = 0;
+
             foreach (var user in session.Users.Where(u => u != userInSession))
             {
                 user.ClientChannel.NotifyClientOfSessionStart();

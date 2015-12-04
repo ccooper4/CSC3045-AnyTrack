@@ -6,12 +6,18 @@
              xmlns:local="clr-namespace:AnyTrack.PlanningPoker.Views"
              xmlns:prism="http://www.codeplex.com/prism"
              xmlns:convert="clr-namespace:AnyTrack.Infrastructure.Converters;assembly=AnyTrack.Infrastructure"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600">
 
     <UserControl.Resources>
         <convert:BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter"></convert:BooleanToVisibilityConverter>
+        <ResourceDictionary x:Key="at">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     
     <Grid Background="White">
@@ -29,17 +35,16 @@
 
         <GroupBox Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <GroupBox.Header>
-                <TextBlock Foreground="White" Text="Stories" />
+                <TextBlock Foreground="White" Text="{Binding TotalStoriesLabel}" />
             </GroupBox.Header>
-            <TabControl ItemsSource="{Binding SprintStoriesCollection}" TabStripPlacement="Left">
-                <TabControl.ItemTemplate>
-                    <DataTemplate>
-                        <Label Content="{Binding Path=Story.Summary}" />
-                    </DataTemplate>
-                </TabControl.ItemTemplate>
-                <TabControl.ContentTemplate>
+            <controls:FlipView x:Name="storyView" IsBannerEnabled="False" SelectedValuePath="." SelectedValue="{Binding ActiveStory}" ItemsSource="{Binding SprintStoriesCollection}">
+                <controls:FlipView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontWeight="ExtraBold" Text="Summary: "/>
+                                <TextBlock FontWeight="Bold" Text="{Binding Path=Story.Summary}"/>
+                            </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="As a "/>
                                 <TextBlock Text="{Binding Path=Story.AsA}"/>
@@ -54,8 +59,9 @@
                             </StackPanel>
                         </StackPanel>
                     </DataTemplate>
-                </TabControl.ContentTemplate>
-            </TabControl>
+                </controls:FlipView.ItemTemplate>
+            </controls:FlipView>
+
         </GroupBox>
 
         <GroupBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
