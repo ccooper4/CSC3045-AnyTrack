@@ -157,6 +157,8 @@
                 </Grid>
 
                 <!-- Task Section -->
+                
+                
 
                 <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
@@ -170,48 +172,59 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <ListBox Grid.Column="1" Grid.Row="0">
+<!--                    <ListBox Grid.Column="0" Grid.Row="1" ItemsSource="{Binding NotStartedSprintStories}" Background="Transparent" HorizontalAlignment="Stretch">-->
+<!--                        <ListBox.ItemTemplate>-->
+<!--                            <DataTemplate>-->
+<!--                                <Grid Margin="10" >-->
+<!--                                    <Button Command="{Binding DataContext.EditSprintStoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding Path=.}" BorderThickness="0" Background="Gray" >-->
+<!--                                        <TextBox IsEnabled="False" Height="Auto" MinHeight="50px" Width="160" Background="LightGray" TextWrapping="Wrap" Text="{Binding Story.Summary}" />-->
+<!--                                    </Button>-->
+<!--                                </Grid>-->
+<!--                            </DataTemplate>-->
+<!--                        </ListBox.ItemTemplate>-->
+<!--                    </ListBox>-->
+
+                    <ListBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Tasks}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
+                                <Border Grid.Column="1" Grid.Row="0" CornerRadius="0" BorderBrush="Gray" Background="Gray" BorderThickness="2" Margin="0,0,0,-5px">
+                                    <Grid Background="#fcfcfc">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10px"></ColumnDefinition>
+                                            <ColumnDefinition Width ="1*"></ColumnDefinition>
+                                            <ColumnDefinition Width ="50px"></ColumnDefinition>
+                                            <ColumnDefinition Width ="50px"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Canvas Background="LightGray" Grid.Column="0"></Canvas>
+                                        <Label Content="{Binding Summary}" Grid.Column="1" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="15px,0,0,0"></Label>
+
+                                        <Button Grid.Column="2" Command="{Binding DataContext.EditStoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding Path=.}">
+                                            <Button.Template>
+                                                <ControlTemplate>
+                                                    <Border CornerRadius="0" BorderBrush="Gray" BorderThickness="1" Margin="0,-1px,-1px,-1px">
+                                                        <Image Margin="0,3px,0,3px" Source="../Images/edit_icon.png" Height="25px"></Image>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+
+                                        <Button Grid.Column="3" Command="{Binding DataContext.DeleteStoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding StoryId, Converter={StaticResource guidToStringConverter}}">
+                                            <Button.Template>
+                                                <ControlTemplate>
+                                                    <Border CornerRadius="0" BorderBrush="Gray" BorderThickness="1" Margin="0,-1px,-1px,-1px">
+                                                        <Image Margin="0,3px,0,3px" Source="../Images/delete_icon.png" Height="25px"></Image>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+
+                                    </Grid>
+                                </Border>
+
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-
-                    <Border Grid.Column="1" Grid.Row="0" CornerRadius="0" BorderBrush="Gray" Background="Gray" BorderThickness="2" Margin="0,0,0,-5px">
-                        <Grid Background="#fcfcfc">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="10px"></ColumnDefinition>
-                                <ColumnDefinition Width ="1*"></ColumnDefinition>
-                                <ColumnDefinition Width ="50px"></ColumnDefinition>
-                                <ColumnDefinition Width ="50px"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-
-                            <Canvas Background="LightGray" Grid.Column="0"></Canvas>
-                            <Label Content="{Binding Summary}" Grid.Column="1" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="15px,0,0,0"></Label>
-
-                            <Button Grid.Column="2" Command="{Binding DataContext.EditStoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding Path=.}">
-                                <Button.Template>
-                                    <ControlTemplate>
-                                        <Border CornerRadius="0" BorderBrush="Gray" BorderThickness="1" Margin="0,-1px,-1px,-1px">
-                                            <Image Margin="0,3px,0,3px" Source="../Images/edit_icon.png" Height="25px"></Image>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
-
-                            <Button Grid.Column="3" Command="{Binding DataContext.DeleteStoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding StoryId, Converter={StaticResource guidToStringConverter}}">
-                                <Button.Template>
-                                    <ControlTemplate>
-                                        <Border CornerRadius="0" BorderBrush="Gray" BorderThickness="1" Margin="0,-1px,-1px,-1px">
-                                            <Image Margin="0,3px,0,3px" Source="../Images/delete_icon.png" Height="25px"></Image>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
-
-                        </Grid>
-                    </Border>
-
 
                     <StackPanel Margin="0,50,0,20" Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" >
                         <Button  Command="{Binding SaveSprintStoryCommand}" BorderThickness="0" Background="LightGray" Width="60px">Save</Button>

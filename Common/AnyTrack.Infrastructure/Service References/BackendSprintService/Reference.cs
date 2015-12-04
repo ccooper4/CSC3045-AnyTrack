@@ -15,461 +15,6 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceSprint", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
-    [System.SerializableAttribute()]
-    public partial class ServiceSprint : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> BacklogField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DescriptionField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime EndDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int LengthField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid ProjectIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid SprintIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime StartDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Collections.Generic.List<string> TeamEmailAddressesField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> Backlog {
-            get {
-                return this.BacklogField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BacklogField, value) != true)) {
-                    this.BacklogField = value;
-                    this.RaisePropertyChanged("Backlog");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Description {
-            get {
-                return this.DescriptionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
-                    this.DescriptionField = value;
-                    this.RaisePropertyChanged("Description");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime EndDate {
-            get {
-                return this.EndDateField;
-            }
-            set {
-                if ((this.EndDateField.Equals(value) != true)) {
-                    this.EndDateField = value;
-                    this.RaisePropertyChanged("EndDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Length {
-            get {
-                return this.LengthField;
-            }
-            set {
-                if ((this.LengthField.Equals(value) != true)) {
-                    this.LengthField = value;
-                    this.RaisePropertyChanged("Length");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
-            get {
-                return this.NameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Guid ProjectId {
-            get {
-                return this.ProjectIdField;
-            }
-            set {
-                if ((this.ProjectIdField.Equals(value) != true)) {
-                    this.ProjectIdField = value;
-                    this.RaisePropertyChanged("ProjectId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Guid SprintId {
-            get {
-                return this.SprintIdField;
-            }
-            set {
-                if ((this.SprintIdField.Equals(value) != true)) {
-                    this.SprintIdField = value;
-                    this.RaisePropertyChanged("SprintId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime StartDate {
-            get {
-                return this.StartDateField;
-            }
-            set {
-                if ((this.StartDateField.Equals(value) != true)) {
-                    this.StartDateField = value;
-                    this.RaisePropertyChanged("StartDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<string> TeamEmailAddresses {
-            get {
-                return this.TeamEmailAddressesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TeamEmailAddressesField, value) != true)) {
-                    this.TeamEmailAddressesField = value;
-                    this.RaisePropertyChanged("TeamEmailAddresses");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceSprintStory", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
-    [System.SerializableAttribute()]
-    public partial class ServiceSprintStory : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> DateCompletedField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid SprintIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid SprintStoryIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string StatusField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private AnyTrack.Infrastructure.BackendSprintService.ServiceStory StoryField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private double StoryEstimateField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> DateCompleted {
-            get {
-                return this.DateCompletedField;
-            }
-            set {
-                if ((this.DateCompletedField.Equals(value) != true)) {
-                    this.DateCompletedField = value;
-                    this.RaisePropertyChanged("DateCompleted");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Guid SprintId {
-            get {
-                return this.SprintIdField;
-            }
-            set {
-                if ((this.SprintIdField.Equals(value) != true)) {
-                    this.SprintIdField = value;
-                    this.RaisePropertyChanged("SprintId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Guid SprintStoryId {
-            get {
-                return this.SprintStoryIdField;
-            }
-            set {
-                if ((this.SprintStoryIdField.Equals(value) != true)) {
-                    this.SprintStoryIdField = value;
-                    this.RaisePropertyChanged("SprintStoryId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Status {
-            get {
-                return this.StatusField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.StatusField, value) != true)) {
-                    this.StatusField = value;
-                    this.RaisePropertyChanged("Status");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public AnyTrack.Infrastructure.BackendSprintService.ServiceStory Story {
-            get {
-                return this.StoryField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.StoryField, value) != true)) {
-                    this.StoryField = value;
-                    this.RaisePropertyChanged("Story");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double StoryEstimate {
-            get {
-                return this.StoryEstimateField;
-            }
-            set {
-                if ((this.StoryEstimateField.Equals(value) != true)) {
-                    this.StoryEstimateField = value;
-                    this.RaisePropertyChanged("StoryEstimate");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceStory", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
-    [System.SerializableAttribute()]
-    public partial class ServiceStory : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string AsAField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ConditionsOfSatisfactionField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IWantField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool InSprintField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid ProjectIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string SoThatField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid StoryIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string SummaryField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string AsA {
-            get {
-                return this.AsAField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.AsAField, value) != true)) {
-                    this.AsAField = value;
-                    this.RaisePropertyChanged("AsA");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ConditionsOfSatisfaction {
-            get {
-                return this.ConditionsOfSatisfactionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ConditionsOfSatisfactionField, value) != true)) {
-                    this.ConditionsOfSatisfactionField = value;
-                    this.RaisePropertyChanged("ConditionsOfSatisfaction");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string IWant {
-            get {
-                return this.IWantField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IWantField, value) != true)) {
-                    this.IWantField = value;
-                    this.RaisePropertyChanged("IWant");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool InSprint {
-            get {
-                return this.InSprintField;
-            }
-            set {
-                if ((this.InSprintField.Equals(value) != true)) {
-                    this.InSprintField = value;
-                    this.RaisePropertyChanged("InSprint");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Guid ProjectId {
-            get {
-                return this.ProjectIdField;
-            }
-            set {
-                if ((this.ProjectIdField.Equals(value) != true)) {
-                    this.ProjectIdField = value;
-                    this.RaisePropertyChanged("ProjectId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SoThat {
-            get {
-                return this.SoThatField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SoThatField, value) != true)) {
-                    this.SoThatField = value;
-                    this.RaisePropertyChanged("SoThat");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Guid StoryId {
-            get {
-                return this.StoryIdField;
-            }
-            set {
-                if ((this.StoryIdField.Equals(value) != true)) {
-                    this.StoryIdField = value;
-                    this.RaisePropertyChanged("StoryId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Summary {
-            get {
-                return this.SummaryField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SummaryField, value) != true)) {
-                    this.SummaryField = value;
-                    this.RaisePropertyChanged("Summary");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ServiceTask", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
     [System.SerializableAttribute()]
     public partial class ServiceTask : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -941,6 +486,477 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceSprint", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
+    [System.SerializableAttribute()]
+    public partial class ServiceSprint : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> BacklogField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime EndDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int LengthField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid ProjectIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid SprintIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime StartDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<string> TeamEmailAddressesField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> Backlog {
+            get {
+                return this.BacklogField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BacklogField, value) != true)) {
+                    this.BacklogField = value;
+                    this.RaisePropertyChanged("Backlog");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime EndDate {
+            get {
+                return this.EndDateField;
+            }
+            set {
+                if ((this.EndDateField.Equals(value) != true)) {
+                    this.EndDateField = value;
+                    this.RaisePropertyChanged("EndDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Length {
+            get {
+                return this.LengthField;
+            }
+            set {
+                if ((this.LengthField.Equals(value) != true)) {
+                    this.LengthField = value;
+                    this.RaisePropertyChanged("Length");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid ProjectId {
+            get {
+                return this.ProjectIdField;
+            }
+            set {
+                if ((this.ProjectIdField.Equals(value) != true)) {
+                    this.ProjectIdField = value;
+                    this.RaisePropertyChanged("ProjectId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid SprintId {
+            get {
+                return this.SprintIdField;
+            }
+            set {
+                if ((this.SprintIdField.Equals(value) != true)) {
+                    this.SprintIdField = value;
+                    this.RaisePropertyChanged("SprintId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime StartDate {
+            get {
+                return this.StartDateField;
+            }
+            set {
+                if ((this.StartDateField.Equals(value) != true)) {
+                    this.StartDateField = value;
+                    this.RaisePropertyChanged("StartDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<string> TeamEmailAddresses {
+            get {
+                return this.TeamEmailAddressesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TeamEmailAddressesField, value) != true)) {
+                    this.TeamEmailAddressesField = value;
+                    this.RaisePropertyChanged("TeamEmailAddresses");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceSprintStory", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
+    [System.SerializableAttribute()]
+    public partial class ServiceSprintStory : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> DateCompletedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid SprintIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid SprintStoryIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StatusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Infrastructure.BackendSprintService.ServiceStory StoryField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double StoryEstimateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<System.Guid> TasksField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> DateCompleted {
+            get {
+                return this.DateCompletedField;
+            }
+            set {
+                if ((this.DateCompletedField.Equals(value) != true)) {
+                    this.DateCompletedField = value;
+                    this.RaisePropertyChanged("DateCompleted");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid SprintId {
+            get {
+                return this.SprintIdField;
+            }
+            set {
+                if ((this.SprintIdField.Equals(value) != true)) {
+                    this.SprintIdField = value;
+                    this.RaisePropertyChanged("SprintId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid SprintStoryId {
+            get {
+                return this.SprintStoryIdField;
+            }
+            set {
+                if ((this.SprintStoryIdField.Equals(value) != true)) {
+                    this.SprintStoryIdField = value;
+                    this.RaisePropertyChanged("SprintStoryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StatusField, value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Infrastructure.BackendSprintService.ServiceStory Story {
+            get {
+                return this.StoryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StoryField, value) != true)) {
+                    this.StoryField = value;
+                    this.RaisePropertyChanged("Story");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double StoryEstimate {
+            get {
+                return this.StoryEstimateField;
+            }
+            set {
+                if ((this.StoryEstimateField.Equals(value) != true)) {
+                    this.StoryEstimateField = value;
+                    this.RaisePropertyChanged("StoryEstimate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<System.Guid> Tasks {
+            get {
+                return this.TasksField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TasksField, value) != true)) {
+                    this.TasksField = value;
+                    this.RaisePropertyChanged("Tasks");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceStory", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
+    [System.SerializableAttribute()]
+    public partial class ServiceStory : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AsAField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ConditionsOfSatisfactionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IWantField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool InSprintField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid ProjectIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SoThatField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid StoryIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SummaryField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string AsA {
+            get {
+                return this.AsAField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AsAField, value) != true)) {
+                    this.AsAField = value;
+                    this.RaisePropertyChanged("AsA");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ConditionsOfSatisfaction {
+            get {
+                return this.ConditionsOfSatisfactionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ConditionsOfSatisfactionField, value) != true)) {
+                    this.ConditionsOfSatisfactionField = value;
+                    this.RaisePropertyChanged("ConditionsOfSatisfaction");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IWant {
+            get {
+                return this.IWantField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IWantField, value) != true)) {
+                    this.IWantField = value;
+                    this.RaisePropertyChanged("IWant");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool InSprint {
+            get {
+                return this.InSprintField;
+            }
+            set {
+                if ((this.InSprintField.Equals(value) != true)) {
+                    this.InSprintField = value;
+                    this.RaisePropertyChanged("InSprint");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid ProjectId {
+            get {
+                return this.ProjectIdField;
+            }
+            set {
+                if ((this.ProjectIdField.Equals(value) != true)) {
+                    this.ProjectIdField = value;
+                    this.RaisePropertyChanged("ProjectId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SoThat {
+            get {
+                return this.SoThatField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SoThatField, value) != true)) {
+                    this.SoThatField = value;
+                    this.RaisePropertyChanged("SoThat");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid StoryId {
+            get {
+                return this.StoryIdField;
+            }
+            set {
+                if ((this.StoryIdField.Equals(value) != true)) {
+                    this.StoryIdField = value;
+                    this.RaisePropertyChanged("StoryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Summary {
+            get {
+                return this.SummaryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SummaryField, value) != true)) {
+                    this.SummaryField = value;
+                    this.RaisePropertyChanged("Summary");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ServiceSprintSummary", Namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model")]
     [System.SerializableAttribute()]
     public partial class ServiceSprintSummary : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -1019,6 +1035,12 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="BackendSprintService.ISprintService")]
     public interface ISprintService {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetAllTasksForSprintStory", ReplyAction="http://tempuri.org/ISprintService/GetAllTasksForSprintStoryResponse")]
+        System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask> GetAllTasksForSprintStory(System.Guid sprintStoryId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetAllTasksForSprintStory", ReplyAction="http://tempuri.org/ISprintService/GetAllTasksForSprintStoryResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask>> GetAllTasksForSprintStoryAsync(System.Guid sprintStoryId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/AddSprint", ReplyAction="http://tempuri.org/ISprintService/AddSprintResponse")]
         void AddSprint(System.Guid projectId, AnyTrack.Infrastructure.BackendSprintService.ServiceSprint sprint);
@@ -1148,6 +1170,14 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         
         public SprintServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask> GetAllTasksForSprintStory(System.Guid sprintStoryId) {
+            return base.Channel.GetAllTasksForSprintStory(sprintStoryId);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask>> GetAllTasksForSprintStoryAsync(System.Guid sprintStoryId) {
+            return base.Channel.GetAllTasksForSprintStoryAsync(sprintStoryId);
         }
         
         public void AddSprint(System.Guid projectId, AnyTrack.Infrastructure.BackendSprintService.ServiceSprint sprint) {

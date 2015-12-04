@@ -412,7 +412,7 @@ namespace AnyTrack.Sprints.Views
                 this.SprintStoryId = (Guid)navigationContext.Parameters["sprintStoryId"];
                 this.TaskId = Guid.NewGuid();
             }
-            else if (navigationContext.Parameters.ContainsKey("task"))
+            else if (navigationContext.Parameters.ContainsKey("tasks"))
             {
                 ServiceTask task = (ServiceTask)navigationContext.Parameters["task"];
                 this.TaskId = task.TaskId;
