@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Mail;
 using AnyTrack.Infrastructure.BackendSprintService;
+using Attachment = AnyTrack.Infrastructure.BackendSprintService.Attachment;
 
 namespace AnyTrack.Infrastructure.ServiceGateways
 {
@@ -115,6 +116,26 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         public void SaveUpdatedTaskHours(List<ServiceTask> tasks)
         {
             client.SaveUpdatedTaskHours(tasks);
+        }
+
+        /// <summary>
+        /// Add the initial task hour estimate to a task. 
+        /// </summary>
+        /// <param name="taskId"> the id of the task</param>
+        /// <param name="serviceTaskHourEstimate"> the task hour estimate </param>
+        public void AddTaskHourEstimateToTask(Guid taskId, ServiceTaskHourEstimate serviceTaskHourEstimate)
+        {
+            client.AddTaskHourEstimateToTask(taskId, serviceTaskHourEstimate);
+        }
+
+        /// <summary>
+        /// Add a new task to a sprint story.
+        /// </summary>
+        /// <param name="sprintStoryId">The story to add the task to.</param>
+        /// <param name="serviceTask">The task to add.</param>
+        public void AddTaskToSprintStory(Guid sprintStoryId, ServiceTask serviceTask)
+        {
+            client.AddTaskToSprintStory(sprintStoryId, serviceTask);
         }
 
         /// <summary>

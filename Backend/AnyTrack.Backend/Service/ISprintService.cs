@@ -64,6 +64,22 @@ namespace AnyTrack.Backend.Service
         void SaveUpdatedTaskHours(List<ServiceTask> tasks);
 
         /// <summary>
+        /// Add the initial task hour estimate to a task. 
+        /// </summary>
+        /// <param name="taskId"> the id of the task</param>
+        /// <param name="serviceTaskHourEstimate"> the task hour estimate </param>
+        [OperationContract]
+        void AddTaskHourEstimateToTask(Guid taskId, ServiceTaskHourEstimate serviceTaskHourEstimate);
+
+        /// <summary>
+        /// Add a new task to a sprint story.
+        /// </summary>
+        /// <param name="sprintStoryId">The story to add the task to.</param>
+        /// <param name="serviceTask">The task to add.</param>
+        [OperationContract]
+        void AddTaskToSprintStory(Guid sprintStoryId, ServiceTask serviceTask);
+
+        /// <summary>
         /// Gets all sprints for the current user
         /// </summary>
         /// <param name="projectId">The id of the project.</param>

@@ -10,6 +10,7 @@ using AnyTrack.Infrastructure.ServiceGateways;
 using MahApps.Metro.Controls;
 using Prism.Commands;
 using Prism.Regions;
+using Attachment = AnyTrack.Infrastructure.BackendSprintService.Attachment;
 
 namespace AnyTrack.Sprints.Views
 {

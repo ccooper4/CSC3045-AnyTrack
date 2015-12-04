@@ -986,6 +986,343 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AttachmentBase", Namespace="http://schemas.datacontract.org/2004/07/System.Net.Mail")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(AnyTrack.Infrastructure.BackendSprintService.Attachment))]
+    public partial class AttachmentBase : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContentIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Infrastructure.BackendSprintService.ContentType ContentTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Infrastructure.BackendSprintService.TransferEncoding TransferEncodingField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContentId {
+            get {
+                return this.ContentIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContentIdField, value) != true)) {
+                    this.ContentIdField = value;
+                    this.RaisePropertyChanged("ContentId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Infrastructure.BackendSprintService.ContentType ContentType {
+            get {
+                return this.ContentTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContentTypeField, value) != true)) {
+                    this.ContentTypeField = value;
+                    this.RaisePropertyChanged("ContentType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Infrastructure.BackendSprintService.TransferEncoding TransferEncoding {
+            get {
+                return this.TransferEncodingField;
+            }
+            set {
+                if ((this.TransferEncodingField.Equals(value) != true)) {
+                    this.TransferEncodingField = value;
+                    this.RaisePropertyChanged("TransferEncoding");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ContentType", Namespace="http://schemas.datacontract.org/2004/07/System.Net.Mime")]
+    [System.SerializableAttribute()]
+    public partial class ContentType : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BoundaryField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CharSetField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MediaTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Boundary {
+            get {
+                return this.BoundaryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BoundaryField, value) != true)) {
+                    this.BoundaryField = value;
+                    this.RaisePropertyChanged("Boundary");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CharSet {
+            get {
+                return this.CharSetField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CharSetField, value) != true)) {
+                    this.CharSetField = value;
+                    this.RaisePropertyChanged("CharSet");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MediaType {
+            get {
+                return this.MediaTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MediaTypeField, value) != true)) {
+                    this.MediaTypeField = value;
+                    this.RaisePropertyChanged("MediaType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Attachment", Namespace="http://schemas.datacontract.org/2004/07/System.Net.Mail")]
+    [System.SerializableAttribute()]
+    public partial class Attachment : AnyTrack.Infrastructure.BackendSprintService.AttachmentBase {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Infrastructure.BackendSprintService.Encoding NameEncodingField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Infrastructure.BackendSprintService.Encoding NameEncoding {
+            get {
+                return this.NameEncodingField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameEncodingField, value) != true)) {
+                    this.NameEncodingField = value;
+                    this.RaisePropertyChanged("NameEncoding");
+                }
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TransferEncoding", Namespace="http://schemas.datacontract.org/2004/07/System.Net.Mime")]
+    public enum TransferEncoding : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        QuotedPrintable = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Base64 = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SevenBit = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        EightBit = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Unknown = -1,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Encoding", Namespace="http://schemas.datacontract.org/2004/07/System.Text")]
+    [System.SerializableAttribute()]
+    public partial class Encoding : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private AnyTrack.Infrastructure.BackendSprintService.CodePageDataItem dataItemField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Infrastructure.BackendSprintService.DecoderFallback decoderFallbackField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AnyTrack.Infrastructure.BackendSprintService.EncoderFallback encoderFallbackField;
+        
+        private int m_codePageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool m_isReadOnlyField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public AnyTrack.Infrastructure.BackendSprintService.CodePageDataItem dataItem {
+            get {
+                return this.dataItemField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.dataItemField, value) != true)) {
+                    this.dataItemField = value;
+                    this.RaisePropertyChanged("dataItem");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Infrastructure.BackendSprintService.DecoderFallback decoderFallback {
+            get {
+                return this.decoderFallbackField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.decoderFallbackField, value) != true)) {
+                    this.decoderFallbackField = value;
+                    this.RaisePropertyChanged("decoderFallback");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AnyTrack.Infrastructure.BackendSprintService.EncoderFallback encoderFallback {
+            get {
+                return this.encoderFallbackField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.encoderFallbackField, value) != true)) {
+                    this.encoderFallbackField = value;
+                    this.RaisePropertyChanged("encoderFallback");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int m_codePage {
+            get {
+                return this.m_codePageField;
+            }
+            set {
+                if ((this.m_codePageField.Equals(value) != true)) {
+                    this.m_codePageField = value;
+                    this.RaisePropertyChanged("m_codePage");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool m_isReadOnly {
+            get {
+                return this.m_isReadOnlyField;
+            }
+            set {
+                if ((this.m_isReadOnlyField.Equals(value) != true)) {
+                    this.m_isReadOnlyField = value;
+                    this.RaisePropertyChanged("m_isReadOnly");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CodePageDataItem", Namespace="http://schemas.datacontract.org/2004/07/System.Globalization")]
     [System.SerializableAttribute()]
     public partial class CodePageDataItem : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -1103,6 +1440,94 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DecoderFallback", Namespace="http://schemas.datacontract.org/2004/07/System.Text")]
+    [System.SerializableAttribute()]
+    public partial class DecoderFallback : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private bool bIsMicrosoftBestFitFallbackField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public bool bIsMicrosoftBestFitFallback {
+            get {
+                return this.bIsMicrosoftBestFitFallbackField;
+            }
+            set {
+                if ((this.bIsMicrosoftBestFitFallbackField.Equals(value) != true)) {
+                    this.bIsMicrosoftBestFitFallbackField = value;
+                    this.RaisePropertyChanged("bIsMicrosoftBestFitFallback");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="EncoderFallback", Namespace="http://schemas.datacontract.org/2004/07/System.Text")]
+    [System.SerializableAttribute()]
+    public partial class EncoderFallback : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private bool bIsMicrosoftBestFitFallbackField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public bool bIsMicrosoftBestFitFallback {
+            get {
+                return this.bIsMicrosoftBestFitFallbackField;
+            }
+            set {
+                if ((this.bIsMicrosoftBestFitFallbackField.Equals(value) != true)) {
+                    this.bIsMicrosoftBestFitFallbackField = value;
+                    this.RaisePropertyChanged("bIsMicrosoftBestFitFallback");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="BackendSprintService.ISprintService")]
     public interface ISprintService {
@@ -1143,6 +1568,18 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/SaveUpdatedTaskHours", ReplyAction="http://tempuri.org/ISprintService/SaveUpdatedTaskHoursResponse")]
         System.Threading.Tasks.Task SaveUpdatedTaskHoursAsync(System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask> tasks);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/AddTaskHourEstimateToTask", ReplyAction="http://tempuri.org/ISprintService/AddTaskHourEstimateToTaskResponse")]
+        void AddTaskHourEstimateToTask(System.Guid taskId, AnyTrack.Infrastructure.BackendSprintService.ServiceTaskHourEstimate serviceTaskHourEstimate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/AddTaskHourEstimateToTask", ReplyAction="http://tempuri.org/ISprintService/AddTaskHourEstimateToTaskResponse")]
+        System.Threading.Tasks.Task AddTaskHourEstimateToTaskAsync(System.Guid taskId, AnyTrack.Infrastructure.BackendSprintService.ServiceTaskHourEstimate serviceTaskHourEstimate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/AddTaskToSprintStory", ReplyAction="http://tempuri.org/ISprintService/AddTaskToSprintStoryResponse")]
+        void AddTaskToSprintStory(System.Guid sprintStoryId, AnyTrack.Infrastructure.BackendSprintService.ServiceTask serviceTask);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/AddTaskToSprintStory", ReplyAction="http://tempuri.org/ISprintService/AddTaskToSprintStoryResponse")]
+        System.Threading.Tasks.Task AddTaskToSprintStoryAsync(System.Guid sprintStoryId, AnyTrack.Infrastructure.BackendSprintService.ServiceTask serviceTask);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetSprintNames", ReplyAction="http://tempuri.org/ISprintService/GetSprintNamesResponse")]
         System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintSummary> GetSprintNames(System.Nullable<System.Guid> projectId, bool scrumMaster, bool developer);
         
@@ -1180,10 +1617,10 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         System.Threading.Tasks.Task ManageSprintBacklogAsync(System.Guid projectId, System.Guid sprintId, System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> sprintStories);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/SendEmailRequest", ReplyAction="http://tempuri.org/ISprintService/SendEmailRequestResponse")]
-        void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, System.Net.Mail.Attachment emailAttachment);
+        void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, AnyTrack.Infrastructure.BackendSprintService.Attachment emailAttachment);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/SendEmailRequest", ReplyAction="http://tempuri.org/ISprintService/SendEmailRequestResponse")]
-        System.Threading.Tasks.Task SendEmailRequestAsync(string senderEmailAddress, string recipientEmailAddress, string emailMessage, System.Net.Mail.Attachment emailAttachment);
+        System.Threading.Tasks.Task SendEmailRequestAsync(string senderEmailAddress, string recipientEmailAddress, string emailMessage, AnyTrack.Infrastructure.BackendSprintService.Attachment emailAttachment);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1261,6 +1698,22 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
             return base.Channel.SaveUpdatedTaskHoursAsync(tasks);
         }
         
+        public void AddTaskHourEstimateToTask(System.Guid taskId, AnyTrack.Infrastructure.BackendSprintService.ServiceTaskHourEstimate serviceTaskHourEstimate) {
+            base.Channel.AddTaskHourEstimateToTask(taskId, serviceTaskHourEstimate);
+        }
+        
+        public System.Threading.Tasks.Task AddTaskHourEstimateToTaskAsync(System.Guid taskId, AnyTrack.Infrastructure.BackendSprintService.ServiceTaskHourEstimate serviceTaskHourEstimate) {
+            return base.Channel.AddTaskHourEstimateToTaskAsync(taskId, serviceTaskHourEstimate);
+        }
+        
+        public void AddTaskToSprintStory(System.Guid sprintStoryId, AnyTrack.Infrastructure.BackendSprintService.ServiceTask serviceTask) {
+            base.Channel.AddTaskToSprintStory(sprintStoryId, serviceTask);
+        }
+        
+        public System.Threading.Tasks.Task AddTaskToSprintStoryAsync(System.Guid sprintStoryId, AnyTrack.Infrastructure.BackendSprintService.ServiceTask serviceTask) {
+            return base.Channel.AddTaskToSprintStoryAsync(sprintStoryId, serviceTask);
+        }
+        
         public System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintSummary> GetSprintNames(System.Nullable<System.Guid> projectId, bool scrumMaster, bool developer) {
             return base.Channel.GetSprintNames(projectId, scrumMaster, developer);
         }
@@ -1309,11 +1762,11 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
             return base.Channel.ManageSprintBacklogAsync(projectId, sprintId, sprintStories);
         }
         
-        public void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, System.Net.Mail.Attachment emailAttachment) {
+        public void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, AnyTrack.Infrastructure.BackendSprintService.Attachment emailAttachment) {
             base.Channel.SendEmailRequest(senderEmailAddress, recipientEmailAddress, emailMessage, emailAttachment);
         }
         
-        public System.Threading.Tasks.Task SendEmailRequestAsync(string senderEmailAddress, string recipientEmailAddress, string emailMessage, System.Net.Mail.Attachment emailAttachment) {
+        public System.Threading.Tasks.Task SendEmailRequestAsync(string senderEmailAddress, string recipientEmailAddress, string emailMessage, AnyTrack.Infrastructure.BackendSprintService.Attachment emailAttachment) {
             return base.Channel.SendEmailRequestAsync(senderEmailAddress, recipientEmailAddress, emailMessage, emailAttachment);
         }
     }

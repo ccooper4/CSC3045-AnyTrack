@@ -7,5 +7,4 @@
 -->
 <GenericObjectDataSource DisplayName="ServiceSprintSummary" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
    <TypeInfo>AnyTrack.Infrastructure.BackendSprintService.ServiceSprintSummary, Service References.BackendSprintService.Reference.cs.dll, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
-   <TypeInfo>AnyTrack.Infrastructure.BackendSprintService.ServiceSprintSummary, Service References.BackendSprintService.Reference.cs.dll, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
 </GenericObjectDataSource>

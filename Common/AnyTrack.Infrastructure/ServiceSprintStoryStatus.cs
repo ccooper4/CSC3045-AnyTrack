@@ -8,7 +8,7 @@
         /// <summary>
         /// Not started. 
         /// </summary>
-        public const string NotStarted = "Not_Started";
+        public const string NotStarted = "NOT_STARTED";
 
         /// <summary>
         /// In progress.

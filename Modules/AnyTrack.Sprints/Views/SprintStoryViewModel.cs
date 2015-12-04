@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.BackendProjectService;
+using AnyTrack.Infrastructure.BackendSprintService;
 using AnyTrack.Infrastructure.ServiceGateways;
 using MahApps.Metro.Controls;
 using Prism.Commands;
 using Prism.Regions;
+using ServiceSprintStory = AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory;
+using ServiceStory = AnyTrack.Infrastructure.BackendSprintService.ServiceStory;
 
 namespace AnyTrack.Sprints.Views
 {
@@ -20,6 +23,71 @@ namespace AnyTrack.Sprints.Views
     public class SprintStoryViewModel : ValidatedBindableBase, INavigationAware, IRegionMemberLifetime, IFlyoutCompatibleViewModel
     {
         #region Fields
+
+        /// <summary>
+        /// The sprint story passed to this view model. 
+        /// </summary>
+        private ServiceSprintStory sprintStory;
+
+        /// <summary>
+        /// Project Name
+        /// </summary>
+        private string projectName;
+
+        /// <summary>
+        /// The story belonging to this sprint story.
+        /// </summary>
+        private ServiceStory story;
+
+        /// <summary>
+        /// The project Id
+        /// </summary>
+        private Guid sprintId;
+
+        /// <summary>
+        /// The project Id
+        /// </summary>
+        private Guid sprintStoryId;
+
+        /// <summary>
+        /// summary field
+        /// </summary>
+        private string summary;
+
+        /// <summary>
+        /// as a
+        /// </summary>
+        private string asA;
+
+        /// <summary>
+        /// I want
+        /// </summary>
+        private string iWant;
+
+        /// <summary>
+        /// so that
+        /// </summary>
+        private string soThat;
+
+        /// <summary>
+        /// conditionsOfSatisfaction var
+        /// </summary>
+        private string conditionsOfSatisfaction;
+
+        /// <summary>
+        /// all status member
+        /// </summary>
+        private ObservableCollection<string> allStatus; 
+
+        /// <summary>
+        /// status member
+        /// </summary>
+        private string status;
+
+        /// <summary>
+        /// status member
+        /// </summary>
+        private int storyPoints;
 
         /// <summary>
         /// The is open field.
@@ -56,26 +124,233 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         private Visibility titleVisibility;
 
+        /// <summary>
+        /// The Sprint Service Gateway.
+        /// </summary>
+        private ISprintServiceGateway sprintServiceGateway;
+
         #endregion
 
         /// <summary>
         /// Creates a new Sprint Story View Model
         /// </summary>
-        /// <param name="iSprintServiceGateway">The sprint Service Gateway</param>
-        public SprintStoryViewModel(ISprintServiceGateway iSprintServiceGateway)
+        /// <param name="sprintServiceGateway"> the sprint service gateway </param>
+        public SprintStoryViewModel(ISprintServiceGateway sprintServiceGateway)
         {
+            // Null checks
+            if (sprintServiceGateway == null)
+            {
+                throw new ArgumentNullException("sprintServiceGateway");
+            }
+
+            // Set service
+            this.sprintServiceGateway = sprintServiceGateway;
+
+            // flyout settings
             this.Header = null;
             this.Theme = FlyoutTheme.Accent;
             this.Position = Position.Right;
             this.IsModal = true;
+            this.CloseButtonVisibility = Visibility.Collapsed;
+
+            //// Set status combobox values
+            this.AllStatus = new ObservableCollection<string>();
+            AllStatus.Add(ServiceSprintStoryStatus.NotStarted);
+            AllStatus.Add(ServiceSprintStoryStatus.InProgress);
+            AllStatus.Add(ServiceSprintStoryStatus.AwaitingTest);
+            AllStatus.Add(ServiceSprintStoryStatus.InTest);
+            AllStatus.Add(ServiceSprintStoryStatus.Done);
 
             OpenTaskViewCommand = new DelegateCommand(this.OpenTaskView);
+            SaveSprintStoryCommand = new DelegateCommand(this.SaveSprintStory);
         }
 
         /// <summary>
         /// Gets the command used to open a sprint story view. 
         /// </summary>
         public DelegateCommand OpenTaskViewCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command used to open a sprint story view. 
+        /// </summary>
+        public DelegateCommand SaveSprintStoryCommand { get; private set; }
+
+        /// <summary>
+        /// Gets or sets all the status'
+        /// </summary>
+        public ObservableCollection<string> AllStatus
+        {
+            get
+            {
+                return allStatus;
+            }
+
+            set
+            {
+                SetProperty(ref allStatus, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the sprint story Id
+        /// </summary>
+        public Guid SprintStoryId
+        {
+            get
+            {
+                return sprintStoryId;
+            }
+
+            set
+            {
+                SetProperty(ref sprintStoryId, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the sprint Id
+        /// </summary>
+        public Guid SprintId
+        {
+            get
+            {
+                return sprintId;
+            }
+
+            set
+            {
+                SetProperty(ref sprintId, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the project Id
+        /// </summary>
+        public ServiceStory Story
+        {
+            get
+            {
+                return story;
+            }
+
+            set
+            {
+                SetProperty(ref story, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the summary
+        /// </summary>
+        public string Summary
+        {
+            get
+            {
+                return summary;
+            }
+
+            set
+            {
+                SetProperty(ref summary, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the as a
+        /// </summary>
+        public string AsA
+        {
+            get
+            {
+                return asA;
+            }
+
+            set
+            {
+                SetProperty(ref asA, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the i want
+        /// </summary>
+        public string IWant
+        {
+            get
+            {
+                return iWant;
+            }
+
+            set
+            {
+                SetProperty(ref iWant, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the so that
+        /// </summary>
+        public string SoThat
+        {
+            get
+            {
+                return soThat;
+            }
+
+            set
+            {
+                SetProperty(ref soThat, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the conditions of satisfaction
+        /// </summary>
+        public string ConditionsOfSatisfaction
+        {
+            get
+            {
+                return conditionsOfSatisfaction;
+            }
+
+            set
+            {
+                SetProperty(ref conditionsOfSatisfaction, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the status
+        /// </summary>
+        public string Status
+        {
+            get
+            {
+                return status;
+            }
+
+            set
+            {
+                this.sprintStory.Status = value;
+                SetProperty(ref status, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the story points
+        /// </summary>
+        public int StoryPoints
+        {
+            get
+            {
+                return storyPoints;
+            }
+
+            set
+            {
+                SetProperty(ref storyPoints, value);
+            }
+        }
 
         #region Flyouts
 
@@ -207,6 +482,26 @@ namespace AnyTrack.Sprints.Views
         /// <param name="navigationContext"> The navigation context </param>
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            if (navigationContext.Parameters.ContainsKey("sprintStory"))
+            {
+                var sprintStory = (ServiceSprintStory)navigationContext.Parameters["sprintStory"];
+                this.sprintStory = sprintStory;
+
+                //// IDs
+                this.SprintStoryId = sprintStory.SprintStoryId;
+                this.SprintId = sprintStory.SprintId;
+
+                //// Story attributes
+                this.Summary = sprintStory.Story.Summary;
+                this.AsA = sprintStory.Story.AsA;
+                this.IWant = sprintStory.Story.IWant;
+                this.SoThat = sprintStory.Story.SoThat;
+                this.ConditionsOfSatisfaction = sprintStory.Story.ConditionsOfSatisfaction;
+
+                //// Sprint story attributes
+                this.Status = sprintStory.Status;
+                //// TODO - story points, created, updated. 
+            }
         }
 
         /// <summary>
@@ -233,9 +528,26 @@ namespace AnyTrack.Sprints.Views
         private void OpenTaskView()
         {
             var navParams = new NavigationParameters();
-
-            ////navParams.Add("projectId", projectId);
+            navParams.Add("sprintStoryId", SprintStoryId);
+            navParams.Add("sprintStory", this.sprintStory);
             this.ShowMetroFlyout("Task", navParams);
+            IsOpen = false;
+        }
+
+        /// <summary>
+        /// Save the story.
+        /// </summary>
+        private void SaveSprintStory()
+        {
+            ServiceSprintStory sprintStory = new ServiceSprintStory()
+            {
+                SprintId = this.SprintId,
+                Story = this.Story,
+                Status = this.Status,
+                SprintStoryId = this.SprintStoryId,
+            };
+
+            IsOpen = false;
         }
     }
 }

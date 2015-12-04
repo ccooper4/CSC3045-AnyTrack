@@ -25,5 +25,10 @@ namespace AnyTrack.Backend.Data.Model
         /// Gets or sets the task list.
         /// </summary>
         public virtual ICollection<Task> Tasks { get; set; }
+
+        /// <summary>
+        /// Gets or sets the story status.
+        /// </summary>
+        public virtual string Status { get; set; }
     }
 }

@@ -48,6 +48,18 @@
   <wsdl:message name="ISprintService_SaveUpdatedTaskHours_OutputMessage">
     <wsdl:part name="parameters" element="tns:SaveUpdatedTaskHoursResponse" />
   </wsdl:message>
+  <wsdl:message name="ISprintService_AddTaskHourEstimateToTask_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddTaskHourEstimateToTask" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_AddTaskHourEstimateToTask_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddTaskHourEstimateToTaskResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_AddTaskToSprintStory_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddTaskToSprintStory" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_AddTaskToSprintStory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddTaskToSprintStoryResponse" />
+  </wsdl:message>
   <wsdl:message name="ISprintService_GetSprintNames_InputMessage">
     <wsdl:part name="parameters" element="tns:GetSprintNames" />
   </wsdl:message>
@@ -114,6 +126,14 @@
     <wsdl:operation name="SaveUpdatedTaskHours">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/SaveUpdatedTaskHours" message="tns:ISprintService_SaveUpdatedTaskHours_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/SaveUpdatedTaskHoursResponse" message="tns:ISprintService_SaveUpdatedTaskHours_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddTaskHourEstimateToTask">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/AddTaskHourEstimateToTask" message="tns:ISprintService_AddTaskHourEstimateToTask_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/AddTaskHourEstimateToTaskResponse" message="tns:ISprintService_AddTaskHourEstimateToTask_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddTaskToSprintStory">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/AddTaskToSprintStory" message="tns:ISprintService_AddTaskToSprintStory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/AddTaskToSprintStoryResponse" message="tns:ISprintService_AddTaskToSprintStory_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetSprintNames">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetSprintNames" message="tns:ISprintService_GetSprintNames_InputMessage" />
@@ -193,6 +213,24 @@
     </wsdl:operation>
     <wsdl:operation name="SaveUpdatedTaskHours">
       <soap:operation soapAction="http://tempuri.org/ISprintService/SaveUpdatedTaskHours" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddTaskHourEstimateToTask">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/AddTaskHourEstimateToTask" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddTaskToSprintStory">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/AddTaskToSprintStory" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

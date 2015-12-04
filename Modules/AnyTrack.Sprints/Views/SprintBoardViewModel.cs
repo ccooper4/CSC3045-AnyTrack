@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.BackendSprintService;
+using AnyTrack.Infrastructure.ServiceGateways;
 using Prism.Commands;
 using Prism.Regions;
 using ServiceProjectSummary = AnyTrack.Infrastructure.BackendProjectService.ServiceProjectSummary;
@@ -19,12 +20,12 @@ namespace AnyTrack.Sprints.Views
         /// <summary>
         /// The Sprint Service Gateway.
         /// </summary>
-        private ISprintService sprintServiceGateway;
+        private ISprintServiceGateway sprintServiceGateway;
 
         /// <summary>
         /// The Sprint Service Gateway.
         /// </summary>
-        private IProjectService projectServiceGateway;
+        private IProjectServiceGateway projectServiceGateway;
 
         /// <summary>
         /// The project list.
@@ -83,7 +84,7 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         /// <param name="sprintServiceGateway">The sprint service gateway</param>
         /// <param name="projectServiceGateway">The project service gateway</param>
-        public SprintBoardViewModel(ISprintService sprintServiceGateway, IProjectService projectServiceGateway)
+        public SprintBoardViewModel(ISprintServiceGateway sprintServiceGateway, IProjectServiceGateway projectServiceGateway)
         {
             // Null checks
             if (sprintServiceGateway == null)
@@ -101,7 +102,7 @@ namespace AnyTrack.Sprints.Views
             this.projectServiceGateway = projectServiceGateway;
 
             // Set commands
-            OpenSprintStoryViewCommand = new DelegateCommand(this.OpenSprintStoryView);
+            EditSprintStoryCommand = new DelegateCommand<ServiceSprintStory>(this.EditSprintStory);
             EditTaskHoursCommand = new DelegateCommand(this.GoToUpdateTaskHours);
 
             // Make service calls
@@ -279,9 +280,9 @@ namespace AnyTrack.Sprints.Views
         #region Commands
 
         /// <summary>
-        /// Gets the command used to open a sprint story view. 
+        /// Gets or sets the command used to open a sprint story view. 
         /// </summary>
-        public DelegateCommand OpenSprintStoryViewCommand { get; private set; }
+        public DelegateCommand<ServiceSprintStory> EditSprintStoryCommand { get; set; }
 
         /// <summary>
         /// Gets or sets the command that can be used to add a sprint.
@@ -371,11 +372,11 @@ namespace AnyTrack.Sprints.Views
         /// <summary>
         /// Open story view.
         /// </summary>
-        private void OpenSprintStoryView()
+        /// <param name="story">story object</param>
+        private void EditSprintStory(ServiceSprintStory story)
         {
             var navParams = new NavigationParameters();
-
-            ////navParams.Add("projectId", projectId);
+            navParams.Add("sprintStory", story);
             this.ShowMetroFlyout("SprintStory", navParams);
         }
 

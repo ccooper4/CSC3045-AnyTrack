@@ -14,7 +14,7 @@
     </UserControl.Resources>
 
     <!-- Outer Grid -->
-    <Grid VerticalAlignment="Stretch" Width="550px" Background="WhiteSmoke" >
+    <Grid VerticalAlignment="Stretch" Width="650px" Background="WhiteSmoke" >
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -63,17 +63,17 @@
 
                         <StackPanel Grid.Row="0" Height="Auto">
                             <Label Margin="0,5,5,5" HorizontalAlignment="Left" Content="Summary" FontSize="14" Height="Auto"></Label>
-                            <TextBox ></TextBox>
+                            <TextBox Text="{Binding Summary}"></TextBox>
                         </StackPanel>
 
                         <StackPanel Grid.Row="1">
                             <Label Margin="0,5,5,5" HorizontalAlignment="Left" Content="Description" FontSize="14" Height="Auto"></Label>
-                            <TextBox Height="70px" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"></TextBox>
+                            <TextBox Text="{Binding Description}" Height="70px" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"></TextBox>
                         </StackPanel>
 
                         <StackPanel Grid.Row="2">
                             <Label Margin="0,5,5,5" HorizontalAlignment="Left" Content="Conditions of Satisfaction" FontSize="14" Height="Auto"></Label>
-                            <TextBox Height="70px" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"></TextBox>
+                            <TextBox Text="{Binding ConditionsOfSatisfaction}" Height="70px" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"></TextBox>
                         </StackPanel>
                     </Grid>
 
@@ -88,7 +88,6 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
 
                         <StackPanel Margin="5" Grid.Row="0">
@@ -96,17 +95,12 @@
                             <ComboBox ></ComboBox>
                         </StackPanel>
 
-                        <StackPanel Margin="5" Grid.Row="1">
-                            <Label HorizontalAlignment="Left" Content="Tester" FontSize="14"></Label>
-                            <ComboBox ></ComboBox>
-                        </StackPanel>
-
-                        <StackPanel Margin="5" Grid.Row="2" Orientation="Horizontal">
+                        <StackPanel Margin="5" Grid.Row="1" Orientation="Horizontal">
                             <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Hours Remaining" FontSize="14"></Label>
-                            <TextBox Margin="15,0,0,0" VerticalAlignment="Center" Height="Auto" Width="30" Text="5"></TextBox>
+                            <TextBox Margin="15,0,0,0" VerticalAlignment="Center" Height="Auto" Width="30" Text="{Binding HoursRemaining}"></TextBox>
                         </StackPanel>
 
-                        <WrapPanel Margin="5" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <WrapPanel Margin="5" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Top">
                             <Label Content="Blocked" FontSize="14"></Label>
                             <CheckBox ></CheckBox>
                         </WrapPanel>
@@ -115,8 +109,7 @@
                 
                 <!-- Buttons -->
                 <StackPanel Margin="0,20,0,20" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" >
-                    <Button Margin="0,0,10,0" Command="{Binding SaveUpdateStoryCommand}" BorderThickness="0" Background="LightGray" Width="60px">Cancel</Button>
-                    <Button  Command="{Binding SaveUpdateStoryCommand}" BorderThickness="0" Background="LightGray" Width="60px">Save</Button>
+                    <Button  Command="{Binding SaveTaskCommand}" BorderThickness="0" Background="LightGray" Width="60px" Height="25" VerticalAlignment="Top">Save</Button>
                 </StackPanel>
             </Grid> <!-- End Main grid -->
         </Grid> <!-- End content grid -->
