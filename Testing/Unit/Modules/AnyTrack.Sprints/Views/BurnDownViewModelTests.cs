@@ -38,8 +38,14 @@ namespace Unit.Modules.AnyTrack.Sprints.Views.BurnDownViewModelTests
         {
             projectServiceGateway = Substitute.For<IProjectServiceGateway>();
             sprintServiceGateway = Substitute.For<ISprintServiceGateway>();
+
+            projectServiceGateway.GetProjectNames(Arg.Any<bool>(), Arg.Any<bool>(), Arg.Any<bool>()).Returns(new List<ServiceProjectSummary>());
+
+            sprintServiceGateway.GetSprintNames(Arg.Any<Nullable<Guid>>(), Arg.Any<bool>(), Arg.Any<bool>()).Returns(new List<ServiceModel.ServiceSprintSummary>());
+
             vm = new BurnDownViewModel(projectServiceGateway, sprintServiceGateway);
             vm.RegionManager = Substitute.For<IRegionManager>();
+
         }
         #endregion Setup
     }
@@ -74,6 +80,8 @@ namespace Unit.Modules.AnyTrack.Sprints.Views.BurnDownViewModelTests
             vm = new BurnDownViewModel(projectServiceGateway, sprintServiceGateway);
             vm.GetChartForProjectAndSprint.Should().NotBeNull();
             vm.GetStoryPointBD.Should().NotBeNull();
+            vm.Sprints.Should().NotBeNull();
+            vm.Projects.Should().NotBeNull();
         }
 
         #endregion Constructor Tests
@@ -144,6 +152,46 @@ namespace Unit.Modules.AnyTrack.Sprints.Views.BurnDownViewModelTests
         }
 
         #endregion GetStoryPointBurnDown() Tests
+
+        #region OnNavigatedTo Tests()
+
+        [Test]
+        public void OnNavigatedTo()
+        {
+            var sprintId = Guid.NewGuid();
+            var projectId = Guid.NewGuid();
+
+            var navigationService = Substitute.For<IRegionNavigationService>();
+            var navContext = new NavigationContext(navigationService, new Uri("BurnDown", UriKind.Relative));
+            navContext.Parameters.Add("projectId", projectId);
+            navContext.Parameters.Add("sprintId", sprintId);
+
+            sprintServiceGateway.GetAllTasksForSprint(sprintId).Returns(new List<ServiceModel.ServiceTask>()
+            {
+                new ServiceModel.ServiceTask
+                {
+                    TaskHourEstimates = new List<ServiceModel.ServiceTaskHourEstimate>()
+                    {
+                        new ServiceModel.ServiceTaskHourEstimate
+                        {
+                            Estimate = 10,
+                            Created = DateTime.Now
+                        }
+                    }
+
+                }
+            });
+
+            sprintServiceGateway.GetSprintStoryEstimates(sprintId).Returns(new List<ServiceModel.ServiceSprintStory>());
+
+            vm.OnNavigatedTo(navContext);
+
+            vm.SprintId.Should().Be(sprintId);
+            vm.ProjectId.Should().Be(projectId);
+            sprintServiceGateway.Received().GetAllTasksForSprint(sprintId);
+            sprintServiceGateway.Received().GetSprintStoryEstimates(sprintId);
+        }
+        #endregion OnNavigatedTo Tests()
     }
 }
                

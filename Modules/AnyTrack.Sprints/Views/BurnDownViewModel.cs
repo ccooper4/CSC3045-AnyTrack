@@ -102,15 +102,10 @@ namespace AnyTrack.Sprints.Views
             this.GetChartForProjectAndSprint = new DelegateCommand(GetBurndownChartForProjectAndSprint);
             this.projectServiceGateway = projectServiceGateway;
             this.sprintServiceGateway = sprintServiceGateway;
-            if (this.Projects != null)
-            {
-                this.Projects = new ObservableCollection<ServiceProjectSummary>(projectServiceGateway.GetProjectNames(true, true, true));
-            }
 
-            if (this.Sprints != null)
-            {
-                this.Sprints = new ObservableCollection<Infrastructure.BackendSprintService.ServiceSprintSummary>(sprintServiceGateway.GetSprintNames(projectId, true, true));
-            }
+            this.Projects = new ObservableCollection<ServiceProjectSummary>(projectServiceGateway.GetProjectNames(true, true, true));
+            
+            this.Sprints = new ObservableCollection<Infrastructure.BackendSprintService.ServiceSprintSummary>(sprintServiceGateway.GetSprintNames(projectId, true, true));
 
             this.Points = new ObservableCollection<DataPoint>();
             this.Trend = new ObservableCollection<DataPoint>();
@@ -323,12 +318,6 @@ namespace AnyTrack.Sprints.Views
                                 this.Points.Add(new DataPoint(DateTimeAxis.ToDouble(taskHour.Created), taskHour.Estimate));
                             }
                         }
-
-                var x = new OxyPlot.Series.LineSeries()
-                {
-                    ItemsSource = this.Points
-                }; 
-                PlotModel.Series.Add(x);
                     }
                     else
                     {
