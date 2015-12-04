@@ -46,6 +46,18 @@
   <wsdl:message name="ISprintService_SaveUpdatedTaskHours_OutputMessage">
     <wsdl:part name="parameters" element="tns:SaveUpdatedTaskHoursResponse" />
   </wsdl:message>
+  <wsdl:message name="ISprintService_AddTaskHourEstimateToTask_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddTaskHourEstimateToTask" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_AddTaskHourEstimateToTask_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddTaskHourEstimateToTaskResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_AddTaskToSprintStory_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddTaskToSprintStory" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_AddTaskToSprintStory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddTaskToSprintStoryResponse" />
+  </wsdl:message>
   <wsdl:message name="ISprintService_GetSprintNames_InputMessage">
     <wsdl:part name="parameters" element="tns:GetSprintNames" />
   </wsdl:message>
@@ -57,6 +69,36 @@
   </wsdl:message>
   <wsdl:message name="ISprintService_GetSprintStories_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetSprintStoriesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_GetStartDateOfSprint_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStartDateOfSprint" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_GetStartDateOfSprint_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStartDateOfSprintResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_GetEndDateOfSprint_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEndDateOfSprint" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_GetEndDateOfSprint_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEndDateOfSprintResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_GetMaxEstimateOfSprint_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMaxEstimateOfSprint" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_GetMaxEstimateOfSprint_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMaxEstimateOfSprintResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_GetTotalStoryPointEstimate_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTotalStoryPointEstimate" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_GetTotalStoryPointEstimate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTotalStoryPointEstimateResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_GetSprintStoryEstimates_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSprintStoryEstimates" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_GetSprintStoryEstimates_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSprintStoryEstimatesResponse" />
   </wsdl:message>
   <wsdl:message name="ISprintService_ManageSprintBacklog_InputMessage">
     <wsdl:part name="parameters" element="tns:ManageSprintBacklog" />
@@ -95,6 +137,14 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/SaveUpdatedTaskHours" message="tns:ISprintService_SaveUpdatedTaskHours_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/SaveUpdatedTaskHoursResponse" message="tns:ISprintService_SaveUpdatedTaskHours_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="AddTaskHourEstimateToTask">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/AddTaskHourEstimateToTask" message="tns:ISprintService_AddTaskHourEstimateToTask_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/AddTaskHourEstimateToTaskResponse" message="tns:ISprintService_AddTaskHourEstimateToTask_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddTaskToSprintStory">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/AddTaskToSprintStory" message="tns:ISprintService_AddTaskToSprintStory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/AddTaskToSprintStoryResponse" message="tns:ISprintService_AddTaskToSprintStory_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetSprintNames">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetSprintNames" message="tns:ISprintService_GetSprintNames_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetSprintNamesResponse" message="tns:ISprintService_GetSprintNames_OutputMessage" />
@@ -102,6 +152,26 @@
     <wsdl:operation name="GetSprintStories">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetSprintStories" message="tns:ISprintService_GetSprintStories_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetSprintStoriesResponse" message="tns:ISprintService_GetSprintStories_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStartDateOfSprint">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetStartDateOfSprint" message="tns:ISprintService_GetStartDateOfSprint_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetStartDateOfSprintResponse" message="tns:ISprintService_GetStartDateOfSprint_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEndDateOfSprint">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetEndDateOfSprint" message="tns:ISprintService_GetEndDateOfSprint_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetEndDateOfSprintResponse" message="tns:ISprintService_GetEndDateOfSprint_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMaxEstimateOfSprint">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetMaxEstimateOfSprint" message="tns:ISprintService_GetMaxEstimateOfSprint_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetMaxEstimateOfSprintResponse" message="tns:ISprintService_GetMaxEstimateOfSprint_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTotalStoryPointEstimate">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetTotalStoryPointEstimate" message="tns:ISprintService_GetTotalStoryPointEstimate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetTotalStoryPointEstimateResponse" message="tns:ISprintService_GetTotalStoryPointEstimate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSprintStoryEstimates">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetSprintStoryEstimates" message="tns:ISprintService_GetSprintStoryEstimates_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetSprintStoryEstimatesResponse" message="tns:ISprintService_GetSprintStoryEstimates_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="ManageSprintBacklog">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/ManageSprintBacklog" message="tns:ISprintService_ManageSprintBacklog_InputMessage" />
@@ -168,6 +238,24 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="AddTaskHourEstimateToTask">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/AddTaskHourEstimateToTask" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddTaskToSprintStory">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/AddTaskToSprintStory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetSprintNames">
       <soap:operation soapAction="http://tempuri.org/ISprintService/GetSprintNames" style="document" />
       <wsdl:input>
@@ -179,6 +267,51 @@
     </wsdl:operation>
     <wsdl:operation name="GetSprintStories">
       <soap:operation soapAction="http://tempuri.org/ISprintService/GetSprintStories" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStartDateOfSprint">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/GetStartDateOfSprint" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEndDateOfSprint">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/GetEndDateOfSprint" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMaxEstimateOfSprint">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/GetMaxEstimateOfSprint" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTotalStoryPointEstimate">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/GetTotalStoryPointEstimate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSprintStoryEstimates">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/GetSprintStoryEstimates" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

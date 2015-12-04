@@ -6,8 +6,7 @@
         prism:ViewModelLocator.AutoWireViewModel="True"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d" Width="1000" Height="500">
-    <Grid>
-
+    <Grid Background="Transparent">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="8*"/>
@@ -18,24 +17,35 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
-        <Label Margin="98,-7,702,4" Grid.ColumnSpan="2">Project:</Label>
-        <ComboBox Grid.Column="1" Grid.Row="0" IsEditable="True" BorderBrush="Gray" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200px" Height="26" ItemsSource="{Binding Projects}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}"/>
-        <Label Margin="228,-7,472,4" Grid.Column="1">Sprint:</Label>
-        <ComboBox Grid.Column="1" Grid.Row="0" IsEditable="True" BorderBrush="Gray" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200px" Height="26" ItemsSource="{Binding Sprints}" DisplayMemberPath="Name" SelectedValuePath="SprintId" SelectedValue="{Binding SprintId}" Margin="230,15,0,15"/>
+        <Label Margin="98,-1,702,442" Grid.ColumnSpan="2" Grid.RowSpan="2">Project:</Label>
+        <ComboBox Grid.Column="1" Grid.Row="0" IsEditable="True" BorderBrush="Gray" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200px" Height="26" ItemsSource="{Binding Projects}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}" Margin="0,23,0,7"/>
+        <Label Margin="228,-1,472,442" Grid.Column="1" Grid.RowSpan="2">Sprint:</Label>
+        <ComboBox Grid.Column="1" Grid.Row="0" IsEditable="True" BorderBrush="Gray" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200px" Height="26" ItemsSource="{Binding Sprints}" DisplayMemberPath="Name" SelectedValuePath="SprintId" SelectedValue="{Binding SprintId}" Margin="230,23,0,7"/>
         <Button Grid.Column="1" Content="Email" Margin="457,15,200,15" Command="{Binding EmailFlyoutCommand}"></Button>
         
         <oxy:PlotView Model="{Binding PlotModel}" Grid.Column="1" Grid.Row="1" Margin="0,0,0,0"></oxy:PlotView>
         
         <!--<oxy:Plot Model="{Binding PlotModel}"  Grid.Column="1" Grid.Row="1" Title="{Binding Title}" Margin="0,0,0,0">
             <oxy:Plot.Axes>
-                <oxy:DateTimeAxis Name="DateTimeAxis" Position="Bottom" MajorGridlineColor="#40FFFFFF" TicklineColor="Red" StringFormat="dd/MM/yy" IntervalType="Days" IntervalLength="40"/>
+                <oxy:DateTimeAxis Name="DateTimeAxis" Position="Bottom" MajorGridlineColor="#40FFFFFF" TicklineColor="Red" StringFormat="dd/MM/yy" IntervalType="Days" IntervalLength="100"/>
             </oxy:Plot.Axes>
             <oxy:Plot.Series>
                 <oxy:LineSeries ItemsSource="{Binding Points}"
                 Color="CadetBlue" 
                 MarkerFill="SteelBlue" 
                 MarkerType="Circle"/>
+                <oxy:LineSeries ItemsSource="{Binding Trend}"
+                Color="SaddleBrown" 
+                MarkerFill="Red" 
+                MarkerType="Circle"/>
             </oxy:Plot.Series>
         </oxy:Plot>-->
+        <Button Command="{Binding GetChartForProjectAndSprint}" Grid.Column="1" HorizontalAlignment="Left" Margin="438,20,0,3">
+            <Button.Content>
+                <Image Source="../Images/enter_icon.png" Width="20px" Height="20px"></Image>
+            </Button.Content>
+        </Button>
+        <Button x:Name="teamBurndown" HorizontalAlignment="Center" Command="{Binding GetChartForProjectAndSprint}"  Content="Team Burndown" Grid.Column="1" Margin="0,380,0,0" VerticalAlignment="Top" Width="154" Grid.Row="1"/>
+        <Button x:Name="storyPointBurndown" HorizontalAlignment="Center" Command="{Binding GetStoryPointBD}"  Content="Story Point Burndown" Grid.Column="1" Margin="0,350,0,0" VerticalAlignment="Top" Width="154" Grid.Row="1"/>
     </Grid>
 </UserControl>

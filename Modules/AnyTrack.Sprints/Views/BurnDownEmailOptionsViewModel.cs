@@ -48,7 +48,7 @@ namespace AnyTrack.Sprints.Views
 
             sprintService = sprintGateway;
             projectService = projectGateway;
-            SendEmailCommand = new DelegateCommand(SendEmail);
+            //// SendEmailCommand = new DelegateCommand(SendEmail);
         }
 
         /// <summary>

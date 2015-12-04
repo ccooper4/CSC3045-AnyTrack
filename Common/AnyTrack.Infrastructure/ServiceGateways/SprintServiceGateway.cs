@@ -71,6 +71,46 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         }
 
         /// <summary>
+        /// Get all tasks for sprint
+        /// </summary>
+        /// <param name="sprintId">The sprint id</param>
+        /// <returns>Returns a list of tasks</returns>
+        public List<ServiceTask> GetAllTasksForSprintCurrentUser(Guid sprintId)
+        {
+            return new List<ServiceTask>(client.GetAllTasksForSprint(sprintId));
+        }
+
+        /// <summary>
+        /// Gets the maximum estimate of the sprint
+        /// </summary>
+        /// <param name="sprintId">the sprint id</param>
+        /// <returns>the max value of estimate in the sprint</returns>
+        public double GetSprintMaxEstimate(Guid sprintId)
+        {
+            return client.GetMaxEstimateOfSprint(sprintId);
+        }
+
+        /// <summary>
+        /// Gets the start date of the current sprint
+        /// </summary>
+        /// <param name="sprintId">the sprintId</param>
+        /// <returns>the start date of the current sprint</returns>
+        public DateTime? GetDateSprintStarted(Guid sprintId)
+        {
+            return client.GetStartDateOfSprint(sprintId);
+        }
+
+        /// <summary>
+        /// Gets the end date of the current sprint
+        /// </summary>
+        /// <param name="sprintId">the sprintId</param>
+        /// <returns>the enddate of the sprint</returns>
+        public DateTime? GetDateSprintEnds(Guid sprintId)
+        {
+            return client.GetEndDateOfSprint(sprintId);
+        }
+
+        /// <summary>
         /// Retrieves a specified sprint.
         /// </summary>
         /// <param name="sprintId">Id of the sprint</param>
@@ -87,6 +127,26 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         public void SaveUpdatedTaskHours(List<ServiceTask> tasks)
         {
             client.SaveUpdatedTaskHours(tasks);
+        }
+
+        /// <summary>
+        /// Add the initial task hour estimate to a task. 
+        /// </summary>
+        /// <param name="taskId"> the id of the task</param>
+        /// <param name="serviceTaskHourEstimate"> the task hour estimate </param>
+        public void AddTaskHourEstimateToTask(Guid taskId, ServiceTaskHourEstimate serviceTaskHourEstimate)
+        {
+            client.AddTaskHourEstimateToTask(taskId, serviceTaskHourEstimate);
+        }
+
+        /// <summary>
+        /// Add a new task to a sprint story.
+        /// </summary>
+        /// <param name="sprintStoryId">The story to add the task to.</param>
+        /// <param name="serviceTask">The task to add.</param>
+        public void AddTaskToSprintStory(Guid sprintStoryId, ServiceTask serviceTask)
+        {
+            client.AddTaskToSprintStory(sprintStoryId, serviceTask);
         }
 
         /// <summary>
@@ -122,6 +182,28 @@ namespace AnyTrack.Infrastructure.ServiceGateways
             client.ManageSprintBacklog(projectId, sprintId, updatedSprintBacklog);
         }
 
+        //// <summary>
+        //// Sending an email request via burndown
+        //// </summary>
+        //// <param name="senderEmailAddress">The email adddress to send the email to</param>
+        //// <param name="recipientEmailAddress">The email adddress where the email is sent from</param>
+        ////<param name="emailMessage">The email address of the </param>
+        //// <param name="emailAttachment">Attachment for the email</param>
+        //// public void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, System.Net.Mail.Attachment emailAttachment)
+       //// {
+           //// client.SendEmailRequest(senderEmailAddress, recipientEmailAddress, emailMessage, emailAttachment);
+       //// }
+
+        /// <summary>
+        /// Gets Sprint stories for a given sprint with estimates
+        /// </summary>
+        /// <param name="sprintId">The sprint id</param>
+        /// <returns>sprint stories</returns>
+        public List<ServiceSprintStory> GetSprintStoryEstimates(Guid sprintId)
+        {
+            return client.GetSprintStoryEstimates(sprintId);
+        }
+        
         /// <summary>
         /// Sending an email request via burndown
         /// </summary>
@@ -132,6 +214,16 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         public void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, MemoryStream emailAttachment)
         {
             client.SendEmailRequest(senderEmailAddress, recipientEmailAddress, emailMessage, emailAttachment);
+        }
+
+        /// <summary>
+        /// Gets Sprint stories total story point estimate within sprint
+        /// </summary>
+        /// <param name="sprintId">the sprint id</param>
+        /// <returns>the total story point estimates for a given sprint</returns>
+        public double GetTotalStoryPointEstimate(Guid sprintId)
+        {
+            return client.GetTotalStoryPointEstimate(sprintId);
         }
 
         #endregion

@@ -30,5 +30,15 @@ namespace AnyTrack.Backend.Service.Model
         /// Gets or sets the sprint story status.
         /// </summary>
         public string Status { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sprint story estimate.
+        /// </summary>
+        public double StoryEstimate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Date Completed.
+        /// </summary>
+        public DateTime? DateCompleted { get; set; }
     }
 }

@@ -7,13 +7,13 @@ namespace AnyTrack.Backend.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddingStory : IMigrationMetadata
+    public sealed partial class Sprint2migration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddingStory));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Sprint2migration));
         
         string IMigrationMetadata.Id
         {
-            get { return "201511042021444_Adding Story"; }
+            get { return "201512041144485_Sprint 2 migration"; }
         }
         
         string IMigrationMetadata.Source

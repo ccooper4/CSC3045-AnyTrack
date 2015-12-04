@@ -325,6 +325,73 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
+        /// Gets a startdate for a given sprint
+        /// </summary>
+        /// <param name="sprintId">The sprint id</param>
+        /// <returns>the startDate</returns>
+        public DateTime? GetStartDateOfSprint(Guid sprintId)
+        {
+            var startDate = unitOfWork.SprintRepository.Items.Min(s => s.StartDate);
+            return startDate;
+        }
+
+        /// <summary>
+        /// Gets a story estimates for a given sprintId
+        /// </summary>
+        /// <param name="sprintId">The sprint id</param>
+        /// <returns>the list of estimates</returns>
+        public List<ServiceSprintStory> GetSprintStoryEstimates(Guid sprintId)
+        {
+            List<ServiceSprintStory> sprintStoryList = new List<ServiceSprintStory>();
+            var sprintStoryEstimates = unitOfWork.SprintStoryRepository.Items.Where(ss => ss.Sprint.Id == sprintId).ToList();
+
+            foreach (var sprintEst in sprintStoryEstimates)
+            {
+                ServiceSprintStory sprintStory = new ServiceSprintStory
+                {
+                    SprintId = sprintEst.Id,
+                    StoryEstimate = sprintEst.StoryEstimate,
+                    DateCompleted = sprintEst.DateCompleted
+                };                  
+            }
+
+            return sprintStoryList;
+        }
+
+        /// <summary>
+        /// Gets an enddate for a given sprint.
+        /// </summary>
+        /// <param name="sprintId">the sprintid</param>
+        /// <returns>the enddate of sprint</returns>
+        public DateTime? GetEndDateOfSprint(Guid sprintId)
+        {
+            var endDate = unitOfWork.SprintRepository.Items.Max(s => s.EndDate);
+            return endDate;
+        }
+
+        /// <summary>
+        /// Gets the maximum estimate of a sprint
+        /// </summary>
+        /// <param name="sprintId">the sprintId</param>
+        /// <returns>retrieve the max estimate of the sprint</returns>
+        public double GetMaxEstimateOfSprint(Guid sprintId)
+        {
+            var maxEst = unitOfWork.TaskHourEstimateRepository.Items.Max(t => t.Estimate);
+            return maxEst;
+        }
+
+        /// <summary>
+        /// Gets the total story estimate of a sprint
+        /// </summary>
+        /// <param name="sprintId">the sprintId</param>
+        /// <returns>retrieve total story estimate of the sprint</returns>
+        public double GetTotalStoryPointEstimate(Guid sprintId)
+        {
+            var totalEstimateStoryPoints = unitOfWork.SprintStoryRepository.Items.Sum(ss => ss.StoryEstimate);
+            return totalEstimateStoryPoints;
+        }
+
+        /// <summary>
         /// Method to save the update hours for tasks
         /// </summary>
         /// <param name="tasks">List of tasks to save</param>
@@ -335,7 +402,7 @@ namespace AnyTrack.Backend.Service
                 var task = unitOfWork.TaskRepository.Items.Single(x => x.Id == t.TaskId);
                 var serviceUpdatedHours = t.TaskHourEstimates.LastOrDefault();
 
-                if (serviceUpdatedHours.NewEstimate != null)
+                if (serviceUpdatedHours != null)
                 {
                     task.TaskHourEstimate.Add(new TaskHourEstimate
                     {
@@ -343,6 +410,36 @@ namespace AnyTrack.Backend.Service
                     });
                 }
             }
+
+            unitOfWork.Commit();
+        }
+
+        /// <summary>
+        /// Add the initial task hour estimate to a task. 
+        /// </summary>
+        /// <param name="taskId"> the id of the task</param>
+        /// <param name="serviceTaskHourEstimate"> the task hour estimate </param>
+        public void AddTaskHourEstimateToTask(Guid taskId, ServiceTaskHourEstimate serviceTaskHourEstimate)
+        {
+            if (taskId == null)
+            {
+                throw new ArgumentNullException("taskId");
+            }
+
+            if (serviceTaskHourEstimate == null)
+            {
+                throw new ArgumentNullException("serviceTaskHourEstimate");
+            }
+
+            TaskHourEstimate dataTaskHourEstimate = new TaskHourEstimate()
+            {
+                Id = serviceTaskHourEstimate.ServiceTaskHourEstimateId,
+                Created = serviceTaskHourEstimate.Created,
+                Estimate = serviceTaskHourEstimate.Estimate
+            };
+
+            var task = unitOfWork.TaskRepository.Items.SingleOrDefault(t => t.Id == taskId);
+            task.TaskHourEstimate.Add(dataTaskHourEstimate);
 
             unitOfWork.Commit();
         }
@@ -359,29 +456,71 @@ namespace AnyTrack.Backend.Service
                 throw new ArgumentNullException("sprintStoryId");
             }
 
-            if (sprintStoryId == null)
+            if (serviceTask == null)
             {
                 throw new ArgumentNullException("serviceTask");
             }
 
-            User assignee = unitOfWork.UserRepository.Items.SingleOrDefault(
-                u => u.EmailAddress == serviceTask.Assignee.EmailAddress);
-
-            User tester = unitOfWork.UserRepository.Items.SingleOrDefault(
-                u => u.EmailAddress == serviceTask.Tester.EmailAddress);
-
-            DateTime now = DateTime.Now;
-
-            Task task = new Task()
+            User assignee = null;
+            if (serviceTask.Assignee != null)
             {
+                assignee = unitOfWork.UserRepository.Items.SingleOrDefault(
+                u => u.EmailAddress == serviceTask.Assignee.EmailAddress);
+            }
+
+            SprintStory dataSprintStory = unitOfWork.SprintStoryRepository.Items.SingleOrDefault(
+                s => s.Id == sprintStoryId);
+
+            Task dataTask = new Task()
+            {
+                Id = serviceTask.TaskId,
                 Assignee = assignee,
-                Tester = tester,
                 Blocked = serviceTask.Blocked,
                 ConditionsOfSatisfaction = serviceTask.ConditionsOfSatisfaction,
                 Description = serviceTask.Description,
                 Summary = serviceTask.Summary,
-                Updated = now,
+                SprintStory = dataSprintStory,                
             };
+
+            if (dataSprintStory != null)
+            {
+                dataSprintStory.Tasks.Add(dataTask);
+            }
+            
+            unitOfWork.Commit();
+        }
+
+        /// <summary>
+        /// Get a sprint story given it's id.
+        /// </summary>
+        /// <param name="sprintStoryId">the sprint story id</param>
+        /// <returns>the sprint story</returns>
+        public ServiceSprintStory GetSprintStory(Guid sprintStoryId)
+        {
+            SprintStory dataSprintStory = unitOfWork.SprintStoryRepository.Items.SingleOrDefault(s => s.Id == sprintStoryId);
+            Story dataStory = unitOfWork.StoryRepository.Items.SingleOrDefault(s => s.Id == dataSprintStory.Story.Id);
+
+            ServiceStory serviceStory = new ServiceStory()
+            {
+                StoryId = dataStory.Id,
+                ProjectId = dataStory.Project.Id,
+                Summary = dataStory.Summary,
+                ConditionsOfSatisfaction = dataStory.ConditionsOfSatisfaction,
+                SoThat = dataStory.SoThat,
+                AsA = dataStory.AsA,
+                IWant = dataStory.IWant,
+                InSprint = dataStory.InSprint
+            };
+
+            ServiceSprintStory serviceSprintStory = new ServiceSprintStory()
+            {
+                SprintId = dataSprintStory.Sprint.Id,
+                Status = dataSprintStory.Status,
+                SprintStoryId = dataSprintStory.Id,
+                Story = serviceStory
+            };
+
+            return serviceSprintStory;
         }
 
         /// <summary>
@@ -475,7 +614,8 @@ namespace AnyTrack.Backend.Service
                             Summary = sprintStory.Story.Summary,
                             InSprint = sprintStory.Story.InSprint,
                             ConditionsOfSatisfaction = sprintStory.Story.ConditionsOfSatisfaction
-                        }
+                        },
+                        Status = sprintStory.Status
                     });
                 }
                 else
@@ -538,7 +678,8 @@ namespace AnyTrack.Backend.Service
                     productBacklogStory.InSprint = true;
                     dataSprint.Backlog.Add(new SprintStory
                     {
-                        Story = productBacklogStory
+                        Story = productBacklogStory,
+                        Status = story.Status
                     });
                 }
             }

@@ -14,7 +14,7 @@
     </UserControl.Resources>
 
     <!-- Outer Grid -->
-    <Grid VerticalAlignment="Stretch" Width="600px" Background="WhiteSmoke" >
+    <Grid VerticalAlignment="Stretch" Width="650px" Background="WhiteSmoke" >
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
 
         <!-- Flyout title -->
-        <Label Grid.Row="0" Background="CornflowerBlue" FontWeight="Bold" Foreground="White" Content="This is the story title" Height="Auto"></Label>
+        <Label Grid.Row="0" Background="CornflowerBlue" FontWeight="Bold" Foreground="White" Content="{Binding Summary}" Height="Auto"></Label>
 
         <!-- Content Grid -->
         <Grid Grid.Row="1">
@@ -79,26 +79,26 @@
 
 
                             <Label Grid.Column="0" Grid.Row="0" Content="As a" FontWeight="Bold" HorizontalAlignment="Right"/>
-                            <TextBox IsEnabled="False" Margin="5px" Grid.Column="1"  Grid.Row="0" TextWrapping="Wrap" Text="developer" Height="Auto"></TextBox>
+                            <TextBox IsEnabled="False" Margin="5px" Grid.Column="1"  Grid.Row="0" TextWrapping="Wrap" Text="{Binding AsA}" Height="Auto"></TextBox>
 
                             <Label Grid.Column="0" Grid.Row="1" Content="I want" FontWeight="Bold" HorizontalAlignment="Right"/>
-                            <TextBox IsEnabled="False" Margin="5px" Grid.Column="1"  Grid.Row="1" TextWrapping="Wrap" Text="to build some UI" Height="Auto"></TextBox>
+                            <TextBox IsEnabled="False" Margin="5px" Grid.Column="1"  Grid.Row="1" TextWrapping="Wrap" Text="{Binding IWant}" Height="Auto"></TextBox>
 
                             <Label Grid.Column="0" Grid.Row="2" Content="So that" FontWeight="Bold" HorizontalAlignment="Right"/>
-                            <TextBox IsEnabled="False" Margin="5px" Grid.Column="1"  Grid.Row="2" TextWrapping="Wrap" Text="I can test all of the functionality of the intended system" Height="Auto"></TextBox>
+                            <TextBox IsEnabled="False" Margin="5px" Grid.Column="1"  Grid.Row="2" TextWrapping="Wrap" Text="{Binding SoThat}" Height="Auto"></TextBox>
                         </Grid>
 
                         <!-- Conditions of satisfaction -->
                         <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,10,0,10px">
                             <Label Margin="0,5,5,5" HorizontalAlignment="Left" Content="Conditions of Satisfaction" FontSize="14"></Label>
-                            <TextBox IsEnabled="False" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Height="70px" Text="Lorem ipsum dolor sit amet, ius id corpora pertinacia, ei facer periculis cum, prima dolores voluptua an mea. Altera regione sapientem no nec, mea ad justo fuisset ullamcorper. Mea scripta dissentiunt cu. Albucius partiendo vituperatoribus ut usu. Ne sale dicta discere mei, semper inciderint vis ne, eum quis recusabo periculis et."></TextBox>
+                            <TextBox IsEnabled="False" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Height="70px" Text="{Binding ConditionsOfSatisfaction}"></TextBox>
                         </StackPanel>
 
                     </Grid>
 
 
                     <Grid Grid.Column="1" Grid.Row="0">
-                        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="20" Margin="3,10,2, 0" />
+                        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="20" Margin="3,10,2, 0" Width="3" />
                     </Grid>
 
                     <!-- Status, points, created, updated -->
@@ -114,7 +114,7 @@
                         <!-- Status -->
                         <StackPanel Margin="5" Grid.Row="0">
                             <Label HorizontalAlignment="Left" Content="Status" FontSize="14"></Label>
-                            <ComboBox ></ComboBox>
+                            <ComboBox ItemsSource="{Binding AllStatus}" DisplayMemberPath="." SelectedValuePath="Status" SelectedValue="{Binding Status}" ></ComboBox>
                         </StackPanel>
 
                         <StackPanel Margin="5" Grid.Row="1" Orientation="Horizontal">
@@ -214,8 +214,7 @@
 
 
                     <StackPanel Margin="0,50,0,20" Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" >
-                        <Button Margin="0,0,10,0" Command="{Binding SaveUpdateStoryCommand}" BorderThickness="0" Background="LightGray" Width="60px">Cancel</Button>
-                        <Button  Command="{Binding SaveUpdateStoryCommand}" BorderThickness="0" Background="LightGray" Width="60px">Save</Button>
+                        <Button  Command="{Binding SaveSprintStoryCommand}" BorderThickness="0" Background="LightGray" Width="60px">Save</Button>
                     </StackPanel>
 
                 </Grid>
