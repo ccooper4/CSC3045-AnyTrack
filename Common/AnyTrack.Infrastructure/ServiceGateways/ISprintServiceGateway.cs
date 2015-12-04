@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Mail;
 using AnyTrack.Infrastructure.BackendSprintService;
+using MemoryStream = System.IO.MemoryStream;
 
 namespace AnyTrack.Infrastructure.ServiceGateways
 {
@@ -122,8 +123,17 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         /// </summary>
         /// <param name="sprintId">the id of the sprint</param>
         /// <returns>the total story point estimate</returns>
-        double GetTotalStoryPointEstimate(Guid sprintId);
+        double GetTotalStoryPointEstimate(Guid sprintId);        
 
+        /// <summary>
+        /// Sends an email of a burndown chart
+        /// </summary>
+        /// <param name="senderEmailAddress">The email adddress to send the email to</param>
+        /// <param name="recipientEmailAddress">The email adddress where the email is sent from</param>
+        /// <param name="emailMessage">The email address of the </param>
+        /// <param name="emailAttachment">The email attachment of the </param>
+        void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, MemoryStream emailAttachment);
+        
         /// <summary>
         /// Acquires the maxmium story estimate for a given sprint
         /// </summary>

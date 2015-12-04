@@ -13,6 +13,7 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
     /// <summary>
     /// Provides an implementation for the Planning Poker Manager service gateway.
     /// </summary>
+    [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class PlanningPokerManagerServiceGateway : IPlanningPokerManagerServiceGateway, IPlanningPokerManagerServiceCallback
     {
         #region Fields 
@@ -69,9 +70,14 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         public event EventHandler<ServiceChatMessage> NotifyClientOfNewMessageFromServerEvent;
 
         /// <summary>
-        /// Notifies the client that they should clear their recieved estimates
+        /// Notifies the client that the session has changed.
         /// </summary>
-        public event EventHandler NotifyClientToClearStoryPointEstimateFromServerEvent;
+        public event EventHandler<ServicePlanningPokerSession> NotifyClientOfSessionUpdateEvent;
+
+        /// <summary>
+        /// Notifies the client that the session has started.
+        /// </summary>
+        public event EventHandler NotifyClientOfSessionStartEvent;
 
         #endregion 
 
@@ -83,9 +89,10 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         /// Allows the client to subscribe to messages about new sessions for the given project and sprint ids. 
         /// </summary>
         /// <param name="sprintId">The sprint id.</param>
-        public void SubscribeToNewSessionMessages(Guid sprintId)
+        /// <returns>Any currently available session.</returns>
+        public ServiceSessionChangeInfo SubscribeToNewSessionMessages(Guid sprintId)
         {
-            client.SubscribeToNewSessionMessages(sprintId);
+            return client.SubscribeToNewSessionMessages(sprintId);
         }
 
         /// <summary>
@@ -102,9 +109,9 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         /// Allows the scrum master to cancel a pending planning poker session.
         /// </summary>
         /// <param name="sessionId">The session.</param>
-        public void CancelPendingPokerSession(Guid sessionId)
+        public void EndPokerSession(Guid sessionId)
         {
-            client.CancelPendingPokerSession(sessionId);
+            client.EndPokerSession(sessionId);
         }
         
         /// <summary>
@@ -115,6 +122,70 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         public ServicePlanningPokerSession JoinSession(Guid sessionId)
         {
             return client.JoinSession(sessionId);
+        }
+
+        /// <summary>
+        /// Allows a user to exit the session.
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        public void LeaveSession(Guid sessionId)
+        {
+            client.LeaveSession(sessionId);
+        }
+
+        /// <summary>
+        /// Allows a scrum master to start the session.
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        public void StartSession(Guid sessionId)
+        {
+            client.StartSession(sessionId);
+        }
+
+        /// <summary>
+        /// Allows the client to pull an up to date session state. 
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        /// <returns>The current session.</returns>
+        public ServicePlanningPokerSession RetrieveSessionInfo(Guid sessionId)
+        {
+            return client.RetrieveSessionInfo(sessionId);
+        }
+
+        /// <summary>
+        /// A callback to be raised when the client's current session is terminated. 
+        /// </summary>
+        /// <param name="msg">The message to submit.</param>        
+        public void SubmitMessageToServer(ServiceChatMessage msg)
+        {
+            client.SubmitMessageToServer(msg);
+        }
+
+        /// <summary>
+        /// Sends the client's estimate to the server
+        /// </summary>
+        /// <param name="estimate">The message to submit.</param>        
+        public void SubmitEstimateToServer(ServicePlanningPokerEstimate estimate)
+        {
+            client.SubmitEstimateToServer(estimate);
+        }
+
+        /// <summary>
+        /// Method for sending messages out to the client
+        /// </summary>
+        /// <param name="msg">The message to be sent</param>
+        public void SendMessageToClient(ServiceChatMessage msg)
+        {
+            NotifyClientOfNewMessageFromServerEvent(this, msg);
+        }
+
+        /// <summary>
+        /// Allows a scrum master to show the estimates. 
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        public void ShowEstimates(Guid sessionId)
+        {
+            client.ShowEstimates(sessionId);
         }
 
         #endregion 
@@ -139,29 +210,20 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         }
 
         /// <summary>
-        /// A callback to be raised when the client's current session is terminated. 
+        /// Notifies the client that the session has changed.
         /// </summary>
-        /// <param name="msg">The message to submit.</param>        
-        public void SubmitMessageToServer(ServiceChatMessage msg)
+        /// <param name="newSession">The new session.</param>
+        public void NotifyClientOfSessionUpdate(ServicePlanningPokerSession newSession)
         {
-            client.SubmitMessageToServer(msg);            
+            NotifyClientOfSessionUpdateEvent(this, newSession);
         }
 
         /// <summary>
-        /// Method for sending messages out to the client
+        /// Notifies the client that the session has started.
         /// </summary>
-        /// <param name="msg">The message to be sent</param>
-        public void SendMessageToClient(ServiceChatMessage msg)
+        public void NotifyClientOfSessionStart()
         {
-            NotifyClientOfNewMessageFromServerEvent(this, msg);
-        }
-
-        /// <summary>
-        /// Notifies the client to clear their current story point estimate. 
-        /// </summary>
-        public void NotifyClientToClearStoryPointEstimateFromServer()
-        {
-            throw new NotImplementedException();
+            NotifyClientOfSessionStartEvent(this, new EventArgs());
         }
 
         #endregion

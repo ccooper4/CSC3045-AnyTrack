@@ -12,6 +12,8 @@ using MahApps.Metro.Controls;
 using NSubstitute;
 using NUnit.Framework;
 using Prism.Regions;
+using AnyTrack.Infrastructure.Security;
+using AnyTrack.Infrastructure.BackendAccountService;
 
 namespace Unit.Modules.AnyTrack.Sprints.Views.SprintOptionsViewModelTests
 {
@@ -66,8 +68,9 @@ namespace Unit.Modules.AnyTrack.Sprints.Views.SprintOptionsViewModelTests
         #region OnNavigatedTo(NavigationContext navigationContext) Tests
 
          [Test]
-        public void CallOnNavToWithSummary()
+        public void CallOnNavToWithSummaryAsScrumMaster()
         {
+
             var projectInfo = new ServiceProjectRoleSummary();
             projectInfo.ProjectId = Guid.NewGuid();
             projectInfo.Name = "Test";
@@ -78,6 +81,22 @@ namespace Unit.Modules.AnyTrack.Sprints.Views.SprintOptionsViewModelTests
             sprintInfo.SprintId = Guid.NewGuid();
             sprintInfo.Description = "Description";
             sprintInfo.Name = "Sprint";
+
+             var loginResult = new ServiceLoginResult
+             {
+                 AssignedRoles = new List<ServiceRoleInfo>()
+                 {
+                     new ServiceRoleInfo
+                     {
+                         ProjectId = projectInfo.ProjectId,
+                         SprintId = sprintInfo.SprintId,
+                         Role = "Scrum Master"
+                     }
+                 }.ToArray()
+             };
+             var principal = new ServiceUserPrincipal(loginResult, "");
+
+             UserDetailsStore.LoggedInUserPrincipal = principal;
 
             var context = new NavigationContext(Substitute.For<IRegionNavigationService>(), new Uri("SprintManager", UriKind.Relative));
             context.Parameters.Add("projectRoleInfo", projectInfo);
@@ -97,12 +116,87 @@ namespace Unit.Modules.AnyTrack.Sprints.Views.SprintOptionsViewModelTests
             vm.SprintDescription.Should().Be(sprintInfo.Description);
         }
 
+         [Test]
+         public void CallOnNavToWithSummaryAsDev()
+         {
+
+             var projectInfo = new ServiceProjectRoleSummary();
+             projectInfo.ProjectId = Guid.NewGuid();
+             projectInfo.Name = "Test";
+             projectInfo.Description = "Test";
+             projectInfo.ScrumMaster = true;
+
+             var sprintInfo = new ServiceSprintSummary();
+             sprintInfo.SprintId = Guid.NewGuid();
+             sprintInfo.Description = "Description";
+             sprintInfo.Name = "Sprint";
+
+             var loginResult = new ServiceLoginResult
+             {
+                 AssignedRoles = new List<ServiceRoleInfo>()
+                 {
+                     new ServiceRoleInfo
+                     {
+                         ProjectId = projectInfo.ProjectId,
+                         SprintId = sprintInfo.SprintId,
+                         Role = "Developer"
+                     }
+                 }.ToArray()
+             };
+             var principal = new ServiceUserPrincipal(loginResult, "");
+
+             UserDetailsStore.LoggedInUserPrincipal = principal;
+
+             var context = new NavigationContext(Substitute.For<IRegionNavigationService>(), new Uri("SprintManager", UriKind.Relative));
+             context.Parameters.Add("projectRoleInfo", projectInfo);
+             context.Parameters.Add("sprintSummary", sprintInfo);
+
+             vm.IsOpen = true;
+
+             vm.OnNavigatedTo(context);
+
+             vm.IsOpen.Should().BeTrue();
+
+             vm.ProjectId.Should().Be(projectInfo.ProjectId);
+             vm.ProjectName.Should().Be(projectInfo.Name);
+             vm.IsScrumMaster.Should().BeFalse();
+             vm.IsDeveloper.Should().BeTrue();
+             vm.SprintId.Should().Be(sprintInfo.SprintId);
+             vm.SprintName.Should().Be(sprintInfo.Name);
+             vm.SprintDescription.Should().Be(sprintInfo.Description);
+         }
+
         #endregion 
 
         #region DisplayPlanningPoker() Tests
 
         [Test]
-        public void DisplayPlanningPoker()
+        public void DisplayPlanningPokerInSMMode()
+        {
+            NavigationParameters sentParams = null;
+            vm.ProjectId = Guid.NewGuid();
+            vm.SprintId = Guid.NewGuid();
+
+            vm.IsOpen = true;
+
+            vm.IsScrumMaster = true; 
+
+            var regionManager = Substitute.For<IRegionManager>();
+            regionManager.RequestNavigate(Arg.Any<string>(), Arg.Any<string>(), Arg.Do<NavigationParameters>(np => sentParams = np));
+            vm.RegionManager = regionManager;
+
+            vm.Call("DisplayPlanningPoker", "ScrumMaster");
+            sentParams.Should().NotBeNull();
+            sentParams.ContainsKey("projectId").Should().BeTrue();
+            sentParams.ContainsKey("sprintId").Should().BeTrue();
+            sentParams["projectId"].Should().Be(vm.ProjectId);
+            sentParams["sprintId"].Should().Be(vm.SprintId);
+            regionManager.Received().RequestNavigate(RegionNames.MainRegion, "StartPlanningPokerSession", sentParams);
+            vm.IsOpen.Should().BeFalse();
+        }
+
+        [Test]
+        public void DisplayPlanningPokerInDevMode()
         {
             NavigationParameters sentParams = null;
             vm.ProjectId = Guid.NewGuid();
@@ -114,13 +208,15 @@ namespace Unit.Modules.AnyTrack.Sprints.Views.SprintOptionsViewModelTests
             regionManager.RequestNavigate(Arg.Any<string>(), Arg.Any<string>(), Arg.Do<NavigationParameters>(np => sentParams = np));
             vm.RegionManager = regionManager;
 
-            vm.Call("DisplayPlanningPoker");
+            vm.IsDeveloper = true; 
+
+            vm.Call("DisplayPlanningPoker", "Developer");
             sentParams.Should().NotBeNull();
-            sentParams.ContainsKey("ProjectId").Should().BeTrue();
-            sentParams.ContainsKey("SprintId").Should().BeTrue();
-            sentParams["ProjectId"].Should().Be(vm.ProjectId);
-            sentParams["SprintId"].Should().Be(vm.SprintId);
-            regionManager.Received().RequestNavigate(RegionNames.MainRegion, "StartPlanningPokerSession", sentParams);
+            sentParams.ContainsKey("projectId").Should().BeTrue();
+            sentParams.ContainsKey("sprintId").Should().BeTrue();
+            sentParams["projectId"].Should().Be(vm.ProjectId);
+            sentParams["sprintId"].Should().Be(vm.SprintId);
+            regionManager.Received().RequestNavigate(RegionNames.MainRegion, "SearchForPlanningPokerSession", sentParams);
             vm.IsOpen.Should().BeFalse();
         }
 

@@ -175,8 +175,12 @@ namespace AnyTrack.PlanningPoker.Views
             if (navigationContext.Parameters.ContainsKey("sprintId"))
             {
                 sprintId = (Guid)navigationContext.Parameters["sprintId"];
-                serviceGateway.SubscribeToNewSessionMessages(sprintId);
                 serviceGateway.NotifyClientOfSessionEvent += HandleNotifyClientOfSessionEvent;
+                var potentialSession = serviceGateway.SubscribeToNewSessionMessages(sprintId);
+                if (potentialSession != null)
+                {
+                    HandleNotifyClientOfSessionEvent(this, potentialSession);
+                }
             }
         }
 
@@ -185,6 +189,9 @@ namespace AnyTrack.PlanningPoker.Views
         /// </summary>
         private void JoinAndNavigateToPokerSession()
         {
+            var navParams = new NavigationParameters();
+            navParams.Add("sessionId", sessionId);
+            NavigateToItem("PokerLobby", navParams);
         }
 
         /// <summary>

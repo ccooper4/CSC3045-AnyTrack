@@ -6,10 +6,8 @@
       <xsd:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" />
       <xsd:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-      <xsd:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System.Net.Mail" />
-      <xsd:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System.Net.Mime" />
-      <xsd:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/System.Text" />
-      <xsd:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/System.Globalization" />
+      <xsd:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System.IO" />
+      <xsd:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="ISprintService_AddSprint_InputMessage">

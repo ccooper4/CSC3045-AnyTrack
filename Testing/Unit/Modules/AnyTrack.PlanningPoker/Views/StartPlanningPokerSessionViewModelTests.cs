@@ -13,6 +13,7 @@ using AnyTrack.Infrastructure.BackendProjectService;
 using SprintModels = AnyTrack.Infrastructure.BackendSprintService;
 using AnyTrack.Infrastructure.ServiceGateways;
 using AnyTrack.Infrastructure.Providers;
+using AnyTrack.Infrastructure;
 
 namespace Unit.Modules.AnyTrack.PlanningPoker.Views.StartPlanningPokerSessionViewModelTests
 {
@@ -176,18 +177,29 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.StartPlanningPokerSessionVie
         public void CallEstablishPokerSession()
         {
             var projectId = Guid.NewGuid();
+            var sessionId = Guid.NewGuid();
 
             sprintServiceGateway.GetSprintNames(projectId, true, false).Returns(new List<SprintModels.ServiceSprintSummary>());
 
-            vm.MainWindow = Substitute.For<WindowProvider>();
+            NavigationParameters sentParams = null;
+
             vm.SprintId = Guid.NewGuid();
-            vm.ProjectId = projectId; 
+            vm.ProjectId = projectId;
+            vm.RegionManager = Substitute.For<IRegionManager>();
+
+            vm.RegionManager.RequestNavigate(Arg.Any<string>(), Arg.Any<string>(), Arg.Do<NavigationParameters>(n => sentParams = n));
+
+            serviceGateway.StartNewPokerSession(vm.SprintId.Value).Returns(sessionId);
 
             vm.Call("EstablishPokerSession");
 
             sprintServiceGateway.Received().GetSprintNames(projectId, true, false);
             serviceGateway.Received().StartNewPokerSession(vm.SprintId.Value);
-            vm.MainWindow.Received().ShowMessageAsync("Sesion started", "The planning poker session has been started");
+
+            sentParams.Should().NotBeNull();
+            sentParams["sessionId"].Should().Be(sessionId);
+            ((bool)sentParams["joinRequired"]).Should().BeFalse();
+            vm.RegionManager.Received().RequestNavigate(RegionNames.MainRegion, "PokerLobby", sentParams);
         }
 
         #endregion 

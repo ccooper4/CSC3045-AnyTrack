@@ -6,7 +6,7 @@
              xmlns:prism="http://www.codeplex.com/prism"
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:local="clr-namespace:AnyTrack.Sprints.Views"
-             xmlns:converters="clr-namespace:AnyTrack.Sprints.Converters"
+             xmlns:converters="clr-namespace:AnyTrack.Infrastructure.Converters;assembly=AnyTrack.Infrastructure"
              mc:Ignorable="d" >
 
     <UserControl.Resources>

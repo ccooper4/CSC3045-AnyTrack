@@ -122,7 +122,7 @@ namespace AnyTrack.Sprints.Views
 
             SaveSprintCommand = new DelegateCommand(SaveSprint);
             CancelSprintCommand = new DelegateCommand(CancelSprintCreation);
-            SearchDeveloperCommand = new DelegateCommand(SearchDevelopers);
+            SearchDeveloperCommand = new DelegateCommand(SearchDevelopers, CanSearch);
             SelectDeveloperCommand = new DelegateCommand<ServiceUserSearchInfo>(AddDeveloper, CanAddDeveloper);
             RemoveDeveloperCommand = new DelegateCommand<ServiceUserSearchInfo>(RemoveDeveloper);
         }
@@ -438,7 +438,8 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         private void SearchDevelopers()
         {
-            var skillsList = skillSetSearch.Split(',').Select(p => p.Trim()).ToList();
+            var skillsList = skillSetSearch.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToList();
+            skillsList.RemoveAll(s => s == string.Empty);
             var filter = new ServiceUserSearchFilter { Developer = true, SprintStartingDate = startDate, SprintEndingDate = endDate, Skillset = skillsList };
             var results = projectServiceGateway.SearchUsers(filter);
 
@@ -497,6 +498,20 @@ namespace AnyTrack.Sprints.Views
             });
 
             ShowMetroDialog("Remove Team Member", "Are you sure you want to remove {0} from the sprint?".Substitute(selectedDeveloper.FullName), MessageDialogStyle.AffirmativeAndNegative, callbackAction); 
+        }
+
+        /// <summary>
+        /// Indicates whether a user can search.
+        /// </summary>
+        /// <returns>user can search</returns>
+        private bool CanSearch()
+        {
+            if (SkillSetSearch != null)
+            {
+                return SkillSetSearch.Length != 0 && SkillSetSearch.Trim().Length != 0 && SkillSetSearch.TrimStart()[0] != ',';     
+            }
+
+            return false;
         }
 
         /// <summary>

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.BackendProjectService;
+using AnyTrack.Infrastructure.Extensions;
 using AnyTrack.SharedUtilities.Extensions;
 using MahApps.Metro.Controls;
 using Prism.Commands;
@@ -86,6 +87,11 @@ namespace AnyTrack.Sprints.Views
         private bool isScrumMaster;
 
         /// <summary>
+        /// Indicates whether the user is a developer in the sprint.
+        /// </summary>
+        private bool isDeveloper; 
+
+        /// <summary>
         /// Summary of the project displayed in the options.
         /// </summary>
         private ServiceProjectRoleSummary projectSummary;
@@ -111,7 +117,7 @@ namespace AnyTrack.Sprints.Views
             this.IsOpen = true;
 
             OpenProjectManager = new DelegateCommand(DisplayProjectManager);
-            OpenPlanningPoker = new DelegateCommand(DisplayPlanningPoker);
+            OpenPlanningPoker = new DelegateCommand<string>(DisplayPlanningPoker);
             OpenBurndown = new DelegateCommand(DisplayBurnDownCharts);
             OpenEditSprint = new DelegateCommand(DisplayEditSprint);
             OpenManageSprintBacklog = new DelegateCommand(DisplaySprintBacklog);
@@ -322,7 +328,16 @@ namespace AnyTrack.Sprints.Views
             set { SetProperty(ref isScrumMaster, value); }
         }
 
-        #endregion
+        /// <summary>
+        /// Gets or sets a value indicating whether or not the user is a developer in the sprint.
+        /// </summary>
+        public bool IsDeveloper
+        {
+            get { return isDeveloper; }
+            set { SetProperty(ref isDeveloper, value); }
+        }
+
+        #endregion 
 
         #region Commands
 
@@ -334,7 +349,7 @@ namespace AnyTrack.Sprints.Views
         /// <summary>
         /// Gets or sets a command to open a planning poker start session.
         /// </summary>
-        public DelegateCommand OpenPlanningPoker { get; set; }
+        public DelegateCommand<string> OpenPlanningPoker { get; set; }
 
         /// <summary>
         /// Gets or sets a command to open the burndown charts for the sprint.
@@ -385,7 +400,6 @@ namespace AnyTrack.Sprints.Views
                 this.projectSummary = projectInfo;
                 this.ProjectId = projectInfo.ProjectId;
                 this.ProjectName = projectInfo.Name;
-                this.IsScrumMaster = projectInfo.ScrumMaster;
             }
 
             if (navigationContext.Parameters.ContainsKey("sprintSummary"))
@@ -395,6 +409,8 @@ namespace AnyTrack.Sprints.Views
                 this.SprintId = sprintInfo.SprintId;
                 this.SprintName = sprintInfo.Name;
                 this.SprintDescription = sprintInfo.Description;
+                this.IsScrumMaster = UserDetailsStore.LoggedInUserPrincipal.IsUserInRole("Scrum Master", projectId, sprintId);
+                this.IsDeveloper = UserDetailsStore.LoggedInUserPrincipal.IsUserInRole("Developer", projectId, sprintId);
             }
         }
 
@@ -413,15 +429,25 @@ namespace AnyTrack.Sprints.Views
         /// <summary>
         /// Navigates to the start planning poker session screen for this project and sprint.
         /// </summary>
-        private void DisplayPlanningPoker()
+        /// <param name="mode">A string saying which button triggered this event.</param>
+        private void DisplayPlanningPoker(string mode)
         {
             IsOpen = false;
 
             var navParams = new NavigationParameters();
 
-            navParams.Add("ProjectId", projectId);
-            navParams.Add("SprintId", sprintId);
-            NavigateToItem("StartPlanningPokerSession", navParams);
+            navParams.Add("projectId", projectId);
+            navParams.Add("sprintId", sprintId);
+
+            if (IsDeveloper && mode == "Developer")
+            {
+                NavigateToItem("SearchForPlanningPokerSession", navParams);
+            }
+
+            if (IsScrumMaster && mode == "ScrumMaster")
+            {
+                NavigateToItem("StartPlanningPokerSession", navParams);
+            }
         }
         
                /// <summary>

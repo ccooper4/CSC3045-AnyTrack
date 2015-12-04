@@ -2,8 +2,11 @@
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
+using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -723,21 +726,32 @@ namespace AnyTrack.Backend.Service
         /// <param name="senderEmailAddress">The sender email address</param>
         /// <param name="recipientEmailAddress">The recipient email message</param>
         /// <param name="emailMessage">The email address</param>
-        /// <param name="emailAttachment">The email attachment</param>
-        public void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, Attachment emailAttachment)
+        /// <param name="emailAttachment">The email attachment of the </param>
+        public void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, MemoryStream emailAttachment)
         {
-            MailMessage mail = new MailMessage();
+            var fromAddress = new MailAddress(senderEmailAddress, "From Name");
+            var toAddress = new MailAddress(recipientEmailAddress, "To Name");
+            const string ConstFromPassword = "password";
+            const string ConstSubject = "Subject";
+            const string ConstBody = "Body";
 
-            mail.From = new MailAddress(senderEmailAddress);
-            mail.To.Add(recipientEmailAddress);
-
-            mail.Subject = "Agile";
-            mail.Body = emailMessage;
-
-            mail.Attachments.Add(emailAttachment);
-
-            SmtpClient smtp = new SmtpClient("127.0.0.1");
-            smtp.Send(mail);
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromAddress.Address, ConstFromPassword)
+            };
+            using (var message = new MailMessage(fromAddress, toAddress)
+            {
+                Subject = ConstSubject,
+                Body = ConstBody,
+            })
+            {
+                smtp.Send(message);
+            }
         }
 
         #endregion

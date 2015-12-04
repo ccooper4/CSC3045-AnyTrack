@@ -55,11 +55,15 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.ServiceGateways.PlanningPokerManag
         [Test]
         public void CallSubscribeToNewSessionMessages()
         {
+            var session = new ServiceSessionChangeInfo();
             var sprintId = Guid.NewGuid();
 
-            serviceGateway.SubscribeToNewSessionMessages(sprintId);
+            client.SubscribeToNewSessionMessages(sprintId).Returns(session);
+
+            var res = serviceGateway.SubscribeToNewSessionMessages(sprintId);
 
             client.Received().SubscribeToNewSessionMessages(sprintId);
+            res.Equals(session).Should().BeTrue();
         }
 
         #endregion 
@@ -82,16 +86,16 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.ServiceGateways.PlanningPokerManag
 
         #endregion 
 
-        #region CancelPendingPokerSession(Guid sessionId) Tests 
-        
+        #region EndPokerSession(Guid sessionId) Tests
+
         [Test]
-        public void CallCancelPendingPokerSession()
+        public void EndPokerSession()
         {
             var sessionId = Guid.NewGuid();
 
-            serviceGateway.CancelPendingPokerSession(sessionId);
+            serviceGateway.EndPokerSession(sessionId);
 
-            client.Received().CancelPendingPokerSession(sessionId);
+            client.Received().EndPokerSession(sessionId);
         }
 
         #endregion 
@@ -158,6 +162,150 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.ServiceGateways.PlanningPokerManag
         }
 
         #endregion 
+
+        #region NotifyClientOfSessionUpdate(ServicePlanningPokerSession newSession) Tests
+
+        [Test]
+        public void NotifyClientOfSessionUpdate()
+        {
+            var waitObject = new ManualResetEvent(false);
+
+            var session = new ServicePlanningPokerSession();
+
+            serviceGateway.NotifyClientOfSessionUpdateEvent += (sender, args) =>
+            {
+                sender.Equals(serviceGateway).Should().BeTrue();
+                args.Equals(session).Should().BeTrue();
+
+                waitObject.Set();
+            };
+
+            serviceGateway.NotifyClientOfSessionUpdate(session);
+
+            waitObject.WaitOne();
+        }
+
+        #endregion 
+
+        #region RetrieveSessionInfo(Guid sessionId) Tests 
+
+        [Test]
+        public void CallRetrieveSessionInfo()
+        {
+            var sessionId = Guid.NewGuid();
+            var session = new ServicePlanningPokerSession();
+
+            client.RetrieveSessionInfo(sessionId).Returns(session);
+
+            var res = serviceGateway.RetrieveSessionInfo(sessionId);
+
+            client.Received().RetrieveSessionInfo(sessionId);
+
+            res.Equals(session).Should().BeTrue();
+        }
+
+        #endregion 
+
+        #region LeaveSession(Guid sessionId) Tests 
+
+        [Test]
+        public void LeaveSession()
+        {
+            var sessionId = Guid.NewGuid();
+
+            serviceGateway.LeaveSession(sessionId);
+
+            client.Received().LeaveSession(sessionId);
+        }
+
+        #endregion 
+
+        #region StartSession(Guid sessionId) Tests 
+
+        [Test]
+        public void CallStartSession()
+        {
+            var sessionId = Guid.NewGuid();
+
+            serviceGateway.StartSession(sessionId);
+
+            client.Received().StartSession(sessionId);
+        }
+
+        #endregion 
+
+        #region NotifyClientOfSessionStart() Tests
+
+        [Test]
+        public void NotifyClientOfSessionStart()
+        {
+            var waitObject = new ManualResetEvent(false);
+
+            serviceGateway.NotifyClientOfSessionStartEvent += (sender, args) =>
+            {
+                sender.Equals(serviceGateway).Should().BeTrue();
+
+                waitObject.Set();
+            };
+
+            serviceGateway.NotifyClientOfSessionStart();
+
+            waitObject.WaitOne();
+        }
+
+        #endregion 
+
+        #region SubmitMessageToServer(ServiceChatMessage msg) Tests 
+
+        [Test]
+        public void CallSubmitMessageToServer()
+        {
+            var newMessage = new ServiceChatMessage();
+
+            serviceGateway.SubmitMessageToServer(newMessage);
+            client.Received().SubmitMessageToServer(newMessage);
+        }
+
+        #endregion 
+
+        #region SendMessageToClient() Tests
+
+        [Test]
+        public void SendMessageToClientTest()
+        {
+            var message = new ServiceChatMessage();
+
+            var waitObject = new ManualResetEvent(false);
+
+            serviceGateway.NotifyClientOfNewMessageFromServerEvent += (sender, args) =>
+            {
+                sender.Equals(serviceGateway).Should().BeTrue();
+                args.Equals(message).Should().BeTrue();
+
+                waitObject.Set();
+            };
+
+            serviceGateway.SendMessageToClient(message);
+
+            waitObject.WaitOne();
+        }
+
+        #endregion 
+
+        #region ShowEstimates(Guid sessionId) Tests 
+
+        [Test]
+        public void CallShowEstimates()
+        {
+            var sessionId = Guid.NewGuid();
+
+            serviceGateway.ShowEstimates(sessionId);
+
+            client.Received().ShowEstimates(sessionId);
+        }
+
+        #endregion 
+
     }
 
     #endregion 

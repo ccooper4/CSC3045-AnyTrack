@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Mail;
 using AnyTrack.Infrastructure.BackendSprintService;
+using MemoryStream = System.IO.MemoryStream;
 
 namespace AnyTrack.Infrastructure.ServiceGateways
 {
@@ -200,6 +202,18 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         public List<ServiceSprintStory> GetSprintStoryEstimates(Guid sprintId)
         {
             return client.GetSprintStoryEstimates(sprintId);
+        }
+        
+        /// <summary>
+        /// Sending an email request via burndown
+        /// </summary>
+        /// <param name="senderEmailAddress">The email adddress to send the email to</param>
+        /// <param name="recipientEmailAddress">The email adddress where the email is sent from</param>
+        /// <param name="emailMessage">The email address of the </param>
+        /// <param name="emailAttachment">The email attachment of the </param>
+        public void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, MemoryStream emailAttachment)
+        {
+            client.SendEmailRequest(senderEmailAddress, recipientEmailAddress, emailMessage, emailAttachment);
         }
 
         /// <summary>

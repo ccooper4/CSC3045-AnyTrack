@@ -173,6 +173,7 @@
     <Compile Include="Backend\AnyTrack.Backend\Providers\AvailableClientsProviderTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Providers\RoleProviderTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Service\AccountServiceTests.cs" />
+    <Compile Include="Backend\AnyTrack.Backend\Service\Model\ServicePlanningPokerUserTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Service\SprintServiceTests.cs" />
     <Compile Include="Backend\AnyTrack.Backend\Service\PlanningPokerManagerServiceTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\CookieMessageInspectorTests.cs" />
@@ -193,10 +194,12 @@
     <Compile Include="Modules\AnyTrack.Accounting\Views\RegistrationViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.PlanningPoker\PlanningPokerModuleTests.cs" />
     <Compile Include="Modules\AnyTrack.PlanningPoker\ServiceGateways\PlanningPokerManagerServiceGatewayTests.cs" />
+    <Compile Include="Modules\AnyTrack.PlanningPoker\Views\PlanningPokerSessionViewModelTests.cs" />
+    <Compile Include="Modules\AnyTrack.PlanningPoker\Views\PokerLobbyViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.PlanningPoker\Views\SearchForPlanningPokerSessionViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.PlanningPoker\Views\StartPlanningPokerSessionViewModelTests.cs" />
-    <Compile Include="Modules\AnyTrack.Projects\Converters\DateConverterTests.cs" />
-    <Compile Include="Modules\AnyTrack.Projects\Converters\BooleanToVisibilityConverterTests.cs" />
+    <Compile Include="Common\AnyTrack.Infrastructure\Converters\DateConverterTests.cs" />
+    <Compile Include="Common\AnyTrack.Infrastructure\Converters\BooleanToVisibilityConverterTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\ProjectModuleTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\ServiceGateways\ProjectServiceGatewayTests.cs" />
     <Compile Include="Modules\AnyTrack.Projects\Views\CreateProjectViewModelTests.cs" />
@@ -206,6 +209,8 @@
     <Compile Include="Modules\AnyTrack.Projects\Views\StoryViewModelTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\ServiceGateways\SprintServiceGatewayService.cs" />
     <Compile Include="Modules\AnyTrack.Sprints\SprintModuleTests.cs" />
+    <Compile Include="Modules\AnyTrack.Sprints\Views\ManageSprintBacklogViewModelTests.cs" />
+    <Compile Include="Modules\AnyTrack.Sprints\Views\CreateSprintViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Sprints\Views\SprintManagerViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Sprints\Views\SprintOptionsViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -63,7 +63,7 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// The email address of the selected product owner.
         /// </summary>
-        private string selectProductOwnerEmailAddress;
+        private ServiceUserSearchInfo selectedProductOwner;
 
         /// <summary>
         /// Retrieves a flag indicating if the PO search grid is enabled.
@@ -103,15 +103,17 @@ namespace AnyTrack.Projects.Views
 
             SaveProjectCommand = new DelegateCommand(SaveProject);
             CancelProjectCommand = new DelegateCommand(CancelProject);
-            SearchProductOwnerUserCommand = new DelegateCommand(SearchProjectOwners);
-            SetProductOwnerCommand = new DelegateCommand<string>(SetProductOwner);
+            SearchProductOwnerUserCommand = new DelegateCommand(SearchProjectOwners, CanSearchProductOwner);
+            SetProductOwnerCommand = new DelegateCommand<ServiceUserSearchInfo>(SetProductOwner);
             SearchScrumMasterCommand = new DelegateCommand(SearchScrumMasters);
             SelectScrumMasterCommand = new DelegateCommand<ServiceUserSearchInfo>(AddScrumMaster, CanAddScrumMaster);
             RemoveScrumMasterCommand = new DelegateCommand<ServiceUserSearchInfo>(RemoveScrumMaster);
+            RemoveProductOwnerCommand = new DelegateCommand<ServiceUserSearchInfo>(RemoveProductOwner);
 
             startedOn = DateTime.Now;
 
             ProductOwnerSearchUserResults = new ObservableCollection<ServiceUserSearchInfo>();
+            SelectedProductOwnerList = new ObservableCollection<ServiceUserSearchInfo>();
             ScrumMasterSearchUserResults = new ObservableCollection<ServiceUserSearchInfo>();
             SelectedScrumMasters = new ObservableCollection<ServiceUserSearchInfo>();
         }
@@ -171,10 +173,10 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Gets or sets the selected product owner's email address.
         /// </summary>
-        public string SelectProductOwnerEmailAddress
+        public ServiceUserSearchInfo SelectedProductOwner
         {
-            get { return selectProductOwnerEmailAddress; }
-            set { SetProperty(ref selectProductOwnerEmailAddress, value); }
+            get { return selectedProductOwner; }
+            set { SetProperty(ref selectedProductOwner, value); }
         }
 
         /// <summary>
@@ -199,7 +201,7 @@ namespace AnyTrack.Projects.Views
         /// Gets or sets the observable collection that stores the Product Owner search results.
         /// </summary>
         public ObservableCollection<ServiceUserSearchInfo> ProductOwnerSearchUserResults { get; set; }
-
+    
         /// <summary>
         /// Gets or sets the scrum master email address being searched.
         /// </summary>
@@ -242,6 +244,11 @@ namespace AnyTrack.Projects.Views
         /// </summary>
         public ObservableCollection<ServiceUserSearchInfo> SelectedScrumMasters { get; set; }
 
+        /// <summary>
+        /// Gets or sets the Product Owner.
+        /// </summary>
+        public ObservableCollection<ServiceUserSearchInfo> SelectedProductOwnerList { get; set; } 
+
         #endregion
 
         #region Commands
@@ -264,7 +271,7 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Gets or sets the command that can be used to set a product owner on a new project.
         /// </summary>
-        public DelegateCommand<string> SetProductOwnerCommand { get; set; }
+        public DelegateCommand<ServiceUserSearchInfo> SetProductOwnerCommand { get; set; }
 
         /// <summary>
         /// Gets or sets the command that can be used to search for scrum masters.
@@ -280,6 +287,11 @@ namespace AnyTrack.Projects.Views
         /// Gets or sets the command that can be used to remove a scrum master.
         /// </summary>
         public DelegateCommand<ServiceUserSearchInfo> RemoveScrumMasterCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the command that can be used to remove a product owner.
+        /// </summary>
+        public DelegateCommand<ServiceUserSearchInfo> RemoveProductOwnerCommand { get; set; }
 
         #endregion
 
@@ -326,7 +338,18 @@ namespace AnyTrack.Projects.Views
                         Description = project.Description;
                         VersionControl = project.VersionControl;
                         StartedOn = project.StartedOn;
-                        SelectProductOwnerEmailAddress = project.ProductOwnerEmailAddress;
+
+                        if (project.ProductOwnerEmailAddress != null)
+                        {
+                            var filter = new ServiceUserSearchFilter { EmailAddress = project.ProductOwnerEmailAddress };
+                            var result = ServiceGateway.SearchUsers(filter);
+                            SelectedProductOwner = result.FirstOrDefault();
+                            SelectedProductOwnerList.Add(SelectedProductOwner);
+                        }
+                        else
+                        {
+                            SelectedProductOwner = null;
+                        }
 
                         if (project.ScrumMasterEmailAddresses != null && project.ScrumMasterEmailAddresses.Count > 0)
                         {
@@ -334,7 +357,7 @@ namespace AnyTrack.Projects.Views
                             {
                                 var filter = new ServiceUserSearchFilter { EmailAddress = scrumMasterEmail, ScrumMaster = true };
                                 var result = ServiceGateway.SearchUsers(filter);
-                                SelectedScrumMasters.Add(result.First());
+                                SelectedScrumMasters.Add(result.FirstOrDefault());
                             }
                         }
                     }
@@ -379,10 +402,13 @@ namespace AnyTrack.Projects.Views
                     Description = this.Description,
                     VersionControl = this.VersionControl,
                     StartedOn = this.StartedOn,
-                    ProductOwnerEmailAddress = selectProductOwnerEmailAddress,
                     ProjectManagerEmailAddress = UserDetailsStore.LoggedInUserPrincipal.Identity.Name,
                     ScrumMasterEmailAddresses = this.SelectedScrumMasters.Select(sm => sm.EmailAddress).ToList()
                 };
+
+                project.ProductOwnerEmailAddress = SelectedProductOwner != null
+                    ? SelectedProductOwner.EmailAddress
+                    : null;
 
                 if (editMode)
                 {
@@ -424,6 +450,15 @@ namespace AnyTrack.Projects.Views
         }
 
         /// <summary>
+        /// Indicates if a PO can be searched for.
+        /// </summary>
+        /// <returns>PO can be searched for.</returns>
+        private bool CanSearchProductOwner()
+        {
+            return !ProductOwnerConfirmed;
+        }
+
+        /// <summary>
         /// Searches for scrum masters using the details entered by the user.
         /// </summary>
         private void SearchScrumMasters()
@@ -443,17 +478,18 @@ namespace AnyTrack.Projects.Views
         }
 
         /// <summary>
-        /// Sets the product owner of this project to the user with the specified email address.
+        /// Sets the product owner of this project to the user
         /// </summary>
-        /// <param name="emailAddress">The email address of the user to be set as the Product Owner.</param>
-        private void SetProductOwner(string emailAddress)
+        /// <param name="selectedProductOwner">The user to be set as the Product Owner.</param>
+        private void SetProductOwner(ServiceUserSearchInfo selectedProductOwner)
         {
-            SelectProductOwnerEmailAddress = emailAddress;
+            SelectedProductOwner = selectedProductOwner;
+            SelectedProductOwnerList.Add(selectedProductOwner);
             ProductOwnerSearchUserResults.Clear();
             EnableProductOwnerSearchGrid = false;
             ProductOwnerConfirmed = true;
             ProductOwnerSearchEmailAddress = string.Empty;
-            ShowMetroDialog("Product Owner Assigned", "{0} has been assigned the role Product Owner of the project.".Substitute(emailAddress), MessageDialogStyle.Affirmative);
+            ShowMetroDialog("Product Owner Assigned", "{0} has been assigned the role Product Owner of the project.".Substitute(selectedProductOwner.EmailAddress), MessageDialogStyle.Affirmative);
         }
 
         /// <summary>
@@ -503,6 +539,31 @@ namespace AnyTrack.Projects.Views
             });
 
             ShowMetroDialog("Scrum Master Removal", "Are you sure you want to remove {0} as a scrum master on the project?".Substitute(selectedScrumMaster.FullName), MessageDialogStyle.AffirmativeAndNegative, callbackAction);          
+        }
+
+        /// <summary>
+        /// Removes the currently assigned Product Owner
+        /// </summary>
+        /// <param name="selectedProductOwner">User to be removed as product owner</param>
+        private void RemoveProductOwner(ServiceUserSearchInfo selectedProductOwner)
+        {
+            bool remove = false;
+            var callbackAction = new Action<MessageDialogResult>(mdr =>
+            {
+                if (mdr == MessageDialogResult.Affirmative)
+                {
+                    remove = true;
+
+                    if (remove)
+                    {
+                        SelectedProductOwner = null;
+                        ProductOwnerConfirmed = false;
+                        SelectedProductOwnerList.Remove(selectedProductOwner);
+                    }
+                }
+            });
+
+            ShowMetroDialog("Product Owner Removal", "Are you sure you want to remove {0} as the product owner the project?".Substitute(selectedProductOwner.FullName), MessageDialogStyle.AffirmativeAndNegative, callbackAction);          
         }
         #endregion    
     }
