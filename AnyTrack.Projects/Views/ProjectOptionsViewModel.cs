@@ -68,7 +68,12 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// The project id field.
         /// </summary>
-        private string projectId; 
+        private Guid projectId;
+
+        /// <summary>
+        /// Indicates whether user is peoject manager of the project.
+        /// </summary>
+        private bool projectManager;
 
         #endregion 
 
@@ -84,7 +89,8 @@ namespace AnyTrack.Projects.Views
             this.Position = Position.Right;
             this.Theme = FlyoutTheme.Accent;
 
-            ViewBacklog = new DelegateCommand<string>(GoToBacklog);
+            ViewBacklog = new DelegateCommand(GoToBacklog);
+            ViewEditProject = new DelegateCommand(GoToEditProject);
         }
 
         #endregion 
@@ -238,7 +244,7 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Gets or sets the project id.
         /// </summary>
-        public string ProjectID
+        public Guid ProjectId
         {
             get
             {
@@ -254,7 +260,12 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Gets or sets the command used to view the product backlog.
         /// </summary>
-        public DelegateCommand<string> ViewBacklog { get; set; }
+        public DelegateCommand ViewBacklog { get; set; }
+
+        /// <summary>
+        /// Gets or sets the command used to view the Edit Project screen.
+        /// </summary>
+        public DelegateCommand ViewEditProject { get; set; }
 
         #endregion 
 
@@ -287,10 +298,11 @@ namespace AnyTrack.Projects.Views
             if (navigationContext.Parameters.ContainsKey("projectInfo"))
             {
                 var projectInfo = navigationContext.Parameters["projectInfo"] as ServiceProjectRoleSummary;
-                this.ProjectID = projectInfo.ProjectId.ToString();
+                this.ProjectId = (Guid)projectInfo.ProjectId;
                 this.Header = "Project Options - {0}".Substitute(projectInfo.Name);
                 this.ProjectDescription = projectInfo.Description;
                 this.ProjectName = projectInfo.Name;
+                this.projectManager = projectInfo.ProjectManager;
             }
             else 
             {
@@ -301,12 +313,24 @@ namespace AnyTrack.Projects.Views
         /// <summary>
         /// Navigates to the backlog view. 
         /// </summary>
-        /// <param name="projectId">The project id.</param>
-        private void GoToBacklog(string projectId)
+        private void GoToBacklog()
         {
+            this.IsOpen = false;
             var navParams = new NavigationParameters();
-            navParams.Add("projectId", Guid.Parse(projectId));
+            navParams.Add("projectId", (Guid)projectId);
             this.NavigateToItem("ProductBacklog", navParams);
+        }
+
+        /// <summary>
+        /// Naviagtes to Edit projects and sends required parameteres.
+        /// </summary>
+        private void GoToEditProject()
+        {
+            this.IsOpen = false;
+            var navParams = new NavigationParameters();
+            navParams.Add("ProjectId", (Guid)projectId);
+            navParams.Add("EditMode", "true");
+            this.NavigateToItem("Project", navParams);
             this.IsOpen = false;
         }
 

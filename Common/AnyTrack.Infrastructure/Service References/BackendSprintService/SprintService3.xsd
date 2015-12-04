@@ -26,6 +26,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="SprintId" type="ser:guid" />
       <xs:element minOccurs="0" name="SprintStoryId" type="ser:guid" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Story" nillable="true" type="tns:ServiceStory" />
     </xs:sequence>
   </xs:complexType>
@@ -86,6 +87,7 @@
   <xs:element name="ArrayOfServiceTaskHourEstimate" nillable="true" type="tns:ArrayOfServiceTaskHourEstimate" />
   <xs:complexType name="ServiceTaskHourEstimate">
     <xs:sequence>
+      <xs:element minOccurs="0" name="Created" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Estimate" type="xs:double" />
       <xs:element minOccurs="0" name="NewEstimate" type="xs:double" />
       <xs:element minOccurs="0" name="ServiceTaskHourEstimateId" type="ser:guid" />

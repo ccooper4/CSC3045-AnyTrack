@@ -45,5 +45,10 @@ namespace AnyTrack.Backend.Service.Model
         /// Gets or sets the end date of a sprint.
         /// </summary>
         public DateTime? SprintEndingDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sprintId the user is a member of. (Useful for edit mode)
+        /// </summary>
+        public Guid? SprintId { get; set; }
     }
 }

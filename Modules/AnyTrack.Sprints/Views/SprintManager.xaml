@@ -23,23 +23,23 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid Background="LightGray" >
+    <Grid Background="Transparent" >
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" MinHeight="76"></RowDefinition>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="0" Margin="0,29,30,11" HorizontalAlignment="Right" Background="Transparent" BorderThickness="0" VerticalAlignment="Center" Height="36" Width="35" Command="{Binding AddSprintCommand}" Visibility="{Binding ShowAddButton, Converter={StaticResource booleanToVisibility}}">
-            <Image Source="../Images/add_icon.png" Width="25px" Height="25px"></Image>
+        <Button Grid.Row="0" Margin="0,29,30,11" HorizontalAlignment="Right" Background="{x:Null}" VerticalAlignment="Center" Height="36" Width="35" Command="{Binding AddSprintCommand}" Visibility="{Binding ShowAddButton, Converter={StaticResource booleanToVisibility}}" BorderBrush="{x:Null}" BorderThickness="0">
+            <Image Source="../Images/add_icon_white.png" Width="25px" Height="25px"></Image>
         </Button>
 
-        <Button Grid.Row="0" Margin="178,30,0,10" HorizontalAlignment="Left" Background="Transparent" BorderThickness="0" VerticalAlignment="Center" Height="36" Width="35" Command="{Binding UpdateProjectDisplayedCommand}">
+        <Button Grid.Row="0" Margin="178,30,0,10" Focusable="False" HorizontalAlignment="Left" Background="{x:Null}" VerticalAlignment="Center" Height="36" Width="35" Command="{Binding UpdateProjectDisplayedCommand}" BorderThickness="0">
             <Image Source="../Images/enter_icon.png" Width="25px" Height="25px"></Image>
         </Button>
 
         <DockPanel Grid.Row="1">
-            <ListBox DockPanel.Dock="Top" Background="LightGray" HorizontalAlignment="Stretch" ItemsSource="{Binding Sprints}" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox DockPanel.Dock="Top" HorizontalAlignment="Stretch" ItemsSource="{Binding Sprints}" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Width="auto" Margin="30px,30px,30px,30px" >
@@ -48,7 +48,8 @@
                                 <RowDefinition Height="9*"></RowDefinition>
                             </Grid.RowDefinitions>
 
-                            <controls:Tile Grid.Row="0" Title="{Binding Name}" Width="120" Height="120" CommandParameter="{Binding Path=.}" Command="{Binding Path=DataContext.OpenSprintOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"></controls:Tile>
+                            <Label Margin="10" HorizontalAlignment="Left" Grid.Row="0" FontSize="16" Foreground="WhiteSmoke" Content="{Binding Name}" ></Label>
+                            <controls:Tile Grid.Row="0" Title="{Binding Description}" Width="120" Height="120" CommandParameter="{Binding Path=.}" Command="{Binding Path=DataContext.OpenSprintOptionsCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"></controls:Tile>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

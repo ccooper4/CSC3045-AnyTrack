@@ -202,6 +202,9 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         private System.Guid SprintStoryIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StatusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private AnyTrack.Infrastructure.BackendSprintService.ServiceStory StoryField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -236,6 +239,19 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
                 if ((this.SprintStoryIdField.Equals(value) != true)) {
                     this.SprintStoryIdField = value;
                     this.RaisePropertyChanged("SprintStoryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StatusField, value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
                 }
             }
         }
@@ -984,6 +1000,12 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/EditSprint", ReplyAction="http://tempuri.org/ISprintService/EditSprintResponse")]
         System.Threading.Tasks.Task EditSprintAsync(System.Guid sprintId, AnyTrack.Infrastructure.BackendSprintService.ServiceSprint updatedSprint);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetSprint", ReplyAction="http://tempuri.org/ISprintService/GetSprintResponse")]
+        AnyTrack.Infrastructure.BackendSprintService.ServiceSprint GetSprint(System.Guid sprintId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetSprint", ReplyAction="http://tempuri.org/ISprintService/GetSprintResponse")]
+        System.Threading.Tasks.Task<AnyTrack.Infrastructure.BackendSprintService.ServiceSprint> GetSprintAsync(System.Guid sprintId);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetAllTasksForSprintCurrentUser", ReplyAction="http://tempuri.org/ISprintService/GetAllTasksForSprintCurrentUserResponse")]
         System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask> GetAllTasksForSprintCurrentUser(System.Guid sprintId);
         
@@ -1015,10 +1037,16 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory>> GetSprintStoriesAsync(System.Guid sprintId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/ManageSprintBacklog", ReplyAction="http://tempuri.org/ISprintService/ManageSprintBacklogResponse")]
-        void ManageSprintBacklog(System.Guid sprintId, System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> sprintStories);
+        void ManageSprintBacklog(System.Guid projectId, System.Guid sprintId, System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> sprintStories);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/ManageSprintBacklog", ReplyAction="http://tempuri.org/ISprintService/ManageSprintBacklogResponse")]
-        System.Threading.Tasks.Task ManageSprintBacklogAsync(System.Guid sprintId, System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> sprintStories);
+        System.Threading.Tasks.Task ManageSprintBacklogAsync(System.Guid projectId, System.Guid sprintId, System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> sprintStories);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/SendEmailRequest", ReplyAction="http://tempuri.org/ISprintService/SendEmailRequestResponse")]
+        void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/SendEmailRequest", ReplyAction="http://tempuri.org/ISprintService/SendEmailRequestResponse")]
+        System.Threading.Tasks.Task SendEmailRequestAsync(string senderEmailAddress, string recipientEmailAddress, string emailMessage);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1064,6 +1092,14 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
             return base.Channel.EditSprintAsync(sprintId, updatedSprint);
         }
         
+        public AnyTrack.Infrastructure.BackendSprintService.ServiceSprint GetSprint(System.Guid sprintId) {
+            return base.Channel.GetSprint(sprintId);
+        }
+        
+        public System.Threading.Tasks.Task<AnyTrack.Infrastructure.BackendSprintService.ServiceSprint> GetSprintAsync(System.Guid sprintId) {
+            return base.Channel.GetSprintAsync(sprintId);
+        }
+        
         public System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask> GetAllTasksForSprintCurrentUser(System.Guid sprintId) {
             return base.Channel.GetAllTasksForSprintCurrentUser(sprintId);
         }
@@ -1104,12 +1140,20 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
             return base.Channel.GetSprintStoriesAsync(sprintId);
         }
         
-        public void ManageSprintBacklog(System.Guid sprintId, System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> sprintStories) {
-            base.Channel.ManageSprintBacklog(sprintId, sprintStories);
+        public void ManageSprintBacklog(System.Guid projectId, System.Guid sprintId, System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> sprintStories) {
+            base.Channel.ManageSprintBacklog(projectId, sprintId, sprintStories);
         }
         
-        public System.Threading.Tasks.Task ManageSprintBacklogAsync(System.Guid sprintId, System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> sprintStories) {
-            return base.Channel.ManageSprintBacklogAsync(sprintId, sprintStories);
+        public System.Threading.Tasks.Task ManageSprintBacklogAsync(System.Guid projectId, System.Guid sprintId, System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> sprintStories) {
+            return base.Channel.ManageSprintBacklogAsync(projectId, sprintId, sprintStories);
+        }
+        
+        public void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage) {
+            base.Channel.SendEmailRequest(senderEmailAddress, recipientEmailAddress, emailMessage);
+        }
+        
+        public System.Threading.Tasks.Task SendEmailRequestAsync(string senderEmailAddress, string recipientEmailAddress, string emailMessage) {
+            return base.Channel.SendEmailRequestAsync(senderEmailAddress, recipientEmailAddress, emailMessage);
         }
     }
 }

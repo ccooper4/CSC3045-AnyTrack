@@ -122,6 +122,24 @@ namespace AnyTrack.Backend.Service
             project.StartedOn = updatedProject.StartedOn;
             project.VersionControl = updatedProject.VersionControl;
 
+            if (project.ProductOwner != null && updatedProject.ProductOwnerEmailAddress != null &&
+                project.ProductOwner.EmailAddress != updatedProject.ProductOwnerEmailAddress)
+            {
+                UnassignUserRole(project.Id, project.ProductOwner.EmailAddress, "Product Owner");
+                project.ProductOwner = AssignUserRole(project.Id, updatedProject.ProductOwnerEmailAddress, "Product Owner");
+            }
+            else if (project.ProductOwner == null && updatedProject.ProductOwnerEmailAddress != null)
+            {
+                project.ProductOwner = AssignUserRole(project.Id, updatedProject.ProductOwnerEmailAddress, "Product Owner");
+            }
+            else if (project.ProductOwner != null && updatedProject.ProductOwnerEmailAddress == null)
+            {
+                UnassignUserRole(project.Id, project.ProductOwner.EmailAddress, "Product Owner");
+                project.ProductOwner = null;
+            }
+
+            List<User> smToRemove = new List<User>();
+
             // Assign Scrum Master
             if (project.ScrumMasters != null)
             {
@@ -130,10 +148,15 @@ namespace AnyTrack.Backend.Service
                 {
                     if (!updatedProject.ScrumMasterEmailAddresses.Contains(scrumMaster.EmailAddress))
                     {
-                        project.ScrumMasters.Remove(UnassignUserRole(project.Id, scrumMaster.EmailAddress, "Scrum Master"));
+                        smToRemove.Add(UnassignUserRole(project.Id, scrumMaster.EmailAddress, "Scrum Master"));
                     }
                 }
 
+                foreach (var scrumMaster in smToRemove)
+                {
+                    project.ScrumMasters.Remove(scrumMaster);
+                }
+                
                 // Add new scrum masters
                 foreach (var updatedScrumMasterEmailAddress in updatedProject.ScrumMasterEmailAddresses)
                 {
@@ -245,6 +268,7 @@ namespace AnyTrack.Backend.Service
                     var serviceSprint = new ServiceSprint
                     {
                         SprintId = sprint.Id,
+                        ProjectId = dataProject.Id,
                         Name = sprint.Name,
                         Description = sprint.Description,
                         StartDate = sprint.StartDate,
@@ -604,7 +628,7 @@ namespace AnyTrack.Backend.Service
 
             foreach (var user in filteredUsers)
             {
-                availabilityDictionary.Add(user, CalculateAvailability(user, (DateTime)filter.SprintStartingDate, (DateTime)filter.SprintEndingDate));
+                availabilityDictionary.Add(user, CalculateAvailability(user, (DateTime)filter.SprintStartingDate, (DateTime)filter.SprintEndingDate, filter.SprintId));
             }
 
             foreach (var userAvailability in availabilityDictionary)
@@ -773,7 +797,8 @@ namespace AnyTrack.Backend.Service
                     user.Roles = new List<Role>();
                 }
 
-                if (!user.Roles.Contains(role))
+                var roles = user.Roles.Where(r => r.ProjectId == role.ProjectId && r.RoleName == role.RoleName).ToList();
+                if (roles.Count == 0)
                 {
                     user.Roles.Add(role);
                 }
@@ -803,16 +828,33 @@ namespace AnyTrack.Backend.Service
                 throw new Exception("User does not exist");
             }
 
-            Role role =
-                        unitOfWork.RoleRepository.Items.SingleOrDefault(r => r.RoleName == roleName && r.User == user && r.ProjectId == projectId);
+            Role role = null;
 
-            if (role == null)
+            if (roleName.Equals("Scrum Master"))
             {
-                throw new Exception("Role does not exist for user in project");
+                var scrumMasterRolesList = unitOfWork.RoleRepository.Items.Where(r => r.RoleName == roleName && r.User.EmailAddress == user.EmailAddress && r.ProjectId == projectId).ToList();
+
+                if (scrumMasterRolesList.Count > 0)
+                {
+                    foreach (var scrumMaster in scrumMasterRolesList)
+                    {
+                        user.Roles.Remove(scrumMaster);     
+                    }
+                }
             }
+            else
+            {
+                role = unitOfWork.RoleRepository.Items.SingleOrDefault(r => r.RoleName == roleName && r.User.EmailAddress == user.EmailAddress && r.ProjectId == projectId && r.SprintId == null);
 
-            user.Roles.Remove(role);
+                if (role == null)
+                {
+                    throw new Exception("Role does not exist for user in project");
+                }
 
+                unitOfWork.RoleRepository.Delete(role);
+                user.Roles.Remove(role);
+            }
+            
             return user;
         }
 
@@ -841,8 +883,9 @@ namespace AnyTrack.Backend.Service
         /// <param name="user">The user </param>
         /// <param name="sprintStartDate">The sprint start date</param>
         /// <param name="sprintEndDate">The sprint end date</param>
+        /// <param name="sprintIdToExclude">Sprint Id to exclude from availabilty results</param>
         /// <returns>Number of days available on the sprint</returns>
-        private int CalculateAvailability(User user, DateTime sprintStartDate, DateTime sprintEndDate)
+        private int CalculateAvailability(User user, DateTime sprintStartDate, DateTime sprintEndDate, Guid? sprintIdToExclude)
         {
             Dictionary<DateTime, bool> availableOnDate = new Dictionary<DateTime, bool>();
 
@@ -871,6 +914,11 @@ namespace AnyTrack.Backend.Service
 
                 foreach (var sprintSummary in project.Sprints)
                 {
+                    if (sprintIdToExclude.HasValue && sprintSummary.SprintId == sprintIdToExclude.Value)
+                    {
+                        break;
+                    }
+
                     var sprint = unitOfWork.SprintRepository.Items.Single(s => s.Id == sprintSummary.SprintId);
                     date = sprint.StartDate;
                     sprintLength = (sprint.EndDate - sprintStartDate).Days + 1;

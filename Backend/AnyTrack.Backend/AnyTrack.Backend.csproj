@@ -190,6 +190,10 @@
     <Compile Include="Migrations\201512020048275_Adding migration to merge the last few after an issue.Designer.cs">
       <DependentUpon>201512020048275_Adding migration to merge the last few after an issue.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512021344120_Adding combined migrationfor sprint team relationship and scrum master    .cs" />
+    <Compile Include="Migrations\201512021344120_Adding combined migrationfor sprint team relationship and scrum master    .Designer.cs">
+      <DependentUpon>201512021344120_Adding combined migrationfor sprint team relationship and scrum master    .cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Model\BaseEntity.cs" />
@@ -276,6 +280,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512020048275_Adding migration to merge the last few after an issue.resx">
       <DependentUpon>201512020048275_Adding migration to merge the last few after an issue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512021344120_Adding combined migrationfor sprint team relationship and scrum master    .resx">
+      <DependentUpon>201512021344120_Adding combined migrationfor sprint team relationship and scrum master    .cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

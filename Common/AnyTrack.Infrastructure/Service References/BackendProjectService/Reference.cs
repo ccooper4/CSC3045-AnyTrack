@@ -548,6 +548,9 @@ namespace AnyTrack.Infrastructure.BackendProjectService {
         private System.Guid SprintStoryIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StatusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private AnyTrack.Infrastructure.BackendProjectService.ServiceStory StoryField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -582,6 +585,19 @@ namespace AnyTrack.Infrastructure.BackendProjectService {
                 if ((this.SprintStoryIdField.Equals(value) != true)) {
                     this.SprintStoryIdField = value;
                     this.RaisePropertyChanged("SprintStoryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StatusField, value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
                 }
             }
         }
@@ -635,6 +651,9 @@ namespace AnyTrack.Infrastructure.BackendProjectService {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> SprintEndingDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.Guid> SprintIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> SprintStartingDateField;
@@ -723,6 +742,19 @@ namespace AnyTrack.Infrastructure.BackendProjectService {
                 if ((this.SprintEndingDateField.Equals(value) != true)) {
                     this.SprintEndingDateField = value;
                     this.RaisePropertyChanged("SprintEndingDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.Guid> SprintId {
+            get {
+                return this.SprintIdField;
+            }
+            set {
+                if ((this.SprintIdField.Equals(value) != true)) {
+                    this.SprintIdField = value;
+                    this.RaisePropertyChanged("SprintId");
                 }
             }
         }

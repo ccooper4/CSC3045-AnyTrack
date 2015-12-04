@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,12 +26,20 @@ namespace AnyTrack.Backend.Service
         void AddSprint(Guid projectId, ServiceSprint sprint);
 
         /// <summary>
-        /// Edits an exiting sprint.
+        /// Edits an existing sprint.
         /// </summary>
         /// <param name="sprintId">Id of the sprint to be edited</param>
         /// <param name="updatedSprint">ServiceSprint entity containing changes</param>
         [OperationContract]
         void EditSprint(Guid sprintId, ServiceSprint updatedSprint);
+
+        /// <summary>
+        /// Retrieves a specified sprint.
+        /// </summary>
+        /// <param name="sprintId">Id of the sprint</param>
+        /// <returns>The sprint</returns>
+        [OperationContract]
+        ServiceSprint GetSprint(Guid sprintId);
 
         /// <summary>
         /// Gets all task for a sprint for the current user
@@ -65,7 +75,7 @@ namespace AnyTrack.Backend.Service
         List<ServiceSprintSummary> GetSprintNames(Guid? projectId, bool scrumMaster, bool developer);
 
         /// <summary>
-        /// Gets all the stories associated with a sprint
+        /// Gets all the stories associated with a sprintISprintService
         /// </summary>
         /// <param name="sprintId">Sprint id to retrieve sprints from</param>
         /// <returns>List of sprint stories</returns>
@@ -75,9 +85,20 @@ namespace AnyTrack.Backend.Service
         /// <summary>
         /// Manages the sprint backlog
         /// </summary>
+        /// <param name="projectId">Project id of the project</param>
         /// <param name="sprintId">Sprint id of sprint</param>
         /// <param name="sprintStories">List of sprint stories</param>
         [OperationContract]
-        void ManageSprintBacklog(Guid sprintId, List<ServiceSprintStory> sprintStories);
+        void ManageSprintBacklog(Guid projectId, Guid sprintId, List<ServiceSprintStory> sprintStories);
+
+        /// <summary>
+        /// Sending an email request
+        /// </summary>
+        /// <param name="senderEmailAddress">The email adddress to send the email to</param>
+        /// <param name="recipientEmailAddress">The email adddress where the email is sent from</param>
+        /// <param name="emailMessage">The email address of the </param>
+        /// <param name="emailAttachment">The email attachment of the </param>
+        [OperationContract]
+        void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, MemoryStream emailAttachment);
     }
 }

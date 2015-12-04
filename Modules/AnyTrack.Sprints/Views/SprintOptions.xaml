@@ -32,9 +32,9 @@
         <Label Foreground="{StaticResource WhiteBrush}" FontSize="{StaticResource MenuFontSize}" FontFamily="{StaticResource HeaderFontFamily}" Grid.Row="2" Content="{Binding SprintDescription}" ContentStringFormat="Sprint Description: {0}"/>
 
         <Button Style="{StaticResource MetroFlatButton}" Command="{Binding OpenProjectManager}" Content="Project Manager" Width="Auto" Height="Auto" Margin="5,10,5,5" Grid.Row="3"/>
-        <Button Style="{StaticResource MetroFlatButton}" Command="{Binding ViewBacklog}" Content="Edit Sprint" Width="Auto" Height="Auto" Margin="5" Grid.Row="4" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibility}}"/>
-        <Button Style="{StaticResource MetroFlatButton}" Command="{Binding ViewBacklog}" Content="Add Stories To Sprint Backlog" Width="Auto" Height="Auto" Margin="5" Grid.Row="5" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibility}}"/>
-        <Button Style="{StaticResource MetroFlatButton}" Command="{Binding ViewBacklog}" Content="View Burndown Chart" Width="Auto" Height="Auto" Margin="5" Grid.Row="6"/>
+        <Button Style="{StaticResource MetroFlatButton}" Command="{Binding OpenEditSprint}" Content="Edit Sprint" Width="Auto" Height="Auto" Margin="5" Grid.Row="4" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibility}}"/>
+        <Button Style="{StaticResource MetroFlatButton}" Command="{Binding OpenManageSprintBacklog}" Content="Add Stories To Sprint Backlog" Width="Auto" Height="Auto" Margin="5" Grid.Row="5" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibility}}"/>
+        <Button Style="{StaticResource MetroFlatButton}" Command="{Binding OpenBurndown}" Content="View Burndown Chart" Width="Auto" Height="Auto" Margin="5" Grid.Row="6"/>
         <Button Style="{StaticResource MetroFlatButton}" Command="{Binding OpenPlanningPoker}" CommandParameter="ScrumMaster" Content="Start a Planning Poker Session" Width="Auto" Height="Auto" Margin="5" Grid.Row="7" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibility}}"/>
         <Button Style="{StaticResource MetroFlatButton}" Command="{Binding OpenPlanningPoker}" CommandParameter="Developer" Content="Join a Planning Poker Session" Width="Auto" Height="Auto" Margin="5" Grid.Row="8" Visibility="{Binding IsDeveloper, Converter={StaticResource booleanToVisibility}}"/>
     </Grid>

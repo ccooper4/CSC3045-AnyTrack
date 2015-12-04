@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net.Mail;
 using AnyTrack.Infrastructure.BackendSprintService;
+using MemoryStream = System.IO.MemoryStream;
 
 namespace AnyTrack.Infrastructure.ServiceGateways
 {
@@ -68,6 +71,16 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         }
 
         /// <summary>
+        /// Retrieves a specified sprint.
+        /// </summary>
+        /// <param name="sprintId">Id of the sprint</param>
+        /// <returns>The sprint</returns>
+        public ServiceSprint GetSprint(Guid sprintId)
+         {
+             return client.GetSprint(sprintId);
+         }
+
+        /// <summary>
         /// Saves the updated task hours
         /// </summary>
         /// <param name="tasks">The list of tasks</param>
@@ -101,11 +114,24 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         /// <summary>
         /// Manages the backlog of sprints
         /// </summary>
+        /// <param name="projectId">the id of the project</param>
         /// <param name="sprintId">The id of the sprint</param>
         /// <param name="updatedSprintBacklog">The updated backlog</param>
-        public void ManageSprintBacklog(Guid sprintId, List<ServiceSprintStory> updatedSprintBacklog)
+        public void ManageSprintBacklog(Guid projectId, Guid sprintId, List<ServiceSprintStory> updatedSprintBacklog)
         {
-            client.ManageSprintBacklog(sprintId, updatedSprintBacklog);
+            client.ManageSprintBacklog(projectId, sprintId, updatedSprintBacklog);
+        }
+
+        /// <summary>
+        /// Sending an email request via burndown
+        /// </summary>
+        /// <param name="senderEmailAddress">The email adddress to send the email to</param>
+        /// <param name="recipientEmailAddress">The email adddress where the email is sent from</param>
+        /// <param name="emailMessage">The email address of the </param>
+        /// <param name="emailAttachment">The email attachment of the </param>
+        public void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, MemoryStream emailAttachment)
+        {
+            client.SendEmailRequest(senderEmailAddress, recipientEmailAddress, emailMessage);
         }
 
         #endregion

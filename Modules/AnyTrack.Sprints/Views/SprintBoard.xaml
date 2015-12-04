@@ -34,7 +34,7 @@
 
             <StackPanel Grid.Column="0" Margin="10px" Orientation="Horizontal">
                 <ComboBox Margin="5px" IsEditable="True" BorderBrush="Gray" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200px" Height="26" ItemsSource="{Binding Projects}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}" />
-                <ComboBox Margin="5px"  IsEditable="True" BorderBrush="Gray" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200px" Height="26" ItemsSource="{Binding Sprints}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}" />
+                <ComboBox Margin="5px"  IsEditable="True" BorderBrush="Gray" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200px" Height="26" ItemsSource="{Binding Sprints}" DisplayMemberPath="Name" SelectedValuePath="SprintId" SelectedValue="{Binding SprintId}" />
             </StackPanel>
 
             <Button Margin="0,0,20px,0" Grid.Column="1" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Center" Height="Auto" Width="Auto" Command="{Binding EditTaskHoursCommand}">

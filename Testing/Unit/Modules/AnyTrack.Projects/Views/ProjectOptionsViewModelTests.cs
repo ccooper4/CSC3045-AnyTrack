@@ -92,25 +92,25 @@ namespace Unit.Modules.AnyTrack.Projects.Views.ProjectOptionsViewModelTests
             vm.Header.Should().Be("Project Options - " + summary.Name);
             vm.ProjectName.Should().Be(summary.Name);
             vm.ProjectDescription.Should().Be(summary.Description);
-            vm.ProjectID.Should().Be(summary.ProjectId.ToString());
+            vm.ProjectId.Should().Be(summary.ProjectId.ToString());
         }
 
         #endregion 
 
-        #region GoToBacklog(string projectId) Tests 
+        #region GoToBacklog() Tests 
 
         [Test]
         public void CallGoToBacklog()
         {
             NavigationParameters sentParams = null;
-            string projectId = Guid.NewGuid().ToString();
+            Guid projectId = Guid.NewGuid();
             vm.IsOpen = true;
 
             var regionManager = Substitute.For<IRegionManager>();
             regionManager.RequestNavigate(Arg.Any<string>(), Arg.Any<string>(), Arg.Do<NavigationParameters>(np => sentParams = np));
             vm.RegionManager = regionManager;
 
-            vm.Call("GoToBacklog", projectId);
+            vm.Call("GoToBacklog");
             sentParams.Should().NotBeNull();
             sentParams.ContainsKey("projectId").Should().BeTrue();
             regionManager.Received().RequestNavigate(RegionNames.MainRegion, "ProductBacklog", sentParams);
@@ -118,6 +118,31 @@ namespace Unit.Modules.AnyTrack.Projects.Views.ProjectOptionsViewModelTests
         }
 
         #endregion 
+
+        #region GoToEditProject()
+
+        [Test]
+        public void GoToEditProject()
+        {
+            NavigationParameters sentParams = null;
+            vm.ProjectId = new Guid();
+            vm.IsOpen = true;
+
+            var regionManager = Substitute.For<IRegionManager>();
+            regionManager.RequestNavigate(Arg.Any<string>(), Arg.Any<string>(), Arg.Do<NavigationParameters>(np => sentParams = np));
+            vm.RegionManager = regionManager;
+
+            vm.Call("GoToEditProject");
+            sentParams.Should().NotBeNull();
+            sentParams.ContainsKey("ProjectId").Should().BeTrue();
+            sentParams.ContainsKey("EditMode").Should().BeTrue();
+            sentParams["ProjectId"].Should().Be(vm.ProjectId);
+            sentParams["EditMode"].Should().Be("true");
+            regionManager.Received().RequestNavigate(RegionNames.MainRegion, "Project", sentParams);
+            vm.IsOpen.Should().BeFalse();
+        }
+
+        #endregion
     }
 
     #endregion 

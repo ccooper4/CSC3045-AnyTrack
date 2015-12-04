@@ -2,7 +2,11 @@
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -132,7 +136,8 @@ namespace AnyTrack.Backend.Service
             dataSprint.StartDate = updatedSprint.StartDate;
             dataSprint.EndDate = updatedSprint.EndDate;
 
-            var dataProject = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Sprints.Any(s => s.Id == sprintId));
+            var dataProject =
+                unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Sprints.Any(s => s.Id == sprintId));
 
             if (dataProject == null)
             {
@@ -147,7 +152,7 @@ namespace AnyTrack.Backend.Service
                 {
                     teamMembersToRemove.Add(UnassignDeveloper(dataProject, dataSprint.Id, teamMember.EmailAddress));
                 }
-            }            
+            }
 
             foreach (var teamMemberEmailAddress in updatedSprint.TeamEmailAddresses)
             {
@@ -161,11 +166,68 @@ namespace AnyTrack.Backend.Service
             {
                 dataProject.Sprints.SingleOrDefault(s => s.Id == sprintId).Team.Remove(user);
             }
-           
+
             unitOfWork.Commit();
         }
 
         /// <summary>
+        /// Retrieves a specified sprint.
+        /// </summary>
+        /// <param name="sprintId">Id of the sprint</param>
+        /// <returns>The sprint</returns>
+        public ServiceSprint GetSprint(Guid sprintId)
+        {
+            if (sprintId == Guid.Empty)
+            {
+                throw new ArgumentNullException("sprintId");
+            }
+
+            var dataSprint = unitOfWork.SprintRepository.Items.SingleOrDefault(s => s.Id == sprintId);
+
+            ServiceSprint sprint = new ServiceSprint
+            {
+                SprintId = sprintId,
+                ProjectId = dataSprint.Project.Id,
+                Name = dataSprint.Name,
+                StartDate = dataSprint.StartDate,
+                EndDate = dataSprint.EndDate,
+                Description = dataSprint.Description,
+            };
+
+            if (dataSprint.Team != null)
+            {
+                foreach (var developer in dataSprint.Team)
+                {
+                    sprint.TeamEmailAddresses.Add(developer.EmailAddress);
+                }
+            }
+
+            if (dataSprint.Backlog != null)
+            {
+                foreach (var sprintStory in dataSprint.Backlog)
+                {
+                    sprint.Backlog.Add(new ServiceSprintStory
+                    {
+                        SprintStoryId = sprintStory.Id,
+                        SprintId = dataSprint.Id,
+                        Story = new ServiceStory
+                        {
+                            StoryId = sprintStory.Story.Id,
+                            Summary = sprintStory.Story.Summary,
+                            ProjectId = dataSprint.Project.Id,
+                            ConditionsOfSatisfaction = sprintStory.Story.ConditionsOfSatisfaction,
+                            AsA = sprintStory.Story.AsA,
+                            IWant = sprintStory.Story.IWant,
+                            SoThat = sprintStory.Story.SoThat
+                        }
+                    });
+                }
+            }
+
+            return sprint;
+        }
+    
+    /// <summary>
         /// Gets all tasks for a sprint
         /// </summary>
         /// <param name="sprintId">The sprint id</param>
@@ -231,7 +293,7 @@ namespace AnyTrack.Backend.Service
             foreach (var dataTask in tasks)
             {
                 var remainingTaskHours =
-                    unitOfWork.TaskHourEstimateRepository.Items.Where(t => t.Id == dataTask.Id).ToList();
+                    unitOfWork.TaskHourEstimateRepository.Items.Where(t => t.Task.Id == dataTask.Id).ToList();
 
                 List<ServiceTaskHourEstimate> serviceRemainingTaskHours = new List<ServiceTaskHourEstimate>();
                 foreach (var dataRemainingTaskHours in remainingTaskHours)
@@ -239,7 +301,8 @@ namespace AnyTrack.Backend.Service
                     ServiceTaskHourEstimate serviceTaskHourEstimate = new ServiceTaskHourEstimate()
                     {
                         Estimate = dataRemainingTaskHours.Estimate,
-                        TaskId = dataTask.Id    
+                        TaskId = dataTask.Id,
+                        Created = dataRemainingTaskHours.Created
                     };
                     serviceRemainingTaskHours.Add(serviceTaskHourEstimate);
                 }
@@ -429,9 +492,10 @@ namespace AnyTrack.Backend.Service
         /// <summary>
         /// All stories in the backlog right now
         /// </summary>
+        /// <param name="projectId">The project id</param>
         /// <param name="sprintId">The sprint id</param>
         /// <param name="sprintStories">The Sprint stories</param>
-        public void ManageSprintBacklog(Guid sprintId, List<ServiceSprintStory> sprintStories)
+        public void ManageSprintBacklog(Guid projectId, Guid sprintId, List<ServiceSprintStory> sprintStories)
         {
             if (sprintId == null)
             {
@@ -487,19 +551,67 @@ namespace AnyTrack.Backend.Service
                 ////Then we need to remove this from the repo
                 if (!newSprintIds.Contains(story.Story.Id))
                 {
-                    var productBacklogStory = unitOfWork.StoryRepository.Items.Single(s => s.Id == story.Story.Id);
-                    productBacklogStory.InSprint = false;
                     removeStories.Add(story);
                 }
             }
 
             foreach (var story in removeStories)
             {
+                var project = unitOfWork.ProjectRepository.Items.SingleOrDefault(p => p.Id == projectId);
+
+                if (project == null)
+                {
+                    throw new NullReferenceException("project");
+                }
+
+                var dataStory = project.Stories.SingleOrDefault(s => s.Id == story.Story.Id);
+                if (dataStory == null)
+                {
+                    throw new NullReferenceException("dataStory");
+                }
+
+                dataStory.InSprint = false;
+                unitOfWork.Commit();
+                                
                 var sprintStory = unitOfWork.SprintStoryRepository.Items.Single(s => s.Story.Id == story.Story.Id);
                 unitOfWork.SprintStoryRepository.Delete(sprintStory);
             }
 
             unitOfWork.Commit();
+        }
+
+        /// <summary>
+        /// Sends an email request
+        /// </summary>
+        /// <param name="senderEmailAddress">The sender email address</param>
+        /// <param name="recipientEmailAddress">The recipient email message</param>
+        /// <param name="emailMessage">The email address</param>
+        /// <param name="emailAttachment">The email attachment of the </param>
+        public void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, MemoryStream emailAttachment)
+        {
+            var fromAddress = new MailAddress(senderEmailAddress, "From Name");
+            var toAddress = new MailAddress(recipientEmailAddress, "To Name");
+            const string ConstFromPassword = "password";
+            const string ConstSubject = "Subject";
+            const string ConstBody = "Body";
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromAddress.Address, ConstFromPassword)
+            };
+            using (var message = new MailMessage(fromAddress, toAddress)
+            {
+                Subject = ConstSubject,
+                Body = ConstBody,
+            })
+            {
+                smtp.Send(message);
+            }
         }
 
         #endregion
@@ -536,7 +648,9 @@ namespace AnyTrack.Backend.Service
                     user.Roles = new List<Role>();
                 }
 
-                if (!user.Roles.Contains(role))
+                var roles = user.Roles.Where(r => r.ProjectId == role.ProjectId && r.RoleName == role.RoleName && r.SprintId == role.SprintId).ToList();
+
+                if (roles.Count == 0)
                 {
                     user.Roles.Add(role);
                 }
@@ -579,7 +693,9 @@ namespace AnyTrack.Backend.Service
                     user.Roles = new List<Role>();
                 }
 
-                if (!user.Roles.Contains(role))
+                var roles = user.Roles.Where(r => r.ProjectId == role.ProjectId && r.RoleName == role.RoleName && r.SprintId == role.SprintId).ToList();
+
+                if (roles.Count == 0)
                 {
                     user.Roles.Add(role);
                 }
@@ -610,7 +726,7 @@ namespace AnyTrack.Backend.Service
                 throw new Exception("User does not exist");
             }
 
-            Role role = unitOfWork.RoleRepository.Items.SingleOrDefault(r => r.User == user && r.SprintId == sprintId);
+            Role role = unitOfWork.RoleRepository.Items.SingleOrDefault(r => r.User.EmailAddress == user.EmailAddress && (r.SprintId == sprintId) && r.RoleName == "Developer");
 
             if (role == null)
             {

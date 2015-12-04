@@ -19,6 +19,8 @@ namespace AnyTrack.Backend.Service.Model
         public ServiceProject()
         {
             ScrumMasterEmailAddresses = new List<string>();
+            Sprints = new List<ServiceSprint>();
+            Stories = new List<ServiceStory>();
         }
         #endregion
 

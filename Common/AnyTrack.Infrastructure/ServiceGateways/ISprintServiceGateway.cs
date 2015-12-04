@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Mail;
 using AnyTrack.Infrastructure.BackendSprintService;
+using MemoryStream = System.IO.MemoryStream;
 
 namespace AnyTrack.Infrastructure.ServiceGateways
 {
@@ -22,6 +24,13 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         /// <param name="sprintId">Id of the sprint to be edited</param>
         /// <param name="updatedSprint">ServiceSprint entity containing changes</param>
         void EditSprint(Guid sprintId, ServiceSprint updatedSprint);
+
+        /// <summary>
+        /// Retrieves a specified sprint.
+        /// </summary>
+        /// <param name="sprintId">Id of the sprint</param>
+        /// <returns>The sprint</returns>
+        ServiceSprint GetSprint(Guid sprintId);
 
         /// <summary>
         /// Gets all tasks for sprint
@@ -55,8 +64,18 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         /// <summary>
         /// Manages the sprint backlog
         /// </summary>
+        /// <param name="projectId">the id of the project</param>
         /// <param name="sprintId">the id of the sprint</param>
         /// <param name="updatedSprintBacklog">the updated sprint backlog</param>
-        void ManageSprintBacklog(Guid sprintId, List<ServiceSprintStory> updatedSprintBacklog);
+        void ManageSprintBacklog(Guid projectId, Guid sprintId, List<ServiceSprintStory> updatedSprintBacklog);
+
+        /// <summary>
+        /// Sends an email of a burndown chart
+        /// </summary>
+        /// <param name="senderEmailAddress">The email adddress to send the email to</param>
+        /// <param name="recipientEmailAddress">The email adddress where the email is sent from</param>
+        /// <param name="emailMessage">The email address of the </param>
+        /// <param name="emailAttachment">The email attachment of the </param>
+        void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, MemoryStream emailAttachment);
     }
 }
