@@ -6,15 +6,15 @@
              xmlns:prism="http://www.codeplex.com/prism"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             xmlns:converter="clr-namespace:AnyTrack.Projects.Converters"
+             xmlns:infraConverter="clr-namespace:AnyTrack.Infrastructure.Converters;assembly=AnyTrack.Infrastructure"
              xmlns:Views="clr-namespace:AnyTrack.Projects.Views.CustomControls"
              xml:lang="en-GB"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" Width="1000" Height="364.328">
 
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="booleanToVisibility"/>
-        <converter:DateConverter x:Key="dateConverter"/>
+        <infraConverter:BooleanToVisibilityConverter x:Key="booleanToVisibility"/>
+        <infraConverter:DateConverter x:Key="dateConverter"/>
     </UserControl.Resources>
 
     <Grid HorizontalAlignment="Stretch">
@@ -74,10 +74,6 @@
                     <Button Content="Search" DockPanel.Dock="Right" Command="{Binding SearchProductOwnerUserCommand}" BorderThickness="0" Background="LightGray" Height="4"/>
                     <TextBox Text="{Binding ProductOwnerSearchEmailAddress}" controls:TextBoxHelper.ClearTextButton="True" />
                 </DockPanel>
-                <StackPanel Orientation="Horizontal" Margin="10px, 20px, 10px, 2px" Visibility="{Binding POConfirmed, Converter={StaticResource booleanToVisibility}}">
-                    <Label FontWeight="Bold">Product owner confirmed:</Label>
-                    <Label FontWeight="Bold" Content="{Binding SelectProductOwnerEmailAddress}"></Label>
-                </StackPanel>
                 <DataGrid x:Name="poSearchGrid" Margin="10px, 20px, 10px, 2px" AutoGenerateColumns="False" IsReadOnly="True" IsEnabled="{Binding EnablePoSearchGrid}" ItemsSource="{Binding ProductOwnerSearchUserResults}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding FullName}" Width="2*"></DataGridTextColumn>
@@ -85,7 +81,23 @@
                         <DataGridTemplateColumn Width="2*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="Select" Command="{Binding Path=DataContext.SetProductOwnerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding EmailAddress}"></Button>
+                                    <Button Content="Select" Command="{Binding Path=DataContext.SetProductOwnerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding Path=.}"></Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <Label FontWeight="Bold" Margin="10px, 10px, 10px, 2px">Seleted Product owner:</Label>
+
+                <DataGrid Margin="10px, 10px, 10px, 2px" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding SelectedProductOwnerList}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding FullName}" Width="2*"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Email address" Binding="{Binding EmailAddress}" Width="4*"></DataGridTextColumn>
+                        <DataGridTemplateColumn Width="2*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Remove" Command="{Binding Path=DataContext.RemoveProductOwnerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding Path=.}"></Button>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

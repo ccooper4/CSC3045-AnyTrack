@@ -87,6 +87,7 @@ namespace AnyTrack.Sprints
             container.RegisterType<object, Views.Task>("Task");
             container.RegisterType<object, ManageSprintBacklog>("ManageSprintBacklog");
             container.RegisterType<object, BurnDown>("BurnDown");
+            container.RegisterType<object, BurnDownEmailOptions>("BurnDownEmailOptions");
 
             menuService.AddMenuItem(new MenuItem { Color = "Gray", Title = "Sprints", NavigationViewName = "SprintManager", Icon = NavigationIcons.Sprints });
             menuService.AddMenuItem(new MenuItem { Color = "Gray", Title = "Sprint Board", NavigationViewName = "SprintBoard", Icon = NavigationIcons.SprintBoard });

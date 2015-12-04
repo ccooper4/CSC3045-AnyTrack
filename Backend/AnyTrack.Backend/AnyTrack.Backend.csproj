@@ -142,65 +142,9 @@
     <Compile Include="Data\Model\User.cs" />
     <Compile Include="Faults\UserAlreadyExistsFault.cs" />
     <Compile Include="Data\Model\Project.cs" />
-    <Compile Include="Migrations\201510261641270_Adding user entity.cs" />
-    <Compile Include="Migrations\201510261641270_Adding user entity.Designer.cs">
-      <DependentUpon>201510261641270_Adding user entity.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510261759447_Making dates nullable.cs" />
-    <Compile Include="Migrations\201510261759447_Making dates nullable.Designer.cs">
-      <DependentUpon>201510261759447_Making dates nullable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510282334577_Adding migration to cover T1 and T2 changes.cs" />
-    <Compile Include="Migrations\201510282334577_Adding migration to cover T1 and T2 changes.Designer.cs">
-      <DependentUpon>201510282334577_Adding migration to cover T1 and T2 changes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510291434411_Adding Project.cs" />
-    <Compile Include="Migrations\201510291434411_Adding Project.Designer.cs">
-      <DependentUpon>201510291434411_Adding Project.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511031252215_Adding Stories and T4 changes to a single migration.cs" />
-    <Compile Include="Migrations\201511031252215_Adding Stories and T4 changes to a single migration.Designer.cs">
-      <DependentUpon>201511031252215_Adding Stories and T4 changes to a single migration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511031351105_Adding story name to models for backlog view.cs" />
-    <Compile Include="Migrations\201511031351105_Adding story name to models for backlog view.Designer.cs">
-      <DependentUpon>201511031351105_Adding story name to models for backlog view.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511031901088_Extra field on story model for story creation.cs" />
-    <Compile Include="Migrations\201511031901088_Extra field on story model for story creation.Designer.cs">
-      <DependentUpon>201511031901088_Extra field on story model for story creation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511042021444_Adding Story.cs" />
-    <Compile Include="Migrations\201511042021444_Adding Story.Designer.cs">
-      <DependentUpon>201511042021444_Adding Story.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511061057447_Configuring projects to users as many-many for scrum masters.cs" />
-    <Compile Include="Migrations\201511061057447_Configuring projects to users as many-many for scrum masters.Designer.cs">
-      <DependentUpon>201511061057447_Configuring projects to users as many-many for scrum masters.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511231434077_Adding Sprint Data Layer Entities.cs" />
-    <Compile Include="Migrations\201511231434077_Adding Sprint Data Layer Entities.Designer.cs">
-      <DependentUpon>201511231434077_Adding Sprint Data Layer Entities.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511301309017_Adding tasks and task hours.cs" />
-    <Compile Include="Migrations\201511301309017_Adding tasks and task hours.Designer.cs">
-      <DependentUpon>201511301309017_Adding tasks and task hours.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201512010554304_Adding boolean to a story %28InSprint%29.cs" />
-    <Compile Include="Migrations\201512010554304_Adding boolean to a story %28InSprint%29.Designer.cs">
-      <DependentUpon>201512010554304_Adding boolean to a story %28InSprint%29.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201512021344120_Adding combined migrationfor sprint team relationship and scrum master    .cs" />
-    <Compile Include="Migrations\201512021344120_Adding combined migrationfor sprint team relationship and scrum master    .Designer.cs">
-      <DependentUpon>201512021344120_Adding combined migrationfor sprint team relationship and scrum master    .cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201512031645308_Adding SprintStory estimate value.cs" />
-    <Compile Include="Migrations\201512031645308_Adding SprintStory estimate value.Designer.cs">
-      <DependentUpon>201512031645308_Adding SprintStory estimate value.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201512031808142_Added Completed Date to Sprint Story.cs" />
-    <Compile Include="Migrations\201512031808142_Added Completed Date to Sprint Story.Designer.cs">
-      <DependentUpon>201512031808142_Added Completed Date to Sprint Story.cs</DependentUpon>
+    <Compile Include="Migrations\201512041144485_Sprint 2 migration.cs" />
+    <Compile Include="Migrations\201512041144485_Sprint 2 migration.Designer.cs">
+      <DependentUpon>201512041144485_Sprint 2 migration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -221,6 +165,7 @@
     <Compile Include="Service\IProjectService.cs" />
     <Compile Include="Service\ISprintService.cs" />
     <Compile Include="Service\Model\ServiceChatMessage.cs" />
+    <Compile Include="Service\Model\ServicePlanningPokerEstimate.cs" />
     <Compile Include="Service\Model\ServicePlanningPokerPendingUser.cs" />
     <Compile Include="Service\Model\ServicePlanningPokerSession.cs" />
     <Compile Include="Service\Model\ServicePlanningPokerSessionState.cs" />
@@ -252,53 +197,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201510261641270_Adding user entity.resx">
-      <DependentUpon>201510261641270_Adding user entity.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510261759447_Making dates nullable.resx">
-      <DependentUpon>201510261759447_Making dates nullable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510282334577_Adding migration to cover T1 and T2 changes.resx">
-      <DependentUpon>201510282334577_Adding migration to cover T1 and T2 changes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510291434411_Adding Project.resx">
-      <DependentUpon>201510291434411_Adding Project.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511031252215_Adding Stories and T4 changes to a single migration.resx">
-      <DependentUpon>201511031252215_Adding Stories and T4 changes to a single migration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511031351105_Adding story name to models for backlog view.resx">
-      <DependentUpon>201511031351105_Adding story name to models for backlog view.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511031901088_Extra field on story model for story creation.resx">
-      <DependentUpon>201511031901088_Extra field on story model for story creation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511042021444_Adding Story.resx">
-      <DependentUpon>201511042021444_Adding Story.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511061057447_Configuring projects to users as many-many for scrum masters.resx">
-      <DependentUpon>201511061057447_Configuring projects to users as many-many for scrum masters.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511231434077_Adding Sprint Data Layer Entities.resx">
-      <DependentUpon>201511231434077_Adding Sprint Data Layer Entities.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511301309017_Adding tasks and task hours.resx">
-      <DependentUpon>201511301309017_Adding tasks and task hours.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512010554304_Adding boolean to a story %28InSprint%29.resx">
-      <DependentUpon>201512010554304_Adding boolean to a story %28InSprint%29.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512021344120_Adding combined migrationfor sprint team relationship and scrum master    .resx">
-      <DependentUpon>201512021344120_Adding combined migrationfor sprint team relationship and scrum master    .cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512031645308_Adding SprintStory estimate value.resx">
-      <DependentUpon>201512031645308_Adding SprintStory estimate value.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512031808142_Added Completed Date to Sprint Story.resx">
-      <DependentUpon>201512031808142_Added Completed Date to Sprint Story.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\Common\AnyTrack.SharedUtilities\AnyTrack.SharedUtilities.csproj">
       <Project>{4d4353ae-46fa-4b2e-b41a-a430fe6a8640}</Project>
       <Name>AnyTrack.SharedUtilities</Name>
@@ -306,6 +204,11 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201512041144485_Sprint 2 migration.resx">
+      <DependentUpon>201512041144485_Sprint 2 migration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets" Condition="Exists('..\..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets')" />

@@ -1009,8 +1009,17 @@ namespace Unit.Backend.AnyTrack.Backend.Service
 
             unitOfWork.ProjectRepository.Items.Returns(projectList.AsQueryable());
             unitOfWork.SprintRepository.Items.Returns(sprintList.AsQueryable());
-            unitOfWork.UserRepository.Items.Returns(userList.AsQueryable());
-            
+
+            var user = new User
+            {
+                Id = Guid.NewGuid(),
+                Roles = new List<Role>()
+            };
+
+            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
             service.AddSprint(projectList[0].Id, sprint);
             
             List<ServiceSprintStory> serv = service.GetSprintStories(sprint.SprintId);
@@ -1081,6 +1090,16 @@ namespace Unit.Backend.AnyTrack.Backend.Service
                     }
                 }
             };
+
+            var user = new User
+            {
+                Id = Guid.NewGuid(),
+                Roles = new List<Role>()
+            };
+
+            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
 
             unitOfWork.ProjectRepository.Items.Returns(projectList.AsQueryable());
             unitOfWork.SprintRepository.Items.Returns(sprintList.AsQueryable());
@@ -1233,6 +1252,16 @@ namespace Unit.Backend.AnyTrack.Backend.Service
             unitOfWork.StoryRepository.Items.Returns(storyList.AsQueryable());
             unitOfWork.SprintStoryRepository.Items.Returns(sprintStoryList.AsQueryable());
             #endregion
+
+            var user = new User
+            {
+                Id = Guid.NewGuid(),
+                Roles = new List<Role>()
+            };
+
+            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
 
             service.AddSprint(projectList[0].Id, sprint);
             sprintList.First().Backlog.Count().Should().Be(1);

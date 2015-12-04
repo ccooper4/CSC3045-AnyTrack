@@ -21,7 +21,11 @@
         <ComboBox Grid.Column="1" Grid.Row="0" IsEditable="True" BorderBrush="Gray" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200px" Height="26" ItemsSource="{Binding Projects}" DisplayMemberPath="ProjectName" SelectedValuePath="ProjectId" SelectedValue="{Binding ProjectId}" Margin="0,23,0,7"/>
         <Label Margin="228,-1,472,442" Grid.Column="1" Grid.RowSpan="2">Sprint:</Label>
         <ComboBox Grid.Column="1" Grid.Row="0" IsEditable="True" BorderBrush="Gray" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200px" Height="26" ItemsSource="{Binding Sprints}" DisplayMemberPath="Name" SelectedValuePath="SprintId" SelectedValue="{Binding SprintId}" Margin="230,23,0,7"/>
-        <oxy:Plot Grid.Column="1" Grid.Row="1" Title="{Binding Title}" Margin="0,0,0,109">
+        <Button Grid.Column="1" Content="Email" Margin="457,15,200,15" Command="{Binding EmailFlyoutCommand}"></Button>
+        
+        <oxy:PlotView Model="{Binding PlotModel}" Grid.Column="1" Grid.Row="1" Margin="0,0,0,0"></oxy:PlotView>
+        
+        <!--<oxy:Plot Model="{Binding PlotModel}"  Grid.Column="1" Grid.Row="1" Title="{Binding Title}" Margin="0,0,0,0">
             <oxy:Plot.Axes>
                 <oxy:DateTimeAxis Name="DateTimeAxis" Position="Bottom" MajorGridlineColor="#40FFFFFF" TicklineColor="Red" StringFormat="dd/MM/yy" IntervalType="Days" IntervalLength="100"/>
             </oxy:Plot.Axes>
@@ -35,7 +39,7 @@
                 MarkerFill="Red" 
                 MarkerType="Circle"/>
             </oxy:Plot.Series>
-        </oxy:Plot>
+        </oxy:Plot>-->
         <Button Command="{Binding GetChartForProjectAndSprint}" Grid.Column="1" HorizontalAlignment="Left" Margin="438,20,0,3">
             <Button.Content>
                 <Image Source="../Images/enter_icon.png" Width="20px" Height="20px"></Image>

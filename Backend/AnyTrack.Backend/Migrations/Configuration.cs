@@ -10,7 +10,7 @@ namespace AnyTrack.Backend.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(AnyTrack.Backend.Data.EntityUnitOfWork context)

@@ -122,6 +122,22 @@ namespace AnyTrack.Backend.Service
             project.StartedOn = updatedProject.StartedOn;
             project.VersionControl = updatedProject.VersionControl;
 
+            if (project.ProductOwner != null && updatedProject.ProductOwnerEmailAddress != null &&
+                project.ProductOwner.EmailAddress != updatedProject.ProductOwnerEmailAddress)
+            {
+                UnassignUserRole(project.Id, project.ProductOwner.EmailAddress, "Product Owner");
+                project.ProductOwner = AssignUserRole(project.Id, updatedProject.ProductOwnerEmailAddress, "Product Owner");
+            }
+            else if (project.ProductOwner == null && updatedProject.ProductOwnerEmailAddress != null)
+            {
+                project.ProductOwner = AssignUserRole(project.Id, updatedProject.ProductOwnerEmailAddress, "Product Owner");
+            }
+            else if (project.ProductOwner != null && updatedProject.ProductOwnerEmailAddress == null)
+            {
+                UnassignUserRole(project.Id, project.ProductOwner.EmailAddress, "Product Owner");
+                project.ProductOwner = null;
+            }
+
             List<User> smToRemove = new List<User>();
 
             // Assign Scrum Master

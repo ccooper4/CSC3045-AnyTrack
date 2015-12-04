@@ -160,7 +160,6 @@ namespace AnyTrack.Sprints.Views
 
         #endregion
 
-
         #region Methods
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
