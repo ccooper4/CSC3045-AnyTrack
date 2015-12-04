@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -184,6 +185,7 @@ namespace AnyTrack.Sprints.Views
         /// <summary>
         /// Gets or sets a value indicating summary
         /// </summary>
+        [Required]
         public string Summary
         {
             get
@@ -200,6 +202,7 @@ namespace AnyTrack.Sprints.Views
         /// <summary>
         /// Gets or sets a value indicating description
         /// </summary>
+        [Required]
         public string Description
         {
             get
@@ -216,6 +219,7 @@ namespace AnyTrack.Sprints.Views
         /// <summary>
         /// Gets or sets a value indicating COS
         /// </summary>
+        [Required]
         public string ConditionsOfSatisfaction
         {
             get
@@ -232,6 +236,7 @@ namespace AnyTrack.Sprints.Views
         /// <summary>
         /// Gets or sets a value indicating COS
         /// </summary>
+        [Required]
         public string HoursRemaining
         {
             get
@@ -465,38 +470,43 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         private void Save()
         {
-            ServiceTaskHourEstimate serviceTaskHourEstimate = new ServiceTaskHourEstimate()
+            this.ValidateViewModelNow();
+
+            if (!this.HasErrors)
             {
-                NewEstimate = double.Parse(this.HoursRemaining, System.Globalization.CultureInfo.InvariantCulture),
-                Estimate = double.Parse(this.HoursRemaining, System.Globalization.CultureInfo.InvariantCulture),
-                Created = DateTime.Now,
-                TaskId = this.taskId
-            };
+                ServiceTaskHourEstimate serviceTaskHourEstimate = new ServiceTaskHourEstimate()
+                {
+                    NewEstimate = double.Parse(this.HoursRemaining, System.Globalization.CultureInfo.InvariantCulture),
+                    Estimate = double.Parse(this.HoursRemaining, System.Globalization.CultureInfo.InvariantCulture),
+                    Created = DateTime.Now,
+                    TaskId = this.taskId
+                };
 
-            List<ServiceTaskHourEstimate> taskHourEstimates = new List<ServiceTaskHourEstimate>();
-            taskHourEstimates.Add(serviceTaskHourEstimate);
+                List<ServiceTaskHourEstimate> taskHourEstimates = new List<ServiceTaskHourEstimate>();
+                taskHourEstimates.Add(serviceTaskHourEstimate);
 
-            ServiceTask serviceTask = new ServiceTask()
-            {
-                TaskId = this.TaskId,
-                SprintStoryId = this.sprintStoryId,
-                Summary = this.Summary,
-                Description = this.Description,
-                ConditionsOfSatisfaction = this.ConditionsOfSatisfaction,
-                Blocked = this.Blocked,
-                TaskHourEstimates = taskHourEstimates
-            };
+                ServiceTask serviceTask = new ServiceTask()
+                {
+                    TaskId = this.TaskId,
+                    SprintStoryId = this.sprintStoryId,
+                    Summary = this.Summary,
+                    Description = this.Description,
+                    ConditionsOfSatisfaction = this.ConditionsOfSatisfaction,
+                    Blocked = this.Blocked,
+                    TaskHourEstimates = taskHourEstimates
+                };
 
-            //// Save task
-            sprintServiceGateway.AddTaskToSprintStory(this.SprintStoryId, serviceTask);
+                //// Save task
+                sprintServiceGateway.AddTaskToSprintStory(this.SprintStoryId, serviceTask);
 
-            //// Save update hours
-            //// sprintServiceGateway.AddTaskHourEstimateToTask(this.TaskId, serviceTaskHourEstimate);
+                //// Save update hours
+                //// sprintServiceGateway.AddTaskHourEstimateToTask(this.TaskId, serviceTaskHourEstimate);
 
-            NavigationParameters navParams = new NavigationParameters();
-            navParams.Add("sprintStory", this.serviceSprintStory);
-            this.ShowMetroFlyout("SprintStory", navParams);
-            this.IsOpen = false;
+                NavigationParameters navParams = new NavigationParameters();
+                navParams.Add("sprintStory", this.serviceSprintStory);
+                this.ShowMetroFlyout("SprintStory", navParams);
+                this.IsOpen = false;
+            }
         }
     }
 }

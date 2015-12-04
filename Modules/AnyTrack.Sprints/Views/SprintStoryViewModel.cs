@@ -547,6 +547,12 @@ namespace AnyTrack.Sprints.Views
                     this.Tasks = new ObservableCollection<ServiceTask>(tasks);
                 }
             }
+
+            if (navigationContext.Parameters.ContainsKey("projectId"))
+            {
+                var projectId = (Guid)navigationContext.Parameters["projectId"];
+                this.projectId = projectId;
+            }
         }
 
         /// <summary>
@@ -583,7 +589,7 @@ namespace AnyTrack.Sprints.Views
             sprintServiceGateway.SaveSprintStory(sprintStory);
             IsOpen = false;
 
-            NavigationParameters navParams = new NavigationParameters();
+            var navParams = new NavigationParameters();
             navParams.Add("sprintId", sprintId);
             navParams.Add("projectId", projectId);
             NavigateToItem("SprintBoard", navParams);
