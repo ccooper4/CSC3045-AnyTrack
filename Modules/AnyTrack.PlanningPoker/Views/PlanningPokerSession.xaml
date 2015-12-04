@@ -26,13 +26,6 @@
             <GroupBox.Header>
                 <TextBlock Foreground="White" Text="Stories" />
             </GroupBox.Header>
-            <!--ListBox ItemsSource="{Binding SprintStoriesCollection}" Padding="0,0,0,0" Margin="0,10px,0,0" BorderThickness="0">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Label Content="{Binding Path=Story.Summary}"></Label>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox-->
             <TabControl ItemsSource="{Binding SprintStoriesCollection}" TabStripPlacement="Left">
                 <TabControl.ItemTemplate>
                     <DataTemplate>
