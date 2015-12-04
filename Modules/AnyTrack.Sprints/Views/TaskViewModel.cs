@@ -438,7 +438,8 @@ namespace AnyTrack.Sprints.Views
                 var devs = sprintServiceGateway.GetDevTeamList(serviceSprintStory.SprintId);
                 this.Assignees.Clear();
                 this.Assignees.AddRange(devs);
-                this.SprintStoryId = serviceSprintStory.SprintStoryId;            }
+                this.SprintStoryId = serviceSprintStory.SprintStoryId;       
+            }
         }
 
         /// <summary>
