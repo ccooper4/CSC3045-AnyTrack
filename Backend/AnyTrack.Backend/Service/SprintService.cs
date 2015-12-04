@@ -552,20 +552,20 @@ namespace AnyTrack.Backend.Service
             SprintStory dataSprintStory = unitOfWork.SprintStoryRepository.Items.SingleOrDefault(
                 s => s.Id == sprintStoryId);
 
-            Task dataTask = new Task()
-            {
-                Assignee = assignee,
-                Blocked = serviceTask.Blocked,
-                ConditionsOfSatisfaction = serviceTask.ConditionsOfSatisfaction,
-                Description = serviceTask.Description,
-                Summary = serviceTask.Summary,
-                SprintStory = dataSprintStory,
-            };
+            var dataTask = dataSprintStory.Tasks.SingleOrDefault(t => t.Id == serviceTask.TaskId);
 
-            if (dataSprintStory != null)
+            if (dataTask == null)
             {
+                dataTask = new Task(); 
                 dataSprintStory.Tasks.Add(dataTask);
             }
+
+            dataTask.Assignee = assignee;
+            dataTask.Blocked = serviceTask.Blocked;
+            dataTask.ConditionsOfSatisfaction = serviceTask.ConditionsOfSatisfaction;
+            dataTask.Description = serviceTask.Description;
+            dataTask.Summary = serviceTask.Summary;
+            dataTask.SprintStory = dataSprintStory;
 
             unitOfWork.Commit();
 
@@ -605,6 +605,14 @@ namespace AnyTrack.Backend.Service
             };
 
             return serviceSprintStory;
+        }
+
+        /// <summary>
+        /// Save a sprint story
+        /// </summary>
+        /// <param name="sprintStory">the spritn story id</param>
+        public void SaveSprintStory(ServiceSprintStory sprintStory)
+        {
         }
 
         /// <summary>

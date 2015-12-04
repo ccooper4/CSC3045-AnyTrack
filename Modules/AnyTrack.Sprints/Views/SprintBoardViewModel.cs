@@ -397,6 +397,8 @@ namespace AnyTrack.Sprints.Views
         {
             var navParams = new NavigationParameters();
             navParams.Add("sprintStory", story);
+            navParams.Add("sprintId", sprintId);
+            navParams.Add("projectId", projectId);
             this.ShowMetroFlyout("SprintStory", navParams);
         }
 

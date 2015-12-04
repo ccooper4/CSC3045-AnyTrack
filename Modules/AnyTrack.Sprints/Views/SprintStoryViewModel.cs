@@ -47,6 +47,11 @@ namespace AnyTrack.Sprints.Views
         /// <summary>
         /// The project Id
         /// </summary>
+        private Guid projectId;
+
+        /// <summary>
+        /// The project Id
+        /// </summary>
         private Guid sprintStoryId;
 
         /// <summary>
@@ -523,6 +528,7 @@ namespace AnyTrack.Sprints.Views
                 //// IDs
                 this.SprintStoryId = sprintStory.SprintStoryId;
                 this.SprintId = sprintStory.SprintId;
+                this.projectId = sprintStory.Story.ProjectId;
 
                 //// Story attributes
                 this.Summary = sprintStory.Story.Summary;
@@ -575,6 +581,11 @@ namespace AnyTrack.Sprints.Views
             };
 
             IsOpen = false;
+
+            NavigationParameters navParams = new NavigationParameters();
+            navParams.Add("sprintId", sprintId);
+            navParams.Add("projectId", projectId);
+            NavigateToItem("SprintBoard", navParams);
         }
 
         /// <summary>

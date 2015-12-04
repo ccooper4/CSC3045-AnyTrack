@@ -115,7 +115,7 @@
                             <!-- Status -->
                             <StackPanel Margin="5" Grid.Row="0">
                                 <Label HorizontalAlignment="Left" Content="Status" FontSize="14"></Label>
-                                <ComboBox ItemsSource="{Binding AllStatus}" DisplayMemberPath="." SelectedValuePath="Status" SelectedValue="{Binding Status}" ></ComboBox>
+                                <ComboBox ItemsSource="{Binding AllStatus}" DisplayMemberPath="." SelectedValuePath="." SelectedValue="{Binding Status}" ></ComboBox>
                             </StackPanel>
 
                             <StackPanel Margin="5" Grid.Row="1" Orientation="Horizontal">
