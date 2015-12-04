@@ -24,19 +24,74 @@ namespace AnyTrack.Sprints.Views
     public class ManageSprintBacklogViewModel : ValidatedBindableBase, INavigationAware
     {
         #region Fields
+        /// <summary>
+        /// Sprint service
+        /// </summary>
         private ISprintServiceGateway sprintService;
+
+        /// <summary>
+        /// Project service
+        /// </summary>
         private IProjectServiceGateway projectService;
+        
+        /// <summary>
+        /// Selected sprint
+        /// </summary>
         private ServiceSprintStory selectedSprint;
+        
+        /// <summary>
+        /// Selected product backlog story
+        /// </summary>
         private ServiceStorySummary selectedProductStory;
+ 
+        /// <summary>
+        /// Index of selected sprint story
+        /// </summary>
         private int selectedSprintIndex;
+
+        /// <summary>
+        /// Index of selected product backlog story
+        /// </summary>
         private int selectedProductStoryIndex;
+
+        /// <summary>
+        /// Service project instance
+        /// </summary>
         private ServiceProject project;
+
+        /// <summary>
+        /// Collection of current product backlog stories which can be saved later
+        /// </summary>
         private ObservableCollection<ServiceStorySummary> productBacklog;
+
+        /// <summary>
+        /// Collection of current sprint stories which can be saved later
+        /// </summary>
         private ObservableCollection<ServiceSprintStory> sprintBacklog;
+
+        /// <summary>
+        /// Summary of the story
+        /// </summary>
         private string summary;
+
+        /// <summary>
+        /// Project id
+        /// </summary>
         private Guid projectId;
+
+        /// <summary>
+        /// Sprint id
+        /// </summary>
         private Guid sprintId;
+
+        /// <summary>
+        /// Start date of the sprint
+        /// </summary>
         private DateTime sprintStartDate;
+
+        /// <summary>
+        /// Sprint Active
+        /// </summary>
         private bool sprintActive;
         #endregion
 
@@ -192,6 +247,9 @@ namespace AnyTrack.Sprints.Views
         {
         }
 
+        /// <summary>
+        /// Add the story to the sprint, if the sprint isnt active
+        /// </summary>
         private void AddToSprint()
         {
             if (!SprintActive)
@@ -208,6 +266,9 @@ namespace AnyTrack.Sprints.Views
             }
         }
 
+        /// <summary>
+        /// Adds all product backlog stories to the sprint, if the sprint isnt active
+        /// </summary>
         private void AddAllToSprint()
         {
             if (!SprintActive)
@@ -224,6 +285,9 @@ namespace AnyTrack.Sprints.Views
             }
         }
 
+        /// <summary>
+        /// Removes all stories from the sprint, if the sprint isnt active
+        /// </summary>
         private void RemoveFromSprint()
         {
             if (!SprintActive)
@@ -240,6 +304,9 @@ namespace AnyTrack.Sprints.Views
             }
         }
 
+        /// <summary>
+        /// Removes all stories from sprint, if sprint is not active
+        /// </summary>
         private void RemoveAllFromSprint()
         {
             if (!SprintActive)
@@ -256,6 +323,9 @@ namespace AnyTrack.Sprints.Views
             }
         }
 
+        /// <summary>
+        /// This is put in place to hide any product backlog story that also is a sprint story
+        /// </summary>
         private void PreventDuplicateStories()
         {
             foreach (var story in SprintBacklog)
@@ -267,6 +337,9 @@ namespace AnyTrack.Sprints.Views
             }
         }
 
+        /// <summary>
+        /// Once this method is called, it saves the current states of the two observable collections and writes to DB
+        /// </summary>
         private void Save()
         {
             var callbackAction = new Action<MessageDialogResult>(mdr =>
@@ -284,6 +357,9 @@ namespace AnyTrack.Sprints.Views
             ShowMetroDialog("Save Changes?", "Are you sure you want to save?", MessageDialogStyle.AffirmativeAndNegative, callbackAction); 
         }
 
+        /// <summary>
+        /// Cancel action
+        /// </summary>
         private void Cancel()
         {
             var callbackAction = new Action<MessageDialogResult>(mdr =>
@@ -301,6 +377,11 @@ namespace AnyTrack.Sprints.Views
 
         }
 
+        /// <summary>
+        /// Conversion from product story to sprint story
+        /// </summary>
+        /// <param name="sprintStory">sprint story</param>
+        /// <returns>product story</returns>
         private ServiceStorySummary MapSprintStoryToProductStory(ServiceSprintStory sprintStory)
         {
             ServiceStorySummary productStory = new ServiceStorySummary();
@@ -310,6 +391,12 @@ namespace AnyTrack.Sprints.Views
             return productStory;
         }
 
+
+        /// <summary>
+        /// Conversion from sprint story to product story
+        /// </summary>
+        /// <param name="productStory">product story</param>
+        /// <returns>sprint story</returns>
         private ServiceSprintStory MapProductStoryToSprintStory(ServiceStorySummary productStory)
         {
             ServiceSprintStory sprintStory = new ServiceSprintStory();
