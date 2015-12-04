@@ -184,6 +184,15 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
             NotifyClientOfNewMessageFromServerEvent(this, msg);
         }
 
+        /// <summary>
+        /// Allows a scrum master to show the estimates. 
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        public void ShowEstimates(Guid sessionId)
+        {
+            client.ShowEstimates(sessionId);
+        }
+
         #endregion 
 
         #region Callback Methods

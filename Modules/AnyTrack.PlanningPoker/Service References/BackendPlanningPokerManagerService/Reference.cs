@@ -657,6 +657,12 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPlanningPokerManagerService/SubmitEstimateToServer")]
         System.Threading.Tasks.Task SubmitEstimateToServerAsync(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerEstimate estimate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/ShowEstimates", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/ShowEstimatesResponse")]
+        void ShowEstimates(System.Guid sessionId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/ShowEstimates", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/ShowEstimatesResponse")]
+        System.Threading.Tasks.Task ShowEstimatesAsync(System.Guid sessionId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -784,6 +790,14 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         
         public System.Threading.Tasks.Task SubmitEstimateToServerAsync(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServicePlanningPokerEstimate estimate) {
             return base.Channel.SubmitEstimateToServerAsync(estimate);
+        }
+        
+        public void ShowEstimates(System.Guid sessionId) {
+            base.Channel.ShowEstimates(sessionId);
+        }
+        
+        public System.Threading.Tasks.Task ShowEstimatesAsync(System.Guid sessionId) {
+            return base.Channel.ShowEstimatesAsync(sessionId);
         }
     }
 }

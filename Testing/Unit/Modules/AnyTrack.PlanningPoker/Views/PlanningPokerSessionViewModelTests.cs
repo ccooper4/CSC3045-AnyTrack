@@ -13,6 +13,8 @@ using AnyTrack.PlanningPoker.BackendPlanningPokerManagerService;
 using System.Reflection;
 using AnyTrack.Infrastructure;
 using System.Security.Principal;
+using AnyTrack.Infrastructure.Providers;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewModelTests
 {
@@ -255,6 +257,52 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewMode
 
 
         #endregion
+
+        #region ShowUserEstimates() Tests 
+
+        [Test]
+        public void CallShowUserEstimates()
+        {
+            var sessionId = Guid.NewGuid();
+
+            vm.GetType().GetField("sessionId", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(vm, sessionId);
+
+            vm.Call("ShowUserEstimates");
+
+            gateway.Received().ShowEstimates(sessionId);
+            vm.ShowEstimates.Should().BeTrue();
+            vm.HideEstimates.Should().BeFalse();
+        }
+
+        #endregion 
+
+        #region SubmitEstimateToServer(string estimate) Tests 
+
+        [Test]
+        public void CallSubmitEstimateToServer()
+        {
+            var sessionId = Guid.NewGuid();
+            var estimate = "10";
+
+            vm.GetType().GetField("sessionId", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(vm, sessionId);
+
+            ServicePlanningPokerEstimate sentEstimate = null;
+            gateway.SubmitEstimateToServer(Arg.Do<ServicePlanningPokerEstimate>(a => sentEstimate = a));
+
+            vm.MainWindow = Substitute.For<WindowProvider>();
+
+            vm.Call("SubmitEstimateToServer", estimate);
+
+            sentEstimate.Should().NotBeNull();
+            sentEstimate.Estimate.Should().Be(10);
+            sentEstimate.SessionID.Should().Be(sessionId);
+
+            vm.MainWindow.Received().ShowMessageAsync("Going to submit estimate", "10", MessageDialogStyle.Affirmative);
+            gateway.Received().SubmitEstimateToServer(sentEstimate);
+
+        }
+
+        #endregion 
 
     }
 

@@ -507,6 +507,43 @@ namespace AnyTrack.Backend.Service
             }
         }
 
+        /// <summary>
+        /// Allows a scrum master to show the estimates. 
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        public void ShowEstimates(Guid sessionId)
+        {
+            var sessions = activeSessions.GetListOfSessions();
+
+            if (!sessions.ContainsKey(sessionId))
+            {
+                throw new ArgumentException("No session found", "sessionId");
+            }
+
+            var session = sessions[sessionId];
+
+            var thisUserEmail = Thread.CurrentPrincipal.Identity.Name;
+
+            var userInSession = session.Users.SingleOrDefault(u => u.EmailAddress == thisUserEmail);
+
+            if (userInSession == null)
+            {
+                throw new InvalidOperationException("User not found in session");
+            }
+
+            if (userInSession.UserID != session.HostID)
+            {
+                throw new InvalidOperationException("User is not the scrum master");
+            }
+
+            session.State = ServicePlanningPokerSessionState.ShowingEstimates;
+
+            foreach (var user in session.Users.Where(u => u.EmailAddress != thisUserEmail))
+            {
+                user.ClientChannel.NotifyClientOfSessionUpdate(session);
+            }
+        }
+
         #endregion 
 
         #region Helpers 

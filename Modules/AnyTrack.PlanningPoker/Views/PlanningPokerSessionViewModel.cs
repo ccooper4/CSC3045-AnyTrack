@@ -342,14 +342,9 @@ namespace AnyTrack.PlanningPoker.Views
         /// </summary>
         private void ShowUserEstimates()
         {
-            var session = serviceGateway.RetrieveSessionInfo(this.sessionId);
-
-            foreach (var user in session.Users)
-            {
-                RecievedEstimates.Add(user.Estimate);
-            }
-
-            ShowEstimates = true;
+            serviceGateway.ShowEstimates(sessionId);
+            this.ShowEstimates = true;
+            this.HideEstimates = false; 
         }
 
         /// <summary>

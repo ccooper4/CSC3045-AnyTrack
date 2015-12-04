@@ -81,5 +81,12 @@ namespace AnyTrack.Backend.Service
         /// <param name="estimate">The estimate object</param>
         [OperationContract(IsOneWay = true)]
         void SubmitEstimateToServer(ServicePlanningPokerEstimate estimate);
+
+        /// <summary>
+        /// Allows a scrum master to show the estimates. 
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        [OperationContract]
+        void ShowEstimates(Guid sessionId);
     }        
 }

@@ -106,6 +106,12 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         /// <param name="estimate">The estimate to submit</param>
         void SubmitEstimateToServer(ServicePlanningPokerEstimate estimate);
 
+        /// <summary>
+        /// Allows a scrum master to show the estimates. 
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        void ShowEstimates(Guid sessionId); 
+
         #endregion
     }
 }

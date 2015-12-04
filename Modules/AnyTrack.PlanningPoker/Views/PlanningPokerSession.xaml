@@ -106,7 +106,7 @@
                 </ListBox>
             </GroupBox>
 
-            <Button Grid.Row="1" Content="Show Estimates" Command="{Binding ShowEstimates}" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibilityConverter}}" Background="LightGray" />
+            <Button Grid.Row="1" Content="Show Estimates" Command="{Binding ShowEstimatesCommand}" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibilityConverter}}" Background="LightGray" />
 
             <GroupBox Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <GroupBox.Header>

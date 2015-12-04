@@ -292,6 +292,20 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.ServiceGateways.PlanningPokerManag
 
         #endregion 
 
+        #region ShowEstimates(Guid sessionId) Tests 
+
+        [Test]
+        public void CallShowEstimates()
+        {
+            var sessionId = Guid.NewGuid();
+
+            serviceGateway.ShowEstimates(sessionId);
+
+            client.Received().ShowEstimates(sessionId);
+        }
+
+        #endregion 
+
     }
 
     #endregion 
