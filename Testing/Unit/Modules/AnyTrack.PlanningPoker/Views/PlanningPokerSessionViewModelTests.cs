@@ -131,7 +131,8 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewMode
             vm.Call("SubmitMessageToServer");
 
             sentMessage.Should().NotBeNull();
-            sentMessage.Message.Should().Be(vm.MessageToSend);
+            sentMessage.Message.Should().Be("Test");
+            vm.MessageToSend.Should().BeEmpty();
             sentMessage.Name.Should().Be("Me");
             gateway.Received().SubmitMessageToServer(sentMessage);
             vm.MessageHistories.Count.Should().Be(1);
@@ -191,6 +192,10 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewMode
                         }
                     }
                 }.ToArray(),
+                Stories = new List<ServiceSprintStory>()
+                {
+                    new ServiceSprintStory()
+                }.ToArray(),
                 State = ServicePlanningPokerSessionState.GettingEstimates,
                 HostID = userId
             };
@@ -204,6 +209,7 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewMode
             vm.RecievedEstimates.Single().Name.Should().Be("New");
             vm.ShowEstimates.Should().BeFalse();
             vm.HideEstimates.Should().BeTrue();
+            vm.SprintStoriesCollection.Single().Equals(session.Stories.Single());
         }
 
         [Test]
@@ -244,6 +250,10 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewMode
                         }
                     }
                 }.ToArray(),
+                Stories = new List<ServiceSprintStory>()
+                {
+                    new ServiceSprintStory()
+                }.ToArray(),
                 State = ServicePlanningPokerSessionState.ShowingEstimates,
                 HostID = userId
             };
@@ -258,6 +268,7 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewMode
             vm.ShowEstimates.Should().BeTrue();
             vm.HideEstimates.Should().BeFalse();
             vm.Users.First().Should().Be(session.Users.First());
+            vm.SprintStoriesCollection.Single().Equals(session.Stories.Single());
         }
 
 

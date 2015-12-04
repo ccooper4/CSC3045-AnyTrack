@@ -63,11 +63,6 @@ namespace AnyTrack.Backend.Service
         /// <param name="sprintServiceGateway">The sprint gateway.</param>
         public PlanningPokerManagerService(IUnitOfWork unitOfWork, OperationContextProvider context, AvailableClientsProvider availableClients, ActivePokerSessionsProvider activeSessions, ISprintService sprintServiceGateway)
         {
-            if (sprintServiceGateway == null)
-            {
-                throw new ArgumentNullException("unitOfWork");
-            }
-
             if (unitOfWork == null)
             {
                 throw new ArgumentNullException("unitOfWork");
@@ -86,6 +81,11 @@ namespace AnyTrack.Backend.Service
             if (activeSessions == null)
             {
                 throw new ArgumentNullException("activeSessions");
+            }
+
+            if (sprintServiceGateway == null)
+            {
+                throw new ArgumentNullException("sprintServiceGateway");
             }
 
             this.unitOfWork = unitOfWork;

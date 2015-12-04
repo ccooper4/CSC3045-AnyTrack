@@ -36,6 +36,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
             contextProvider = Substitute.For<OperationContextProvider>();
             activeSessionProvider = Substitute.For<ActivePokerSessionsProvider>();
             pendingClientsProvider = Substitute.For<AvailableClientsProvider>();
+            sprintStoryService = Substitute.For<ISprintService>();
 
             service = new PlanningPokerManagerService(unitOfWork, contextProvider, pendingClientsProvider, activeSessionProvider, sprintStoryService);
         }
