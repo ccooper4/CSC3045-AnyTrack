@@ -580,6 +580,7 @@ namespace AnyTrack.Sprints.Views
                 SprintStoryId = this.SprintStoryId,
             };
 
+            sprintServiceGateway.SaveSprintStory(sprintStory);
             IsOpen = false;
 
             NavigationParameters navParams = new NavigationParameters();

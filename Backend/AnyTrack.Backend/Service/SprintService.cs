@@ -613,6 +613,21 @@ namespace AnyTrack.Backend.Service
         /// <param name="sprintStory">the spritn story id</param>
         public void SaveSprintStory(ServiceSprintStory sprintStory)
         {
+            var sprint = unitOfWork.SprintRepository.Items.SingleOrDefault(s => s.Id == sprintStory.SprintId);
+
+            if (sprint != null)
+            {
+                SprintStory dataSprintStory = new SprintStory()
+                {
+                    Id = sprintStory.SprintStoryId,
+                    Status = sprintStory.Status,
+                    StoryEstimate = sprintStory.StoryEstimate,
+                };
+
+                sprint.Backlog.Add(dataSprintStory);
+            }
+
+            unitOfWork.Commit();
         }
 
         /// <summary>

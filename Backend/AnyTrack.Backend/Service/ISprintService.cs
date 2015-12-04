@@ -73,6 +73,13 @@ namespace AnyTrack.Backend.Service
         List<ServiceTask> GetAllTasksForSprintStory(Guid sprintStoryId);
 
         /// <summary>
+        /// Save a sprint story
+        /// </summary>
+        /// <param name="sprintStory">the spritn story id</param>
+        [OperationContract]
+        void SaveSprintStory(ServiceSprintStory sprintStory);
+
+        /// <summary>
         /// Method to save the update hours for tasks
         /// </summary>
         /// <param name="tasks">List of tasks to save</param>

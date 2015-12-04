@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Mail;
 using System.Runtime.Remoting;
+using System.Security.RightsManagement;
 using AnyTrack.Infrastructure.BackendSprintService;
 using MemoryStream = System.IO.MemoryStream;
 
@@ -58,6 +59,15 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         public void AddSprint(Guid projectId, ServiceSprint sprint)
         {
             client.AddSprint(projectId, sprint);
+        }
+
+        /// <summary>
+        /// Save a sprint story
+        /// </summary>
+        /// <param name="sprintStory">the spritn story id</param>
+        public void SaveSprintStory(ServiceSprintStory sprintStory)
+        {
+            client.SaveSprintStory(sprintStory);
         }
 
         /// <summary>

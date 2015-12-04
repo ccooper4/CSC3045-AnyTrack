@@ -32,6 +32,12 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         void EditSprint(Guid sprintId, ServiceSprint updatedSprint);
 
         /// <summary>
+        /// Save a sprint story
+        /// </summary>
+        /// <param name="sprintStory">the spritn story id</param>
+        void SaveSprintStory(ServiceSprintStory sprintStory);
+
+        /// <summary>
         /// Retrieves a specified sprint.
         /// </summary>
         /// <param name="sprintId">Id of the sprint</param>
