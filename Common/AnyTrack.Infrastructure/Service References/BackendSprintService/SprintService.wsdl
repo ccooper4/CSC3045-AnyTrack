@@ -10,11 +10,11 @@
       <xsd:import schemaLocation="http://localhost:5789/SprintService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="ISprintService_GetAllTasksForSprintStory_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetAllTasksForSprintStory" />
+  <wsdl:message name="ISprintService_DeleteTask_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteTask" />
   </wsdl:message>
-  <wsdl:message name="ISprintService_GetAllTasksForSprintStory_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetAllTasksForSprintStoryResponse" />
+  <wsdl:message name="ISprintService_DeleteTask_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteTaskResponse" />
   </wsdl:message>
   <wsdl:message name="ISprintService_AddSprint_InputMessage">
     <wsdl:part name="parameters" element="tns:AddSprint" />
@@ -45,6 +45,18 @@
   </wsdl:message>
   <wsdl:message name="ISprintService_GetAllTasksForSprint_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAllTasksForSprintResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_GetAllTasksForSprintStory_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllTasksForSprintStory" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_GetAllTasksForSprintStory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllTasksForSprintStoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_SaveSprintStory_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveSprintStory" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_SaveSprintStory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveSprintStoryResponse" />
   </wsdl:message>
   <wsdl:message name="ISprintService_SaveUpdatedTaskHours_InputMessage">
     <wsdl:part name="parameters" element="tns:SaveUpdatedTaskHours" />
@@ -118,10 +130,16 @@
   <wsdl:message name="ISprintService_SendEmailRequest_OutputMessage">
     <wsdl:part name="parameters" element="tns:SendEmailRequestResponse" />
   </wsdl:message>
+  <wsdl:message name="ISprintService_GetSprintTeamList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSprintTeamList" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_GetSprintTeamList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSprintTeamListResponse" />
+  </wsdl:message>
   <wsdl:portType name="ISprintService">
-    <wsdl:operation name="GetAllTasksForSprintStory">
-      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetAllTasksForSprintStory" message="tns:ISprintService_GetAllTasksForSprintStory_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetAllTasksForSprintStoryResponse" message="tns:ISprintService_GetAllTasksForSprintStory_OutputMessage" />
+    <wsdl:operation name="DeleteTask">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/DeleteTask" message="tns:ISprintService_DeleteTask_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/DeleteTaskResponse" message="tns:ISprintService_DeleteTask_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="AddSprint">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/AddSprint" message="tns:ISprintService_AddSprint_InputMessage" />
@@ -142,6 +160,14 @@
     <wsdl:operation name="GetAllTasksForSprint">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetAllTasksForSprint" message="tns:ISprintService_GetAllTasksForSprint_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetAllTasksForSprintResponse" message="tns:ISprintService_GetAllTasksForSprint_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllTasksForSprintStory">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetAllTasksForSprintStory" message="tns:ISprintService_GetAllTasksForSprintStory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetAllTasksForSprintStoryResponse" message="tns:ISprintService_GetAllTasksForSprintStory_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveSprintStory">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/SaveSprintStory" message="tns:ISprintService_SaveSprintStory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/SaveSprintStoryResponse" message="tns:ISprintService_SaveSprintStory_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="SaveUpdatedTaskHours">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/SaveUpdatedTaskHours" message="tns:ISprintService_SaveUpdatedTaskHours_InputMessage" />
@@ -191,11 +217,15 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/SendEmailRequest" message="tns:ISprintService_SendEmailRequest_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/SendEmailRequestResponse" message="tns:ISprintService_SendEmailRequest_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetSprintTeamList">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetSprintTeamList" message="tns:ISprintService_GetSprintTeamList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetSprintTeamListResponse" message="tns:ISprintService_GetSprintTeamList_OutputMessage" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ISprintService" type="tns:ISprintService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetAllTasksForSprintStory">
-      <soap:operation soapAction="http://tempuri.org/ISprintService/GetAllTasksForSprintStory" style="document" />
+    <wsdl:operation name="DeleteTask">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/DeleteTask" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -241,6 +271,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetAllTasksForSprint">
       <soap:operation soapAction="http://tempuri.org/ISprintService/GetAllTasksForSprint" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllTasksForSprintStory">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/GetAllTasksForSprintStory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveSprintStory">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/SaveSprintStory" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -349,6 +397,15 @@
     </wsdl:operation>
     <wsdl:operation name="SendEmailRequest">
       <soap:operation soapAction="http://tempuri.org/ISprintService/SendEmailRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSprintTeamList">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/GetSprintTeamList" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Mail;
+using System.Runtime.Remoting;
+using System.Security.RightsManagement;
 using AnyTrack.Infrastructure.BackendSprintService;
 using AnyTrack.Infrastructure.Security;
 using MemoryStream = System.IO.MemoryStream;
@@ -54,13 +56,12 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         #region Methods
 
         /// <summary>
-        /// Get all the tasks of a sprint story.
+        /// Delete a task. 
         /// </summary>
-        /// <param name="sprintStoryId">The id of the sprint story</param>
-        /// <returns>A list of tasks</returns>
-        public List<ServiceTask> GetAllTasksForSprintStory(Guid sprintStoryId)
+        /// <param name="serviceTaskId">the task to delete</param>
+        public void DeleteTask(Guid serviceTaskId)
         {
-            return client.GetAllTasksForSprintStory(sprintStoryId);
+            client.DeleteTask(serviceTaskId);
         }
 
         /// <summary>
@@ -72,6 +73,15 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         {
             client.AddSprint(projectId, sprint);
             UserDetailsStore.LoggedInUserPrincipal = new ServiceUserPrincipal(accServiceGateway.RefreshLoginPrincipal(), UserDetailsStore.AuthCookie);
+        }
+
+        /// <summary>
+        /// Save a sprint story
+        /// </summary>
+        /// <param name="sprintStory">the spritn story id</param>
+        public void SaveSprintStory(ServiceSprintStory sprintStory)
+        {
+            client.SaveSprintStory(sprintStory);
         }
 
         /// <summary>
@@ -103,6 +113,16 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         public List<ServiceTask> GetAllTasksForSprintCurrentUser(Guid sprintId)
         {
             return new List<ServiceTask>(client.GetAllTasksForSprint(sprintId));
+        }
+
+        /// <summary>
+        /// Get all the tasks for a given sprint story.
+        /// </summary>
+        /// <param name="sprintStoryId">the id of the sprint story</param>
+        /// <returns>the list of tasks</returns>
+        public List<ServiceTask> GetAllTasksForSprintStory(Guid sprintStoryId)
+        {
+            return client.GetAllTasksForSprintStory(sprintStoryId);
         }
 
         /// <summary>
@@ -249,6 +269,16 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         public double GetTotalStoryPointEstimate(Guid sprintId)
         {
             return client.GetTotalStoryPointEstimate(sprintId);
+        }
+
+        /// <summary>
+        /// Gets the dev team
+        /// </summary>
+        /// <param name="sprintId">The sprint</param>
+        /// <returns>A list of team devs</returns>
+        public List<ServiceUser> GetDevTeamList(Guid sprintId)
+        {
+            return client.GetSprintTeamList(sprintId);
         }
 
         #endregion

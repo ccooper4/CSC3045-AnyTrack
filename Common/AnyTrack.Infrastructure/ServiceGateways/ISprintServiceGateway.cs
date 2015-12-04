@@ -12,11 +12,10 @@ namespace AnyTrack.Infrastructure.ServiceGateways
     public interface ISprintServiceGateway
     {
         /// <summary>
-        /// Get all the tasks of a sprint story.
+        /// Delete a task. 
         /// </summary>
-        /// <param name="sprintStoryId">The id of the sprint story</param>
-        /// <returns>A list of tasks</returns>
-        List<ServiceTask> GetAllTasksForSprintStory(Guid sprintStoryId);
+        /// <param name="serviceTaskId">the task to delete</param>
+        void DeleteTask(Guid serviceTaskId);
 
         /// <summary>
         /// Creates a sprint and adds it to the project.
@@ -31,6 +30,12 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         /// <param name="sprintId">Id of the sprint to be edited</param>
         /// <param name="updatedSprint">ServiceSprint entity containing changes</param>
         void EditSprint(Guid sprintId, ServiceSprint updatedSprint);
+
+        /// <summary>
+        /// Save a sprint story
+        /// </summary>
+        /// <param name="sprintStory">the spritn story id</param>
+        void SaveSprintStory(ServiceSprintStory sprintStory);
 
         /// <summary>
         /// Retrieves a specified sprint.
@@ -52,6 +57,13 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         /// <param name="sprintId">The sprint id</param>
         /// <returns>A list of tasks</returns>
         List<ServiceTask> GetAllTasksForSprintCurrentUser(Guid sprintId);
+
+        /// <summary>
+        /// Get all the tasks for a given sprint story.
+        /// </summary>
+        /// <param name="sprintStoryId">the id of the sprint story</param>
+        /// <returns>the list of tasks</returns>
+        List<ServiceTask> GetAllTasksForSprintStory(Guid sprintStoryId);
 
         /// <summary>
         /// Gets the end date of the sprint
@@ -140,7 +152,14 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         /// <param name="emailMessage">The email address of the </param>
         /// <param name="emailAttachment">The email attachment of the </param>
         void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, MemoryStream emailAttachment);
-        
+
+        /// <summary>
+        /// Gets the dev team
+        /// </summary>
+        /// <param name="sprintId">The sprint</param>
+        /// <returns>A list of team devs</returns>
+        List<ServiceUser> GetDevTeamList(Guid sprintId);
+
         /// <summary>
         /// Acquires the maxmium story estimate for a given sprint
         /// </summary>

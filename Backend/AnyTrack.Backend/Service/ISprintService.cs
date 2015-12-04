@@ -16,14 +16,13 @@ namespace AnyTrack.Backend.Service
     /// </summary>
     [ServiceContract]
     public interface ISprintService
-    {
+    {        
         /// <summary>
-        /// Get all the tasks of a sprint story.
+        /// Delete a task. 
         /// </summary>
-        /// <param name="sprintStoryId">The id of the sprint story</param>
-        /// <returns>A list of tasks</returns>
+        /// <param name="serviceTaskId">the task to delete</param>
         [OperationContract]
-        List<ServiceTask> GetAllTasksForSprintStory(Guid sprintStoryId);
+        void DeleteTask(Guid serviceTaskId);
 
         /// <summary>
         /// Creates a sprint and adds it to the project.
@@ -64,6 +63,21 @@ namespace AnyTrack.Backend.Service
         /// <returns>Returns a list of tasks</returns>
         [OperationContract]
         List<ServiceTask> GetAllTasksForSprint(Guid sprintId);
+
+        /// <summary>
+        /// Get all the tasks for a given sprint story.
+        /// </summary>
+        /// <param name="sprintStoryId">the id of the sprint story</param>
+        /// <returns>the list of tasks</returns>
+        [OperationContract]
+        List<ServiceTask> GetAllTasksForSprintStory(Guid sprintStoryId);
+
+        /// <summary>
+        /// Save a sprint story
+        /// </summary>
+        /// <param name="sprintStory">the spritn story id</param>
+        [OperationContract]
+        void SaveSprintStory(ServiceSprintStory sprintStory);
 
         /// <summary>
         /// Method to save the update hours for tasks
@@ -164,5 +178,13 @@ namespace AnyTrack.Backend.Service
         /// <param name="emailAttachment">The email attachment of the </param>
         [OperationContract]
         void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, MemoryStream emailAttachment);
+
+        /// <summary>
+        /// Gets the dev list for a sprint
+        /// </summary>
+        /// <param name="sprintId">The sprint</param>
+        /// <returns>A list of devs</returns>
+        [OperationContract]
+        List<ServiceUser> GetSprintTeamList(Guid sprintId);
     }
 }

@@ -14,7 +14,7 @@ namespace AnyTrack.Sprints.Views
     /// <summary>
     /// The view model for the Update Task Hours ViewModel
     /// </summary>
-    public class UpdateTaskHoursViewModel : ValidatedBindableBase
+    public class UpdateTaskHoursViewModel : ValidatedBindableBase, INavigationAware, IRegionMemberLifetime
     {
         #region Fields
 
@@ -27,6 +27,11 @@ namespace AnyTrack.Sprints.Views
         /// The sprint Id
         /// </summary>
         private Guid sprintId;
+
+        /// <summary>
+        /// The sprint id
+        /// </summary>
+        private Guid projectId;
 
         #endregion
 
@@ -47,6 +52,8 @@ namespace AnyTrack.Sprints.Views
          
             UpdateTaskHoursCommand = new DelegateCommand(SaveTaskHours);
             CancelCommand = new DelegateCommand(GoToSprintBoard);
+
+            Tasks = new ObservableCollection<ServiceTask>();
         }
 
         #endregion
@@ -74,6 +81,17 @@ namespace AnyTrack.Sprints.Views
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether or not this view/view model should be reused.
+        /// </summary>
+        public bool KeepAlive
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -93,6 +111,16 @@ namespace AnyTrack.Sprints.Views
         #region Methods
 
         /// <summary>
+        /// Handles the Is Navigation target event. 
+        /// </summary>
+        /// <param name="navigationContext">The navigation context.</param>
+        /// <returns>A true or false value indicating if this viewmodel can handle the navigation request.</returns>
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return false;
+        }
+
+        /// <summary>
         /// Handles the navigated to.
         /// </summary>
         /// <param name="navigationContext">The navigation context.</param>
@@ -101,9 +129,32 @@ namespace AnyTrack.Sprints.Views
             if (navigationContext.Parameters.ContainsKey("sprintId"))
             {
                 sprintId = (Guid)navigationContext.Parameters["sprintId"];
-                this.Tasks = new ObservableCollection<ServiceTask>();
-                Tasks.AddRange(serviceGateway.GetAllTasksForSprintCurrentUser(SprintId));
+                var tasks = serviceGateway.GetAllTasksForSprintCurrentUser(SprintId);
+
+                foreach (var task in tasks)
+                {
+                    var sortedEstimates = task.TaskHourEstimates.OrderByDescending(x => x.Created);
+                    var tempEstimate = sortedEstimates.FirstOrDefault();
+                    task.TaskHourEstimates.Clear();
+                    task.TaskHourEstimates.Add(tempEstimate);
+                }
+
+                Tasks.Clear();
+                Tasks.AddRange(tasks);
             }
+
+            if (navigationContext.Parameters.ContainsKey("projectId"))
+            {
+                projectId = (Guid)navigationContext.Parameters["projectId"];
+            }
+        }
+
+        /// <summary>
+        /// Handles the on navigated from event. 
+        /// </summary>
+        /// <param name="navigationContext">The navigation context.</param>
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
         }
 
         /// <summary>
@@ -122,6 +173,10 @@ namespace AnyTrack.Sprints.Views
         private void SaveTaskHours()
         {
             serviceGateway.SaveUpdatedTaskHours(this.Tasks.ToList());
+            var navParams = new NavigationParameters();
+            navParams.Add("sprintId", sprintId);
+            this.ShowMetroDialog("Tasks Updated", "Task hours have been updated successfully!");
+            this.NavigateToItem("UpdateTaskHours", navParams);
         }
 
         /// <summary>
@@ -131,6 +186,7 @@ namespace AnyTrack.Sprints.Views
         {
             var navParams = new NavigationParameters();
             navParams.Add("sprintId", sprintId);
+            navParams.Add("projectId", projectId);
             NavigateToItem("SprintBoard", navParams);
         }
 

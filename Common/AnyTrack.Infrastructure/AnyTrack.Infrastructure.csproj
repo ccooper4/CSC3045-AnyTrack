@@ -214,6 +214,9 @@
     <None Include="Service References\BackendSprintService\AnyTrack.Infrastructure.BackendSprintService.ServiceTask.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\BackendSprintService\AnyTrack.Infrastructure.BackendSprintService.ServiceUser.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\BackendSprintService\SprintService.wsdl">
       <SubType>Designer</SubType>
     </None>

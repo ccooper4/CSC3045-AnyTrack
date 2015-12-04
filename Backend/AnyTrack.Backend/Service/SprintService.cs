@@ -171,6 +171,37 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
+        /// Gets the team list
+        /// </summary>
+        /// <param name="sprintId">The sprint</param>
+        /// <returns>A list of the team</returns>
+        public List<ServiceUser> GetSprintTeamList(Guid sprintId)
+        {
+            var sprint = unitOfWork.SprintRepository.Items.Single(x => x.Id == sprintId);
+
+            List<ServiceUser> developers = new List<ServiceUser>();
+
+            foreach (var dev in sprint.Team)
+            {
+                if (dev.Developer)
+                {
+                    developers.Add(new ServiceUser
+                    {
+                        Developer = dev.Developer,
+                        EmailAddress = dev.EmailAddress,
+                        FirstName = dev.FirstName,
+                        LastName = dev.LastName,
+                        ProductOwner = dev.ProductOwner,
+                        ScrumMaster = dev.ScrumMaster,
+                        Skills = dev.Skills
+                    });
+                }
+            }
+
+            return developers;
+        }
+
+        /// <summary>
         /// Retrieves a specified sprint.
         /// </summary>
         /// <param name="sprintId">Id of the sprint</param>
@@ -191,7 +222,7 @@ namespace AnyTrack.Backend.Service
                 Name = dataSprint.Name,
                 StartDate = dataSprint.StartDate,
                 EndDate = dataSprint.EndDate,
-                Description = dataSprint.Description,
+                Description = dataSprint.Description
             };
 
             if (dataSprint.Team != null)
@@ -280,6 +311,32 @@ namespace AnyTrack.Backend.Service
             return serviceTasks;
         }
 
+        /// <summary>
+        /// Delete a task. 
+        /// </summary>
+        /// <param name="serviceTaskId">the task to delete</param>
+        public void DeleteTask(Guid serviceTaskId)
+        {
+            var dataTask = unitOfWork.TaskRepository.Items.SingleOrDefault(t => t.Id == serviceTaskId);
+
+            if (dataTask != null)
+            {
+                var taskHourEstimates = unitOfWork.TaskHourEstimateRepository.Items.Where(t => t.Task.Id == dataTask.Id).ToList();
+
+                if (taskHourEstimates.Count > 0)
+                {
+                    foreach (TaskHourEstimate estimate in taskHourEstimates)
+                    {
+                        unitOfWork.TaskHourEstimateRepository.Delete(estimate);
+                    }
+                }
+
+                unitOfWork.TaskRepository.Delete(dataTask);
+            }
+
+            unitOfWork.Commit();
+        }
+        
         /// <summary>
         /// Get all the tasks of a sprint story.
         /// </summary>
@@ -444,18 +501,20 @@ namespace AnyTrack.Backend.Service
             foreach (var t in tasks)
             {
                 var task = unitOfWork.TaskRepository.Items.Single(x => x.Id == t.TaskId);
-                var serviceUpdatedHours = t.TaskHourEstimates.LastOrDefault();
+                ServiceTaskHourEstimate updatedTaskHour = t.TaskHourEstimates.LastOrDefault();
 
-                if (serviceUpdatedHours != null)
+                if (updatedTaskHour != null)
                 {
-                    task.TaskHourEstimate.Add(new TaskHourEstimate
+                    TaskHourEstimate estimateToAdd = new TaskHourEstimate
                     {
-                        Estimate = serviceUpdatedHours.NewEstimate
-                    });
+                        Estimate = updatedTaskHour.NewEstimate,
+                        Task = task
+                    };
+
+                    task.TaskHourEstimate.Add(estimateToAdd);
+                    unitOfWork.Commit();
                 }
             }
-
-            unitOfWork.Commit();
         }
 
         /// <summary>
@@ -477,14 +536,23 @@ namespace AnyTrack.Backend.Service
 
             TaskHourEstimate dataTaskHourEstimate = new TaskHourEstimate()
             {
-                Id = serviceTaskHourEstimate.ServiceTaskHourEstimateId,
                 Created = serviceTaskHourEstimate.Created,
                 Estimate = serviceTaskHourEstimate.Estimate
             };
 
             var task = unitOfWork.TaskRepository.Items.SingleOrDefault(t => t.Id == taskId);
-            task.TaskHourEstimate.Add(dataTaskHourEstimate);
 
+            if (task.TaskHourEstimate == null)
+            {
+                List<TaskHourEstimate> taskHourEstimates = new List<TaskHourEstimate>();
+                taskHourEstimates.Add(dataTaskHourEstimate);
+                task.TaskHourEstimate = taskHourEstimates;
+            }
+            else
+            {
+                task.TaskHourEstimate.Add(dataTaskHourEstimate);
+            }
+            
             unitOfWork.Commit();
         }
 
@@ -515,23 +583,26 @@ namespace AnyTrack.Backend.Service
             SprintStory dataSprintStory = unitOfWork.SprintStoryRepository.Items.SingleOrDefault(
                 s => s.Id == sprintStoryId);
 
-            Task dataTask = new Task()
-            {
-                Id = serviceTask.TaskId,
-                Assignee = assignee,
-                Blocked = serviceTask.Blocked,
-                ConditionsOfSatisfaction = serviceTask.ConditionsOfSatisfaction,
-                Description = serviceTask.Description,
-                Summary = serviceTask.Summary,
-                SprintStory = dataSprintStory,                
-            };
+            var dataTask = dataSprintStory.Tasks.SingleOrDefault(t => t.Id == serviceTask.TaskId);
 
-            if (dataSprintStory != null)
+            if (dataTask == null)
             {
+                dataTask = new Task(); 
                 dataSprintStory.Tasks.Add(dataTask);
             }
-            
+
+            dataTask.Assignee = assignee;
+            dataTask.Blocked = serviceTask.Blocked;
+            dataTask.ConditionsOfSatisfaction = serviceTask.ConditionsOfSatisfaction;
+            dataTask.Description = serviceTask.Description;
+            dataTask.Summary = serviceTask.Summary;
+            dataTask.SprintStory = dataSprintStory;
+
             unitOfWork.Commit();
+
+            ServiceTaskHourEstimate taskHourEstimate = serviceTask.TaskHourEstimates.LastOrDefault();
+            Guid taskId = dataTask.Id;
+            AddTaskHourEstimateToTask(taskId, taskHourEstimate);
         }
 
         /// <summary>
@@ -565,6 +636,22 @@ namespace AnyTrack.Backend.Service
             };
 
             return serviceSprintStory;
+        }
+
+        /// <summary>
+        /// Save a sprint story
+        /// </summary>
+        /// <param name="sprintStory">the spritn story id</param>
+        public void SaveSprintStory(ServiceSprintStory sprintStory)
+        {
+            var dataSprintStory = unitOfWork.SprintStoryRepository.Items.SingleOrDefault(t => t.Id == sprintStory.SprintStoryId);
+
+            if (dataSprintStory != null)
+            {
+                dataSprintStory.Status = sprintStory.Status;
+            }
+
+            unitOfWork.Commit();
         }
 
         /// <summary>

@@ -131,6 +131,17 @@ namespace AnyTrack.Sprints.Views
         }
 
         /// <summary>
+        /// Gets a value indicating whether or not this view/view model should be reused.
+        /// </summary>
+        public bool KeepAlive
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the Sprints.
         /// </summary>
         public ObservableCollection<ServiceSprintSummary> Sprints
@@ -172,7 +183,7 @@ namespace AnyTrack.Sprints.Views
 
             set
             {
-                sprintId = value;
+                SetProperty(ref sprintId, value);
                 ObservableCollection<ServiceSprintStory> sprintStories = new ObservableCollection<ServiceSprintStory>(sprintServiceGateway.GetSprintStories(sprintId));
                 AllSprintStories = sprintStories;
             }
@@ -317,6 +328,15 @@ namespace AnyTrack.Sprints.Views
         /// <param name="navigationContext">The navigation context.</param>
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            if (navigationContext.Parameters.ContainsKey("sprintId"))
+            {
+                SprintId = (Guid)navigationContext.Parameters["sprintId"];
+            }
+
+            if (navigationContext.Parameters.ContainsKey("projectId"))
+            {
+                ProjectId = (Guid)navigationContext.Parameters["projectId"];
+            }
         }
 
         /// <summary>
@@ -365,6 +385,7 @@ namespace AnyTrack.Sprints.Views
         {
             var navParams = new NavigationParameters();
             navParams.Add("sprintId", sprintId);
+            navParams.Add("projectId", projectId);
             NavigateToItem("UpdateTaskHours", navParams);
         }
 
@@ -375,7 +396,10 @@ namespace AnyTrack.Sprints.Views
         private void EditSprintStory(ServiceSprintStory story)
         {
             var navParams = new NavigationParameters();
+            story.SprintId = SprintId;
             navParams.Add("sprintStory", story);
+            navParams.Add("sprintId", sprintId);
+            navParams.Add("projectId", projectId);
             this.ShowMetroFlyout("SprintStory", navParams);
         }
 

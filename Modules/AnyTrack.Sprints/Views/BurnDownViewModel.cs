@@ -102,12 +102,15 @@ namespace AnyTrack.Sprints.Views
             this.GetChartForProjectAndSprint = new DelegateCommand(GetBurndownChartForProjectAndSprint);
             this.projectServiceGateway = projectServiceGateway;
             this.sprintServiceGateway = sprintServiceGateway;
+
             this.Projects = new ObservableCollection<ServiceProjectSummary>(projectServiceGateway.GetProjectNames(true, true, true));
+            
             this.Sprints = new ObservableCollection<Infrastructure.BackendSprintService.ServiceSprintSummary>(sprintServiceGateway.GetSprintNames(projectId, true, true));
+
             this.Points = new ObservableCollection<DataPoint>();
             this.Trend = new ObservableCollection<DataPoint>();
             this.PlotModel = new PlotModel();
-            EmailFlyoutCommand = new DelegateCommand(EmailFlyout);
+            this.EmailFlyoutCommand = new DelegateCommand(EmailFlyout);
         }
         #endregion
 
@@ -315,12 +318,6 @@ namespace AnyTrack.Sprints.Views
                                 this.Points.Add(new DataPoint(DateTimeAxis.ToDouble(taskHour.Created), taskHour.Estimate));
                             }
                         }
-
-                var x = new OxyPlot.Series.LineSeries()
-                {
-                    ItemsSource = this.Points
-                }; 
-                PlotModel.Series.Add(x);
                     }
                     else
                     {
@@ -403,6 +400,7 @@ namespace AnyTrack.Sprints.Views
         {
             this.storyBurnDownOption = true;
             this.Trend.Clear();
+            this.Points.Clear();
             ValidateViewModelNow();
             if (!this.HasErrors)
             {

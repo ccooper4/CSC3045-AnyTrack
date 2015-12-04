@@ -100,6 +100,18 @@
       <HintPath>..\..\packages\NUnitTestAdapter.2.0.0\lib\NUnit.VisualStudio.TestAdapter.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="OxyPlot, Version=1.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OxyPlot.Core.1.0.0-unstable1886\lib\net45\OxyPlot.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OxyPlot.Wpf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=75e952ba404cdbb0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OxyPlot.Wpf.1.0.0-unstable1886\lib\net45\OxyPlot.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OxyPlot.Xps, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OxyPlot.Wpf.1.0.0-unstable1886\lib\net45\OxyPlot.Xps.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Prism, Version=6.0.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -209,6 +221,7 @@
     <Compile Include="Modules\AnyTrack.Projects\Views\StoryViewModelTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\ServiceGateways\SprintServiceGatewayService.cs" />
     <Compile Include="Modules\AnyTrack.Sprints\SprintModuleTests.cs" />
+    <Compile Include="Modules\AnyTrack.Sprints\Views\BurnDownViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Sprints\Views\ManageSprintBacklogViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Sprints\Views\CreateSprintViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Sprints\Views\SprintManagerViewModelTests.cs" />

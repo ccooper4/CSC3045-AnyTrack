@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using AnyTrack.Infrastructure;
+using AnyTrack.Infrastructure.BackendAccountService;
 using AnyTrack.Infrastructure.BackendSprintService;
 using AnyTrack.Infrastructure.ServiceGateways;
 using MahApps.Metro.Controls;
 using OxyPlot;
 using Prism.Commands;
 using Prism.Regions;
+using ServiceUser = AnyTrack.Infrastructure.BackendSprintService.ServiceUser;
 
 namespace AnyTrack.Sprints.Views
 {
@@ -50,11 +54,6 @@ namespace AnyTrack.Sprints.Views
         /// COS field.
         /// </summary>
         private string conditionsOfSatisfaction;
-
-        /// <summary>
-        /// The available assignees
-        /// </summary>
-        private List<string> availableAssignees; 
 
         /// <summary>
         /// Assignee field.
@@ -140,6 +139,8 @@ namespace AnyTrack.Sprints.Views
             this.IsModal = true;
             this.CloseButtonVisibility = Visibility.Collapsed;
 
+            this.Assignees = new ObservableCollection<ServiceUser>();
+
             // Commands
             SaveTaskCommand = new DelegateCommand(this.Save);
         }
@@ -184,6 +185,7 @@ namespace AnyTrack.Sprints.Views
         /// <summary>
         /// Gets or sets a value indicating summary
         /// </summary>
+        [Required]
         public string Summary
         {
             get
@@ -200,6 +202,7 @@ namespace AnyTrack.Sprints.Views
         /// <summary>
         /// Gets or sets a value indicating description
         /// </summary>
+        [Required]
         public string Description
         {
             get
@@ -216,6 +219,7 @@ namespace AnyTrack.Sprints.Views
         /// <summary>
         /// Gets or sets a value indicating COS
         /// </summary>
+        [Required]
         public string ConditionsOfSatisfaction
         {
             get
@@ -232,6 +236,7 @@ namespace AnyTrack.Sprints.Views
         /// <summary>
         /// Gets or sets a value indicating COS
         /// </summary>
+        [Required]
         public string HoursRemaining
         {
             get
@@ -268,14 +273,19 @@ namespace AnyTrack.Sprints.Views
         {
             get
             {
-                return conditionsOfSatisfaction;
+                return assignee;
             }
 
             set
             {
-                SetProperty(ref conditionsOfSatisfaction, value);
+                SetProperty(ref assignee, value);
             }
         }
+
+        /// <summary>
+        /// Gets or sets the stories
+        /// </summary>
+        public ObservableCollection<ServiceUser> Assignees { get; set; }
 
         #region Flyouts
 
@@ -410,7 +420,6 @@ namespace AnyTrack.Sprints.Views
             if (navigationContext.Parameters.ContainsKey("sprintStoryId")) 
             {
                 this.SprintStoryId = (Guid)navigationContext.Parameters["sprintStoryId"];
-                this.TaskId = Guid.NewGuid();
             }
             else if (navigationContext.Parameters.ContainsKey("tasks"))
             {
@@ -431,6 +440,10 @@ namespace AnyTrack.Sprints.Views
             if (navigationContext.Parameters.ContainsKey("sprintStory"))
             {
                 this.serviceSprintStory = (ServiceSprintStory)navigationContext.Parameters["sprintStory"];
+                var devs = sprintServiceGateway.GetDevTeamList(serviceSprintStory.SprintId);
+                this.Assignees.Clear();
+                this.Assignees.AddRange(devs);
+                this.SprintStoryId = serviceSprintStory.SprintStoryId;
             }
         }
 
@@ -457,34 +470,47 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         private void Save()
         {
-            ServiceTaskHourEstimate serviceTaskHourEstimate = new ServiceTaskHourEstimate()
+            this.ValidateViewModelNow();
+
+            if (!this.HasErrors)
             {
-                NewEstimate = double.Parse(this.HoursRemaining, System.Globalization.CultureInfo.InvariantCulture),
-                Estimate = double.Parse(this.HoursRemaining, System.Globalization.CultureInfo.InvariantCulture),
-                Created = DateTime.Now,
-                TaskId = this.taskId
+                ServiceTaskHourEstimate serviceTaskHourEstimate = new ServiceTaskHourEstimate()
+                {
+                    NewEstimate = double.Parse(this.HoursRemaining, System.Globalization.CultureInfo.InvariantCulture),
+                    Estimate = double.Parse(this.HoursRemaining, System.Globalization.CultureInfo.InvariantCulture),
+                    Created = DateTime.Now,
+                    TaskId = this.taskId
+                };
+
+                List<ServiceTaskHourEstimate> taskHourEstimates = new List<ServiceTaskHourEstimate>();
+                taskHourEstimates.Add(serviceTaskHourEstimate);
+
+                ServiceTask serviceTask = new ServiceTask()
+                {
+                    TaskId = this.TaskId,
+                    SprintStoryId = this.sprintStoryId,
+                    Summary = this.Summary,
+                    Description = this.Description,
+                    ConditionsOfSatisfaction = this.ConditionsOfSatisfaction,
+                    Blocked = this.Blocked,
+                    TaskHourEstimates = taskHourEstimates
+                };
+
+            ServiceUser user = new ServiceUser
+            {
+                EmailAddress = assignee
             };
 
-            ServiceTask serviceTask = new ServiceTask()
-            {
-                TaskId = this.TaskId,
-                SprintStoryId = this.sprintStoryId,
-                Summary = this.Summary,
-                Description = this.Description,
-                ConditionsOfSatisfaction = this.ConditionsOfSatisfaction,
-                Blocked = this.Blocked
-            };
+            serviceTask.Assignee = user;
 
-            //// Save task
-            sprintServiceGateway.AddTaskToSprintStory(this.SprintStoryId, serviceTask);
+                //// Save task
+                sprintServiceGateway.AddTaskToSprintStory(this.SprintStoryId, serviceTask);
 
-            //// Save update hours
-            sprintServiceGateway.AddTaskHourEstimateToTask(this.TaskId, serviceTaskHourEstimate);
-
-            NavigationParameters navParams = new NavigationParameters();
-            navParams.Add("sprintStory", this.serviceSprintStory);
-            this.ShowMetroFlyout("SprintStory", navParams);
-            this.IsOpen = false;
+                NavigationParameters navParams = new NavigationParameters();
+                navParams.Add("sprintStory", this.serviceSprintStory);
+                this.ShowMetroFlyout("SprintStory", navParams);
+                this.IsOpen = false;
+            }
         }
     }
 }

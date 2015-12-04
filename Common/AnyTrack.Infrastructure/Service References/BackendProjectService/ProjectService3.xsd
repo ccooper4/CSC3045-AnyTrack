@@ -45,10 +45,13 @@
   <xs:element name="ArrayOfServiceSprintStory" nillable="true" type="tns:ArrayOfServiceSprintStory" />
   <xs:complexType name="ServiceSprintStory">
     <xs:sequence>
+      <xs:element minOccurs="0" name="DateCompleted" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="SprintId" type="ser:guid" />
       <xs:element minOccurs="0" name="SprintStoryId" type="ser:guid" />
       <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Story" nillable="true" type="tns:ServiceStory" />
+      <xs:element minOccurs="0" name="StoryEstimate" type="xs:double" />
+      <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Tasks" nillable="true" type="q3:ArrayOfguid" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ServiceSprintStory" nillable="true" type="tns:ServiceSprintStory" />
@@ -83,7 +86,7 @@
       <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ProductOwner" nillable="true" type="xs:boolean" />
       <xs:element minOccurs="0" name="ScrumMaster" nillable="true" type="xs:boolean" />
-      <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Skillset" nillable="true" type="q3:ArrayOfstring" />
+      <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Skillset" nillable="true" type="q4:ArrayOfstring" />
       <xs:element minOccurs="0" name="SprintEndingDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="SprintId" nillable="true" type="ser:guid" />
       <xs:element minOccurs="0" name="SprintStartingDate" nillable="true" type="xs:dateTime" />
