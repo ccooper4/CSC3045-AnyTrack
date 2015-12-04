@@ -46,7 +46,7 @@
                             </Grid.RowDefinitions>
 
                             <Label Margin="10" HorizontalAlignment="Left" Grid.Row="0" FontSize="16" Foreground="WhiteSmoke" Content="{Binding Name}" ></Label>
-                            <controls:Tile Grid.Row="1" Width="230" Height="150" CommandParameter="{Binding Path=.}" Command="{Binding Path=DataContext.ViewProjectOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"></controls:Tile>
+                            <controls:Tile Grid.Row="1" Title="{Binding Description}" BorderBrush="Black" BorderThickness="2" Width="230" Height="150" CommandParameter="{Binding Path=.}" Command="{Binding Path=DataContext.ViewProjectOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"></controls:Tile>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

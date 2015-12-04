@@ -94,7 +94,7 @@ namespace AnyTrack.Accounting.Views
 
             // SecretQuestions = serviceGateway.SecretQuestions();
             RegisterUserCommand = new DelegateCommand(this.RegisterUser);
-            AddSkillCommand = new DelegateCommand(this.AddSkill);
+            AddSkillCommand = new DelegateCommand(this.AddSkill, CanAddSkill);
             CancelRegisterUserCommand = new DelegateCommand(this.CancelRegisterUser);
         }
 
@@ -250,6 +250,7 @@ namespace AnyTrack.Accounting.Views
             set
             {
                 SetProperty(ref currentSkill, value);
+                AddSkillCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -344,7 +345,7 @@ namespace AnyTrack.Accounting.Views
                     Developer = developer,
                     SecretQuestion = secretQuestion,
                     SecretAnswer = secretAnswer,
-                    Skills = string.Join(",", Skills)
+                    Skills = string.Join(", ", Skills)
                 };
 
                 try
@@ -383,6 +384,20 @@ namespace AnyTrack.Accounting.Views
         {
             Skills.Add(CurrentSkill);
             CurrentSkill = string.Empty;
+        }
+
+        /// <summary>
+        /// Indicates whether a skill can be added.
+        /// </summary>
+        /// <returns>skill can be added</returns>
+        private bool CanAddSkill()    
+        {
+            if (CurrentSkill != null)
+            {
+                return CurrentSkill.Length != 0 && !Skills.Contains(CurrentSkill);
+            }
+
+            return false;
         }
 
         #endregion 

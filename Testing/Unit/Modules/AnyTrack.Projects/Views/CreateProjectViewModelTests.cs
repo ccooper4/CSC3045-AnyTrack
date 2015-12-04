@@ -141,7 +141,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
             };
 
             vm.Call("SetProductOwner", emailAddress);
-            vm.SelectProductOwnerEmailAddress.Should().Be(emailAddress);
+            vm.SelectedProductOwner.Should().Be(emailAddress);
             vm.ProductOwnerSearchUserResults.Count.Should().Be(0);
             vm.EnableProductOwnerSearchGrid.Should().BeFalse();
             vm.ProductOwnerConfirmed.Should().BeTrue();
@@ -168,7 +168,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
             vm.Description = "This is a description";
             vm.VersionControl = "V4";
             vm.StartedOn = new DateTime(30, 09, 15);
-            vm.SelectProductOwnerEmailAddress = "test@agile.local";
+            vm.SelectedProductOwner = new ServiceUserSearchInfo() {EmailAddress = "test@agile.local"};
             vm.ProductOwnerConfirmed = true;
             vm.SelectedScrumMasters = new ObservableCollection<ServiceUserSearchInfo>()
             {
@@ -186,7 +186,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
             sentProject.Name.Should().Be(vm.ProjectName);
             sentProject.VersionControl.Should().Be(vm.VersionControl);
             sentProject.StartedOn.Should().Be(vm.StartedOn);
-            sentProject.ProductOwnerEmailAddress.Should().Be(vm.SelectProductOwnerEmailAddress);
+            sentProject.ProductOwnerEmailAddress.Should().Be(vm.SelectedProductOwner.EmailAddress);
             sentProject.ProjectManagerEmailAddress.Should().Be("testmanager@agile.local");
             gateway.Received().CreateProject(sentProject);
             windowProvider.Received().ShowMessageAsync("Project created", "The {0} project has been created sucessfully.".Substitute(vm.ProjectName), MessageDialogStyle.Affirmative);
@@ -240,7 +240,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
             vm.Description.Should().Be(serviceProject.Description);
             vm.VersionControl.Should().Be(serviceProject.VersionControl);
             vm.StartedOn.Should().Be(serviceProject.StartedOn);
-            vm.SelectProductOwnerEmailAddress.Should().Be(serviceProject.ProductOwnerEmailAddress);
+            vm.SelectedProductOwner.Should().Be(serviceProject.ProductOwnerEmailAddress);
             vm.SelectedScrumMasters.Count.Should().Be(2);
 
             ServiceProject sentProject = null;
@@ -254,7 +254,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
             sentProject.Name.Should().Be(vm.ProjectName);
             sentProject.VersionControl.Should().Be(vm.VersionControl);
             sentProject.StartedOn.Should().Be(vm.StartedOn);
-            sentProject.ProductOwnerEmailAddress.Should().Be(vm.SelectProductOwnerEmailAddress);
+            sentProject.ProductOwnerEmailAddress.Should().Be(vm.SelectedProductOwner.EmailAddress);
             sentProject.ProjectManagerEmailAddress.Should().Be("testmanager@agile.local");
             gateway.Received().UpdateProject(sentProject);
             windowProvider.Received().ShowMessageAsync("Project Updated", "The {0} project has been updated successfully.".Substitute(vm.ProjectName), MessageDialogStyle.Affirmative);
@@ -274,7 +274,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
             vm.Description = "This is a description";
             vm.VersionControl = "V4";
             vm.StartedOn = new DateTime(30, 09, 15);
-            vm.SelectProductOwnerEmailAddress = "test@agile.local";
+            vm.SelectedProductOwner = new ServiceUserSearchInfo() {EmailAddress = "test@agile.local"};
 
             vm.Call("SaveProject");
 
@@ -296,7 +296,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
             vm.Description = "This is a description";
             vm.VersionControl = "V4";
             vm.StartedOn = new DateTime(30, 09, 15);
-            vm.SelectProductOwnerEmailAddress = "test@agile.local";
+            vm.SelectedProductOwner = new ServiceUserSearchInfo() { EmailAddress = "test@agile.local" };
 
             vm.Call("SaveProject");
 
