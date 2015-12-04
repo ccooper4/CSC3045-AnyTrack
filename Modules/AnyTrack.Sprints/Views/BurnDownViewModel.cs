@@ -102,8 +102,16 @@ namespace AnyTrack.Sprints.Views
             this.GetChartForProjectAndSprint = new DelegateCommand(GetBurndownChartForProjectAndSprint);
             this.projectServiceGateway = projectServiceGateway;
             this.sprintServiceGateway = sprintServiceGateway;
-            this.Projects = new ObservableCollection<ServiceProjectSummary>(projectServiceGateway.GetProjectNames(true, true, true));
-            this.Sprints = new ObservableCollection<Infrastructure.BackendSprintService.ServiceSprintSummary>(sprintServiceGateway.GetSprintNames(projectId, true, true));
+            if (this.Projects.Count != 0)
+            {
+                this.Projects = new ObservableCollection<ServiceProjectSummary>(projectServiceGateway.GetProjectNames(true, true, true));
+            }
+
+            if (this.Sprints.Count != 0)
+            {
+                this.Sprints = new ObservableCollection<Infrastructure.BackendSprintService.ServiceSprintSummary>(sprintServiceGateway.GetSprintNames(projectId, true, true));
+            }
+
             this.Points = new ObservableCollection<DataPoint>();
             this.Trend = new ObservableCollection<DataPoint>();
             this.PlotModel = new PlotModel();
