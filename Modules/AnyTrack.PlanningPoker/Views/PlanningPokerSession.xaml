@@ -131,7 +131,7 @@
             </GroupBox>
             
             <StackPanel Grid.Row="1" Orientation="Vertical">
-                <Button Content="Show Estimates" Command="{Binding ShowEstimatesCommand}" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibilityConverter}}" Background="LightGray" />
+                <Button IsEnabled="{Binding CanShowEstimates}" Content="Show Estimates" Command="{Binding ShowEstimatesCommand}" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibilityConverter}}" Background="LightGray" />
                 <Button Content="End Session" Command="{Binding EndSessionCommand}" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibilityConverter}}" Background="LightGray" />
                 <Button Content="Leave Session" Command="{Binding LeaveSessionCommand}" Visibility="{Binding IsDeveloper, Converter={StaticResource booleanToVisibilityConverter}}" Background="LightGray" />
                 
@@ -142,7 +142,7 @@
                     <TextBlock Foreground="White" Text="Final Value" />
                 </GroupBox.Header>
                 <DockPanel>
-                    <Button Content="Submit" DockPanel.Dock="Right" Command="{Binding SubmitFinalEstimateCommand}" Background="LightGray" Margin="10px,0,0,0"/>
+                    <Button IsEnabled="{Binding CanGiveFinalEstimate}" Content="Submit" DockPanel.Dock="Right" Command="{Binding SubmitFinalEstimateCommand}" Background="LightGray" Margin="10px,0,0,0"/>
                     <ComboBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" ItemsSource="{Binding EstimateValues}"/>
                 </DockPanel>
             </GroupBox>

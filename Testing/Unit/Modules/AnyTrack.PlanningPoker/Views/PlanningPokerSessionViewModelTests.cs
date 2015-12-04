@@ -159,7 +159,7 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewMode
         }
 
         [Test]
-        public void CallOnNavigatedToAndUserIsScrumMasterAndStateIsShowEstimates()
+        public void CallOnNavigatedToAndUserIsScrumMasterAndStateIsGettingEstimates()
         {
             vm.RecievedEstimates = new System.Collections.ObjectModel.ObservableCollection<ServicePlanningPokerEstimate>()
             {
@@ -213,6 +213,8 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewMode
             vm.RecievedEstimates.Single().Name.Should().Be("New");
             vm.ShowEstimates.Should().BeFalse();
             vm.HideEstimates.Should().BeTrue();
+            vm.CanGiveFinalEstimate.Should().BeFalse();
+            vm.CanShowEstimates.Should().BeTrue();
             vm.SprintStoriesCollection.Single().Equals(session.Stories.Single());
         }
 
@@ -271,6 +273,8 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewMode
             vm.RecievedEstimates.Single().Name.Should().Be("New");
             vm.ShowEstimates.Should().BeTrue();
             vm.HideEstimates.Should().BeFalse();
+            vm.CanShowEstimates.Should().BeFalse();
+            vm.CanGiveFinalEstimate.Should().BeTrue();
             vm.Users.First().Should().Be(session.Users.First());
             vm.SprintStoriesCollection.Single().Equals(session.Stories.Single());
         }
@@ -352,6 +356,8 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewMode
             gateway.Received().ShowEstimates(sessionId);
             vm.ShowEstimates.Should().BeTrue();
             vm.HideEstimates.Should().BeFalse();
+            vm.CanShowEstimates.Should().BeFalse();
+            vm.CanGiveFinalEstimate.Should().BeTrue();
         }
 
         #endregion 

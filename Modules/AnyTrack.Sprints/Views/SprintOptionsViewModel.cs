@@ -410,7 +410,7 @@ namespace AnyTrack.Sprints.Views
                 this.SprintName = sprintInfo.Name;
                 this.SprintDescription = sprintInfo.Description;
                 this.IsScrumMaster = UserDetailsStore.LoggedInUserPrincipal.IsUserInRole("Scrum Master", projectId, sprintId);
-                this.IsDeveloper = UserDetailsStore.LoggedInUserPrincipal.IsUserInRole("Developer", projectId, sprintId);
+                this.IsDeveloper = UserDetailsStore.LoggedInUserPrincipal.IsUserInRole("Developer", projectId, sprintId) && !this.IsScrumMaster;
             }
         }
 

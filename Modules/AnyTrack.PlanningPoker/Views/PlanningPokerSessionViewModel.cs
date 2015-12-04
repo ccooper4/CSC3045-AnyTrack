@@ -67,6 +67,16 @@ namespace AnyTrack.PlanningPoker.Views
         /// </summary>
         private string estimateToSend;
 
+        /// <summary>
+        /// A value indicating if estimates can be shown.
+        /// </summary>
+        private bool canShowEstimates = true;
+
+        /// <summary>
+        /// A value indicating if a final estimate can be provided. 
+        /// </summary>
+        private bool canGiveFinalEstimate = false; 
+
         #endregion
 
         #region Constructor 
@@ -187,7 +197,7 @@ namespace AnyTrack.PlanningPoker.Views
         }
 
         /// <summary>
-        /// Gets or sets message property.
+        /// Gets or sets value of the final estimate. 
         /// </summary>
         public string EstimateToSend
         {
@@ -263,6 +273,38 @@ namespace AnyTrack.PlanningPoker.Views
             set
             {
                 SetProperty(ref hideEstimates, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the scrum master can show the estimates. 
+        /// </summary>
+        public bool CanShowEstimates
+        {
+            get
+            {
+                return canShowEstimates; 
+            }
+
+            set
+            {
+                SetProperty(ref canShowEstimates, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether or not the scrum master can give a final estimate. 
+        /// </summary>
+        public bool CanGiveFinalEstimate
+        {
+            get
+            {
+                return canGiveFinalEstimate; 
+            }
+
+            set
+            {
+                SetProperty(ref canGiveFinalEstimate, value);
             }
         }
 
@@ -394,7 +436,9 @@ namespace AnyTrack.PlanningPoker.Views
         {
             serviceGateway.ShowEstimates(sessionId);
             this.ShowEstimates = true;
-            this.HideEstimates = false; 
+            this.HideEstimates = false;
+            this.CanShowEstimates = false;
+            this.CanGiveFinalEstimate = true; 
         }
 
         /// <summary>
@@ -484,12 +528,16 @@ namespace AnyTrack.PlanningPoker.Views
             {
                 this.ShowEstimates = false;
                 this.HideEstimates = true;
+                this.CanGiveFinalEstimate = false;
+                this.CanShowEstimates = true;
             }
 
             if (session.State == ServicePlanningPokerSessionState.ShowingEstimates)
             {
                 this.ShowEstimates = true;
                 this.HideEstimates = false;
+                this.CanGiveFinalEstimate = true;
+                this.CanShowEstimates = false;
             }
         }
 
