@@ -171,6 +171,37 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
+        /// Gets the team list
+        /// </summary>
+        /// <param name="sprintId">The sprint</param>
+        /// <returns>A list of the team</returns>
+        public List<ServiceUser> GetSprintTeamList(Guid sprintId)
+        {
+            var sprint = unitOfWork.SprintRepository.Items.Single(x => x.Id == sprintId);
+
+            List<ServiceUser> developers = new List<ServiceUser>();
+
+            foreach (var dev in sprint.Team)
+            {
+                if (dev.Developer)
+                {
+                    developers.Add(new ServiceUser
+                    {
+                        Developer = dev.Developer,
+                        EmailAddress = dev.EmailAddress,
+                        FirstName = dev.FirstName,
+                        LastName = dev.LastName,
+                        ProductOwner = dev.ProductOwner,
+                        ScrumMaster = dev.ScrumMaster,
+                        Skills = dev.Skills
+                    });
+                }
+            }
+
+            return developers;
+        }
+
+        /// <summary>
         /// Retrieves a specified sprint.
         /// </summary>
         /// <param name="sprintId">Id of the sprint</param>
@@ -191,7 +222,7 @@ namespace AnyTrack.Backend.Service
                 Name = dataSprint.Name,
                 StartDate = dataSprint.StartDate,
                 EndDate = dataSprint.EndDate,
-                Description = dataSprint.Description,
+                Description = dataSprint.Description
             };
 
             if (dataSprint.Team != null)

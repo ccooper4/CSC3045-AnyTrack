@@ -1139,6 +1139,12 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/SendEmailRequest", ReplyAction="http://tempuri.org/ISprintService/SendEmailRequestResponse")]
         System.Threading.Tasks.Task SendEmailRequestAsync(string senderEmailAddress, string recipientEmailAddress, string emailMessage, System.IO.MemoryStream emailAttachment);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetSprintTeamList", ReplyAction="http://tempuri.org/ISprintService/GetSprintTeamListResponse")]
+        System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceUser> GetSprintTeamList(System.Guid sprintId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetSprintTeamList", ReplyAction="http://tempuri.org/ISprintService/GetSprintTeamListResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceUser>> GetSprintTeamListAsync(System.Guid sprintId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1326,6 +1332,14 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         
         public System.Threading.Tasks.Task SendEmailRequestAsync(string senderEmailAddress, string recipientEmailAddress, string emailMessage, System.IO.MemoryStream emailAttachment) {
             return base.Channel.SendEmailRequestAsync(senderEmailAddress, recipientEmailAddress, emailMessage, emailAttachment);
+        }
+        
+        public System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceUser> GetSprintTeamList(System.Guid sprintId) {
+            return base.Channel.GetSprintTeamList(sprintId);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceUser>> GetSprintTeamListAsync(System.Guid sprintId) {
+            return base.Channel.GetSprintTeamListAsync(sprintId);
         }
     }
 }

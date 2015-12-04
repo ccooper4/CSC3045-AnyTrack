@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using AnyTrack.Infrastructure;
+using AnyTrack.Infrastructure.BackendAccountService;
 using AnyTrack.Infrastructure.BackendSprintService;
 using AnyTrack.Infrastructure.ServiceGateways;
 using MahApps.Metro.Controls;
 using OxyPlot;
 using Prism.Commands;
 using Prism.Regions;
+using ServiceUser = AnyTrack.Infrastructure.BackendSprintService.ServiceUser;
 
 namespace AnyTrack.Sprints.Views
 {
@@ -50,11 +53,6 @@ namespace AnyTrack.Sprints.Views
         /// COS field.
         /// </summary>
         private string conditionsOfSatisfaction;
-
-        /// <summary>
-        /// The available assignees
-        /// </summary>
-        private List<string> availableAssignees; 
 
         /// <summary>
         /// Assignee field.
@@ -139,6 +137,8 @@ namespace AnyTrack.Sprints.Views
             this.Position = Position.Left;
             this.IsModal = true;
             this.CloseButtonVisibility = Visibility.Collapsed;
+
+            this.Assignees = new ObservableCollection<ServiceUser>();
 
             // Commands
             SaveTaskCommand = new DelegateCommand(this.Save);
@@ -268,14 +268,19 @@ namespace AnyTrack.Sprints.Views
         {
             get
             {
-                return conditionsOfSatisfaction;
+                return assignee;
             }
 
             set
             {
-                SetProperty(ref conditionsOfSatisfaction, value);
+                SetProperty(ref assignee, value);
             }
         }
+
+        /// <summary>
+        /// Gets or sets the stories
+        /// </summary>
+        public ObservableCollection<ServiceUser> Assignees { get; set; }
 
         #region Flyouts
 
@@ -430,8 +435,10 @@ namespace AnyTrack.Sprints.Views
             if (navigationContext.Parameters.ContainsKey("sprintStory"))
             {
                 this.serviceSprintStory = (ServiceSprintStory)navigationContext.Parameters["sprintStory"];
-                this.SprintStoryId = serviceSprintStory.SprintStoryId;
-            }
+                var devs = sprintServiceGateway.GetDevTeamList(serviceSprintStory.SprintId);
+                this.Assignees.Clear();
+                this.Assignees.AddRange(devs);
+                this.SprintStoryId = serviceSprintStory.SprintStoryId;            }
         }
 
         /// <summary>

@@ -111,4 +111,10 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ServiceSprintSummary" nillable="true" type="tns:ServiceSprintSummary" />
+  <xs:complexType name="ArrayOfServiceUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ServiceUser" nillable="true" type="tns:ServiceUser" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfServiceUser" nillable="true" type="tns:ArrayOfServiceUser" />
 </xs:schema>

@@ -396,6 +396,7 @@ namespace AnyTrack.Sprints.Views
         private void EditSprintStory(ServiceSprintStory story)
         {
             var navParams = new NavigationParameters();
+            story.SprintId = SprintId;
             navParams.Add("sprintStory", story);
             navParams.Add("sprintId", sprintId);
             navParams.Add("projectId", projectId);
