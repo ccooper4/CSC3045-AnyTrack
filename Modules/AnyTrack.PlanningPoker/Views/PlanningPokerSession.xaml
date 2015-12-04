@@ -99,8 +99,8 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="2.5*"></RowDefinition>
-                <RowDefinition Height="0.5*"></RowDefinition>
-                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
 
             <GroupBox Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -129,8 +129,13 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </GroupBox>
-
-            <Button Grid.Row="1" Content="Show Estimates" Command="{Binding ShowEstimatesCommand}" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibilityConverter}}" Background="LightGray" />
+            
+            <StackPanel Grid.Row="1" Orientation="Vertical">
+                <Button Content="Show Estimates" Command="{Binding ShowEstimatesCommand}" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibilityConverter}}" Background="LightGray" />
+                <Button Content="End Session" Command="{Binding EndSessionCommand}" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibilityConverter}}" Background="LightGray" />
+                <Button Content="Leave Session" Command="{Binding LeaveSessionCommand}" Visibility="{Binding IsDeveloper, Converter={StaticResource booleanToVisibilityConverter}}" Background="LightGray" />
+                
+            </StackPanel>
 
             <GroupBox Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibilityConverter}}">
                 <GroupBox.Header>

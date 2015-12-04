@@ -69,6 +69,10 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewMode
             vm.SendEstimateCommand.Should().NotBeNull();
 
             vm.SendFinalEstimateCommand.Should().NotBeNull();
+
+            vm.LeaveSessionCommand.Should().NotBeNull();
+
+            vm.EndSessionCommand.Should().NotBeNull();
         }
 
         #endregion 
@@ -271,6 +275,66 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewMode
             vm.SprintStoriesCollection.Single().Equals(session.Stories.Single());
         }
 
+        [Test]
+        public void CallOnNavigatedToAndUserIsADeveloper()
+        {
+            vm.RecievedEstimates = new System.Collections.ObjectModel.ObservableCollection<ServicePlanningPokerEstimate>()
+            {
+                new ServicePlanningPokerEstimate
+                {
+                    Name = "Old"
+                }
+            };
+
+            var sessionId = Guid.NewGuid();
+
+            var navParams = new NavigationParameters();
+            navParams.Add("sessionId", sessionId);
+
+            var navService = Substitute.For<IRegionNavigationService>();
+            var navContext = new NavigationContext(navService, new Uri("Test", UriKind.Relative), navParams);
+
+            var userId = Guid.NewGuid();
+            UserDetailsStore.LoggedInUserPrincipal = new GenericPrincipal(new GenericIdentity("test@agile.local"), null);
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>
+                {
+                    new ServicePlanningPokerUser
+                    {
+                        UserID = userId,
+                        EmailAddress = "test@agile.local",
+                        Estimate = new ServicePlanningPokerEstimate
+                        {
+                            Estimate = 10,
+                            Name = "New"
+                        }
+                    }
+                }.ToArray(),
+                Stories = new List<ServiceSprintStory>()
+                {
+                    new ServiceSprintStory()
+                }.ToArray(),
+                State = ServicePlanningPokerSessionState.ShowingEstimates,
+                HostID = Guid.NewGuid()
+            };
+
+            gateway.RetrieveSessionInfo(sessionId).Returns(session);
+
+            vm.OnNavigatedTo(navContext);
+
+            vm.IsScrumMaster.Should().BeFalse();
+            vm.IsDeveloper.Should().BeTrue();
+            vm.RecievedEstimates.Count.Should().Be(1);
+            vm.RecievedEstimates.Single().Name.Should().Be("New");
+            vm.ShowEstimates.Should().BeTrue();
+            vm.HideEstimates.Should().BeFalse();
+            vm.Users.First().Should().Be(session.Users.First());
+            vm.SprintStoriesCollection.Single().Equals(session.Stories.Single());
+        }
+
 
         #endregion
 
@@ -319,6 +383,65 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewMode
         }
 
         #endregion 
+
+        #region ServiceGateway_NotifyClientOfTerminatedSessionEvent(object sender, EventArgs e) Tests 
+
+        [Test]
+        public void CallNotifyTerminatedSesion()
+        {
+            vm.MainWindow = Substitute.For<WindowProvider>();
+            vm.RegionManager = Substitute.For<IRegionManager>();
+
+            vm.Call("ServiceGateway_NotifyClientOfTerminatedSessionEvent", null, null);
+
+            vm.MainWindow.Received().ShowMessageAsync("Planning Poker Session Terminated!", "The planning poker session has been terminated.");
+            vm.RegionManager.Received().RequestNavigate(RegionNames.MainRegion, "MyProjects");
+        }
+
+        #endregion 
+
+        #region EndCurrentSession() Tests 
+
+        [Test]
+        public void CallEndCurrentSession()
+        {
+            var sessionId = Guid.NewGuid();
+
+            vm.GetType().GetField("sessionId", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(vm, sessionId);
+
+            vm.MainWindow = Substitute.For<WindowProvider>();
+            vm.RegionManager = Substitute.For<IRegionManager>();
+
+            vm.Call("EndCurrentSession");
+
+            gateway.Received().EndPokerSession(sessionId);
+            vm.MainWindow.Received().ShowMessageAsync("Poker session ended!", "Your planning poker session has been successfully ended.");
+            vm.RegionManager.Received().RequestNavigate(RegionNames.MainRegion, "StartPlanningPokerSession");
+
+        }
+
+        #endregion 
+
+        #region LeaveCurrentSession() Tests 
+
+        [Test]
+        public void CallLeaveCurrentSession()
+        {
+            var sessionId = Guid.NewGuid();
+
+            vm.GetType().GetField("sessionId", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(vm, sessionId);
+
+            vm.MainWindow = Substitute.For<WindowProvider>();
+            vm.RegionManager = Substitute.For<IRegionManager>();
+
+            vm.Call("LeaveCurrentSession");
+
+            gateway.Received().LeaveSession(sessionId);
+            vm.MainWindow.Received().ShowMessageAsync("Left the Planning poker session!", "You have now left the session.");
+            vm.RegionManager.Received().RequestNavigate(RegionNames.MainRegion, "MyProjects");
+        }
+
+        #endregion
 
     }
 

@@ -328,6 +328,9 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         private System.Guid SprintStoryIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StatusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServiceStory StoryField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -362,6 +365,19 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
                 if ((this.SprintStoryIdField.Equals(value) != true)) {
                     this.SprintStoryIdField = value;
                     this.RaisePropertyChanged("SprintStoryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StatusField, value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
                 }
             }
         }
@@ -938,11 +954,6 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/SendMessageToClient", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/SendMessageToClientResponse")]
         void SendMessageToClient(AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServiceChatMessage msg);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/NotifyClientToClearStoryPointEsti" +
-            "mateFromServer", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/NotifyClientToClearStoryPointEsti" +
-            "mateFromServerResponse")]
-        void NotifyClientToClearStoryPointEstimateFromServer();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

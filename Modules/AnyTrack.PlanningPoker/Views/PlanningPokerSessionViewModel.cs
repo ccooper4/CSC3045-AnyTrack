@@ -43,6 +43,11 @@ namespace AnyTrack.PlanningPoker.Views
         private bool isScrumMaster = false;
 
         /// <summary>
+        /// Is the user a developer? 
+        /// </summary>
+        private bool isDeveloper = false; 
+
+        /// <summary>
         /// Should the estimates be shown
         /// </summary>
         private bool showEstimates = false;
@@ -94,6 +99,10 @@ namespace AnyTrack.PlanningPoker.Views
             SendEstimateCommand = new DelegateCommand<string>(SubmitEstimateToServer);
 
             SendFinalEstimateCommand = new DelegateCommand<ServicePlanningPokerEstimate>(SubmitFinalEstimateToServer);
+
+            EndSessionCommand = new DelegateCommand(EndCurrentSession);
+
+            LeaveSessionCommand = new DelegateCommand(LeaveCurrentSession);
         }               
 
         #endregion
@@ -139,6 +148,16 @@ namespace AnyTrack.PlanningPoker.Views
         /// Gets the command used to send and set the final story point estimate. 
         /// </summary>
         public DelegateCommand<ServicePlanningPokerEstimate> SendFinalEstimateCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command used for a SM to end the session.
+        /// </summary>
+        public DelegateCommand EndSessionCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command used by a developer to leave the session
+        /// </summary>
+        public DelegateCommand LeaveSessionCommand { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether or not this view can be re-used.
@@ -198,6 +217,22 @@ namespace AnyTrack.PlanningPoker.Views
                 SetProperty(ref isScrumMaster, value);
             }
         }
+        
+        /// <summary>
+        /// Gets or sets a value indicating whether or not this user is a developer.
+        /// </summary>
+        public bool IsDeveloper
+        {
+            get
+            {
+                return isDeveloper;
+            }
+
+            set
+            {
+                SetProperty(ref isDeveloper, value);
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether to show the estimates
@@ -251,8 +286,9 @@ namespace AnyTrack.PlanningPoker.Views
         /// <param name="navigationContext">The navigation context</param>
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            serviceGateway.NotifyClientToClearStoryPointEstimateFromServerEvent -= ServiceGateway_NotifyClientToClearStoryPointEstimateFromServerEvent;
             serviceGateway.NotifyClientOfNewMessageFromServerEvent -= ServiceGateway_NotifyClientOfNewMessageFromServerEvent;
+            serviceGateway.NotifyClientOfSessionUpdateEvent -= ServiceGateway_NotifyClientOfSessionUpdateEvent;
+            serviceGateway.NotifyClientOfTerminatedSessionEvent -= ServiceGateway_NotifyClientOfTerminatedSessionEvent;
         }
 
         /// <summary>
@@ -272,15 +308,30 @@ namespace AnyTrack.PlanningPoker.Views
                 {
                     IsScrumMaster = true; 
                 }
+                else
+                {
+                    IsDeveloper = true; 
+                }
 
                 SprintStoriesCollection.AddRange(session.Stories);
 
-                serviceGateway.NotifyClientToClearStoryPointEstimateFromServerEvent += ServiceGateway_NotifyClientToClearStoryPointEstimateFromServerEvent;
                 serviceGateway.NotifyClientOfNewMessageFromServerEvent += ServiceGateway_NotifyClientOfNewMessageFromServerEvent;
                 serviceGateway.NotifyClientOfSessionUpdateEvent += ServiceGateway_NotifyClientOfSessionUpdateEvent;
+                serviceGateway.NotifyClientOfTerminatedSessionEvent += ServiceGateway_NotifyClientOfTerminatedSessionEvent;
 
                 UpdateViewGivenSession(session);
             }
+        }
+
+        /// <summary>
+        /// Handles the session terminated event from the server. 
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">Any event args.</param>
+        private void ServiceGateway_NotifyClientOfTerminatedSessionEvent(object sender, EventArgs e)
+        {
+            this.ShowMetroDialog("Planning Poker Session Terminated!", "The planning poker session has been terminated.");
+            this.NavigateToItem("MyProjects");
         }
 
         /// <summary>
@@ -303,16 +354,6 @@ namespace AnyTrack.PlanningPoker.Views
             var message = "{0} {1} - {2}".Substitute(msg.Name, DateTime.Now.ToString(), msg.Message);
             this.MessageHistories.Add(message);
             CollectionViewSource.GetDefaultView(this.MessageHistories).MoveCurrentTo(message);
-        }
-
-        /// <summary>
-        /// Duplex binding for clearing estimates when server asks
-        /// </summary>
-        /// <param name="sender">The sender object</param>
-        /// <param name="e">the event</param>
-        private void ServiceGateway_NotifyClientToClearStoryPointEstimateFromServerEvent(object sender, EventArgs e)
-        {
-            this.RecievedEstimates.Clear();
         }
 
         /// <summary>
@@ -387,6 +428,26 @@ namespace AnyTrack.PlanningPoker.Views
             msg.Message = finalEstimate.ToString();
 
             serviceGateway.SubmitMessageToServer(msg);
+        }
+
+        /// <summary>
+        /// Allows a scrum master to end the session.
+        /// </summary>
+        private void EndCurrentSession()
+        {
+            serviceGateway.EndPokerSession(sessionId);
+            this.ShowMetroDialog("Poker session ended!", "Your planning poker session has been successfully ended.");
+            this.NavigateToItem("StartPlanningPokerSession", null);
+        }
+
+        /// <summary>
+        /// Allows a developer to leave the session.
+        /// </summary>
+        private void LeaveCurrentSession()
+        {
+            serviceGateway.LeaveSession(sessionId);
+            this.ShowMetroDialog("Left the Planning poker session!", "You have now left the session.");
+            this.NavigateToItem("MyProjects", null);
         }
 
         /// <summary>

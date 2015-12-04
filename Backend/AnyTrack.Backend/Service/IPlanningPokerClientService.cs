@@ -46,11 +46,5 @@ namespace AnyTrack.Backend.Service
         /// <param name="msg">The message being sent to the clients</param>
         [OperationContract]
         void SendMessageToClient(ServiceChatMessage msg);
-
-        /// <summary>
-        /// Notifies the cient that the session they are in has been terminated. 
-        /// </summary>
-        [OperationContract]
-        void NotifyClientToClearStoryPointEstimateFromServer();
     }    
 }
