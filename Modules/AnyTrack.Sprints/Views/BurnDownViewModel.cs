@@ -102,12 +102,12 @@ namespace AnyTrack.Sprints.Views
             this.GetChartForProjectAndSprint = new DelegateCommand(GetBurndownChartForProjectAndSprint);
             this.projectServiceGateway = projectServiceGateway;
             this.sprintServiceGateway = sprintServiceGateway;
-            if (this.Projects.Count != 0)
+            if (this.Projects != null)
             {
                 this.Projects = new ObservableCollection<ServiceProjectSummary>(projectServiceGateway.GetProjectNames(true, true, true));
             }
 
-            if (this.Sprints.Count != 0)
+            if (this.Sprints != null)
             {
                 this.Sprints = new ObservableCollection<Infrastructure.BackendSprintService.ServiceSprintSummary>(sprintServiceGateway.GetSprintNames(projectId, true, true));
             }
@@ -115,7 +115,7 @@ namespace AnyTrack.Sprints.Views
             this.Points = new ObservableCollection<DataPoint>();
             this.Trend = new ObservableCollection<DataPoint>();
             this.PlotModel = new PlotModel();
-            EmailFlyoutCommand = new DelegateCommand(EmailFlyout);
+            this.EmailFlyoutCommand = new DelegateCommand(EmailFlyout);
         }
         #endregion
 
@@ -411,6 +411,7 @@ namespace AnyTrack.Sprints.Views
         {
             this.storyBurnDownOption = true;
             this.Trend.Clear();
+            this.Points.Clear();
             ValidateViewModelNow();
             if (!this.HasErrors)
             {
