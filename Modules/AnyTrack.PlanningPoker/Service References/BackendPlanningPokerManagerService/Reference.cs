@@ -325,6 +325,9 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> DateCompletedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid SprintIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -336,6 +339,9 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServiceStory StoryField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double StoryEstimateField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -343,6 +349,19 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> DateCompleted {
+            get {
+                return this.DateCompletedField;
+            }
+            set {
+                if ((this.DateCompletedField.Equals(value) != true)) {
+                    this.DateCompletedField = value;
+                    this.RaisePropertyChanged("DateCompleted");
+                }
             }
         }
         
@@ -394,6 +413,19 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
                 if ((object.ReferenceEquals(this.StoryField, value) != true)) {
                     this.StoryField = value;
                     this.RaisePropertyChanged("Story");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double StoryEstimate {
+            get {
+                return this.StoryEstimateField;
+            }
+            set {
+                if ((this.StoryEstimateField.Equals(value) != true)) {
+                    this.StoryEstimateField = value;
+                    this.RaisePropertyChanged("StoryEstimate");
                 }
             }
         }

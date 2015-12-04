@@ -42,7 +42,6 @@
                     <DataTemplate>
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock FontWeight="ExtraBold" Text="Summary: "/>
                                 <TextBlock FontWeight="Bold" Text="{Binding Path=Story.Summary}"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
@@ -56,6 +55,10 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="So That "/>
                                 <TextBlock Text="{Binding Path=Story.SoThat}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Estimate "/>
+                                <TextBlock Text="{Binding Path=StoryEstimate}"/>
                             </StackPanel>
                         </StackPanel>
                     </DataTemplate>

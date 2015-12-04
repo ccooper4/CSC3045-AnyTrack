@@ -598,6 +598,9 @@ namespace AnyTrack.Backend.Service
             }
 
             var dataSprintStory = unitOfWork.SprintStoryRepository.Items.Single(s => s.Id == sprintStoryId);
+            dataSprintStory.StoryEstimate = estimate;
+            sprintStory.StoryEstimate = estimate;
+            unitOfWork.Commit();
 
             foreach (var user in session.Users.Where(u => u.EmailAddress != thisUserEmail))
             {

@@ -1610,6 +1610,9 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
             service.SubmitFinalEstimate(sessionId, storyId, 10);
             session.State.Should().Be(ServicePlanningPokerSessionState.GettingEstimates);
             session.ActiveStoryIndex.Should().Be(1);
+            dataSprintStories.First().StoryEstimate.Should().Be(10);
+            session.Stories.First().StoryEstimate.Should().Be(10);
+            unitOfWork.Received().Commit();
             otherClientChannel.Received().NotifyClientOfSessionUpdate(session);
         }
 
@@ -1673,6 +1676,9 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
             service.SubmitFinalEstimate(sessionId, storyId, 10);
             session.State.Should().Be(ServicePlanningPokerSessionState.Complete);
             session.ActiveStoryIndex.Should().Be(1);
+            dataSprintStories.First().StoryEstimate.Should().Be(10);
+            session.Stories.Last().StoryEstimate.Should().Be(10);
+            unitOfWork.Received().Commit();
             otherClientChannel.Received().NotifyClientOfSessionUpdate(session);
         }
 
