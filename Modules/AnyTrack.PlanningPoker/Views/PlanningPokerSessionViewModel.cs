@@ -515,6 +515,11 @@ namespace AnyTrack.PlanningPoker.Views
         /// <param name="estimate">The estimate to send</param>
         private void SubmitEstimateToServer(string estimate)
         {
+            if (estimate.Equals("?"))
+            {
+                estimate = "0";
+            }
+
             ServicePlanningPokerEstimate userEstimate = new ServicePlanningPokerEstimate
             {
                 Estimate = double.Parse(estimate),
@@ -532,7 +537,7 @@ namespace AnyTrack.PlanningPoker.Views
         private void SubmitFinalEstimateToServer()
         {
             var finalEstimate = double.Parse(SelectedFinalEstimate);
-
+            
             var sprintStoryId = SprintStoriesCollection[activeStoryIndex].SprintStoryId;
 
             serviceGateway.SubmitFinalEstimate(sessionId, sprintStoryId, finalEstimate);
