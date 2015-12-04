@@ -1122,6 +1122,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
             service.StartSession(sessionId);
 
             session.State.Should().Be(ServicePlanningPokerSessionState.GettingEstimates);
+            session.ActiveStoryIndex.Should().Be(0);
             otherClientChannel.Received().NotifyClientOfSessionStart();
         }
 
@@ -1464,6 +1465,220 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
             service.ShowEstimates(sessionId);
 
             session.State.Should().Be(ServicePlanningPokerSessionState.ShowingEstimates);
+            otherClientChannel.Received().NotifyClientOfSessionUpdate(session);
+        }
+
+        #endregion 
+
+        #region SubmitFinalEstimate(Guid sessionId, Guid sprintStoryId, double estimate) Tests 
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void CallSubmitFinalEstimateWithNoSession()
+        {
+            var sessionId = Guid.NewGuid();
+            var storyId = Guid.NewGuid();
+            activeSessionProvider.GetListOfSessions().Returns(new ConcurrentDictionary<Guid, ServicePlanningPokerSession>());
+
+            service.SubmitFinalEstimate(sessionId, storyId, 10);
+        }
+
+        [Test]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void CallSubmitFinalEstimateAndUserNotInSession()
+        {
+            var sessionId = Guid.NewGuid();
+            var storyId = Guid.NewGuid(); 
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+            };
+
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            service.SubmitFinalEstimate(sessionId, storyId, 10);
+        }
+
+        [Test]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void CallSubmitFinalEstimateAndUserIsNotScrumMaster()
+        {
+            var sessionId = Guid.NewGuid();
+            var storyId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+                {
+                    new ServicePlanningPokerUser
+                    {
+                        UserID = userId,
+                        EmailAddress = "test@agile.local"
+                    }
+                },
+                HostID = Guid.NewGuid()
+            };
+
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            service.SubmitFinalEstimate(sessionId, storyId, 10);
+        }
+
+        [Test]
+        public void CallSubmitFinalEstimateOnTheNonLastStory()
+        {
+            var sessionId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+            var storyId = Guid.NewGuid();
+
+            var otherClientChannel = Substitute.For<IPlanningPokerClientService>();
+
+            var thisUser = new ServicePlanningPokerUser
+            {
+                UserID = userId,
+                EmailAddress = "test@agile.local"
+            };
+
+            var session = new ServicePlanningPokerSession
+            {
+                ActiveStoryIndex = 0,
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+                {
+                    thisUser,
+                    new ServicePlanningPokerUser
+                    {
+                        ClientChannel = otherClientChannel,
+                        UserID = Guid.NewGuid(),
+                        EmailAddress = "other@agile.local"
+                    }
+                },
+                Stories = new List<ServiceSprintStory>()
+                {
+                    new ServiceSprintStory { SprintStoryId = storyId},
+                    new ServiceSprintStory { SprintStoryId = Guid.NewGuid() },
+                },
+                HostID = userId
+            };
+
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            var dataSprintStories = new List<SprintStory>()
+            {
+                new SprintStory { Id = storyId},
+                new SprintStory()
+            };
+            unitOfWork.SprintStoryRepository.Items.Returns(dataSprintStories.AsQueryable());
+
+            service.SubmitFinalEstimate(sessionId, storyId, 10);
+            session.State.Should().Be(ServicePlanningPokerSessionState.GettingEstimates);
+            session.ActiveStoryIndex.Should().Be(1);
+            dataSprintStories.First().StoryEstimate.Should().Be(10);
+            session.Stories.First().StoryEstimate.Should().Be(10);
+            unitOfWork.Received().Commit();
+            otherClientChannel.Received().NotifyClientOfSessionUpdate(session);
+        }
+
+        [Test]
+        public void CallSubmitFinalEstimateOnTheLastStory()
+        {
+            var sessionId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+            var storyId = Guid.NewGuid();
+
+            var otherClientChannel = Substitute.For<IPlanningPokerClientService>();
+
+            var thisUser = new ServicePlanningPokerUser
+            {
+                UserID = userId,
+                EmailAddress = "test@agile.local"
+            };
+
+            var session = new ServicePlanningPokerSession
+            {
+                ActiveStoryIndex = 1,
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+                {
+                    thisUser,
+                    new ServicePlanningPokerUser
+                    {
+                        ClientChannel = otherClientChannel,
+                        UserID = Guid.NewGuid(),
+                        EmailAddress = "other@agile.local"
+                    }
+                },
+                Stories = new List<ServiceSprintStory>()
+                {
+                    new ServiceSprintStory { SprintStoryId = Guid.NewGuid()},
+                    new ServiceSprintStory { SprintStoryId = storyId },
+                },
+                HostID = userId
+            };
+
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            var dataSprintStories = new List<SprintStory>()
+            {
+                new SprintStory { Id = storyId},
+                new SprintStory()
+            };
+            unitOfWork.SprintStoryRepository.Items.Returns(dataSprintStories.AsQueryable());
+
+            service.SubmitFinalEstimate(sessionId, storyId, 10);
+            session.State.Should().Be(ServicePlanningPokerSessionState.Complete);
+            session.ActiveStoryIndex.Should().Be(1);
+            dataSprintStories.First().StoryEstimate.Should().Be(10);
+            session.Stories.Last().StoryEstimate.Should().Be(10);
+            unitOfWork.Received().Commit();
             otherClientChannel.Received().NotifyClientOfSessionUpdate(session);
         }
 

@@ -88,5 +88,14 @@ namespace AnyTrack.Backend.Service
         /// <param name="sessionId">The session id.</param>
         [OperationContract]
         void ShowEstimates(Guid sessionId);
+
+        /// <summary>
+        /// Allows a scrum master to submit the final estimate.
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        /// <param name="sprintStoryId">The sprint story id.</param>
+        /// <param name="estimate">The selected estimate.</param>
+        [OperationContract]
+        void SubmitFinalEstimate(Guid sessionId, Guid sprintStoryId, double estimate);
     }        
 }

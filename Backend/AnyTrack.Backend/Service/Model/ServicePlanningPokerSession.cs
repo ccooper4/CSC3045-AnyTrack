@@ -34,7 +34,7 @@ namespace AnyTrack.Backend.Service.Model
         /// <summary>
         /// Gets or sets the active story
         /// </summary>
-        public Guid ActiveStory { get; set; }
+        public int ActiveStoryIndex { get; set; }
 
         /// <summary>
         /// Gets or sets the users.

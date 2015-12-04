@@ -120,10 +120,24 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="SubmitFinalEstimate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionId" type="q15:guid" />
+        <xs:element xmlns:q16="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sprintStoryId" type="q16:guid" />
+        <xs:element minOccurs="0" name="estimate" type="xs:double" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SubmitFinalEstimateResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="NotifyClientOfSession">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="sessionInfo" nillable="true" type="q15:ServiceSessionChangeInfo" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="sessionInfo" nillable="true" type="q17:ServiceSessionChangeInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -145,7 +159,7 @@
   <xs:element name="NotifyClientOfSessionUpdate">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="newSession" nillable="true" type="q16:ServicePlanningPokerSession" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="newSession" nillable="true" type="q18:ServicePlanningPokerSession" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -167,7 +181,7 @@
   <xs:element name="SendMessageToClient">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="msg" nillable="true" type="q17:ServiceChatMessage" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/AnyTrack.Backend.Service.Model" minOccurs="0" name="msg" nillable="true" type="q19:ServiceChatMessage" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

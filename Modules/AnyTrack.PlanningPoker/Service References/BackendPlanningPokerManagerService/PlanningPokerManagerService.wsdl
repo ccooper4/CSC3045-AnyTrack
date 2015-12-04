@@ -75,6 +75,12 @@
   <wsdl:message name="IPlanningPokerManagerService_ShowEstimates_OutputMessage">
     <wsdl:part name="parameters" element="tns:ShowEstimatesResponse" />
   </wsdl:message>
+  <wsdl:message name="IPlanningPokerManagerService_SubmitFinalEstimate_InputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitFinalEstimate" />
+  </wsdl:message>
+  <wsdl:message name="IPlanningPokerManagerService_SubmitFinalEstimate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitFinalEstimateResponse" />
+  </wsdl:message>
   <wsdl:message name="IPlanningPokerManagerService_NotifyClientOfSession_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotifyClientOfSession" />
   </wsdl:message>
@@ -143,6 +149,10 @@
     <wsdl:operation name="ShowEstimates">
       <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/ShowEstimates" message="tns:IPlanningPokerManagerService_ShowEstimates_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/ShowEstimatesResponse" message="tns:IPlanningPokerManagerService_ShowEstimates_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitFinalEstimate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/SubmitFinalEstimate" message="tns:IPlanningPokerManagerService_SubmitFinalEstimate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/SubmitFinalEstimateResponse" message="tns:IPlanningPokerManagerService_SubmitFinalEstimate_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="NotifyClientOfSession">
       <wsdl:output wsaw:Action="http://tempuri.org/IPlanningPokerManagerService/NotifyClientOfSession" message="tns:IPlanningPokerManagerService_NotifyClientOfSession_OutputCallbackMessage" />
@@ -245,6 +255,15 @@
     </wsdl:operation>
     <wsdl:operation name="ShowEstimates">
       <soap12:operation soapAction="http://tempuri.org/IPlanningPokerManagerService/ShowEstimates" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitFinalEstimate">
+      <soap12:operation soapAction="http://tempuri.org/IPlanningPokerManagerService/SubmitFinalEstimate" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

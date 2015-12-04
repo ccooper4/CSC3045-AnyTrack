@@ -6,12 +6,18 @@
              xmlns:local="clr-namespace:AnyTrack.PlanningPoker.Views"
              xmlns:prism="http://www.codeplex.com/prism"
              xmlns:convert="clr-namespace:AnyTrack.Infrastructure.Converters;assembly=AnyTrack.Infrastructure"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600">
 
     <UserControl.Resources>
         <convert:BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter"></convert:BooleanToVisibilityConverter>
+        <ResourceDictionary x:Key="at">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     
     <Grid Background="White">
@@ -29,17 +35,15 @@
 
         <GroupBox Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <GroupBox.Header>
-                <TextBlock Foreground="White" Text="Stories" />
+                <TextBlock Foreground="White" Text="{Binding TotalStoriesLabel}" />
             </GroupBox.Header>
-            <TabControl ItemsSource="{Binding SprintStoriesCollection}" TabStripPlacement="Left">
-                <TabControl.ItemTemplate>
-                    <DataTemplate>
-                        <Label Content="{Binding Path=Story.Summary}" />
-                    </DataTemplate>
-                </TabControl.ItemTemplate>
-                <TabControl.ContentTemplate>
+            <controls:FlipView IsBannerEnabled="False" SelectedValuePath="." SelectedValue="{Binding ActiveStory}" ItemsSource="{Binding SprintStoriesCollection}">
+                <controls:FlipView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontWeight="Bold" Text="{Binding Path=Story.Summary}"/>
+                            </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="As a "/>
                                 <TextBlock Text="{Binding Path=Story.AsA}"/>
@@ -52,10 +56,15 @@
                                 <TextBlock Text="So That "/>
                                 <TextBlock Text="{Binding Path=Story.SoThat}"/>
                             </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Estimate "/>
+                                <TextBlock Text="{Binding Path=StoryEstimate}"/>
+                            </StackPanel>
                         </StackPanel>
                     </DataTemplate>
-                </TabControl.ContentTemplate>
-            </TabControl>
+                </controls:FlipView.ItemTemplate>
+            </controls:FlipView>
+
         </GroupBox>
 
         <GroupBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -131,7 +140,7 @@
             </GroupBox>
             
             <StackPanel Grid.Row="1" Orientation="Vertical">
-                <Button Content="Show Estimates" Command="{Binding ShowEstimatesCommand}" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibilityConverter}}" Background="LightGray" />
+                <Button IsEnabled="{Binding CanShowEstimates}" Content="Show Estimates" Command="{Binding ShowEstimatesCommand}" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibilityConverter}}" Background="LightGray" />
                 <Button Content="End Session" Command="{Binding EndSessionCommand}" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibilityConverter}}" Background="LightGray" />
                 <Button Content="Leave Session" Command="{Binding LeaveSessionCommand}" Visibility="{Binding IsDeveloper, Converter={StaticResource booleanToVisibilityConverter}}" Background="LightGray" />
                 
@@ -142,8 +151,20 @@
                     <TextBlock Foreground="White" Text="Final Value" />
                 </GroupBox.Header>
                 <DockPanel>
-                    <Button Content="Submit" DockPanel.Dock="Right" Command="{Binding SubmitFinalEstimateCommand}" Background="LightGray" Margin="10px,0,0,0"/>
-                    <ComboBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" ItemsSource="{Binding EstimateValues}"/>
+                    <Button IsEnabled="{Binding CanGiveFinalEstimate}" Content="Submit" DockPanel.Dock="Right" Command="{Binding SubmitFinalEstimateCommand}" Background="LightGray" Margin="10px,0,0,0"/>
+                    <ComboBox SelectedValuePath="Tag" SelectedValue="{Binding SelectedFinalEstimate}" DockPanel.Dock="Left" HorizontalAlignment="Stretch">
+                        <ComboBoxItem Tag="0">0</ComboBoxItem>
+                        <ComboBoxItem Tag="0.5">0.5</ComboBoxItem>
+                        <ComboBoxItem Tag="1">1</ComboBoxItem>
+                        <ComboBoxItem Tag="2">2</ComboBoxItem>
+                        <ComboBoxItem Tag="3">3</ComboBoxItem>
+                        <ComboBoxItem Tag="5">5</ComboBoxItem>
+                        <ComboBoxItem Tag="8">8</ComboBoxItem>
+                        <ComboBoxItem Tag="13">13</ComboBoxItem>
+                        <ComboBoxItem Tag="20">20</ComboBoxItem>
+                        <ComboBoxItem Tag="40">40</ComboBoxItem>
+                        <ComboBoxItem Tag="100">100</ComboBoxItem>
+                    </ComboBox>
                 </DockPanel>
             </GroupBox>
 
