@@ -5,13 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AnyTrack.Accounting.Views"
              xmlns:prism="http://www.codeplex.com/prism"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:controls="clr-namespace:AnyTrack.Accounting.Controls"
              xmlns:atph="clr-namespace:AnyTrack.Accounting.Controls"
              xmlns:Views="clr-namespace:AnyTrack.Client.CustomControls"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="600">
 
-    <Grid Background="LightGray" Margin="0,0,0,-210">
+    <Grid Background="Transparent" Margin="0,0,0,-210">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.75*" />
             <ColumnDefinition Width="6.75*" MaxWidth="600px"/>
@@ -24,17 +26,17 @@
         </Grid.RowDefinitions>
 
 
-        <GroupBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" Margin="0, 30px, 0, 10px" >
+        <GroupBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" Margin="0, 30px, 0, 10px" Background="{DynamicResource AccentColorBrush2}">
             <GroupBox.Header>
                 <TextBlock Foreground="White" Text="Registration" />
             </GroupBox.Header>
-            <Grid Background="White">
+            <Grid Background="{DynamicResource AccentColorBrush2}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0*"></ColumnDefinition>
                     <ColumnDefinition Width="6*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-       
+
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
@@ -50,44 +52,33 @@
                     <RowDefinition ></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Views:LabelledTextBox Label="Email Address*:" Text="{Binding Email}" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"/>
+                <!--Views:LabelledTextBox Label="Email Address*:" Text="{Binding Email}"  VerticalAlignment="Center"/-->
+                <TextBox Grid.Column="1" Grid.Row="0" Margin="10" HorizontalAlignment="Stretch" Controls:TextBoxHelper.Watermark="Email*" ToolTip="Enter Email Here" Text="{Binding Email}" />
 
-                <Views:LabelledTextBox Label="First Name*:" Text="{Binding FirstName}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"/>
+                <!--Views:LabelledTextBox Label="First Name*:" Text="{Binding FirstName}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"/-->
+                <TextBox Grid.Column="1" Grid.Row="1" Margin="10" HorizontalAlignment="Stretch" Controls:TextBoxHelper.Watermark="First Name" ToolTip="Enter First Name Here" Text="{Binding FirstName}" />
 
-                <Views:LabelledTextBox Label="Last Name*:" Text="{Binding LastName}" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center"/>
+                <!--Views:LabelledTextBox Label="Last Name*:" Text="{Binding LastName}" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center"/-->
+                <TextBox Grid.Column="1" Grid.Row="2" Margin="10" HorizontalAlignment="Stretch" Controls:TextBoxHelper.Watermark="Username" ToolTip="Enter Lat Name Here" Text="{Binding LastName}" />
 
-                <Grid Grid.Column="1" Grid.Row="3">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="4*" SharedSizeGroup="Labels"/>
-                        <ColumnDefinition Width="6*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label  Grid.Column="0" Name="PasswordLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Password*:</Label>
-                    <PasswordBox  Grid.Column="1" VerticalAlignment="Center" atph:PasswordBoxBindingHelper.EnablePasswordBoxBinding="true" atph:PasswordBoxBindingHelper.Binding="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </Grid>
-
-                <Grid Grid.Column="1" Grid.Row="4">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="4*" SharedSizeGroup="Labels"/>
-                        <ColumnDefinition Width="6*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Name="ConfirmPasswordLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Confirm Password:</Label>
-                    <PasswordBox Grid.Column="1" VerticalAlignment="Center" atph:PasswordBoxBindingHelper.EnablePasswordBoxBinding="true"  atph:PasswordBoxBindingHelper.Binding="{Binding Path=ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </Grid>
+                <PasswordBox Grid.Column="1" Grid.Row="3" Margin="10" HorizontalAlignment="Stretch" Controls:TextBoxHelper.Watermark="Password" Controls:TextBoxHelper.IsWaitingForData="True" ToolTip="Enter Password Here" controls:PasswordBoxBindingHelper.EnablePasswordBoxBinding="true"  controls:PasswordBoxBindingHelper.Binding="{Binding Path=ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <PasswordBox Grid.Column="1" Grid.Row="4" Margin="10" HorizontalAlignment="Stretch" Controls:TextBoxHelper.Watermark="Confirm Password" Controls:TextBoxHelper.IsWaitingForData="True" ToolTip="Enter Password Here" controls:PasswordBoxBindingHelper.EnablePasswordBoxBinding="true"  controls:PasswordBoxBindingHelper.Binding="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Grid Grid.Column="1" Grid.Row="5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="4*" SharedSizeGroup="Labels"/>
-                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="33*" SharedSizeGroup="Labels"/>
+                        <ColumnDefinition Width="98*"/>
+                        <ColumnDefinition Width="197*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Label Grid.Column="0" Grid.Row="0" Name="RolesLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Roles:</Label>
-                    <CheckBox Grid.Column="1" Grid.Row="0" Name="ProductOwnerCheckbox" Content="Product Owner" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10px" IsChecked="{Binding ProductOwner}"/>
-                    <CheckBox Grid.Column="1" Grid.Row="1" Name="ScrumMasterCheckbox" Content="Scrum Master" HorizontalAlignment="Left"  VerticalAlignment="Center" Padding="10px" IsChecked="{Binding ScrumMaster}"/>
-                    <CheckBox Grid.Column="1" Grid.Row="2" Name="DeveloperCheckbox" Content="Developer" HorizontalAlignment="Left"  VerticalAlignment="Center" Padding="10px" IsChecked="{Binding Developer}"/>
+                    <Label Grid.Column="1" Grid.Row="0" Name="RolesLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10px" >Roles:</Label>
+                    <CheckBox Grid.Column="2" Grid.Row="0" Name="ProductOwnerCheckbox" Content="Product Owner" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10px" IsChecked="{Binding ProductOwner}"/>
+                    <CheckBox Grid.Column="2" Grid.Row="1" Name="ScrumMasterCheckbox" Content="Scrum Master" HorizontalAlignment="Left"  VerticalAlignment="Center" Padding="10px" IsChecked="{Binding ScrumMaster}"/>
+                    <CheckBox Grid.Column="2" Grid.Row="2" Name="DeveloperCheckbox" Content="Developer" HorizontalAlignment="Left"  VerticalAlignment="Center" Padding="10px" IsChecked="{Binding Developer}"/>
                 </Grid>
 
                 <Grid Grid.Column="1" Grid.Row="6">
@@ -122,7 +113,7 @@
                 </Grid>
 
                 <Views:LabelledTextBox Label="Secret Answer:" Text="{Binding SecretAnswer}" Grid.Column="1" Grid.Row="8" VerticalAlignment="Center"/>
-                
+
             </Grid>
         </GroupBox>
         <WrapPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
