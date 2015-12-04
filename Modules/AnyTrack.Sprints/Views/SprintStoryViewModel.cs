@@ -129,6 +129,11 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         private ISprintServiceGateway sprintServiceGateway;
 
+        /// <summary>
+        /// The list of tasks for this sprint story.
+        /// </summary>
+        private ObservableCollection<ServiceTask> tasks; 
+
         #endregion
 
         /// <summary>
@@ -163,6 +168,8 @@ namespace AnyTrack.Sprints.Views
 
             OpenTaskViewCommand = new DelegateCommand(this.OpenTaskView);
             SaveSprintStoryCommand = new DelegateCommand(this.SaveSprintStory);
+            DeleteTaskCommand = new DelegateCommand<ServiceTask>(this.DeleteTask);
+            EditTaskCommand = new DelegateCommand<ServiceTask>(this.EditTask);
         }
 
         /// <summary>
@@ -174,6 +181,32 @@ namespace AnyTrack.Sprints.Views
         /// Gets the command used to open a sprint story view. 
         /// </summary>
         public DelegateCommand SaveSprintStoryCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command used to open a sprint story view. 
+        /// </summary>
+        public DelegateCommand<ServiceTask> DeleteTaskCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the comman used to edit a task.
+        /// </summary>
+        public DelegateCommand<ServiceTask> EditTaskCommand { get; private set; }
+
+        /// <summary>
+        /// Gets or sets all the status'
+        /// </summary>
+        public ObservableCollection<ServiceTask> Tasks
+        {
+            get
+            {
+                return tasks;
+            }
+
+            set
+            {
+                SetProperty(ref tasks, value);
+            }
+        }
 
         /// <summary>
         /// Gets or sets all the status'
@@ -500,7 +533,13 @@ namespace AnyTrack.Sprints.Views
 
                 //// Sprint story attributes
                 this.Status = sprintStory.Status;
-                //// TODO - story points, created, updated. 
+                //// TODO - story points, created, updated.
+
+                var tasks = sprintServiceGateway.GetAllTasksForSprintStory(sprintStory.SprintStoryId);
+                if (tasks != null)
+                {
+                    this.Tasks = new ObservableCollection<ServiceTask>(tasks);
+                }
             }
         }
 
@@ -523,18 +562,6 @@ namespace AnyTrack.Sprints.Views
         }
 
         /// <summary>
-        /// Open story view.
-        /// </summary>
-        private void OpenTaskView()
-        {
-            var navParams = new NavigationParameters();
-            navParams.Add("sprintStoryId", SprintStoryId);
-            navParams.Add("sprintStory", this.sprintStory);
-            this.ShowMetroFlyout("Task", navParams);
-            IsOpen = false;
-        }
-
-        /// <summary>
         /// Save the story.
         /// </summary>
         private void SaveSprintStory()
@@ -547,6 +574,48 @@ namespace AnyTrack.Sprints.Views
                 SprintStoryId = this.SprintStoryId,
             };
 
+            IsOpen = false;
+        }
+
+        /// <summary>
+        /// Delete a task
+        /// </summary>
+        /// <param name="task">the task to delete</param>
+        private void DeleteTask(ServiceTask task)
+        {
+            sprintServiceGateway.DeleteTask(task.TaskId);
+            Tasks.Remove(task);
+        }
+
+        /// <summary>
+        /// Open story view.
+        /// </summary>
+        private void OpenTaskView()
+        {
+            NavigationParameters navParams = new NavigationParameters();
+            navParams.Add("sprintStoryId", SprintStoryId);
+            Navigate(navParams);
+        }
+
+        /// <summary>
+        /// Edit a task
+        /// </summary>
+        /// <param name="task">the task to delete</param>
+        private void EditTask(ServiceTask task)
+        {
+            NavigationParameters navParams = new NavigationParameters();
+            navParams.Add("task", task);
+            Navigate(navParams);
+        }
+
+        /// <summary>
+        /// Base navigation method.
+        /// </summary>
+        /// <param name="navParams">the nav params</param>
+        private void Navigate(NavigationParameters navParams)
+        {
+            navParams.Add("sprintStory", this.sprintStory);
+            this.ShowMetroFlyout("Task", navParams);
             IsOpen = false;
         }
     }

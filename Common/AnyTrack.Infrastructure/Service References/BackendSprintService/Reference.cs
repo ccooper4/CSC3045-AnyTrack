@@ -1020,6 +1020,12 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="BackendSprintService.ISprintService")]
     public interface ISprintService {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/DeleteTask", ReplyAction="http://tempuri.org/ISprintService/DeleteTaskResponse")]
+        void DeleteTask(System.Guid serviceTaskId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/DeleteTask", ReplyAction="http://tempuri.org/ISprintService/DeleteTaskResponse")]
+        System.Threading.Tasks.Task DeleteTaskAsync(System.Guid serviceTaskId);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/AddSprint", ReplyAction="http://tempuri.org/ISprintService/AddSprintResponse")]
         void AddSprint(System.Guid projectId, AnyTrack.Infrastructure.BackendSprintService.ServiceSprint sprint);
         
@@ -1049,6 +1055,12 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetAllTasksForSprint", ReplyAction="http://tempuri.org/ISprintService/GetAllTasksForSprintResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask>> GetAllTasksForSprintAsync(System.Guid sprintId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetAllTasksForSprintStory", ReplyAction="http://tempuri.org/ISprintService/GetAllTasksForSprintStoryResponse")]
+        System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask> GetAllTasksForSprintStory(System.Guid sprintStoryId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/GetAllTasksForSprintStory", ReplyAction="http://tempuri.org/ISprintService/GetAllTasksForSprintStoryResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask>> GetAllTasksForSprintStoryAsync(System.Guid sprintStoryId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/SaveUpdatedTaskHours", ReplyAction="http://tempuri.org/ISprintService/SaveUpdatedTaskHoursResponse")]
         void SaveUpdatedTaskHours(System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask> tasks);
@@ -1150,6 +1162,14 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
                 base(binding, remoteAddress) {
         }
         
+        public void DeleteTask(System.Guid serviceTaskId) {
+            base.Channel.DeleteTask(serviceTaskId);
+        }
+        
+        public System.Threading.Tasks.Task DeleteTaskAsync(System.Guid serviceTaskId) {
+            return base.Channel.DeleteTaskAsync(serviceTaskId);
+        }
+        
         public void AddSprint(System.Guid projectId, AnyTrack.Infrastructure.BackendSprintService.ServiceSprint sprint) {
             base.Channel.AddSprint(projectId, sprint);
         }
@@ -1188,6 +1208,14 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         
         public System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask>> GetAllTasksForSprintAsync(System.Guid sprintId) {
             return base.Channel.GetAllTasksForSprintAsync(sprintId);
+        }
+        
+        public System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask> GetAllTasksForSprintStory(System.Guid sprintStoryId) {
+            return base.Channel.GetAllTasksForSprintStory(sprintStoryId);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask>> GetAllTasksForSprintStoryAsync(System.Guid sprintStoryId) {
+            return base.Channel.GetAllTasksForSprintStoryAsync(sprintStoryId);
         }
         
         public void SaveUpdatedTaskHours(System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceTask> tasks) {

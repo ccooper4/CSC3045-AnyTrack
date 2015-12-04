@@ -18,6 +18,13 @@ namespace AnyTrack.Backend.Service
     public interface ISprintService
     {
         /// <summary>
+        /// Delete a task. 
+        /// </summary>
+        /// <param name="serviceTaskId">the task to delete</param>
+        [OperationContract]
+        void DeleteTask(Guid serviceTaskId);
+
+        /// <summary>
         /// Creates a sprint and adds it to the project.
         /// </summary>
         /// <param name="projectId">Id of the project to add the sprint to</param>
@@ -56,6 +63,14 @@ namespace AnyTrack.Backend.Service
         /// <returns>Returns a list of tasks</returns>
         [OperationContract]
         List<ServiceTask> GetAllTasksForSprint(Guid sprintId);
+
+        /// <summary>
+        /// Get all the tasks for a given sprint story.
+        /// </summary>
+        /// <param name="sprintStoryId">the id of the sprint story</param>
+        /// <returns>the list of tasks</returns>
+        [OperationContract]
+        List<ServiceTask> GetAllTasksForSprintStory(Guid sprintStoryId);
 
         /// <summary>
         /// Method to save the update hours for tasks

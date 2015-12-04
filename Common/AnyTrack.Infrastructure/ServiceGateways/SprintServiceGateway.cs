@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Mail;
+using System.Runtime.Remoting;
 using AnyTrack.Infrastructure.BackendSprintService;
 using MemoryStream = System.IO.MemoryStream;
 
@@ -41,6 +42,15 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         #region Methods
 
         /// <summary>
+        /// Delete a task. 
+        /// </summary>
+        /// <param name="serviceTaskId">the task to delete</param>
+        public void DeleteTask(Guid serviceTaskId)
+        {
+            client.DeleteTask(serviceTaskId);
+        }
+
+        /// <summary>
         /// Creates a sprint and adds it to the project.
         /// </summary>
         /// <param name="projectId">Id of the project to add the sprint to</param>
@@ -78,6 +88,16 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         public List<ServiceTask> GetAllTasksForSprintCurrentUser(Guid sprintId)
         {
             return new List<ServiceTask>(client.GetAllTasksForSprint(sprintId));
+        }
+
+        /// <summary>
+        /// Get all the tasks for a given sprint story.
+        /// </summary>
+        /// <param name="sprintStoryId">the id of the sprint story</param>
+        /// <returns>the list of tasks</returns>
+        public List<ServiceTask> GetAllTasksForSprintStory(Guid sprintStoryId)
+        {
+            return client.GetAllTasksForSprintStory(sprintStoryId);
         }
 
         /// <summary>

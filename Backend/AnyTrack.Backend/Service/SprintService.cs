@@ -281,6 +281,76 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
+        /// Delete a task. 
+        /// </summary>
+        /// <param name="serviceTaskId">the task to delete</param>
+        public void DeleteTask(Guid serviceTaskId)
+        {
+            var dataTask = unitOfWork.TaskRepository.Items.SingleOrDefault(t => t.Id == serviceTaskId);
+
+            if (dataTask != null)
+            {
+                var taskHourEstimates = unitOfWork.TaskHourEstimateRepository.Items.Where(t => t.Task.Id == dataTask.Id).ToList();
+
+                if (taskHourEstimates.Count > 0)
+                {
+                    foreach (TaskHourEstimate estimate in taskHourEstimates)
+                    {
+                        unitOfWork.TaskHourEstimateRepository.Delete(estimate);
+                    }
+                }
+
+                unitOfWork.TaskRepository.Delete(dataTask);
+            }
+
+            unitOfWork.Commit();
+        }
+        
+        /// <summary>
+        /// Get all the tasks for a given sprint story.
+        /// </summary>
+        /// <param name="sprintStoryId">the id of the sprint story</param>
+        /// <returns>the list of tasks</returns>
+        public List<ServiceTask> GetAllTasksForSprintStory(Guid sprintStoryId)
+        {
+            var tasks = unitOfWork.TaskRepository.Items.Where(t => t.SprintStory.Id == sprintStoryId).ToList();
+
+            List<ServiceTask> serviceTasks = new List<ServiceTask>();
+            foreach (var dataTask in tasks)
+            {
+                var remainingTaskHours =
+                    unitOfWork.TaskHourEstimateRepository.Items.Where(t => t.Task.Id == dataTask.Id).ToList();
+
+                List<ServiceTaskHourEstimate> serviceRemainingTaskHours = new List<ServiceTaskHourEstimate>();
+                foreach (var dataRemainingTaskHours in remainingTaskHours)
+                {
+                    ServiceTaskHourEstimate serviceTaskHourEstimate = new ServiceTaskHourEstimate()
+                    {
+                        Estimate = dataRemainingTaskHours.Estimate,
+                        TaskId = dataTask.Id,
+                        Created = dataRemainingTaskHours.Created
+                    };
+                    serviceRemainingTaskHours.Add(serviceTaskHourEstimate);
+                }
+
+                ServiceTask task = new ServiceTask
+                {
+                    Blocked = dataTask.Blocked,
+                    ConditionsOfSatisfaction = dataTask.ConditionsOfSatisfaction,
+                    Description = dataTask.Description,
+                    TaskHourEstimates = serviceRemainingTaskHours,
+                    SprintStoryId = dataTask.SprintStory.Id,
+                    Summary = dataTask.Summary,
+                    TaskId = dataTask.Id
+                };
+
+                serviceTasks.Add(task);
+            }
+
+            return serviceTasks;
+        } 
+
+        /// <summary>
         /// Gets all tasks for a sprint for a burndown
         /// </summary>
         /// <param name="sprintId">The sprint id</param>

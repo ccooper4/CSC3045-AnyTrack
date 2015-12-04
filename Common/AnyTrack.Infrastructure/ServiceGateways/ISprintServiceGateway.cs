@@ -12,6 +12,12 @@ namespace AnyTrack.Infrastructure.ServiceGateways
     public interface ISprintServiceGateway
     {
         /// <summary>
+        /// Delete a task. 
+        /// </summary>
+        /// <param name="serviceTaskId">the task to delete</param>
+        void DeleteTask(Guid serviceTaskId);
+
+        /// <summary>
         /// Creates a sprint and adds it to the project.
         /// </summary>
         /// <param name="projectId">Id of the project to add the sprint to</param>
@@ -45,6 +51,13 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         /// <param name="sprintId">The sprint id</param>
         /// <returns>A list of tasks</returns>
         List<ServiceTask> GetAllTasksForSprintCurrentUser(Guid sprintId);
+
+        /// <summary>
+        /// Get all the tasks for a given sprint story.
+        /// </summary>
+        /// <param name="sprintStoryId">the id of the sprint story</param>
+        /// <returns>the list of tasks</returns>
+        List<ServiceTask> GetAllTasksForSprintStory(Guid sprintStoryId);
 
         /// <summary>
         /// Gets the end date of the sprint
