@@ -6,7 +6,10 @@ using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.ServiceGateways;
 using OxyPlot;
 using OxyPlot.Axes;
+using OxyPlot.Wpf;
+using Prism.Commands;
 using Prism.Regions;
+using DateTimeAxis = OxyPlot.Axes.DateTimeAxis;
 using SprintModels = AnyTrack.Infrastructure.BackendSprintService;
 
 namespace AnyTrack.Sprints.Views
@@ -53,6 +56,11 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         private ObservableCollection<DataPoint> trend;
 
+        /// <summary>
+        /// The plot model.
+        /// </summary>
+        private PlotModel model; 
+
         #endregion Fields
 
         #region Constructor
@@ -78,10 +86,23 @@ namespace AnyTrack.Sprints.Views
             this.sprintServiceGateway = sprintServiceGateway;
             this.Sprints = new ObservableCollection<SprintModels.ServiceSprintSummary>();
             this.Points = new ObservableCollection<DataPoint>();
+            this.PlotModel = new PlotModel();
+
+            EmailFlyoutCommand = new DelegateCommand(EmailFlyout);
         }
         #endregion
 
         #region Properties 
+
+        /// <summary>
+        /// Gets or sets PlotGraph
+        /// </summary>
+        public Plot PlotGraph { get; set; }
+
+        /// <summary>
+        /// Gets or sets the command for flyout email
+        /// </summary>
+        public DelegateCommand EmailFlyoutCommand { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether the view can be reused
@@ -186,6 +207,15 @@ namespace AnyTrack.Sprints.Views
                 SetProperty(ref sprintID, value);
             }
         }
+        
+        /// <summary>
+        /// Gets or sets the plot model.
+        /// </summary>
+        public PlotModel PlotModel
+        {
+            get { return model; }
+            set { SetProperty(ref model, value); }
+        }
 
         #endregion Properties
 
@@ -207,6 +237,12 @@ namespace AnyTrack.Sprints.Views
                         this.Points.Add(new DataPoint(DateTimeAxis.ToDouble(taskHour.Created), taskHour.Estimate));
                     }
                 }
+
+                var x = new OxyPlot.Series.LineSeries()
+                {
+                    ItemsSource = this.Points
+                }; 
+                PlotModel.Series.Add(x);
             }
         }
         
@@ -226,6 +262,16 @@ namespace AnyTrack.Sprints.Views
         /// <param name="navigationContext">The navigation context</param>
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+        }
+
+        /// <summary>
+        /// Method to open the email flyout
+        /// </summary>
+        private void EmailFlyout()
+        {
+            ////Burndown chart will be added as a nav param!
+            ////var navParams = new NavigationParameters();
+            this.ShowMetroFlyout("BurnDownEmailOptions");
         }
         #endregion Methods
     }

@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.ServiceGateways;
 using MahApps.Metro.Controls;
+using OxyPlot;
+using OxyPlot.Wpf;
 using Prism.Commands;
 using Prism.Regions;
 
@@ -112,7 +117,6 @@ namespace AnyTrack.Sprints.Views
         /// <param name="navigationContext">Context of email</param>
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -122,7 +126,7 @@ namespace AnyTrack.Sprints.Views
         /// <returns>the navigation target</returns>
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         /// <summary>
@@ -131,15 +135,21 @@ namespace AnyTrack.Sprints.Views
         /// <param name="navigationContext">Context of the navigation</param>
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            throw new NotImplementedException();
         }
-
+        
         /// <summary>
         /// Method to send an email request
         /// </summary>
         private void SendEmail()
         {
-            sprintService.SendEmailRequest(SenderEmailAddress, RecipientEmailAddress, EmailMessage, EmailAttachment);
+            ////sprintService.SendEmailRequest(SenderEmailAddress, RecipientEmailAddress, EmailMessage, EmailAttachment);
+            MemoryStream ms = new MemoryStream();
+
+            using (var stream = new MemoryStream())
+            {
+                var pngExporter = new PngExporter();
+                ////pngExporter.Export(null, stream, 600, 400, Brushes.White);
+            }
         }
     }
 }

@@ -209,7 +209,9 @@
     <None Include="Service References\BackendSprintService\AnyTrack.Infrastructure.BackendSprintService.ServiceTask.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\BackendSprintService\SprintService.wsdl" />
+    <None Include="Service References\BackendSprintService\SprintService.wsdl">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\BackendSprintService\SprintService.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -220,18 +222,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\BackendSprintService\SprintService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BackendSprintService\SprintService4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BackendSprintService\SprintService41.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BackendSprintService\SprintService42.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BackendSprintService\SprintService43.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
