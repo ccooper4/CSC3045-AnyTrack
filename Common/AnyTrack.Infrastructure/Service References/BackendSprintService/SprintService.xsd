@@ -229,7 +229,7 @@
         <xs:element minOccurs="0" name="senderEmailAddress" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="recipientEmailAddress" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="emailMessage" nillable="true" type="xs:string" />
-        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="emailAttachment" nillable="true" type="q19:MemoryStream" />
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="emailAttachment" nillable="true" type="q29:MemoryStream" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

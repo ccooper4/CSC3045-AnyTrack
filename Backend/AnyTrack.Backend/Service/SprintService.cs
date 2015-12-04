@@ -400,18 +400,19 @@ namespace AnyTrack.Backend.Service
             foreach (var t in tasks)
             {
                 var task = unitOfWork.TaskRepository.Items.Single(x => x.Id == t.TaskId);
-                var serviceUpdatedHours = t.TaskHourEstimates.LastOrDefault();
+                ServiceTaskHourEstimate updatedTaskHour = t.TaskHourEstimates.LastOrDefault();
 
-                if (serviceUpdatedHours != null)
+                if (updatedTaskHour != null)
                 {
                     task.TaskHourEstimate.Add(new TaskHourEstimate
                     {
-                        Estimate = serviceUpdatedHours.NewEstimate
+                        Estimate = updatedTaskHour.NewEstimate,
+                        Task = task
                     });
                 }
-            }
 
-            unitOfWork.Commit();
+                unitOfWork.Commit();
+            }
         }
 
         /// <summary>

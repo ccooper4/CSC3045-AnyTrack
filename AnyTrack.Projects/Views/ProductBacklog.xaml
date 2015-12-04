@@ -10,8 +10,7 @@
              xmlns:projconverters="clr-namespace:AnyTrack.Projects.Converters"
              xml:lang="en-GB"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             mc:Ignorable="d">
-    <!--             mc:Ignorable="d" Height="500" Width="800">-->
+                 mc:Ignorable="d" Height="500" Width="800">
 
     <UserControl.Resources>
         <converters:GuidToStringConverter x:Key="guidToStringConverter"/>
