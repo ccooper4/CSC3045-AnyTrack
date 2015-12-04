@@ -139,8 +139,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="ServiceGateways\AccountServiceGateway.cs" />
-    <Compile Include="ServiceGateways\IAccountServiceGateway.cs" />
     <Compile Include="ServiceGateways\Models\ClientAvailableSecretQuestions.cs" />
     <Compile Include="Views\BaseViewModel.cs" />
     <Compile Include="Views\CustomControls\LabelledTextBox.xaml.cs">

@@ -16,6 +16,7 @@ using System.Web.Helpers;
 using System.Threading;
 using System.ServiceModel;
 using AnyTrack.Backend.Faults;
+using AnyTrack.Backend.Security;
 
 namespace Unit.Backend.AnyTrack.Backend.Service.AccountServiceTests
 {
@@ -187,6 +188,43 @@ namespace Unit.Backend.AnyTrack.Backend.Service.AccountServiceTests
             provider.Received().SetAuthCookie(dataUser.EmailAddress, false);
 
             result.Success.Should().BeTrue();
+        }
+
+        #endregion 
+
+        #region RefreshLoginPrincipal() Tests 
+
+        [Test]
+        public void CallRefresh()
+        {
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                FirstName = "Test",
+                LastName = "Test",
+                Developer = true,
+                ScrumMaster = true,
+                ProductOwner = true,
+                Roles = new List<Role>
+                {
+                    new Role { RoleName = "Test", ProjectId = Guid.NewGuid(), SprintId = Guid.NewGuid() }
+                }
+            };
+
+            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            var res = service.RefreshLoginPrincipal();
+
+            res.Should().NotBeNull();
+            res.EmailAddress.Should().Be(user.EmailAddress);
+            res.FirstName.Should().Be(user.FirstName);
+            res.LastName.Should().Be(user.LastName);
+            res.Developer.Should().Be(user.Developer);
+            res.ScrumMaster.Should().Be(user.ScrumMaster);
+            res.ProductOwner.Should().Be(user.ProductOwner);
+            res.AssignedRoles.Count.Should().Be(1);
         }
 
         #endregion 

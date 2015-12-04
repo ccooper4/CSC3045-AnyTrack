@@ -22,6 +22,7 @@ using System.ServiceModel;
 using AnyTrack.Backend.Faults;
 using System.Collections.ObjectModel;
 using AnyTrack.Infrastructure.BackendAccountService;
+using AnyTrack.Infrastructure.ServiceGateways;
 
 namespace Unit.Modules.AnyTrack.Accounting.Views.RegistrationViewModelTests
 {

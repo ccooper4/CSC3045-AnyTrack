@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AnyTrack.Accounting.ServiceGateways.Models;
 using AnyTrack.Infrastructure.BackendAccountService;
 
-namespace AnyTrack.Accounting.ServiceGateways
+namespace AnyTrack.Infrastructure.ServiceGateways
 {
     /// <summary>
     /// The interface outlining the account service gateway
@@ -25,5 +24,11 @@ namespace AnyTrack.Accounting.ServiceGateways
         /// <param name="login">The login details.</param>
         /// <returns>The result from the login operation.</returns>
         ServiceLoginResult LoginAccount(ServiceUserCredential login);
+
+        /// <summary>
+        /// Refreshes the user's principal.
+        /// </summary>
+        /// <returns>The login result.</returns>
+        ServiceLoginResult RefreshLoginPrincipal();
     }
 }

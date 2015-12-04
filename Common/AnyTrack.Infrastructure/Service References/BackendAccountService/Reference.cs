@@ -542,6 +542,12 @@ namespace AnyTrack.Infrastructure.BackendAccountService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccountService/LogIn", ReplyAction="http://tempuri.org/IAccountService/LogInResponse")]
         System.Threading.Tasks.Task<AnyTrack.Infrastructure.BackendAccountService.ServiceLoginResult> LogInAsync(AnyTrack.Infrastructure.BackendAccountService.ServiceUserCredential credential);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccountService/RefreshLoginPrincipal", ReplyAction="http://tempuri.org/IAccountService/RefreshLoginPrincipalResponse")]
+        AnyTrack.Infrastructure.BackendAccountService.ServiceLoginResult RefreshLoginPrincipal();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccountService/RefreshLoginPrincipal", ReplyAction="http://tempuri.org/IAccountService/RefreshLoginPrincipalResponse")]
+        System.Threading.Tasks.Task<AnyTrack.Infrastructure.BackendAccountService.ServiceLoginResult> RefreshLoginPrincipalAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -585,6 +591,14 @@ namespace AnyTrack.Infrastructure.BackendAccountService {
         
         public System.Threading.Tasks.Task<AnyTrack.Infrastructure.BackendAccountService.ServiceLoginResult> LogInAsync(AnyTrack.Infrastructure.BackendAccountService.ServiceUserCredential credential) {
             return base.Channel.LogInAsync(credential);
+        }
+        
+        public AnyTrack.Infrastructure.BackendAccountService.ServiceLoginResult RefreshLoginPrincipal() {
+            return base.Channel.RefreshLoginPrincipal();
+        }
+        
+        public System.Threading.Tasks.Task<AnyTrack.Infrastructure.BackendAccountService.ServiceLoginResult> RefreshLoginPrincipalAsync() {
+            return base.Channel.RefreshLoginPrincipalAsync();
         }
     }
 }

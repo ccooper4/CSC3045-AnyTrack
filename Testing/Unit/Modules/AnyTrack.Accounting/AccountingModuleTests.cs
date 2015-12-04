@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AnyTrack.Infrastructure.BackendAccountService;
+using AnyTrack.Infrastructure.ServiceGateways;
 
 namespace Unit.Modules.AnyTrack.Accounting.AccountingModuleTests
 {
@@ -74,8 +75,6 @@ namespace Unit.Modules.AnyTrack.Accounting.AccountingModuleTests
         public void InitializeModuleTest()
         {
             module.Initialize();
-            container.Received().RegisterType<IAccountService, AccountServiceClient>(Arg.Any<InjectionMember[]>());
-            container.Received().RegisterType<IAccountServiceGateway, AccountServiceGateway>();
             container.Received().RegisterType<object, Registration>("Registration");
             container.Received().RegisterType<object, Login>("Login");
 

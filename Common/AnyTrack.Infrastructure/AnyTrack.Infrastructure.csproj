@@ -133,6 +133,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="ServiceGateways\AccountServiceGateway.cs" />
+    <Compile Include="ServiceGateways\IAccountServiceGateway.cs" />
     <Compile Include="ServiceGateways\IProjectServiceGateway.cs" />
     <Compile Include="ServiceGateways\ISprintServiceGateway.cs" />
     <Compile Include="ServiceGateways\ProjectServiceGateway.cs" />

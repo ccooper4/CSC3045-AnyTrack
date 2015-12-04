@@ -78,12 +78,6 @@ namespace AnyTrack.Accounting
         /// </summary>
         public void Initialize()
         {
-            // AnyTrack.Accountng.ServiceReferences.BackendAccountService 
-            container.RegisterType<IAccountService, AccountServiceClient>(new InjectionConstructor());
-
-            // AnyTrack.Accounting.ServiceGateways
-            container.RegisterType<IAccountServiceGateway, AccountServiceGateway>();
-
             // AnyTrack.Accounting.Views
             container.RegisterType<object, Registration>("Registration");
             container.RegisterType<object, Login>("Login");

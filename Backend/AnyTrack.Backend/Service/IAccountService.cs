@@ -26,5 +26,12 @@ namespace AnyTrack.Backend.Service
         /// <returns>A flag indicating if the login was successfu</returns>
         [OperationContract]
         ServiceLoginResult LogIn(ServiceUserCredential credential);
+
+        /// <summary>
+        /// Allows a user to refresh their roles.
+        /// </summary>
+        /// <returns>A login result object.</returns>
+        [OperationContract]
+        ServiceLoginResult RefreshLoginPrincipal();
     }
 }

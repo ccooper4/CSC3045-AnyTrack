@@ -135,6 +135,34 @@ namespace AnyTrack.Backend.Service
             }; 
         }
 
+        /// <summary>
+        /// Allows a user to refresh their roles.
+        /// </summary>
+        /// <returns>A login result object.</returns>
+        public ServiceLoginResult RefreshLoginPrincipal()
+        {
+            var currentUser = Thread.CurrentPrincipal.Identity.Name;
+
+            var userAccount = unitOfWork.UserRepository.Items.Single(u => u.EmailAddress == currentUser);
+
+            return new ServiceLoginResult
+            {
+                EmailAddress = userAccount.EmailAddress,
+                FirstName = userAccount.FirstName,
+                LastName = userAccount.LastName,
+                Developer = userAccount.Developer,
+                ProductOwner = userAccount.ProductOwner,
+                ScrumMaster = userAccount.ScrumMaster,
+                AssignedRoles = userAccount.Roles.Select(r => new ServiceRoleInfo
+                {
+                    Role = r.RoleName,
+                    ProjectId = r.ProjectId,
+                    SprintId = r.SprintId
+                }).ToList(),
+                Success = true
+            }; 
+        }
+
         #endregion 
     }
 }

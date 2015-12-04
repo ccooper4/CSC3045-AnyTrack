@@ -1,6 +1,6 @@
 ﻿using System;
-using AnyTrack.Accounting.ServiceGateways;
 using AnyTrack.Infrastructure;
+using AnyTrack.Infrastructure.ServiceGateways;
 using Prism.Regions;
 
 namespace AnyTrack.Accounting.Views
