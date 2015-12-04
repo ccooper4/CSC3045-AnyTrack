@@ -69,6 +69,16 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         }
 
         /// <summary>
+        /// Get all tasks for sprint
+        /// </summary>
+        /// <param name="sprintId">The sprint id</param>
+        /// <returns>Returns a list of tasks</returns>
+        public List<ServiceTask> GetAllTasksForSprintCurrentUser(Guid sprintId)
+        {
+            return new List<ServiceTask>(client.GetAllTasksForSprint(sprintId));
+        }
+
+        /// <summary>
         /// Gets the maximum estimate of the sprint
         /// </summary>
         /// <param name="sprintId">the sprint id</param>

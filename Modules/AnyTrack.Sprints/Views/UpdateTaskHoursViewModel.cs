@@ -44,61 +44,9 @@ namespace AnyTrack.Sprints.Views
             }
 
             this.serviceGateway = serviceGateway;
-            this.Tasks = new ObservableCollection<ServiceTask>();
-            ////Tasks = GetTasksForUser(this.sprintId);
+         
             UpdateTaskHoursCommand = new DelegateCommand(SaveTaskHours);
             CancelCommand = new DelegateCommand(GoToSprintBoard);
-
-            #region mockdata
-            List<ServiceTask> tasksList = new List<ServiceTask>();
-            ServiceTask t = new ServiceTask
-            {
-                Assignee = new ServiceUser(),
-                ConditionsOfSatisfaction = "sdda",
-                Description = "As a Developer I can indicate that I am blocked on a certain task so that the problem is highlighted for the Scrum Master and rest of the team",
-                TaskHourEstimates = new List<ServiceTaskHourEstimate>(),
-                SprintStoryId = new Guid("cfc247ce-f830-4a4d-bd39-74999c66ef3e")
-            };
-
-            t.TaskHourEstimates.Add(new ServiceTaskHourEstimate
-            {
-                Estimate = 2
-            });
-            tasksList.Add(t);
-
-            ServiceTask t2 = new ServiceTask
-            {
-                Assignee = new ServiceUser(),
-                ConditionsOfSatisfaction = "jkh",
-                Description = "As a user I can import a previously exported project snapshot",
-                TaskHourEstimates = new List<ServiceTaskHourEstimate>(),
-                SprintStoryId = new Guid("cfc247ce-f830-4a4d-bd39-74999c66ef3e")
-            };
-
-            t2.TaskHourEstimates.Add(new ServiceTaskHourEstimate
-            {
-                Estimate = 5
-            });
-            tasksList.Add(t2);
-
-            ServiceTask t3 = new ServiceTask
-            {
-                Assignee = new ServiceUser(),
-                ConditionsOfSatisfaction = "asdsad",
-                Description = "As a user I can export a project using the project manager so that a snapshot can be saved for later viewing",
-                TaskHourEstimates = new List<ServiceTaskHourEstimate>(),
-                SprintStoryId = new Guid("cfc247ce-f830-4a4d-bd39-74999c66ef3e")
-            };
-
-            t3.TaskHourEstimates.Add(new ServiceTaskHourEstimate
-            {
-                Estimate = 8.5
-            });
-            tasksList.Add(t3);
-
-            #endregion
-
-            this.Tasks = new ObservableCollection<ServiceTask>(tasksList);
         }
 
         #endregion
@@ -153,6 +101,8 @@ namespace AnyTrack.Sprints.Views
             if (navigationContext.Parameters.ContainsKey("sprintId"))
             {
                 sprintId = (Guid)navigationContext.Parameters["sprintId"];
+                this.Tasks = new ObservableCollection<ServiceTask>();
+                Tasks.AddRange(serviceGateway.GetAllTasksForSprintCurrentUser(SprintId));
             }
         }
 

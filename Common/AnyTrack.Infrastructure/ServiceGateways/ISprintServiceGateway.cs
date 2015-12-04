@@ -39,6 +39,13 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         List<ServiceTask> GetAllTasksForSprint(Guid sprintId);
 
         /// <summary>
+        /// Gets all tasks for sprint current user
+        /// </summary>
+        /// <param name="sprintId">The sprint id</param>
+        /// <returns>A list of tasks</returns>
+        List<ServiceTask> GetAllTasksForSprintCurrentUser(Guid sprintId);
+
+        /// <summary>
         /// Gets the end date of the sprint
         /// </summary>
         /// <param name="sprintId">the sprint id</param>

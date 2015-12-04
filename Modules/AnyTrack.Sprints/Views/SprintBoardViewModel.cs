@@ -364,7 +364,6 @@ namespace AnyTrack.Sprints.Views
         private void GoToUpdateTaskHours()
         {
             var navParams = new NavigationParameters();
-            sprintId = new Guid("878b0202-24b0-4f9f-a147-620879a6e760");
             navParams.Add("sprintId", sprintId);
             NavigateToItem("UpdateTaskHours", navParams);
         }
