@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace AnyTrack.Sprints.Converters
+namespace AnyTrack.Infrastructure.Converters
 {
     /// <summary>
     /// Provides a class to convert between the Visibility enum and a boolean flag.
@@ -41,15 +45,15 @@ namespace AnyTrack.Sprints.Converters
         /// <returns>A bool value.</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var visibility = (Visibility)value; 
+            var visibility = (Visibility)value;
 
             if (visibility == Visibility.Visible)
             {
-                return true; 
+                return true;
             }
             else
             {
-                return false; 
+                return false;
             }
         }
     }

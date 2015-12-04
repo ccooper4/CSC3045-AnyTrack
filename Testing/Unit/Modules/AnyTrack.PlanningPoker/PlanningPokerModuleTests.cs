@@ -83,9 +83,8 @@ namespace Unit.Modules.AnyTrack.Projects.PlanningPokerModuleTests
 
             container.Received().RegisterType<object, StartPlanningPokerSession>("StartPlanningPokerSession");
             container.Received().RegisterType<object, SearchForPlanningPokerSession>("SearchForPlanningPokerSession");
-
-            menuService.Received(2);
-
+            container.Received().RegisterType<object, PokerLobby>("PokerLobby");
+            container.Received().RegisterType<object, PlanningPokerSession>("PlanningPokerSession");
         }
 
         #endregion 

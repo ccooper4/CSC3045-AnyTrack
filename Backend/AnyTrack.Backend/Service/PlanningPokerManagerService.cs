@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.SessionState;
 using AnyTrack.Backend.Data;
 using AnyTrack.Backend.Providers;
 using AnyTrack.Backend.Security;
@@ -18,10 +19,15 @@ namespace AnyTrack.Backend.Service
     /// The implementation of the planning poker manager service. 
     /// </summary>
     [CreatePrincipal]
-    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Single, InstanceContextMode = InstanceContextMode.PerCall)]
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, InstanceContextMode = InstanceContextMode.PerCall)]
     public class PlanningPokerManagerService : IPlanningPokerManagerService
     {
         #region Fields 
+
+        /// <summary>
+        /// The planning poker service gateway.
+        /// </summary>
+        private readonly ISprintService sprintServiceGateway;
 
         /// <summary>
         /// The database unit of work.
@@ -54,7 +60,8 @@ namespace AnyTrack.Backend.Service
         /// <param name="context">The operation context provider.</param>
         /// <param name="availableClients">The connected clients provider.</param>
         /// <param name="activeSessions">The currently active sessions.</param>
-        public PlanningPokerManagerService(IUnitOfWork unitOfWork, OperationContextProvider context, AvailableClientsProvider availableClients, ActivePokerSessionsProvider activeSessions)
+        /// <param name="sprintServiceGateway">The sprint gateway.</param>
+        public PlanningPokerManagerService(IUnitOfWork unitOfWork, OperationContextProvider context, AvailableClientsProvider availableClients, ActivePokerSessionsProvider activeSessions, ISprintService sprintServiceGateway)
         {
             if (unitOfWork == null)
             {
@@ -76,10 +83,16 @@ namespace AnyTrack.Backend.Service
                 throw new ArgumentNullException("activeSessions");
             }
 
+            if (sprintServiceGateway == null)
+            {
+                throw new ArgumentNullException("sprintServiceGateway");
+            }
+
             this.unitOfWork = unitOfWork;
             this.contextProvider = context;
             this.availableClients = availableClients;
             this.activeSessions = activeSessions;
+            this.sprintServiceGateway = sprintServiceGateway;
         }
 
         #endregion 
@@ -90,7 +103,8 @@ namespace AnyTrack.Backend.Service
         /// Allows the client to subscribe to messages about new sessions for the given project and sprint ids. 
         /// </summary>
         /// <param name="sprintId">The sprint id.</param>
-        public void SubscribeToNewSessionMessages(Guid sprintId)
+        /// <returns>A current session, if there is one.</returns>
+        public ServiceSessionChangeInfo SubscribeToNewSessionMessages(Guid sprintId)
         {
             var sprint = unitOfWork.SprintRepository.Items.SingleOrDefault(s => s.Id == sprintId);
 
@@ -113,7 +127,7 @@ namespace AnyTrack.Backend.Service
 
             if (!connectedClientsList.ContainsKey(sprintId))
             {
-                connectedClientsList.Add(sprintId, new List<ServicePlanningPokerPendingUser>());
+                connectedClientsList.TryAdd(sprintId, new List<ServicePlanningPokerPendingUser>());
             }
 
             var thisSprintLst = connectedClientsList.Single(k => k.Key == sprintId);
@@ -124,10 +138,32 @@ namespace AnyTrack.Backend.Service
                 EmailAddress = currentUser.EmailAddress,
                 Name = "{0} {1}".Substitute(currentUser.FirstName, currentUser.LastName),
                 UserID = currentUserId,
-                UserRoles = currentUser.Roles.Where(r => r.SprintId == sprintId || r.ProjectId == sprint.Project.Id).Select(r => r.RoleName).ToList()
+                UserRoles = currentUser.Roles.Where(r => r.SprintId == sprintId && r.ProjectId == sprint.Project.Id).Select(r => r.RoleName).ToList()
             };
 
             thisSprintLst.Value.Add(pendingUser);
+
+            // Notify clients in this sprint group. 
+            var sessions = activeSessions.GetListOfSessions();
+
+            var sprintSession = sessions.Where(s => s.Value.SprintID == sprintId && s.Value.State == ServicePlanningPokerSessionState.Pending).Select(s => s.Value).SingleOrDefault();
+
+            if (sprintSession != null)
+            {
+                var sessionInfo = new ServiceSessionChangeInfo
+                {
+                    SprintId = sprintId,
+                    SessionAvailable = true,
+                    SessionId = sprintSession.SessionID,
+                    SprintName = sprint.Name,
+                    ProjectName = sprint.Project.Name
+                };
+                return sessionInfo; 
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -161,11 +197,19 @@ namespace AnyTrack.Backend.Service
 
             var clientSocket = contextProvider.GetClientChannel<IPlanningPokerClientService>();
 
+            // TODO: David - map stories into session from sprint.
+            var stories = new List<ServiceSprintStory>();
+
+            stories = sprintServiceGateway.GetSprintStories(sprintId);
+
             var newSession = new ServicePlanningPokerSession
             {
                 SessionID = Guid.NewGuid(),
                 HostID = currentUserId,
                 SprintID = sprintId,
+                SprintName = sprint.Name,
+                ProjectName = sprint.Project.Name,
+                Stories = stories,
                 Users = new List<ServicePlanningPokerUser>()
                 {
                     new ServicePlanningPokerUser
@@ -174,13 +218,13 @@ namespace AnyTrack.Backend.Service
                         EmailAddress = currentUser.EmailAddress,
                         Name = "{0} {1}".Substitute(currentUser.FirstName, currentUser.LastName),
                         UserID = currentUserId,
-                        UserRoles = currentUser.Roles.Where(r => r.SprintId == sprintId || r.ProjectId == sprint.Project.Id).Select(r => r.RoleName).ToList()
+                        UserRoles = currentUser.Roles.Where(r => r.SprintId == sprintId && r.ProjectId == sprint.Project.Id).Select(r => r.RoleName).ToList()
                     }
                 },
                 State = ServicePlanningPokerSessionState.Pending
             };
 
-            sessions.Add(newSession.SessionID, newSession);
+            sessions.TryAdd(newSession.SessionID, newSession);
 
             // Notify clients in this sprint group. 
             var availableClientsList = availableClients.GetListOfClients();
@@ -205,10 +249,10 @@ namespace AnyTrack.Backend.Service
         }
 
         /// <summary>
-        /// Allows the scrum master to cancel a pending planning poker session.
+        /// Allows the scrum master to end a poker session.
         /// </summary>
         /// <param name="sessionId">The session.</param>
-        public void CancelPendingPokerSession(Guid sessionId)
+        public void EndPokerSession(Guid sessionId)
         {
             var sessions = activeSessions.GetListOfSessions();
 
@@ -220,40 +264,40 @@ namespace AnyTrack.Backend.Service
             var thisSession = sessions.Single(s => s.Key == sessionId).Value;
             var sprintId = thisSession.SprintID;
 
-            if (thisSession.State != ServicePlanningPokerSessionState.Pending)
+            if (thisSession.State == ServicePlanningPokerSessionState.Pending)
             {
-                throw new InvalidOperationException("This planning poker session has already been started");
-            }
-
-            // Notify clients in this sprint group. 
-            var availableClientsList = availableClients.GetListOfClients();
-            if (availableClientsList.ContainsKey(sprintId))
-            {
-                var clientList = availableClientsList[sprintId];
-
-                var sessionInfo = new ServiceSessionChangeInfo
+                // Notify clients in this sprint group. 
+                var availableClientsList = availableClients.GetListOfClients();
+                if (availableClientsList.ContainsKey(sprintId))
                 {
-                    SprintId = sprintId,
-                    SessionAvailable = false,
-                    SessionId = null
-                };
+                    var clientList = availableClientsList[sprintId];
 
-                foreach (var client in clientList)
-                {
-                    client.ClientChannel.NotifyClientOfSession(sessionInfo);
+                    var sessionInfo = new ServiceSessionChangeInfo
+                    {
+                        SprintId = sprintId,
+                        SessionAvailable = false,
+                        SessionId = null
+                    };
+
+                    foreach (var client in clientList)
+                    {
+                        client.ClientChannel.NotifyClientOfSession(sessionInfo);
+                    }
                 }
             }
 
             var currentUserEmail = Thread.CurrentPrincipal.Identity.Name;
 
             // Notify and connected clients in the group that a session is no longer available 
-            var connectedUsers = thisSession.Users.Where(u => u.EmailAddress != currentUserEmail); 
+            var connectedUsers = thisSession.Users.Where(u => u.EmailAddress != currentUserEmail);
             foreach (var user in connectedUsers)
             {
                 user.ClientChannel.NotifyClientOfTerminatedSession();
             }
 
-            sessions.Remove(sessionId);
+            ServicePlanningPokerSession removedItem;
+
+            sessions.TryRemove(sessionId, out removedItem);
         }
 
         /// <summary>
@@ -288,19 +332,126 @@ namespace AnyTrack.Backend.Service
                 throw new InvalidOperationException("Current user is not currently in the pending clients list.");
             }
 
-            thisSession.Users.Add(new ServicePlanningPokerUser
+            var newUser = new ServicePlanningPokerUser
             {
                 ClientChannel = pendingUserEntry.ClientChannel,
                 EmailAddress = pendingUserEntry.EmailAddress,
                 Name = pendingUserEntry.Name,
                 UserID = pendingUserEntry.UserID,
                 UserRoles = pendingUserEntry.UserRoles
-            });
+            }; 
+
+            thisSession.Users.Add(newUser);
 
             pendingUsers[thisSession.SprintID].Remove(pendingUserEntry);
 
+            foreach (var user in thisSession.Users.Where(u => u != newUser))
+            {
+                user.ClientChannel.NotifyClientOfSessionUpdate(thisSession);
+            }
+
             return thisSession;
-        }              
+        }
+
+        /// <summary>
+        /// Allows a user to exit the session.
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        public void LeaveSession(Guid sessionId)
+        {
+            var sessions = activeSessions.GetListOfSessions();
+
+            if (!sessions.ContainsKey(sessionId))
+            {
+                throw new ArgumentException("No session found", "sessionId");
+            }
+
+            var session = sessions[sessionId];
+
+            var thisUserEmail = Thread.CurrentPrincipal.Identity.Name;
+
+            var userInSession = session.Users.SingleOrDefault(u => u.EmailAddress == thisUserEmail);
+
+            if (userInSession == null)
+            {
+                throw new InvalidOperationException("User not found in session");
+            }
+
+            if (userInSession.UserID == session.HostID)
+            {
+                throw new InvalidOperationException("User is the scrum master");
+            }
+
+            session.Users.Remove(userInSession);
+
+            foreach (var user in session.Users)
+            {
+                user.ClientChannel.NotifyClientOfSessionUpdate(session);
+            }            
+        }
+
+        /// <summary>
+        /// Allows a scrum master to start the session.
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        public void StartSession(Guid sessionId)
+        {
+            var sessions = activeSessions.GetListOfSessions();
+
+            if (!sessions.ContainsKey(sessionId))
+            {
+                throw new ArgumentException("No session found", "sessionId");
+            }
+
+            var session = sessions[sessionId];
+
+            var thisUserEmail = Thread.CurrentPrincipal.Identity.Name;
+
+            var userInSession = session.Users.SingleOrDefault(u => u.EmailAddress == thisUserEmail);
+
+            if (userInSession == null)
+            {
+                throw new InvalidOperationException("User not found in session");
+            }
+
+            if (userInSession.UserID != session.HostID)
+            {
+                throw new InvalidOperationException("User is not the scrum master");
+            }
+
+            session.State = ServicePlanningPokerSessionState.GettingEstimates;
+
+            foreach (var user in session.Users.Where(u => u != userInSession))
+            {
+                user.ClientChannel.NotifyClientOfSessionStart();
+            }
+        }
+
+        /// <summary>
+        /// Allows the client to pull an up to date session state. 
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        /// <returns>The current session.</returns>
+        public ServicePlanningPokerSession RetrieveSessionInfo(Guid sessionId)
+        {
+            var sessions = activeSessions.GetListOfSessions();
+
+            if (!sessions.ContainsKey(sessionId))
+            {
+                throw new ArgumentException("Session could not be found!", "sessionId");
+            }
+
+            var session = sessions[sessionId];
+
+            var currentUserEmail = Thread.CurrentPrincipal.Identity.Name; 
+
+            if (session.Users.SingleOrDefault(u => u.EmailAddress == currentUserEmail) == null)
+            {
+                throw new InvalidOperationException("User is not in the session"); 
+            }
+
+            return session;
+        }
 
         /// <summary>
         /// Method to submit message to chat channel
@@ -317,49 +468,106 @@ namespace AnyTrack.Backend.Service
                 throw new ArgumentException("No session could be found", "sessionId");
             }
 
-            SendMessageToClients(msg);                      
+            var session = sessions[sessionId];
+
+            SendMessageToClients(session, msg);                      
         }
+
+        /// <summary>
+        /// Method to submit estimate
+        /// </summary>
+        /// <param name="estimate">The estimate object which is to be sent</param>
+        public void SubmitEstimateToServer(ServicePlanningPokerEstimate estimate)
+        {
+            Guid sessionId = estimate.SessionID;
+            var sessions = activeSessions.GetListOfSessions();
+
+            if (!sessions.ContainsKey(sessionId))
+            {
+                throw new ArgumentException("No session could be found", "sessionId");
+            }
+
+            var currentUser = unitOfWork.UserRepository.Items.Single(u => u.EmailAddress == Thread.CurrentPrincipal.Identity.Name);
+
+            ServicePlanningPokerUser user = sessions[sessionId].Users.SingleOrDefault(x => x.UserID == currentUser.Id);
+
+            if (user == null)
+            {
+                throw new ArgumentException("User could not be found", "currentUser");
+            }
+
+            estimate.Name = user.Name;
+            user.Estimate = estimate;
+
+            foreach (var client in sessions[sessionId].Users)
+            {
+                client.ClientChannel.NotifyClientOfSessionUpdate(sessions[sessionId]);
+            }
+        }
+
+        /// <summary>
+        /// Allows a scrum master to show the estimates. 
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        public void ShowEstimates(Guid sessionId)
+        {
+            var sessions = activeSessions.GetListOfSessions();
+
+            if (!sessions.ContainsKey(sessionId))
+            {
+                throw new ArgumentException("No session found", "sessionId");
+            }
+
+            var session = sessions[sessionId];
+
+            var thisUserEmail = Thread.CurrentPrincipal.Identity.Name;
+
+            var userInSession = session.Users.SingleOrDefault(u => u.EmailAddress == thisUserEmail);
+
+            if (userInSession == null)
+            {
+                throw new InvalidOperationException("User not found in session");
+            }
+
+            if (userInSession.UserID != session.HostID)
+            {
+                throw new InvalidOperationException("User is not the scrum master");
+            }
+
+            session.State = ServicePlanningPokerSessionState.ShowingEstimates;
+
+            foreach (var user in session.Users.Where(u => u.EmailAddress != thisUserEmail))
+            {
+                user.ClientChannel.NotifyClientOfSessionUpdate(session);
+            }
+        }
+
+        #endregion 
+
+        #region Helpers 
 
         /// <summary>
         /// Method for sending a message
         /// </summary>
+        /// <param name="session">The session</param>
         /// <param name="msg">the message object to be sent</param>
-        public void SendMessageToClients(ServiceChatMessage msg)
+        private void SendMessageToClients(ServicePlanningPokerSession session, ServiceChatMessage msg)
         {
-            var thisSession = msg.SessionID;
-
             var currentUser = unitOfWork.UserRepository.Items.Single(u => u.EmailAddress == Thread.CurrentPrincipal.Identity.Name);
 
-            var connectedClientsList = availableClients.GetListOfClients();
-            var clientList = connectedClientsList[msg.SessionID];
+            if (session.Users.SingleOrDefault(u => u.EmailAddress == currentUser.EmailAddress) == null)
+            {
+                throw new InvalidOperationException("User not found in session"); 
+            }
 
             msg.Name = "{0} {1}".Substitute(currentUser.FirstName, currentUser.LastName);
 
-            foreach (var client in clientList)
+            foreach (var client in session.Users.Where(u => u.EmailAddress != currentUser.EmailAddress))
             {
                 client.ClientChannel.SendMessageToClient(msg);
             }
         }
 
-        /// <summary>
-        /// Method for telling clients to clear recieved estimates
-        /// </summary>
-        /// <param name="msg">the message object used to find the sessionID</param>
-        public void ClearRecievedEstimatesToClients(ServiceChatMessage msg)
-        {
-            var thisSession = msg.SessionID;
-
-            var currentUser = unitOfWork.UserRepository.Items.Single(u => u.EmailAddress == Thread.CurrentPrincipal.Identity.Name);
-
-            var connectedClientsList = availableClients.GetListOfClients();
-            var clientList = connectedClientsList[msg.SessionID];
-            
-            foreach (var client in clientList)
-            {
-                client.ClientChannel.NotifyClientToClearStoryPointEstimateFromServer();
-            }
-        }
-
-        #endregion 
+        #endregion
     }
 }

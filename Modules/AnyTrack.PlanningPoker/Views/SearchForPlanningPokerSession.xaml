@@ -42,7 +42,7 @@
                     <TextBlock Margin="0,0,0,20" HorizontalAlignment="Center">Waiting for session.</TextBlock>
                 </StackPanel>
 
-                <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical" Visibility="{Binding ShowSearchingForSesion}">
+                <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical" Visibility="{Binding ShowSessionFound}">
                     <TextBlock Margin="0,0,0,5" FontWeight="Bold" HorizontalAlignment="Center">Session Found!</TextBlock>
                     <TextBlock Margin="0,0,0,5" HorizontalAlignment="Center" Text="{Binding SessionAvailableText}"></TextBlock>
                     <Button Command="{Binding JoinPokerSession}">Join Poker Session</Button>

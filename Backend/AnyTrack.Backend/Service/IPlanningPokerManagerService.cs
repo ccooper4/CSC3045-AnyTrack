@@ -19,8 +19,9 @@ namespace AnyTrack.Backend.Service
         /// Allows the client to subscribe to messages about new sessions for the given project and sprint ids. 
         /// </summary>
         /// <param name="sprintId">The sprint id.</param>
+        /// <returns>A current session, if there is one.</returns>
         [OperationContract]
-        void SubscribeToNewSessionMessages(Guid sprintId);
+        ServiceSessionChangeInfo SubscribeToNewSessionMessages(Guid sprintId);
 
         /// <summary>
         /// Allows the scrum master to start a new planning poker session.
@@ -31,11 +32,18 @@ namespace AnyTrack.Backend.Service
         Guid StartNewPokerSession(Guid sprintId);
 
         /// <summary>
-        /// Allows the scrum master to cancel a pending planning poker session.
+        /// Allows the scrum master to end a poker session.
         /// </summary>
         /// <param name="sessionId">The session.</param>
         [OperationContract]
-        void CancelPendingPokerSession(Guid sessionId);
+        void EndPokerSession(Guid sessionId);
+
+        /// <summary>
+        /// Allows a scrum master to start the session.
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        [OperationContract]
+        void StartSession(Guid sessionId); 
 
         /// <summary>
         /// Allows a client to join an active session.
@@ -44,6 +52,21 @@ namespace AnyTrack.Backend.Service
         /// <returns>The details of the server side planning poker session.</returns>
         [OperationContract]
         ServicePlanningPokerSession JoinSession(Guid sessionId);
+
+        /// <summary>
+        /// Allows a user to exit the session.
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        [OperationContract]
+        void LeaveSession(Guid sessionId);
+
+        /// <summary>
+        /// Allows the client to pull an up to date session state. 
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        /// <returns>The current session.</returns>
+        [OperationContract]
+        ServicePlanningPokerSession RetrieveSessionInfo(Guid sessionId);
         
         /// <summary>
         /// Method to submit message to chat channel
@@ -51,5 +74,19 @@ namespace AnyTrack.Backend.Service
         /// <param name="msg">The chatmessage object which is to be sent</param>
         [OperationContract(IsOneWay = true)]
         void SubmitMessageToServer(ServiceChatMessage msg);
+
+        /// <summary>
+        /// Method to submit estimate to server
+        /// </summary>
+        /// <param name="estimate">The estimate object</param>
+        [OperationContract(IsOneWay = true)]
+        void SubmitEstimateToServer(ServicePlanningPokerEstimate estimate);
+
+        /// <summary>
+        /// Allows a scrum master to show the estimates. 
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        [OperationContract]
+        void ShowEstimates(Guid sessionId);
     }        
 }

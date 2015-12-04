@@ -213,8 +213,11 @@ namespace AnyTrack.PlanningPoker.Views
 
             if (!this.HasErrors)
             {
-                var sessonId = serviceGateway.StartNewPokerSession(sprintId.Value);
-                this.ShowMetroDialog("Sesion started", "The planning poker session has been started");
+                var sessionId = serviceGateway.StartNewPokerSession(sprintId.Value);
+                var navigationParams = new NavigationParameters();
+                navigationParams.Add("sessionId", sessionId);
+                navigationParams.Add("joinRequired", false);
+                NavigateToItem("PokerLobby", navigationParams);
             }
         }
 

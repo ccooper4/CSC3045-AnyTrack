@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AnyTrack.Infrastructure.BackendAccountService;
 using FluentAssertions;
+using System.Security.Principal;
 
 namespace Unit.Common.AnyTrack.Infrastructure.Extensions.IPrincipalExtensionsTests
 {
@@ -58,7 +59,37 @@ namespace Unit.Common.AnyTrack.Infrastructure.Extensions.IPrincipalExtensionsTes
         }
 
         #endregion
-    
+
+        #region IsUserInRole(this IPrincipal principal, string role, Guid? projectId = null, Guid? sprintId = null) Tests 
+
+        [Test]
+        public void CallIsUserInRoleOnServicePrincipal()
+        {
+            var loginResult = new ServiceLoginResult
+            {
+                AssignedRoles =  new List<ServiceRoleInfo>()
+                {
+                    new ServiceRoleInfo { Role = "Tester"}
+                }.ToArray()
+            };
+
+            var servicePrincipal = new ServiceUserPrincipal(loginResult, "test");
+
+            var userInRole = servicePrincipal.IsUserInRole("Tester", null, null);
+            userInRole.Should().BeTrue();
+        }
+
+        [Test]
+        public void CallIsUserInRoleOnOtherPrincipal()
+        {
+            var genericPrincipal = new GenericPrincipal(new GenericIdentity("Test"), null);
+
+            var userInRole = genericPrincipal.IsUserInRole("Tester", null, null);
+            userInRole.Should().BeFalse();
+        }
+
+        #endregion 
+
     }
 
     #endregion

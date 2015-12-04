@@ -11,7 +11,7 @@ using NSubstitute;
 using NUnit.Framework;
 using Prism.Regions;
 
-namespace Unit.Modules.AnyTrack.Sprints.Views
+namespace Unit.Modules.AnyTrack.Sprints.Views.CreateSprintViewModelTests
 {
     public class Context
     {
