@@ -218,7 +218,7 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewMode
             vm.CanShowEstimates.Should().BeTrue();
             vm.SprintStoriesCollection.Single().Equals(session.Stories.Single());
             vm.ActiveStory.Should().Be(vm.SprintStoriesCollection.First());
-            vm.TotalStoriesLabel.Should().Be("Stories - 1/1");
+            vm.TotalStoriesLabel.Should().Be("Stories - Estimating 1/1");
         }
 
         [Test]
