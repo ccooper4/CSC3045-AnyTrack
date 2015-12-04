@@ -50,5 +50,10 @@ namespace AnyTrack.Backend.Service.Model
         /// Gets or sets the session state.
         /// </summary>
         public ServicePlanningPokerSessionState State { get; set; }
+
+        /// <summary>
+        /// Gets or sets the session stories.
+        /// </summary>
+        public List<ServiceSprintStory> Stories { get; set; }
     }
 }

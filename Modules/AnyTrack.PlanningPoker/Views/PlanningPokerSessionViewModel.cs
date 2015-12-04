@@ -4,8 +4,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using AnyTrack.Infrastructure;
-using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.Extensions;
 using AnyTrack.Infrastructure.ServiceGateways;
 using AnyTrack.PlanningPoker;
@@ -29,7 +31,7 @@ namespace AnyTrack.PlanningPoker.Views
         /// The planning poker service gateway.
         /// </summary>
         private readonly IPlanningPokerManagerServiceGateway serviceGateway;
-        
+
         /// <summary>
         /// The specified message to send.
         /// </summary>
@@ -74,10 +76,10 @@ namespace AnyTrack.PlanningPoker.Views
             {
                 throw new ArgumentNullException("gateway");
             }
-
+            
             this.serviceGateway = gateway;
 
-            this.SprintStoriesCollection = new ObservableCollection<ServiceStorySummary>();
+            this.SprintStoriesCollection = new ObservableCollection<ServiceSprintStory>();
 
             this.MessageHistories = new ObservableCollection<string>();
 
@@ -101,12 +103,7 @@ namespace AnyTrack.PlanningPoker.Views
         /// <summary>
         /// Gets or sets the stories
         /// </summary>
-        public ObservableCollection<ServiceStorySummary> SprintStoriesCollection { get; set; }
-
-        /// <summary>
-        /// Gets or sets a list of sprint stories
-        /// </summary>
-        public ObservableCollection<ServiceStorySummary> SprintStories { get; set; }
+        public ObservableCollection<ServiceSprintStory> SprintStoriesCollection { get; set; }
 
         /// <summary>
         /// Gets or sets the history of messages.
@@ -225,7 +222,13 @@ namespace AnyTrack.PlanningPoker.Views
         {
             get
             {
-                return hideEstimates;
+                sessionId = (Guid)navigationContext.Parameters["sessionId"];
+                var session = serviceGateway.RetrieveSessionInfo(sessionId);
+                SprintStoriesCollection.AddRange(session.Stories);
+                
+                ////this.ShowMetroDialog("Loaded stories collection", ss.Summary + "<-- story summary should be here", MessageDialogStyle.Affirmative);
+                serviceGateway.NotifyClientToClearStoryPointEstimateFromServerEvent += ServiceGateway_NotifyClientToClearStoryPointEstimateFromServerEvent;
+                serviceGateway.NotifyClientOfNewMessageFromServerEvent += ServiceGateway_NotifyClientOfNewMessageFromServerEvent;
             }
 
             set
@@ -303,6 +306,7 @@ namespace AnyTrack.PlanningPoker.Views
         {
             var message = "{0} {1} - {2}".Substitute(msg.Name, DateTime.Now.ToString(), msg.Message);
             this.MessageHistories.Add(message);
+            CollectionViewSource.GetDefaultView(this.MessageHistories).MoveCurrentTo(message);
         }
 
         /// <summary>
@@ -342,6 +346,8 @@ namespace AnyTrack.PlanningPoker.Views
             serviceGateway.SubmitMessageToServer(msg);
 
             ServiceGateway_NotifyClientOfNewMessageFromServerEvent(this, msg);
+
+            MessageToSend = string.Empty;
         }
 
         /// <summary>
@@ -385,6 +391,20 @@ namespace AnyTrack.PlanningPoker.Views
             msg.Message = finalEstimate.ToString();
 
             serviceGateway.SubmitMessageToServer(msg);
+        }
+
+        /// <summary>
+        /// this scrools chat 
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">selections changed</param>
+        private void BringSelectionIntoView(object sender, SelectionChangedEventArgs e)
+        {
+            Selector selector = sender as Selector;
+            if (selector is ListBox)
+            {
+                (selector as ListBox).ScrollIntoView(selector.SelectedIndex = MessageHistories.Count);
+            }
         }
 
         #endregion
