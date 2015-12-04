@@ -131,7 +131,7 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         /// <param name="emailAttachment">The email attachment of the </param>
         public void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, MemoryStream emailAttachment)
         {
-            client.SendEmailRequest(senderEmailAddress, recipientEmailAddress, emailMessage);
+            client.SendEmailRequest(senderEmailAddress, recipientEmailAddress, emailMessage, emailAttachment);
         }
 
         #endregion
