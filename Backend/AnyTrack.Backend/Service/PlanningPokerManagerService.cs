@@ -197,7 +197,6 @@ namespace AnyTrack.Backend.Service
 
             var clientSocket = contextProvider.GetClientChannel<IPlanningPokerClientService>();
 
-            // TODO: David - map stories into session from sprint.
             var stories = new List<ServiceSprintStory>();
 
             stories = sprintServiceGateway.GetSprintStories(sprintId);

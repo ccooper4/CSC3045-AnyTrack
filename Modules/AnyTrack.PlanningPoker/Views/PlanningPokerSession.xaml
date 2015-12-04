@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="AnyTrack.PlanningPoker.Views.PlanningPokerSession" 
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:listBoxBehavior="clr-namespace:ListBoxBehavior;assembly=ListBoxBehavior"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AnyTrack.PlanningPoker.Views"
@@ -169,7 +170,7 @@
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <ListBox ItemsSource="{Binding MessageHistories}" Grid.Row="0" Grid.Column="0" BorderThickness="0" VerticalAlignment="Stretch">
+                <ListBox ItemsSource="{Binding MessageHistories}" Grid.Row="0" Grid.Column="0" BorderThickness="0" VerticalAlignment="Stretch" listBoxBehavior:ListBoxBehavior.AutoScroll="True">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Label Content="{Binding Path=.}" />
