@@ -26,20 +26,20 @@
 
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width ="6*" SharedSizeGroup="FirstColumn"></ColumnDefinition>
+                        <ColumnDefinition Width ="6*" SharedSizeGroup="FirstColumn" MinWidth="400"></ColumnDefinition>
                     <ColumnDefinition Width ="2*" SharedSizeGroup="SecondColumn"></ColumnDefinition>
                     <ColumnDefinition Width ="2*" SharedSizeGroup="ThirdColumn"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
 
-                <Label Grid.Column="0" Content="Description" Margin="0,-5,0,5"></Label>
-                <Label Grid.Column="1" Content="Hours Remaining"/>
-                <Label Grid.Column="2" Content="New Estimate"/>
-
-
+                    <Label Grid.Column="0" Content="Description" Margin="0,-5,0,5" FontSize="16" ></Label>
+                    <Label Grid.Column="1" Content="Hours Remaining" FontSize="16"/>
+                    <Label Grid.Column="2" Content="New Estimate" FontSize="16"/>
             </Grid>
 
-            <ListBox Grid.Row="1" HorizontalAlignment="Left" Height="291" ItemsSource="{Binding Tasks}" VerticalAlignment="Top" Width="980">
+                <Border Grid.Row="1" CornerRadius="9" BorderBrush="Gray" Background="Gray" BorderThickness="2">
+                    <DockPanel Background="White" >
+                        <ListBox Grid.Row="1" HorizontalAlignment="Left" MinHeight="300" ItemsSource="{Binding Tasks}" VerticalAlignment="Top">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -48,14 +48,17 @@
                                 <ColumnDefinition SharedSizeGroup="SecondColumn" />
                                 <ColumnDefinition SharedSizeGroup="ThirdColumn" />
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="{Binding Description}"></Label>
-                            <Label Grid.Column="1" Content="{Binding TaskHourEstimates[0].Estimate}"/>
-                            <TextBox Grid.Column="2" Text="{Binding TaskHourEstimates[0].NewEstimate}"/>
+                                        <Label Grid.Column="0" Content="{Binding Description}" FontSize="14"></Label>
+                                        <Label Grid.Column="1" Content="{Binding TaskHourEstimates[0].Estimate}" FontSize="14"/>
+                                        <TextBox Grid.Column="2" Text="{Binding TaskHourEstimates[0].NewEstimate}" Width="50" FontSize="14"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Height="60" VerticalAlignment="Top">
+                    </DockPanel>
+                </Border>
+            
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Height="60" VerticalAlignment="Top">
                 <Button Content="Update Tasks" HorizontalAlignment="Left" Margin="0, 0, 10, 0" VerticalAlignment="Top" Width="81" Command="{Binding UpdateTaskHoursCommand}"/>
                 <Button Content="Cancel" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Command="{Binding CancelCommand}" />
             </StackPanel>

@@ -126,12 +126,11 @@ namespace AnyTrack.Sprints.Views
                 sprintId = (Guid)navigationContext.Parameters["sprintId"];
                 var tasks = serviceGateway.GetAllTasksForSprintCurrentUser(SprintId);
 
-                foreach (var task in Tasks)
+                foreach (var task in tasks)
                 {
-                    task.TaskHourEstimates = new List<ServiceTaskHourEstimate>
-                    {
-                        task.TaskHourEstimates.LastOrDefault()
-                    };
+                    var tempEstimate = task.TaskHourEstimates.LastOrDefault();
+                    task.TaskHourEstimates.Clear();
+                    task.TaskHourEstimates.Add(tempEstimate);
                 }
 
                 Tasks.Clear();
@@ -163,6 +162,10 @@ namespace AnyTrack.Sprints.Views
         private void SaveTaskHours()
         {
             serviceGateway.SaveUpdatedTaskHours(this.Tasks.ToList());
+            var navParams = new NavigationParameters();
+            navParams.Add("sprintId", sprintId);
+            this.ShowMetroDialog("Tasks Updated", "Task hours have been updated successfully!");
+            this.NavigateToItem("UpdateTaskHours", navParams);
         }
 
         /// <summary>
