@@ -39,11 +39,11 @@ namespace AnyTrack.Infrastructure.Interceptors
             ref System.ServiceModel.Channels.Message request,
             System.ServiceModel.IClientChannel channel)
         {
-            if (!string.IsNullOrEmpty(cookie))
+            if (!string.IsNullOrEmpty(UserDetailsStore.AuthCookie))
             {
                 // Add the auth cookie to both the SOAP Header and the HTTP Header.
                 var httpRequestProperty = new HttpRequestMessageProperty();
-                httpRequestProperty.Headers.Add(HttpRequestHeader.Cookie, cookie);
+                httpRequestProperty.Headers.Add(HttpRequestHeader.Cookie, UserDetailsStore.AuthCookie);
 
                 var header = MessageHeader.CreateHeader("authCookie", "http://anytrack", cookie);
 

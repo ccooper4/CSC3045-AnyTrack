@@ -10,6 +10,7 @@ using AnyTrack.Backend.Data;
 using AnyTrack.Backend.Data.Model;
 using AnyTrack.Backend.Faults;
 using AnyTrack.Backend.Providers;
+using AnyTrack.Backend.Security;
 using AnyTrack.Backend.Service.Model;
 
 namespace AnyTrack.Backend.Service
@@ -17,6 +18,7 @@ namespace AnyTrack.Backend.Service
     /// <summary>
     /// Provides a service that can be used to work with user accounts. 
     /// </summary>
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall)]
     public class AccountService : IAccountService
     {
         #region Fields 
@@ -139,6 +141,7 @@ namespace AnyTrack.Backend.Service
         /// Allows a user to refresh their roles.
         /// </summary>
         /// <returns>A login result object.</returns>
+        [CreatePrincipal]
         public ServiceLoginResult RefreshLoginPrincipal()
         {
             var currentUser = Thread.CurrentPrincipal.Identity.Name;

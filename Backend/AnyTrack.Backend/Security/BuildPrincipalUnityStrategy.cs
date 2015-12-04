@@ -29,7 +29,7 @@ namespace AnyTrack.Backend.Security
         /// <summary>
         /// Types that are excluded from being affected by this extension.
         /// </summary>
-        private readonly Type[] excludedTypes = new Type[] { typeof(IUnitOfWork), typeof(OperationContextProvider), typeof(FormsAuthenticationProvider) }; 
+        private readonly Type[] excludedTypes = new Type[] { typeof(EntityUnitOfWork), typeof(IUnitOfWork), typeof(OperationContextProvider), typeof(FormsAuthenticationProvider) }; 
 
         #endregion 
 
