@@ -7,6 +7,7 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:converters="clr-namespace:AnyTrack.Infrastructure.Converters;assembly=AnyTrack.Infrastructure"
+             xmlns:projconverters="clr-namespace:AnyTrack.Projects.Converters"
              xml:lang="en-GB"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d">
@@ -14,7 +15,7 @@
 
     <UserControl.Resources>
         <converters:GuidToStringConverter x:Key="guidToStringConverter"/>
-        <converters:BooleanToInvisibilityConverter x:Key="booleanToInvisibilityConverter"></converters:BooleanToInvisibilityConverter>
+        <projconverters:BooleanToInvisibilityConverter x:Key="booleanToInvisibilityConverter"></projconverters:BooleanToInvisibilityConverter>
     </UserControl.Resources>
 
     <Grid>

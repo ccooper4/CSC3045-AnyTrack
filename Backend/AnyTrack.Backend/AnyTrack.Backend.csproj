@@ -186,13 +186,9 @@
     <Compile Include="Migrations\201511301309017_Adding tasks and task hours.Designer.cs">
       <DependentUpon>201511301309017_Adding tasks and task hours.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201512020048275_Adding migration to merge the last few after an issue.cs" />
-    <Compile Include="Migrations\201512020048275_Adding migration to merge the last few after an issue.Designer.cs">
-      <DependentUpon>201512020048275_Adding migration to merge the last few after an issue.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201512021344120_Adding combined migrationfor sprint team relationship and scrum master    .cs" />
-    <Compile Include="Migrations\201512021344120_Adding combined migrationfor sprint team relationship and scrum master    .Designer.cs">
-      <DependentUpon>201512021344120_Adding combined migrationfor sprint team relationship and scrum master    .cs</DependentUpon>
+    <Compile Include="Migrations\201512040222451_Adding migration following T17 merge.cs" />
+    <Compile Include="Migrations\201512040222451_Adding migration following T17 merge.Designer.cs">
+      <DependentUpon>201512040222451_Adding migration following T17 merge.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -278,11 +274,8 @@
     <EmbeddedResource Include="Migrations\201511301309017_Adding tasks and task hours.resx">
       <DependentUpon>201511301309017_Adding tasks and task hours.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512020048275_Adding migration to merge the last few after an issue.resx">
-      <DependentUpon>201512020048275_Adding migration to merge the last few after an issue.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512021344120_Adding combined migrationfor sprint team relationship and scrum master    .resx">
-      <DependentUpon>201512021344120_Adding combined migrationfor sprint team relationship and scrum master    .cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201512040222451_Adding migration following T17 merge.resx">
+      <DependentUpon>201512040222451_Adding migration following T17 merge.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

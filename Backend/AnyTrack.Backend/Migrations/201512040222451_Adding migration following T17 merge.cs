@@ -4,7 +4,7 @@ namespace AnyTrack.Backend.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Addingmigrationtomergethelastfewafteranissue : DbMigration
+    public partial class AddingmigrationfollowingT17merge : DbMigration
     {
         public override void Up()
         {

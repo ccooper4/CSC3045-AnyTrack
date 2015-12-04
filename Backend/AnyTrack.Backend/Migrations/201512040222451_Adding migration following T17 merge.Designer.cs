@@ -7,13 +7,13 @@ namespace AnyTrack.Backend.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Addingmigrationtomergethelastfewafteranissue : IMigrationMetadata
+    public sealed partial class AddingmigrationfollowingT17merge : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Addingmigrationtomergethelastfewafteranissue));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddingmigrationfollowingT17merge));
         
         string IMigrationMetadata.Id
         {
-            get { return "201512020048275_Adding migration to merge the last few after an issue"; }
+            get { return "201512040222451_Adding migration following T17 merge"; }
         }
         
         string IMigrationMetadata.Source
