@@ -509,8 +509,18 @@ namespace AnyTrack.Backend.Service
             };
 
             var task = unitOfWork.TaskRepository.Items.SingleOrDefault(t => t.Id == taskId);
-            task.TaskHourEstimate.Add(dataTaskHourEstimate);
 
+            if (task.TaskHourEstimate == null)
+            {
+                List<TaskHourEstimate> taskHourEstimates = new List<TaskHourEstimate>();
+                taskHourEstimates.Add(dataTaskHourEstimate);
+                task.TaskHourEstimate = taskHourEstimates;
+            }
+            else
+            {
+                task.TaskHourEstimate.Add(dataTaskHourEstimate);
+            }
+            
             unitOfWork.Commit();
         }
 
@@ -543,21 +553,24 @@ namespace AnyTrack.Backend.Service
 
             Task dataTask = new Task()
             {
-                Id = serviceTask.TaskId,
                 Assignee = assignee,
                 Blocked = serviceTask.Blocked,
                 ConditionsOfSatisfaction = serviceTask.ConditionsOfSatisfaction,
                 Description = serviceTask.Description,
                 Summary = serviceTask.Summary,
-                SprintStory = dataSprintStory,                
+                SprintStory = dataSprintStory,
             };
 
             if (dataSprintStory != null)
             {
                 dataSprintStory.Tasks.Add(dataTask);
             }
-            
+
             unitOfWork.Commit();
+
+            ServiceTaskHourEstimate taskHourEstimate = serviceTask.TaskHourEstimates.LastOrDefault();
+            Guid taskId = dataTask.Id;
+            AddTaskHourEstimateToTask(taskId, taskHourEstimate);
         }
 
         /// <summary>

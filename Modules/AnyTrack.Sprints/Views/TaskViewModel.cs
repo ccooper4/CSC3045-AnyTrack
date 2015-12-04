@@ -410,7 +410,6 @@ namespace AnyTrack.Sprints.Views
             if (navigationContext.Parameters.ContainsKey("sprintStoryId")) 
             {
                 this.SprintStoryId = (Guid)navigationContext.Parameters["sprintStoryId"];
-                this.TaskId = Guid.NewGuid();
             }
             else if (navigationContext.Parameters.ContainsKey("task"))
             {
@@ -431,6 +430,7 @@ namespace AnyTrack.Sprints.Views
             if (navigationContext.Parameters.ContainsKey("sprintStory"))
             {
                 this.serviceSprintStory = (ServiceSprintStory)navigationContext.Parameters["sprintStory"];
+                this.SprintStoryId = serviceSprintStory.SprintStoryId;
             }
         }
 
@@ -465,6 +465,9 @@ namespace AnyTrack.Sprints.Views
                 TaskId = this.taskId
             };
 
+            List<ServiceTaskHourEstimate> taskHourEstimates = new List<ServiceTaskHourEstimate>();
+            taskHourEstimates.Add(serviceTaskHourEstimate);
+
             ServiceTask serviceTask = new ServiceTask()
             {
                 TaskId = this.TaskId,
@@ -472,14 +475,15 @@ namespace AnyTrack.Sprints.Views
                 Summary = this.Summary,
                 Description = this.Description,
                 ConditionsOfSatisfaction = this.ConditionsOfSatisfaction,
-                Blocked = this.Blocked
+                Blocked = this.Blocked,
+                TaskHourEstimates = taskHourEstimates
             };
 
             //// Save task
             sprintServiceGateway.AddTaskToSprintStory(this.SprintStoryId, serviceTask);
 
             //// Save update hours
-            sprintServiceGateway.AddTaskHourEstimateToTask(this.TaskId, serviceTaskHourEstimate);
+            //// sprintServiceGateway.AddTaskHourEstimateToTask(this.TaskId, serviceTaskHourEstimate);
 
             NavigationParameters navParams = new NavigationParameters();
             navParams.Add("sprintStory", this.serviceSprintStory);
