@@ -246,6 +246,16 @@ namespace AnyTrack.Infrastructure.ServiceGateways
             return client.GetTotalStoryPointEstimate(sprintId);
         }
 
+        /// <summary>
+        /// Gets the dev team
+        /// </summary>
+        /// <param name="sprintId">The sprint</param>
+        /// <returns>A list of team devs</returns>
+        public List<ServiceUser> GetDevTeamList(Guid sprintId)
+        {
+            return client.GetSprintTeamList(sprintId);
+        }
+
         #endregion
     }
 }

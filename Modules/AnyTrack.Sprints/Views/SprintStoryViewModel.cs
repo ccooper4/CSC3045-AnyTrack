@@ -626,6 +626,7 @@ namespace AnyTrack.Sprints.Views
         private void Navigate(NavigationParameters navParams)
         {
             navParams.Add("sprintStory", this.sprintStory);
+            navParams.Add("sprintId", this.sprintId);
             this.ShowMetroFlyout("Task", navParams);
             IsOpen = false;
         }

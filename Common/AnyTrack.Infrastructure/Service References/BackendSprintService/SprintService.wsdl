@@ -124,6 +124,12 @@
   <wsdl:message name="ISprintService_SendEmailRequest_OutputMessage">
     <wsdl:part name="parameters" element="tns:SendEmailRequestResponse" />
   </wsdl:message>
+  <wsdl:message name="ISprintService_GetSprintTeamList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSprintTeamList" />
+  </wsdl:message>
+  <wsdl:message name="ISprintService_GetSprintTeamList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSprintTeamListResponse" />
+  </wsdl:message>
   <wsdl:portType name="ISprintService">
     <wsdl:operation name="DeleteTask">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/DeleteTask" message="tns:ISprintService_DeleteTask_InputMessage" />
@@ -200,6 +206,10 @@
     <wsdl:operation name="SendEmailRequest">
       <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/SendEmailRequest" message="tns:ISprintService_SendEmailRequest_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/SendEmailRequestResponse" message="tns:ISprintService_SendEmailRequest_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSprintTeamList">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISprintService/GetSprintTeamList" message="tns:ISprintService_GetSprintTeamList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISprintService/GetSprintTeamListResponse" message="tns:ISprintService_GetSprintTeamList_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ISprintService" type="tns:ISprintService">
@@ -368,6 +378,15 @@
     </wsdl:operation>
     <wsdl:operation name="SendEmailRequest">
       <soap:operation soapAction="http://tempuri.org/ISprintService/SendEmailRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSprintTeamList">
+      <soap:operation soapAction="http://tempuri.org/ISprintService/GetSprintTeamList" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

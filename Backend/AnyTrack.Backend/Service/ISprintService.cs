@@ -171,5 +171,13 @@ namespace AnyTrack.Backend.Service
         /// <param name="emailAttachment">The email attachment of the </param>
         [OperationContract]
         void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, MemoryStream emailAttachment);
+
+        /// <summary>
+        /// Gets the dev list for a sprint
+        /// </summary>
+        /// <param name="sprintId">The sprint</param>
+        /// <returns>A list of devs</returns>
+        [OperationContract]
+        List<ServiceUser> GetSprintTeamList(Guid sprintId);
     }
 }

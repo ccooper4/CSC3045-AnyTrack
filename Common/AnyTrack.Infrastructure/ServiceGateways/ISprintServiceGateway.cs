@@ -146,7 +146,14 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         /// <param name="emailMessage">The email address of the </param>
         /// <param name="emailAttachment">The email attachment of the </param>
         void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, MemoryStream emailAttachment);
-        
+
+        /// <summary>
+        /// Gets the dev team
+        /// </summary>
+        /// <param name="sprintId">The sprint</param>
+        /// <returns>A list of team devs</returns>
+        List<ServiceUser> GetDevTeamList(Guid sprintId);
+
         /// <summary>
         /// Acquires the maxmium story estimate for a given sprint
         /// </summary>
