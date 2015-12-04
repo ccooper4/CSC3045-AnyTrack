@@ -129,6 +129,16 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         private ISprintServiceGateway sprintServiceGateway;
 
+        /// <summary>
+        /// The tasks of this sprint story
+        /// </summary>
+        private ObservableCollection<ServiceTask> tasks;
+
+        /// <summary>
+        /// The tasks id of the selected task.
+        /// </summary>
+        private ServiceTask currentTask;
+
         #endregion
 
         /// <summary>
@@ -174,6 +184,38 @@ namespace AnyTrack.Sprints.Views
         /// Gets the command used to open a sprint story view. 
         /// </summary>
         public DelegateCommand SaveSprintStoryCommand { get; private set; }
+
+        /// <summary>
+        /// Gets or sets all the currently selected task
+        /// </summary>
+        public ServiceTask CurrentTask
+        {
+            get
+            {
+                return currentTask;
+            }
+
+            set
+            {
+                SetProperty(ref currentTask, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets all the tasks of this sprint story
+        /// </summary>
+        public ObservableCollection<ServiceTask> Tasks
+        {
+            get
+            {
+                return tasks;
+            }
+
+            set
+            {
+                SetProperty(ref tasks, value);
+            }
+        }
 
         /// <summary>
         /// Gets or sets all the status'
@@ -501,6 +543,12 @@ namespace AnyTrack.Sprints.Views
                 //// Sprint story attributes
                 this.Status = sprintStory.Status;
                 //// TODO - story points, created, updated. 
+
+                List<ServiceTask> serviceTasks = sprintServiceGateway.GetAllTasksForSprintStory(SprintStoryId);
+                if (serviceTasks != null)
+                {
+                    this.Tasks = new ObservableCollection<ServiceTask>(serviceTasks);
+                }
             }
         }
 
@@ -530,6 +578,7 @@ namespace AnyTrack.Sprints.Views
             var navParams = new NavigationParameters();
             navParams.Add("sprintStoryId", SprintStoryId);
             navParams.Add("sprintStory", this.sprintStory);
+            navParams.Add("tasks", this.Tasks);
             this.ShowMetroFlyout("Task", navParams);
             IsOpen = false;
         }

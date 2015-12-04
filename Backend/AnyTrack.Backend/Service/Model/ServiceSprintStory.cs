@@ -40,5 +40,10 @@ namespace AnyTrack.Backend.Service.Model
         /// Gets or sets the Date Completed.
         /// </summary>
         public DateTime? DateCompleted { get; set; }
+
+        /// <summary>
+        /// Gets or sets the task list ids
+        /// </summary>
+        public virtual ICollection<Guid> Tasks { get; set; }
     }
 }

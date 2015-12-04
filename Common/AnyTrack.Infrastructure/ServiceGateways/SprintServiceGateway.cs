@@ -41,6 +41,16 @@ namespace AnyTrack.Infrastructure.ServiceGateways
         #region Methods
 
         /// <summary>
+        /// Get all the tasks of a sprint story.
+        /// </summary>
+        /// <param name="sprintStoryId">The id of the sprint story</param>
+        /// <returns>A list of tasks</returns>
+        public List<ServiceTask> GetAllTasksForSprintStory(Guid sprintStoryId)
+        {
+            return client.GetAllTasksForSprintStory(sprintStoryId);
+        }
+
+        /// <summary>
         /// Creates a sprint and adds it to the project.
         /// </summary>
         /// <param name="projectId">Id of the project to add the sprint to</param>
