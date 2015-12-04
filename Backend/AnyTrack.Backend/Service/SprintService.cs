@@ -430,7 +430,6 @@ namespace AnyTrack.Backend.Service
 
             TaskHourEstimate dataTaskHourEstimate = new TaskHourEstimate()
             {
-                Id = serviceTaskHourEstimate.ServiceTaskHourEstimateId,
                 Created = serviceTaskHourEstimate.Created,
                 Estimate = serviceTaskHourEstimate.Estimate
             };

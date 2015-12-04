@@ -14,7 +14,7 @@ namespace AnyTrack.Sprints.Views
     /// <summary>
     /// The view model for the Update Task Hours ViewModel
     /// </summary>
-    public class UpdateTaskHoursViewModel : ValidatedBindableBase
+    public class UpdateTaskHoursViewModel : ValidatedBindableBase, INavigationAware, IRegionMemberLifetime
     {
         #region Fields
 
@@ -47,6 +47,8 @@ namespace AnyTrack.Sprints.Views
          
             UpdateTaskHoursCommand = new DelegateCommand(SaveTaskHours);
             CancelCommand = new DelegateCommand(GoToSprintBoard);
+
+            Tasks = new ObservableCollection<ServiceTask>();
         }
 
         #endregion
@@ -74,6 +76,17 @@ namespace AnyTrack.Sprints.Views
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether or not this view/view model should be reused.
+        /// </summary>
+        public bool KeepAlive
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -93,6 +106,16 @@ namespace AnyTrack.Sprints.Views
         #region Methods
 
         /// <summary>
+        /// Handles the Is Navigation target event. 
+        /// </summary>
+        /// <param name="navigationContext">The navigation context.</param>
+        /// <returns>A true or false value indicating if this viewmodel can handle the navigation request.</returns>
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return false;
+        }
+
+        /// <summary>
         /// Handles the navigated to.
         /// </summary>
         /// <param name="navigationContext">The navigation context.</param>
@@ -101,9 +124,27 @@ namespace AnyTrack.Sprints.Views
             if (navigationContext.Parameters.ContainsKey("sprintId"))
             {
                 sprintId = (Guid)navigationContext.Parameters["sprintId"];
-                this.Tasks = new ObservableCollection<ServiceTask>();
-                Tasks.AddRange(serviceGateway.GetAllTasksForSprintCurrentUser(SprintId));
+                var tasks = serviceGateway.GetAllTasksForSprintCurrentUser(SprintId);
+
+                foreach (var task in Tasks)
+                {
+                    task.TaskHourEstimates = new List<ServiceTaskHourEstimate>
+                    {
+                        task.TaskHourEstimates.LastOrDefault()
+                    };
+                }
+
+                Tasks.Clear();
+                Tasks.AddRange(tasks);
             }
+        }
+
+        /// <summary>
+        /// Handles the on navigated from event. 
+        /// </summary>
+        /// <param name="navigationContext">The navigation context.</param>
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
         }
 
         /// <summary>
