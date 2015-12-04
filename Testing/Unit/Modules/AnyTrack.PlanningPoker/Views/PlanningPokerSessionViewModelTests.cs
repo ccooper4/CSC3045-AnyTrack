@@ -68,7 +68,7 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewMode
 
             vm.SendEstimateCommand.Should().NotBeNull();
 
-            vm.SendFinalEstimateCommand.Should().NotBeNull();
+            vm.SubmitFinalEstimateCommand.Should().NotBeNull();
 
             vm.LeaveSessionCommand.Should().NotBeNull();
 
@@ -218,7 +218,7 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewMode
             vm.CanShowEstimates.Should().BeTrue();
             vm.SprintStoriesCollection.Single().Equals(session.Stories.Single());
             vm.ActiveStory.Should().Be(vm.SprintStoriesCollection.First());
-            vm.TotalStoriesLabel.Should().Be("Stories - 1/1");
+            vm.TotalStoriesLabel.Should().Be("Stories - Estimating 1/1");
         }
 
         [Test]
@@ -451,6 +451,50 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.PlanningPokerSessionViewMode
         }
 
         #endregion
+
+        #region SubmitFinalEstimateToServer() Tests 
+
+        [Test]
+        public void CallSubmitFinalEstimateToServerAndStateIsComplete()
+        {
+            vm.SelectedFinalEstimate = "10";
+
+            var sessionId = Guid.NewGuid();
+            var activeStoryIndex = 1; 
+            var storyId = Guid.NewGuid();
+
+            vm.GetType().GetField("sessionId", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(vm, sessionId);
+            vm.GetType().GetField("activeStoryIndex", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(vm, activeStoryIndex);
+
+            vm.SprintStoriesCollection = new System.Collections.ObjectModel.ObservableCollection<ServiceSprintStory>()
+            {
+                new ServiceSprintStory(),
+                new ServiceSprintStory() { SprintStoryId = storyId}
+            };
+
+            var updatedSession = new ServicePlanningPokerSession
+            {
+                State = ServicePlanningPokerSessionState.Complete,
+                SessionID = sessionId,
+                Stories = new List<ServiceSprintStory>().ToArray(),
+                Users = new List<ServicePlanningPokerUser>().ToArray()
+            };
+
+            gateway.RetrieveSessionInfo(sessionId).Returns(updatedSession);
+
+            vm.MainWindow = Substitute.For<WindowProvider>();
+
+            vm.Call("SubmitFinalEstimateToServer");
+
+            gateway.Received().SubmitFinalEstimate(sessionId, storyId, 10);
+            gateway.Received().RetrieveSessionInfo(sessionId);
+            vm.CanGiveFinalEstimate.Should().BeFalse();
+            vm.CanShowEstimates.Should().BeFalse();
+            vm.MainWindow.Received().ShowMessageAsync("Estimation complete!", "All stories have now been estimated! The session may now be ended.");
+
+        }
+
+        #endregion 
 
     }
 

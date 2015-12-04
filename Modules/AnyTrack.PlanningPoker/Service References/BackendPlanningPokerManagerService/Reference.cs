@@ -310,6 +310,9 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         ShowingEstimates = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Complete = 4,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -320,6 +323,9 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> DateCompletedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid SprintIdField;
@@ -333,6 +339,9 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private AnyTrack.PlanningPoker.BackendPlanningPokerManagerService.ServiceStory StoryField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double StoryEstimateField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -340,6 +349,19 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> DateCompleted {
+            get {
+                return this.DateCompletedField;
+            }
+            set {
+                if ((this.DateCompletedField.Equals(value) != true)) {
+                    this.DateCompletedField = value;
+                    this.RaisePropertyChanged("DateCompleted");
+                }
             }
         }
         
@@ -391,6 +413,19 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
                 if ((object.ReferenceEquals(this.StoryField, value) != true)) {
                     this.StoryField = value;
                     this.RaisePropertyChanged("Story");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double StoryEstimate {
+            get {
+                return this.StoryEstimateField;
+            }
+            set {
+                if ((this.StoryEstimateField.Equals(value) != true)) {
+                    this.StoryEstimateField = value;
+                    this.RaisePropertyChanged("StoryEstimate");
                 }
             }
         }
@@ -932,6 +967,12 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/ShowEstimates", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/ShowEstimatesResponse")]
         System.Threading.Tasks.Task ShowEstimatesAsync(System.Guid sessionId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/SubmitFinalEstimate", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/SubmitFinalEstimateResponse")]
+        void SubmitFinalEstimate(System.Guid sessionId, System.Guid sprintStoryId, double estimate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/SubmitFinalEstimate", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/SubmitFinalEstimateResponse")]
+        System.Threading.Tasks.Task SubmitFinalEstimateAsync(System.Guid sessionId, System.Guid sprintStoryId, double estimate);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1062,6 +1103,14 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         
         public System.Threading.Tasks.Task ShowEstimatesAsync(System.Guid sessionId) {
             return base.Channel.ShowEstimatesAsync(sessionId);
+        }
+        
+        public void SubmitFinalEstimate(System.Guid sessionId, System.Guid sprintStoryId, double estimate) {
+            base.Channel.SubmitFinalEstimate(sessionId, sprintStoryId, estimate);
+        }
+        
+        public System.Threading.Tasks.Task SubmitFinalEstimateAsync(System.Guid sessionId, System.Guid sprintStoryId, double estimate) {
+            return base.Channel.SubmitFinalEstimateAsync(sessionId, sprintStoryId, estimate);
         }
     }
 }

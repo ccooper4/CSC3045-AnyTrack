@@ -306,6 +306,22 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.ServiceGateways.PlanningPokerManag
 
         #endregion 
 
+        #region SubmitFinalEstimate(Guid sessionId, Guid sprintStoryId, double estimate) Tests 
+
+        [Test]
+        public void CallSubmitFinalEstimate()
+        {
+            var sessionId = Guid.NewGuid();
+            var storyId = Guid.NewGuid();
+            double estimate = 10;
+
+            serviceGateway.SubmitFinalEstimate(sessionId, storyId, estimate);
+
+            client.Received().SubmitFinalEstimate(sessionId, storyId, estimate);
+        }
+
+        #endregion 
+
     }
 
     #endregion 

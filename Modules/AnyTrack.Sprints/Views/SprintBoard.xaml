@@ -67,23 +67,18 @@
                         <Label Grid.Column="3" Grid.Row="0" Content="In Test" HorizontalAlignment="Center"/>
                         <Label Grid.Column="4" Grid.Row="0" Content="Done" HorizontalAlignment="Center"/>
 
-<!--                        ~1~ The Not started stories @1@-->
-<!--                        <ListBox Grid.Column="0" Grid.Row="1">-->
-<!--                            <ListBox.ItemTemplate >-->
-<!--                                <DataTemplate>-->
-<!--                                </DataTemplate>-->
-<!--                            </ListBox.ItemTemplate>-->
-<!--                        </ListBox>-->
-
-                        <Grid Grid.Row="1" Grid.Column="0">
-                            <Grid Margin="10">
-                                <Button Command="{Binding OpenSprintStoryViewCommand}" BorderThickness="0" Background="Transparent">
-                                    <Border CornerRadius="2" BorderBrush="Gray" Background="Gray" BorderThickness="2">
-                                       <TextBox IsEnabled="False" Height="Auto" MinHeight="50px" Width="Auto" Background="LightGray" TextWrapping="Wrap" Text="This is a test story for UI testing purposes"/>  
-                                    </Border>
-                                </Button>
-                            </Grid>
-                        </Grid>
+                        <!-- The Not started stories -->
+                        <ListBox Grid.Column="0" Grid.Row="1" ItemsSource="{Binding NotStartedSprintStories}" Background="Transparent" HorizontalAlignment="Stretch">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="10" >
+                                        <Button Command="{Binding DataContext.EditSprintStoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding Path=.}" BorderThickness="0" Background="Gray" >
+                                            <TextBox IsEnabled="False" Height="Auto" MinHeight="50px" Width="160" Background="LightGray" TextWrapping="Wrap" Text="{Binding Story.Summary}" />
+                                        </Button>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
 
                     </Grid>
                 </DockPanel>

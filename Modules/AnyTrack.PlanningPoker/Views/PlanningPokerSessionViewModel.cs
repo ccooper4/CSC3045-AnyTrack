@@ -85,7 +85,17 @@ namespace AnyTrack.PlanningPoker.Views
         /// <summary>
         /// The progress label. 
         /// </summary>
-        private string totalStoriesLabel; 
+        private string totalStoriesLabel;
+
+        /// <summary>
+        /// The final selected estimate.
+        /// </summary>
+        private string selectedFinalEstimate;
+
+        /// <summary>
+        /// The final active story index.
+        /// </summary>
+        private int activeStoryIndex; 
 
         #endregion
 
@@ -118,7 +128,7 @@ namespace AnyTrack.PlanningPoker.Views
 
             SendEstimateCommand = new DelegateCommand<string>(SubmitEstimateToServer);
 
-            SendFinalEstimateCommand = new DelegateCommand<ServicePlanningPokerEstimate>(SubmitFinalEstimateToServer);
+            SubmitFinalEstimateCommand = new DelegateCommand(SubmitFinalEstimateToServer);
 
             EndSessionCommand = new DelegateCommand(EndCurrentSession);
 
@@ -165,11 +175,6 @@ namespace AnyTrack.PlanningPoker.Views
         public DelegateCommand<string> SendEstimateCommand { get; private set; }
 
         /// <summary>
-        /// Gets the command used to send and set the final story point estimate. 
-        /// </summary>
-        public DelegateCommand<ServicePlanningPokerEstimate> SendFinalEstimateCommand { get; private set; }
-
-        /// <summary>
         /// Gets the command used for a SM to end the session.
         /// </summary>
         public DelegateCommand EndSessionCommand { get; private set; }
@@ -178,6 +183,11 @@ namespace AnyTrack.PlanningPoker.Views
         /// Gets the command used by a developer to leave the session
         /// </summary>
         public DelegateCommand LeaveSessionCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command used to submit a final estimate for a story.
+        /// </summary>
+        public DelegateCommand SubmitFinalEstimateCommand { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether or not this view can be re-used.
@@ -350,6 +360,22 @@ namespace AnyTrack.PlanningPoker.Views
             }
         }
 
+        /// <summary>
+        /// Gets or sets the selected final estimate.
+        /// </summary>
+        public string SelectedFinalEstimate
+        {
+            get
+            {
+                return selectedFinalEstimate;
+            }
+
+            set
+            {
+                SetProperty(ref selectedFinalEstimate, value);
+            }
+        }
+
         #endregion 
 
         #region Methods
@@ -503,17 +529,21 @@ namespace AnyTrack.PlanningPoker.Views
         /// <summary>
         /// Submit a story estimate to the server to be relayed to other session members.
         /// </summary>
-        /// <param name="finalEstimate">Final estimate for storys to be stored</param>
-        private void SubmitFinalEstimateToServer(ServicePlanningPokerEstimate finalEstimate)
+        private void SubmitFinalEstimateToServer()
         {
-            ServiceChatMessage msg = new ServiceChatMessage();
+            var finalEstimate = double.Parse(SelectedFinalEstimate);
 
-            ////Needs to be changed to the sessionID of planning poker session
-            msg.SessionID = Guid.NewGuid();
+            var sprintStoryId = SprintStoriesCollection[activeStoryIndex].SprintStoryId;
 
-            msg.Message = finalEstimate.ToString();
+            serviceGateway.SubmitFinalEstimate(sessionId, sprintStoryId, finalEstimate);
 
-            serviceGateway.SubmitMessageToServer(msg);
+            var updatedSession = serviceGateway.RetrieveSessionInfo(sessionId);
+            UpdateViewGivenSession(updatedSession);
+
+            if (updatedSession.State == ServicePlanningPokerSessionState.Complete)
+            {
+                this.ShowMetroDialog("Estimation complete!", "All stories have now been estimated! The session may now be ended.");
+            }
         }
 
         /// <summary>
@@ -566,13 +596,17 @@ namespace AnyTrack.PlanningPoker.Views
             this.Users.Clear();
             this.Users.AddRange(session.Users);
 
+            this.SprintStoriesCollection.Clear();
+            this.SprintStoriesCollection.AddRange(session.Stories);
+
             if (session.Stories.Count() > 0 && session.ActiveStoryIndex > -1)
             {
                 var currentActiveStory = session.Stories.ToList()[session.ActiveStoryIndex];
                 ActiveStory = currentActiveStory;
+                activeStoryIndex = session.ActiveStoryIndex;
             }
 
-            TotalStoriesLabel = "Stories - {0}/{1}".Substitute(session.ActiveStoryIndex + 1, session.Stories.Count());
+            TotalStoriesLabel = "Stories - Estimating {0}/{1}".Substitute(session.ActiveStoryIndex + 1, session.Stories.Count());
 
             if (session.State == ServicePlanningPokerSessionState.GettingEstimates)
             {
@@ -587,6 +621,12 @@ namespace AnyTrack.PlanningPoker.Views
                 this.ShowEstimates = true;
                 this.HideEstimates = false;
                 this.CanGiveFinalEstimate = true;
+                this.CanShowEstimates = false;
+            }
+
+            if (session.State == ServicePlanningPokerSessionState.Complete)
+            {
+                this.CanGiveFinalEstimate = false;
                 this.CanShowEstimates = false;
             }
         }
