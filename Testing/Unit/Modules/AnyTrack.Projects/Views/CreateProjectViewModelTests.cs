@@ -140,8 +140,12 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
                 new ServiceUserSearchInfo()
             };
 
-            vm.Call("SetProductOwner", emailAddress);
-            vm.SelectedProductOwner.Should().Be(emailAddress);
+            var pO = new ServiceUserSearchInfo() {EmailAddress = emailAddress};
+
+            vm.Call("SetProductOwner", pO);
+            vm.SelectedProductOwner.Should().Be(pO);
+            vm.SelectedProductOwnerList.Should().Contain(pO);
+            vm.SelectedProductOwner.EmailAddress.Should().Be(emailAddress);
             vm.ProductOwnerSearchUserResults.Count.Should().Be(0);
             vm.EnableProductOwnerSearchGrid.Should().BeFalse();
             vm.ProductOwnerConfirmed.Should().BeTrue();
@@ -240,7 +244,7 @@ namespace Unit.Modules.AnyTrack.Projects.Views.CreateProjectViewModelTests
             vm.Description.Should().Be(serviceProject.Description);
             vm.VersionControl.Should().Be(serviceProject.VersionControl);
             vm.StartedOn.Should().Be(serviceProject.StartedOn);
-            vm.SelectedProductOwner.Should().Be(serviceProject.ProductOwnerEmailAddress);
+            vm.SelectedProductOwnerList.Count.Should().Be(1);
             vm.SelectedScrumMasters.Count.Should().Be(2);
 
             ServiceProject sentProject = null;
