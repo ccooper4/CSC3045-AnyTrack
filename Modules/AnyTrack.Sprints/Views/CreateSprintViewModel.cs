@@ -430,7 +430,7 @@ namespace AnyTrack.Sprints.Views
             else
             {
                 ShowMetroDialog("Sprint Creation Cancellation", "Are you sure you want to cancel? All data will be lost.", MessageDialogStyle.AffirmativeAndNegative, callbackAction); 
-            }           
+            }
         }
 
         /// <summary>

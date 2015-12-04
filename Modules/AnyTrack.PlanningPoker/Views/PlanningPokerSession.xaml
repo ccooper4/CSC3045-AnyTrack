@@ -86,18 +86,18 @@
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Button Grid.Column="0" Grid.Row="0" Command="{Binding SendEstimateCommand}" CommandParameter="0">0</Button>
-                <Button Grid.Column="1" Grid.Row="0" Command="{Binding SendEstimateCommand}" CommandParameter="0.5">1/2</Button>
-                <Button Grid.Column="2" Grid.Row="0" Command="{Binding SendEstimateCommand}" CommandParameter="1">1</Button>
-                <Button Grid.Column="0" Grid.Row="1" Command="{Binding SendEstimateCommand}" CommandParameter="2">2</Button>
-                <Button Grid.Column="1" Grid.Row="1" Command="{Binding SendEstimateCommand}" CommandParameter="3">3</Button>
-                <Button Grid.Column="2" Grid.Row="1" Command="{Binding SendEstimateCommand}" CommandParameter="5">5</Button>
-                <Button Grid.Column="0" Grid.Row="2" Command="{Binding SendEstimateCommand}" CommandParameter="8">8</Button>
-                <Button Grid.Column="1" Grid.Row="2" Command="{Binding SendEstimateCommand}" CommandParameter="13">13</Button>
-                <Button Grid.Column="2" Grid.Row="2" Command="{Binding SendEstimateCommand}" CommandParameter="20">20</Button>
-                <Button Grid.Column="0" Grid.Row="3" Command="{Binding SendEstimateCommand}" CommandParameter="40">40</Button>
-                <Button Grid.Column="1" Grid.Row="3" Command="{Binding SendEstimateCommand}" CommandParameter="100">100</Button>
-                <Button Grid.Column="2" Grid.Row="3" Command="{Binding SendEstimateCommand}" CommandParameter="?">?</Button>
+                <Button Grid.Column="0" Grid.Row="0" Command="{Binding SendEstimateCommand}" CommandParameter="0"   FontSize="22">0</Button>
+                <Button Grid.Column="1" Grid.Row="0" Command="{Binding SendEstimateCommand}" CommandParameter="0.5"   FontSize="22">1/2</Button>
+                <Button Grid.Column="2" Grid.Row="0" Command="{Binding SendEstimateCommand}" CommandParameter="1"   FontSize="22">1</Button>
+                <Button Grid.Column="0" Grid.Row="1" Command="{Binding SendEstimateCommand}" CommandParameter="2"   FontSize="22">2</Button>
+                <Button Grid.Column="1" Grid.Row="1" Command="{Binding SendEstimateCommand}" CommandParameter="3"   FontSize="22">3</Button>
+                <Button Grid.Column="2" Grid.Row="1" Command="{Binding SendEstimateCommand}" CommandParameter="5"   FontSize="22">5</Button>
+                <Button Grid.Column="0" Grid.Row="2" Command="{Binding SendEstimateCommand}" CommandParameter="8"   FontSize="22">8</Button>
+                <Button Grid.Column="1" Grid.Row="2" Command="{Binding SendEstimateCommand}" CommandParameter="13"   FontSize="22">13</Button>
+                <Button Grid.Column="2" Grid.Row="2" Command="{Binding SendEstimateCommand}" CommandParameter="20"   FontSize="22">20</Button>
+                <Button Grid.Column="0" Grid.Row="3" Command="{Binding SendEstimateCommand}" CommandParameter="40"   FontSize="22">40</Button>
+                <Button Grid.Column="1" Grid.Row="3" Command="{Binding SendEstimateCommand}" CommandParameter="100"   FontSize="22">100</Button>
+                <Button Grid.Column="2" Grid.Row="3" Command="{Binding SendEstimateCommand}" CommandParameter="?"   FontSize="22">?</Button>
 
             </Grid>
         </GroupBox>

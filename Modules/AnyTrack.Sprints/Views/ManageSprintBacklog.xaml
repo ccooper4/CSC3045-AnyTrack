@@ -98,7 +98,7 @@
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Button Width="50" Command="{Binding Path=SaveCommand}" Content="Save" Grid.Column="1"></Button>
-                <Button Width="50" Content="Cancel" Grid.Column="2"></Button>
+                <Button Width="50" Command="{Binding Path=CancelCommand}" Content="Cancel" Grid.Column="2"></Button>
             </Grid>
         </Grid>
     </GroupBox>

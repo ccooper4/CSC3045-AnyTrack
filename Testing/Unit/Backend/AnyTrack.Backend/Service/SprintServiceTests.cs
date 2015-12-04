@@ -14,7 +14,6 @@ using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
 using Task = AnyTrack.Backend.Data.Model.Task;
-using System.Threading;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.Security;
 using ServiceLoginResult = AnyTrack.Infrastructure.BackendAccountService.ServiceLoginResult;

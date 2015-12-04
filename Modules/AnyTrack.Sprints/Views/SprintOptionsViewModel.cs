@@ -9,6 +9,7 @@ using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.Extensions;
 using AnyTrack.SharedUtilities.Extensions;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using Prism.Commands;
 using Prism.Regions;
 

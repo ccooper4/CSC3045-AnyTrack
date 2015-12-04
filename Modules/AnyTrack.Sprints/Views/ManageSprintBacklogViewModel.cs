@@ -9,6 +9,7 @@ using System.Windows.Input;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.ServiceGateways;
+using MahApps.Metro.Controls.Dialogs;
 using Prism.Commands;
 using Prism.Regions;
 using ServiceSprintStory = AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory;
@@ -57,6 +58,8 @@ namespace AnyTrack.Sprints.Views
         public DelegateCommand RemoveAllFromSprintCommand { get; set; }
 
         public DelegateCommand SaveCommand { get; set; }
+
+        public DelegateCommand CancelCommand { get; set; }
 
         /// <summary>
         /// Gets or sets the stories
@@ -153,6 +156,7 @@ namespace AnyTrack.Sprints.Views
             AddAllToSprintCommand = new DelegateCommand(AddAllToSprint);
             RemoveAllFromSprintCommand = new DelegateCommand(RemoveAllFromSprint);
             SaveCommand = new DelegateCommand(Save);
+            CancelCommand = new DelegateCommand(Cancel);
 
             SelectedProductStoryIndex = -1;
             SelectedSprintIndex = -1;
@@ -265,7 +269,36 @@ namespace AnyTrack.Sprints.Views
 
         private void Save()
         {
-            sprintService.ManageSprintBacklog(projectId, sprintId, new List<ServiceSprintStory>(sprintBacklog));
+            var callbackAction = new Action<MessageDialogResult>(mdr =>
+            {
+                if (mdr == MessageDialogResult.Affirmative)
+                {
+                    sprintService.ManageSprintBacklog(projectId, sprintId, new List<ServiceSprintStory>(sprintBacklog));
+                    var navParams = new NavigationParameters();
+                    navParams.Add("ProjectId", projectId);
+                    navParams.Add("SprintId", sprintId);
+                    NavigateToItem("SprintManager", navParams);
+                }
+            });
+
+            ShowMetroDialog("Save Changes?", "Are you sure you want to save?", MessageDialogStyle.AffirmativeAndNegative, callbackAction); 
+        }
+
+        private void Cancel()
+        {
+            var callbackAction = new Action<MessageDialogResult>(mdr =>
+            {
+                if (mdr == MessageDialogResult.Affirmative)
+                {
+                    var navParams = new NavigationParameters();
+                    navParams.Add("ProjectId", projectId);
+                    navParams.Add("SprintId", sprintId);
+                    NavigateToItem("SprintManager", navParams);
+                }
+            });
+
+            ShowMetroDialog("Manage Sprint Backlog Cancelation", "Are you sure you want to cancel? All changes will be lost.", MessageDialogStyle.AffirmativeAndNegative, callbackAction); 
+
         }
 
         private ServiceStorySummary MapSprintStoryToProductStory(ServiceSprintStory sprintStory)
