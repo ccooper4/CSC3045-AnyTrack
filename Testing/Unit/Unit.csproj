@@ -209,6 +209,8 @@
     <Compile Include="Modules\AnyTrack.Projects\Views\StoryViewModelTests.cs" />
     <Compile Include="Common\AnyTrack.Infrastructure\ServiceGateways\SprintServiceGatewayService.cs" />
     <Compile Include="Modules\AnyTrack.Sprints\SprintModuleTests.cs" />
+    <Compile Include="Modules\AnyTrack.Sprints\Views\ManageSprintBacklogViewModelTests.cs" />
+    <Compile Include="Modules\AnyTrack.Sprints\Views\CreateSprintViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Sprints\Views\SprintManagerViewModelTests.cs" />
     <Compile Include="Modules\AnyTrack.Sprints\Views\SprintOptionsViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -227,6 +227,12 @@
     <None Include="Service References\BackendSprintService\SprintService3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\BackendSprintService\SprintService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BackendSprintService\SprintService41.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
