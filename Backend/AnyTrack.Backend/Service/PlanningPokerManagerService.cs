@@ -544,6 +544,67 @@ namespace AnyTrack.Backend.Service
             }
         }
 
+        /// <summary>
+        /// Allows a scrum master to submit the final estimate.
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        /// <param name="sprintStoryId">The sprint story id.</param>
+        /// <param name="estimate">The selected estimate.</param>
+        public void SubmitFinalEstimate(Guid sessionId, Guid sprintStoryId, double estimate)
+        {
+            var sessions = activeSessions.GetListOfSessions();
+
+            if (!sessions.ContainsKey(sessionId))
+            {
+                throw new ArgumentException("No session found", "sessionId");
+            }
+
+            var session = sessions[sessionId];
+
+            var thisUserEmail = Thread.CurrentPrincipal.Identity.Name;
+
+            var userInSession = session.Users.SingleOrDefault(u => u.EmailAddress == thisUserEmail);
+
+            if (userInSession == null)
+            {
+                throw new InvalidOperationException("User not found in session");
+            }
+
+            if (userInSession.UserID != session.HostID)
+            {
+                throw new InvalidOperationException("User is not the scrum master");
+            }
+
+            var sprintStory = session.Stories.SingleOrDefault(s => s.SprintStoryId == sprintStoryId); 
+
+            if (sprintStory == null)
+            {
+                throw new ArgumentException("Story with the specified ID could not be found");
+            }
+
+            if (session.ActiveStoryIndex + 1 == session.Stories.Count())
+            {
+                session.State = ServicePlanningPokerSessionState.Complete;
+            }
+            else
+            {
+                session.State = ServicePlanningPokerSessionState.GettingEstimates;
+                session.ActiveStoryIndex++;
+            }
+
+            foreach (var user in session.Users)
+            {
+                user.Estimate = null;
+            }
+
+            var dataSprintStory = unitOfWork.SprintStoryRepository.Items.Single(s => s.Id == sprintStoryId);
+
+            foreach (var user in session.Users.Where(u => u.EmailAddress != thisUserEmail))
+            {
+                user.ClientChannel.NotifyClientOfSessionUpdate(session);
+            }
+        }
+
         #endregion 
 
         #region Helpers 

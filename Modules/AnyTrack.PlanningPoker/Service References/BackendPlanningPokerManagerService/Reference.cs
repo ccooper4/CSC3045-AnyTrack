@@ -310,6 +310,9 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         ShowingEstimates = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Complete = 4,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -932,6 +935,12 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/ShowEstimates", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/ShowEstimatesResponse")]
         System.Threading.Tasks.Task ShowEstimatesAsync(System.Guid sessionId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/SubmitFinalEstimate", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/SubmitFinalEstimateResponse")]
+        void SubmitFinalEstimate(System.Guid sessionId, System.Guid sprintStoryId, double estimate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlanningPokerManagerService/SubmitFinalEstimate", ReplyAction="http://tempuri.org/IPlanningPokerManagerService/SubmitFinalEstimateResponse")]
+        System.Threading.Tasks.Task SubmitFinalEstimateAsync(System.Guid sessionId, System.Guid sprintStoryId, double estimate);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1062,6 +1071,14 @@ namespace AnyTrack.PlanningPoker.BackendPlanningPokerManagerService {
         
         public System.Threading.Tasks.Task ShowEstimatesAsync(System.Guid sessionId) {
             return base.Channel.ShowEstimatesAsync(sessionId);
+        }
+        
+        public void SubmitFinalEstimate(System.Guid sessionId, System.Guid sprintStoryId, double estimate) {
+            base.Channel.SubmitFinalEstimate(sessionId, sprintStoryId, estimate);
+        }
+        
+        public System.Threading.Tasks.Task SubmitFinalEstimateAsync(System.Guid sessionId, System.Guid sprintStoryId, double estimate) {
+            return base.Channel.SubmitFinalEstimateAsync(sessionId, sprintStoryId, estimate);
         }
     }
 }

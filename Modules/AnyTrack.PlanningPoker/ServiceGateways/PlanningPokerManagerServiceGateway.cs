@@ -188,6 +188,17 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
             client.ShowEstimates(sessionId);
         }
 
+        /// <summary>
+        /// Allows a scrum master to submit the final estimate.
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        /// <param name="sprintStoryId">The sprint story id.</param>
+        /// <param name="estimate">The selected estimate.</param>
+        public void SubmitFinalEstimate(Guid sessionId, Guid sprintStoryId, double estimate)
+        {
+            client.SubmitFinalEstimate(sessionId, sprintStoryId, estimate);
+        }
+
         #endregion 
 
         #region Callback Methods

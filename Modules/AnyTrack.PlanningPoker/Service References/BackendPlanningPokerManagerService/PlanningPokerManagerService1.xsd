@@ -32,6 +32,7 @@
       <xs:enumeration value="Started" />
       <xs:enumeration value="GettingEstimates" />
       <xs:enumeration value="ShowingEstimates" />
+      <xs:enumeration value="Complete" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="ServicePlanningPokerSessionState" nillable="true" type="tns:ServicePlanningPokerSessionState" />

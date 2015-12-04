@@ -37,7 +37,7 @@
             <GroupBox.Header>
                 <TextBlock Foreground="White" Text="{Binding TotalStoriesLabel}" />
             </GroupBox.Header>
-            <controls:FlipView x:Name="storyView" IsBannerEnabled="False" SelectedValuePath="." SelectedValue="{Binding ActiveStory}" ItemsSource="{Binding SprintStoriesCollection}">
+            <controls:FlipView IsBannerEnabled="False" SelectedValuePath="." SelectedValue="{Binding ActiveStory}" ItemsSource="{Binding SprintStoriesCollection}">
                 <controls:FlipView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical">
@@ -149,7 +149,19 @@
                 </GroupBox.Header>
                 <DockPanel>
                     <Button IsEnabled="{Binding CanGiveFinalEstimate}" Content="Submit" DockPanel.Dock="Right" Command="{Binding SubmitFinalEstimateCommand}" Background="LightGray" Margin="10px,0,0,0"/>
-                    <ComboBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" ItemsSource="{Binding EstimateValues}"/>
+                    <ComboBox SelectedValuePath="Tag" SelectedValue="{Binding SelectedFinalEstimate}" DockPanel.Dock="Left" HorizontalAlignment="Stretch">
+                        <ComboBoxItem Tag="0">0</ComboBoxItem>
+                        <ComboBoxItem Tag="0.5">0.5</ComboBoxItem>
+                        <ComboBoxItem Tag="1">1</ComboBoxItem>
+                        <ComboBoxItem Tag="2">2</ComboBoxItem>
+                        <ComboBoxItem Tag="3">3</ComboBoxItem>
+                        <ComboBoxItem Tag="5">5</ComboBoxItem>
+                        <ComboBoxItem Tag="8">8</ComboBoxItem>
+                        <ComboBoxItem Tag="13">13</ComboBoxItem>
+                        <ComboBoxItem Tag="20">20</ComboBoxItem>
+                        <ComboBoxItem Tag="40">40</ComboBoxItem>
+                        <ComboBoxItem Tag="100">100</ComboBoxItem>
+                    </ComboBox>
                 </DockPanel>
             </GroupBox>
 

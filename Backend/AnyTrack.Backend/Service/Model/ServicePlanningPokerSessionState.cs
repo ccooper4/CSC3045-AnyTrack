@@ -29,6 +29,11 @@ namespace AnyTrack.Backend.Service.Model
         /// <summary>
         /// Showing story estimates
         /// </summary>
-        ShowingEstimates = 3
+        ShowingEstimates = 3,
+
+        /// <summary>
+        /// Finished planning.
+        /// </summary>
+        Complete = 4
     }
 }
