@@ -26,7 +26,8 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
         public static OperationContextProvider contextProvider;
         public static ActivePokerSessionsProvider activeSessionProvider;
         public static AvailableClientsProvider pendingClientsProvider; 
-        public static PlanningPokerManagerService service; 
+        public static PlanningPokerManagerService service;
+        public static ISprintService sprintStoryService;
 
         [SetUp]
         public void SetUp()
@@ -36,7 +37,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
             activeSessionProvider = Substitute.For<ActivePokerSessionsProvider>();
             pendingClientsProvider = Substitute.For<AvailableClientsProvider>();
 
-            service = new PlanningPokerManagerService(unitOfWork, contextProvider, pendingClientsProvider, activeSessionProvider);
+            service = new PlanningPokerManagerService(unitOfWork, contextProvider, pendingClientsProvider, activeSessionProvider, sprintStoryService);
         }
     }
 
@@ -52,28 +53,35 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
         [Test]
         public void ConstructWithNoUnitOfWork()
         {
-            service = new PlanningPokerManagerService(null, contextProvider, pendingClientsProvider, activeSessionProvider);
+            service = new PlanningPokerManagerService(null, contextProvider, pendingClientsProvider, activeSessionProvider, sprintStoryService);
         }
 
         [ExpectedException(typeof(ArgumentNullException))]
         [Test]
         public void ConstructWithNoOperationContextProvider()
         {
-            service = new PlanningPokerManagerService(unitOfWork, null, pendingClientsProvider, activeSessionProvider);
+            service = new PlanningPokerManagerService(unitOfWork, null, pendingClientsProvider, activeSessionProvider, sprintStoryService);
         }
 
         [ExpectedException(typeof(ArgumentNullException))]
         [Test]
         public void ConstructWithPendingClientsProvider()
         {
-            service = new PlanningPokerManagerService(unitOfWork, contextProvider, null, activeSessionProvider);
+            service = new PlanningPokerManagerService(unitOfWork, contextProvider, null, activeSessionProvider, sprintStoryService);
         }
 
         [ExpectedException(typeof(ArgumentNullException))]
         [Test]
         public void ConstructWithNoActiveSessionProvider()
         {
-            service = new PlanningPokerManagerService(unitOfWork, contextProvider, pendingClientsProvider, null);
+            service = new PlanningPokerManagerService(unitOfWork, contextProvider, pendingClientsProvider, null, sprintStoryService);
+        }
+
+        [ExpectedException(typeof(ArgumentNullException))]
+        [Test]
+        public void ConstructWithNosprintStoryService()
+        {
+            service = new PlanningPokerManagerService(unitOfWork, contextProvider, pendingClientsProvider, activeSessionProvider, null);
         }
 
         #endregion 

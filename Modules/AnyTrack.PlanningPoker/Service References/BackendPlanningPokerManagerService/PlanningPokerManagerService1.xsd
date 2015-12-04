@@ -21,6 +21,7 @@
       <xs:element minOccurs="0" name="SprintID" type="ser:guid" />
       <xs:element minOccurs="0" name="SprintName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="State" type="tns:ServicePlanningPokerSessionState" />
+      <xs:element minOccurs="0" name="Stories" nillable="true" type="tns:ArrayOfServiceSprintStory" />
       <xs:element minOccurs="0" name="Users" nillable="true" type="tns:ArrayOfServicePlanningPokerUser" />
     </xs:sequence>
   </xs:complexType>
@@ -34,6 +35,33 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="ServicePlanningPokerSessionState" nillable="true" type="tns:ServicePlanningPokerSessionState" />
+  <xs:complexType name="ArrayOfServiceSprintStory">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ServiceSprintStory" nillable="true" type="tns:ServiceSprintStory" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfServiceSprintStory" nillable="true" type="tns:ArrayOfServiceSprintStory" />
+  <xs:complexType name="ServiceSprintStory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SprintId" type="ser:guid" />
+      <xs:element minOccurs="0" name="SprintStoryId" type="ser:guid" />
+      <xs:element minOccurs="0" name="Story" nillable="true" type="tns:ServiceStory" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServiceSprintStory" nillable="true" type="tns:ServiceSprintStory" />
+  <xs:complexType name="ServiceStory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AsA" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConditionsOfSatisfaction" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IWant" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InSprint" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ProjectId" type="ser:guid" />
+      <xs:element minOccurs="0" name="SoThat" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StoryId" type="ser:guid" />
+      <xs:element minOccurs="0" name="Summary" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServiceStory" nillable="true" type="tns:ServiceStory" />
   <xs:complexType name="ArrayOfServicePlanningPokerUser">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="ServicePlanningPokerUser" nillable="true" type="tns:ServicePlanningPokerUser" />

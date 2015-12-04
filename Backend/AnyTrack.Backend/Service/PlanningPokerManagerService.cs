@@ -25,6 +25,11 @@ namespace AnyTrack.Backend.Service
         #region Fields 
 
         /// <summary>
+        /// The planning poker service gateway.
+        /// </summary>
+        private readonly ISprintService sprintServiceGateway;
+
+        /// <summary>
         /// The database unit of work.
         /// </summary>
         private readonly IUnitOfWork unitOfWork;
@@ -55,8 +60,14 @@ namespace AnyTrack.Backend.Service
         /// <param name="context">The operation context provider.</param>
         /// <param name="availableClients">The connected clients provider.</param>
         /// <param name="activeSessions">The currently active sessions.</param>
-        public PlanningPokerManagerService(IUnitOfWork unitOfWork, OperationContextProvider context, AvailableClientsProvider availableClients, ActivePokerSessionsProvider activeSessions)
+        /// <param name="sprintServiceGateway">The sprint gateway.</param>
+        public PlanningPokerManagerService(IUnitOfWork unitOfWork, OperationContextProvider context, AvailableClientsProvider availableClients, ActivePokerSessionsProvider activeSessions, ISprintService sprintServiceGateway)
         {
+            if (sprintServiceGateway == null)
+            {
+                throw new ArgumentNullException("unitOfWork");
+            }
+
             if (unitOfWork == null)
             {
                 throw new ArgumentNullException("unitOfWork");
@@ -81,6 +92,7 @@ namespace AnyTrack.Backend.Service
             this.contextProvider = context;
             this.availableClients = availableClients;
             this.activeSessions = activeSessions;
+            this.sprintServiceGateway = sprintServiceGateway;
         }
 
         #endregion 
@@ -185,7 +197,11 @@ namespace AnyTrack.Backend.Service
 
             var clientSocket = contextProvider.GetClientChannel<IPlanningPokerClientService>();
 
-             // TODO: David - map stories into session from sprint.
+            // TODO: David - map stories into session from sprint.
+            var stories = new List<ServiceSprintStory>();
+
+            stories = sprintServiceGateway.GetSprintStories(sprintId);
+
             var newSession = new ServicePlanningPokerSession
             {
                 SessionID = Guid.NewGuid(),
@@ -193,6 +209,7 @@ namespace AnyTrack.Backend.Service
                 SprintID = sprintId,
                 SprintName = sprint.Name,
                 ProjectName = sprint.Project.Name,
+                Stories = stories,
                 Users = new List<ServicePlanningPokerUser>()
                 {
                     new ServicePlanningPokerUser
