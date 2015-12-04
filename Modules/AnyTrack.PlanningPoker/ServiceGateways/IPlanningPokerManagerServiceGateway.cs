@@ -30,9 +30,14 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         event EventHandler<ServiceChatMessage> NotifyClientOfNewMessageFromServerEvent;
 
         /// <summary>
-        /// Notifies the client that they should clear their estimates.
+        /// Notifies the client that the session has changed.
         /// </summary>
-        event EventHandler NotifyClientToClearStoryPointEstimateFromServerEvent;
+        event EventHandler<ServicePlanningPokerSession> NotifyClientOfSessionUpdateEvent;
+
+        /// <summary>
+        /// Notifies the client that the session has started.
+        /// </summary>
+        event EventHandler NotifyClientOfSessionStartEvent; 
 
         #endregion
 
@@ -42,7 +47,8 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         /// Allows the client to subscribe to messages about new sessions for the given project and sprint ids. 
         /// </summary>
         /// <param name="sprintId">The sprint id.</param>
-        void SubscribeToNewSessionMessages(Guid sprintId);
+        /// <returns>Any currently available session.</returns>
+        ServiceSessionChangeInfo SubscribeToNewSessionMessages(Guid sprintId);
 
         /// <summary>
         /// Allows the scrum master to start a new planning poker session.
@@ -55,7 +61,7 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         /// Allows the scrum master to cancel a pending planning poker session.
         /// </summary>
         /// <param name="sessionId">The session.</param>
-        void CancelPendingPokerSession(Guid sessionId);
+        void EndPokerSession(Guid sessionId);
 
         /// <summary>
         /// Allows a client to join an active session.
@@ -65,11 +71,42 @@ namespace AnyTrack.PlanningPoker.ServiceGateways
         ServicePlanningPokerSession JoinSession(Guid sessionId);
 
         /// <summary>
+        /// Allows a user to exit the session.
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        void LeaveSession(Guid sessionId);
+
+        /// <summary>
+        /// Allows a scrum master to start the session.
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        void StartSession(Guid sessionId);
+
+        /// <summary>
+        /// Allows the client to pull an up to date session state. 
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        /// <returns>The current session.</returns>
+        ServicePlanningPokerSession RetrieveSessionInfo(Guid sessionId);
+
+        /// <summary>
         /// Allows a client to submit message to a session on the server
         /// </summary>
         /// <param name="msg">The message to send.</param>
         void SubmitMessageToServer(ServiceChatMessage msg);
 
-        #endregion 
+        /// <summary>
+        /// Sumbits the client's estimate to the server
+        /// </summary>
+        /// <param name="estimate">The estimate to submit</param>
+        void SubmitEstimateToServer(ServicePlanningPokerEstimate estimate);
+
+        /// <summary>
+        /// Allows a scrum master to show the estimates. 
+        /// </summary>
+        /// <param name="sessionId">The session id.</param>
+        void ShowEstimates(Guid sessionId); 
+
+        #endregion
     }
 }

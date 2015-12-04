@@ -88,7 +88,31 @@ namespace AnyTrack.Infrastructure.Security
         /// <returns>A true or false flag.</returns>
         public bool IsInRole(string role)
         {
-            return loginResult.AssignedRoles.Any(r => r.Role == role);
+            return IsInRole(role, null, null);
+        }
+
+        /// <summary>
+        /// Returns a flag indicating if the user is in the given role.
+        /// </summary>
+        /// <param name="role">The role.</param>
+        /// <param name="projectId">The project id to scope this check to.</param>
+        /// <param name="sprintId">The Sprint id to scope this check to.</param>
+        /// <returns>A true or false flag.</returns>
+        public bool IsInRole(string role, Guid? projectId, Guid? sprintId)
+        {
+            var roles = loginResult.AssignedRoles.Where(r => r.Role == role);
+
+            if (projectId.HasValue)
+            {
+                roles = roles.Where(r => r.ProjectId == projectId);
+            }
+
+            if (sprintId.HasValue)
+            {
+                roles = roles.Where(r => r.SprintId == sprintId);
+            }
+
+            return roles.Count() > 0;
         }
 
         #endregion 

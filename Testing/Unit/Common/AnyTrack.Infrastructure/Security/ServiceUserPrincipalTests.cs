@@ -117,6 +117,49 @@ namespace Unit.Common.AnyTrack.Infrastructure.Security.ServiceUserPrincipalTests
         }
 
         #endregion 
+
+        #region IsInRole(string role, Guid? projectId, Guid? sprintId) Tests
+
+        [Test]
+        public void IsInRoleWhenUserIsInRoleWithPrjectId()
+        {
+            var role = "Tester";
+            var projectId = Guid.NewGuid();
+            var loginResult = new ServiceLoginResult
+            {
+                AssignedRoles = new List<ServiceRoleInfo>()
+                {
+                    new ServiceRoleInfo { Role = role, ProjectId = projectId}
+                }.ToArray()
+            };
+            var cookie = "test";
+
+            principal = new ServiceUserPrincipal(loginResult, cookie);
+
+            principal.IsInRole(role, projectId, null).Should().BeTrue();
+        }
+
+        [Test]
+        public void IsInRoleWhenUserIsInRoleWithSprintId()
+        {
+            var role = "Tester";
+            var sprintId = Guid.NewGuid();
+            var loginResult = new ServiceLoginResult
+            {
+                AssignedRoles = new List<ServiceRoleInfo>()
+                {
+                    new ServiceRoleInfo { Role = role, SprintId = sprintId}
+                }.ToArray()
+            };
+            var cookie = "test";
+
+            principal = new ServiceUserPrincipal(loginResult, cookie);
+
+            principal.IsInRole(role, null, sprintId).Should().BeTrue();
+        }
+
+
+        #endregion 
     }
 
     #endregion

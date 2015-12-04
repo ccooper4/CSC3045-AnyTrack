@@ -51,6 +51,27 @@ namespace AnyTrack.Infrastructure.Extensions
             }
         }
 
+        /// <summary>
+        /// Returns a value indicating if this user is in the specificed role with the given ids. 
+        /// </summary>
+        /// <param name="principal">The principal object.</param>
+        /// <param name="role">The role.</param>
+        /// <param name="projectId">The project id.</param>
+        /// <param name="sprintId">The sprint id.</param>
+        /// <returns>A true or false value.</returns>
+        public static bool IsUserInRole(this IPrincipal principal, string role, Guid? projectId = null, Guid? sprintId = null)
+        {
+            var serviceUserPrincipal = principal as ServiceUserPrincipal;
+            if (serviceUserPrincipal != null)
+            {
+                return serviceUserPrincipal.IsInRole(role, projectId, sprintId);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         #endregion 
     }
 }

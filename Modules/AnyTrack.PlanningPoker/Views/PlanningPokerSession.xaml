@@ -1,0 +1,194 @@
+﻿<UserControl x:Class="AnyTrack.PlanningPoker.Views.PlanningPokerSession" 
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AnyTrack.PlanningPoker.Views"
+             xmlns:prism="http://www.codeplex.com/prism"
+             xmlns:convert="clr-namespace:AnyTrack.Infrastructure.Converters;assembly=AnyTrack.Infrastructure"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="600">
+
+    <UserControl.Resources>
+        <convert:BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter"></convert:BooleanToVisibilityConverter>
+    </UserControl.Resources>
+    
+    <Grid Background="White">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <GroupBox Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <GroupBox.Header>
+                <TextBlock Foreground="White" Text="Stories" />
+            </GroupBox.Header>
+            <TabControl ItemsSource="{Binding SprintStoriesCollection}" TabStripPlacement="Left">
+                <TabControl.ItemTemplate>
+                    <DataTemplate>
+                        <Label Content="{Binding Path=Story.Summary}" />
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
+                <TabControl.ContentTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="As a "/>
+                                <TextBlock Text="{Binding Path=Story.AsA}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="I Want "/>
+                                <TextBlock Text="{Binding Path=Story.IWant}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="So That "/>
+                                <TextBlock Text="{Binding Path=Story.SoThat}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </TabControl.ContentTemplate>
+            </TabControl>
+        </GroupBox>
+
+        <GroupBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <GroupBox.Header>
+                <TextBlock Foreground="White" Text="Estimates" />
+            </GroupBox.Header>
+            <Grid Background="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Button Grid.Column="0" Grid.Row="0" Command="{Binding SendEstimateCommand}" CommandParameter="0">0</Button>
+                <Button Grid.Column="1" Grid.Row="0" Command="{Binding SendEstimateCommand}" CommandParameter="0.5">1/2</Button>
+                <Button Grid.Column="2" Grid.Row="0" Command="{Binding SendEstimateCommand}" CommandParameter="1">1</Button>
+                <Button Grid.Column="0" Grid.Row="1" Command="{Binding SendEstimateCommand}" CommandParameter="2">2</Button>
+                <Button Grid.Column="1" Grid.Row="1" Command="{Binding SendEstimateCommand}" CommandParameter="3">3</Button>
+                <Button Grid.Column="2" Grid.Row="1" Command="{Binding SendEstimateCommand}" CommandParameter="5">5</Button>
+                <Button Grid.Column="0" Grid.Row="2" Command="{Binding SendEstimateCommand}" CommandParameter="8">8</Button>
+                <Button Grid.Column="1" Grid.Row="2" Command="{Binding SendEstimateCommand}" CommandParameter="13">13</Button>
+                <Button Grid.Column="2" Grid.Row="2" Command="{Binding SendEstimateCommand}" CommandParameter="20">20</Button>
+                <Button Grid.Column="0" Grid.Row="3" Command="{Binding SendEstimateCommand}" CommandParameter="40">40</Button>
+                <Button Grid.Column="1" Grid.Row="3" Command="{Binding SendEstimateCommand}" CommandParameter="100">100</Button>
+                <Button Grid.Column="2" Grid.Row="3" Command="{Binding SendEstimateCommand}" CommandParameter="?">?</Button>
+
+            </Grid>
+        </GroupBox>
+
+        <Grid Background="White" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2.5*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <GroupBox Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <GroupBox.Header>
+                    <TextBlock Foreground="White" Text="Recieved" />
+                </GroupBox.Header>
+                <ListBox DockPanel.Dock="Top" ItemsSource="{Binding RecievedEstimates}" BorderThickness="0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border CornerRadius="0" BorderBrush="Gray" Background="Gray" BorderThickness="2" Margin="0,0,0,-5px">
+                                <Grid Background="#fcfcfc">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width ="*"/>
+                                        <ColumnDefinition Width ="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Content="{Binding Name}" Grid.Column="0" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="15px,0,0,0"/>
+
+                                    <Label Content="{Binding Estimate}" Visibility="{Binding DataContext.ShowEstimates, Converter={StaticResource booleanToVisibilityConverter},RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Grid.Column="1" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="15px,0,0,0"/>
+
+                                    <Label Content="--" Visibility="{Binding DataContext.HideEstimates, Converter={StaticResource booleanToVisibilityConverter},RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Grid.Column="1" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="15px,0,0,0"/>
+
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </GroupBox>
+            
+            <StackPanel Grid.Row="1" Orientation="Vertical">
+                <Button Content="Show Estimates" Command="{Binding ShowEstimatesCommand}" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibilityConverter}}" Background="LightGray" />
+                <Button Content="End Session" Command="{Binding EndSessionCommand}" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibilityConverter}}" Background="LightGray" />
+                <Button Content="Leave Session" Command="{Binding LeaveSessionCommand}" Visibility="{Binding IsDeveloper, Converter={StaticResource booleanToVisibilityConverter}}" Background="LightGray" />
+                
+            </StackPanel>
+
+            <GroupBox Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="{Binding IsScrumMaster, Converter={StaticResource booleanToVisibilityConverter}}">
+                <GroupBox.Header>
+                    <TextBlock Foreground="White" Text="Final Value" />
+                </GroupBox.Header>
+                <DockPanel>
+                    <Button Content="Submit" DockPanel.Dock="Right" Command="{Binding SubmitFinalEstimateCommand}" Background="LightGray" Margin="10px,0,0,0"/>
+                    <ComboBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" ItemsSource="{Binding EstimateValues}"/>
+                </DockPanel>
+            </GroupBox>
+
+        </Grid>
+
+        <GroupBox Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <GroupBox.Header>
+                <TextBlock Foreground="White" Text="Chat" />
+            </GroupBox.Header>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <ListBox ItemsSource="{Binding MessageHistories}" Grid.Row="0" Grid.Column="0" BorderThickness="0" VerticalAlignment="Stretch">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Path=.}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <ListBox ItemsSource="{Binding Users}" Grid.Row="0" Grid.Column="1" BorderThickness="0" VerticalAlignment="Stretch">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Path=Name}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <DockPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom">
+                    <Label DockPanel.Dock="Left" Name="ChatInputLabel" HorizontalAlignment="Right">Chat Input</Label>
+                    <Button Content="Send" DockPanel.Dock="Right" Command="{Binding SendMessageCommand}" Background="LightGray" Margin="10px,0,0,0"/>
+                    <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Text="{Binding MessageToSend}"/>
+                </DockPanel>
+
+            </Grid>
+
+
+        </GroupBox>
+
+    </Grid>
+</UserControl>

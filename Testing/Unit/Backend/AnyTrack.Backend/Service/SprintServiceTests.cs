@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,7 +15,6 @@ using NSubstitute;
 using NUnit.Framework;
 using Task = AnyTrack.Backend.Data.Model.Task;
 using System.Threading;
-using System.Web.Security;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.Security;
 using ServiceLoginResult = AnyTrack.Infrastructure.BackendAccountService.ServiceLoginResult;
@@ -25,7 +22,6 @@ using ServiceLoginResult = AnyTrack.Infrastructure.BackendAccountService.Service
 namespace Unit.Backend.AnyTrack.Backend.Service
 {
     #region Setup
-    #region Supporting Types
 
     public class Context
     {
@@ -1011,9 +1007,21 @@ namespace Unit.Backend.AnyTrack.Backend.Service
                 }
             };
 
+            unitOfWork.ProjectRepository.Items.Returns(projectList.AsQueryable());
             unitOfWork.SprintRepository.Items.Returns(sprintList.AsQueryable());
-            unitOfWork.UserRepository.Items.Returns(userList.AsQueryable());
-                        
+
+            var user = new User
+            {
+                Id = Guid.NewGuid(),
+                Roles = new List<Role>()
+            };
+
+            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            service.AddSprint(projectList[0].Id, sprint);
+            
             List<ServiceSprintStory> serv = service.GetSprintStories(sprint.SprintId);
 
             serv.First().SprintStoryId.Should().Be(new Guid("00000001-5566-7788-99AA-BBCCDDEEFF00"));
@@ -1083,7 +1091,20 @@ namespace Unit.Backend.AnyTrack.Backend.Service
                 }
             };
 
+            var user = new User
+            {
+                Id = Guid.NewGuid(),
+                Roles = new List<Role>()
+            };
+
+            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            unitOfWork.ProjectRepository.Items.Returns(projectList.AsQueryable());
             unitOfWork.SprintRepository.Items.Returns(sprintList.AsQueryable());
+
+            service.AddSprint(projectList[0].Id, sprint);
 
             List<ServiceSprintStory> serv = service.GetSprintStories(Guid.Empty);
         }
@@ -1225,15 +1246,24 @@ namespace Unit.Backend.AnyTrack.Backend.Service
 
             #endregion
 
-
             #region Repositories
-            
+            unitOfWork.ProjectRepository.Items.Returns(projectList.AsQueryable());
             unitOfWork.SprintRepository.Items.Returns(sprintList.AsQueryable());
             unitOfWork.StoryRepository.Items.Returns(storyList.AsQueryable());
             unitOfWork.SprintStoryRepository.Items.Returns(sprintStoryList.AsQueryable());
-            unitOfWork.UserRepository.Items.Returns(userList.AsQueryable());
             #endregion
 
+            var user = new User
+            {
+                Id = Guid.NewGuid(),
+                Roles = new List<Role>()
+            };
+
+            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            service.AddSprint(projectList[0].Id, sprint);
             sprintList.First().Backlog.Count().Should().Be(1);
             service.ManageSprintBacklog(projectList[0].Id, sprint.SprintId, serviceSprintStory);
             sprintList.First().Backlog.Count().Should().Be(2);
@@ -1241,4 +1271,3 @@ namespace Unit.Backend.AnyTrack.Backend.Service
         #endregion
     }
 }
-    #endregion

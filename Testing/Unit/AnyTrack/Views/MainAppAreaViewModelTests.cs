@@ -33,6 +33,7 @@ namespace Unit.AnyTrack.Views.MainAppAreaViewModelTests
             regionManager = Substitute.For<IRegionManager>();
 
             vm = new MainAppAreaViewModel(menuService, regionManager);
+            vm.RegionManager = regionManager;
         }
     }
 
@@ -115,6 +116,30 @@ namespace Unit.AnyTrack.Views.MainAppAreaViewModelTests
         }
 
         #endregion 
+
+        #region Logout() Tests
+
+        [Test]
+        public void NavigateToLogin()
+        {
+            var view = "Login";
+
+            vm.Call("NavigateToItemFromMenu", view);
+
+            regionManager.Received().RequestNavigate(RegionNames.MainRegion, view);
+        }
+
+        [Test]
+        public void CheckUserHasBeenLoggedOut()
+        {
+            vm.Call("Logout");
+
+            vm.FullName.Should().BeNull();
+            UserDetailsStore.AuthCookie.Should().BeNull();
+            UserDetailsStore.LoggedInUserPrincipal.Should().BeNull();
+        }
+
+        #endregion
     }
 
     #endregion 

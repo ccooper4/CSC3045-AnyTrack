@@ -19,6 +19,16 @@ namespace AnyTrack.Backend.Service.Model
         /// <summary>
         /// The session has been started. 
         /// </summary>
-        Started = 1
+        Started = 1,
+
+        /// <summary>
+        /// Getting story estimates started 
+        /// </summary>
+        GettingEstimates = 2,
+
+        /// <summary>
+        /// Showing story estimates
+        /// </summary>
+        ShowingEstimates = 3
     }
 }

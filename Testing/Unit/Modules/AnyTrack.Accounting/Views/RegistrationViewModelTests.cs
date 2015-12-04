@@ -149,7 +149,7 @@ namespace Unit.Modules.AnyTrack.Accounting.Views.RegistrationViewModelTests
             registration.Developer.Should().Be(registrationViewModel.Developer);
             registration.SecretQuestion.Should().Be(registrationViewModel.SecretQuestion);
             registrationViewModel.SecretAnswer.Should().Be(registrationViewModel.SecretAnswer);
-            registration.Skills.Should().Be("C#,WCF");
+            registration.Skills.Should().Be("C#, WCF");
             gateway.Received().RegisterAccount(registration);
 
             waitObject.WaitOne();

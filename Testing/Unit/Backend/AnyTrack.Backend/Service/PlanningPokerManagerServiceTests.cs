@@ -14,6 +14,7 @@ using System.Security;
 using AnyTrack.Backend.Security;
 using System.Threading;
 using AnyTrack.Backend.Service.Model;
+using System.Collections.Concurrent;
 
 namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
 {
@@ -25,7 +26,8 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
         public static OperationContextProvider contextProvider;
         public static ActivePokerSessionsProvider activeSessionProvider;
         public static AvailableClientsProvider pendingClientsProvider; 
-        public static PlanningPokerManagerService service; 
+        public static PlanningPokerManagerService service;
+        public static ISprintService sprintStoryService;
 
         [SetUp]
         public void SetUp()
@@ -34,8 +36,9 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
             contextProvider = Substitute.For<OperationContextProvider>();
             activeSessionProvider = Substitute.For<ActivePokerSessionsProvider>();
             pendingClientsProvider = Substitute.For<AvailableClientsProvider>();
+            sprintStoryService = Substitute.For<ISprintService>();
 
-            service = new PlanningPokerManagerService(unitOfWork, contextProvider, pendingClientsProvider, activeSessionProvider);
+            service = new PlanningPokerManagerService(unitOfWork, contextProvider, pendingClientsProvider, activeSessionProvider, sprintStoryService);
         }
     }
 
@@ -51,28 +54,35 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
         [Test]
         public void ConstructWithNoUnitOfWork()
         {
-            service = new PlanningPokerManagerService(null, contextProvider, pendingClientsProvider, activeSessionProvider);
+            service = new PlanningPokerManagerService(null, contextProvider, pendingClientsProvider, activeSessionProvider, sprintStoryService);
         }
 
         [ExpectedException(typeof(ArgumentNullException))]
         [Test]
         public void ConstructWithNoOperationContextProvider()
         {
-            service = new PlanningPokerManagerService(unitOfWork, null, pendingClientsProvider, activeSessionProvider);
+            service = new PlanningPokerManagerService(unitOfWork, null, pendingClientsProvider, activeSessionProvider, sprintStoryService);
         }
 
         [ExpectedException(typeof(ArgumentNullException))]
         [Test]
         public void ConstructWithPendingClientsProvider()
         {
-            service = new PlanningPokerManagerService(unitOfWork, contextProvider, null, activeSessionProvider);
+            service = new PlanningPokerManagerService(unitOfWork, contextProvider, null, activeSessionProvider, sprintStoryService);
         }
 
         [ExpectedException(typeof(ArgumentNullException))]
         [Test]
         public void ConstructWithNoActiveSessionProvider()
         {
-            service = new PlanningPokerManagerService(unitOfWork, contextProvider, pendingClientsProvider, null);
+            service = new PlanningPokerManagerService(unitOfWork, contextProvider, pendingClientsProvider, null, sprintStoryService);
+        }
+
+        [ExpectedException(typeof(ArgumentNullException))]
+        [Test]
+        public void ConstructWithNosprintStoryService()
+        {
+            service = new PlanningPokerManagerService(unitOfWork, contextProvider, pendingClientsProvider, activeSessionProvider, null);
         }
 
         #endregion 
@@ -129,6 +139,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
         public void Subscribe()
         {
             var sprintId = Guid.NewGuid();
+            var projectId = Guid.NewGuid();
 
             var thisUser = new User
             {
@@ -138,7 +149,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 EmailAddress = "test@agile.local",
                 Roles = new List<Role>() 
                 {  
-                    new Role  { RoleName = "Developer", SprintId = sprintId }
+                    new Role  { RoleName = "Developer", ProjectId = projectId, SprintId = sprintId }
                 }
             };
 
@@ -153,6 +164,10 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 Team = new List<User>
                 {
                     thisUser
+                },
+                Project = new Project
+                {
+                    Id = projectId
                 }
             };
 
@@ -161,10 +176,12 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
             var clientChannel = Substitute.For<IPlanningPokerClientService>();
             contextProvider.GetClientChannel<IPlanningPokerClientService>().Returns(clientChannel);
 
-            var pendingClients = new Dictionary<Guid, List<ServicePlanningPokerPendingUser>>();
+            var pendingClients = new ConcurrentDictionary<Guid, List<ServicePlanningPokerPendingUser>>();
             pendingClientsProvider.GetListOfClients().Returns(pendingClients);
 
-            service.SubscribeToNewSessionMessages(sprintId);
+            activeSessionProvider.GetListOfSessions().Returns(new ConcurrentDictionary<Guid, ServicePlanningPokerSession>());
+
+            var res = service.SubscribeToNewSessionMessages(sprintId);
 
             contextProvider.Received().GetClientChannel<IPlanningPokerClientService>();
             pendingClients.ContainsKey(sprintId).Should().BeTrue();
@@ -175,6 +192,84 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
             newPendingClient.Name.Should().Be("David Tester");
             newPendingClient.UserRoles.SingleOrDefault().Should().Be("Developer");
             newPendingClient.UserID.Should().Be(thisUser.Id);
+            res.Should().BeNull();
+        }
+
+        [Test]
+        public void SubscribeWithASuitableSession()
+        {
+            var sprintId = Guid.NewGuid();
+            var projectId = Guid.NewGuid();
+
+            var thisUser = new User
+            {
+                Id = Guid.NewGuid(),
+                FirstName = "David",
+                LastName = "Tester",
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>() 
+                {  
+                    new Role  { RoleName = "Developer", ProjectId = projectId, SprintId = sprintId }
+                }
+            };
+
+            unitOfWork.UserRepository.Items.Returns(new List<User> { thisUser }.AsQueryable());
+
+            var generatedPrincipal = new GeneratedServiceUserPrincipal(thisUser);
+            Thread.CurrentPrincipal = generatedPrincipal;
+
+            var sprint = new Sprint
+            {
+                Id = sprintId,
+                Name = "Test",
+                Project = new Project
+                {
+                    Id = projectId,
+                    Name = "Test"
+                },
+                Team = new List<User>
+                {
+                    thisUser
+                }
+            };
+
+            unitOfWork.SprintRepository.Items.Returns(new List<Sprint>() { sprint }.AsQueryable());
+
+            var clientChannel = Substitute.For<IPlanningPokerClientService>();
+            contextProvider.GetClientChannel<IPlanningPokerClientService>().Returns(clientChannel);
+
+            var pendingClients = new ConcurrentDictionary<Guid, List<ServicePlanningPokerPendingUser>>();
+            pendingClientsProvider.GetListOfClients().Returns(pendingClients);
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = Guid.NewGuid(),
+                State = ServicePlanningPokerSessionState.Pending,
+                SprintID = sprintId
+            };
+
+            var sessionDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            sessionDictionary.TryAdd(session.SessionID, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(sessionDictionary);
+
+            var res = service.SubscribeToNewSessionMessages(sprintId);
+
+            contextProvider.Received().GetClientChannel<IPlanningPokerClientService>();
+            pendingClients.ContainsKey(sprintId).Should().BeTrue();
+            pendingClients[sprintId].SingleOrDefault().Should().NotBeNull();
+            var newPendingClient = pendingClients[sprintId].SingleOrDefault();
+            newPendingClient.ClientChannel.Should().Be(clientChannel);
+            newPendingClient.EmailAddress.Should().Be(thisUser.EmailAddress);
+            newPendingClient.Name.Should().Be("David Tester");
+            newPendingClient.UserRoles.SingleOrDefault().Should().Be("Developer");
+            newPendingClient.UserID.Should().Be(thisUser.Id);
+            res.Should().NotBeNull();
+            res.SprintId.Should().Be(sprintId);
+            res.SessionAvailable.Should().Be(true);
+            res.SessionId.Should().Be(session.SessionID);
+            res.SprintName.Should().Be(sprint.Name);
+            res.ProjectName.Should().Be(sprint.Project.Name);
         }
 
         #endregion 
@@ -266,8 +361,8 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 SessionID = currentSessionId
             };
 
-            var sessionList = new Dictionary<Guid, ServicePlanningPokerSession>();
-            sessionList.Add(currentSessionId, currentSession);
+            var sessionList = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            sessionList.TryAdd(currentSessionId, currentSession);
             activeSessionProvider.GetListOfSessions().Returns(sessionList);
 
             service.StartNewPokerSession(sprintId);
@@ -277,6 +372,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
         public void StartNewPokerSession()
         {
             var sprintId = Guid.NewGuid();
+            var projectId = Guid.NewGuid();
 
             var thisUser = new User
             {
@@ -286,7 +382,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 LastName = "Tester",
                 Roles = new List<Role>()
                 {
-                    new Role { RoleName = "Scrum Master", SprintId = sprintId}
+                    new Role { RoleName = "Scrum Master", ProjectId = projectId, SprintId = sprintId}
                 }
             };
 
@@ -300,6 +396,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 Id = sprintId,
                 Project = new Project
                 {
+                    Id = projectId,
                     ScrumMasters = new List<User>()
                     {
                         thisUser
@@ -314,12 +411,12 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
             var clientSocket = Substitute.For<IPlanningPokerClientService>();
             contextProvider.GetClientChannel<IPlanningPokerClientService>().Returns(clientSocket);
 
-            var sessionList = new Dictionary<Guid, ServicePlanningPokerSession>();
+            var sessionList = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
             activeSessionProvider.GetListOfSessions().Returns(sessionList);
 
             ServiceSessionChangeInfo sentSessionInfo = null;
 
-            var clientList = new Dictionary<Guid, List<ServicePlanningPokerPendingUser>>();
+            var clientList = new ConcurrentDictionary<Guid, List<ServicePlanningPokerPendingUser>>();
             var currentPendingClients = new List<ServicePlanningPokerPendingUser>();
             var pendingUserSocket = Substitute.For<IPlanningPokerClientService>();
 
@@ -330,7 +427,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 ClientChannel = pendingUserSocket
             });
 
-            clientList.Add(sprintId, currentPendingClients);
+            clientList.TryAdd(sprintId, currentPendingClients);
             pendingClientsProvider.GetListOfClients().Returns(clientList);
 
             var result = service.StartNewPokerSession(sprintId);
@@ -342,6 +439,8 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
             newSession.SprintID.Should().Be(sprintId);
             newSession.Users.Should().NotBeNull();
             newSession.Users.Count.Should().Be(1);
+            newSession.ProjectName.Should().Be(sprint.Project.Name);
+            newSession.SprintName.Should().Be(sprint.Name);
             var singleUser = newSession.Users.Single();
             singleUser.ClientChannel.Should().Be(clientSocket);
             singleUser.EmailAddress.Should().Be(thisUser.EmailAddress);
@@ -362,40 +461,22 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
 
         #endregion 
 
-        #region CancelPendingPokerSession(Guid sessionId) Tests 
+        #region EndPokerSession(Guid sessionId) Tests
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
-        public void CancelASessionWithNoSession()
+        public void EndPokerSessionWithNoSession()
         {
             var sessionId = Guid.NewGuid();
 
-            var activeSessions = new Dictionary<Guid, ServicePlanningPokerSession>();
+            var activeSessions = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
             activeSessionProvider.GetListOfSessions().Returns(activeSessions);
 
-            service.CancelPendingPokerSession(sessionId);
+            service.EndPokerSession(sessionId);
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void CancelASessionWithNoSessionPending()
-        {
-            var sessionId = Guid.NewGuid();
-
-            var activeSessions = new Dictionary<Guid, ServicePlanningPokerSession>();
-            var session = new ServicePlanningPokerSession
-            {
-                SessionID = sessionId,
-                State = ServicePlanningPokerSessionState.Started
-            };
-            activeSessions.Add(sessionId, session);
-            activeSessionProvider.GetListOfSessions().Returns(activeSessions);
-
-            service.CancelPendingPokerSession(sessionId);
-        }
-
-        [Test]
-        public void CancelASession()
+        public void EndPokerSession()
         {
             var sessionId = Guid.NewGuid();
             var sprintId = Guid.NewGuid();
@@ -420,7 +501,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
             var thisUserChannel = Substitute.For<IPlanningPokerClientService>();
             var otherUserChannel = Substitute.For<IPlanningPokerClientService>();
 
-            var activeSessions = new Dictionary<Guid, ServicePlanningPokerSession>();
+            var activeSessions = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
             var session = new ServicePlanningPokerSession
             {
                 SessionID = sessionId,
@@ -440,7 +521,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                     }
                 }                
             };
-            activeSessions.Add(sessionId, session);
+            activeSessions.TryAdd(sessionId, session);
             activeSessionProvider.GetListOfSessions().Returns(activeSessions);
 
             var pendingUserChannel = Substitute.For<IPlanningPokerClientService>();
@@ -448,17 +529,17 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
             ServiceSessionChangeInfo sentSessionInfo = null; 
             pendingUserChannel.NotifyClientOfSession(Arg.Do<ServiceSessionChangeInfo>(s => sentSessionInfo = s));
 
-            var pendingClients = new Dictionary<Guid, List<ServicePlanningPokerPendingUser>>();
+            var pendingClients = new ConcurrentDictionary<Guid, List<ServicePlanningPokerPendingUser>>();
             var pendingClientList = new List<ServicePlanningPokerPendingUser>();
             pendingClientList.Add(new ServicePlanningPokerPendingUser
             {
                 ClientChannel = pendingUserChannel
             });
-            pendingClients.Add(sprintId, pendingClientList);
+            pendingClients.TryAdd(sprintId, pendingClientList);
 
             pendingClientsProvider.GetListOfClients().Returns(pendingClients);
 
-            service.CancelPendingPokerSession(sessionId);
+            service.EndPokerSession(sessionId);
 
             activeSessionProvider.Received().GetListOfSessions();
             pendingClientsProvider.Received().GetListOfClients();
@@ -482,7 +563,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
         {
             var sessionId = Guid.NewGuid();
 
-            var activeSessions = new Dictionary<Guid, ServicePlanningPokerSession>();
+            var activeSessions = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
             activeSessionProvider.GetListOfSessions().Returns(activeSessions);
 
             service.JoinSession(sessionId);
@@ -512,11 +593,11 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 SessionID = sessionId
             };
 
-            var sessions = new Dictionary<Guid, ServicePlanningPokerSession>();
-            sessions.Add(sessionId, session);
+            var sessions = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            sessions.TryAdd(sessionId, session);
             activeSessionProvider.GetListOfSessions().Returns(sessions);
 
-            var pendingUsersDictionary = new Dictionary<Guid, List<ServicePlanningPokerPendingUser>>();
+            var pendingUsersDictionary = new ConcurrentDictionary<Guid, List<ServicePlanningPokerPendingUser>>();
 
             pendingClientsProvider.GetListOfClients().Returns(pendingUsersDictionary);
 
@@ -548,19 +629,19 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 SessionID = sessionId
             };
 
-            var sessions = new Dictionary<Guid, ServicePlanningPokerSession>();
-            sessions.Add(sessionId, session);
+            var sessions = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            sessions.TryAdd(sessionId, session);
             activeSessionProvider.GetListOfSessions().Returns(sessions);
 
-            var pendingUsersDictionary = new Dictionary<Guid, List<ServicePlanningPokerPendingUser>>();
-            pendingUsersDictionary.Add(sprintId, new List<ServicePlanningPokerPendingUser>());
+            var pendingUsersDictionary = new ConcurrentDictionary<Guid, List<ServicePlanningPokerPendingUser>>();
+            pendingUsersDictionary.TryAdd(sprintId, new List<ServicePlanningPokerPendingUser>());
             pendingClientsProvider.GetListOfClients().Returns(pendingUsersDictionary);
 
             service.JoinSession(sessionId);
         }
 
         [Test]
-        public void JoinASession()
+        public void JoinASessionWithExistingUsers()
         {
             var sprintId = Guid.NewGuid();
             var sessionId = Guid.NewGuid();
@@ -592,13 +673,13 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 Users = new List<ServicePlanningPokerUser>()
             };
 
-            var sessions = new Dictionary<Guid, ServicePlanningPokerSession>();
-            sessions.Add(sessionId, session);
+            var sessions = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            sessions.TryAdd(sessionId, session);
             activeSessionProvider.GetListOfSessions().Returns(sessions);
 
             var userChannel = Substitute.For<IPlanningPokerClientService>();
 
-            var pendingUsersDictionary = new Dictionary<Guid, List<ServicePlanningPokerPendingUser>>();
+            var pendingUsersDictionary = new ConcurrentDictionary<Guid, List<ServicePlanningPokerPendingUser>>();
             var pendingUserList = new List<ServicePlanningPokerPendingUser>();
             var pendingUser = new ServicePlanningPokerPendingUser
             {
@@ -609,7 +690,7 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
                 UserRoles = thisUser.Roles.Select(u => u.RoleName).ToList()
             };
             pendingUserList.Add(pendingUser);
-            pendingUsersDictionary.Add(sprintId, pendingUserList);
+            pendingUsersDictionary.TryAdd(sprintId, pendingUserList);
 
             pendingClientsProvider.GetListOfClients().Returns(pendingUsersDictionary);
 
@@ -627,6 +708,763 @@ namespace Unit.Backend.AnyTrack.Backend.Service.PlanningPokerManagerServiceTests
             singleSessionUser.UserRoles.Equals(pendingUser.UserRoles).Should().BeTrue();
             returnSession.Should().Be(session);
 
+        }
+
+        [Test]
+        public void JoinASession()
+        {
+            var sprintId = Guid.NewGuid();
+            var sessionId = Guid.NewGuid();
+
+            var thisUser = new User
+            {
+                Id = Guid.NewGuid(),
+                EmailAddress = "test@agile.local",
+                FirstName = "David",
+                LastName = "Tester",
+                Roles = new List<Role>()
+                {
+                    new Role
+                    {
+                        RoleName = "Developer", SprintId = sprintId
+                    }
+                }
+            };
+
+            unitOfWork.UserRepository.Items.Returns(new List<User> { thisUser }.AsQueryable());
+
+            var generatedPrincipal = new GeneratedServiceUserPrincipal(thisUser);
+            Thread.CurrentPrincipal = generatedPrincipal;
+
+            var existingUserChannel = Substitute.For<IPlanningPokerClientService>();
+
+            var session = new ServicePlanningPokerSession
+            {
+                SprintID = sprintId,
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+                {
+                    new ServicePlanningPokerUser
+                    {
+                        ClientChannel = existingUserChannel,
+                        EmailAddress = "other@agile.local"
+                    }
+                }
+            };
+
+            var sessions = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            sessions.TryAdd(sessionId, session);
+            activeSessionProvider.GetListOfSessions().Returns(sessions);
+
+            var userChannel = Substitute.For<IPlanningPokerClientService>();
+
+            var pendingUsersDictionary = new ConcurrentDictionary<Guid, List<ServicePlanningPokerPendingUser>>();
+            var pendingUserList = new List<ServicePlanningPokerPendingUser>();
+            var pendingUser = new ServicePlanningPokerPendingUser
+            {
+                ClientChannel = userChannel,
+                UserID = thisUser.Id,
+                EmailAddress = thisUser.EmailAddress,
+                Name = thisUser.FirstName + " " + thisUser.LastName,
+                UserRoles = thisUser.Roles.Select(u => u.RoleName).ToList()
+            };
+            pendingUserList.Add(pendingUser);
+            pendingUsersDictionary.TryAdd(sprintId, pendingUserList);
+
+            pendingClientsProvider.GetListOfClients().Returns(pendingUsersDictionary);
+
+            var returnSession = service.JoinSession(sessionId);
+
+            activeSessionProvider.Received().GetListOfSessions();
+            pendingClientsProvider.Received().GetListOfClients();
+            pendingUsersDictionary[sprintId].Count.Should().Be(0);
+            session.Users.Count.Should().Be(2);
+            var singleSessionUser = session.Users.Last();
+            singleSessionUser.ClientChannel.Should().Be(pendingUser.ClientChannel);
+            singleSessionUser.EmailAddress.Should().Be(pendingUser.EmailAddress);
+            singleSessionUser.Name.Should().Be(pendingUser.Name);
+            singleSessionUser.UserID.Should().Be(pendingUser.UserID);
+            singleSessionUser.UserRoles.Equals(pendingUser.UserRoles).Should().BeTrue();
+            returnSession.Should().Be(session);
+
+            existingUserChannel.Received().NotifyClientOfSessionUpdate(session);
+            pendingUser.ClientChannel.DidNotReceive().NotifyClientOfSessionUpdate(session);
+
+        }
+
+        #endregion 
+
+        #region ServicePlanningPokerSession RetrieveSessionInfo(Guid sessionId) Tests 
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void CallForASessionThatDoesntExist()
+        {
+            var sessionId = Guid.NewGuid();
+            activeSessionProvider.GetListOfSessions().Returns(new ConcurrentDictionary<Guid, ServicePlanningPokerSession>());
+
+            service.RetrieveSessionInfo(sessionId);
+        }
+
+        [Test]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void CallForASessionThatIAmNotAUserIn()
+        {
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            var principal = new GeneratedServiceUserPrincipal(user);
+            Thread.CurrentPrincipal = principal;
+
+            var sessionId = Guid.NewGuid();
+
+            var session = new ServicePlanningPokerSession()
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+            };
+
+            var sessionDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            sessionDictionary.TryAdd(session.SessionID, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(sessionDictionary);
+
+            service.RetrieveSessionInfo(sessionId);
+        }
+
+        [Test]
+        public void CallForASessionThatIAmIn()
+        {
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            var principal = new GeneratedServiceUserPrincipal(user);
+            Thread.CurrentPrincipal = principal;
+
+            var sessionId = Guid.NewGuid();
+
+            var session = new ServicePlanningPokerSession()
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+                {
+                    new ServicePlanningPokerUser
+                    {
+                        EmailAddress = "test@agile.local"
+                    }
+                }
+            };
+
+            var sessionDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            sessionDictionary.TryAdd(session.SessionID, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(sessionDictionary);
+
+            var res = service.RetrieveSessionInfo(sessionId);
+            res.Equals(session).Should().BeTrue();
+        }
+
+        #endregion 
+
+        #region LeaveSession(Guid sessionId) Tests 
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void CallLeaveSessionWithNoSession()
+        {
+            var sessionId = Guid.NewGuid();
+            activeSessionProvider.GetListOfSessions().Returns(new ConcurrentDictionary<Guid, ServicePlanningPokerSession>());
+
+            service.LeaveSession(sessionId);
+        }
+
+        [Test]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void CallLeaveSessionAndUserNotInSession()
+        {
+            var sessionId = Guid.NewGuid();
+            
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+            }; 
+
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>(); 
+            ConcurrentDictionary.TryAdd(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            service.LeaveSession(sessionId);
+        }
+
+        [Test]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void CallLeaveSessionAndUserIsScrumMaster()
+        {
+            var sessionId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+                {
+                    new ServicePlanningPokerUser
+                    {
+                        UserID = userId,
+                        EmailAddress = "test@agile.local"
+                    }
+                },
+                HostID = userId
+            };
+
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            service.LeaveSession(sessionId);
+        }
+
+        [Test]
+        public void CallLeaveSession()
+        {
+            var sessionId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+            var otherClientChannel = Substitute.For<IPlanningPokerClientService>();
+
+            var thisUser = new ServicePlanningPokerUser
+            {
+                UserID = userId,
+                EmailAddress = "test@agile.local"
+            };
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+                {
+                    thisUser,
+                    new ServicePlanningPokerUser
+                    {
+                        ClientChannel = otherClientChannel,
+                        UserID = Guid.NewGuid(),
+                        EmailAddress = "other@agile.local"
+                    }
+                },
+            };
+
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            service.LeaveSession(sessionId);
+
+            session.Users.Contains(thisUser).Should().BeFalse();
+            otherClientChannel.Received().NotifyClientOfSessionUpdate(session);
+
+            
+        }
+
+        #endregion 
+
+        #region StartSession(Guid sessionId) Tests
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void CallStartSessionWithNoSession()
+        {
+            var sessionId = Guid.NewGuid();
+            activeSessionProvider.GetListOfSessions().Returns(new ConcurrentDictionary<Guid, ServicePlanningPokerSession>());
+
+            service.StartSession(sessionId);
+        }
+
+        [Test]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void CallStartSessionAndUserNotInSession()
+        {
+            var sessionId = Guid.NewGuid();
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+            };
+
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            service.StartSession(sessionId);
+        }
+
+        [Test]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void CallStartSessionAndUserIsNotScrumMaster()
+        {
+            var sessionId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+                {
+                    new ServicePlanningPokerUser
+                    {
+                        UserID = userId,
+                        EmailAddress = "test@agile.local"
+                    }
+                },
+                HostID = Guid.NewGuid()
+            };
+
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            service.StartSession(sessionId);
+        }
+
+        [Test]
+        public void CallStartSession()
+        {
+            var sessionId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+            var otherClientChannel = Substitute.For<IPlanningPokerClientService>();
+
+            var thisUser = new ServicePlanningPokerUser
+            {
+                UserID = userId,
+                EmailAddress = "test@agile.local"
+            };
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+                {
+                    thisUser,
+                    new ServicePlanningPokerUser
+                    {
+                        ClientChannel = otherClientChannel,
+                        UserID = Guid.NewGuid(),
+                        EmailAddress = "other@agile.local"
+                    }
+                },
+                HostID = userId
+            };
+
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            service.StartSession(sessionId);
+
+            session.State.Should().Be(ServicePlanningPokerSessionState.GettingEstimates);
+            otherClientChannel.Received().NotifyClientOfSessionStart();
+        }
+
+        #endregion 
+
+        #region SubmitMessageToServer(ServiceChatMessage msg) Tests 
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void CallSubmitWithNoSession()
+        {
+            var sessionId = Guid.NewGuid();
+            activeSessionProvider.GetListOfSessions().Returns(new ConcurrentDictionary<Guid, ServicePlanningPokerSession>());
+
+            var message = new ServiceChatMessage { SessionID = sessionId };
+
+            service.SubmitMessageToServer(message);
+        }
+
+        [Test]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void CallSubmitAndUserNotInSession()
+        {
+            var sessionId = Guid.NewGuid();
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+            };
+
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            var newMessage = new ServiceChatMessage
+            {
+                SessionID = sessionId
+            };
+
+            service.SubmitMessageToServer(newMessage);
+        }
+
+        [Test]
+        public void CallSubmit()
+        {
+            var sessionId = Guid.NewGuid();
+
+            var myClientChannel = Substitute.For<IPlanningPokerClientService>();
+            var otherClientChannel = Substitute.For<IPlanningPokerClientService>();
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>
+                {
+                    new ServicePlanningPokerUser()
+                    {
+                        ClientChannel  = myClientChannel,
+                        EmailAddress = "test@agile.local"
+                    },
+                    new ServicePlanningPokerUser()
+                    {
+                        ClientChannel  = otherClientChannel,
+                        EmailAddress = "test2@agile.local"
+                    },
+                }
+            };
+
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>(),
+                FirstName = "David",
+                LastName = "Tester"
+            };
+
+            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            var newMessage = new ServiceChatMessage
+            {
+                SessionID = sessionId
+            };
+
+            service.SubmitMessageToServer(newMessage);
+
+            newMessage.Name.Should().Be("David Tester");
+            myClientChannel.DidNotReceive().SendMessageToClient(newMessage);
+            otherClientChannel.Received().SendMessageToClient(newMessage);
+        }
+
+        #endregion 
+
+        #region SubmitEstimateToServer(ServicePlanningPokerEstimate estimate) Tests 
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void CallSubmitEstimateWithNoSession()
+        {
+            var sessionId = Guid.NewGuid();
+            activeSessionProvider.GetListOfSessions().Returns(new ConcurrentDictionary<Guid, ServicePlanningPokerSession>());
+
+            var message = new ServicePlanningPokerEstimate { SessionID = sessionId };
+
+            service.SubmitEstimateToServer(message);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void CallSubmitEstimateAndUserNotInSession()
+        {
+            var sessionId = Guid.NewGuid();
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+            };
+
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            var newEstimate = new ServicePlanningPokerEstimate
+            {
+                SessionID = sessionId
+            };
+
+            service.SubmitEstimateToServer(newEstimate);
+        }
+
+        [Test]
+        public void CallSubmitEstimate()
+        {
+            var sessionId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+
+            var myClientChannel = Substitute.For<IPlanningPokerClientService>();
+            var otherUser = Substitute.For<IPlanningPokerClientService>();
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>
+                {
+                    new ServicePlanningPokerUser
+                    {
+                        ClientChannel = myClientChannel,
+                        UserID = userId,
+                        Name = "David Tester"
+                    },
+                    new ServicePlanningPokerUser
+                    {
+                        ClientChannel = otherUser,
+                        UserID = Guid.NewGuid(),
+                        Name = "Bill Tester"
+                    }
+                }
+            };
+
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
+
+            var user = new User
+            {
+                Id = userId,
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            unitOfWork.UserRepository.Items.Returns(new List<User>() { user }.AsQueryable());
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            var newEstimate = new ServicePlanningPokerEstimate
+            {
+                SessionID = sessionId
+            };
+
+            service.SubmitEstimateToServer(newEstimate);
+
+            newEstimate.Name.Should().Be("David Tester");
+            session.Users.First().Estimate.Equals(newEstimate).Should().BeTrue();
+            myClientChannel.Received().NotifyClientOfSessionUpdate(session);
+            otherUser.Received().NotifyClientOfSessionUpdate(session);
+        }
+
+        #endregion 
+
+        #region ShowEstimates(Guid sessionId) Tests
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void CallShowEstimatesWithNoSession()
+        {
+            var sessionId = Guid.NewGuid();
+            activeSessionProvider.GetListOfSessions().Returns(new ConcurrentDictionary<Guid, ServicePlanningPokerSession>());
+
+            service.ShowEstimates(sessionId);
+        }
+
+        [Test]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void CallShowEstimatesAndUserNotInSession()
+        {
+            var sessionId = Guid.NewGuid();
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+            };
+
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            service.ShowEstimates(sessionId);
+        }
+
+        [Test]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void CallShowEstimatesAndUserIsNotScrumMaster()
+        {
+            var sessionId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+                {
+                    new ServicePlanningPokerUser
+                    {
+                        UserID = userId,
+                        EmailAddress = "test@agile.local"
+                    }
+                },
+                HostID = Guid.NewGuid()
+            };
+
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            service.ShowEstimates(sessionId);
+        }
+
+        [Test]
+        public void CallShowEstimates()
+        {
+            var sessionId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+            var otherClientChannel = Substitute.For<IPlanningPokerClientService>();
+
+            var thisUser = new ServicePlanningPokerUser
+            {
+                UserID = userId,
+                EmailAddress = "test@agile.local"
+            };
+
+            var session = new ServicePlanningPokerSession
+            {
+                SessionID = sessionId,
+                Users = new List<ServicePlanningPokerUser>()
+                {
+                    thisUser,
+                    new ServicePlanningPokerUser
+                    {
+                        ClientChannel = otherClientChannel,
+                        UserID = Guid.NewGuid(),
+                        EmailAddress = "other@agile.local"
+                    }
+                },
+                HostID = userId
+            };
+
+            var ConcurrentDictionary = new ConcurrentDictionary<Guid, ServicePlanningPokerSession>();
+            ConcurrentDictionary.TryAdd(sessionId, session);
+
+            activeSessionProvider.GetListOfSessions().Returns(ConcurrentDictionary);
+
+            var user = new User
+            {
+                EmailAddress = "test@agile.local",
+                Roles = new List<Role>()
+            };
+
+            Thread.CurrentPrincipal = new GeneratedServiceUserPrincipal(user);
+
+            service.ShowEstimates(sessionId);
+
+            session.State.Should().Be(ServicePlanningPokerSessionState.ShowingEstimates);
+            otherClientChannel.Received().NotifyClientOfSessionUpdate(session);
         }
 
         #endregion 

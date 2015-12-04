@@ -128,7 +128,8 @@ namespace AnyTrack.Backend.Service
                 AssignedRoles = userAccount.Roles.Select(r => new ServiceRoleInfo
                 {
                     Role = r.RoleName,
-                    ProjectId = r.ProjectId
+                    ProjectId = r.ProjectId,
+                    SprintId = r.SprintId
                 }).ToList(),
                 Success = true
             }; 
