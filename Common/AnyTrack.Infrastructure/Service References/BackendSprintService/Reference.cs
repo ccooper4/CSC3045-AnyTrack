@@ -1043,10 +1043,10 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
         System.Threading.Tasks.Task ManageSprintBacklogAsync(System.Guid projectId, System.Guid sprintId, System.Collections.Generic.List<AnyTrack.Infrastructure.BackendSprintService.ServiceSprintStory> sprintStories);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/SendEmailRequest", ReplyAction="http://tempuri.org/ISprintService/SendEmailRequestResponse")]
-        void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage);
+        void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, System.IO.MemoryStream emailAttachment);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISprintService/SendEmailRequest", ReplyAction="http://tempuri.org/ISprintService/SendEmailRequestResponse")]
-        System.Threading.Tasks.Task SendEmailRequestAsync(string senderEmailAddress, string recipientEmailAddress, string emailMessage);
+        System.Threading.Tasks.Task SendEmailRequestAsync(string senderEmailAddress, string recipientEmailAddress, string emailMessage, System.IO.MemoryStream emailAttachment);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1148,12 +1148,12 @@ namespace AnyTrack.Infrastructure.BackendSprintService {
             return base.Channel.ManageSprintBacklogAsync(projectId, sprintId, sprintStories);
         }
         
-        public void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage) {
-            base.Channel.SendEmailRequest(senderEmailAddress, recipientEmailAddress, emailMessage);
+        public void SendEmailRequest(string senderEmailAddress, string recipientEmailAddress, string emailMessage, System.IO.MemoryStream emailAttachment) {
+            base.Channel.SendEmailRequest(senderEmailAddress, recipientEmailAddress, emailMessage, emailAttachment);
         }
         
-        public System.Threading.Tasks.Task SendEmailRequestAsync(string senderEmailAddress, string recipientEmailAddress, string emailMessage) {
-            return base.Channel.SendEmailRequestAsync(senderEmailAddress, recipientEmailAddress, emailMessage);
+        public System.Threading.Tasks.Task SendEmailRequestAsync(string senderEmailAddress, string recipientEmailAddress, string emailMessage, System.IO.MemoryStream emailAttachment) {
+            return base.Channel.SendEmailRequestAsync(senderEmailAddress, recipientEmailAddress, emailMessage, emailAttachment);
         }
     }
 }
