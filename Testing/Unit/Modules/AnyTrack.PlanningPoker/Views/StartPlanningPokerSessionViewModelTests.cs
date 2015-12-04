@@ -191,6 +191,16 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.StartPlanningPokerSessionVie
 
             serviceGateway.StartNewPokerSession(vm.SprintId.Value).Returns(sessionId);
 
+            sprintServiceGateway.GetSprint(vm.SprintId.Value).Returns(new SprintModels.ServiceSprint
+            {
+                StartDate = DateTime.Today.AddDays(4),
+            });
+
+            sprintServiceGateway.GetSprintStories(vm.SprintId.Value).Returns(new List<SprintModels.ServiceSprintStory>()
+            {
+                new SprintModels.ServiceSprintStory()
+            });
+
             vm.Call("EstablishPokerSession");
 
             sprintServiceGateway.Received().GetSprintNames(projectId, true, false);
@@ -200,6 +210,79 @@ namespace Unit.Modules.AnyTrack.PlanningPoker.Views.StartPlanningPokerSessionVie
             sentParams["sessionId"].Should().Be(sessionId);
             ((bool)sentParams["joinRequired"]).Should().BeFalse();
             vm.RegionManager.Received().RequestNavigate(RegionNames.MainRegion, "PokerLobby", sentParams);
+        }
+
+        [Test]
+        public void CallEstablishPokerSessionForAnActiveSprint()
+        {
+            var projectId = Guid.NewGuid();
+            var sessionId = Guid.NewGuid();
+
+            sprintServiceGateway.GetSprintNames(projectId, true, false).Returns(new List<SprintModels.ServiceSprintSummary>());
+
+            NavigationParameters sentParams = null;
+
+            vm.SprintId = Guid.NewGuid();
+            vm.ProjectId = projectId;
+            vm.RegionManager = Substitute.For<IRegionManager>();
+            vm.MainWindow = Substitute.For<WindowProvider>();
+
+            vm.RegionManager.RequestNavigate(Arg.Any<string>(), Arg.Any<string>(), Arg.Do<NavigationParameters>(n => sentParams = n));
+
+            serviceGateway.StartNewPokerSession(vm.SprintId.Value).Returns(sessionId);
+
+            sprintServiceGateway.GetSprint(vm.SprintId.Value).Returns(new SprintModels.ServiceSprint
+            {
+                StartDate = DateTime.Today.AddDays(-4),
+            });
+
+            sprintServiceGateway.GetSprintStories(vm.SprintId.Value).Returns(new List<SprintModels.ServiceSprintStory>()
+            {
+                new SprintModels.ServiceSprintStory()
+            });
+
+            vm.Call("EstablishPokerSession");
+
+            sprintServiceGateway.Received().GetSprintNames(projectId, true, false);
+            serviceGateway.DidNotReceive().StartNewPokerSession(vm.SprintId.Value);
+            vm.RegionManager.DidNotReceive().RequestNavigate(RegionNames.MainRegion, "PokerLobby", Arg.Any<NavigationParameters>());
+            vm.MainWindow.Received().ShowMessageAsync("Cannot start planning poker", "Planning poker cannot be started - this sprint has already started.");
+        }
+
+        [Test]
+        public void CallEstablishPokerSessionForASprintWithNoStories()
+        {
+            var projectId = Guid.NewGuid();
+            var sessionId = Guid.NewGuid();
+
+            sprintServiceGateway.GetSprintNames(projectId, true, false).Returns(new List<SprintModels.ServiceSprintSummary>());
+
+            NavigationParameters sentParams = null;
+
+            vm.SprintId = Guid.NewGuid();
+            vm.ProjectId = projectId;
+            vm.RegionManager = Substitute.For<IRegionManager>();
+            vm.MainWindow = Substitute.For<WindowProvider>();
+
+            vm.RegionManager.RequestNavigate(Arg.Any<string>(), Arg.Any<string>(), Arg.Do<NavigationParameters>(n => sentParams = n));
+
+            serviceGateway.StartNewPokerSession(vm.SprintId.Value).Returns(sessionId);
+
+            sprintServiceGateway.GetSprint(vm.SprintId.Value).Returns(new SprintModels.ServiceSprint
+            {
+                StartDate = DateTime.Today.AddDays(4),
+            });
+
+            sprintServiceGateway.GetSprintStories(vm.SprintId.Value).Returns(new List<SprintModels.ServiceSprintStory>()
+            {
+            });
+
+            vm.Call("EstablishPokerSession");
+
+            sprintServiceGateway.Received().GetSprintNames(projectId, true, false);
+            serviceGateway.DidNotReceive().StartNewPokerSession(vm.SprintId.Value);
+            vm.RegionManager.DidNotReceive().RequestNavigate(RegionNames.MainRegion, "PokerLobby", Arg.Any<NavigationParameters>());
+            vm.MainWindow.Received().ShowMessageAsync("Cannot start planning poker", "Planning poker cannot be started for this sprint - no stories have been added to the backlog.");
         }
 
         #endregion 

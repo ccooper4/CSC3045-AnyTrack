@@ -213,6 +213,21 @@ namespace AnyTrack.PlanningPoker.Views
 
             if (!this.HasErrors)
             {
+                var sprint = sprintServiceGateway.GetSprint(SprintId.Value);
+                var stories = sprintServiceGateway.GetSprintStories(SprintId.Value); 
+
+                if (stories.Count == 0)
+                {
+                    this.ShowMetroDialog("Cannot start planning poker", "Planning poker cannot be started for this sprint - no stories have been added to the backlog.");
+                    return; 
+                }
+
+                if (sprint.StartDate <= DateTime.Today)
+                {
+                    this.ShowMetroDialog("Cannot start planning poker", "Planning poker cannot be started - this sprint has already started.");
+                    return; 
+                }
+
                 var sessionId = serviceGateway.StartNewPokerSession(sprintId.Value);
                 var navigationParams = new NavigationParameters();
                 navigationParams.Add("sessionId", sessionId);
