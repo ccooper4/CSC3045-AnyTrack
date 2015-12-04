@@ -28,6 +28,11 @@ namespace AnyTrack.Sprints.Views
         /// </summary>
         private Guid sprintId;
 
+        /// <summary>
+        /// The sprint id
+        /// </summary>
+        private Guid projectId;
+
         #endregion
 
         #region Constructor
@@ -128,13 +133,19 @@ namespace AnyTrack.Sprints.Views
 
                 foreach (var task in tasks)
                 {
-                    var tempEstimate = task.TaskHourEstimates.LastOrDefault();
+                    var sortedEstimates = task.TaskHourEstimates.OrderByDescending(x => x.Created);
+                    var tempEstimate = sortedEstimates.FirstOrDefault();
                     task.TaskHourEstimates.Clear();
                     task.TaskHourEstimates.Add(tempEstimate);
                 }
 
                 Tasks.Clear();
                 Tasks.AddRange(tasks);
+            }
+
+            if (navigationContext.Parameters.ContainsKey("projectId"))
+            {
+                projectId = (Guid)navigationContext.Parameters["projectId"];
             }
         }
 
@@ -175,6 +186,7 @@ namespace AnyTrack.Sprints.Views
         {
             var navParams = new NavigationParameters();
             navParams.Add("sprintId", sprintId);
+            navParams.Add("projectId", projectId);
             NavigateToItem("SprintBoard", navParams);
         }
 

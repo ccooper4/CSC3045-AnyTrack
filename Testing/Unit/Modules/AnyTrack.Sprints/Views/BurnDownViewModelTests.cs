@@ -32,7 +32,6 @@ namespace Unit.Modules.AnyTrack.Sprints.Views.BurnDownViewModelTests
         public static IProjectServiceGateway projectServiceGateway;
         public static ISprintServiceGateway sprintServiceGateway;
         public static BurnDownViewModel vm;
-        public static bool storyOption = false;
 
         [SetUp]
         public void SetUp()
@@ -75,8 +74,6 @@ namespace Unit.Modules.AnyTrack.Sprints.Views.BurnDownViewModelTests
             vm = new BurnDownViewModel(projectServiceGateway, sprintServiceGateway);
             vm.GetChartForProjectAndSprint.Should().NotBeNull();
             vm.GetStoryPointBD.Should().NotBeNull();
-            vm.Projects.Should().NotBeNull();
-            vm.Sprints.Should().NotBeNull();
         }
 
         #endregion Constructor Tests
@@ -93,11 +90,12 @@ namespace Unit.Modules.AnyTrack.Sprints.Views.BurnDownViewModelTests
             regionManager.RequestNavigate(Arg.Any<string>(), Arg.Any<string>(), Arg.Do<NavigationParameters>(np => sentParams = np));
             vm.RegionManager = regionManager;
 
-            vm.Trend.Add(new DataPoint(30, 30));
-            vm.Points.Add(new DataPoint(40, 40));
+            vm.Trend.Add(new DataPoint(40, 0));
+            vm.Points.Add(new DataPoint(30, 10));
+            vm.Points.Add(new DataPoint(20, 5));
 
             sprintServiceGateway.GetSprintNames(Arg.Any<Guid>(), Arg.Any<bool>(), Arg.Any<bool>()).Returns(new List<ServiceModel.ServiceSprintSummary>());
-
+            vm.Sprints = new ObservableCollection<ServiceModel.ServiceSprintSummary>();
             vm.ProjectId = Guid.NewGuid();
             vm.SprintId = Guid.NewGuid();
 
@@ -125,11 +123,12 @@ namespace Unit.Modules.AnyTrack.Sprints.Views.BurnDownViewModelTests
             regionManager.RequestNavigate(Arg.Any<string>(), Arg.Any<string>(), Arg.Do<NavigationParameters>(np => sentParams = np));
             vm.RegionManager = regionManager;
 
-            vm.Trend.Add(new DataPoint());
-            vm.Points.Add(new DataPoint());
+            vm.Trend.Add(new DataPoint(40, 0));
+            vm.Points.Add(new DataPoint(30, 10));
+            vm.Points.Add(new DataPoint(20, 5));
 
             sprintServiceGateway.GetSprintNames(Arg.Any<Guid>(), Arg.Any<bool>(), Arg.Any<bool>()).Returns(new List<ServiceModel.ServiceSprintSummary>());
-
+            vm.Sprints = new ObservableCollection<ServiceModel.ServiceSprintSummary>();
             vm.ProjectId = Guid.NewGuid();
             vm.SprintId = Guid.NewGuid();
 
