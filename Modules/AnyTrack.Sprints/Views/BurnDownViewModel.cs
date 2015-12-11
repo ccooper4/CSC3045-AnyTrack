@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using AnyTrack.Infrastructure;
 using AnyTrack.Infrastructure.BackendProjectService;
 using AnyTrack.Infrastructure.BackendSprintService;
@@ -309,14 +310,29 @@ namespace AnyTrack.Sprints.Views
                         DateTime? start = sprintServiceGateway.GetDateSprintStarted(sprintId.Value);
                         DateTime? end = sprintServiceGateway.GetDateSprintEnds(sprintId.Value);
                         double highestEstimate = sprintServiceGateway.GetSprintMaxEstimate(sprintId.Value);
-                        this.Trend.Add(new DataPoint(DateTimeAxis.ToDouble(start), highestEstimate));
+
+                        var sprintStartValue = listOfAllTasks.Select(t => t.TaskHourEstimates.Where(te => te.Estimate > 0).OrderBy(te => te.Created).Last().Estimate).Sum();
+
+                        this.Trend.Add(new DataPoint(DateTimeAxis.ToDouble(start), sprintStartValue));
                         this.Trend.Add(new DataPoint(DateTimeAxis.ToDouble(end), 0));
-                        foreach (var item in listOfAllTasks)
+
+                        var curDate = start.Value;
+                        var chartEndDate = DateTime.Today < end.Value ? DateTime.Today : end.Value;
+                        var pointDict = new Dictionary<DateTime, double>(); 
+                        while (curDate <= chartEndDate)
                         {
-                            foreach (var taskHour in item.TaskHourEstimates)
-                            {
-                                this.Points.Add(new DataPoint(DateTimeAxis.ToDouble(taskHour.Created), taskHour.Estimate));
-                            }
+                            var todaysRemaining = listOfAllTasks.Select(s => s.TaskHourEstimates.Where(t => t.Created.Value.Date <= curDate).OrderBy(t => t.Created).Last());
+
+                            var thisPointValue = todaysRemaining.Sum(t => t.Estimate);
+
+                            pointDict.Add(curDate, thisPointValue);
+
+                            curDate = curDate.AddDays(1);
+                        }
+
+                        foreach (var item in pointDict)
+                        {
+                            this.Points.Add(new DataPoint(DateTimeAxis.ToDouble(item.Key), item.Value));
                         }
                     }
                     else
@@ -326,9 +342,22 @@ namespace AnyTrack.Sprints.Views
                         double totalStoryPoints = sprintServiceGateway.GetTotalStoryPointEstimate(sprintId.Value);
                         this.Trend.Add(new DataPoint(DateTimeAxis.ToDouble(start), totalStoryPoints));
                         this.Trend.Add(new DataPoint(DateTimeAxis.ToDouble(end), 0));
-                        foreach (var sprintStory in listOfAllEstimates)
+
+                        var curDate = start.Value;
+                        var chartEndDate = DateTime.Today < end.Value ? DateTime.Today : end.Value;
+                        var pointDict = new Dictionary<DateTime, double>();
+                        while (curDate <= chartEndDate)
                         {
-                            this.points.Add(new DataPoint(DateTimeAxis.ToDouble(sprintStory.DateCompleted), sprintStory.StoryEstimate));
+                            var thisPointValue = listOfAllEstimates.Where(s => s.DateCompleted == null || (s.DateCompleted != null && s.DateCompleted.Value.Date > curDate)).Sum(s => s.StoryEstimate);
+
+                            pointDict.Add(curDate, thisPointValue);
+
+                            curDate = curDate.AddDays(1);
+                        }
+
+                        foreach (var item in pointDict)
+                        {
+                            this.Points.Add(new DataPoint(DateTimeAxis.ToDouble(item.Key), item.Value));
                         }
                     }
                 }

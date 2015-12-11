@@ -120,7 +120,7 @@
 
                             <StackPanel Margin="5" Grid.Row="1" Orientation="Horizontal">
                                 <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Story Points" FontSize="14"></Label>
-                                <TextBox  IsEnabled="False" Margin="15,0,0,0" VerticalAlignment="Center" Height="Auto" Width="30" Text="5"></TextBox>
+                                <TextBox  IsEnabled="False" Margin="15,0,0,0" VerticalAlignment="Center" Height="Auto" Width="30" Text="{Binding StoryPoints}"></TextBox>
                             </StackPanel>
 
 

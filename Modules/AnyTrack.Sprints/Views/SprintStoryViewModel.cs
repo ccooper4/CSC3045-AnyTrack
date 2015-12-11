@@ -92,7 +92,7 @@ namespace AnyTrack.Sprints.Views
         /// <summary>
         /// status member
         /// </summary>
-        private int storyPoints;
+        private double storyPoints;
 
         /// <summary>
         /// The is open field.
@@ -398,7 +398,7 @@ namespace AnyTrack.Sprints.Views
         /// <summary>
         /// Gets or sets the story points
         /// </summary>
-        public int StoryPoints
+        public double StoryPoints
         {
             get
             {
@@ -560,6 +560,8 @@ namespace AnyTrack.Sprints.Views
 
                 //// Sprint story attributes
                 this.Status = sprintStory.Status;
+                this.StoryPoints = sprintStory.StoryEstimate;
+                
                 //// TODO - story points, created, updated.
 
                 var tasks = sprintServiceGateway.GetAllTasksForSprintStory(sprintStory.SprintStoryId);
@@ -606,6 +608,11 @@ namespace AnyTrack.Sprints.Views
                 Status = this.Status,
                 SprintStoryId = this.SprintStoryId,
             };
+
+            if (this.Status == "DONE")
+            {
+                sprintStory.DateCompleted = DateTime.Now;
+            }
 
             sprintServiceGateway.SaveSprintStory(sprintStory);
             IsOpen = false;

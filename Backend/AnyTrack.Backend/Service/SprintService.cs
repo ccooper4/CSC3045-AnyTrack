@@ -453,7 +453,8 @@ namespace AnyTrack.Backend.Service
                     SprintId = sprintEst.Id,
                     StoryEstimate = sprintEst.StoryEstimate,
                     DateCompleted = sprintEst.DateCompleted
-                };                  
+                };
+                sprintStoryList.Add(sprintStory);
             }
 
             return sprintStoryList;
@@ -649,6 +650,7 @@ namespace AnyTrack.Backend.Service
             if (dataSprintStory != null)
             {
                 dataSprintStory.Status = sprintStory.Status;
+                dataSprintStory.DateCompleted = dataSprintStory.DateCompleted ?? sprintStory.DateCompleted;
             }
 
             unitOfWork.Commit();
@@ -746,7 +748,8 @@ namespace AnyTrack.Backend.Service
                             InSprint = sprintStory.Story.InSprint,
                             ConditionsOfSatisfaction = sprintStory.Story.ConditionsOfSatisfaction
                         },
-                        Status = sprintStory.Status
+                        Status = sprintStory.Status,
+                        StoryEstimate = sprintStory.StoryEstimate
                     });
                 }
                 else
